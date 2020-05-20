@@ -64,6 +64,7 @@ DEFINE_VECTOR(CLensFlareDescriptor*,LensFlareDescVec,LensFlareDescIt);
 class ENGINE_API CLensFlare
 {
 	friend class dxLensFlareRender;
+    friend class XRayLensFlareRender;
 public:
 	enum
 	{

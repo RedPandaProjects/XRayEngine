@@ -383,7 +383,6 @@ void CEnvDescriptorMixer::clear	()
 	*/
 }
 
-int get_ref_count(IUnknown* ii);
 
 void CEnvDescriptorMixer::lerp	(CEnvironment* , CEnvDescriptor& A, CEnvDescriptor& B, float f, CEnvModifier& Mdf, float modifier_power)
 {
