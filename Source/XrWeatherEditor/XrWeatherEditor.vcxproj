@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Mixed|Win32">
+      <Configuration>Mixed</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Mixed|x64">
+      <Configuration>Mixed</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <ProjectGuid>{77E2E2AC-AC5B-48B8-B6C5-EC5F9F953927}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>XrWeatherEditor</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>true</CLRSupport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>true</CLRSupport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>true</CLRSupport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>true</CLRSupport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>true</CLRSupport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Mixed|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>true</CLRSupport>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Default.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Default.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Default.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Default.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Default.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Mixed|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Default.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Mixed|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>EDITOR_LIBRARY;WIN32;NDEBUG;XRWEATHEREDITOR_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
+      <ExceptionHandling>Async</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <PreprocessorDefinitions>EDITOR_LIBRARY;DEBUG;WIN32;XRWEATHEREDITOR_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PreprocessorDefinitions>EDITOR_LIBRARY;WIN32;_DEBUG;XRWEATHEREDITOR_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
+      <ExceptionHandling>Async</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PreprocessorDefinitions>EDITOR_LIBRARY;_DEBUG;XRWEATHEREDITOR_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
+      <ExceptionHandling>Async</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>EDITOR_LIBRARY;NDEBUG;XRWEATHEREDITOR_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
+      <ExceptionHandling>Async</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Mixed|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <PreprocessorDefinitions>EDITOR_LIBRARY;DEBUG;XRWEATHEREDITOR_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <OmitFramePointers>false</OmitFramePointers>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="AssemblyInfo.cpp" />
+    <ClCompile Include="entry_point.cpp" />
+    <ClCompile Include="ide_impl.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Mixed|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="property_boolean.cpp" />
+    <ClCompile Include="property_boolean_reference.cpp" />
+    <ClCompile Include="property_boolean_values_value.cpp" />
+    <ClCompile Include="property_boolean_values_value_reference.cpp" />
+    <ClCompile Include="property_collection.cpp" />
+    <ClCompile Include="property_collection_base.cpp" />
+    <ClCompile Include="property_collection_converter.cpp" />
+    <ClCompile Include="property_collection_editor.cpp" />
+    <ClCompile Include="property_collection_enumerator.cpp" />
+    <ClCompile Include="property_collection_getter.cpp" />
+    <ClCompile Include="property_color.cpp" />
+    <ClCompile Include="property_color_base.cpp" />
+    <ClCompile Include="property_color_reference.cpp" />
+    <ClCompile Include="property_container.cpp" />
+    <ClCompile Include="property_container_converter.cpp" />
+    <ClCompile Include="property_converter_boolean_values.cpp" />
+    <ClCompile Include="property_converter_color.cpp" />
+    <ClCompile Include="property_converter_float.cpp" />
+    <ClCompile Include="property_converter_float_enum.cpp" />
+    <ClCompile Include="property_converter_integer_enum.cpp" />
+    <ClCompile Include="property_converter_integer_values.cpp" />
+    <ClCompile Include="property_converter_string_values.cpp" />
+    <ClCompile Include="property_converter_tree_values.cpp" />
+    <ClCompile Include="property_converter_vec3f.cpp" />
+    <ClCompile Include="property_editor_color.cpp" />
+    <ClCompile Include="property_editor_file_name.cpp" />
+    <ClCompile Include="property_editor_tree_values.cpp" />
+    <ClCompile Include="property_file_name_value.cpp" />
+    <ClCompile Include="property_file_name_value_shared_str.cpp" />
+    <ClCompile Include="property_float.cpp" />
+    <ClCompile Include="property_float_enum_value.cpp" />
+    <ClCompile Include="property_float_enum_value_reference.cpp" />
+    <ClCompile Include="property_float_limited.cpp" />
+    <ClCompile Include="property_float_limited_reference.cpp" />
+    <ClCompile Include="property_float_reference.cpp" />
+    <ClCompile Include="property_holder.cpp" />
+    <ClCompile Include="property_holder_boolean.cpp" />
+    <ClCompile Include="property_holder_collection.cpp" />
+    <ClCompile Include="property_holder_color.cpp" />
+    <ClCompile Include="property_holder_container.cpp" />
+    <ClCompile Include="property_holder_float.cpp" />
+    <ClCompile Include="property_holder_integer.cpp" />
+    <ClCompile Include="property_holder_string.cpp" />
+    <ClCompile Include="property_holder_vec3f.cpp" />
+    <ClCompile Include="property_integer.cpp" />
+    <ClCompile Include="property_integer_enum_value.cpp" />
+    <ClCompile Include="property_integer_enum_value_reference.cpp" />
+    <ClCompile Include="property_integer_limited.cpp" />
+    <ClCompile Include="property_integer_limited_reference.cpp" />
+    <ClCompile Include="property_integer_reference.cpp" />
+    <ClCompile Include="property_integer_values_value.cpp" />
+    <ClCompile Include="property_integer_values_value_getter.cpp" />
+    <ClCompile Include="property_integer_values_value_reference.cpp" />
+    <ClCompile Include="property_integer_values_value_reference_getter.cpp" />
+    <ClCompile Include="property_property_container.cpp" />
+    <ClCompile Include="property_string.cpp" />
+    <ClCompile Include="property_string_shared_str.cpp" />
+    <ClCompile Include="property_string_values_value.cpp" />
+    <ClCompile Include="property_string_values_value_getter.cpp" />
+    <ClCompile Include="property_string_values_value_shared_str.cpp" />
+    <ClCompile Include="property_string_values_value_shared_str_getter.cpp" />
+    <ClCompile Include="property_vec3f.cpp" />
+    <ClCompile Include="property_vec3f_base.cpp" />
+    <ClCompile Include="property_vec3f_reference.cpp" />
+    <ClCompile Include="window_ide.cpp" />
+    <ClCompile Include="window_ide_serialize.cpp" />
+    <ClCompile Include="window_levels.cpp" />
+    <ClCompile Include="window_tree_values.cpp" />
+    <ClCompile Include="window_view.cpp" />
+    <ClCompile Include="window_weather.cpp" />
+    <ClCompile Include="window_weather_editor.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Public\engine.hpp" />
+    <ClInclude Include="Public\ide.hpp" />
+    <ClInclude Include="Public\interfaces.hpp" />
+    <ClInclude Include="Public\property_holder.hpp" />
+    <ClInclude Include="engine_include.hpp" />
+    <ClInclude Include="ide_impl.hpp" />
+    <ClInclude Include="pch.hpp" />
+    <ClInclude Include="property_boolean.hpp" />
+    <ClInclude Include="property_boolean_reference.hpp" />
+    <ClInclude Include="property_boolean_values_value.hpp" />
+    <ClInclude Include="property_boolean_values_value_reference.hpp" />
+    <ClInclude Include="property_collection.hpp" />
+    <ClInclude Include="property_collection_base.hpp" />
+    <ClInclude Include="property_collection_converter.hpp" />
+    <ClInclude Include="property_collection_editor.hpp" />
+    <ClInclude Include="property_collection_enumerator.hpp" />
+    <ClInclude Include="property_collection_getter.hpp" />
+    <ClInclude Include="property_color.hpp" />
+    <ClInclude Include="property_color_base.hpp" />
+    <ClInclude Include="property_color_reference.hpp" />
+    <ClInclude Include="property_container.hpp" />
+    <ClInclude Include="property_container_converter.hpp" />
+    <ClInclude Include="property_container_holder.hpp" />
+    <ClInclude Include="property_converter_boolean_values.hpp" />
+    <ClInclude Include="property_converter_color.hpp" />
+    <ClInclude Include="property_converter_float.hpp" />
+    <ClInclude Include="property_converter_float_enum.hpp" />
+    <ClInclude Include="property_converter_integer_enum.hpp" />
+    <ClInclude Include="property_converter_integer_values.hpp" />
+    <ClInclude Include="property_converter_string_values.hpp" />
+    <ClInclude Include="property_converter_tree_values.hpp" />
+    <ClInclude Include="property_converter_vec3f.hpp" />
+    <ClInclude Include="property_editor_color.hpp" />
+    <ClInclude Include="property_editor_file_name.hpp" />
+    <ClInclude Include="property_editor_tree_values.hpp" />
+    <ClInclude Include="property_file_name_value.hpp" />
+    <ClInclude Include="property_file_name_value_base.hpp" />
+    <ClInclude Include="property_file_name_value_shared_str.hpp" />
+    <ClInclude Include="property_float.hpp" />
+    <ClInclude Include="property_float_enum_value.hpp" />
+    <ClInclude Include="property_float_enum_value_reference.hpp" />
+    <ClInclude Include="property_float_limited.hpp" />
+    <ClInclude Include="property_float_limited_reference.hpp" />
+    <ClInclude Include="property_float_reference.hpp" />
+    <ClInclude Include="property_holder.hpp" />
+    <ClInclude Include="property_holder_include.hpp" />
+    <ClInclude Include="property_integer.hpp" />
+    <ClInclude Include="property_integer_enum_value.hpp" />
+    <ClInclude Include="property_integer_enum_value_reference.hpp" />
+    <ClInclude Include="property_integer_limited.hpp" />
+    <ClInclude Include="property_integer_limited_reference.hpp" />
+    <ClInclude Include="property_integer_reference.hpp" />
+    <ClInclude Include="property_integer_values_value.hpp" />
+    <ClInclude Include="property_integer_values_value_base.hpp" />
+    <ClInclude Include="property_integer_values_value_getter.hpp" />
+    <ClInclude Include="property_integer_values_value_reference.hpp" />
+    <ClInclude Include="property_integer_values_value_reference_getter.hpp" />
+    <ClInclude Include="property_property_container.hpp" />
+    <ClInclude Include="property_string.hpp" />
+    <ClInclude Include="property_string_shared_str.hpp" />
+    <ClInclude Include="property_string_values_value.hpp" />
+    <ClInclude Include="property_string_values_value_base.hpp" />
+    <ClInclude Include="property_string_values_value_getter.hpp" />
+    <ClInclude Include="property_string_values_value_shared_str.hpp" />
+    <ClInclude Include="property_string_values_value_shared_str_getter.hpp" />
+    <ClInclude Include="property_vec3f.hpp" />
+    <ClInclude Include="property_vec3f_base.hpp" />
+    <ClInclude Include="property_vec3f_reference.hpp" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="window_ide.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="window_levels.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="window_tree_values.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="window_view.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="window_weather.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="window_weather_editor.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\color_picker.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="editor.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="window_ide.resx">
+      <DependentUpon>window_ide.h</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="window_levels.resx">
+      <DependentUpon>window_levels.h</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="window_tree_values.resx">
+      <DependentUpon>window_tree_values.h</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="window_view.resx">
+      <DependentUpon>window_view.h</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="window_weather.resx">
+      <DependentUpon>window_weather.h</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="window_weather_editor.resx">
+      <DependentUpon>window_weather_editor.h</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="DockPanelSkin">
+      <HintPath>..\..\SDK\Bin\DockPanelSkin.dll</HintPath>
+    </Reference>
+    <Reference Include="Flobbster.Windows.Forms.PropertyGrid">
+      <HintPath>..\..\SDK\Bin\Flobbster.Windows.Forms.PropertyGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WeifenLuo.WinFormsUI.Docking">
+      <HintPath>..\..\SDK\Bin\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\XrAPI\XrAPI.vcxproj">
+      <Project>{ff16ef0a-8a51-4c36-9213-4aa87cb4b317}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\XrCore\XrCore.vcxproj">
+      <Project>{da642d7c-4fff-43dc-98f8-3f96caf1e4ba}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\XrEngine\XrEngine.vcxproj">
+      <Project>{2820680f-79fe-4477-a14c-007f273a5fa8}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\XrWeatherEditorControls\XrWeatherEditorControls.vcxproj">
+      <Project>{a170d052-a69e-48b4-a5a6-1e0ebacde726}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="EditButton.Image.png" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

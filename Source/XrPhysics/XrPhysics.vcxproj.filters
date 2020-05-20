@@ -1,0 +1,597 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="kernel">
+      <UniqueIdentifier>{94f872ef-a1ff-403d-9485-9c31b1836e3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="interface">
+      <UniqueIdentifier>{98610901-3418-4413-93ce-c801456e25c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="interface\shell">
+      <UniqueIdentifier>{dcfa3460-b771-4420-9ec1-0e760af8b4b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="interface\character_movement">
+      <UniqueIdentifier>{a3381345-c7a1-4af4-bba8-40502149301b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="interface\world">
+      <UniqueIdentifier>{2af4658b-999b-45a3-a45e-6b1e9bedb15c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics">
+      <UniqueIdentifier>{c7e29474-c775-4daf-a6f6-f66ccd95e381}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\colliders">
+      <UniqueIdentifier>{4bb1bafc-2bde-44ad-8855-9552cf0eff02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\colliders\tri">
+      <UniqueIdentifier>{2482725e-1d2d-4178-99b6-025416f5affb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\colliders\cyl">
+      <UniqueIdentifier>{82e113aa-7348-40fe-aebc-610af971d693}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\colliders\RayMotions">
+      <UniqueIdentifier>{7a00d9d5-0e51-48f2-8cae-734617f0a614}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\ActivationBox">
+      <UniqueIdentifier>{05c6bd5f-4fd0-4fed-bdc5-7d502470fb4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base">
+      <UniqueIdentifier>{7c60deac-003d-44a9-ac5d-66c5f121ddee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Objects">
+      <UniqueIdentifier>{ec467986-0d9a-4676-b774-b71d4671c776}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Objects\Utils">
+      <UniqueIdentifier>{323e3788-6c2c-4c1b-a8d7-97b76df029a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Objects\Utils\Interpolation">
+      <UniqueIdentifier>{aec5e294-ce34-4957-8e50-5db105e9b379}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Objects\Utils\Storage">
+      <UniqueIdentifier>{9987ada2-00a9-4581-90e4-e13c3b68d2ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Objects\Utils\Math">
+      <UniqueIdentifier>{7cc466ba-8bcc-4d6f-88bd-aad11b0c10ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Objects\BodyEffectors">
+      <UniqueIdentifier>{ad0a22e4-b45d-4718-9bc7-cc04cc1e07ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Objects\PHNet">
+      <UniqueIdentifier>{53f6c013-4dd8-4247-9502-c0ca57d45d1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Objects\MoveStorage">
+      <UniqueIdentifier>{4a1bbf83-1bee-474c-9ceb-12ad7f97dcc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Objects\Disabling">
+      <UniqueIdentifier>{de181064-523b-4fd3-ac59-3ea04fbad0b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Objects\PhyMove">
+      <UniqueIdentifier>{7ae1ff45-7b10-41cf-bd41-d66bd619890f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Objects\PhyMove\ActorCaracter">
+      <UniqueIdentifier>{45e3b8e4-7e70-401b-90ab-45b232e64004}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Objects\PhyMove\AICharacter">
+      <UniqueIdentifier>{e5e22b20-2ca7-40bd-9695-4128924d7798}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Objects\PhyMove\Capture">
+      <UniqueIdentifier>{38335dab-cd70-4960-81da-571b97fce720}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Objects\PhyMove\SipmpleCharacter">
+      <UniqueIdentifier>{08ee9150-310a-4031-a6d1-1fd4739f7187}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Objects\PhyMove\BaseCharacter">
+      <UniqueIdentifier>{c0549f76-7fa0-4623-b4b0-58fbde3e7f2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Objects\BaseShell">
+      <UniqueIdentifier>{15250077-d243-4cb9-aa5b-6b37d80fffd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Objects\BaseShell\PhysicsShellAnimator">
+      <UniqueIdentifier>{486b143b-e737-4054-b4df-961ae57bb3cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Objects\Element">
+      <UniqueIdentifier>{9ff84bb1-208d-4c63-81ea-6ef491e151b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Objects\Element\Geom">
+      <UniqueIdentifier>{c56eb2cd-9218-4b75-a43b-5be01011bca5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Objects\Joint">
+      <UniqueIdentifier>{c94e76e0-e785-4741-a037-76ba4fe9370e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Objects\Shell">
+      <UniqueIdentifier>{10186755-f26c-440c-b3c3-3b95dc9262de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Objects\Breakable">
+      <UniqueIdentifier>{6f269d5f-8088-4bbb-a3fb-efd344695e46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Objects\SplitedShell">
+      <UniqueIdentifier>{d6e519bc-2aca-45f8-9e76-c71688f2693e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Objects\PHObject">
+      <UniqueIdentifier>{6c6d80be-f0e4-4882-b06d-70c98cd22a39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Objects\PHIsland">
+      <UniqueIdentifier>{e9400b71-be59-4d40-86d1-a964bbd7d02b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Objects\World">
+      <UniqueIdentifier>{6ee5ea9e-ba73-46fb-bc87-9c631f13aafe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Objects\CollideValidator">
+      <UniqueIdentifier>{55b1747d-dd1f-4d42-9620-9298d30d09ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Objects\StaticShell">
+      <UniqueIdentifier>{4d89568f-2794-44f8-bf25-7b1484817a86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Objects\script">
+      <UniqueIdentifier>{63e40ff8-3c9b-4ad6-8975-d416c820cfa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Impact">
+      <UniqueIdentifier>{2d91cee5-f6ba-4c72-8121-59c95e2ea65f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\Base\Debug">
+      <UniqueIdentifier>{047d0ca3-f0f9-4f77-9094-ef6c4cb8609d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\camera_collision">
+      <UniqueIdentifier>{f3672530-527a-43dd-8dea-af8837905de1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics\damage_receiver">
+      <UniqueIdentifier>{fa1d11c5-1195-40ae-959c-9a95bd4cb80c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="xrPhysics.cpp">
+      <Filter>kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="console_vars.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="ShellHit.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="tri-colliderknoopc\dcTriListCollider.cpp">
+      <Filter>physics\colliders\tri</Filter>
+    </ClCompile>
+    <ClCompile Include="tri-colliderknoopc\dSortTriPrimitive.cpp">
+      <Filter>physics\colliders\tri</Filter>
+    </ClCompile>
+    <ClCompile Include="tri-colliderknoopc\dTriBox.cpp">
+      <Filter>physics\colliders\tri</Filter>
+    </ClCompile>
+    <ClCompile Include="tri-colliderknoopc\dTriCallideK.cpp">
+      <Filter>physics\colliders\tri</Filter>
+    </ClCompile>
+    <ClCompile Include="tri-colliderknoopc\dTriCylinder.cpp">
+      <Filter>physics\colliders\tri</Filter>
+    </ClCompile>
+    <ClCompile Include="tri-colliderknoopc\dTriList.cpp">
+      <Filter>physics\colliders\tri</Filter>
+    </ClCompile>
+    <ClCompile Include="tri-colliderknoopc\dTriSphere.cpp">
+      <Filter>physics\colliders\tri</Filter>
+    </ClCompile>
+    <ClCompile Include="dcylinder\dCylinder.cpp">
+      <Filter>physics\colliders\cyl</Filter>
+    </ClCompile>
+    <ClCompile Include="dRayMotions.cpp">
+      <Filter>physics\colliders\RayMotions</Filter>
+    </ClCompile>
+    <ClCompile Include="IActivationShape.cpp">
+      <Filter>physics\ActivationBox</Filter>
+    </ClCompile>
+    <ClCompile Include="PHActivationShape.cpp">
+      <Filter>physics\ActivationBox</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsExternalCommon.cpp">
+      <Filter>physics\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="phvalide.cpp">
+      <Filter>physics\Base\Objects\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="PHInterpolation.cpp">
+      <Filter>physics\Base\Objects\Utils\Interpolation</Filter>
+    </ClCompile>
+    <ClCompile Include="MathUtils.cpp">
+      <Filter>physics\Base\Objects\Utils\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="PHDynamicData.cpp">
+      <Filter>physics\Base\Objects\Utils\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="PHContactBodyEffector.cpp">
+      <Filter>physics\Base\Objects\BodyEffectors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xrServerEntities\PHNetState.cpp">
+      <Filter>physics\Base\Objects\PHNet</Filter>
+    </ClCompile>
+    <ClCompile Include="PHMoveStorage.cpp">
+      <Filter>physics\Base\Objects\MoveStorage</Filter>
+    </ClCompile>
+    <ClCompile Include="DisablingParams.cpp">
+      <Filter>physics\Base\Objects\Disabling</Filter>
+    </ClCompile>
+    <ClCompile Include="PHDisabling.cpp">
+      <Filter>physics\Base\Objects\Disabling</Filter>
+    </ClCompile>
+    <ClCompile Include="PHActorCharacter.cpp">
+      <Filter>physics\Base\Objects\PhyMove\ActorCaracter</Filter>
+    </ClCompile>
+    <ClCompile Include="PHAICharacter.cpp">
+      <Filter>physics\Base\Objects\PhyMove\AICharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="PHCapture.cpp">
+      <Filter>physics\Base\Objects\PhyMove\Capture</Filter>
+    </ClCompile>
+    <ClCompile Include="PHCaptureInit.cpp">
+      <Filter>physics\Base\Objects\PhyMove\Capture</Filter>
+    </ClCompile>
+    <ClCompile Include="ElevatorState.cpp">
+      <Filter>physics\Base\Objects\PhyMove\SipmpleCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="PHSimpleCharacter.cpp">
+      <Filter>physics\Base\Objects\PhyMove\SipmpleCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementBoxDynamicActivate.cpp">
+      <Filter>physics\Base\Objects\PhyMove\BaseCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="PHCharacter.cpp">
+      <Filter>physics\Base\Objects\PhyMove\BaseCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsShell.cpp">
+      <Filter>physics\Base\Objects\BaseShell</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsShellAnimator.cpp">
+      <Filter>physics\Base\Objects\BaseShell\PhysicsShellAnimator</Filter>
+    </ClCompile>
+    <ClCompile Include="PHElement.cpp">
+      <Filter>physics\Base\Objects\Element</Filter>
+    </ClCompile>
+    <ClCompile Include="PHElementNetState.cpp">
+      <Filter>physics\Base\Objects\Element</Filter>
+    </ClCompile>
+    <ClCompile Include="ExtendedGeom.cpp">
+      <Filter>physics\Base\Objects\Element\Geom</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry.cpp">
+      <Filter>physics\Base\Objects\Element\Geom</Filter>
+    </ClCompile>
+    <ClCompile Include="PHGeometryOwner.cpp">
+      <Filter>physics\Base\Objects\Element\Geom</Filter>
+    </ClCompile>
+    <ClCompile Include="PHJoint.cpp">
+      <Filter>physics\Base\Objects\Joint</Filter>
+    </ClCompile>
+    <ClCompile Include="PHShell.cpp">
+      <Filter>physics\Base\Objects\Shell</Filter>
+    </ClCompile>
+    <ClCompile Include="PHShellActivate.cpp">
+      <Filter>physics\Base\Objects\Shell</Filter>
+    </ClCompile>
+    <ClCompile Include="PHShellNetState.cpp">
+      <Filter>physics\Base\Objects\Shell</Filter>
+    </ClCompile>
+    <ClCompile Include="PHFracture.cpp">
+      <Filter>physics\Base\Objects\Breakable</Filter>
+    </ClCompile>
+    <ClCompile Include="PHJointDestroyInfo.cpp">
+      <Filter>physics\Base\Objects\Breakable</Filter>
+    </ClCompile>
+    <ClCompile Include="PHShellSplitter.cpp">
+      <Filter>physics\Base\Objects\Breakable</Filter>
+    </ClCompile>
+    <ClCompile Include="PHSplitedShell.cpp">
+      <Filter>physics\Base\Objects\SplitedShell</Filter>
+    </ClCompile>
+    <ClCompile Include="PHObject.cpp">
+      <Filter>physics\Base\Objects\PHObject</Filter>
+    </ClCompile>
+    <ClCompile Include="PHIsland.cpp">
+      <Filter>physics\Base\Objects\PHIsland</Filter>
+    </ClCompile>
+    <ClCompile Include="GeometryBits.cpp">
+      <Filter>physics\Base\Objects\World</Filter>
+    </ClCompile>
+    <ClCompile Include="params.cpp">
+      <Filter>physics\Base\Objects\World</Filter>
+    </ClCompile>
+    <ClCompile Include="PHWorld.cpp">
+      <Filter>physics\Base\Objects\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics.cpp">
+      <Filter>physics\Base\Objects\World</Filter>
+    </ClCompile>
+    <ClCompile Include="PHCollideValidator.cpp">
+      <Filter>physics\Base\Objects\CollideValidator</Filter>
+    </ClCompile>
+    <ClCompile Include="PHStaticGeomShell.cpp">
+      <Filter>physics\Base\Objects\StaticShell</Filter>
+    </ClCompile>
+    <ClCompile Include="physics_scripted.cpp">
+      <Filter>physics\Base\Objects\script</Filter>
+    </ClCompile>
+    <ClCompile Include="debug_output.cpp">
+      <Filter>physics\Base\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="ActorCameraCollision.cpp">
+      <Filter>physics\camera_collision</Filter>
+    </ClCompile>
+    <ClCompile Include="collisiondamagereceiver.cpp">
+      <Filter>physics\damage_receiver</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="xrPhysics.h">
+      <Filter>kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="console_vars.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="tri-colliderknoopc\__aabb_tri.h">
+      <Filter>physics\colliders\tri</Filter>
+    </ClInclude>
+    <ClInclude Include="tri-colliderknoopc\dcTriangle.h">
+      <Filter>physics\colliders\tri</Filter>
+    </ClInclude>
+    <ClInclude Include="tri-colliderknoopc\dcTriListCollider.h">
+      <Filter>physics\colliders\tri</Filter>
+    </ClInclude>
+    <ClInclude Include="tri-colliderknoopc\dSortTriPrimitive.h">
+      <Filter>physics\colliders\tri</Filter>
+    </ClInclude>
+    <ClInclude Include="tri-colliderknoopc\dTriBox.h">
+      <Filter>physics\colliders\tri</Filter>
+    </ClInclude>
+    <ClInclude Include="tri-colliderknoopc\dTriCollideK.h">
+      <Filter>physics\colliders\tri</Filter>
+    </ClInclude>
+    <ClInclude Include="tri-colliderknoopc\dTriColliderCommon.h">
+      <Filter>physics\colliders\tri</Filter>
+    </ClInclude>
+    <ClInclude Include="tri-colliderknoopc\dTriColliderMath.h">
+      <Filter>physics\colliders\tri</Filter>
+    </ClInclude>
+    <ClInclude Include="tri-colliderknoopc\dTriCylinder.h">
+      <Filter>physics\colliders\tri</Filter>
+    </ClInclude>
+    <ClInclude Include="tri-colliderknoopc\dTriList.h">
+      <Filter>physics\colliders\tri</Filter>
+    </ClInclude>
+    <ClInclude Include="tri-colliderknoopc\dTriSphere.h">
+      <Filter>physics\colliders\tri</Filter>
+    </ClInclude>
+    <ClInclude Include="tri-colliderknoopc\dxTriList.h">
+      <Filter>physics\colliders\tri</Filter>
+    </ClInclude>
+    <ClInclude Include="tri-colliderknoopc\TriPrimitiveCollideClassDef.h">
+      <Filter>physics\colliders\tri</Filter>
+    </ClInclude>
+    <ClInclude Include="dcylinder\dCylinder.h">
+      <Filter>physics\colliders\cyl</Filter>
+    </ClInclude>
+    <ClInclude Include="dRayMotions.h">
+      <Filter>physics\colliders\RayMotions</Filter>
+    </ClInclude>
+    <ClInclude Include="IActivationShape.h">
+      <Filter>physics\ActivationBox</Filter>
+    </ClInclude>
+    <ClInclude Include="PHActivationShape.h">
+      <Filter>physics\ActivationBox</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageSource.h">
+      <Filter>physics\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="ode_include.h">
+      <Filter>physics\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="ode_redefine.h">
+      <Filter>physics\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsCommon.h">
+      <Filter>physics\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsExternalCommon.h">
+      <Filter>physics\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="PHDefs.h">
+      <Filter>physics\Base\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ph_valid_ode.h">
+      <Filter>physics\Base\Objects\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="phvalide.h">
+      <Filter>physics\Base\Objects\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="PHValideValues.h">
+      <Filter>physics\Base\Objects\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="PHInterpolation.h">
+      <Filter>physics\Base\Objects\Utils\Interpolation</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockAllocator.h">
+      <Filter>physics\Base\Objects\Utils\Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="CycleConstStorage.h">
+      <Filter>physics\Base\Objects\Utils\Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="CalculateTriangle.h">
+      <Filter>physics\Base\Objects\Utils\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="MathUtils.h">
+      <Filter>physics\Base\Objects\Utils\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="MathUtilsOde.h">
+      <Filter>physics\Base\Objects\Utils\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="matrix_utils.h">
+      <Filter>physics\Base\Objects\Utils\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="PHDynamicData.h">
+      <Filter>physics\Base\Objects\Utils\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="PHBaseBodyEffector.h">
+      <Filter>physics\Base\Objects\BodyEffectors</Filter>
+    </ClInclude>
+    <ClInclude Include="PHContactBodyEffector.h">
+      <Filter>physics\Base\Objects\BodyEffectors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xrServerEntities\PHNetState.h">
+      <Filter>physics\Base\Objects\PHNet</Filter>
+    </ClInclude>
+    <ClInclude Include="PHMoveStorage.h">
+      <Filter>physics\Base\Objects\MoveStorage</Filter>
+    </ClInclude>
+    <ClInclude Include="DisablingParams.h">
+      <Filter>physics\Base\Objects\Disabling</Filter>
+    </ClInclude>
+    <ClInclude Include="PHDisabling.h">
+      <Filter>physics\Base\Objects\Disabling</Filter>
+    </ClInclude>
+    <ClInclude Include="PHActorCharacter.h">
+      <Filter>physics\Base\Objects\PhyMove\ActorCaracter</Filter>
+    </ClInclude>
+    <ClInclude Include="PHActorCharacterInline.h">
+      <Filter>physics\Base\Objects\PhyMove\ActorCaracter</Filter>
+    </ClInclude>
+    <ClInclude Include="PHAICharacter.h">
+      <Filter>physics\Base\Objects\PhyMove\AICharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="IPHCapture.h">
+      <Filter>physics\Base\Objects\PhyMove\Capture</Filter>
+    </ClInclude>
+    <ClInclude Include="PHCapture.h">
+      <Filter>physics\Base\Objects\PhyMove\Capture</Filter>
+    </ClInclude>
+    <ClInclude Include="ElevatorState.h">
+      <Filter>physics\Base\Objects\PhyMove\SipmpleCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="iclimableobject.h">
+      <Filter>physics\Base\Objects\PhyMove\SipmpleCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="IElevatorState.h">
+      <Filter>physics\Base\Objects\PhyMove\SipmpleCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="PHSimpleCharacter.h">
+      <Filter>physics\Base\Objects\PhyMove\SipmpleCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="PHSimpleCharacterInline.h">
+      <Filter>physics\Base\Objects\PhyMove\SipmpleCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="IColisiondamageInfo.h">
+      <Filter>physics\Base\Objects\PhyMove\BaseCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementBoxDynamicActivate.h">
+      <Filter>physics\Base\Objects\PhyMove\BaseCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="PHCharacter.h">
+      <Filter>physics\Base\Objects\PhyMove\BaseCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="IPhysicsShellHolder.h">
+      <Filter>physics\Base\Objects\BaseShell</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsShell.h">
+      <Filter>physics\Base\Objects\BaseShell</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsShellAnimator.h">
+      <Filter>physics\Base\Objects\BaseShell\PhysicsShellAnimator</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsShellAnimatorBoneData.h">
+      <Filter>physics\Base\Objects\BaseShell\PhysicsShellAnimator</Filter>
+    </ClInclude>
+    <ClInclude Include="PHElement.h">
+      <Filter>physics\Base\Objects\Element</Filter>
+    </ClInclude>
+    <ClInclude Include="PHElementInline.h">
+      <Filter>physics\Base\Objects\Element</Filter>
+    </ClInclude>
+    <ClInclude Include="ExtendedGeom.h">
+      <Filter>physics\Base\Objects\Element\Geom</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry.h">
+      <Filter>physics\Base\Objects\Element\Geom</Filter>
+    </ClInclude>
+    <ClInclude Include="PHGeometryOwner.h">
+      <Filter>physics\Base\Objects\Element\Geom</Filter>
+    </ClInclude>
+    <ClInclude Include="PHJoint.h">
+      <Filter>physics\Base\Objects\Joint</Filter>
+    </ClInclude>
+    <ClInclude Include="PHShell.h">
+      <Filter>physics\Base\Objects\Shell</Filter>
+    </ClInclude>
+    <ClInclude Include="PHShellBuildJoint.h">
+      <Filter>physics\Base\Objects\Shell</Filter>
+    </ClInclude>
+    <ClInclude Include="PHFracture.h">
+      <Filter>physics\Base\Objects\Breakable</Filter>
+    </ClInclude>
+    <ClInclude Include="PHJointDestroyInfo.h">
+      <Filter>physics\Base\Objects\Breakable</Filter>
+    </ClInclude>
+    <ClInclude Include="PHShellSplitter.h">
+      <Filter>physics\Base\Objects\Breakable</Filter>
+    </ClInclude>
+    <ClInclude Include="PHSplitedShell.h">
+      <Filter>physics\Base\Objects\SplitedShell</Filter>
+    </ClInclude>
+    <ClInclude Include="PHObject.h">
+      <Filter>physics\Base\Objects\PHObject</Filter>
+    </ClInclude>
+    <ClInclude Include="PHUpdateObject.h">
+      <Filter>physics\Base\Objects\PHObject</Filter>
+    </ClInclude>
+    <ClInclude Include="PHIsland.h">
+      <Filter>physics\Base\Objects\PHIsland</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryBits.h">
+      <Filter>physics\Base\Objects\World</Filter>
+    </ClInclude>
+    <ClInclude Include="IPHWorld.h">
+      <Filter>physics\Base\Objects\World</Filter>
+    </ClInclude>
+    <ClInclude Include="params.h">
+      <Filter>physics\Base\Objects\World</Filter>
+    </ClInclude>
+    <ClInclude Include="PHItemList.h">
+      <Filter>physics\Base\Objects\World</Filter>
+    </ClInclude>
+    <ClInclude Include="PHWorld.h">
+      <Filter>physics\Base\Objects\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics.h">
+      <Filter>physics\Base\Objects\World</Filter>
+    </ClInclude>
+    <ClInclude Include="ICollideValidator.h">
+      <Filter>physics\Base\Objects\CollideValidator</Filter>
+    </ClInclude>
+    <ClInclude Include="PHCollideValidator.h">
+      <Filter>physics\Base\Objects\CollideValidator</Filter>
+    </ClInclude>
+    <ClInclude Include="IPHStaticGeomShell.h">
+      <Filter>physics\Base\Objects\StaticShell</Filter>
+    </ClInclude>
+    <ClInclude Include="PHStaticGeomShell.h">
+      <Filter>physics\Base\Objects\StaticShell</Filter>
+    </ClInclude>
+    <ClInclude Include="iphysics_scripted.h">
+      <Filter>physics\Base\Objects\script</Filter>
+    </ClInclude>
+    <ClInclude Include="physics_scripted.h">
+      <Filter>physics\Base\Objects\script</Filter>
+    </ClInclude>
+    <ClInclude Include="PHImpact.h">
+      <Filter>physics\Base\Impact</Filter>
+    </ClInclude>
+    <ClInclude Include="debug_output.h">
+      <Filter>physics\Base\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorCameraCollision.h">
+      <Filter>physics\camera_collision</Filter>
+    </ClInclude>
+    <ClInclude Include="icollisiondamagereceiver.h">
+      <Filter>physics\damage_receiver</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

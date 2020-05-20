@@ -1,0 +1,9 @@
+Source/.vs/
+_appdata_/
+Bin/
+Intermediate/
+Lib/
+import/
+rawdata/
+logs/
+temp/

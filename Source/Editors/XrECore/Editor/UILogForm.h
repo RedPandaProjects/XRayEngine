@@ -1,0 +1,23 @@
+//---------------------------------------------------------------------------
+#ifndef LogFormH
+#define LogFormH
+//---------------------------------------------------------------------------
+
+class UILogForm 
+{
+public:
+	static void AddMessage(TMsgDlgType mt, const xr_string& msg);
+	static void AddMessage(const xr_string& msg) { AddMessage(mtCustom, msg); }
+	static void AddDlgMessage(TMsgDlgType mt, const xr_string& msg);
+	static void AddDlgMessage(const xr_string& msg) { AddDlgMessage(mtCustom, msg); }
+	static void Show();
+	static void Hide();
+	static void Update();
+
+	
+private:
+	static xr_vector<xr_string> List;
+	static bool bAutoScroll;
+};
+//---------------------------------------------------------------------------
+#endif

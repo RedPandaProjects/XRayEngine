@@ -1,0 +1,760 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="windows">
+      <UniqueIdentifier>{62825f2e-496d-4380-970d-df6b9cb8352a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="windows\ide">
+      <UniqueIdentifier>{80723a2e-dca2-421b-b9d0-42303daf5926}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="windows\view">
+      <UniqueIdentifier>{25a0866b-993a-461b-8202-c59f14318d1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="windows\weather">
+      <UniqueIdentifier>{59bcec34-8288-48a9-a19b-787dd082f51e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="windows\weather\weathers">
+      <UniqueIdentifier>{5550bb69-0ece-4f82-89cc-39c059d9ca39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="windows\weather\levels">
+      <UniqueIdentifier>{c3699043-9ae9-483a-99e1-d668ae8c53f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="windows\weather\editor">
+      <UniqueIdentifier>{a19e6a00-2b90-4c97-89b0-9217ce85bcd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="windows\tree_values">
+      <UniqueIdentifier>{e0a5b41e-2188-455a-b0d2-79eadc66b848}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core">
+      <UniqueIdentifier>{5f319b49-8b06-47ba-a767-141899759e68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="interfaces">
+      <UniqueIdentifier>{13b95d10-fa29-448b-9e1d-e95d4a1262dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations">
+      <UniqueIdentifier>{f65468a0-a50c-4500-ba59-efc9eeab944d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties">
+      <UniqueIdentifier>{5a328f67-6840-4edf-a758-73dc08816c05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values">
+      <UniqueIdentifier>{dacadc18-0f62-4fa4-bdad-3bca45d864ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\boolean">
+      <UniqueIdentifier>{78ea6a48-6f0f-4484-be57-18043fa7d443}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\boolean\values">
+      <UniqueIdentifier>{538c0541-ed30-440b-a260-7f0ebe9c2551}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\boolean\values\value">
+      <UniqueIdentifier>{568a0392-cec8-43a3-8513-786129a96fa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\boolean\values\converter">
+      <UniqueIdentifier>{ab21fb7c-e2d0-448a-9f19-65498c39173e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\boolean\values\reference">
+      <UniqueIdentifier>{de9631cc-9c54-457a-a20a-7c0c203a2346}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\boolean\value">
+      <UniqueIdentifier>{4768dd34-4b86-487c-ab6e-dc49344813f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\boolean\value\reference">
+      <UniqueIdentifier>{f5353ea6-05db-4edc-942f-d149cf84d0e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\boolean\value\value">
+      <UniqueIdentifier>{412965d7-e22a-4934-bd3a-ed8548141d88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\vec3f">
+      <UniqueIdentifier>{f82497b1-f611-4cda-991a-6bdc3835f84c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\vec3f\base">
+      <UniqueIdentifier>{2c3469d0-82e3-4920-a6db-9f2173442d69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\vec3f\converter">
+      <UniqueIdentifier>{2a606aaf-2281-42a3-9d8d-4c6497805a01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\vec3f\reference">
+      <UniqueIdentifier>{3240ad06-abc0-4d0b-9d38-f5e2fe5b568e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\vec3f\value">
+      <UniqueIdentifier>{dd9d8e3a-fa82-4e45-b78a-191e91591410}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\collection">
+      <UniqueIdentifier>{0261f635-eea0-4228-bdbc-77526e9d998f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\collection\converter">
+      <UniqueIdentifier>{a9f8f5d2-c6d6-4407-8731-ffa820acd689}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\collection\editor">
+      <UniqueIdentifier>{b1f01c21-9fdc-4e64-b329-2ae4ac25b172}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\collection\enumerator">
+      <UniqueIdentifier>{2a53e0d5-e328-498e-88ea-f102c01cbc0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\collection\value">
+      <UniqueIdentifier>{52c92800-65fd-4409-94d1-8d59f97dbcd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\collection\value\value">
+      <UniqueIdentifier>{8675c93e-2f9d-4c55-accf-60963c863266}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\collection\value\getter">
+      <UniqueIdentifier>{c510bec9-33f7-4b2b-9fec-f50665fb498e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\collection\value\base">
+      <UniqueIdentifier>{06e10be3-9aca-4aee-bb66-37821eb875be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\color">
+      <UniqueIdentifier>{2872dc68-8420-42d5-aa93-9db86e563dd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\color\value">
+      <UniqueIdentifier>{0c7157fc-3f20-49e3-9aa5-dffe7a212d27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\color\converter">
+      <UniqueIdentifier>{c7dbd125-31f1-4d0b-a9b0-f6166cc3f152}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\color\editor">
+      <UniqueIdentifier>{f3634267-ea66-4bc8-aed1-32d2a19bcc17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\color\reference">
+      <UniqueIdentifier>{75923d7c-334f-4f2e-97b8-de64976d5613}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\color\base">
+      <UniqueIdentifier>{0329f1f3-68cf-4378-8951-fd9911346613}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\container">
+      <UniqueIdentifier>{bd0ca2ac-225c-4729-aee5-c7f4ffc8d30e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\container\converter">
+      <UniqueIdentifier>{45ead6cc-8acc-4ebe-a532-7f0ffc1d1b2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\container\value">
+      <UniqueIdentifier>{d946f453-07c7-4b02-927e-2258874f9c21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\float">
+      <UniqueIdentifier>{9343b57f-5df5-40aa-a8fb-fab3d47b20d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\float\value">
+      <UniqueIdentifier>{c366ad3f-68af-42ac-bdeb-cd83d2df74b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\float\value\value">
+      <UniqueIdentifier>{1ad914e2-222f-4e1f-8723-80a78421265d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\float\value\reference">
+      <UniqueIdentifier>{7f7cf23a-2a66-402a-b7ab-6633166e37d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\float\values_enum">
+      <UniqueIdentifier>{c0621cfc-af40-49c5-9e19-c8bc12269d85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\float\values_enum\value">
+      <UniqueIdentifier>{6269a880-bc4b-4960-9dff-c6308b0f8d21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\float\values_enum\converter">
+      <UniqueIdentifier>{4ed4ebe6-8693-4cca-bdb3-654df15a0080}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\float\values_enum\reference">
+      <UniqueIdentifier>{9ecd8d17-6068-46f2-b58c-559272fef1b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\float\value_limited">
+      <UniqueIdentifier>{018d5914-da66-40bc-aaef-dd041b14cc37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\float\value_limited\value">
+      <UniqueIdentifier>{087f1f71-1621-4190-aade-9feb24141f91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\float\value_limited\reference">
+      <UniqueIdentifier>{916208c3-0f74-4975-a132-9775ff998d96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\float\converter">
+      <UniqueIdentifier>{cd0c8286-18f6-490d-a783-73b8cef44b43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\integer">
+      <UniqueIdentifier>{c75f2333-28e5-4294-8315-3142042e0b49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\integer\value">
+      <UniqueIdentifier>{5cc20fe4-ea30-44b0-8b2f-24b73b985945}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\integer\value\value">
+      <UniqueIdentifier>{f4f4bb98-6ff4-4009-9439-f855792bdde6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\integer\value\reference">
+      <UniqueIdentifier>{8e8a6bbd-f9b4-4e81-bb97-d971d213f188}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\integer\values">
+      <UniqueIdentifier>{76bb835c-072c-45fc-95ed-799532892afe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\integer\values\value">
+      <UniqueIdentifier>{7dc7e058-0906-41f6-bcc0-a2da7b9f3a01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\integer\values\converter">
+      <UniqueIdentifier>{fb367211-44eb-45d6-b160-378f671bbc7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\integer\values\reference">
+      <UniqueIdentifier>{730d0bf2-2cc7-429e-9ea6-c770981a3384}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\integer\values\base">
+      <UniqueIdentifier>{a9fb22f4-6c22-4a07-b400-72eb458ae09d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\integer\values\value_getter">
+      <UniqueIdentifier>{f4951c0e-3774-4e1c-b5a0-e562d41949f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\integer\values\reference_getter">
+      <UniqueIdentifier>{3e2351a6-fe97-4e75-9541-f3aaf8f046ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\integer\value_limited">
+      <UniqueIdentifier>{ad505ff2-9b42-47c9-bb81-9112da26537f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\integer\value_limited\value">
+      <UniqueIdentifier>{8f5c8c88-91f5-4f4e-a9d0-158079599d49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\integer\value_limited\reference">
+      <UniqueIdentifier>{98248f79-7ab9-475f-b094-cd57f5ea4442}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\integer\values_enum">
+      <UniqueIdentifier>{cae9a379-67b7-44f1-affa-f8e92e81b28c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\integer\values_enum\value">
+      <UniqueIdentifier>{5476f0c1-45ba-428e-b6c3-3f9f7795c466}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\integer\values_enum\converter">
+      <UniqueIdentifier>{618157ee-0090-4114-8b0d-20f38b232136}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\integer\values_enum\reference">
+      <UniqueIdentifier>{7351a539-f643-47d8-8ac9-21f03dc336fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\string">
+      <UniqueIdentifier>{4c593f95-af40-4362-a424-64dcacd582a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\string\file_name">
+      <UniqueIdentifier>{6c3eebc3-49dd-420b-9cc3-287826c9a9ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\string\file_name\editor">
+      <UniqueIdentifier>{72dc9967-fb63-487a-af28-96374cae48c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\string\file_name\value">
+      <UniqueIdentifier>{cd7cb2b8-5743-4b6d-ba08-4f71f402d50d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\string\file_name\shared_str">
+      <UniqueIdentifier>{909de1fe-68db-49e0-abf4-72857b781ca3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\string\file_name\base">
+      <UniqueIdentifier>{0a6eb787-831d-4ee4-a314-91513f146168}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\string\value">
+      <UniqueIdentifier>{df5d5fee-29a9-40f5-a38b-a9644bde9fb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\string\value\value">
+      <UniqueIdentifier>{1edcaa34-b57d-49c5-9ca8-b25bd0d407c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\string\value\shared_str">
+      <UniqueIdentifier>{2aa7da92-415a-47b7-aafc-f766073d9023}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\string\values">
+      <UniqueIdentifier>{6bc6cffb-1018-4d3c-abcd-0ae8ae45a3b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\string\values\value">
+      <UniqueIdentifier>{f185129e-7a07-4bc0-9205-55a067a05d23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\string\values\converter">
+      <UniqueIdentifier>{1296d5d5-fa7b-4cc9-bf3f-22d649eec431}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\string\values\shared_str">
+      <UniqueIdentifier>{c27dd0c1-271c-433b-8a2a-a00fa40faa98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\string\values\base">
+      <UniqueIdentifier>{fcf03270-d8ce-494a-8896-7f8ae57ee2a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\string\values\shared_str_getter">
+      <UniqueIdentifier>{b77317c3-c17e-4e14-8e82-8d38a37fb0a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\string\values\value_getter">
+      <UniqueIdentifier>{f02359a7-9b19-4693-9361-4f230e2fdc44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\string\tree_values">
+      <UniqueIdentifier>{64f44d64-f449-4656-ae19-a71ae52e615c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\string\tree_values\editor">
+      <UniqueIdentifier>{adc8b46a-8772-427b-a734-063e42abda7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\values\string\tree_values\converter">
+      <UniqueIdentifier>{cae1aee3-d238-4a00-9aa3-59e05e6ff1f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\container">
+      <UniqueIdentifier>{846b83cb-1198-4fd4-ad77-d0a765bb33b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\properties\holder">
+      <UniqueIdentifier>{3e2027c1-6a16-4b91-b5cf-d3a94640afad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implementations\ide">
+      <UniqueIdentifier>{d41fe970-c9ec-4a58-ad67-f38bb7dec3e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources">
+      <UniqueIdentifier>{293ac1e7-f250-40b4-933f-3a19db1873bd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="window_ide.cpp">
+      <Filter>windows\ide</Filter>
+    </ClCompile>
+    <ClCompile Include="window_ide_serialize.cpp">
+      <Filter>windows\ide</Filter>
+    </ClCompile>
+    <ClCompile Include="window_view.cpp">
+      <Filter>windows\view</Filter>
+    </ClCompile>
+    <ClCompile Include="window_weather.cpp">
+      <Filter>windows\weather\weathers</Filter>
+    </ClCompile>
+    <ClCompile Include="window_levels.cpp">
+      <Filter>windows\weather\levels</Filter>
+    </ClCompile>
+    <ClCompile Include="window_weather_editor.cpp">
+      <Filter>windows\weather\editor</Filter>
+    </ClCompile>
+    <ClCompile Include="window_tree_values.cpp">
+      <Filter>windows\tree_values</Filter>
+    </ClCompile>
+    <ClCompile Include="AssemblyInfo.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="entry_point.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="property_boolean_values_value.cpp">
+      <Filter>implementations\properties\values\boolean\values\value</Filter>
+    </ClCompile>
+    <ClCompile Include="property_converter_boolean_values.cpp">
+      <Filter>implementations\properties\values\boolean\values\converter</Filter>
+    </ClCompile>
+    <ClCompile Include="property_boolean_values_value_reference.cpp">
+      <Filter>implementations\properties\values\boolean\values\reference</Filter>
+    </ClCompile>
+    <ClCompile Include="property_boolean_reference.cpp">
+      <Filter>implementations\properties\values\boolean\value\reference</Filter>
+    </ClCompile>
+    <ClCompile Include="property_boolean.cpp">
+      <Filter>implementations\properties\values\boolean\value\value</Filter>
+    </ClCompile>
+    <ClCompile Include="property_vec3f_base.cpp">
+      <Filter>implementations\properties\values\vec3f\base</Filter>
+    </ClCompile>
+    <ClCompile Include="property_converter_vec3f.cpp">
+      <Filter>implementations\properties\values\vec3f\converter</Filter>
+    </ClCompile>
+    <ClCompile Include="property_vec3f_reference.cpp">
+      <Filter>implementations\properties\values\vec3f\reference</Filter>
+    </ClCompile>
+    <ClCompile Include="property_vec3f.cpp">
+      <Filter>implementations\properties\values\vec3f\value</Filter>
+    </ClCompile>
+    <ClCompile Include="property_collection_converter.cpp">
+      <Filter>implementations\properties\values\collection\converter</Filter>
+    </ClCompile>
+    <ClCompile Include="property_collection_editor.cpp">
+      <Filter>implementations\properties\values\collection\editor</Filter>
+    </ClCompile>
+    <ClCompile Include="property_collection_enumerator.cpp">
+      <Filter>implementations\properties\values\collection\enumerator</Filter>
+    </ClCompile>
+    <ClCompile Include="property_collection.cpp">
+      <Filter>implementations\properties\values\collection\value\value</Filter>
+    </ClCompile>
+    <ClCompile Include="property_collection_getter.cpp">
+      <Filter>implementations\properties\values\collection\value\getter</Filter>
+    </ClCompile>
+    <ClCompile Include="property_collection_base.cpp">
+      <Filter>implementations\properties\values\collection\value\base</Filter>
+    </ClCompile>
+    <ClCompile Include="property_color.cpp">
+      <Filter>implementations\properties\values\color\value</Filter>
+    </ClCompile>
+    <ClCompile Include="property_converter_color.cpp">
+      <Filter>implementations\properties\values\color\converter</Filter>
+    </ClCompile>
+    <ClCompile Include="property_editor_color.cpp">
+      <Filter>implementations\properties\values\color\editor</Filter>
+    </ClCompile>
+    <ClCompile Include="property_color_reference.cpp">
+      <Filter>implementations\properties\values\color\reference</Filter>
+    </ClCompile>
+    <ClCompile Include="property_color_base.cpp">
+      <Filter>implementations\properties\values\color\base</Filter>
+    </ClCompile>
+    <ClCompile Include="property_container_converter.cpp">
+      <Filter>implementations\properties\values\container\converter</Filter>
+    </ClCompile>
+    <ClCompile Include="property_property_container.cpp">
+      <Filter>implementations\properties\values\container\value</Filter>
+    </ClCompile>
+    <ClCompile Include="property_float.cpp">
+      <Filter>implementations\properties\values\float\value\value</Filter>
+    </ClCompile>
+    <ClCompile Include="property_float_reference.cpp">
+      <Filter>implementations\properties\values\float\value\reference</Filter>
+    </ClCompile>
+    <ClCompile Include="property_float_enum_value.cpp">
+      <Filter>implementations\properties\values\float\values_enum\value</Filter>
+    </ClCompile>
+    <ClCompile Include="property_converter_float_enum.cpp">
+      <Filter>implementations\properties\values\float\values_enum\converter</Filter>
+    </ClCompile>
+    <ClCompile Include="property_float_enum_value_reference.cpp">
+      <Filter>implementations\properties\values\float\values_enum\reference</Filter>
+    </ClCompile>
+    <ClCompile Include="property_float_limited.cpp">
+      <Filter>implementations\properties\values\float\value_limited\value</Filter>
+    </ClCompile>
+    <ClCompile Include="property_float_limited_reference.cpp">
+      <Filter>implementations\properties\values\float\value_limited\reference</Filter>
+    </ClCompile>
+    <ClCompile Include="property_converter_float.cpp">
+      <Filter>implementations\properties\values\float\converter</Filter>
+    </ClCompile>
+    <ClCompile Include="property_integer.cpp">
+      <Filter>implementations\properties\values\integer\value\value</Filter>
+    </ClCompile>
+    <ClCompile Include="property_integer_reference.cpp">
+      <Filter>implementations\properties\values\integer\value\reference</Filter>
+    </ClCompile>
+    <ClCompile Include="property_integer_values_value.cpp">
+      <Filter>implementations\properties\values\integer\values\value</Filter>
+    </ClCompile>
+    <ClCompile Include="property_converter_integer_values.cpp">
+      <Filter>implementations\properties\values\integer\values\converter</Filter>
+    </ClCompile>
+    <ClCompile Include="property_integer_values_value_reference.cpp">
+      <Filter>implementations\properties\values\integer\values\reference</Filter>
+    </ClCompile>
+    <ClCompile Include="property_integer_values_value_getter.cpp">
+      <Filter>implementations\properties\values\integer\values\value_getter</Filter>
+    </ClCompile>
+    <ClCompile Include="property_integer_values_value_reference_getter.cpp">
+      <Filter>implementations\properties\values\integer\values\reference_getter</Filter>
+    </ClCompile>
+    <ClCompile Include="property_integer_limited.cpp">
+      <Filter>implementations\properties\values\integer\value_limited\value</Filter>
+    </ClCompile>
+    <ClCompile Include="property_integer_limited_reference.cpp">
+      <Filter>implementations\properties\values\integer\value_limited\reference</Filter>
+    </ClCompile>
+    <ClCompile Include="property_integer_enum_value.cpp">
+      <Filter>implementations\properties\values\integer\values_enum\value</Filter>
+    </ClCompile>
+    <ClCompile Include="property_converter_integer_enum.cpp">
+      <Filter>implementations\properties\values\integer\values_enum\converter</Filter>
+    </ClCompile>
+    <ClCompile Include="property_integer_enum_value_reference.cpp">
+      <Filter>implementations\properties\values\integer\values_enum\reference</Filter>
+    </ClCompile>
+    <ClCompile Include="property_editor_file_name.cpp">
+      <Filter>implementations\properties\values\string\file_name\editor</Filter>
+    </ClCompile>
+    <ClCompile Include="property_file_name_value.cpp">
+      <Filter>implementations\properties\values\string\file_name\value</Filter>
+    </ClCompile>
+    <ClCompile Include="property_file_name_value_shared_str.cpp">
+      <Filter>implementations\properties\values\string\file_name\shared_str</Filter>
+    </ClCompile>
+    <ClCompile Include="property_string.cpp">
+      <Filter>implementations\properties\values\string\value\value</Filter>
+    </ClCompile>
+    <ClCompile Include="property_string_shared_str.cpp">
+      <Filter>implementations\properties\values\string\value\shared_str</Filter>
+    </ClCompile>
+    <ClCompile Include="property_string_values_value.cpp">
+      <Filter>implementations\properties\values\string\values\value</Filter>
+    </ClCompile>
+    <ClCompile Include="property_converter_string_values.cpp">
+      <Filter>implementations\properties\values\string\values\converter</Filter>
+    </ClCompile>
+    <ClCompile Include="property_string_values_value_shared_str.cpp">
+      <Filter>implementations\properties\values\string\values\shared_str</Filter>
+    </ClCompile>
+    <ClCompile Include="property_string_values_value_shared_str_getter.cpp">
+      <Filter>implementations\properties\values\string\values\shared_str_getter</Filter>
+    </ClCompile>
+    <ClCompile Include="property_string_values_value_getter.cpp">
+      <Filter>implementations\properties\values\string\values\value_getter</Filter>
+    </ClCompile>
+    <ClCompile Include="property_editor_tree_values.cpp">
+      <Filter>implementations\properties\values\string\tree_values\editor</Filter>
+    </ClCompile>
+    <ClCompile Include="property_converter_tree_values.cpp">
+      <Filter>implementations\properties\values\string\tree_values\converter</Filter>
+    </ClCompile>
+    <ClCompile Include="property_container.cpp">
+      <Filter>implementations\properties\container</Filter>
+    </ClCompile>
+    <ClCompile Include="property_holder.cpp">
+      <Filter>implementations\properties\holder</Filter>
+    </ClCompile>
+    <ClCompile Include="property_holder_boolean.cpp">
+      <Filter>implementations\properties\holder</Filter>
+    </ClCompile>
+    <ClCompile Include="property_holder_collection.cpp">
+      <Filter>implementations\properties\holder</Filter>
+    </ClCompile>
+    <ClCompile Include="property_holder_color.cpp">
+      <Filter>implementations\properties\holder</Filter>
+    </ClCompile>
+    <ClCompile Include="property_holder_container.cpp">
+      <Filter>implementations\properties\holder</Filter>
+    </ClCompile>
+    <ClCompile Include="property_holder_float.cpp">
+      <Filter>implementations\properties\holder</Filter>
+    </ClCompile>
+    <ClCompile Include="property_holder_integer.cpp">
+      <Filter>implementations\properties\holder</Filter>
+    </ClCompile>
+    <ClCompile Include="property_holder_string.cpp">
+      <Filter>implementations\properties\holder</Filter>
+    </ClCompile>
+    <ClCompile Include="property_holder_vec3f.cpp">
+      <Filter>implementations\properties\holder</Filter>
+    </ClCompile>
+    <ClCompile Include="ide_impl.cpp">
+      <Filter>implementations\ide</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="window_ide.h">
+      <Filter>windows\ide</Filter>
+    </ClInclude>
+    <ClInclude Include="window_view.h">
+      <Filter>windows\view</Filter>
+    </ClInclude>
+    <ClInclude Include="window_weather.h">
+      <Filter>windows\weather\weathers</Filter>
+    </ClInclude>
+    <ClInclude Include="window_levels.h">
+      <Filter>windows\weather\levels</Filter>
+    </ClInclude>
+    <ClInclude Include="window_weather_editor.h">
+      <Filter>windows\weather\editor</Filter>
+    </ClInclude>
+    <ClInclude Include="window_tree_values.h">
+      <Filter>windows\tree_values</Filter>
+    </ClInclude>
+    <ClInclude Include="engine_include.hpp">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.hpp">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\engine.hpp">
+      <Filter>interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\ide.hpp">
+      <Filter>interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\interfaces.hpp">
+      <Filter>interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\property_holder.hpp">
+      <Filter>interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="property_holder_include.hpp">
+      <Filter>implementations\properties</Filter>
+    </ClInclude>
+    <ClInclude Include="property_boolean_values_value.hpp">
+      <Filter>implementations\properties\values\boolean\values\value</Filter>
+    </ClInclude>
+    <ClInclude Include="property_converter_boolean_values.hpp">
+      <Filter>implementations\properties\values\boolean\values\converter</Filter>
+    </ClInclude>
+    <ClInclude Include="property_boolean_values_value_reference.hpp">
+      <Filter>implementations\properties\values\boolean\values\reference</Filter>
+    </ClInclude>
+    <ClInclude Include="property_boolean_reference.hpp">
+      <Filter>implementations\properties\values\boolean\value\reference</Filter>
+    </ClInclude>
+    <ClInclude Include="property_boolean.hpp">
+      <Filter>implementations\properties\values\boolean\value\value</Filter>
+    </ClInclude>
+    <ClInclude Include="property_vec3f_base.hpp">
+      <Filter>implementations\properties\values\vec3f\base</Filter>
+    </ClInclude>
+    <ClInclude Include="property_converter_vec3f.hpp">
+      <Filter>implementations\properties\values\vec3f\converter</Filter>
+    </ClInclude>
+    <ClInclude Include="property_vec3f_reference.hpp">
+      <Filter>implementations\properties\values\vec3f\reference</Filter>
+    </ClInclude>
+    <ClInclude Include="property_vec3f.hpp">
+      <Filter>implementations\properties\values\vec3f\value</Filter>
+    </ClInclude>
+    <ClInclude Include="property_collection_converter.hpp">
+      <Filter>implementations\properties\values\collection\converter</Filter>
+    </ClInclude>
+    <ClInclude Include="property_collection_editor.hpp">
+      <Filter>implementations\properties\values\collection\editor</Filter>
+    </ClInclude>
+    <ClInclude Include="property_collection_enumerator.hpp">
+      <Filter>implementations\properties\values\collection\enumerator</Filter>
+    </ClInclude>
+    <ClInclude Include="property_collection.hpp">
+      <Filter>implementations\properties\values\collection\value\value</Filter>
+    </ClInclude>
+    <ClInclude Include="property_collection_getter.hpp">
+      <Filter>implementations\properties\values\collection\value\getter</Filter>
+    </ClInclude>
+    <ClInclude Include="property_collection_base.hpp">
+      <Filter>implementations\properties\values\collection\value\base</Filter>
+    </ClInclude>
+    <ClInclude Include="property_color.hpp">
+      <Filter>implementations\properties\values\color\value</Filter>
+    </ClInclude>
+    <ClInclude Include="property_converter_color.hpp">
+      <Filter>implementations\properties\values\color\converter</Filter>
+    </ClInclude>
+    <ClInclude Include="property_editor_color.hpp">
+      <Filter>implementations\properties\values\color\editor</Filter>
+    </ClInclude>
+    <ClInclude Include="property_color_reference.hpp">
+      <Filter>implementations\properties\values\color\reference</Filter>
+    </ClInclude>
+    <ClInclude Include="property_color_base.hpp">
+      <Filter>implementations\properties\values\color\base</Filter>
+    </ClInclude>
+    <ClInclude Include="property_container_converter.hpp">
+      <Filter>implementations\properties\values\container\converter</Filter>
+    </ClInclude>
+    <ClInclude Include="property_property_container.hpp">
+      <Filter>implementations\properties\values\container\value</Filter>
+    </ClInclude>
+    <ClInclude Include="property_float.hpp">
+      <Filter>implementations\properties\values\float\value\value</Filter>
+    </ClInclude>
+    <ClInclude Include="property_float_reference.hpp">
+      <Filter>implementations\properties\values\float\value\reference</Filter>
+    </ClInclude>
+    <ClInclude Include="property_float_enum_value.hpp">
+      <Filter>implementations\properties\values\float\values_enum\value</Filter>
+    </ClInclude>
+    <ClInclude Include="property_converter_float_enum.hpp">
+      <Filter>implementations\properties\values\float\values_enum\converter</Filter>
+    </ClInclude>
+    <ClInclude Include="property_float_enum_value_reference.hpp">
+      <Filter>implementations\properties\values\float\values_enum\reference</Filter>
+    </ClInclude>
+    <ClInclude Include="property_float_limited.hpp">
+      <Filter>implementations\properties\values\float\value_limited\value</Filter>
+    </ClInclude>
+    <ClInclude Include="property_float_limited_reference.hpp">
+      <Filter>implementations\properties\values\float\value_limited\reference</Filter>
+    </ClInclude>
+    <ClInclude Include="property_converter_float.hpp">
+      <Filter>implementations\properties\values\float\converter</Filter>
+    </ClInclude>
+    <ClInclude Include="property_integer.hpp">
+      <Filter>implementations\properties\values\integer\value\value</Filter>
+    </ClInclude>
+    <ClInclude Include="property_integer_reference.hpp">
+      <Filter>implementations\properties\values\integer\value\reference</Filter>
+    </ClInclude>
+    <ClInclude Include="property_integer_values_value.hpp">
+      <Filter>implementations\properties\values\integer\values\value</Filter>
+    </ClInclude>
+    <ClInclude Include="property_converter_integer_values.hpp">
+      <Filter>implementations\properties\values\integer\values\converter</Filter>
+    </ClInclude>
+    <ClInclude Include="property_integer_values_value_reference.hpp">
+      <Filter>implementations\properties\values\integer\values\reference</Filter>
+    </ClInclude>
+    <ClInclude Include="property_integer_values_value_base.hpp">
+      <Filter>implementations\properties\values\integer\values\base</Filter>
+    </ClInclude>
+    <ClInclude Include="property_integer_values_value_getter.hpp">
+      <Filter>implementations\properties\values\integer\values\value_getter</Filter>
+    </ClInclude>
+    <ClInclude Include="property_integer_values_value_reference_getter.hpp">
+      <Filter>implementations\properties\values\integer\values\reference_getter</Filter>
+    </ClInclude>
+    <ClInclude Include="property_integer_limited.hpp">
+      <Filter>implementations\properties\values\integer\value_limited\value</Filter>
+    </ClInclude>
+    <ClInclude Include="property_integer_limited_reference.hpp">
+      <Filter>implementations\properties\values\integer\value_limited\reference</Filter>
+    </ClInclude>
+    <ClInclude Include="property_integer_enum_value.hpp">
+      <Filter>implementations\properties\values\integer\values_enum\value</Filter>
+    </ClInclude>
+    <ClInclude Include="property_converter_integer_enum.hpp">
+      <Filter>implementations\properties\values\integer\values_enum\converter</Filter>
+    </ClInclude>
+    <ClInclude Include="property_integer_enum_value_reference.hpp">
+      <Filter>implementations\properties\values\integer\values_enum\reference</Filter>
+    </ClInclude>
+    <ClInclude Include="property_editor_file_name.hpp">
+      <Filter>implementations\properties\values\string\file_name\editor</Filter>
+    </ClInclude>
+    <ClInclude Include="property_file_name_value.hpp">
+      <Filter>implementations\properties\values\string\file_name\value</Filter>
+    </ClInclude>
+    <ClInclude Include="property_file_name_value_shared_str.hpp">
+      <Filter>implementations\properties\values\string\file_name\shared_str</Filter>
+    </ClInclude>
+    <ClInclude Include="property_file_name_value_base.hpp">
+      <Filter>implementations\properties\values\string\file_name\base</Filter>
+    </ClInclude>
+    <ClInclude Include="property_string.hpp">
+      <Filter>implementations\properties\values\string\value\value</Filter>
+    </ClInclude>
+    <ClInclude Include="property_string_shared_str.hpp">
+      <Filter>implementations\properties\values\string\value\shared_str</Filter>
+    </ClInclude>
+    <ClInclude Include="property_string_values_value.hpp">
+      <Filter>implementations\properties\values\string\values\value</Filter>
+    </ClInclude>
+    <ClInclude Include="property_converter_string_values.hpp">
+      <Filter>implementations\properties\values\string\values\converter</Filter>
+    </ClInclude>
+    <ClInclude Include="property_string_values_value_shared_str.hpp">
+      <Filter>implementations\properties\values\string\values\shared_str</Filter>
+    </ClInclude>
+    <ClInclude Include="property_string_values_value_base.hpp">
+      <Filter>implementations\properties\values\string\values\base</Filter>
+    </ClInclude>
+    <ClInclude Include="property_string_values_value_shared_str_getter.hpp">
+      <Filter>implementations\properties\values\string\values\shared_str_getter</Filter>
+    </ClInclude>
+    <ClInclude Include="property_string_values_value_getter.hpp">
+      <Filter>implementations\properties\values\string\values\value_getter</Filter>
+    </ClInclude>
+    <ClInclude Include="property_editor_tree_values.hpp">
+      <Filter>implementations\properties\values\string\tree_values\editor</Filter>
+    </ClInclude>
+    <ClInclude Include="property_converter_tree_values.hpp">
+      <Filter>implementations\properties\values\string\tree_values\converter</Filter>
+    </ClInclude>
+    <ClInclude Include="property_container.hpp">
+      <Filter>implementations\properties\container</Filter>
+    </ClInclude>
+    <ClInclude Include="property_container_holder.hpp">
+      <Filter>implementations\properties\container</Filter>
+    </ClInclude>
+    <ClInclude Include="property_holder.hpp">
+      <Filter>implementations\properties\holder</Filter>
+    </ClInclude>
+    <ClInclude Include="ide_impl.hpp">
+      <Filter>implementations\ide</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\color_picker.cur">
+      <Filter>resources</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="editor.rc">
+      <Filter>resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="EditButton.Image.png" />
+  </ItemGroup>
+</Project>

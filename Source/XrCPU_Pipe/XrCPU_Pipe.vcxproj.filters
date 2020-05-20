@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Kernel">
+      <UniqueIdentifier>{4ca0749d-c908-4734-8f2e-812ee53689c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{93cb81a8-8e2e-41c6-90d6-f2a03ca8d40b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Skinning">
+      <UniqueIdentifier>{ab810994-7f62-439a-b513-900ed1e6d1d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TTAPI">
+      <UniqueIdentifier>{570e41dc-f6f4-44f0-bdd6-db99540834a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PLC">
+      <UniqueIdentifier>{f4158d7f-945a-4a45-a899-d00c5c02a448}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="StdAfx.cpp">
+      <Filter>Kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="xrCPU_Pipe.cpp">
+      <Filter>Kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="xrSkin2W.cpp">
+      <Filter>Skinning</Filter>
+    </ClCompile>
+    <ClCompile Include="xrSkin2W_SSE.cpp">
+      <Filter>Skinning</Filter>
+    </ClCompile>
+    <ClCompile Include="xrSkin2W_thread.cpp">
+      <Filter>Skinning</Filter>
+    </ClCompile>
+    <ClCompile Include="ttapi.cpp">
+      <Filter>TTAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="PLC.cpp">
+      <Filter>PLC</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="StdAfx.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="xrCPU_Pipe.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ttapi.h">
+      <Filter>TTAPI</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
