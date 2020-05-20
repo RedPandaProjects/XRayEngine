@@ -58,9 +58,11 @@ void XRayUIRender::DestroyUIGeom()
 
 }
 
+XRayTexture* GUITexture = 0;
 void XRayUIRender::SetShader(IUIShader& shader)
 {
 	m_Shader = static_cast<XRayUIShader&>(shader).Shader;
+	if(!m_Shader.empty())GUITexture = m_Shader->E[0][0].Textures[0];
 }
 
 void XRayUIRender::SetAlphaRef(int aref)
@@ -204,7 +206,6 @@ void XRayUIRender::StartPrimitive(u32 iMaxVerts, ePrimitiveType primType, ePoint
 
 	
 }
-XRayTexture* GUITexture = 0;
 void XRayUIRender::FlushPrimitive()
 {
 	if (m_Shader.empty())return;
@@ -263,7 +264,7 @@ void XRayUIRender::FlushPrimitive()
 
 		GRenderInterface.UpdateDescriptorHeap(m_Shader->E[0][0]);
 		if (!m_Shader->E[0][0].Set(HW->Context, FVF::F_TL)) { R_ASSERT(m_Shader->Name.c_str()==0); return; }
-		GUITexture = m_Shader->E[0][0].Textures[0];
+		
 		m_Shaders.push_back(m_Shader);
 		break;
 	case IUIRender::ptTriStrip:
@@ -271,19 +272,16 @@ void XRayUIRender::FlushPrimitive()
 		GRenderInterface.UpdateDescriptorHeap(m_Shader->E[0][1]);
 		if (!m_Shader->E[0][1].Set(HW->Context, FVF::F_TL)) { R_ASSERT(m_Shader->Name.c_str() == 0); return; }
 		m_Shaders.push_back(m_Shader);
-		GUITexture = m_Shader->E[0][1].Textures[0];
 		break;
 	case IUIRender::ptLineStrip:
 		GRenderInterface.UpdateDescriptorHeap(m_Shader->E[0][3]);
 		if (!m_Shader->E[0][3].Set(HW->Context, FVF::F_TL0uv)) { R_ASSERT(m_Shader->Name.c_str() == 0); return; }
 		m_Shaders.push_back(m_Shader);
-		GUITexture = m_Shader->E[0][3].Textures[0];
 		break;
 	case IUIRender::ptLineList:
 		GRenderInterface.UpdateDescriptorHeap(m_Shader->E[0][2]);
 		if (!m_Shader->E[0][2].Set(HW->Context, FVF::F_TL0uv)) { R_ASSERT(m_Shader->Name.c_str() == 0); return; }
 		m_Shaders.push_back(m_Shader);
-		GUITexture = m_Shader->E[0][2].Textures[0];
 		break;
 	default:
 		break;

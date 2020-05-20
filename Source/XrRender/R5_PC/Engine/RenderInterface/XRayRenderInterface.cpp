@@ -17,9 +17,9 @@ HRESULT XRayRenderInterface::shader_compile(LPCSTR name, DWORD const* pSrcData, 
 
 LPCSTR XRayRenderInterface::getShaderPath()
 {
-#ifdef PLATFORM == _WINDOWS
+#if 1
 	return "r5\\";
-#elif PLATFROM == _XBOX_SERIES
+#else
 	return "r5\\xbox\\";
 #endif
 }

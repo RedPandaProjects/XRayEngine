@@ -98,6 +98,7 @@ CGamePersistent::CGamePersistent(void)
 
 	eQuickLoad				= Engine.Event.Handler_Attach("Game:QuickLoad",this);
 	Fvector3* DofValue		= Console->GetFVectorPtr("r2_dof");
+	if(DofValue)
 	SetBaseDof				(*DofValue);
 }
 

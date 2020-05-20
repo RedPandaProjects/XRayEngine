@@ -81,7 +81,7 @@ XRayTexture::XRayTexture(shared_str texture)
 				if (FS.exist(fn, "$game_textures$", buffer, ".dds"))
 				{
 					IReader* fs = FS.r_open(fn);
-					BearMemoryStream stream_image(_fs->pointer(), _fs->length());
+					BearMemoryStream stream_image(fs->pointer(), fs->length());
 					R_ASSERT(image.LoadDDSFromStream(stream_image));
 					Texture2D = BearRenderInterface::CreateTexture2D(image.GetSize().x, image.GetSize().y, image.GetMips(), image.GetDepth(), image.GetFormat(), TU_STATIC, *image);
 					SeqTextures.push_back(Texture2D);
@@ -117,7 +117,7 @@ XRayTexture::XRayTexture(shared_str texture)
 		m_size.set(image.GetSize().x, image.GetSize().y);
 		FS.r_close(_fs);
 	}
-	else if (FS.exist(fn, "$level_textures$", *texture, ".dds"))
+	/*else if (FS.exist(fn, "$textures$", *texture, ".dds"))
 	{
 		IReader* _fs = FS.r_open(fn);
 		BearMemoryStream stream_image(_fs->pointer(), _fs->length());
@@ -127,7 +127,7 @@ XRayTexture::XRayTexture(shared_str texture)
 		Texture = Texture2D;
 		m_size.set(image.GetSize().x, image.GetSize().y);
 		FS.r_close(_fs);
-	}
+	}*/
 	else if (FS.exist(fn, "$level$", *texture, ".dds"))
 	{
 		IReader* _fs = FS.r_open(fn);

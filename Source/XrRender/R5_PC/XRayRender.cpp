@@ -2,7 +2,7 @@
 //
 #include "pch.h" 
 #pragma comment(lib,"xrEngine.lib")
-const char* GGraphicsAPI[] = { TEXT("BearRenderDX12.dll") };
+const char* GGraphicsAPI[] = { TEXT("BearRenderDX11") };
 XRayRenderFactory BRenderFactory;
 XRayDUInterface  BDUInterface;
 
@@ -59,5 +59,5 @@ bool _declspec(dllexport) SupportsRendering()
 	/*bool result = BearRenderInterface::Initialize(TEXT("bear_render_vulkan1_0"));
 	BearRenderInterface::Destroy();
 	return result;*/
-	return 0;
+	return true;
 }

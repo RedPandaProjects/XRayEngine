@@ -9,14 +9,14 @@ class XRayShaderIncluder :public BearIncluder
 		string_path FilePath;
 		{
 			xr_strcpy(FilePath, m_GlobalPath);
-			xr_strcat(FilePath, m_LocalPath);
-			xr_strcat(FilePath, BEAR_PATH);
 			xr_strcat(FilePath, name);
 		}
 		m_F = FS.r_open("$game_shaders$", FilePath);
 		if (m_F == nullptr)
 		{
 			xr_strcpy(FilePath, m_GlobalPath);
+			xr_strcat(FilePath, m_LocalPath);
+			xr_strcat(FilePath, BEAR_PATH);
 			xr_strcat(FilePath, name);
 			m_F = FS.r_open("$game_shaders$", FilePath);
 		}
