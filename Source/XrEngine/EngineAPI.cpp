@@ -66,7 +66,18 @@ void CEngineAPI::InitializeNotDedicated()
 	LPCSTR			r2_name	= "xrRender_R2.dll";
 	LPCSTR			r3_name	= "xrRender_R3.dll";
 	LPCSTR			r4_name	= "xrRender_R4.dll";
-
+	LPCSTR			r5_name = "xrRender_R5.dll";
+	if (psDeviceFlags.test(rsR5))
+	{
+		Log("Loading DLL:", r5_name);
+		hRender = LoadLibrary(r5_name);
+		if (0 == hRender)
+		{
+			// try to load R1
+			Msg("! ...Failed - incompatible hardware/pre-Vista OS.");
+			psDeviceFlags.set(rsR2, TRUE);
+		}
+	}
 	if (psDeviceFlags.test(rsR4))
 	{
 		// try to initialize R4
@@ -98,8 +109,10 @@ void CEngineAPI::InitializeNotDedicated()
 	if (psDeviceFlags.test(rsR2))	
 	{
 		// try to initialize R2
+		psDeviceFlags.set	(rsR5,FALSE);
 		psDeviceFlags.set	(rsR4,FALSE);
 		psDeviceFlags.set	(rsR3,FALSE);
+		
 		Log				("Loading DLL:",	r2_name);
 		hRender			= LoadLibrary		(r2_name);
 		if (0==hRender)	
@@ -193,10 +206,11 @@ void CEngineAPI::CreateRendererList()
 	bool bSupports_r2_5 = false;
 	bool bSupports_r3 = false;
 	bool bSupports_r4 = false;
-
+	bool bSupports_r5 = false;
 	LPCSTR			r2_name	= "xrRender_R2.dll";
 	LPCSTR			r3_name	= "xrRender_R3.dll";
 	LPCSTR			r4_name	= "xrRender_R4.dll";
+	LPCSTR			r5_name = "xrRender_R5.dll";
 
 	if (strstr(Core.Params,"-perfhud_hack"))
 	{
@@ -204,6 +218,7 @@ void CEngineAPI::CreateRendererList()
 		bSupports_r2_5 = true;
 		bSupports_r3 = true;
 		bSupports_r4 = true;
+		bSupports_r5 = true;
 	}
 	else
 	{
@@ -248,6 +263,17 @@ void CEngineAPI::CreateRendererList()
 			bSupports_r4 = true;// test_dx11_rendering();
 			FreeLibrary(hRender);
 		}
+
+		hRender = LoadLibrary(r5_name);
+		//	Restore error handling
+		SetErrorMode(0);
+		if (hRender)
+		{
+			SupportsDX11Rendering* test_dx11_rendering = (SupportsDX11Rendering*)GetProcAddress(hRender, "SupportsRendering");
+			R_ASSERT(test_dx11_rendering);
+			bSupports_r5 =  test_dx11_rendering();
+			FreeLibrary(hRender);
+		}
 	}
 
 	hRender = 0;
@@ -255,7 +281,7 @@ void CEngineAPI::CreateRendererList()
 	xr_vector<LPCSTR>			_tmp;
 	u32 i						= 0;
 	bool bBreakLoop = false;
-	for(; i<6; ++i)
+	for(; i<7; ++i)
 	{
 		switch (i)
 		{
@@ -275,6 +301,10 @@ void CEngineAPI::CreateRendererList()
 			if (!bSupports_r4)
 				bBreakLoop = true;
 			break;
+		case 6:		//"renderer_r_dx11"
+			if (!bSupports_r5)
+				bBreakLoop = true;
+			break;
 		default:	;
 		}
 
@@ -290,6 +320,7 @@ void CEngineAPI::CreateRendererList()
 		case 3: val ="renderer_r2.5";		break;
 		case 4: val ="renderer_r3";			break; //  -)
 		case 5: val ="renderer_r4";			break; //  -)
+		case 6: val = "renderer_r5";			break; //  -)
 		}
 		if (bBreakLoop) break;
 		_tmp.back()					= xr_strdup(val);
