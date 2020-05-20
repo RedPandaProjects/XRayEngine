@@ -52,9 +52,9 @@ BOOL APIENTRY DllMain( HANDLE hModule,
 
 extern "C"
 {
-	bool _declspec(dllexport) SupportsBearRendering();
+	bool _declspec(dllexport) SupportsRendering();
 };
-bool _declspec(dllexport) SupportsBearRendering()
+bool _declspec(dllexport) SupportsRendering()
 {
 	/*bool result = BearRenderInterface::Initialize(TEXT("bear_render_vulkan1_0"));
 	BearRenderInterface::Destroy();
