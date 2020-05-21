@@ -1,9 +1,9 @@
 Source/.vs/
 gamedata/shaders/r5/.vs/
 _appdata_/
-Bin/
+/Bin/
 Intermediate/
-Lib/
+/Lib/
 import/
 rawdata/
 logs/
