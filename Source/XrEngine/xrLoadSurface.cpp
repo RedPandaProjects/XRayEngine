@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#include <freeimage/freeimage.h>
 
 struct SExts{
 	xr_vector<LPSTR>	exts;
@@ -23,7 +22,7 @@ struct SExts{
     }
 };
 SExts formats;
-
+/*
 void	Surface_FormatExt(FREE_IMAGE_FORMAT f)
 {
 	LPCSTR n=FreeImage_GetFIFExtensionList(f);
@@ -123,3 +122,4 @@ u32*	Surface_Load(char* name, u32& w, u32& h)
 	FreeImage_Unload		(map32);
 	return		memPTR;
 }
+*/

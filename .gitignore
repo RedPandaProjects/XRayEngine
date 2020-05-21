@@ -1,4 +1,5 @@
 Source/.vs/
+gamedata/shaders/r5/.vs/
 _appdata_/
 Bin/
 Intermediate/
@@ -7,4 +8,18 @@ import/
 rawdata/
 logs/
 temp/
-gamedata/
+#gamedata
+gamedata/*.*
+gamedata/ai/
+gamedata/anims/
+gamedata/configs/
+gamedata/levels/
+gamedata/meshes/
+gamedata/scripts/
+gamedata/shaders/r1/
+gamedata/shaders/r2/
+gamedata/shaders/r3/
+gamedata/shaders/shared/
+gamedata/sounds/
+gamedata/spawns/
+gamedata/textures/
