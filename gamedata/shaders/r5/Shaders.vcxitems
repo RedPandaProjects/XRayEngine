@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{6ceb2a3e-f600-4376-96df-1b7e9bcd7d33}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="$(MSBuildThisFileDirectory)effects\bloom\bloom_build.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)effects\bloom\bloom_filter.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)effects\bloom\bloom_filter_f.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)effects\clouds.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)effects\clouds.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)effects\combine\combine_1.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)effects\combine\combine_2.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)effects\lightplanes.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)effects\lightplanes.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)effects\selflight.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)effects\simple.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)effects\sky.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)effects\sky.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)effects\sun.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)flora\tree.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)flora\tree_dt.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)flora\tree_w.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)flora\tree_w_dt.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)hud\font.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)hud\font2.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)hud\hud.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)hud\notransform_build.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)hud\notransform_filter.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)hud\notransform_tl.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)hud\notransform_tl0uv.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)hud\simple_color.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)hud\viewport.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)hud\yuv2rgb.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\lmap\lmap.ms.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\lmap\lmap.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\lmap\lmap.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\lmap\lmape.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\lmap\lmape.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\lmap\lmape_blend.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\lmap\lmape_blend.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\lmap\lmap_aref.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\lmap\lmap_aref_blend.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\lmap\lmap_blend.ms.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\lmap\lmap_blend.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\lmap\lmap_blend.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\lmap\lmap_dt.ms.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\lmap\lmap_dt.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\lmap\lmap_dt.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\lmap\lmap_dt_aref.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\lmap\lmap_dt_aref_blend.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\lmap\lmap_dt_blend.ms.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\lmap\lmap_dt_blend.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\lmap\lmap_dt_blend.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\lod.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\lod.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\terrain.ms.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\terrain_hq.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\terrain.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\terrain_lq.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\terrain_test.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\vertex\vertex.ms.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\vertex\vertex.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\vertex\vertex.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\vertex\vertex_aref.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\vertex\vertex_aref_blend.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\vertex\vertex_blend.ms.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\vertex\vertex_blend.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\vertex\vertex_blend.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\vertex\vertex_dt.ms.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\vertex\vertex_dt.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\vertex\vertex_dt.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\vertex\vertex_dt_aref.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\vertex\vertex_dt_aref_blend.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\vertex\vertex_dt_blend.ms.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\vertex\vertex_dt_blend.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\vertex\vertex_dt_blend.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)level\vertex\vertex_simple.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)model\model.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)model\model_0w.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)model\model_0w_blend.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)model\model_1w.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)model\model_1w_blend.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)model\model_2w.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)model\model_2w_blend.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)model\model_3w.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)model\model_3w_blend.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)model\model_4w.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)model\model.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)model\model_4w_blend.vs.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)model\model_aref.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)model\model_aref_blend.ps.hlsl" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)model\model_blend.ps.hlsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)common.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)common_buffers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)common_function.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)common_input.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)common_input_mesh.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)common_io.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)common_mesh.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)common_output.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)common_rootsig.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)default_model.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)skin.h" />
+  </ItemGroup>
+</Project>
