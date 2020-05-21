@@ -4,6 +4,7 @@
 #ifdef _EDITOR
 	#include "xrLevel.h"
 #else
+	#include "../../BearBundle/BearGraphics/BearGraphics.hpp"
 	#include "../../xrEngine/xrLevel.h"
 #endif
 
@@ -44,6 +45,14 @@ struct b_shader
 {
 	string128			name;
 };
+struct b_texture_real
+{
+	string128			name;
+	u32					dwWidth;
+	u32					dwHeight;
+	BOOL				bHasAlpha;
+	u32					RESERVE;
+};
 
 struct b_texture
 {
@@ -51,7 +60,9 @@ struct b_texture
 	u32					dwWidth;
 	u32					dwHeight;
 	BOOL				bHasAlpha;
-	u32*				pSurface;
+#ifndef _EDITOR
+	BearImage				pSurface;
+#endif
 };
 
 struct b_light_control						// controller or "layer", 30fps

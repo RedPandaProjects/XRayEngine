@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#pragma optimize( "", off )
 #include "elight_def.h"
 
 
@@ -42,7 +43,18 @@ struct R_Layer
 	xr_vector<R_Light>		lights;
 };
 
+inline bool Surface_Detect(string_path& F, LPSTR N)
+{
+	FS.update_path(F, "$game_textures$", strconcat(sizeof(F), F, N, ".dds"));
+	FILE* file = fopen(F, "rb");
+	if (file)
+	{
+		fclose(file);
+		return true;
+	}
 
+	return false;
+}
 
 void CBuild::Load	(const b_params& Params, const IReader& _in_FS)
 {
@@ -285,12 +297,12 @@ void CBuild::Load	(const b_params& Params, const IReader& _in_FS)
 	Status			("Processing textures...");
 	{
 		F = fs.open_chunk	(EB_Textures);
-		u32 tex_count	= F->length()/sizeof(b_texture);
+		u32 tex_count	= F->length()/sizeof(b_texture_real);
 		for (u32 t=0; t<tex_count; t++)
 		{
 			Progress		(float(t)/float(tex_count));
 
-			b_texture		TEX;
+			b_texture_real		TEX;
 			F->r			(&TEX,sizeof(TEX));
 
 			b_BuildTexture	BT;
@@ -306,7 +318,7 @@ void CBuild::Load	(const b_params& Params, const IReader& _in_FS)
 				BT.dwHeight		= 1024;
 				BT.bHasAlpha	= TRUE;
 				BT.THM.SetHasSurface(FALSE);
-				BT.pSurface		= 0;
+				BT.pSurface.Clear();
 
 			} else {
 				string_path			th_name;
@@ -342,18 +354,16 @@ void CBuild::Load	(const b_params& Params, const IReader& _in_FS)
 					if (BT.bHasAlpha || BT.THM.flags.test(STextureParams::flImplicitLighted) || g_build_options.b_radiosity)
 					{
 						clMsg		("- loading: %s",N);
-						int			w = 0, h = 0;
-						int comp = 4;
-						stbi_uc* raw_image = stbi_load(N, &w, &h, &comp, 4);
-						R_ASSERT(comp == 4);
-						BT.pSurface		=	(u32*)raw_image;
-						BT.THM.SetHasSurface(TRUE);
-						R_ASSERT2	(BT.pSurface,"Can't load surface");
-						if ((w != BT.dwWidth) || (h != BT.dwHeight))
+						string_path name;
+						R_ASSERT2(Surface_Detect(name, N), "Can't load surface");
+						R_ASSERT2(BT.pSurface.LoadDDSFromFile(name), "Can't load surface");
+						BT.pSurface.ClearMipLevels();
+						BT.pSurface.Convert(TPF_R8G8B8A8);
+						if ((BT.pSurface.GetSize().x != BT.dwWidth) || (BT.pSurface.GetSize().y != BT.dwHeight))
 						{
-							Msg		("! THM doesn't correspond to the texture: %dx%d -> %dx%d", BT.dwWidth, BT.dwHeight, w, h);
-							BT.dwWidth	= BT.THM.width = w;
-							BT.dwHeight	= BT.THM.height = h;
+							Msg		("! THM doesn't correspond to the texture: %dx%d -> %dx%d", BT.dwWidth, BT.dwHeight, BT.pSurface.GetSize().x, BT.pSurface.GetSize().y);
+							BT.dwWidth	= BT.THM.width = BT.pSurface.GetSize().x;
+							BT.dwHeight	= BT.THM.height = BT.pSurface.GetSize().y;
 						}
 						BT.Vflip	();
 					} else {

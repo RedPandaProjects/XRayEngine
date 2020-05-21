@@ -44,10 +44,10 @@ static Fvector		GetPixel_7x7		(CDB::RESULT& rpinf)
 #ifdef		DEBUG
 	const b_BuildTexture	&build_texture  = pBuild->textures()			[M.surfidx];
 
-	VERIFY( !!(build_texture.THM.HasSurface()) ==  !!(T.pSurface) );
+	VERIFY( !!(build_texture.THM.HasSurface()) ==  !(T.pSurface.Empty()) );
 #endif
 
-	if (0==T.pSurface)									
+	if (T.pSurface.Empty())									
 				return R;
 
 	// barycentric coords
@@ -68,7 +68,8 @@ static Fvector		GetPixel_7x7		(CDB::RESULT& rpinf)
 			int V = iFloor(uv.y*float(T.dwHeight)+ .5f) + _y;
 			U %= T.dwWidth;		if (U<0) U+=T.dwWidth;
 			V %= T.dwHeight;	if (V<0) V+=T.dwHeight;
-			u32 pixel		= T.pSurface[V*T.dwWidth+U];
+			u32* raw = static_cast<u32*>(*T.pSurface);
+			u32 pixel		= raw[V*T.dwWidth+U];
 			P.set(float(color_get_R(pixel)),float(color_get_G(pixel)),float(color_get_B(pixel)));
 			R.mad(P,1.f/255.f);
 		}

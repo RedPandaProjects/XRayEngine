@@ -381,9 +381,9 @@ float getLastRP_Scale(CDB::COLLIDER* DB, CDB::MODEL* MDL, R_Light& L, Face* skip
 #ifdef		DEBUG
 			const b_BuildTexture	&build_texture  = inlc_global_data()->textures()			[M.surfidx];
 
-			VERIFY( !!(build_texture.THM.HasSurface()) ==  !!(T.pSurface) );
+			VERIFY( !!(build_texture.THM.HasSurface()) ==  !!(!T.pSurface.Empty()) );
 #endif
-			if (0==T.pSurface)	{
+			if (T.pSurface.Empty())	{
 				F->flags.bOpaque	= true;
 				clMsg			("* ERROR: RAY-TRACE: Strange face detected... Has alpha without texture...");
 				return 0;
@@ -403,8 +403,8 @@ float getLastRP_Scale(CDB::COLLIDER* DB, CDB::MODEL* MDL, R_Light& L, Face* skip
 			int V = iFloor(uv.y*float(T.dwHeight)+ .5f);
 			U %= T.dwWidth;		if (U<0) U+=T.dwWidth;
 			V %= T.dwHeight;	if (V<0) V+=T.dwHeight;
-
-			u32 pixel		= T.pSurface[V*T.dwWidth+U];
+			u32* raw = static_cast<u32*>(*T.pSurface);
+			u32 pixel		= raw[V*T.dwWidth+U];
 			u32 pixel_a		= color_get_A(pixel);
 			float opac		= 1.f - _sqr(float(pixel_a)/255.f);
 			scale			*= opac;

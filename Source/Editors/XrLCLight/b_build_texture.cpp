@@ -16,7 +16,7 @@ STextureParams	THM;
 
 void clear( b_BuildTexture &texture )
 {
-	stbi_image_free(texture.pSurface);
+	texture.pSurface.Clear();
 }
 
 void	b_BuildTexture::	read	(INetReader	&r )

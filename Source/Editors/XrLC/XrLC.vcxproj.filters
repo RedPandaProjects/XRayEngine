@@ -334,7 +334,7 @@
     <ClCompile Include="net.cpp">
       <Filter>%2a%2a%2a COMPILER %2a%2a%2a\net</Filter>
     </ClCompile>
-    <ClCompile Include="..\Public\NVMeshMender.cpp" />
+    <ClCompile Include="..\Public\NVMeshMenderTwo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc">

@@ -254,7 +254,7 @@
     <ClInclude Include="_rect.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Public\NVMeshMender.cpp" />
+    <ClCompile Include="..\Public\NVMeshMenderTwo.cpp" />
     <ClCompile Include="Build.cpp" />
     <ClCompile Include="Build_Load.cpp" />
     <ClCompile Include="cl_log.cpp" />
@@ -404,6 +404,9 @@
     <ResourceCompile Include="resource.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BearBundle\BearGraphics\Platform\Desktop\BearGraphics.vcxproj">
+      <Project>{3b75536d-008d-4495-9fe8-c7ae79ac6898}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\XrCDB\XrCDB.vcxproj">
       <Project>{7e263157-2fc0-42d7-a676-dd6049bb60f5}</Project>
     </ProjectReference>

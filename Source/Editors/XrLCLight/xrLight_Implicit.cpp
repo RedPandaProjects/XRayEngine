@@ -245,8 +245,8 @@ void ImplicitLightingExec(BOOL b_net)
 		Status	("Mixing lighting with texture...");
 		{
 			b_BuildTexture& TEX		=	*defl.texture;
-			VERIFY					(TEX.pSurface);
-			u32*			color	= TEX.pSurface;
+			VERIFY					(!TEX.pSurface.Empty());
+			u32*			color	= static_cast<u32*>(*TEX.pSurface);
 			for (u32 V=0; V<defl.Height(); V++)	{
 				for (u32 U=0; U<defl.Width(); U++)	{
 					// Retreive Texel
@@ -273,7 +273,7 @@ void ImplicitLightingExec(BOOL b_net)
 			FS.update_path			(out_name,"$game_levels$",out_name);
 			clMsg					("Saving texture '%s'...",out_name);
 			VerifyPath				(out_name);
-			BYTE* raw_data			=	LPBYTE(TEX.pSurface);
+			BYTE* raw_data			=	LPBYTE(*TEX.pSurface);
 			u32	w					=	TEX.dwWidth;
 			u32	h					=	TEX.dwHeight;
 			u32	pitch				=	w*4;

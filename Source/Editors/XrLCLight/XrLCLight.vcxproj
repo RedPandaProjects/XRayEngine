@@ -402,6 +402,9 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BearBundle\BearGraphics\Platform\Desktop\BearGraphics.vcxproj">
+      <Project>{3b75536d-008d-4495-9fe8-c7ae79ac6898}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\BearBundle\External\zlib\zlib.vcxproj">
       <Project>{86d28925-9f85-43ec-980e-e99d7ff2501c}</Project>
     </ProjectReference>

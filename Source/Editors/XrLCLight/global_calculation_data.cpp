@@ -29,7 +29,18 @@ void transfer(const char *name, xr_vector<T> &dest, IReader& F, u32 chunk)
 
 
 // 
+inline bool Surface_Detect(string_path& F, LPSTR N)
+{
+	FS.update_path(F, "$game_textures$", strconcat(sizeof(F), F, N, ".dds"));
+	FILE* file = fopen(F, "rb");
+	if (file)
+	{
+		fclose(file);
+		return true;
+	}
 
+	return false;
+}
 
 
 void global_claculation_data::xrLoad()
@@ -142,7 +153,7 @@ void global_claculation_data::xrLoad()
 					BT.dwWidth	= 1024;
 					BT.dwHeight	= 1024;
 					BT.bHasAlpha= TRUE;
-					BT.pSurface	= 0;
+					BT.pSurface.Clear();
 					BT.THM.SetHasSurface(FALSE);
 				} else {
 					xr_strcat				(N,sizeof(BT.name),".thm");
@@ -171,22 +182,21 @@ void global_claculation_data::xrLoad()
 					BT.dwWidth				= BT.THM.width;
 					BT.dwHeight				= BT.THM.height;
 					BT.bHasAlpha			= BT.THM.HasAlphaChannel();
-					BT.pSurface				= 0;
+					BT.pSurface.Clear();
 					BT.THM.SetHasSurface(FALSE);
 					if (!bLOD) 
 					{
 						if (BT.bHasAlpha || BT.THM.flags.test(STextureParams::flImplicitLighted))
 						{
 							clMsg		("- loading: %s",N);
-							int			w=0, h=0;
-							int comp = 4;
-							stbi_uc*raw_image = stbi_load(N, &w, &h, &comp, 4);
-							R_ASSERT(comp == 4);
-							BT.pSurface		= (u32*)raw_image;
+							string_path name;
+							R_ASSERT2(Surface_Detect(name, N), "Can't load surface");
+							R_ASSERT2(BT.pSurface.LoadDDSFromFile(name), "Can't load surface");
+							BT.pSurface.ClearMipLevels();
+							BT.pSurface.Convert(TPF_R8G8B8A8);
 							BT.THM.SetHasSurface(TRUE);
-							R_ASSERT2	(BT.pSurface,"Can't load surface");
-							if ((w != BT.dwWidth) || (h != BT.dwHeight))
-								Msg		("! THM doesn't correspond to the texture: %dx%d -> %dx%d", BT.dwWidth, BT.dwHeight, w, h);
+							if ((BT.pSurface.GetSize().x != BT.dwWidth) || (BT.pSurface.GetSize().y != BT.dwHeight))
+								Msg		("! THM doesn't correspond to the texture: %dx%d -> %dx%d", BT.dwWidth, BT.dwHeight, BT.pSurface.GetSize().x, BT.pSurface.GetSize().y);
 							BT.Vflip	();
 						} else {
 							// Free surface memory

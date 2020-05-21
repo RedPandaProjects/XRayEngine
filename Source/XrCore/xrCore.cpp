@@ -32,8 +32,9 @@ extern char g_application_path[256];
 void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs, LPCSTR fs_fname)
 {
 	xr_strcpy					(ApplicationName,_ApplicationName);
-	BearCore::Initialize();
+
 	if (0==init_counter) {
+		BearCore::Initialize();
 #ifdef XRCORE_STATIC	
 		_clear87	();
 		_control87	( _PC_53,   MCW_PC );
@@ -151,8 +152,9 @@ void xrCore::_destroy		()
 #endif
 
 		Memory._destroy		();
+
+		BearCore::Destroy();
 	}
-	BearCore::Destroy();
 }
 
 #ifndef XRCORE_STATIC

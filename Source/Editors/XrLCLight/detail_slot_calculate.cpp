@@ -121,10 +121,10 @@ float getLastRP_Scale(CDB::COLLIDER* DB, R_Light& L)//, Face* skip)
 #ifdef		DEBUG
 			const b_BuildTexture	&build_texture  = gl_data.g_textures			[M.surfidx];
 
-			VERIFY( !!(build_texture.THM.HasSurface()) ==  !!(T.pSurface) );
+			VERIFY( !!(build_texture.THM.HasSurface()) ==  !!(!T.pSurface.Empty()) );
 #endif
 
-			if (0==T.pSurface)	T.bHasAlpha = FALSE;
+			if (T.pSurface.Empty())	T.bHasAlpha = FALSE;
 			if (!T.bHasAlpha)	{
 				// Opaque poly - cache it
 				L.tri[0].set	(rpinf.verts[0]);
@@ -147,8 +147,8 @@ float getLastRP_Scale(CDB::COLLIDER* DB, R_Light& L)//, Face* skip)
 			int V = iFloor(uv.y*float(T.dwHeight)+ .5f);
 			U %= T.dwWidth;		if (U<0) U+=T.dwWidth;
 			V %= T.dwHeight;	if (V<0) V+=T.dwHeight;
-
-			u32 pixel		= T.pSurface[V*T.dwWidth+U];
+			u32* raw = static_cast<u32*>(*T.pSurface);
+			u32 pixel		= raw[V*T.dwWidth+U];
 			u32 pixel_a		= color_get_A(pixel);
 			float opac		= 1.f - float(pixel_a)/255.f;
 			scale			*= opac;
