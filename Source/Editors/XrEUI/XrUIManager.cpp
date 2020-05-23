@@ -22,8 +22,7 @@ void XrUIManager::Initialize(HWND hWnd, IDirect3DDevice9* device)
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
     io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
     // Setup Dear ImGui style
-    ImGui::StyleColorsDark();
-    ImGui::Spectrum::StyleColorsSpectrum();
+    ImGui::StyleColorsClassic();
     ImGui::Spectrum::LoadFont();
     //ImGui::GetStyle().IndentSpacing = 12;
     ImGui_ImplWin32_Init(hWnd);
