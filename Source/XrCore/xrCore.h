@@ -267,11 +267,11 @@ DEFINE_VECTOR	(xr_rtoken,RTokenVec,RTokenVecIt);
 #include "log.h"
 #include "xr_trims.h"
 #include "xr_ini.h"
-#ifdef NO_FS_SCAN
-#	include "ELocatorAPI.h"
-#else
-#	include "LocatorAPI.h"
-#endif
+
+#include "ILocatorAPI.h"
+#include "ELocatorAPI.h"
+#include "LocatorAPI.h"
+
 #include "FileSystem.h"
 #include "FTimer.h"
 #include "fastdelegate.h"
@@ -303,7 +303,7 @@ public:
 	string512	Params;
 
 public:
-	void		_initialize	(LPCSTR ApplicationName, LogCallback cb=0, BOOL init_fs=TRUE, LPCSTR fs_fname=0);
+	void		_initialize	(LPCSTR ApplicationName, LogCallback cb=0, BOOL init_fs=TRUE, LPCSTR fs_fname=0,bool editor_fs=false);
 	void		_destroy	();
 };
 

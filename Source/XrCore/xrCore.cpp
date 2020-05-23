@@ -29,7 +29,7 @@ extern char g_application_path[256];
 
 //. extern xr_vector<shared_str>*	LogFile;
 
-void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs, LPCSTR fs_fname)
+void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs, LPCSTR fs_fname, bool editor_fs )
 {
 	xr_strcpy					(ApplicationName,_ApplicationName);
 
@@ -93,6 +93,9 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
 
 		rtc_initialize		();
 
+		if(editor_fs)
+			xr_FS = xr_new<CLocatorAPI>();
+		else
 		xr_FS				= xr_new<CLocatorAPI>	();
 
 		xr_EFS				= xr_new<EFS_Utils>		();

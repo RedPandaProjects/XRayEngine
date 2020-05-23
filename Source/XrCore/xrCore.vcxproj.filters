@@ -85,6 +85,9 @@
     <Filter Include="OS">
       <UniqueIdentifier>{eb82b075-aeb2-4111-ab95-dff5760c7fe7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FS\LocatorAPI">
+      <UniqueIdentifier>{2ff7fb3e-a41d-4c3f-ac70-21a8a6184e63}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FTimer.cpp">
@@ -130,18 +133,6 @@
       <Filter>FS</Filter>
     </ClCompile>
     <ClCompile Include="FS.cpp">
-      <Filter>FS</Filter>
-    </ClCompile>
-    <ClCompile Include="LocatorAPI.cpp">
-      <Filter>FS</Filter>
-    </ClCompile>
-    <ClCompile Include="LocatorAPI_auth.cpp">
-      <Filter>FS</Filter>
-    </ClCompile>
-    <ClCompile Include="LocatorAPI_defs.cpp">
-      <Filter>FS</Filter>
-    </ClCompile>
-    <ClCompile Include="LocatorAPI_Notifications.cpp">
       <Filter>FS</Filter>
     </ClCompile>
     <ClCompile Include="log.cpp">
@@ -289,8 +280,20 @@
       <Filter>OS</Filter>
     </ClCompile>
     <ClCompile Include="xrSyncronize.cpp" />
+    <ClCompile Include="ILocatorAPI.cpp">
+      <Filter>FS\LocatorAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="LocatorAPI.cpp">
+      <Filter>FS\LocatorAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="LocatorAPI_auth.cpp">
+      <Filter>FS\LocatorAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="LocatorAPI_defs.cpp">
+      <Filter>FS\LocatorAPI</Filter>
+    </ClCompile>
     <ClCompile Include="ELocatorAPI.cpp">
-      <Filter>FS</Filter>
+      <Filter>FS\LocatorAPI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -433,12 +436,6 @@
       <Filter>FS</Filter>
     </ClInclude>
     <ClInclude Include="FS_internal.h">
-      <Filter>FS</Filter>
-    </ClInclude>
-    <ClInclude Include="LocatorAPI.h">
-      <Filter>FS</Filter>
-    </ClInclude>
-    <ClInclude Include="LocatorAPI_defs.h">
       <Filter>FS</Filter>
     </ClInclude>
     <ClInclude Include="log.h">
@@ -601,15 +598,21 @@
       <Filter>OS</Filter>
     </ClInclude>
     <ClInclude Include="xrSyncronize.h" />
+    <ClInclude Include="ILocatorAPI.h">
+      <Filter>FS\LocatorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="LocatorAPI.h">
+      <Filter>FS\LocatorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="LocatorAPI_defs.h">
+      <Filter>FS\LocatorAPI</Filter>
+    </ClInclude>
     <ClInclude Include="ELocatorAPI.h">
-      <Filter>FS</Filter>
+      <Filter>FS\LocatorAPI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="FileSystem.h">
-      <Filter>FS</Filter>
-    </CustomBuild>
-    <CustomBuild Include="LocatorAPI_Notifications.h">
       <Filter>FS</Filter>
     </CustomBuild>
   </ItemGroup>

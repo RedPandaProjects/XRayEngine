@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #pragma hdrstop
-#ifndef ELocatorAPIH
 struct	auth_options	{
 	xr_vector<shared_str>				ignore;
 	xr_vector<shared_str>				important;
@@ -59,7 +58,7 @@ void	CLocatorAPI::auth_runtime		(void*	params)
 #endif // DEBUG
 	{
 		for (files_it it = m_files.begin(); it!=m_files.end(); ++it) {
-			const file&	f	=	*it;
+			const ILocatorAPIFile&	f	=	*it;
 
 			// test for skip
 			BOOL	bSkip	=	FALSE;
@@ -74,7 +73,7 @@ void	CLocatorAPI::auth_runtime		(void*	params)
 			// test for important
 			for (u32 s=0; s<_o->important.size(); s++) {
 				if ((f.size_real != 0) && strstr(f.name,_o->important[s].c_str())) {
-					// crc for file				
+					// crc for ILocatorAPIFile				
 					IReader*	r	= FS.r_open	(f.name);
 					if (!r) {
 						do_break	= true;
@@ -110,4 +109,3 @@ void	CLocatorAPI::auth_runtime		(void*	params)
 
 	m_auth_lock.Leave	()	;
 }
-#endif
