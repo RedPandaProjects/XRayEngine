@@ -174,9 +174,11 @@ void CLevel::IR_OnKeyboardPress	(int key)
 	if(_curr == kQUICK_LOAD && IsGameTypeSingle())
 	{
 #ifdef DEBUG
-		FS.get_path					("$game_config$")->m_Flags.set(FS_Path::flNeedRescan, TRUE);
-		FS.get_path					("$game_scripts$")->m_Flags.set(FS_Path::flNeedRescan, TRUE);
-		FS.rescan_pathes			();
+		CLocatorAPI* RealFS = dynamic_cast<CLocatorAPI*>(xr_FS);
+		VERIFY(RealFS);
+		RealFS->get_path					("$game_config$")->m_Flags.set(FS_Path::flNeedRescan, TRUE);
+		RealFS->get_path					("$game_scripts$")->m_Flags.set(FS_Path::flNeedRescan, TRUE);
+		RealFS->rescan_pathes			();
 #endif // DEBUG
 		string_path					saved_game,command;
 		strconcat					(sizeof(saved_game),saved_game,Core.UserName," - ","quicksave");
@@ -192,9 +194,11 @@ void CLevel::IR_OnKeyboardPress	(int key)
 	switch (key) {
 	case DIK_F7: {
 		if (GameID() != eGameIDSingle) return;
-		FS.get_path					("$game_config$")->m_Flags.set(FS_Path::flNeedRescan, TRUE);
-		FS.get_path					("$game_scripts$")->m_Flags.set(FS_Path::flNeedRescan, TRUE);
-		FS.rescan_pathes			();
+		CLocatorAPI* RealFS = dynamic_cast<CLocatorAPI*>(xr_FS);
+		VERIFY(RealFS);
+		RealFS->get_path					("$game_config$")->m_Flags.set(FS_Path::flNeedRescan, TRUE);
+		RealFS->get_path					("$game_scripts$")->m_Flags.set(FS_Path::flNeedRescan, TRUE);
+		RealFS->rescan_pathes			();
 		NET_Packet					net_packet;
 		net_packet.w_begin			(M_RELOAD_GAME);
 		Send						(net_packet,net_flags(TRUE));

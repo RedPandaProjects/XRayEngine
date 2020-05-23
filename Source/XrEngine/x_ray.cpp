@@ -1355,11 +1355,12 @@ void CApplication::Level_Set(u32 L)
 int CApplication::Level_ID(LPCSTR name, LPCSTR ver, bool bSet)
 {
 	int result = -1;
-
+	CLocatorAPI* RealFS = dynamic_cast<CLocatorAPI*>(xr_FS);
+	VERIFY(RealFS);
 	SECUROM_MARKER_SECURITY_ON(7)
 
-	CLocatorAPI::archives_it it		= FS.m_archives.begin();
-	CLocatorAPI::archives_it it_e	= FS.m_archives.end();
+	CLocatorAPI::archives_it it		= RealFS->m_archives.begin();
+	CLocatorAPI::archives_it it_e	= RealFS->m_archives.end();
 	bool arch_res					= false;
 
 	for(;it!=it_e;++it)
@@ -1371,7 +1372,7 @@ int CApplication::Level_ID(LPCSTR name, LPCSTR ver, bool bSet)
 			LPCSTR lv = A.header->r_string("header", "level_ver");
 			if ( 0==stricmp(ln,name) && 0==stricmp(lv,ver) )
 			{
-				FS.LoadArchive(A);
+				RealFS->LoadArchive(A);
 				arch_res = true;
 			}
 		}
@@ -1404,8 +1405,10 @@ int CApplication::Level_ID(LPCSTR name, LPCSTR ver, bool bSet)
 
 CInifile*  CApplication::GetArchiveHeader(LPCSTR name, LPCSTR ver)
 {
-	CLocatorAPI::archives_it it		= FS.m_archives.begin();
-	CLocatorAPI::archives_it it_e	= FS.m_archives.end();
+	CLocatorAPI* RealFS = dynamic_cast<CLocatorAPI*>(xr_FS);
+	VERIFY(RealFS);
+	CLocatorAPI::archives_it it		= RealFS->m_archives.begin();
+	CLocatorAPI::archives_it it_e	= RealFS->m_archives.end();
 
 	for(;it!=it_e;++it)
 	{
