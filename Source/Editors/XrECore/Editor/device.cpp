@@ -346,8 +346,12 @@ void CEditorRenderDevice::End()
     
 
 	g_bRendering = 	FALSE;
-
-	UI->Draw();
+	if (UI)
+	{
+		EDevice.SetRS(D3DRS_FILLMODE,D3DFILL_SOLID);
+		UI->Draw();
+		EDevice.SetRS(D3DRS_FILLMODE, EDevice.dwFillMode);
+	}
 
 	// end scene
 	RCache.OnFrameEnd();

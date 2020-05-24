@@ -220,14 +220,14 @@ void  UITopBarForm::ClickVSnap() { ExecCommand(COMMAND_SET_SETTINGS, etfVSnap, m
 void  UITopBarForm::ClickASnap() { ExecCommand(COMMAND_SET_SETTINGS, etfASnap, m_bASnap); }
 void  UITopBarForm::ClickMSnap() { ExecCommand(COMMAND_SET_SETTINGS, etfMSnap, m_bMSnap); }
 
-void  UITopBarForm::ClickCameraP(){ EDevice.m_Camera.SetStyle(csPlaneMove); }
-void  UITopBarForm::ClickCameraA(){ EDevice.m_Camera.SetStyle(cs3DArcBall); }
-void  UITopBarForm::ClickCameraF(){ EDevice.m_Camera.SetStyle(csFreeFly); }
+void  UITopBarForm::ClickCameraP(){ EDevice.m_Camera.SetStyle(csPlaneMove); UI->RedrawScene();}
+void  UITopBarForm::ClickCameraA(){ EDevice.m_Camera.SetStyle(cs3DArcBall); UI->RedrawScene();}
+void  UITopBarForm::ClickCameraF(){ EDevice.m_Camera.SetStyle(csFreeFly); UI->RedrawScene();}
 
-void  UITopBarForm::ClickViewB1() { EDevice.m_Camera.ViewBack(); }
-void  UITopBarForm::ClickViewB2() { EDevice.m_Camera.ViewBottom(); }
-void  UITopBarForm::ClickViewF() { EDevice.m_Camera.ViewFront(); }
-void  UITopBarForm::ClickViewL() { EDevice.m_Camera.ViewLeft(); }
-void  UITopBarForm::ClickViewR() { EDevice.m_Camera.ViewRight(); }
-void  UITopBarForm::ClickViewT() { EDevice.m_Camera.ViewTop(); }
-void  UITopBarForm::ClickViewX() { EDevice.m_Camera.ViewReset(); }
+void  UITopBarForm::ClickViewB1() { EDevice.m_Camera.ViewBack(); UI->RedrawScene(); }
+void  UITopBarForm::ClickViewB2() { EDevice.m_Camera.ViewBottom();UI->RedrawScene(); }
+void  UITopBarForm::ClickViewF() { EDevice.m_Camera.ViewFront(); UI->RedrawScene();}
+void  UITopBarForm::ClickViewL() { EDevice.m_Camera.ViewLeft();UI->RedrawScene(); }
+void  UITopBarForm::ClickViewR() { EDevice.m_Camera.ViewRight(); UI->RedrawScene();}
+void  UITopBarForm::ClickViewT() { EDevice.m_Camera.ViewTop();UI->RedrawScene(); }
+void  UITopBarForm::ClickViewX() { EDevice.m_Camera.ViewReset(); UI->RedrawScene();}
