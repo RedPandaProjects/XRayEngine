@@ -375,9 +375,10 @@ void TUI::Redraw()
             {
                 if (!psDeviceFlags.is(rsRenderRealTime))
                     m_Flags.set(flRedraw, FALSE);
-                EDevice.Statistic->RenderDUMP_RT.Begin();
+
                 RCache.set_RT(RT->pRT);
                 RCache.set_ZB(ZB->pRT);
+                EDevice.Statistic->RenderDUMP_RT.Begin();
                 {
                     CHK_DX(HW.pDevice->Clear(0, 0, D3DCLEAR_ZBUFFER | D3DCLEAR_TARGET, EPrefs ? EPrefs->scene_clear_color : 0x0, 1, 0));
                 }
@@ -418,18 +419,19 @@ void TUI::Redraw()
 
                 // draw axis
                 DU_impl.DrawAxis(EDevice.m_Camera.GetTransform());
+
+                RDEVICE.b_is_Active = true;
+
+                EDevice.Statistic->RenderDUMP_RT.End();
+                EDevice.Statistic->Show(EDevice.pSystemFont);
+                EDevice.SetRS(D3DRS_FILLMODE, D3DFILL_SOLID);
+                EDevice.pSystemFont->OnRender();
+                EDevice.SetRS(D3DRS_FILLMODE, EDevice.dwFillMode);
+                EDevice.seqRender.Process(rp_Render);
+                RDEVICE.b_is_Active = false;
+                RCache.set_RT(HW.pBaseRT);
+                RCache.set_ZB(HW.pBaseZB);
             }
-            RDEVICE.b_is_Active = true;
-
-            EDevice.Statistic->RenderDUMP_RT.End();
-            EDevice.Statistic->Show(EDevice.pSystemFont);
-            EDevice.SetRS(D3DRS_FILLMODE, D3DFILL_SOLID);
-            EDevice.pSystemFont->OnRender();
-            EDevice.SetRS(D3DRS_FILLMODE, EDevice.dwFillMode);
-
-            RDEVICE.b_is_Active = false;
-            RCache.set_RT(HW.pBaseRT);
-            RCache.set_ZB(HW.pBaseZB);
             try {
                 // end draw
                 EDevice.End();

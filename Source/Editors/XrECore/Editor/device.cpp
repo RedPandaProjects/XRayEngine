@@ -342,7 +342,7 @@ void CEditorRenderDevice::End()
 	VERIFY(HW.pDevice);
 	VERIFY(b_is_Ready);
 
-    seqRender.Process						(rp_Render);
+
     
 
 	g_bRendering = 	FALSE;
