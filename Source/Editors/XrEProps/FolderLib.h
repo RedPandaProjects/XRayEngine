@@ -193,6 +193,7 @@ public:
 		else if (N->IsFloder())
 		{
 			if (N->Selected)ImGui::SetNextTreeNodeOpen(true);
+			ImGui::AlignTextToFramePadding();
 			if (ImGui::TreeNodeEx(N->Name.c_str(), IsFloderBullet(N)?ImGuiTreeNodeFlags_Bullet| ImGuiTreeNodeFlags_OpenOnArrow: ImGuiTreeNodeFlags_OpenOnArrow))
 			{
 				DrawAfterFloderNode();

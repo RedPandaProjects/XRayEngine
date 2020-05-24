@@ -7030,6 +7030,12 @@ float ImGui::GetWindowHeight()
     return window->Size.y;
 }
 
+IMGUI_API float ImGui::GetWindowBarHeight()
+{
+    ImGuiWindow* window = GImGui->CurrentWindow;
+    return window->MenuBarHeight();
+}
+
 ImVec2 ImGui::GetWindowPos()
 {
     ImGuiContext& g = *GImGui;

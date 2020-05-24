@@ -216,9 +216,11 @@ void UIPropertiesForm::DrawItem(Node* node)
 	}
 	break;
 	case PROP_FLAG:
-	{
+	{ 
+		ImGui::AlignTextToFramePadding();
 		ImGui::Text(node->Name.c_str());
 		ImGui::NextColumn();
+		ImGui::AlignTextToFramePadding();
 		if (m_Flags.test(plReadOnly))
 		{
 			FlagValueCustom* V = dynamic_cast<FlagValueCustom*>(node->Object->GetFrontValue()); R_ASSERT(V);
@@ -245,7 +247,7 @@ void UIPropertiesForm::DrawItem(Node* node)
 	case PROP_BOOLEAN:
 	{
 
-		BOOLValue* V = dynamic_cast<BOOLValue*>(node->Object); VERIFY(V);
+		BOOLValue* V = dynamic_cast<BOOLValue*>(node->Object->GetFrontValue()); VERIFY(V);
 		bool new_val = V->GetValue();
 		if (m_Flags.test(plReadOnly))
 		{
@@ -263,18 +265,20 @@ void UIPropertiesForm::DrawItem(Node* node)
 
 	case PROP_CAPTION:
 	{
+		ImGui::AlignTextToFramePadding();
 		ImGui::Text(node->Name.c_str());
 		ImGui::NextColumn();
+		ImGui::AlignTextToFramePadding();
 		ImGui::Text(node->Object->GetDrawText().c_str());
 		ImGui::NextColumn();
 	}
 	break;
 	case PROP_CHOOSE:
 	{
+		ImGui::AlignTextToFramePadding();
 		ImGui::Text(node->Name.c_str());
-
 		ImGui::NextColumn();
-		ImGui::SetNextItemWidth(-1);
+		ImGui::AlignTextToFramePadding();
 		xr_string text = node->Object->GetDrawText().c_str();
 		if (!text[0])text = "<none>";
 		if (ImGui::Button(text.c_str()) && !m_Flags.test(plReadOnly))
@@ -302,8 +306,10 @@ void UIPropertiesForm::DrawItem(Node* node)
 	break;
 	case PROP_TOKEN:
 	{
+		ImGui::AlignTextToFramePadding();
 		ImGui::Text(node->Name.c_str());
 		ImGui::NextColumn();
+		ImGui::AlignTextToFramePadding();
 		if (m_Flags.test(plReadOnly))
 		{
 			ImGui::Text(node->Object->GetDrawText().c_str());
@@ -328,7 +334,6 @@ void UIPropertiesForm::DrawItem(Node* node)
 			str.printf("##value_%s", node->Name.c_str());
 
 			bool change = false;
-			ImGui::SetNextItemWidth(-1);
 			if(ImGui::Combo(str.c_str(), &index, InTokens, i))
 			if (!TokenOnEdit<u8>(node->Object, index, change))
 				if (!TokenOnEdit<u16>(node->Object, index, change))
@@ -343,8 +348,10 @@ void UIPropertiesForm::DrawItem(Node* node)
 
 	case PROP_BUTTON:
 	{
+		ImGui::AlignTextToFramePadding();
 		ImGui::Text(node->Name.c_str());
 		ImGui::NextColumn();
+		ImGui::AlignTextToFramePadding();
 		bool bRes = false;
 		bool bSafe = false;
 		ButtonValue* V = dynamic_cast<ButtonValue*>(node->Object->GetFrontValue()); R_ASSERT(V);
@@ -378,9 +385,10 @@ void UIPropertiesForm::DrawItem(Node* node)
 
 	case PROP_CANVAS:
 	{
+		ImGui::AlignTextToFramePadding();
 		ImGui::Text(node->Name.c_str());
 		ImGui::NextColumn();
-		ImGui::SetNextItemWidth(-1);
+		ImGui::AlignTextToFramePadding();
 		CanvasValue* val = dynamic_cast<CanvasValue*>(node->Object->GetFrontValue()); R_ASSERT(val);
 		if (!val->OnDrawCanvasEvent.empty())
 			val->OnDrawCanvasEvent(val);
@@ -390,8 +398,10 @@ void UIPropertiesForm::DrawItem(Node* node)
 	break;
 	case PROP_COLOR:
 	{
+		ImGui::AlignTextToFramePadding();
 		ImGui::Text(node->Name.c_str());
 		ImGui::NextColumn();
+		ImGui::AlignTextToFramePadding();
 		U32Value* V = dynamic_cast<U32Value*>(node->Object->GetFrontValue()); R_ASSERT(V);
 		u32 edit_val = V->GetValue();
 		node->Object->BeforeEdit<U32Value, u32>(edit_val);
@@ -399,7 +409,6 @@ void UIPropertiesForm::DrawItem(Node* node)
 		shared_str str;
 		str.printf("##value_%s", node->Name.c_str());
 		float color[3] = { color_get_R(edit_val) / 255.f, color_get_G(edit_val) / 255.f, color_get_B(edit_val) / 255.f };
-		ImGui::SetNextItemWidth(-1);
 		if (ImGui::ColorEdit3(str.c_str(), color))
 		{
 			edit_val = color_rgba_f(color[0], color[1], color[2], 1.f);
@@ -414,20 +423,27 @@ void UIPropertiesForm::DrawItem(Node* node)
 	break;
 	case PROP_SHORTCUT:
 	{
+		ImGui::AlignTextToFramePadding();
 		ImGui::Text(node->Name.c_str());
 		ImGui::NextColumn();
+		ImGui::AlignTextToFramePadding();
 		ShortcutValue* V = dynamic_cast<ShortcutValue*>(node->Object->GetFrontValue()); R_ASSERT(V);
-		if (ImGui::Button(V->GetDrawText(0).c_str(),ImVec2(128,0)))
+		ImGui::PushID(node->Object->Key());
 		{
-			UIKeyPressForm::Show();
-			m_EditShortcutValue = node->Object;
-		}ImGui::SameLine();
+			if (ImGui::Button(V->GetDrawText(0).c_str(), ImVec2(128, 0)))
+			{
+				UIKeyPressForm::Show();
+				m_EditShortcutValue = node->Object;
+			}ImGui::SameLine();
 
-		if (ImGui::Button("X", ImVec2(0, 0)))
-		{
-			xr_shortcut val;
-			V->ApplyValue(val);
+			if (ImGui::Button("X", ImVec2(0, 0)))
+			{
+				xr_shortcut val;
+				V->ApplyValue(val);
+			}
+			
 		}
+		ImGui::PopID();
 		ImGui::NextColumn();
 	}
 	break;

@@ -31,7 +31,6 @@ UIMainForm::~UIMainForm()
 
 void UIMainForm::Draw()
 {
-    ImGui::DockSpaceOverViewport();
     m_MainMenu->Draw();
     m_TopBar->Draw();
     m_LeftBar->Draw();

@@ -9,6 +9,7 @@ enum TShiftState_
 	ssAlt = 16,
 };
 using TShiftState = int;
+constexpr int UIToolBarSize = 24;
 class XREUI_API XrUIManager
 {
 public:
@@ -26,9 +27,12 @@ public:
 	void ResetEnd();
 	virtual bool 	ApplyShortCut(DWORD Key, TShiftState Shift)=0;
 
+	inline float GetMenuBarHeight()const { return m_MenuBarHeight; }
+
 protected:
 	virtual void RenderSpecial();
 private:
+	float m_MenuBarHeight;
 	void ApplyShortCut(DWORD Key);
 	TShiftState m_ShiftState;
 	xr_vector<XrUI*> m_UIArray;

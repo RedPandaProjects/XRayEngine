@@ -734,9 +734,9 @@ bool TUI::ApplyGlobalShortCut(DWORD Key, TShiftState Shift)
 
     xr_shortcut SC;
     SC.key = Key;
-    SC.ext.assign(u8((Shift | ssShift ? xr_shortcut::flShift : 0) |
-        (Shift | ssCtrl ? xr_shortcut::flCtrl : 0) |
-        (Shift | ssAlt ? xr_shortcut::flAlt : 0)));
+    SC.ext.assign(u8((Shift & ssShift ? xr_shortcut::flShift : 0) |
+        (Shift & ssCtrl ? xr_shortcut::flCtrl : 0) |
+        (Shift & ssAlt ? xr_shortcut::flAlt : 0)));
 
     if (UIKeyPressForm::SetResult(SC))return true;
     if (Key==VK_OEM_3)ExecCommand	(COMMAND_RENDER_FOCUS); return true;
