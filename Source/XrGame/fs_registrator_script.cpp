@@ -7,7 +7,9 @@ using namespace luabind;
 LPCSTR get_file_age_str(CLocatorAPI* fs, LPCSTR nm);
 CLocatorAPI* getFS()
 {
-	return &FS;
+	CLocatorAPI* RealFS = dynamic_cast<CLocatorAPI*>(xr_FS);
+	VERIFY(RealFS);
+	return RealFS;
 }
 
 
@@ -102,7 +104,9 @@ FS_file_list_ex::FS_file_list_ex(LPCSTR path, u32 flags, LPCSTR mask)
 	FS_Path* P = FS.get_path(path);
 	P->m_Flags.set	(FS_Path::flNeedRescan,TRUE);
 	FS.m_Flags.set	(CLocatorAPI::flNeedCheck,TRUE);
-	FS.rescan_pathes();
+	CLocatorAPI* RealFS = dynamic_cast<CLocatorAPI*>(xr_FS);
+	VERIFY(RealFS);
+	RealFS->rescan_pathes();
 
 	FS_FileSet		files;
 	FS.file_list(files,path,flags,mask);
@@ -181,13 +185,13 @@ void fs_registrator::script_register(lua_State *L)
 			.def_readonly("m_DefExt",					&FS_Path::m_DefExt)
 			.def_readonly("m_FilterCaption",			&FS_Path::m_FilterCaption),
 */
-		class_<CLocatorAPI::file>("fs_file")
-			.def_readonly("name",						&CLocatorAPI::file::name)
-			.def_readonly("vfs",						&CLocatorAPI::file::vfs)
-			.def_readonly("ptr",						&CLocatorAPI::file::ptr)
-			.def_readonly("size_real",					&CLocatorAPI::file::size_real)
-			.def_readonly("size_compressed",			&CLocatorAPI::file::size_compressed)
-			.def_readonly("modif",						&CLocatorAPI::file::modif),
+		class_<ILocatorAPIFile>("fs_file")
+			.def_readonly("name",						&ILocatorAPIFile::name)
+			.def_readonly("vfs",						&ILocatorAPIFile::vfs)
+			.def_readonly("ptr",						&ILocatorAPIFile::ptr)
+			.def_readonly("size_real",					&ILocatorAPIFile::size_real)
+			.def_readonly("size_compressed",			&ILocatorAPIFile::size_compressed)
+			.def_readonly("modif",						&ILocatorAPIFile::modif),
 
 
 		class_<CLocatorAPI>("FS")
@@ -222,8 +226,8 @@ void fs_registrator::script_register(lua_State *L)
 			.def("file_length",							&CLocatorAPI::file_length)
 			.def("file_copy",							&CLocatorAPI::file_copy)
 
-			.def("exist",								(const CLocatorAPI::file*	(CLocatorAPI::*)(LPCSTR)) (&CLocatorAPI::exist))
-			.def("exist",								(const CLocatorAPI::file*	(CLocatorAPI::*)(LPCSTR, LPCSTR)) (&CLocatorAPI::exist))
+			.def("exist",								(const ILocatorAPIFile*	(CLocatorAPI::*)(LPCSTR)) (&CLocatorAPI::exist))
+			.def("exist",								(const ILocatorAPIFile*	(CLocatorAPI::*)(LPCSTR, LPCSTR)) (&CLocatorAPI::exist))
 
 			.def("get_file_age",						&CLocatorAPI::get_file_age)
 			.def("get_file_age_str",					&get_file_age_str)

@@ -1426,7 +1426,9 @@ CInifile*  CApplication::GetArchiveHeader(LPCSTR name, LPCSTR ver)
 
 void CApplication::LoadAllArchives()
 {
-	if( FS.load_all_unloaded_archives() )
+	CLocatorAPI* RealFS = dynamic_cast<CLocatorAPI*>(xr_FS);
+	VERIFY(RealFS);
+	if(RealFS->load_all_unloaded_archives() )
 	{
 		Level_Scan							();
 		g_pGamePersistent->OnAssetsChanged	();

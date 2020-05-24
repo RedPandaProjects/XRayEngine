@@ -489,11 +489,12 @@ void get_files_list( xr_vector<shared_str>& files, LPCSTR dir, LPCSTR file_ext )
 {
 	VERIFY( dir && file_ext );
 	files.clear_not_free();
-
+	CLocatorAPI* RealFS = dynamic_cast<CLocatorAPI*>(xr_FS);
+	VERIFY(RealFS);
 	FS_Path* P = FS.get_path( dir );
 	P->m_Flags.set( FS_Path::flNeedRescan, TRUE );
 	FS.m_Flags.set( CLocatorAPI::flNeedCheck, TRUE );
-	FS.rescan_pathes();
+	RealFS->rescan_pathes();
 
 	LPCSTR fext;
 	STRCONCAT( fext, "*", file_ext );
@@ -1245,7 +1246,9 @@ public:
 			// rescan pathes
 			FS_Path* P = FS.get_path("$game_scripts$");
 			P->m_Flags.set	(FS_Path::flNeedRescan,TRUE);
-			FS.rescan_pathes();
+			CLocatorAPI* RealFS = dynamic_cast<CLocatorAPI*>(xr_FS);
+			VERIFY(RealFS);
+			RealFS->rescan_pathes();
 			// run script
 			if (ai().script_engine().script_process(ScriptEngine::eScriptProcessorLevel))
 				ai().script_engine().script_process(ScriptEngine::eScriptProcessorLevel)->add_script(args,false,true);
