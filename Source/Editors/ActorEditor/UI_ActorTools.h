@@ -6,7 +6,6 @@
 class UIPropertiesForm;
 class CEditableObject;
 class PropValue;
-class TfrmKeyBar;
 class CBlend;
 class CMotionDef;
 class CMotion;
@@ -185,7 +184,6 @@ public:
     UIPropertiesForm*		m_Props;
     UIItemListForm*			m_ObjectItems;
 
-    TfrmKeyBar* 		m_KeyBar;
 // undo part
 protected:
     #pragma pack( push,1 )

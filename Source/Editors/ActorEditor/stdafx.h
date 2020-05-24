@@ -11,6 +11,7 @@
 #include "UITopBarForm.h"
 #include "UIMainMenuForm.h"
 #include "UILeftBarForm.h"
+#include "UIKeyForm.h"
 #include "UIMainForm.h"
 #include "UI_ActorMain.h"
 #include "UI_ActorTools.h"

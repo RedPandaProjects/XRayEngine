@@ -352,6 +352,7 @@ void UIPropertiesForm::DrawItem(Node* node)
 		ImGui::Text(node->Name.c_str());
 		ImGui::NextColumn();
 		ImGui::AlignTextToFramePadding();
+		ImGui::PushID(node->Object->Key());
 		bool bRes = false;
 		bool bSafe = false;
 		ButtonValue* V = dynamic_cast<ButtonValue*>(node->Object->GetFrontValue()); R_ASSERT(V);
@@ -378,6 +379,7 @@ void UIPropertiesForm::DrawItem(Node* node)
 			ImGui::Text("");
 		}
 		if (bRes)Modified();
+		ImGui::PopID();
 		ImGui::NextColumn();
 	}
 

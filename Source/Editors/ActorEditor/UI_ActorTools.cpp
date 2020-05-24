@@ -7,7 +7,7 @@
 #include "..\..\XrPhysics\Physics.h"
 #include "..\XrECore\Editor\EditMesh.h"
 #include "KinematicAnimatedDefs.h"
-
+#include "SkeletonAnimated.h"
 CActorTools*	ATools=(CActorTools*)Tools;
 //------------------------------------------------------------------------------
 #define CHECK_SNAP(R,A,C){ R+=A; if(fabsf(R)>=C){ A=snapto(R,C); R=0; }else{A=0;}}
@@ -147,8 +147,6 @@ CActorTools::CActorTools()
     m_pEditObject = 0;
     m_bObjectModified = false;
     m_ObjectItems = 0;
-    m_bReady = false;
-    m_KeyBar = 0;
     m_Flags.zero();
     m_EditMode = emObject;
     fFogness = 0.9f;
@@ -237,18 +235,18 @@ void CActorTools::OnFrame()
         if (!MainForm->GetLeftBarForm()->GetRenderMode() == UILeftBarForm::Render_Engine)
             m_pEditObject->OnFrame();
 
-     /*   if (!m_KeyBar->auto_ch->Checked)
+        if (!MainForm->GetKeyForm()->AutoChange())
         {
-            m_pEditObject->m_SMParam.t_current = float(m_KeyBar->anm_track->Position) / float(1000);
-        }*/
-        // CKinematicsAnimated* KA = dynamic_cast<CKinematicsAnimated*>(m_RenderObject.m_pVisual);
+            m_pEditObject->m_SMParam.t_current = float(MainForm->GetKeyForm()->Position()) ;
+        }
+        //CKinematicsAnimated* KA = dynamic_cast<CKinematicsAnimated*>(m_RenderObject.m_pVisual);
         if (m_RenderObject.IsRenderable() && m_pEditObject->IsSkeleton() && m_RenderObject.m_pVisual)
         {
 
-          /*  CKinematicsAnimated* KA = dynamic_cast<CKinematicsAnimated*>(m_RenderObject.m_pVisual);
-            if (KA && !m_KeyBar->auto_ch->Checked && m_RenderObject.m_pBlend)
+            CKinematicsAnimated* KA = dynamic_cast<CKinematicsAnimated*>(m_RenderObject.m_pVisual);
+            if (KA && !MainForm->GetKeyForm()->AutoChange() && m_RenderObject.m_pBlend)
             {
-                float tm = float(m_KeyBar->anm_track->Position) / float(1000);
+                float tm = float(MainForm->GetKeyForm()->Position());
                 for (int k = 0; k < MAX_PARTS; k++)
                 {
                     if (KA->LL_PartBlendsCount(k))
@@ -262,15 +260,13 @@ void CActorTools::OnFrame()
             IKinematics* K = m_RenderObject.m_pVisual->dcast_PKinematics();
             VERIFY(K);
             // K->Bone_Calculate			(&K->LL_GetData(K->LL_GetBoneRoot()),&Fidentity);
-            if (!m_KeyBar->auto_ch->Checked)
+            if (!MainForm->GetKeyForm()->AutoChange())
                 K->Bone_Calculate(&K->LL_GetData(K->LL_GetBoneRoot()), &Fidentity);
             else
-                K->CalculateBones(TRUE);*/
+                K->CalculateBones(TRUE);
         }
 
     }
-  //  if (m_KeyBar) m_KeyBar->UpdateBar();
-
     if (m_Flags.is(flRefreshShaders))
     {
         m_Flags.set(flRefreshShaders, FALSE);
@@ -298,19 +294,8 @@ void CActorTools::OnFrame()
 
 bool CActorTools::OnCreate()
 {
-    /*	inherited::OnCreate	();
-    // props
-    m_ObjectItems 		= TItemList::CreateForm("",fraLeftBar->paObjectProps,alClient,TItemList::ilDragCustom|TItemList::ilMultiSelect|TItemList::ilSuppressStatus);
-	m_ObjectItems->SetOnItemsFocusedEvent(fastdelegate::bind<TOnILItemsFocused>(this,&CActorTools::OnObjectItemFocused));
-    m_Props 			= TProperties::CreateForm("",fraLeftBar->paItemProps,alClient,fastdelegate::bind<TOnModifiedEvent>(this,&CActorTools::OnItemModified));
-    m_PreviewObject.OnCreate();
 
-    // key bar
-	m_KeyBar 			= TfrmKeyBar::CreateKeyBar(frmMain->paMain);
-
-    OnDeviceCreate		();
     
-    return true;*/
     inherited::OnCreate();
     m_ObjectItems = xr_new<UIItemListForm>();
     m_Props = xr_new<UIPropertiesForm>();
@@ -318,7 +303,6 @@ bool CActorTools::OnCreate()
      m_PreviewObject.OnCreate();
 
     // key bar
-   // m_KeyBar = TfrmKeyBar::CreateKeyBar(frmMain->paMain);
 
     OnDeviceCreate();
     return true;
