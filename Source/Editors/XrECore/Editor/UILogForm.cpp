@@ -28,17 +28,17 @@ void UILogForm::AddDlgMessage(TMsgDlgType mt, const xr_string& msg)
 
 void UILogForm::Show()
 {
-	bAllowLogCommands = false;
+	bAllowLogCommands = true;
 }
 
 void UILogForm::Hide()
 {
-	bAllowLogCommands = true;
+	bAllowLogCommands = false;
 }
 
 void UILogForm::Update()
 {
-	if (!bAllowLogCommands)
+	if (bAllowLogCommands)
 	{
 		if (!ImGui::Begin("Log", &bAllowLogCommands))
 		{

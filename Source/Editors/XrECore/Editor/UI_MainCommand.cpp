@@ -592,7 +592,7 @@ CCommandVar 	CommandEditCommandList(CCommandVar _p1, CCommandVar _p2)
 CCommandVar 	CommandLogCommands(CCommandVar _p1, CCommandVar _p2)
 {
     
-	bAllowLogCommands	= _p1;
+	bAllowLogCommands	= !_p1;
     return 				TRUE;
 }
 CCommandVar 	CommandRunMacro(CCommandVar p1, CCommandVar p2)
