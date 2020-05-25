@@ -19,6 +19,5 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
     }
     xr_delete(MainForm);
 
-
     return 0;
 }

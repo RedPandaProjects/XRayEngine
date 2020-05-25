@@ -212,6 +212,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ActorEditor.cpp" />
+    <ClCompile Include="UIBoneForm.cpp" />
     <ClCompile Include="UIKeyForm.cpp" />
     <ClCompile Include="UILeftBarForm.cpp" />
     <ClCompile Include="UIMainForm.cpp" />
@@ -246,6 +247,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="UIBoneForm.h" />
     <ClInclude Include="UIKeyForm.h" />
     <ClInclude Include="UILeftBarForm.h" />
     <ClInclude Include="UIMainForm.h" />

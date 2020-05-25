@@ -35,7 +35,7 @@ void UILeftBarForm::Draw()
 			UI->RedrawScene();
 		}
 		ImGui::SameLine(0,10);
-		if (ImGui::Button("Clip Maker")) {}
+		if (ImGui::Button("Clip Maker")) { UIBoneForm::Show(); }
 		ImGui::TreePop();
 	}
 	ImGui::SetNextItemOpen(true, ImGuiCond_Once);

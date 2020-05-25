@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #pragma hdrstop
 #include "..\..\XrRender\Private\KinematicAnimatedDefs.h"
+#include "SkeletonAnimated.h"
 //------------------------------------------------------------------------------
 
 void  CActorTools::OnObjectItemFocused(ListItem* prop)
@@ -287,16 +288,21 @@ void CActorTools::FillMotionProperties(PropItemVec& items, LPCSTR pref, ListItem
     PropValue* V;
 
     xr_string m_cnt;
-    if (m_pEditObject->m_SMotionRefs.size()){ 
-	/*    if (fraLeftBar->ebRenderEngineStyle->Down){
-            CKinematicsAnimated* V	= PKinematicsAnimated(m_RenderObject.m_pVisual);
-            if (V) m_cnt	= V->LL_CycleCount()+V->LL_FXCount();
-        }else{
-        	m_cnt	 		= xr_string(m_pEditObject->SMotionCount())+" (Inaccessible)";
-        }*/
-        not_implemented();
-    }else{
-    	m_cnt 				= m_pEditObject->SMotionCount();
+    if (m_pEditObject->m_SMotionRefs.size())
+    {
+        if (MainForm->GetLeftBarForm()->GetRenderMode() == UILeftBarForm::Render_Engine)
+        {
+            CKinematicsAnimated* V = PKinematicsAnimated(m_RenderObject.m_pVisual);
+            if (V) m_cnt = V->LL_CycleCount() + V->LL_FXCount();
+        }
+        else
+        {
+            m_cnt = xr_string(m_pEditObject->SMotionCount()) + " (Inaccessible)";
+        }
+    }
+    else 
+    {
+        m_cnt = m_pEditObject->SMotionCount();
     }
                                             
     PHelper().CreateCaption			(items, PrepareKey(pref,"Global\\Motion count"),	m_cnt.c_str());
@@ -484,7 +490,6 @@ void  CActorTools::OnBoneCreateDeleteClick(ButtonValue* V, bool& bModif, bool& b
             	Msg("! Select 1 bone please.");
                 return;
             }
-            not_implemented();
            if (ELog.DlgMsg(mtConfirmation, TMsgDlgButtons() << mbYes << mbNo, "Delete selected bone?") == mrYes)
            {
            		m_pEditObject->DeleteBone(sel_bones[0]);

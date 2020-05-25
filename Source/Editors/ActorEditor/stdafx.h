@@ -12,6 +12,7 @@
 #include "UIMainMenuForm.h"
 #include "UILeftBarForm.h"
 #include "UIKeyForm.h"
+#include "UIBoneForm.h"
 #include "UIMainForm.h"
 #include "UI_ActorMain.h"
 #include "UI_ActorTools.h"

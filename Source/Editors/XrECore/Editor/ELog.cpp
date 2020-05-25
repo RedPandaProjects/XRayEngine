@@ -178,7 +178,6 @@ int CLog::DlgMsg (TMsgDlgType mt, TMsgDlgButtons btn, LPCSTR _Format, ...)
 
 int CLog::DlgMsg (TMsgDlgType mt, LPCSTR _Format, ...)
 {
-	return 0;
     in_use = true;
 	char buf[4096];
 	va_list l;

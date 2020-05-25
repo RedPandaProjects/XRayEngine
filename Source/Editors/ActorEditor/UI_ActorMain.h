@@ -54,6 +54,8 @@ public:
 
     // commands
 	virtual	void	RegisterCommands		(); 
+protected:
+    virtual void    RenderSpecial();
 };    
 extern CActorMain*	AUI;
 

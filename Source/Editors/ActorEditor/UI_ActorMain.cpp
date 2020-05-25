@@ -539,3 +539,9 @@ void CActorMain::RegisterCommands()
     REGISTER_SUB_CMD_END;
 }
 
+void CActorMain::RenderSpecial()
+{
+    TUI::RenderSpecial();
+    UIBoneForm::Update();
+}
+
