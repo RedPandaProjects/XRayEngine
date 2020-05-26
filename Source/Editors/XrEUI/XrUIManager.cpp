@@ -25,7 +25,7 @@ void XrUIManager::Initialize(HWND hWnd, IDirect3DDevice9* device)
     io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
     // Setup Dear ImGui style
     ImGui::StyleColorsClassic();
-    ImGui::Spectrum::LoadFont();
+   // ImGui::Spectrum::LoadFont();
     //ImGui::GetStyle().IndentSpacing = 12;
     ImGui_ImplWin32_Init(hWnd);
     ImGui_ImplDX9_Init(device);
