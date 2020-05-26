@@ -80,7 +80,15 @@ namespace ChoseEvents
     void   UpdateObjectTHM(LPCSTR name, ImTextureID&ID)
     {
         EObjectThumbnail* thm = xr_new<EObjectThumbnail>(name);
-        if (thm->Valid()) thm->Update(ID);
+        if (thm->Valid())
+        {
+            thm->Update(ID);
+        }
+        else if (ID)
+        {
+            ID->Release();
+            ID = 0;
+        }
         xr_delete(thm);
     }
     //---------------------------------------------------------------------------
@@ -102,7 +110,15 @@ namespace ChoseEvents
     void   UpdateGroupTHM(LPCSTR name, ImTextureID& ID)
     {
         EGroupThumbnail* thm = xr_new<EGroupThumbnail>(name);
-        if (thm->Valid()) thm->Update(ID);
+        if (thm->Valid())
+        {
+            thm->Update(ID);
+        }
+        else if(ID)
+        {
+            ID->Release();
+            ID = 0;
+        }
         xr_delete(thm);
     }
     //---------------------------------------------------------------------------
@@ -178,7 +194,7 @@ namespace ChoseEvents
             }
             else
             {
-                R_CHK(HW.pDevice->CreateTexture(THUMB_WIDTH, THUMB_HEIGHT, 1, 0, D3DFMT_X8B8G8R8, D3DPOOL_MANAGED, &pTexture, 0));
+                R_CHK(HW.pDevice->CreateTexture(THUMB_WIDTH, THUMB_HEIGHT, 1, D3DUSAGE_DYNAMIC, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &pTexture, 0));
                 Texture = pTexture;
             }
             {
@@ -189,7 +205,11 @@ namespace ChoseEvents
                 for (u32 y = 0; y < THUMB_HEIGHT; y++)
                 {
                     dest = reinterpret_cast<u32*>(reinterpret_cast<char*>(rect.pBits)+(rect.Pitch*y));
-                    for (u32 i = 0; i < THUMB_WIDTH; i++)dest[i] = item->CalculateBGR(EDevice.fTimeGlobal, frame);
+                    for (u32 i = 0; i < THUMB_WIDTH; i++)
+                    {
+                        dest[i] = item->CalculateBGR(EDevice.fTimeGlobal, frame);
+                        dest[i] = subst_alpha(dest[i], 0xFF);
+                    }
                 }
                 R_CHK(pTexture->UnlockRect(0));
             }
