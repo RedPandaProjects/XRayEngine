@@ -15,11 +15,11 @@ public:
 public:
 	enum {
 		plReadOnly = (1 << 0),
-		plMultiSelect = (1 << 1),
 	};
 	Flags32 m_Flags;
 private:
 	virtual void DrawItem(Node* Node);
+	virtual void DrawItem(const char*name,PropItem* Node);
 	virtual bool IsDrawFloder(Node* Node);
 	virtual void DrawAfterFloderNode();
 private:

@@ -152,6 +152,7 @@ public:
         flMixed			= (1<<3),
         flDrawThumbnail	= (1<<4),
         flSorted		= (1<<5),
+        flIgnoreMixed   = (1<<6),
     };
     Flags32				m_Flags;
 public:
@@ -181,7 +182,7 @@ public:
     IC xr_string		GetDrawText		()
     {
     	VERIFY(!values.empty()); 
-        return m_Flags.is(flMixed)?xr_string("(mixed)"):values.front()->GetDrawText(OnDrawTextEvent);
+        return (m_Flags.is(flMixed) && !m_Flags.is(flIgnoreMixed) )? xr_string("(mixed)") : values.front()->GetDrawText(OnDrawTextEvent);
     }
 	IC void				CheckMixed		()
     {
@@ -223,7 +224,10 @@ public:
                 if (!CV->OnChangeEvent.empty()) CV->OnChangeEvent(*it);
             }
             if (!CV->Equal(values.front()))
-                m_Flags.set	(flMixed,TRUE);
+            {
+                m_Flags.set(flMixed, TRUE);
+                m_Flags.set(flIgnoreMixed, FALSE);
+            }
         }
         return bChanged;
     }

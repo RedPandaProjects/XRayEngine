@@ -52,6 +52,7 @@
     <ClCompile Include="UIKeyPressForm.cpp" />
     <ClCompile Include="UINumericVectorForm.cpp" />
     <ClCompile Include="UIPropertiesForm.cpp" />
+    <ClCompile Include="UIPropertiesForm_DrawItem.cpp" />
     <ClCompile Include="UITextForm.cpp" />
   </ItemGroup>
   <ItemGroup>
