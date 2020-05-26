@@ -28,7 +28,7 @@ public:
 	virtual bool 	ApplyShortCut(DWORD Key, TShiftState Shift)=0;
 
 	inline float GetMenuBarHeight()const { return m_MenuBarHeight; }
-
+	inline TShiftState GetShiftState()const { return m_ShiftState; };
 protected:
 	virtual void RenderSpecial();
 private:

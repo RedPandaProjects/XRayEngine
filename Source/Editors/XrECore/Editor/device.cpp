@@ -457,6 +457,14 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 	switch (msg)
 	{
+	case WM_KEYDOWN: 
+	case WM_SYSKEYDOWN:
+		if(UI)UI->KeyDown(wParam,UI->GetShiftState());
+		break;
+	case WM_KEYUP:
+	case WM_SYSKEYUP:
+		if (UI)UI->KeyUp(wParam, UI->GetShiftState());
+		break;
 	case WM_ACTIVATE:
 	{
 		u16 fActive = LOWORD(wParam);

@@ -241,7 +241,7 @@ bool CUI_Camera::KeyDown(WORD Key, TShiftState Shift)
 {
     if (m_bMoving){
     	switch (Key){
-        case VK_CONTROL:  TShiftState(ssCtrl | m_Shift); break;
+        case VK_CONTROL:  m_Shift = ssCtrl | m_Shift; break;
         default: return false;
         }
 	    return true;
@@ -253,8 +253,8 @@ bool CUI_Camera::KeyUp(WORD Key, TShiftState Shift)
 {
     if (m_bMoving){
     	switch (Key){
-        case VK_SHIFT:  TShiftState(~ssShift & m_Shift); MoveEnd(m_Shift); break;
-        case VK_CONTROL: TShiftState(~ssCtrl & m_Shift); break;
+        case VK_SHIFT:  m_Shift = ~ssShift & m_Shift; MoveEnd(m_Shift); break;
+        case VK_CONTROL: m_Shift = ~ssCtrl & m_Shift; break;
         default: return false;
         }
 	    return true;
