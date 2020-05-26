@@ -207,26 +207,26 @@ void TUI::IR_OnMouseMove(int x, int y)
 
 void TUI::OnAppActivate()
 {
-	VERIFY(m_bReady);
+    m_bAppActive = true;
+    if (!m_bReady)return;
 	if (pInput){
         m_ShiftState = ssNone;
      	pInput->OnAppActivate();
         EDevice.seqAppActivate.Process	(rp_AppActivate);
     }
-    m_bAppActive 	= true;
 }
 //---------------------------------------------------------------------------
 
 void TUI::OnAppDeactivate()
 {
-	VERIFY(m_bReady);
+    m_bAppActive = false;
+    if (!m_bReady)return;
 	if (pInput){
 		pInput->OnAppDeactivate();
         m_ShiftState = ssNone;
         EDevice.seqAppDeactivate.Process(rp_AppDeactivate);
     }
     HideHint();
-    m_bAppActive 	= false;
 }
 //---------------------------------------------------------------------------
 
@@ -457,6 +457,7 @@ void TUI::Redraw()
 void TUI::RealResize()
 {
     m_Flags.set			(flResize,FALSE);
+    if(m_Size.x&& m_Size.y)
     EDevice.Resize(m_Size.x, m_Size.y);
     ExecCommand			(COMMAND_UPDATE_PROPERTIES);
 }
@@ -490,10 +491,27 @@ bool TUI::Idle()
 	VERIFY(m_bReady);
    // EDevice.b_is_Active  = Application->Active;
 	// input
+    MSG msg;
+    do
+    {
+        ZeroMemory(&msg, sizeof(msg));
+        if (::PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
+        {
+            ::TranslateMessage(&msg);
+            ::DispatchMessage(&msg);
+            if (msg.message == WM_QUIT)
+            {
+                UI->Quit();
+            }
+            continue;
+        }
+
+    } while (msg.message);
     pInput->OnFrame();
     Sleep(1);
 
     OnFrame			();
+    if(m_bAppActive)
     RealRedrawScene();
 
     // test quit
@@ -542,6 +560,7 @@ bool TUI::OnCreate()
     RTSize.set(GetRenderWidth(), GetRenderHeight());
     RT.create("rt_color", RTSize .x*EDevice.m_ScreenQuality, RTSize.y * EDevice.m_ScreenQuality, HW.Caps.fTarget);
     ZB.create("rt_depth", RTSize.x * EDevice.m_ScreenQuality, RTSize.y* EDevice.m_ScreenQuality, D3DFORMAT::D3DFMT_D24X8);
+
     return true;
 }
 
@@ -549,6 +568,7 @@ void TUI::OnDestroy()
 {
     RT.destroy();
     ZB.destroy();
+
 	VERIFY(m_bReady);
 	m_bReady		= false;
 	UI->IR_Release	();

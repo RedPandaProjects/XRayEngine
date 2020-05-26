@@ -298,22 +298,6 @@ void CEditorRenderDevice::Reset  	()
 
 BOOL CEditorRenderDevice::Begin	()
 {
-	MSG msg;
-	do
-	{
-		ZeroMemory(&msg, sizeof(msg));
-		if (::PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
-		{
-			::TranslateMessage(&msg);
-			::DispatchMessage(&msg);
-			if (msg.message == WM_QUIT)
-			{
-				UI->Quit();
-			}
-			continue;
-		}
-
-	} while (msg.message);
 	VERIFY(b_is_Ready);
 	HW.Validate		();
 	HRESULT	_hr		= HW.pDevice->TestCooperativeLevel();
@@ -473,6 +457,26 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 	switch (msg)
 	{
+	case WM_ACTIVATE:
+	{
+		u16 fActive = LOWORD(wParam);
+		BOOL fMinimized = (BOOL)HIWORD(wParam);
+		BOOL bActive = ((fActive != WA_INACTIVE) && (!fMinimized)) ? TRUE : FALSE;
+		if (bActive != EDevice.b_is_Active)
+		{
+			EDevice.b_is_Active = bActive;
+
+			if (EDevice.b_is_Active)
+			{
+				if (UI)UI->OnAppActivate();
+			}
+			else
+			{
+				if (UI)UI->OnAppDeactivate();
+			}
+		}
+	}
+	break;
 	case WM_SIZE:
 
 		if (UI && HW.pDevice)
