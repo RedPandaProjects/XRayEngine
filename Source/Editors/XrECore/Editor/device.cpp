@@ -92,6 +92,10 @@ void CEditorRenderDevice::Initialize()
 	Create				();
 
     ::Render->Initialize();
+
+	Resize(EPrefs->start_w, EPrefs->start_h);
+	HW.updateWindowProps(m_hWnd);
+	::ShowWindow(m_hWnd, SW_SHOWDEFAULT);
 }
 
 void CEditorRenderDevice::ShutDown()
@@ -136,7 +140,7 @@ bool CEditorRenderDevice::Create()
 	ELog.Msg(mtInformation,"Starting RENDER device...");
 
 
-	HW.CreateDevice		(m_hWnd, false);
+	HW.CreateDevice		(m_hWnd, true);
 
 	if (UI)UI->Initialize(m_hWnd, HW.pDevice);
 	// after creation
@@ -302,9 +306,13 @@ BOOL CEditorRenderDevice::Begin	()
 		{
 			::TranslateMessage(&msg);
 			::DispatchMessage(&msg);
+			if (msg.message == WM_QUIT)
+			{
+				UI->Quit();
+			}
 			continue;
 		}
-		R_ASSERT(msg.message != WM_QUIT);
+
 	} while (msg.message);
 	VERIFY(b_is_Ready);
 	HW.Validate		();
@@ -450,7 +458,7 @@ void CEditorRenderDevice::CreateWindow()
 	m_WC = { sizeof(WNDCLASSEX), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, TEXT("XRay Editor"), NULL };
 	::RegisterClassEx(&m_WC);
 	m_hWnd= ::CreateWindowA(m_WC.lpszClassName, TEXT("XRay Editor"), WS_OVERLAPPEDWINDOW, 100, 100, 1280, 800, NULL, NULL, m_WC.hInstance, NULL);
-	::ShowWindow(m_hWnd, SW_SHOWDEFAULT);
+	
 	::UpdateWindow(m_hWnd);
 }
 void CEditorRenderDevice::DestryWindow()

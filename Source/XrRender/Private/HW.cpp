@@ -542,7 +542,7 @@ void	CHW::updateWindowProps	(HWND m_hWnd)
 			if (strstr(Core.Params,"-no_dialog_header"))
 				SetWindowLong	( m_hWnd, GWL_STYLE, dwWindowStyle=(WS_BORDER|WS_VISIBLE) );
 			else
-				SetWindowLong	( m_hWnd, GWL_STYLE, dwWindowStyle=(WS_BORDER|WS_DLGFRAME|WS_VISIBLE|WS_SYSMENU|WS_MINIMIZEBOX ) );
+				SetWindowLong	( m_hWnd, GWL_STYLE, dwWindowStyle=(WS_OVERLAPPEDWINDOW) );
 			// When moving from fullscreen to windowed mode, it is important to
 			// adjust the window size after recreating the device rather than
 			// beforehand to ensure that you get the window size you want.  For
@@ -553,7 +553,7 @@ void	CHW::updateWindowProps	(HWND m_hWnd)
 			// desktop.
 
 			RECT			m_rcWindowBounds;
-			BOOL			bCenter = FALSE;
+			BOOL			bCenter = TRUE;
 			if (strstr(Core.Params, "-center_screen"))	bCenter = TRUE;
 
 #ifndef _EDITOR

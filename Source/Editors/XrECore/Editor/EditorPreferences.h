@@ -26,6 +26,8 @@ class ECORE_API CCustomPreferences:protected XrUI
 private:	// User declarations
     UIPropertiesForm*	m_ItemProps;
 public:
+    u32             start_w;
+    u32             start_h;
 	// view
     float 			view_np;
     float 			view_fp;
