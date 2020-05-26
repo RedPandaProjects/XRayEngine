@@ -5,16 +5,21 @@ class XREPROPS_API UIChooseForm :
     virtual void DrawItem(Node* Node);
     virtual bool IsDrawFloder(Node* Node);
     void AppendItem(SChooseItem& item);
+    void UpdateTexture();
     Node m_GeneralNode;
     ImTextureID m_Texture;
     ImGuiTextFilter m_Filter;
 private:
     int 			iMultiSelLimit;
+    int             iSelectedInList;
     UIPropertiesForm* m_Props;
     Flags32  m_Flags;
     xr_string m_Title;
-    SChooseItem* m_SelectedItem;
+    xr_vector<SChooseItem*>m_SelectedItems;
+
+    inline SChooseItem* GetSelectedItem() { if (m_SelectedItems.size()) { return m_SelectedItems.back(); }return nullptr; }
     SChooseItem* m_ClickItem;
+    SChooseItem* m_SelectedItem;
     SChooseItem m_ItemNone;
     ChooseItemVec	m_Items;
     u32 m_ChooseID;

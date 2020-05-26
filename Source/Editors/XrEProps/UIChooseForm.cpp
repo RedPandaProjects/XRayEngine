@@ -11,29 +11,43 @@ void UIChooseForm::DrawItem(Node* Node)
         if (Node->Selected)
         {
             ImGui::SetScrollHereY();
-            if (m_SelectedItem && E.flags.test(SChooseEvents::flClearTexture))
-            {
-                if(m_Texture)
-                m_Texture->Release();
-                m_Texture = 0;
-            }
-            if (!E.on_get_texture.empty())E.on_get_texture(Node->Object->name.c_str(), m_Texture);
+            m_SelectedItem = Node->Object;
             m_ClickItem = Node->Object;
         }
         ImGuiTreeNodeFlags Flags = ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
-        if (m_SelectedItem == Node->Object)
-            Flags |= ImGuiTreeNodeFlags_Bullet;
+
+        for (auto& item : m_SelectedItems)
+        {
+            if (item == Node->Object)
+            {
+                Flags |= ImGuiTreeNodeFlags_Bullet;
+                break;
+            }
+        }
+        if (m_SelectedItem ==  Node->Object)
+        {
+            Flags |= ImGuiTreeNodeFlags_Selected;
+        }
+           
         ImGui::TreeNodeEx(Node->Name.c_str(), Flags);
         if (ImGui::IsItemClicked())
         {
-            if (m_SelectedItem && E.flags.test(SChooseEvents::flClearTexture))
+            if ( E.flags.test(SChooseEvents::flClearTexture))
             {
                 if (m_Texture)
                     m_Texture->Release();
                 m_Texture = 0;
             }
-            if (!E.on_get_texture.empty())E.on_get_texture(Node->Object->name.c_str(), m_Texture);
-            m_ClickItem = Node->Object;
+            m_SelectedItem = Node->Object;
+            UpdateTexture();
+            if (!E.on_sel.empty() && !m_Flags.is(cfMultiSelect))
+            {
+                PropItemVec Vec;
+                E.on_sel(m_SelectedItem, Vec);
+                m_Props->AssignItems(Vec);
+            }
+            if (ImGui::GetIO().KeyCtrl||!!m_Flags.is(cfMultiSelect))
+                m_ClickItem = Node->Object;
         }
     }
 
@@ -59,6 +73,28 @@ void UIChooseForm::AppendItem(SChooseItem& item)
    Node*node =  AppendObject(&m_GeneralNode, item.name.c_str());
    VERIFY(node);
    node->Object = &item;
+}
+void UIChooseForm::UpdateTexture()
+{
+    if (m_SelectedItem == &m_ItemNone)
+    {
+        if (m_Texture)m_Texture->Release();
+        m_Texture = nullptr;
+        m_SelectedItems.clear();
+    }
+    else  if (m_SelectedItem)
+    {
+
+        if (m_SelectedItem && E.flags.test(SChooseEvents::flClearTexture))
+        {
+            if (m_Texture)
+                m_Texture->Release();
+            m_Texture = 0;
+        }
+        if (!E.on_get_texture.empty())
+            E.on_get_texture(m_SelectedItem->name.c_str(), m_Texture);
+    }
+
 }
 void UIChooseForm::FillItems(u32 choose_id)
 {
@@ -88,7 +124,8 @@ void UIChooseForm::FillItems(u32 choose_id)
     if (m_Flags.is(cfFullExpand))*
         form->tvItems->FullExpand();*/
 }
-UIChooseForm::UIChooseForm():m_Texture(nullptr),m_SelectedItem(nullptr),m_ClickItem(nullptr)
+
+UIChooseForm::UIChooseForm():m_Texture(nullptr),m_ClickItem(nullptr), iSelectedInList(-1), m_SelectedItem(nullptr)
 {
     m_Props = xr_new<UIPropertiesForm>();
    // m_Props->AsGroup();
@@ -105,6 +142,7 @@ UIChooseForm::~UIChooseForm()
 }
 void UIChooseForm::Draw()
 {
+ 
     if (!m_LastSelection.empty())
     {
         Node* N = FindObject(&m_GeneralNode, m_LastSelection.c_str());
@@ -157,60 +195,97 @@ void UIChooseForm::Draw()
                 }
                 ImGui::Separator();
             }
-            if (!E.on_sel.empty())
+            if (!E.on_sel.empty()&&!m_Flags.is(cfMultiSelect))
             {
-                if (m_SelectedItem)
+            if (m_SelectedItem)
+            {
+                if (ImGui::BeginChild("Props"))
                 {
-                    if (ImGui::BeginChild("Props"))
-                    {
-                        m_Props->Draw();
-                    }
-                    ImGui::EndChild();
+                    m_Props->Draw();
                 }
+                ImGui::EndChild();
+            }
+            }
+            else if (m_Flags.is(cfMultiSelect))
+            {
+            if (ImGui::BeginChild("List", ImVec2(0, -ImGui::GetTextLineHeight() - 10), true))
+            {
+                int i = 0;
+
+                int HereY = -iSelectedInList - 2;
+                if (HereY >= 0)iSelectedInList = HereY;
+                for (auto& item : m_SelectedItems)
+                {
+                    if (HereY == i)
+                        ImGui::SetScrollHereY();
+                    if (ImGui::Selectable(item->name.c_str(), iSelectedInList == i))
+                    {
+                        iSelectedInList = i;
+                    }
+                    i++;
+                }
+            }
+            ImGui::EndChild();
+            if (ImGui::Button("Up")) { if (iSelectedInList > 0) { std::swap(m_SelectedItems[iSelectedInList - 1], m_SelectedItems[iSelectedInList]); iSelectedInList = -(iSelectedInList - 1) - 2; } } ImGui::SameLine();
+            if (ImGui::Button("Down")) { if (m_SelectedItems.size() > 1 && iSelectedInList < m_SelectedItems.size() - 1) { std::swap(m_SelectedItems[iSelectedInList], m_SelectedItems[iSelectedInList + 1]); iSelectedInList = -(iSelectedInList + 1) - 2; } }  ImGui::SameLine();
+            if (ImGui::Button("Del")) { if (m_SelectedItems.size() && iSelectedInList >= 0) { m_SelectedItems.erase(m_SelectedItems.begin() + iSelectedInList); iSelectedInList = -1; } } ImGui::SameLine();
+            if (ImGui::Button("Clear List")) { m_SelectedItems.clear(); iSelectedInList = -1;/*  if (E.flags.test(SChooseEvents::flClearTexture) ){ if (m_Texture)m_Texture->Release(); m_Texture = 0; } */ImGui::SameLine(); }
             }
             ImGui::EndChild();
         }
         {
-            ImGui::SetNextItemWidth(200 - ImGui::CalcTextSize("  Find").x);
-            m_Filter.Draw("Find");
-            ImGui::SameLine(210);
-            if (ImGui::Button("Ok", ImVec2(100, 0)))
-            {
-                m_Result = R_Ok;
-                bOpen= false;
-            }
-            ImGui::SameLine(0);
-            if (ImGui::Button("Cancel", ImVec2(100, 0)))
-            {
-                m_Result = R_Cancel;
-                bOpen = false;
-            }
+        ImGui::SetNextItemWidth(200 - ImGui::CalcTextSize("  Find").x);
+        m_Filter.Draw("Find");
+        ImGui::SameLine(210);
+        if (ImGui::Button("Ok", ImVec2(100, 0)))
+        {
+            m_Result = R_Ok;
+            bOpen = false;
+        }
+        ImGui::SameLine(0);
+        if (ImGui::Button("Cancel", ImVec2(100, 0)))
+        {
+            m_Result = R_Cancel;
+            bOpen = false;
+        }
         }
     }
-
+   
     if (m_ClickItem)
     {
-        if (m_ClickItem == &m_ItemNone)
+       
         {
-            if (m_Texture)m_Texture->Release();
-            m_Texture = nullptr;
-            m_SelectedItem = nullptr;
-        }
-        else
-        {
-            if (!E.on_sel.empty())
+           
+
+            if (!m_Flags.is(cfMultiSelect))
             {
-                PropItemVec Vec;
-                E.on_sel(m_ClickItem, Vec);
-                m_Props->AssignItems(Vec);
+                m_SelectedItems.clear();
+            }
+            else
+            {
+                for (auto b = m_SelectedItems.begin(), e = m_SelectedItems.end(); b != e; b++)
+                {
+                    if (*b == m_ClickItem)
+                    {
+                        iSelectedInList = -1;
+                        m_SelectedItems.erase(b);
+                        m_ClickItem = nullptr;
+                        return;
+                    }
+                }
+            }
+            if (m_SelectedItems.size() != iMultiSelLimit)
+            {
+                m_SelectedItems.push_back(m_ClickItem);
+                iSelectedInList = -1;
             }
 
-            m_SelectedItem = m_ClickItem;
             m_ClickItem = nullptr;
         }
-       
+
     }
 }
+
 void UIChooseForm::SetNullTexture(ImTextureID Texture)
 {
     NullTexture = Texture;
@@ -234,8 +309,19 @@ bool UIChooseForm::GetResult(bool& change, shared_str& result)
     {
         if (Form->m_Result == R_Ok)
         {
-            VERIFY(Form->m_SelectedItem);
-            result = Form->m_SelectedItem->name;
+            VERIFY(Form->GetSelectedItem());
+            xr_string reuslt_temp;
+            int i = 0;
+            for (auto& item : Form->m_SelectedItems)
+            {
+                if (i != 0)
+                {
+                    reuslt_temp.append(",");
+                }
+                reuslt_temp.append(item->name.c_str());
+                i++;
+            }
+            result = reuslt_temp.c_str();
             change = true;
             xr_delete(Form);
             return true;
