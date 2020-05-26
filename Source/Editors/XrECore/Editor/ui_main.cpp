@@ -22,6 +22,7 @@ TUI* 	UI			= 0;
 TUI::TUI()
 {
 	UI				= this;
+    m_AppClosed = false;
     m_bAppActive 	= false;
 	m_bReady 		= false;
     bNeedAbort   	= false;
@@ -484,20 +485,20 @@ void TUI::OnFrame()
     // Progress
     ProgressDraw		();
 }
-void TUI::Idle()         
+bool TUI::Idle()         
 {
 	VERIFY(m_bReady);
    // EDevice.b_is_Active  = Application->Active;
 	// input
     pInput->OnFrame();
     Sleep(1);
-    if (ELog.in_use) return;
 
     OnFrame			();
     RealRedrawScene();
 
     // test quit
     if (m_Flags.is(flNeedQuit))	RealQuit();
+    return !m_AppClosed;
 }
 //---------------------------------------------------------------------------
 void ResetActionToSelect()
@@ -541,7 +542,6 @@ bool TUI::OnCreate()
     RTSize.set(GetRenderWidth(), GetRenderHeight());
     RT.create("rt_color", RTSize .x*EDevice.m_ScreenQuality, RTSize.y * EDevice.m_ScreenQuality, HW.Caps.fTarget);
     ZB.create("rt_depth", RTSize.x * EDevice.m_ScreenQuality, RTSize.y* EDevice.m_ScreenQuality, D3DFORMAT::D3DFMT_D24X8);
- 
     return true;
 }
 
@@ -555,8 +555,7 @@ void TUI::OnDestroy()
     xr_delete		(pInput);
     EndEState		();
 
-    EDevice.ShutDown	();
-    
+    EDevice.ShutDown();    
 }
 
 SPBItem* TUI::ProgressStart		(float max_val, LPCSTR text)

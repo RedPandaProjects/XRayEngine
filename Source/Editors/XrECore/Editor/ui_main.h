@@ -38,6 +38,8 @@ typedef EStateList::iterator EStateIt;
 
 class ECORE_API TUI: public IInputReceiver,public XrUIManager
 {
+    bool m_AppClosed;
+    inline void	RealQuit() { m_AppClosed = true; }
 protected:
     Ivector2 m_Size;
 protected:
@@ -109,7 +111,6 @@ public:
     // mouse sensetive
     float m_MouseSM, m_MouseSS, m_MouseSR;
 protected:
-    virtual void	RealQuit		()=0;
     virtual void 	RealUpdateScene	()=0;
     void			RealRedrawScene	();
     void			RealResize		();
@@ -132,10 +133,10 @@ public:
     virtual void 	OnDestroy		();
 
     virtual char* 	GetCaption		()=0;
-
+ 
     bool 			IsModified		();
 
-    void  Idle			();
+    bool  Idle			();
     void 			Resize(int x, int y, bool bForced = false) { m_Size.set(x, y);   m_Flags.set(flResize | flRedraw, TRUE); if (bForced) RealResize(); }
     void 			Resize(bool bForced = false) { m_Flags.set(flResize | flRedraw, TRUE); if (bForced) RealResize(); }
 

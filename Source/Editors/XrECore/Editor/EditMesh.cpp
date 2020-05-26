@@ -59,7 +59,8 @@ void CEditableMesh::Clear()
     UnloadFNormals		();
     UnloadVNormals		();
     UnloadSVertices		();
-
+	if (m_SmoothGroups)xr_free(m_SmoothGroups);
+	m_SmoothGroups = 0;
 	VERIFY				(m_FNormalsRefs==0 && m_VNormalsRefs==0 && m_AdjsRefs==0 && m_SVertRefs==0);
 
     xr_free				(m_Vertices);

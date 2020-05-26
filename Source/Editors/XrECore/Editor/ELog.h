@@ -31,6 +31,7 @@ public:
 	void 		Msg   	(TMsgDlgType mt, LPCSTR _Format, ...);
 	int 		DlgMsg 	(TMsgDlgType mt, LPCSTR _Format, ...);
 	int 		DlgMsg 	(TMsgDlgType mt, TMsgDlgButtons btn, LPCSTR _Format, ...);
+	void Close();
 };
 
 void ECORE_API ELogCallback(LPCSTR txt);

@@ -41,7 +41,8 @@ void UIMainForm::Draw()
     m_Render->Draw();
 }
 
-void UIMainForm::Frame()
+bool UIMainForm::Frame()
 {
-    if(UI)   UI->Idle();
+    if(UI)  return UI->Idle();
+    return false;
 }

@@ -175,6 +175,12 @@ int CLog::DlgMsg (TMsgDlgType mt, TMsgDlgButtons btn, LPCSTR _Format, ...)
     return res;
 }
 
+void CLog::Close()
+{
+	SetLogCB(0);
+	UILogForm::Destroy();
+}
+
 
 int CLog::DlgMsg (TMsgDlgType mt, LPCSTR _Format, ...)
 {

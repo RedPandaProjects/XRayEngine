@@ -31,7 +31,6 @@ class CActorMain: public TUI{
 	typedef TUI inherited;
 
     virtual void 	RealUpdateScene			();
-    virtual void 	RealQuit				();
 public:
     				CActorMain 				();
     virtual 		~CActorMain				();

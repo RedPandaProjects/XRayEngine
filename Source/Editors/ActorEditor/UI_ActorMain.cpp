@@ -294,11 +294,7 @@ void CActorMain::OutInfo()
 	//fraBottomBar->paSel->Caption = Tools->GetInfo();
 }
 //---------------------------------------------------------------------------
-void CActorMain::RealQuit()
-{
-    not_implemented_low();
-	//frmMain->Close();
-}
+
 //---------------------------------------------------------------------------
 
 void CAEPreferences::Load(CInifile* I)
@@ -400,10 +396,6 @@ CCommandVar CommandRestoreUIBar(CCommandVar p1, CCommandVar p2)
 }
 CCommandVar CommandSaveUIBar(CCommandVar p1, CCommandVar p2)
 {
-    not_implemented();
-    /*fraTopBar->fsStorage->SaveFormPlacement();
-    fraLeftBar->fsStorage->SaveFormPlacement();
-    fraBottomBar->fsStorage->SaveFormPlacement();*/
     return TRUE;
 }
 CCommandVar CommandUpdateToolBar(CCommandVar p1, CCommandVar p2)

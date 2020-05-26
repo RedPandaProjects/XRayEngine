@@ -230,6 +230,11 @@ void CDrawUtilities::OnDeviceCreate()
     m_axis_object = NULL;
 }
 
+void CDrawUtilities::DestroyObjects()
+{
+    Lib.RemoveEditObject(m_axis_object);
+}
+
 void CDrawUtilities::OnDeviceDestroy()
 {
 	EDevice.seqRender.Remove		(this);
@@ -248,7 +253,6 @@ void CDrawUtilities::OnDeviceDestroy()
 	vs_L.destroy		();
 	vs_TL.destroy		();
 	vs_LIT.destroy		();
- 	Lib.RemoveEditObject(m_axis_object);
 }
 //----------------
 

@@ -291,9 +291,16 @@ CCommandVar 	CommandDestroy(CCommandVar p1, CCommandVar p2)
     Tools->OnDestroy	();
     SndLib->OnDestroy	();
     xr_delete			(SndLib);
+    DU_impl.DestroyObjects();
     Lib.OnDestroy		();
     UI->OnDestroy		();
     Engine.Destroy		();
+    ELog.Close();
+    for (auto& item : ECommands)
+    {
+        xr_delete(item);
+    }
+    ECommands.clear();
     return				TRUE;
 }             
 CCommandVar 	CommandQuit(CCommandVar p1, CCommandVar p2)

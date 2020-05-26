@@ -5,7 +5,7 @@ public:
 	UIMainForm();
 	virtual ~UIMainForm();
 	virtual void Draw();
-	void Frame();
+	bool Frame();
 	IC UILeftBarForm* GetLeftBarForm() {return m_LeftBar;}
 	IC UITopBarForm* GetTopBarForm() { return m_TopBar; }
 	IC UIKeyForm* GetKeyForm() { return m_KeyForm; }

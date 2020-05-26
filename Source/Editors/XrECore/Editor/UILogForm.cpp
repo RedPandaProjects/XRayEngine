@@ -7,7 +7,7 @@
 #define MSG_CONF 	0x00FFE6E7
 #define MSG_DEF  	0x00E8E8E8
 bool UILogForm::bAutoScroll = true;
- xr_vector<xr_string> UILogForm::List;
+xr_vector<xr_string>* UILogForm::List = nullptr;
 extern bool bAllowLogCommands;
 void UILogForm::AddMessage(TMsgDlgType mt, const xr_string& msg)
 {
@@ -18,12 +18,12 @@ void UILogForm::AddMessage(TMsgDlgType mt, const xr_string& msg)
 		if (msg[i] == '\n') M += " ";
 		else M += msg[i];
 	}
-	List.push_back(M);
+	GetList()->push_back(M);
 }
 
 void UILogForm::AddDlgMessage(TMsgDlgType mt, const xr_string& msg)
 {
-	List.push_back(msg);
+	GetList()->push_back(msg);
 }
 
 void UILogForm::Show()
@@ -47,7 +47,7 @@ void UILogForm::Update()
 		}
 		if (ImGui::Button("Clear")) 
 		{
-			List.clear();
+			GetList()->clear();
 		}ImGui::SameLine();
 		if (ImGui::Button("Flush")) 
 		{
@@ -57,9 +57,9 @@ void UILogForm::Update()
 		ImGui::Spacing();
 		if (ImGui::BeginChild("Log",ImVec2(0,0),true))
 		{
-			for (int i = 0; i < List.size(); i++)
+			for (int i = 0; i < GetList()->size(); i++)
 			{
-				ImGui::Text(List[i].c_str());
+				ImGui::Text(GetList()->at(i).c_str());
 			}
 			if (bAutoScroll)ImGui::SetScrollHereY();
 			
@@ -67,4 +67,15 @@ void UILogForm::Update()
 		ImGui::EndChild();
 		ImGui::End();
 	}
+}
+
+void UILogForm::Destroy()
+{
+	xr_delete(List);
+}
+
+xr_vector<xr_string>* UILogForm::GetList()
+{
+	if (!List)List = xr_new<xr_vector<xr_string>>();
+	return List;
 }
