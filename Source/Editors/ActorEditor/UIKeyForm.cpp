@@ -169,16 +169,18 @@ void UIKeyForm::SetMark(int id, int action)
 
 void UIKeyForm::DrawMark(int id)
 {
+	for (int i = 0; i < m_TempForPlotHistogram.size(); i++)
+	{
+		m_TempForPlotHistogram[i] = 0;
+	}
+	if (!m_currentEditMotion)return;
 	motion_marks& M = m_currentEditMotion->marks[id];
+
 	float a, b, c;
 	ATools->GetStatTime(a, b, c);
 	float motion_length = b - a;
 
-	for (int i =0; i < m_TempForPlotHistogram.size(); i++)
-	{
-		m_TempForPlotHistogram[i] = 0;
-	}
-
+	
 	float k_len = m_TempForPlotHistogram.size() / motion_length;
 
 	motion_marks::C_ITERATOR it = M.intervals.begin();
