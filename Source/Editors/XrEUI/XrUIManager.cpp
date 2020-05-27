@@ -12,11 +12,13 @@ XrUIManager::~XrUIManager()
 {
 }
 
-void XrUIManager::Initialize(HWND hWnd, IDirect3DDevice9* device)
+void XrUIManager::Initialize(HWND hWnd, IDirect3DDevice9* device, const char* ini_path)
 {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
+    xr_strcpy(m_name_ini, ini_path);
+    io.IniFilename = m_name_ini;
     //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
     //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
@@ -29,6 +31,7 @@ void XrUIManager::Initialize(HWND hWnd, IDirect3DDevice9* device)
     //ImGui::GetStyle().IndentSpacing = 12;
     ImGui_ImplWin32_Init(hWnd);
     ImGui_ImplDX9_Init(device);
+
 }
 
 void XrUIManager::Destroy()

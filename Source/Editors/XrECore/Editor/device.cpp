@@ -141,8 +141,17 @@ bool CEditorRenderDevice::Create()
 
 
 	HW.CreateDevice		(m_hWnd, true);
-
-	if (UI)UI->Initialize(m_hWnd, HW.pDevice);
+	if (UI)
+	{	
+		string_path 		ini_path;
+		string_path			ini_name;
+		xr_strcpy			(ini_name, UI->EditorName());
+		xr_strcat			(ini_name, "_imgui.ini");
+		FS.update_path(ini_path, "$local_root$", ini_name);
+		if (!FS.exist(ini_name))UI->AutoDocking();
+		UI->Initialize(m_hWnd, HW.pDevice, ini_path);
+	}
+	
 	// after creation
 	dwFrame				= 0;
 
