@@ -148,7 +148,7 @@ bool CEditorRenderDevice::Create()
 		xr_strcpy			(ini_name, UI->EditorName());
 		xr_strcat			(ini_name, "_imgui.ini");
 		FS.update_path(ini_path, "$local_root$", ini_name);
-		if (!FS.exist(ini_name))UI->AutoDocking();
+		if (!FS.exist(ini_name))UI->ResetUI();
 		UI->Initialize(m_hWnd, HW.pDevice, ini_path);
 	}
 	

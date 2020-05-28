@@ -197,7 +197,6 @@ void CCustomPreferences::Edit()
    // m_ItemProps->ShowPropertiesModal();
 
     // save changed options
-    Save							();
 }
 //---------------------------------------------------------------------------
 
@@ -318,7 +317,13 @@ void CCustomPreferences::Draw()
     if (!ImGui::Begin("Editor Preferences",&bOpen,ImGuiWindowFlags_NoResize| ImGuiWindowFlags_AlwaysAutoResize))
     {
         ImGui::End();
+       
         return;
+    }
+    if (!bOpen)
+    {
+        OnClose();
+        Save();
     }
     {
         ImGui::BeginChild("Edit", ImVec2(450, 250));

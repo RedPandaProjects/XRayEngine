@@ -637,7 +637,6 @@ CCommandVar 	CommandAssignMacro(CCommandVar p1, CCommandVar p2)
     }
     return FALSE;
 }
-
 void TUI::RegisterCommands()
 {
 	REGISTER_CMD_S		(COMMAND_INITIALIZE,			CommandInitialize);

@@ -66,6 +66,7 @@ protected:
         flUpdateScene	= (1<<1),
         flResize		= (1<<2),
         flNeedQuit		= (1<<3),
+        flResetUI       = (1<<4),
     };
 	Flags32 m_Flags;
 protected:
@@ -231,8 +232,11 @@ public:
     ref_rt				RT;
     ref_rt				ZB;
     _vector2<u32>            RTSize;
-    protected:
-        virtual void RenderSpecial();
+protected:
+    virtual void RenderSpecial();
+    void RealResetUI();
+public:
+   IC  void ResetUI(bool bForced=false)  { if (!bForced)m_Flags.set(flResetUI, TRUE); if (bForced) RealResetUI(); }
 };
 //---------------------------------------------------------------------------
 extern ECORE_API TUI* UI;  

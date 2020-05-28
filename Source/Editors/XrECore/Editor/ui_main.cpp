@@ -507,6 +507,8 @@ bool TUI::Idle()
         }
 
     } while (msg.message);
+    if (m_Flags.is(flResetUI))RealResetUI();
+
     pInput->OnFrame();
     Sleep(1);
 
@@ -605,6 +607,17 @@ void TUI::RenderSpecial()
     UISoundEditorForm::Update();
     UIMinimapEditorForm::Update();
     UILogForm::Update();
+}
+
+void TUI::RealResetUI()
+{
+    m_Flags.set(flResetUI, FALSE);
+    string_path 		ini_path;
+    if (FS.exist(ini_path, "$server_data_root$", UI->EditorName(), "_imgui_default.ini"))
+    {
+        UI->Resize(1280, 800);
+        ImGui::LoadIniSettingsFromDisk(ini_path);
+    }
 }
 
 void SPBItem::GetInfo			(xr_string& txt, float& p, float& m)
