@@ -12,6 +12,13 @@ void UIChooseForm::DrawItem(Node* Node)
         {
             ImGui::SetScrollHereY();
             m_SelectedItem = Node->Object;
+            UpdateTexture();
+            if (!E.on_sel.empty() && !m_Flags.is(cfMultiSelect))
+            {
+                PropItemVec Vec;
+                E.on_sel(m_SelectedItem, Vec);
+                m_Props->AssignItems(Vec);
+            }
             m_ClickItem = Node->Object;
         }
         ImGuiTreeNodeFlags Flags = ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
@@ -46,7 +53,7 @@ void UIChooseForm::DrawItem(Node* Node)
                 E.on_sel(m_SelectedItem, Vec);
                 m_Props->AssignItems(Vec);
             }
-            if (ImGui::GetIO().KeyCtrl||!!m_Flags.is(cfMultiSelect))
+            if (ImGui::GetIO().KeyCtrl||!m_Flags.is(cfMultiSelect))
                 m_ClickItem = Node->Object;
         }
     }
