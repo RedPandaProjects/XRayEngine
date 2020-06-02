@@ -215,7 +215,7 @@ void UIChooseForm::Draw()
             }
             else if (m_Flags.is(cfMultiSelect))
             {
-            if (ImGui::BeginChild("List", ImVec2(0, -ImGui::GetTextLineHeight() - 10), true))
+            if (ImGui::BeginChild("List", ImVec2(0, -ImGui::GetTextLineHeight() - 10), true, ImGuiWindowFlags_AlwaysHorizontalScrollbar| ImGuiWindowFlags_AlwaysVerticalScrollbar))
             {
                 int i = 0;
 
@@ -316,7 +316,10 @@ bool UIChooseForm::GetResult(bool& change, shared_str& result)
     {
         if (Form->m_Result == R_Ok)
         {
-            VERIFY(Form->GetSelectedItem());
+            if (!Form->m_Flags.test(cfMultiSelect))
+            {
+                VERIFY(Form->GetSelectedItem());
+            }
             xr_string reuslt_temp;
             int i = 0;
             for (auto& item : Form->m_SelectedItems)
@@ -350,8 +353,12 @@ void UIChooseForm::SelectItem(u32 choose_ID, int sel_cnt, LPCSTR init_name, TOnC
     Form->iMultiSelLimit = sel_cnt;
 
     // init
-	if (init_name&&init_name[0]) 
-        m_LastSelection = init_name;
+   
+    if(sel_cnt <= 1)
+    {
+        if (init_name && init_name[0])
+            m_LastSelection = init_name;
+    }
     //Form->tvItems->Selected = 0;
 
     // fill items
@@ -379,6 +386,23 @@ void UIChooseForm::SelectItem(u32 choose_ID, int sel_cnt, LPCSTR init_name, TOnC
         Form->E.on_fill(Form->m_Items, fill_param);
 
     Form->FillItems(choose_ID);
+
+    if (sel_cnt > 1)
+    {
+        int cnt = _GetItemCount(init_name);
+        xr_string result;
+        for (int i = 0; i < cnt; i++)
+        {
+            _GetItem(init_name, i, result);
+            for (auto& item : Form->m_Items)
+            {
+                if (item.name.c_str() == result)
+                {
+                    Form->m_SelectedItems.push_back(&item);
+                }
+            }
+        }
+    }
     /*ImGui::GetBack*/
     //.	Form->paItemsCount->Caption		= AnsiString(" Items in list: ")+AnsiString(Form->tvItems->Items->Count);
 

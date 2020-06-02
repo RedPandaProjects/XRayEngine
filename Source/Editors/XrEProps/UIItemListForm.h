@@ -4,6 +4,9 @@ class XREPROPS_API UIItemListForm :
 {
 	TOnILItemFocused	OnItemFocusedEvent;
 	TOnItemRemove	OnItemRemoveEvent;
+	TOnItemRename	OnItemRenameEvent;
+	TOnItemCreate	OnItemCreateEvent;
+	TOnItemClone	OnItemCloneEvent;
 public:
 	UIItemListForm();
 	virtual ~UIItemListForm();
@@ -12,19 +15,41 @@ public:
 	void ClearList();
 	void RemoveSelectItem();
 	void ClearSelected();
-	void AssignItems(ListItemsVec& items);
+	void SelectItem(const char* name);
+	void AssignItems(ListItemsVec& items,const char*name_selection=nullptr,bool clear_floder=true);
 	IC const ListItemsVec& GetItems()const {return m_Items;}
 	bool GetSelected(RStringVec& items)const;
 public:
-	IC void		SetOnItemFocusedEvent(TOnILItemFocused e) { OnItemFocusedEvent = e; }
-	IC void		SetOnItemRemoveEvent(TOnItemRemove e) { OnItemRemoveEvent = e; }
+	enum {
+		fMenuEdit =			(1<<0),
+	};
+	Flags32 m_Flags;
 private:
+	void DrawMenuEdit();
+	string4096 m_edit_name;
+	string4096 m_edit_path;
+	Node* m_edit_node;
+public:
+	IC void		SetOnItemFocusedEvent(TOnILItemFocused e)	{ OnItemFocusedEvent = e; }
+	IC void		SetOnItemRemoveEvent(TOnItemRemove e)		{ OnItemRemoveEvent = e; }
+	IC void		SetOnItemRenameEvent(TOnItemRename e)		{ OnItemRenameEvent = e; }
+	IC void		SetOnItemCreaetEvent(TOnItemCreate e)		{ OnItemCreateEvent = e; }
+	IC void		SetOnItemCloneEvent(TOnItemClone e)			{ OnItemCloneEvent = e; }
+private:
+	virtual void DrawAfterFloderNode(bool is_open, Node* Node = 0);
 	virtual void DrawItem(Node* Node);
 	virtual bool IsDrawFloder(Node* Node);
 	virtual void IsItemClicked(Node* Node);
 	virtual bool IsFloderBullet(Node* Node);
+	virtual bool IsFloderSelected(Node* Node);
+private:
+	virtual void EventRenameNode(Node* Node, const char* old_path, const char* new_path);
+	virtual void EventRemoveNode(Node* Node, const char* path);
+public:
 	Node m_GeneralNode;
 	ListItemsVec m_Items;
 	ListItem* m_SelectedItem;
+	bool m_UseMenuEdit;
+	void ClearObject(Node* Node);
 };
 
