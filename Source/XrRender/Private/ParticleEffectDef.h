@@ -114,6 +114,7 @@ namespace PS
 	public:
 	    DEFINE_VECTOR		(EParticleAction*,EPAVec,EPAVecIt);
 		EPAVec 				m_EActionList;
+		bool m_EditChoose;
 	public:             
 		void   	FindActionByName	(LPCSTR new_name, bool& res);
 		bool   	NameOnAfterEdit					(PropValue* sender, shared_str& edit_val);
@@ -138,6 +139,7 @@ namespace PS
 		void   	FillActionList		(ChooseItemVec& items, void* param);
         bool 				Validate 			(bool bMsg);
 		void 				Compile				(EPAVec& v);
+		void				RenderSpecial();
 #endif
 	};
 };

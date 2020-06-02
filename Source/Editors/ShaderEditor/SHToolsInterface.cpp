@@ -59,7 +59,7 @@ void ISHTools::ZoomObject(bool bOnlySel)
 xr_string ISHTools::ViewGetCurrentItem(bool bFolderOnly)
 {
     xr_string name;
-    not_implemented();
+    R_ASSERT(0);
 /*	TElTreeItem* item 	= Ext.m_Items->GetSelected();
     FHelper.MakeName	(item,0,name,bFolderOnly);*/
     return name;
@@ -74,14 +74,14 @@ TElTreeItem* ISHTools::ViewGetCurrentItem()
 
 void ISHTools::RemoveCurrent()
 {
-    not_implemented();
+    R_ASSERT(0);
 //	Ext.m_Items->RemoveSelItems();
 }
 //---------------------------------------------------------------------------
 
 void ISHTools::RenameCurrent()
 {
-    not_implemented();
+    R_ASSERT(0);
 //	Ext.m_Items->RenameSelItem();
 }
 //---------------------------------------------------------------------------

@@ -126,7 +126,7 @@ float CObjectAnimator::GetLength		()
 
 #ifdef _EDITOR
 
-#include "../ECORE/editor/d3dutils.h"
+#include "../XrECORE/editor/d3dutils.h"
 #include "envelope.h"
 
 static FvectorVec path_points;
@@ -150,13 +150,13 @@ void CObjectAnimator::DrawPath()
         EDevice.SetShader		(EDevice.m_WireShader);
         RCache.set_xform_world	(Fidentity);
         if (!path_points.empty())
-        	DU_impl.DrawPrimitiveL		(D3DPT_LINESTRIP,path_points.size()-1,path_points.begin(),path_points.size(),clr,true,false);
+        	DU_impl.DrawPrimitiveL		(D3DPT_LINESTRIP,path_points.size()-1,path_points.data(),path_points.size(),clr,true,false);
         CEnvelope* E 			= m_Current->Envelope	();
         for (KeyIt k_it=E->keys.begin(); k_it!=E->keys.end(); k_it++){
             m_Current->_Evaluate((*k_it)->time,T,r);
             if (EDevice.m_Camera.GetPosition().distance_to_sqr(T)<50.f*50.f){
                 DU_impl.DrawCross	(T,0.1f,0.1f,0.1f, 0.1f,0.1f,0.1f, clr,false);
-                DU_impl.OutText		(T,AnsiString().sprintf("K: %3.3f",(*k_it)->time).c_str(),0xffffffff,0x00000000);
+                DU_impl.OutText		(T,xr_string().sprintf("K: %3.3f",(*k_it)->time).c_str(),0xffffffff,0x00000000);
             }
         }
     }

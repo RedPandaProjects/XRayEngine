@@ -5,7 +5,11 @@
 #include "motion.h"
 
 // refs
+#ifdef _EDITOR
+class  CObjectAnimator
+#else
 class ENGINE_API CObjectAnimator
+#endif
 {
 private:
 	DEFINE_VECTOR		(COMotion*,MotionVec,MotionIt);

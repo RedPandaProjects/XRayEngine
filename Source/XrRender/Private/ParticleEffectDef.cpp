@@ -33,6 +33,9 @@ CPEDef::CPEDef()
     m_APDefaultRotation.set		(-PI_DIV_2,0.f,0.f);
 	// flags
     m_Flags.zero		();
+#ifdef _EDITOR
+	m_EditChoose = false;
+#endif
 }
 
 CPEDef::~CPEDef()
