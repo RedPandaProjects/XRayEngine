@@ -626,12 +626,11 @@ BOOL CImageManager::CreateOBJThumbnail(LPCSTR tex_name, CEditableObject* obj, in
     return bResult;
 }
 
-void CImageManager::RemoveTexture(LPCSTR fname, EItemType type, bool& res)
+void CImageManager::RemoveTexture(LPCSTR fname, EItemType type)
 {
 	if (TYPE_FOLDER==type){
     	FS.dir_delete			(_textures_,fname,FALSE);
     	FS.dir_delete			(_game_textures_,fname,FALSE);
-        res 					= true;
         return;
     }else if (TYPE_OBJECT==type)
     {
@@ -654,7 +653,6 @@ void CImageManager::RemoveTexture(LPCSTR fname, EItemType type, bool& res)
             return;
         }
     }
-    res 						= false;
 }
 
 EImageThumbnail* CImageManager::CreateThumbnail(LPCSTR src_name, ECustomThumbnail::THMType type, bool bLoad)

@@ -13,10 +13,14 @@ enum EItemType{
 	TYPE_OBJECT	= 1
 };
 
+
+typedef fastdelegate::FastDelegate2<LPCSTR, LPCSTR>	    TOnItemClone;
+typedef fastdelegate::FastDelegate1<LPCSTR>	            TOnItemCreate;
+
 typedef fastdelegate::FastDelegate1<ListItemsVec&> 				TOnILItemsFocused;
 typedef fastdelegate::FastDelegate0<>							TOnILCloseEvent;      
 typedef fastdelegate::FastDelegate3<LPCSTR, LPCSTR, EItemType>	TOnItemRename;
-typedef fastdelegate::FastDelegate3<LPCSTR, EItemType, bool&>	TOnItemRemove;
+typedef fastdelegate::FastDelegate2<LPCSTR, EItemType>	        TOnItemRemove;
 typedef fastdelegate::FastDelegate0<>							TOnItemAfterRemove;
 typedef fastdelegate::FastDelegate0<> 							TOnCloseEvent;
 typedef fastdelegate::FastDelegate0<>		  					TOnModifiedEvent;
