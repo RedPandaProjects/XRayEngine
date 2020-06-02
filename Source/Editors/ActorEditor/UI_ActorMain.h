@@ -38,7 +38,7 @@ public:
     virtual LPSTR	GetCaption				();
 
     virtual void 	ResetStatus				();
-    virtual void 	SetStatus				(LPSTR s, bool bOutLog);
+    virtual void 	SetStatus				(LPCSTR s, bool bOutLog);
     virtual void	ProgressDraw			();
     virtual void 	OutCameraPos			();
     virtual void 	OutUICursorPos			();

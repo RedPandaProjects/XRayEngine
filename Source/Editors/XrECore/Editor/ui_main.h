@@ -177,7 +177,7 @@ public:
     bool 			ContainEState		(EEditorState st){ return std::find(m_EditorState.begin(),m_EditorState.end(),st)!=m_EditorState.end(); }
 
     virtual void 	OutCameraPos		()=0;
-    virtual void 	SetStatus			(LPSTR s, bool bOutLog=true)=0;
+    virtual void 	SetStatus			(LPCSTR s, bool bOutLog=true)=0;
     virtual void 	ResetStatus			()=0;
     
 	// direct input

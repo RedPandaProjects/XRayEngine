@@ -10,7 +10,7 @@ UILeftBarForm::~UILeftBarForm()
 
 void UILeftBarForm::Draw()
 {
-	ImGui::Begin("LeftBar",0,ImGuiWindowFlags_AlwaysAutoResize);
+	ImGui::Begin("LeftBar",0);
 
 	if (ImGui::BeginTabBar("##tabs", ImGuiTabBarFlags_TabListPopupButton| ImGuiTabBarFlags_FittingPolicyScroll))
 	{

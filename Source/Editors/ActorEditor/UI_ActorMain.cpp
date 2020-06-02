@@ -240,7 +240,7 @@ void CActorMain::ResetStatus()
 	    fraBottomBar->paStatus->Caption=""; fraBottomBar->paStatus->Repaint();
     }*/
 }
-void CActorMain::SetStatus(LPSTR s, bool bOutLog)
+void CActorMain::SetStatus(LPCSTR s, bool bOutLog)
 {
 	VERIFY(m_bReady);
     not_implemented_low();

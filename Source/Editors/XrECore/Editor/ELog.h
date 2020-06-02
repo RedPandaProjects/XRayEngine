@@ -30,7 +30,7 @@ public:
 				CLog	(){in_use=false;}
 	void 		Msg   	(TMsgDlgType mt, LPCSTR _Format, ...);
 	int 		DlgMsg 	(TMsgDlgType mt, LPCSTR _Format, ...);
-	int 		DlgMsg 	(TMsgDlgType mt, TMsgDlgButtons btn, LPCSTR _Format, ...);
+	int 		DlgMsg 	(TMsgDlgType mt, int btn, LPCSTR _Format, ...);
 	void Close();
 };
 

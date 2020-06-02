@@ -11,7 +11,7 @@ UILeftBarForm::~UILeftBarForm()
 
 void UILeftBarForm::Draw()
 {
-	ImGui::Begin("LeftBar",0,ImGuiWindowFlags_AlwaysAutoResize);
+	ImGui::Begin("LeftBar",0);
 
 	ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 	if (ImGui::TreeNode("Model"))

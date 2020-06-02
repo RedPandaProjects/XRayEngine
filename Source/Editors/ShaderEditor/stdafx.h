@@ -20,14 +20,3 @@
 #include "UITopBarForm.h"
 #include "UIMainForm.h"
 
-inline void not_implemented_low()
-{
-}
-inline void not_implemented()
-{
-	not_implemented_low();
-	return;
-	if (IsDebuggerPresent())
-		DebugBreak();
-	R_ASSERT(0);
-}
