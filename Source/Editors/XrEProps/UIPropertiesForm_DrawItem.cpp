@@ -2,6 +2,8 @@
 //-----------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------
+#define TSTRING_COUNT 	3
+const LPSTR TEXTUREString[TSTRING_COUNT] = { "Custom...","$null","$base0" };
 template<typename T>
 inline bool DrawNumeric(PropItem* item, bool& change, bool read_only)
 {
@@ -350,26 +352,137 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 		}
 	}
 	break;
-
-	/*
-		case PROP_RTEXT:
-			break;
-		case PROP_RLIST:
-			break;
-		case PROP_STEXT:
-			break;
-		case PROP_TIME:
-			break;
+	case PROP_TEXTURE2:
+	{
+		CTextValue* T = dynamic_cast<CTextValue*>(node->GetFrontValue()); R_ASSERT(T);
+		xr_string edit_val = T->GetValue();
+		node->BeforeEdit<CTextValue, xr_string>(edit_val);
+		int index = 0; int cnt = 3;
+		LPCSTR List[TSTRING_COUNT+1] = { TEXTUREString[0],TEXTUREString[1],TEXTUREString[2],0 };
+		if(edit_val == List[1])index = 1;
+		else if (edit_val == List[2])index = 2;
+		else if (!edit_val.empty()) { List[3] = edit_val.c_str(); index = 3; cnt = 4; }
+		else index = 1;
+		if (ImGui::Combo("##value", &index, List, cnt))
+		{
+			if (index == 0)
+			{
+				UIChooseForm::SelectItem(smTexture, 8, edit_val.c_str(),0,0,0,0,0);
+				m_EditTextureValue = node;
+			}
+			else
+			{
+				edit_val = List[index];
+				if (node->AfterEdit<CTextValue, xr_string>(edit_val)) 
+				{
+					if (node->ApplyValue<CTextValue, LPCSTR>(edit_val.c_str()))
+					{
+						Modified();
+					}
+				}
+			}
+		}
+	}
+	break;
+	case PROP_CLIST:
+	{
+		CListValue* V = dynamic_cast<CListValue*>(node->GetFrontValue()); R_ASSERT(V);
+		LPCSTR edit_value = V->value;
+		int index = 0;
+		const char* InTokens[256];
+		int i = 0;
+		for (; i < V->item_count; i++)
+		{
+			if (V->items[i] == edit_value)
+			{
+				index = i;
+			}
+			InTokens[i] = V->items[i].c_str();
+		}
+		if (ImGui::Combo("##value", &index, InTokens, i))
+		{
+			if (node->AfterEdit<CListValue, xr_string>(V->items[index]))
+				if (node->ApplyValue<CListValue, LPCSTR>(V->items[index].c_str()))Modified();
+		}
+	}
+	break;
+	case PROP_RLIST:
+	{
+		RListValue* V = dynamic_cast<RListValue*>(node->GetFrontValue()); R_ASSERT(V);
+		LPCSTR edit_value = V->value? V->value->c_str():0;
+		int index = 0;
+		const char* InTokens[256];
+		int i = 0;
+		for (; i < V->item_count; i++)
+		{
+			if (V->items[i] == edit_value)
+			{
+				index = i;
+			}
+			InTokens[i] = V->items[i].c_str();
+		}
+		if (ImGui::Combo("##value", &index, InTokens, i))
+		{
+			if (node->AfterEdit<RListValue, shared_str>(V->items[index]))
+				if (node->ApplyValue<RListValue, shared_str>(V->items[index]))Modified();
+		}
+	}
+	break;
+	
 		case PROP_CTEXT:
+		{
+			CTextValue* V = dynamic_cast<CTextValue*>(node->GetFrontValue()); R_ASSERT(V);
+			node->GetDrawText();
+			ImGui::Text(node->GetDrawText().c_str());
+			if (ImGui::OpenPopupOnItemClick("EditText", 0))
+			{
+				if (m_EditTextValueData)xr_delete(m_EditTextValueData);
+				m_EditTextValueData = xr_strdup(V->GetValue());
+				m_EditTextValueDataSize = xr_strlen(m_EditTextValueData)+1;
+				m_EditTextValue = node;
+			}
+			DrawEditText();
+		}
 			break;
-		case PROP_CLIST:
+		case PROP_RTEXT:
+		{
+			RTextValue* V = dynamic_cast<RTextValue*>(node->GetFrontValue()); R_ASSERT(V);
+			node->GetDrawText();
+			ImGui::Text(node->GetDrawText().c_str());
+			if (ImGui::OpenPopupOnItemClick("EditText", 0))
+			{
+				if (m_EditTextValueData)xr_delete(m_EditTextValueData);
+				m_EditTextValueData = xr_strdup(V->GetValue().c_str()? V->GetValue().c_str():"");
+				m_EditTextValueDataSize = xr_strlen(m_EditTextValueData) + 1;
+				m_EditTextValue = node;
+			}
+			DrawEditText();
+		}
 			break;
-		case PROP_TEXTURE2:
+		
+		case PROP_STEXT:
+		{
+			STextValue* V = dynamic_cast<STextValue*>(node->GetFrontValue()); R_ASSERT(V);
+			node->GetDrawText();
+			ImGui::Text(node->GetDrawText().c_str());
+			if (ImGui::OpenPopupOnItemClick("EditText", 0))
+			{
+				if (m_EditTextValueData)xr_delete(m_EditTextValueData);
+				m_EditTextValueData = xr_strdup(V->GetValue().c_str());
+				m_EditTextValueDataSize = xr_strlen(m_EditTextValueData) + 1;
+				m_EditTextValue = node;
+			}
+			DrawEditText();
+		}
 			break;
+			/*case PROP_TIME:
+			break;
+		
+		
 		case PROP_GAMETYPE:
 			break;*/
 	default:
-		not_implemented();
+		//not_implemented();
 		ImGui::Text("");
 		break;
 	}

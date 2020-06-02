@@ -12,6 +12,7 @@ public:
 	void ClearProperties();
 	IC void SetReadOnly(bool enable) { m_Flags.set(plReadOnly, enable); }
 	IC bool IsModified() { return m_bModified;}
+	IC bool Empty() { return m_Items.size() == 0; }
 public:
 	enum {
 		plReadOnly = (1 << 0),
@@ -21,15 +22,22 @@ private:
 	virtual void DrawItem(Node* Node);
 	virtual void DrawItem(const char*name,PropItem* Node);
 	virtual bool IsDrawFloder(Node* Node);
-	virtual void DrawAfterFloderNode();
+	virtual void DrawAfterFloderNode(bool is_open, Node* Node = 0);
 private:
 	PropItemVec m_Items;
 	Node m_GeneralNode;
 	PropItem* m_EditChooseValue;
+	PropItem* m_EditTextureValue;
 	PropItem* m_EditShortcutValue;
 private:
 	TOnModifiedEvent 	OnModifiedEvent;
 	bool m_bModified;
 	void Modified() { m_bModified = true; if (!OnModifiedEvent.empty()) OnModifiedEvent(); }
+private:
+	PropItem* m_EditTextValue;
+	char* m_EditTextValueData;
+	int m_EditTextValueDataSize;
+	void DrawEditText();
+	int  DrawEditText_Callback(ImGuiInputTextCallbackData* data);
 };
 
