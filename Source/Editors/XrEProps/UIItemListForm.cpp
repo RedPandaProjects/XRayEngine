@@ -71,8 +71,11 @@ void UIItemListForm::ClearSelected()
 
 void UIItemListForm::SelectItem(const char* name)
 {
+	if (name == nullptr)return;
 	Node* N = SelectObject(&m_GeneralNode, name);
 	if (N)m_SelectedItem = N->Object;
+	if (!OnItemFocusedEvent.empty())
+		OnItemFocusedEvent(m_SelectedItem);
 }
 
 bool UIItemListForm::GetSelected(RStringVec& items) const

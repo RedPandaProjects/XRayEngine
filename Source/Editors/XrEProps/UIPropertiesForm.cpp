@@ -107,6 +107,7 @@ void UIPropertiesForm::AssignItems(PropItemVec& items)
 	{
 		item->m_Owner = this;
 		Node*N = AppendObject(&m_GeneralNode,item->Key());
+		VERIFY(N);
 		N->Object = item;
 	}
 }
@@ -173,6 +174,7 @@ void UIPropertiesForm::DrawItem(Node* node)
 	}
 	break;
 	case PROP_BUTTON:
+	
 		ImGui::Text(node->Name.c_str());
 		ImGui::NextColumn();
 		if (node->Object->m_Flags.test(PropItem::flMixed))
@@ -182,6 +184,7 @@ void UIPropertiesForm::DrawItem(Node* node)
 		}
 		else
 		{
+			ImGui::PushID(node->Name.c_str());
 			bool bRes = false;
 			bool bSafe = false;
 			ButtonValue* V = dynamic_cast<ButtonValue*>(node->Object->GetFrontValue()); R_ASSERT(V);
@@ -210,6 +213,7 @@ void UIPropertiesForm::DrawItem(Node* node)
 			{
 				ImGui::Text("");
 			}
+			ImGui::PopID();
 		}
 		ImGui::NextColumn();
 		break;
@@ -293,11 +297,122 @@ bool UIPropertiesForm::IsDrawFloder(Node* Node)
 	return true;
 }
 
-void UIPropertiesForm::DrawAfterFloderNode(bool is_open, Node* Node )
+void UIPropertiesForm::DrawAfterFloderNode(bool is_open, Node* node )
 {
-	ImGui::NextColumn();
-	ImGui::Text("");
-	ImGui::NextColumn();
+	if (!node->Object)
+	{
+		ImGui::NextColumn();
+		ImGui::Text("");
+		ImGui::NextColumn();
+		return;
+	}
+	EPropType type = node->Object->Type();
+	//
+	switch (type)
+	{
+	case PROP_CANVAS:
+	{
+		ImGui::NextColumn();
+		ImGui::Text("");
+		ImGui::NextColumn();
+	}
+	break;
+	case PROP_BUTTON:
+		ImGui::PushID(node->Name.c_str());
+		ImGui::NextColumn();
+		if (node->Object->m_Flags.test(PropItem::flMixed))
+		{
+			ImGui::TextDisabled(node->Object->GetDrawText().c_str());
+
+		}
+		else
+		{
+			bool bRes = false;
+			bool bSafe = false;
+			ButtonValue* V = dynamic_cast<ButtonValue*>(node->Object->GetFrontValue()); R_ASSERT(V);
+			if (!V->value.empty())
+			{
+				ImGui::PushItemWidth(-1);
+				float size = float(ImGui::CalcItemWidth());
+				float dx = floorf(size / float(V->value.size()));
+				float offset = size - (dx * V->value.size());
+				V->btn_num = V->value.size();
+				for (RStringVecIt it = V->value.begin(); it != V->value.end(); it++)
+				{
+
+					int k = it - V->value.begin();
+					if (ImGui::Button(it->c_str(), ImVec2(dx + offset, 0)))
+					{
+						V->btn_num = k;
+
+						bRes |= V->OnBtnClick(bSafe);
+					}
+					offset = 0;
+					ImGui::SameLine(0, 2);
+				}
+			}
+			else
+			{
+				ImGui::Text("");
+			}
+		}
+		ImGui::NextColumn();
+		ImGui::PopID();
+		break;
+	case PROP_WAVE:
+	case PROP_UNDEF:
+		break;
+	case PROP_CAPTION:
+	{
+		ImGui::NextColumn();
+		ImGui::TextDisabled(node->Object->GetDrawText().c_str());
+		ImGui::NextColumn();
+	}
+	break;
+
+	default:
+		ImGui::PushID(node->Name.c_str());
+		if (m_Flags.is(plReadOnly))
+		{
+			ImGui::NextColumn();
+			ImGui::TextDisabled(node->Object->GetDrawText().c_str());
+			ImGui::NextColumn();
+		}
+		else if (node->Object->m_Flags.test(PropItem::flMixed) && !node->Object->m_Flags.test(PropItem::flIgnoreMixed))
+		{
+			ImGui::NextColumn();
+			if (ImGui::Button("(Mixed)", ImVec2(-1, 0)))
+			{
+				node->Object->m_Flags.set(PropItem::flIgnoreMixed, 1);
+			}
+			ImGui::NextColumn();
+		}
+		else
+		{
+			
+			ImGui::NextColumn();
+			if (node->Object->m_Flags.test(PropItem::flDisabled))
+			{
+				if (type == PROP_FLAG)
+				{
+					FlagValueCustom* V = dynamic_cast<FlagValueCustom*>(node->Object->GetFrontValue()); VERIFY(V);
+					ImGui::TextDisabled(V->GetValueEx() ? "true" : "false");
+				}
+				else
+				{
+					ImGui::TextDisabled(node->Object->GetDrawText().c_str());
+				}
+			}
+			else
+			{
+				ImGui::PushItemWidth(-1);
+				DrawItem(node->Name.c_str(), node->Object);
+			}
+			ImGui::NextColumn();
+		}
+		ImGui::PopID();
+		break;
+	}
 }
 
 void UIPropertiesForm::DrawEditText()

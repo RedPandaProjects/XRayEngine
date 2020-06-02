@@ -1,5 +1,5 @@
 #pragma once
-class XREPROPS_API UIPropertiesForm :public XrUI, private FolderHelper<PropItem>
+class XREPROPS_API UIPropertiesForm :public XrUI, private FolderHelper<PropItem,true>
 {
 public:
 	void SetModifiedEvent(TOnModifiedEvent modif = 0) { OnModifiedEvent = modif; }
