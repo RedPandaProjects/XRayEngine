@@ -154,6 +154,10 @@ DEFINE_VECTOR(SGameMtl*,GameMtlVec,GameMtlIt);
 struct MTL_EXPORT_API SGameMtlPair{
 	friend class CGameMtlLibrary;
     CGameMtlLibrary*	m_Owner;
+#ifdef _EDITOR
+    bool m_EditParent;
+    bool m_EditCommand;
+#endif
 private:
 	int					mtl0;
 	int					mtl1;
@@ -199,6 +203,10 @@ public:
 public:
 	SGameMtlPair		(CGameMtlLibrary* owner)
     {
+#ifdef _EDITOR
+        m_EditParent = false;
+        m_EditCommand = false;
+#endif
 #ifndef	GM_NON_GAME
 		//m_pCollideMarks = RenderFactory->CreateGameMtlPair();
 #endif	//	GM_NON_GAME
@@ -222,6 +230,7 @@ public:
 #ifdef _EDITOR
 	void 				FillProp		(PropItemVec& values);
     void				TransferFromParent(SGameMtlPair* parent);
+    void                RenderSpecial();
 #endif
 #ifdef DEBUG
 	LPCSTR				dbg_Name		();

@@ -239,9 +239,6 @@
     <ClCompile Include="Engine\cl_collector.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\GameMtlLib.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\guid_generator.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
@@ -270,9 +267,6 @@
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="..\..\XrEngine\GameFont.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrEngine\GameMtlLib.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="..\..\XrEngine\IGame_Persistent.cpp">
@@ -541,6 +535,9 @@
     <ClCompile Include="Editor\UILogForm.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\XrEngine\GameMtlLib.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WildMagic\WmlMath.h">
@@ -728,9 +725,6 @@
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Engine\cl_intersect.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\GameMtlLib.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Engine\guid_generator.h">

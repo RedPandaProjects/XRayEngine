@@ -2,7 +2,7 @@
 #define EditorChooseEventsH
 #include "SoundManager.h"
 #include "Library.h"
-#include "../Engine/GameMtlLib.h"
+#include "GameMtlLib.h"
 #include "LightAnimLibrary.h"
 #include "SkeletonAnimated.h"
 #include "ResourceManager.h"
