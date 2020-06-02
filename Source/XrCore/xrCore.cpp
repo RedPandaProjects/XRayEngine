@@ -31,9 +31,11 @@ extern char g_application_path[256];
 
 void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs, LPCSTR fs_fname, bool editor_fs )
 {
+	
 	xr_strcpy					(ApplicationName,_ApplicationName);
 
 	if (0==init_counter) {
+		Editor = editor_fs;
 		BearCore::Initialize();
 #ifdef XRCORE_STATIC	
 		_clear87	();
