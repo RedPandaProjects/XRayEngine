@@ -48,14 +48,19 @@ void		IBlender::CreatePalette(xr_vector<IBlender*> &palette)
 		for (u32 j=i+1; j<palette.size(); j++)
 		{
 			IBlender* B		= palette[j];
-			if (TYPES_EQUAL(*A,*B))
+			if ((A&&B)&&TYPES_EQUAL(*A,*B))
 			{
 				xr_delete(palette[j]);
 				j--;
 			}
 		}
 	}
-
+	for (u32 i = palette.size(); i !=0 ; i--)
+	{
+		u32 real_i = i - 1;
+		if(!palette[real_i])
+			palette.erase(palette.begin() + real_i);
+	}
 	// Sort by desc and return
 	std::sort		(palette.begin(),palette.end(),p_sort);
 }
