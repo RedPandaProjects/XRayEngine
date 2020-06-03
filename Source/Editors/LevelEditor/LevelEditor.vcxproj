@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\XrEngine\ObjectAnimator.cpp" />
+    <ClCompile Include="..\..\XrRender\Private\DetailManager.cpp" />
+    <ClCompile Include="..\..\XrRender\Private\DetailManager_CACHE.cpp" />
+    <ClCompile Include="..\..\XrRender\Private\DetailManager_Decompress.cpp" />
+    <ClCompile Include="..\..\XrRender\Private\DetailManager_soft.cpp" />
+    <ClCompile Include="..\..\XrRender\Private\DetailManager_VS.cpp" />
+    <ClCompile Include="..\..\XrRender\Private\stats_manager.cpp" />
+    <ClCompile Include="..\..\xrServerEntities\gametype_chooser.cpp" />
+    <ClCompile Include="..\..\xrServerEntities\LevelGameDef.cpp" />
+    <ClCompile Include="Edit\Builder.cpp" />
+    <ClCompile Include="Edit\BuilderCF.cpp" />
+    <ClCompile Include="Edit\BuilderCore.cpp" />
+    <ClCompile Include="Edit\BuilderGame.cpp" />
+    <ClCompile Include="Edit\BuilderLODs.cpp" />
+    <ClCompile Include="Edit\BuilderLTX.cpp" />
+    <ClCompile Include="Edit\BuilderOGF.cpp" />
+    <ClCompile Include="Edit\BuilderRemote.cpp" />
+    <ClCompile Include="Edit\Cursor3D.cpp" />
+    <ClCompile Include="Edit\Custom2DProjector.cpp" />
+    <ClCompile Include="Edit\CustomObject.cpp" />
+    <ClCompile Include="Edit\CustomObjectAnimation.cpp" />
+    <ClCompile Include="Edit\CustomObjectLE.cpp" />
+    <ClCompile Include="Edit\EditObjectExportLWO.cpp" />
+    <ClCompile Include="Edit\ELight.cpp" />
+    <ClCompile Include="Edit\ELight_IO.cpp" />
+    <ClCompile Include="Edit\ELight_props.cpp" />
+    <ClCompile Include="Edit\EParticlesObject.cpp" />
+    <ClCompile Include="Edit\ESceneAIMapControls.cpp" />
+    <ClCompile Include="Edit\ESceneAIMapTools.cpp" />
+    <ClCompile Include="Edit\ESceneAIMapTools_Controls.cpp" />
+    <ClCompile Include="Edit\ESceneAIMapTools_Export.cpp" />
+    <ClCompile Include="Edit\ESceneAIMapTools_Generate.cpp" />
+    <ClCompile Include="Edit\ESceneAIMapTools_MotionSimulator.cpp" />
+    <ClCompile Include="Edit\ESceneAIMapTools_Pick.cpp" />
+    <ClCompile Include="Edit\ESceneAIMapTools_Render.cpp" />
+    <ClCompile Include="Edit\ESceneControlsCustom.cpp" />
+    <ClCompile Include="Edit\ESceneCustomMTools.cpp" />
+    <ClCompile Include="Edit\ESceneCustomMToolsControls.cpp" />
+    <ClCompile Include="Edit\ESceneCustomOTools.cpp" />
+    <ClCompile Include="Edit\ESceneCustomOToolsFactory.cpp" />
+    <ClCompile Include="Edit\ESceneCustomOToolsIO.cpp" />
+    <ClCompile Include="Edit\ESceneDOTools.cpp" />
+    <ClCompile Include="Edit\ESceneDOTools_Controls.cpp" />
+    <ClCompile Include="Edit\ESceneDOTools_Generate.cpp" />
+    <ClCompile Include="Edit\ESceneDOTools_Pick.cpp" />
+    <ClCompile Include="Edit\ESceneDummyTools.cpp" />
+    <ClCompile Include="Edit\ESceneFogVolumeTools.cpp" />
+    <ClCompile Include="Edit\ESceneGlowTools.cpp" />
+    <ClCompile Include="Edit\ESceneGlowToolsIO.cpp" />
+    <ClCompile Include="Edit\ESceneGroupControls.cpp" />
+    <ClCompile Include="Edit\ESceneGroupTools.cpp" />
+    <ClCompile Include="Edit\ESceneGroupToolsIO.cpp" />
+    <ClCompile Include="Edit\ESceneLightTools.cpp" />
+    <ClCompile Include="Edit\ESceneLightToolsIO.cpp" />
+    <ClCompile Include="Edit\ESceneObjectControls.cpp" />
+    <ClCompile Include="Edit\ESceneObjectTools.cpp" />
+    <ClCompile Include="Edit\ESceneObjectToolsExportBreakable.cpp" />
+    <ClCompile Include="Edit\ESceneObjectToolsIO.cpp" />
+    <ClCompile Include="Edit\EScenePortalControls.cpp" />
+    <ClCompile Include="Edit\EScenePortalTools.cpp" />
+    <ClCompile Include="Edit\EScenePortalToolsIO.cpp" />
+    <ClCompile Include="Edit\EScenePSControls.cpp" />
+    <ClCompile Include="Edit\EScenePSTools.cpp" />
+    <ClCompile Include="Edit\EScenePSToolsIO.cpp" />
+    <ClCompile Include="Edit\ESceneSectorControls.cpp" />
+    <ClCompile Include="Edit\ESceneSectorTools.cpp" />
+    <ClCompile Include="Edit\ESceneSectorToolsIO.cpp" />
+    <ClCompile Include="Edit\ESceneShapeControls.cpp" />
+    <ClCompile Include="Edit\ESceneShapeTools.cpp" />
+    <ClCompile Include="Edit\ESceneShapeToolsIO.cpp" />
+    <ClCompile Include="Edit\ESceneSoundEnvTools.cpp" />
+    <ClCompile Include="Edit\ESceneSoundEnvToolsIO.cpp" />
+    <ClCompile Include="Edit\ESceneSoundSrcTools.cpp" />
+    <ClCompile Include="Edit\ESceneSoundSrcToolsIO.cpp" />
+    <ClCompile Include="Edit\ESceneSpawnControls.cpp" />
+    <ClCompile Include="Edit\ESceneSpawnTools.cpp" />
+    <ClCompile Include="Edit\ESceneSpawnToolsIO.cpp" />
+    <ClCompile Include="Edit\ESceneWallmarkControls.cpp" />
+    <ClCompile Include="Edit\ESceneWallmarkTools.cpp" />
+    <ClCompile Include="Edit\ESceneWayControls.cpp" />
+    <ClCompile Include="Edit\ESceneWayTools.cpp" />
+    <ClCompile Include="Edit\ESceneWayToolsIO.cpp" />
+    <ClCompile Include="Edit\EShape.cpp" />
+    <ClCompile Include="Edit\ESound_Environment.cpp" />
+    <ClCompile Include="Edit\ESound_Source.cpp" />
+    <ClCompile Include="Edit\FS2.cpp" />
+    <ClCompile Include="Edit\GeometryPartExtractor.cpp" />
+    <ClCompile Include="Edit\glow.cpp" />
+    <ClCompile Include="Edit\GroupObject.cpp" />
+    <ClCompile Include="Edit\GroupObjectUtils.cpp" />
+    <ClCompile Include="Edit\LevelPreferences.cpp" />
+    <ClCompile Include="Edit\portal.cpp" />
+    <ClCompile Include="Edit\portalutils.cpp" />
+    <ClCompile Include="Edit\scene.cpp" />
+    <ClCompile Include="Edit\SceneIO.cpp" />
+    <ClCompile Include="Edit\SceneObject.cpp" />
+    <ClCompile Include="Edit\SceneObjectIO.cpp" />
+    <ClCompile Include="Edit\ScenePick.cpp" />
+    <ClCompile Include="Edit\SceneRender.cpp" />
+    <ClCompile Include="Edit\SceneSelection.cpp" />
+    <ClCompile Include="Edit\SceneSnap.cpp" />
+    <ClCompile Include="Edit\SceneSummaryInfo.cpp" />
+    <ClCompile Include="Edit\SceneUndo.cpp" />
+    <ClCompile Include="Edit\SceneUtil.cpp" />
+    <ClCompile Include="Edit\Scene_Tools.cpp" />
+    <ClCompile Include="Edit\sector.cpp" />
+    <ClCompile Include="Edit\SoundManager_LE.cpp" />
+    <ClCompile Include="Edit\SpawnPoint.cpp" />
+    <ClCompile Include="Edit\UI_LevelMain.cpp" />
+    <ClCompile Include="Edit\UI_LevelTools.cpp" />
+    <ClCompile Include="Edit\WayPoint.cpp" />
+    <ClCompile Include="iniStreamImpl.cpp" />
+    <ClCompile Include="LEPhysics.cpp" />
+    <ClCompile Include="LevelEditor.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="UI\UILeftBarForm.cpp" />
+    <ClCompile Include="UI\UIMainForm.cpp" />
+    <ClCompile Include="UI\UIMainMenuForm.cpp" />
+    <ClCompile Include="UI\UITopBarForm.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\XrRender\Private\DetailManager.h" />
+    <ClInclude Include="Edit\Builder.h" />
+    <ClInclude Include="Edit\Cursor3D.h" />
+    <ClInclude Include="Edit\Custom2DProjector.h" />
+    <ClInclude Include="Edit\CustomObject.h" />
+    <ClInclude Include="Edit\ELight.h" />
+    <ClInclude Include="Edit\ELight_def.h" />
+    <ClInclude Include="Edit\EParticlesObject.h" />
+    <ClInclude Include="Edit\ESceneAIMapControls.h" />
+    <ClInclude Include="Edit\ESceneAIMapTools.h" />
+    <ClInclude Include="Edit\ESceneAIMapTools_Export.h" />
+    <ClInclude Include="Edit\ESceneClassList.h" />
+    <ClInclude Include="Edit\ESceneControlsCustom.h" />
+    <ClInclude Include="Edit\ESceneCustomMTools.h" />
+    <ClInclude Include="Edit\ESceneCustomOTools.h" />
+    <ClInclude Include="Edit\ESceneDOTools.h" />
+    <ClInclude Include="Edit\ESceneDummyTools.h" />
+    <ClInclude Include="Edit\ESceneFogVolumeTools.h" />
+    <ClInclude Include="Edit\ESceneGlowTools.h" />
+    <ClInclude Include="Edit\ESceneGroupControls.h" />
+    <ClInclude Include="Edit\ESceneGroupTools.h" />
+    <ClInclude Include="Edit\ESceneLightTools.h" />
+    <ClInclude Include="Edit\ESceneObjectControls.h" />
+    <ClInclude Include="Edit\ESceneObjectTools.h" />
+    <ClInclude Include="Edit\EScenePortalControls.h" />
+    <ClInclude Include="Edit\EScenePortalTools.h" />
+    <ClInclude Include="Edit\EScenePSControls.h" />
+    <ClInclude Include="Edit\EScenePSTools.h" />
+    <ClInclude Include="Edit\ESceneSectorControls.h" />
+    <ClInclude Include="Edit\ESceneSectorTools.h" />
+    <ClInclude Include="Edit\ESceneShapeControls.h" />
+    <ClInclude Include="Edit\ESceneShapeTools.h" />
+    <ClInclude Include="Edit\ESceneSoundEnvTools.h" />
+    <ClInclude Include="Edit\ESceneSoundSrcTools.h" />
+    <ClInclude Include="Edit\ESceneSpawnControls.h" />
+    <ClInclude Include="Edit\ESceneSpawnTools.h" />
+    <ClInclude Include="Edit\ESceneWallmarkControls.h" />
+    <ClInclude Include="Edit\ESceneWallmarkTools.h" />
+    <ClInclude Include="Edit\ESceneWayControls.h" />
+    <ClInclude Include="Edit\ESceneWayTools.h" />
+    <ClInclude Include="Edit\EShape.h" />
+    <ClInclude Include="Edit\ESound_Environment.h" />
+    <ClInclude Include="Edit\ESound_Source.h" />
+    <ClInclude Include="Edit\FS2.h" />
+    <ClInclude Include="Edit\GeometryPartExtractor.h" />
+    <ClInclude Include="Edit\glow.h" />
+    <ClInclude Include="Edit\GroupObject.h" />
+    <ClInclude Include="Edit\LevelPreferences.h" />
+    <ClInclude Include="Edit\lwchunks.h" />
+    <ClInclude Include="Edit\portal.h" />
+    <ClInclude Include="Edit\portalutils.h" />
+    <ClInclude Include="Edit\scene.h" />
+    <ClInclude Include="Edit\SceneGraph.h" />
+    <ClInclude Include="Edit\SceneObject.h" />
+    <ClInclude Include="Edit\SceneSummaryInfo.h" />
+    <ClInclude Include="Edit\sector.h" />
+    <ClInclude Include="Edit\SoundManager_LE.h" />
+    <ClInclude Include="Edit\SpawnPoint.h" />
+    <ClInclude Include="Edit\UI_LevelMain.h" />
+    <ClInclude Include="Edit\UI_LevelTools.h" />
+    <ClInclude Include="Edit\WayPoint.h" />
+    <ClInclude Include="iniStreamImpl.h" />
+    <ClInclude Include="LEPhysics.h" />
+    <ClInclude Include="mesh_data.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="UI\UILeftBarForm.h" />
+    <ClInclude Include="UI\UIMainForm.h" />
+    <ClInclude Include="UI\UIMainMenuForm.h" />
+    <ClInclude Include="UI\UITopBarForm.h" />
+    <ClInclude Include="UI\UITopBarForm_ButtonList.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\XrCDB\XrCDB.vcxproj">
+      <Project>{7e263157-2fc0-42d7-a676-dd6049bb60f5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\XrCore\XrCore.vcxproj">
+      <Project>{da642d7c-4fff-43dc-98f8-3f96caf1e4ba}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\XrPhysics\XrPhysics.vcxproj">
+      <Project>{3d3cc439-aabc-4565-99c8-9c53f425380c}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\XrSound\XrSound.vcxproj">
+      <Project>{57601b62-902a-4ec8-bcc7-b6a2e30b0676}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\FreeMagic\FreeMagic.vcxproj">
+      <Project>{dcc5b76d-be13-4d1f-be14-75d0fa678340}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\XrECore\XrECore.vcxproj">
+      <Project>{9187be98-531a-4276-b78e-dba3c8ab8447}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\XrEProps\XrEProps.vcxproj">
+      <Project>{6d47afc7-0557-4bbf-8902-b248f3621419}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\XrETools\XrETools.vcxproj">
+      <Project>{fb040f9f-8344-43da-a4d6-1c8a9d5dbc59}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\XrEUI\XrEUI.vcxproj">
+      <Project>{7e28883c-db86-4ee8-813a-991ba20c68c9}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <ProjectGuid>{7E13BFCC-55B0-4715-8BBB-84A143CCE84B}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>LevelEditor</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\Default.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\Default.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\Default.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\Default.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PreprocessorDefinitions>_EDITOR;_EDITOR_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.;..\..\XrEngine\;..\..\XrRender\Public;..\..\XrRender\Private;Edit\;Engine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PreprocessorDefinitions>_EDITOR;_EDITORWIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.;..\..\XrEngine\;..\..\XrRender\Public;..\..\XrRender\Private;Edit\;Engine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>_EDITOR;_EDITORWIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.;..\..\XrEngine\;..\..\XrRender\Public;..\..\XrRender\Private;Edit\;Engine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>_EDITOR;_EDITORNDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.;..\..\XrEngine\;..\..\XrRender\Public;..\..\XrRender\Private;Edit\;Engine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

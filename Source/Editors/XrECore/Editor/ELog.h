@@ -17,10 +17,11 @@ enum TMsgDlgButtons
 	mbYes=1,
 	mbNo=2,
 	mbCancel=4,
+	mbOK = 8,
+	mrNone = 0,
 	mrYes,
 	mrNo,
 	mrCancel,
-	mbOK=8,
 	mrOK,
 };
 class ECORE_API CLog{

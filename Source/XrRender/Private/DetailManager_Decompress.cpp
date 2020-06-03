@@ -7,7 +7,7 @@
 #ifdef _EDITOR
 #	include "scene.h"
 #	include "sceneobject.h"
-#	include "../utils/ETools/ETools.h"
+#	include "../../Editors/XrETools/ETools.h"
 #endif
 
 //--------------------------------------------------- Decompression
