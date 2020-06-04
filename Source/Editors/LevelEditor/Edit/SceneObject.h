@@ -85,7 +85,7 @@ public:
     virtual bool 	SpherePick				(const Fvector& center, float radius);
 
     // get orintation/bounding volume methods
-	virtual bool 	GetBox					(Fbox& box) const;
+	virtual bool 	GetBox					(Fbox& box) ;
 	virtual bool 	GetUTBox				(Fbox& box);
     void 			GetFullTransformToWorld	(Fmatrix& m);
     void 			GetFullTransformToLocal	(Fmatrix& m);

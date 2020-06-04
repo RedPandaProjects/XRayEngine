@@ -444,7 +444,7 @@ bool CWayObject::FrustumSelect(int flag, const CFrustum& frustum)
     }else 	return inherited::FrustumSelect(flag,frustum);
 }
 
-bool CWayObject::GetBox( Fbox& box ) const
+bool CWayObject::GetBox( Fbox& box ) 
 {
 	box.invalidate();
 	for (WPVec::const_iterator it=m_WayPoints.begin(); it!=m_WayPoints.end(); it++)

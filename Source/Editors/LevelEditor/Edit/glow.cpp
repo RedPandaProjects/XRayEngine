@@ -58,7 +58,7 @@ void CGlow::ShaderChange(PropValue* value)
 	OnDeviceDestroy();
 }
 
-bool CGlow::GetBox( Fbox& box ) const
+bool CGlow::GetBox( Fbox& box ) 
 {
 	box.set( GetPosition(), GetPosition() );
 	box.min.sub(m_fRadius);

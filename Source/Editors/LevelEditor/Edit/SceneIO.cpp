@@ -692,9 +692,10 @@ bool EScene::ReadObjectsLTX(CInifile& ini,  LPCSTR sect_name_parent, LPCSTR sect
                 string256 				buf;
                 GenObjectName(obj->FClassID, buf, obj->GetName());
                 obj->SetName(buf);
-                if (obj && !on_append(obj))
-                    xr_delete(obj);
             }
+            if (obj && !on_append(obj))
+                xr_delete(obj);
+
         }
         
         else

@@ -41,7 +41,7 @@ CPortal::~CPortal(){
 }
 //------------------------------------------------------------------------------
 
-bool CPortal::GetBox( Fbox& box ) const
+bool CPortal::GetBox( Fbox& box ) 
 {
 	if( m_Vertices.empty() )
     {

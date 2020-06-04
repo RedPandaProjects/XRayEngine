@@ -119,7 +119,7 @@ void TUI::MousePress(TShiftState Shift, int X, int Y)
 				IR_GetMousePosScreen(m_StartCpH);
                 m_DeltaCpH.set(0,0);
             }else{
-                IR_GetMousePosReal(EDevice.m_hWnd, m_CurrentCp);
+                m_CurrentCp = GetRenderMousePosition();
                 m_StartCp = m_CurrentCp;
                 EDevice.m_Camera.MouseRayFromPoint(m_CurrentRStart, m_CurrentRDir, m_CurrentCp );
             }
@@ -145,7 +145,7 @@ void TUI::MouseRelease(TShiftState Shift, int X, int Y)
 	    bMouseInUse = false;
         if( m_MouseCaptured ){
             if( !Tools->HiddenMode() ){
-                IR_GetMousePosReal(EDevice.m_hWnd, m_CurrentCp);
+                m_CurrentCp = GetRenderMousePosition();
                 EDevice.m_Camera.MouseRayFromPoint(m_CurrentRStart,m_CurrentRDir,m_CurrentCp );
             }
             if( Tools->MouseEnd(m_ShiftState) ){
@@ -187,7 +187,7 @@ void TUI::IR_OnMouseMove(int x, int y)
             }
             else
             {
-                IR_GetMousePosReal(EDevice.m_hWnd, m_CurrentCp);
+                m_CurrentCp = GetRenderMousePosition();
                 EDevice.m_Camera.MouseRayFromPoint(m_CurrentRStart,m_CurrentRDir,m_CurrentCp);
                 Tools->MouseMove(m_ShiftState);
             }
@@ -197,7 +197,7 @@ void TUI::IR_OnMouseMove(int x, int y)
     }
     if (!bRayUpdated)
     {
-		IR_GetMousePosReal(EDevice.m_hWnd, m_CurrentCp);
+        m_CurrentCp = GetRenderMousePosition();
         EDevice.m_Camera.MouseRayFromPoint(m_CurrentRStart,m_CurrentRDir,m_CurrentCp);
     }
     // Out cursor pos
@@ -368,6 +368,13 @@ void TUI::Redraw()
             RT.create("rt_color", RTSize.x * EDevice.m_ScreenQuality, RTSize.y * EDevice.m_ScreenQuality, HW.Caps.fTarget);
             ZB.create("rt_depth", RTSize.x * EDevice.m_ScreenQuality, RTSize.y * EDevice.m_ScreenQuality, D3DFORMAT::D3DFMT_D24X8);
             m_Flags.set(flRedraw, TRUE);
+            EDevice.fASPECT = ((float)RTSize.y) / ((float)RTSize.x);
+            EDevice.mProject.build_projection(deg2rad(EDevice.fFOV), EDevice.fASPECT, EDevice.m_Camera.m_Znear, EDevice.m_Camera.m_Zfar);
+            EDevice.m_fNearer = EDevice.mProject._43;
+            
+
+            RCache.set_xform_project(EDevice.mProject);
+            RCache.set_xform_world(Fidentity);
         }
 
         if (EDevice.Begin())
@@ -560,6 +567,13 @@ bool TUI::OnCreate()
     GetRenderWidth() = 128;
     GetRenderHeight() = 128;
     RTSize.set(GetRenderWidth(), GetRenderHeight());
+    EDevice.fASPECT = (float)RTSize.x / (float)RTSize.y;
+    EDevice.mProject.build_projection(deg2rad(EDevice.fFOV), EDevice.fASPECT, EDevice.m_Camera.m_Znear, EDevice.m_Camera.m_Zfar);
+    EDevice.m_fNearer = EDevice.mProject._43;
+
+
+    RCache.set_xform_project(EDevice.mProject);
+    RCache.set_xform_world(Fidentity);
     RT.create("rt_color", RTSize .x*EDevice.m_ScreenQuality, RTSize.y * EDevice.m_ScreenQuality, HW.Caps.fTarget);
     ZB.create("rt_depth", RTSize.x * EDevice.m_ScreenQuality, RTSize.y* EDevice.m_ScreenQuality, D3DFORMAT::D3DFMT_D24X8);
 

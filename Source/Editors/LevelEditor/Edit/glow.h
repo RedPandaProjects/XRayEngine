@@ -47,7 +47,7 @@ public:
 	virtual void 		SaveStream			(IWriter&);
   	virtual void 		SaveLTX				(CInifile& ini, LPCSTR sect_name);
 
-	virtual bool    GetBox      ( Fbox& box ) const;
+	virtual bool    GetBox      ( Fbox& box ) ;
     virtual void	FillProp	( LPCSTR pref, PropItemVec& values );
 
     // device dependent routine

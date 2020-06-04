@@ -42,7 +42,7 @@ public:
   	virtual void 		SaveLTX				(CInifile& ini, LPCSTR sect_name);
 
     virtual bool		ExportGame			(SExportStreams* data);
-	virtual bool    	GetBox      		(Fbox& box) const;
+	virtual bool    	GetBox      		(Fbox& box) ;
 	virtual void 		OnFrame				();
 
     void 				Play				();

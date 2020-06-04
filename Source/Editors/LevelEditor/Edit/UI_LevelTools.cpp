@@ -185,7 +185,6 @@ void  CLevelTool::SetAction(ETAction act)
 
 void  CLevelTool::RealSetTarget   (ObjClassID tgt,int sub_tgt,bool bForced)
 {
-    not_implemented();
     if(bForced||(target!=tgt)||(sub_target!=sub_tgt)){
         target 					= tgt;
         sub_target 				= sub_tgt;
@@ -201,8 +200,8 @@ void  CLevelTool::RealSetTarget   (ObjClassID tgt,int sub_tgt,bool bForced)
 
         pCurTool->SetAction		(GetAction());
 
-       // if (pCurTool->IsEditable())
-        	//ATTACH_FRAME(pCurTool->pFrame, paParent);
+        /*if (pCurTool->IsEditable())
+        	ATTACH_FRAME(pCurTool->pFrame, paParent);*/
     }
     UI->RedrawScene();
     //fraLeftBar->ChangeTarget(tgt);
@@ -251,12 +250,11 @@ void CLevelTool::OnShowHint(AStringVec& ss)
 bool CLevelTool::Pick(TShiftState Shift)
 {
     if( Scene->locked() && (esEditLibrary==UI->GetEState())){
-    /*    UI->IR_GetMousePosReal(EDevice.m_hRenderWnd, UI->m_CurrentCp);
+        UI->m_CurrentCp = MainForm->GetRenderForm()->GetMousePos();
         UI->m_StartCp = UI->m_CurrentCp;
         EDevice.m_Camera.MouseRayFromPoint(UI->m_CurrentRStart, UI->m_CurrentRDir, UI->m_CurrentCp );
         SRayPickInfo pinf;
-        TfrmEditLibrary::RayPick(UI->m_CurrentRStart,UI->m_CurrentRDir,&pinf);*/
-        not_implemented();
+        //TfrmEditLibrary::RayPick(UI->m_CurrentRStart,UI->m_CurrentRDir,&pinf);
         return true;
     }
     return false;
@@ -497,7 +495,7 @@ bool CLevelTool::GetSelectionPosition(Fmatrix& result)
         if(!object)
         	return false;
             
-        object->GetBox		(BB);
+        const_cast<CCustomObject*>(object)->GetBox		(BB);
         
         BB.getcenter		(center);
         center.y			= BB.max.y;

@@ -3,7 +3,6 @@
 #define ESceneSpawnToolsH
 
 #include "ESceneCustomOTools.h"
-
 class CEditableObject;
 
 class ESceneSpawnTool: public ESceneCustomOTool
@@ -65,10 +64,6 @@ public:
 // refs 
 class ISE_Abstract;
 
-typedef ISE_Abstract* 	( *Tcreate_entity)		(LPCSTR section);
-typedef void		  	( *Tdestroy_entity)	(ISE_Abstract *&);
-
-extern	Tcreate_entity 	create_entity;
-extern	Tdestroy_entity destroy_entity;
+#include "..\..\XrSE_Factory\xrSE_Factory_import_export.h"
 //---------------------------------------------------------------------------
 #endif

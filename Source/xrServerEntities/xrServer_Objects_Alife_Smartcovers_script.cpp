@@ -26,8 +26,8 @@ void CSE_SmartCover::script_register(lua_State *L)
 			.def	("set_available_loopholes", &CSE_SmartCover::set_available_loopholes )
 #endif // #ifndef AI_COMPILER
 
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS
 			.def	("set_loopholes_table_checker", &CSE_SmartCover::set_loopholes_table_checker )
-#endif // #ifdef XRSE_FACTORY_EXPORTS
+#endif // #ifdef XRSEFACTORY_EXPORTS
 	];
 }

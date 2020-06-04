@@ -154,6 +154,7 @@ public:
 	IC void 		waitlock			()        		{ while( locked() ) Sleep(0); }
 
 	IC ESceneToolBase* 		GetTool		(ObjClassID cat)	{ return m_SceneTools[cat];}
+	IC u32					ToolCount	()					{ return m_SceneTools.size(); }
 
 	IC ESceneCustomOTool* 	GetOTool	(ObjClassID cat)	{ return dynamic_cast<ESceneCustomOTool*>(GetTool(cat)); }
 

@@ -27,7 +27,7 @@
 #	include "../xrEngine/render.h"
 #endif // XRGAME_EXPORTS
 
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS
 #	include "ai_space.h"
 #	include "script_engine.h"
 #	pragma warning(push)
@@ -81,7 +81,7 @@ struct logical_string_predicate {
 	}
 }; // struct logical_string_predicate
 
-#endif // XRSE_FACTORY_EXPORTS
+#endif // XRSEFACTORY_EXPORTS
 
 bool SortStringsByAlphabetPred (const shared_str& s1, const shared_str& s2)
 {
@@ -101,7 +101,7 @@ struct story_name_predicate {
 	}
 };
 
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS
 SFillPropData::SFillPropData	()
 {
 	counter = 0;
@@ -231,12 +231,12 @@ void	SFillPropData::inc				()
     ++counter;
 }
 static SFillPropData			fp_data;
-#endif // #ifdef XRSE_FACTORY_EXPORTS
+#endif // #ifdef XRSEFACTORY_EXPORTS
 
 #ifndef XRGAME_EXPORTS
 void CSE_ALifeTraderAbstract::FillProps	(LPCSTR pref, PropItemVec& items)
 {
-#	ifdef XRSE_FACTORY_EXPORTS
+#	ifdef XRSEFACTORY_EXPORTS
 	PHelper().CreateU32			(items, PrepareKey(pref,*base()->s_name,"Money"), 	&m_dwMoney,	0, u32(-1));
 	PHelper().CreateFlag32		(items,	PrepareKey(pref,*base()->s_name,"Trader\\Infinite ammo"),&m_trader_flags, eTraderFlagInfiniteAmmo);
 	RListValue *value		= PHelper().CreateRList	(items,	PrepareKey(pref,*base()->s_name,"npc profile"),	 
@@ -244,7 +244,7 @@ void CSE_ALifeTraderAbstract::FillProps	(LPCSTR pref, PropItemVec& items)
 		&*fp_data.character_profiles.begin(), fp_data.character_profiles.size());
 	
 	value->OnChangeEvent.bind	(this,&CSE_ALifeTraderAbstract::OnChangeProfile);
-#	endif // #ifdef XRSE_FACTORY_EXPORTS
+#	endif // #ifdef XRSEFACTORY_EXPORTS
 }
 #endif // #ifndef XRGAME_EXPORTS
 ////////////////////////////////////////////////////////////////////////////
@@ -258,16 +258,16 @@ CSE_ALifeGraphPoint::CSE_ALifeGraphPoint	(LPCSTR caSection) : CSE_Abstract(caSec
 	m_tLocations[2]				= 0;
 	m_tLocations[3]				= 0;
 
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS
 	fp_data.inc					();
-#endif // XRSE_FACTORY_EXPORTS
+#endif // XRSEFACTORY_EXPORTS
 }
 
 CSE_ALifeGraphPoint::~CSE_ALifeGraphPoint	()
 {
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS
     fp_data.dec					();
-#endif // XRSE_FACTORY_EXPORTS
+#endif // XRSEFACTORY_EXPORTS
 }
 
 void CSE_ALifeGraphPoint::STATE_Read		(NET_Packet	&tNetPacket, u16 size)
@@ -303,19 +303,19 @@ void CSE_ALifeGraphPoint::UPDATE_Write		(NET_Packet	&tNetPacket)
 #ifndef XRGAME_EXPORTS
 void CSE_ALifeGraphPoint::FillProps			(LPCSTR pref, PropItemVec& items)
 {
-#	ifdef XRSE_FACTORY_EXPORTS
+#	ifdef XRSEFACTORY_EXPORTS
 	PHelper().CreateRToken8		(items,	PrepareKey(pref,*s_name,"Location\\1"),				&m_tLocations[0],			&*fp_data.locations[0].begin(), fp_data.locations[0].size());
 	PHelper().CreateRToken8		(items,	PrepareKey(pref,*s_name,"Location\\2"),				&m_tLocations[1],			&*fp_data.locations[1].begin(), fp_data.locations[1].size());
 	PHelper().CreateRToken8		(items,	PrepareKey(pref,*s_name,"Location\\3"),				&m_tLocations[2],			&*fp_data.locations[2].begin(), fp_data.locations[2].size());
 	PHelper().CreateRToken8		(items,	PrepareKey(pref,*s_name,"Location\\4"),				&m_tLocations[3],			&*fp_data.locations[3].begin(), fp_data.locations[3].size());
 	PHelper().CreateRList	 	(items,	PrepareKey(pref,*s_name,"Connection\\Level name"),	&m_caConnectionLevelName,	&*fp_data.level_ids.begin(),	fp_data.level_ids.size());
 	PHelper().CreateRText	 	(items,	PrepareKey(pref,*s_name,"Connection\\Point name"),	&m_caConnectionPointName);
-#	endif // #ifdef XRSE_FACTORY_EXPORTS
+#	endif // #ifdef XRSEFACTORY_EXPORTS
 }
 
 void CSE_ALifeGraphPoint::on_render(CDUInterface* du, ISE_AbstractLEOwner* owner, bool bSelected, const Fmatrix& parent,int priority, bool strictB2F)
 {
-#	ifdef XRSE_FACTORY_EXPORTS
+#	ifdef XRSEFACTORY_EXPORTS
 static const u32 IL[16]={0,1, 0,2, 0,3, 0,4, 1,3, 3,2, 2,4, 4,1};
 static const u32 IT[12]={1,3,0, 3,2,0, 2,4,0, 4,1,0};
 static Fvector PT [5] = {
@@ -351,7 +351,7 @@ static Fvector PT [5] = {
 	
 	if(bSelected)
 		du->DrawSelectionBox(parent.c, Fvector().set(0.5f,1.0f,0.5f),NULL);
-#	endif // #ifdef XRSE_FACTORY_EXPORTS
+#	endif // #ifdef XRSEFACTORY_EXPORTS
 }
 
 #endif // #ifndef XRGAME_EXPORTS
@@ -375,9 +375,9 @@ CSE_ALifeObject::CSE_ALifeObject			(LPCSTR caSection) : CSE_Abstract(caSection)
 #ifdef XRGAME_EXPORTS
 	m_alife_simulator			= 0;
 #endif
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS
     fp_data.inc					();
-#endif // XRSE_FACTORY_EXPORTS
+#endif // XRSEFACTORY_EXPORTS
 	m_flags.set					(flOfflineNoMove,FALSE);
 	seed						(u32(CPU::QPC() & 0xffffffff));
 }
@@ -397,9 +397,9 @@ Fvector CSE_ALifeObject::draw_level_position	() const
 
 CSE_ALifeObject::~CSE_ALifeObject			()
 {
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS
     fp_data.dec					();
-#endif // XRSE_FACTORY_EXPORTS
+#endif // XRSEFACTORY_EXPORTS
 }
 
 bool CSE_ALifeObject::move_offline			() const
@@ -505,7 +505,7 @@ void CSE_ALifeObject::UPDATE_Read			(NET_Packet &tNetPacket)
 #ifndef XRGAME_EXPORTS
 void CSE_ALifeObject::FillProps				(LPCSTR pref, PropItemVec& items)
 {
-#	ifdef XRSE_FACTORY_EXPORTS
+#	ifdef XRSEFACTORY_EXPORTS
 	inherited::FillProps		(pref, 	items);
 	PHelper().CreateRText		(items,	PrepareKey(pref,*s_name,"Custom data"),&m_ini_string);
 	if (m_flags.is(flUseSwitches)) {
@@ -516,7 +516,7 @@ void CSE_ALifeObject::FillProps				(LPCSTR pref, PropItemVec& items)
 	PHelper().CreateFlag32		(items,	PrepareKey(pref,*s_name,"ALife\\Used AI locations"),	&m_flags,			flUsedAI_Locations);
 	PHelper().CreateRToken32	(items,	PrepareKey(pref,*s_name,"ALife\\Story ID"),				&m_story_id,		&*fp_data.story_names.begin(), fp_data.story_names.size());
 	PHelper().CreateRToken32	(items,	PrepareKey(pref,*s_name,"ALife\\Spawn Story ID"),		&m_spawn_story_id,	&*fp_data.spawn_story_names.begin(), fp_data.spawn_story_names.size());
-#	endif // #ifdef XRSE_FACTORY_EXPORTS
+#	endif // #ifdef XRSEFACTORY_EXPORTS
 }
 #endif // #ifndef XRGAME_EXPORTS
 
@@ -894,17 +894,17 @@ CSE_ALifeLevelChanger::CSE_ALifeLevelChanger(LPCSTR caSection) : CSE_ALifeSpaceR
 	m_dwNextNodeID				= u32(-1);
 	m_tNextPosition.set			(0.f,0.f,0.f);
 	m_tAngles.set				(0.f,0.f,0.f);
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS
     fp_data.inc					();
-#endif // XRSE_FACTORY_EXPORTS
+#endif // XRSEFACTORY_EXPORTS
 	m_bSilentMode				= FALSE;
 }
 
 CSE_ALifeLevelChanger::~CSE_ALifeLevelChanger()\
 {
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS
     fp_data.dec					();
-#endif // XRSE_FACTORY_EXPORTS
+#endif // XRSEFACTORY_EXPORTS
 }
 
 void CSE_ALifeLevelChanger::STATE_Read		(NET_Packet	&tNetPacket, u16 size)
@@ -960,14 +960,14 @@ void CSE_ALifeLevelChanger::UPDATE_Write	(NET_Packet	&tNetPacket)
 #ifndef XRGAME_EXPORTS
 void CSE_ALifeLevelChanger::FillProps		(LPCSTR pref, PropItemVec& items)
 {
-#	ifdef XRSE_FACTORY_EXPORTS
+#	ifdef XRSEFACTORY_EXPORTS
 	inherited::FillProps		(pref,items);
 	
 	PHelper().CreateRList		(items,PrepareKey(pref,*s_name,"Level to change"),		&m_caLevelToChange,		&*fp_data.level_ids.begin(), fp_data.level_ids.size());
 	PHelper().CreateRText		(items,PrepareKey(pref,*s_name,"Level point to change"),	&m_caLevelPointToChange);
 
 	PHelper().CreateBOOL		(items,PrepareKey(pref,*s_name,"Silent mode"),	&m_bSilentMode);
-#	endif // #ifdef XRSE_FACTORY_EXPORTS
+#	endif // #ifdef XRSEFACTORY_EXPORTS
 }
 #endif // #ifndef XRGAME_EXPORTS
 

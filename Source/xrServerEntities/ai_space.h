@@ -7,7 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-
+#ifndef XRSEFACTORY_EXPORTS
 class CGameGraph;
 class CGameLevelCrossTable;
 class CLevelGraph;
@@ -15,9 +15,11 @@ class CGraphEngine;
 class CEF_Storage;
 class CALifeSimulator;
 class CCoverManager;
-class CScriptEngine;
 class CPatrolPathStorage;
 class moving_objects;
+#endif
+
+class CScriptEngine;
 
 namespace doors {
 	class manager;
@@ -32,17 +34,21 @@ private:
 	friend class CLevel;
 
 private:
+#ifndef XRSEFACTORY_EXPORTS
 	CGameGraph							*m_game_graph;
 	CLevelGraph							*m_level_graph;
 	CGraphEngine						*m_graph_engine;
 	CEF_Storage							*m_ef_storage;
 	CALifeSimulator						*m_alife_simulator;
 	CCoverManager						*m_cover_manager;
+#endif
 	CScriptEngine						*m_script_engine;
+#ifndef XRSEFACTORY_EXPORTS
 	CPatrolPathStorage					*m_patrol_path_storage;
 	moving_objects						*m_moving_objects;
 	doors::manager						*m_doors_manager;
-
+#endif
+#ifndef XRSEFACTORY_EXPORTS
 private:
 			void						load					(LPCSTR level_name);
 			void						unload					(bool reload = false);
@@ -50,11 +56,14 @@ private:
 			void						patrol_path_storage		(IReader &stream);
 			void						set_alife				(CALifeSimulator *alife_simulator);
 			void						game_graph				(CGameGraph *game_graph);
+#endif
 
 public:
 										CAI_Space				();
 	virtual								~CAI_Space				();
-			void						init					();
+			void						init					();		
+	IC		CScriptEngine				&script_engine			() const;
+#ifndef XRSEFACTORY_EXPORTS
 	IC		CGameGraph					&game_graph				() const;
 	IC		CGameGraph					*get_game_graph			() const;
 	IC		CLevelGraph					&level_graph			() const;
@@ -67,12 +76,12 @@ public:
 	IC		const CALifeSimulator		&alife					() const;
 	IC		const CALifeSimulator		*get_alife				() const;
 	IC		const CCoverManager			&cover_manager			() const;
-	IC		CScriptEngine				&script_engine			() const;
 	IC		moving_objects				&moving_objects			() const;
 	IC		doors::manager&				doors					() const;
 
 #ifdef DEBUG
 			void						validate				(const u32			level_id) const;
+#endif
 #endif
 };
 

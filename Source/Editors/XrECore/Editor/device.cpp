@@ -273,15 +273,8 @@ void  CEditorRenderDevice::Resize(int w, int h)
 	dwWidth = w;
 	dwHeight = h;
 
-    fASPECT 		= (float)dwHeight / (float)dwWidth;
-    mProject.build_projection( deg2rad(fFOV), fASPECT, m_Camera.m_Znear, m_Camera.m_Zfar );
-    m_fNearer 		= mProject._43;
 
     Reset			();
-
-    RCache.set_xform_project(mProject);
-    RCache.set_xform_world	(Fidentity);
-
     UI->RedrawScene	();
 }
 

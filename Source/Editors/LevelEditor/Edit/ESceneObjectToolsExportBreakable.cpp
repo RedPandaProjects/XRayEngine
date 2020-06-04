@@ -128,7 +128,7 @@ bool ESceneObjectTool::ExportBreakableObjects(SExportStreams* F)
                 // export spawn object
                 {
                     xr_string entity_ref		= "breakable_object";
-                    ISE_Abstract*	m_Data		= create_entity(entity_ref.c_str()); 	VERIFY(m_Data);
+                    ISE_Abstract*	m_Data		= XrSE_Factory::create_entity(entity_ref.c_str()); 	VERIFY(m_Data);
                     CSE_Visual* m_Visual		= m_Data->visual();	VERIFY(m_Visual);
                     // set params
                     m_Data->set_name			(entity_ref.c_str());
@@ -152,7 +152,7 @@ bool ESceneObjectTool::ExportBreakableObjects(SExportStreams* F)
                     F->spawn.stream.open_chunk	(F->spawn.chunk++);
                     F->spawn.stream.w			(Packet.B.data,Packet.B.count);
                     F->spawn.stream.close_chunk	();
-                    destroy_entity				(m_Data);
+                    XrSE_Factory::destroy_entity				(m_Data);
                 }
             }else{
             	ELog.Msg(mtError,"Can't export invalid part #%d",p_it-parts.begin());
@@ -255,7 +255,7 @@ bool ESceneObjectTool::ExportClimableObjects(SExportStreams* F)
                 // export spawn object
                 {
                     xr_string entity_ref		= "climable_object";
-                    ISE_Abstract*	m_Data		= create_entity(entity_ref.c_str()); 	VERIFY(m_Data);
+                    ISE_Abstract*	m_Data		= XrSE_Factory::create_entity(entity_ref.c_str()); 	VERIFY(m_Data);
                     ISE_Shape* m_Shape			= m_Data->shape();                      VERIFY(m_Shape);
 //					CSE_Visual* m_Visual		= m_Data->visual();	VERIFY(m_Visual);
                     // set params
@@ -295,7 +295,7 @@ bool ESceneObjectTool::ExportClimableObjects(SExportStreams* F)
                             Tools->m_DebugDraw.AppendLine(P->m_RefOffset,Fvector().mad(P->m_RefOffset,local_normal,1.f));
                         }
                     }
-                    destroy_entity				(m_Data);
+                    XrSE_Factory::destroy_entity				(m_Data);
                 }
             }else
             {

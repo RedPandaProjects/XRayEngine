@@ -201,7 +201,7 @@ public:
 
     virtual bool	ExportGame		(SExportStreams* data){return true;}
 
-	virtual bool 	GetBox			(Fbox& box)	const {return false;}
+	virtual bool 	GetBox			(Fbox& box)	 {return false;}
 	virtual bool 	GetUTBox		(Fbox& box){return false;}
 	virtual void 	OnSceneUpdate	(){;}
     virtual void 	OnObjectRemove	(const CCustomObject* object){;}

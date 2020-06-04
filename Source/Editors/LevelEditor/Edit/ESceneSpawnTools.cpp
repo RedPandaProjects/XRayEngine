@@ -9,13 +9,7 @@
 #include "spawnpoint.h"
 #include "builder.h"
 #include "..\..\XrECore\Editor\Library.h"
-
 static HMODULE hXRSE_FACTORY = 0;
-static LPCSTR xrse_factory_library	= "xrSE_Factory.dll";
-static LPCSTR create_entity_func 	= "_create_entity@4";
-static LPCSTR destroy_entity_func 	= "_destroy_entity@4";
-Tcreate_entity 	create_entity;
-Tdestroy_entity destroy_entity;
 
 CEditableObject* ESceneSpawnTool::get_draw_visual(u8 _RP_TeamID, u8 _RP_Type, const GameTypeChooser& _GameType)
 {
@@ -119,12 +113,7 @@ ESceneSpawnTool::ESceneSpawnTool():ESceneCustomOTool(OBJCLASS_SPAWNPOINT)
 {
 	m_Flags.zero();
     not_implemented();
-    /*TfrmChoseItem::AppendEvents	(smSpawnItem,		"Select Spawn Item",		FillSpawnItems,		0,0,0,0);
-
-    hXRSE_FACTORY	= LoadLibrary(xrse_factory_library);									VERIFY3(hXRSE_FACTORY,"Can't load library:",xrse_factory_library);
-    create_entity 	= (Tcreate_entity)	GetProcAddress(hXRSE_FACTORY,create_entity_func);  	VERIFY3(create_entity,"Can't find func:",create_entity_func);
-    destroy_entity 	= (Tdestroy_entity)	GetProcAddress(hXRSE_FACTORY,destroy_entity_func);	VERIFY3(destroy_entity,"Can't find func:",destroy_entity_func);
-
+    UIChooseForm::AppendEvents	(smSpawnItem,		"Select Spawn Item",		FillSpawnItems,		0,0,0,0);
     m_Classes.clear			();
     CInifile::Root const& data 	= pSettings->sections();
     for (CInifile::RootCIt it=data.begin(); it!=data.end(); it++){
@@ -134,8 +123,7 @@ ESceneSpawnTool::ESceneSpawnTool():ESceneCustomOTool(OBJCLASS_SPAWNPOINT)
         	shared_str v	= pSettings->r_string_wb((*it)->Name,"$spawn");
         	m_Classes[cls_id].push_back(SChooseItem(*v,*(*it)->Name));
         }
-    }*/
-    
+    }
 }
 
 ESceneSpawnTool::~ESceneSpawnTool()

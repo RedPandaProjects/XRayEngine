@@ -74,7 +74,7 @@ public:
 								SRayPickInfo* pinf = NULL);
     virtual bool 	FrustumPick	(const CFrustum& frustum);
     virtual bool 	SpherePick	(const Fvector& center, float radius);
-	virtual bool 	GetBox		(Fbox& box) const;
+	virtual bool 	GetBox		(Fbox& box) ;
 	virtual void 	Move		( Fvector& amount ); // need for Shift Level
 	virtual void 	OnSceneUpdate();
 

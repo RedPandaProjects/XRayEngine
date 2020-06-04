@@ -42,7 +42,7 @@ public:
     virtual bool 	FrustumPick	(const CFrustum& frustum);
 
     // placement functions
-	virtual bool 	GetBox		(Fbox& box) const;
+	virtual bool 	GetBox		(Fbox& box) ;
 
     // change position/orientation methods
 //	virtual void 	Scale		(Fvector& amount){;}

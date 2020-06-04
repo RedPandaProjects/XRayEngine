@@ -37,7 +37,7 @@ public:
 	virtual void 		SaveStream			(IWriter&);
   	virtual void 		SaveLTX				(CInifile& ini, LPCSTR sect_name);
 
-	virtual bool 	GetBox		(Fbox& box) const;
+	virtual bool 	GetBox		(Fbox& box) ;
     void			Simplify	();
     bool			Update		(bool bLoadMode=false);
     void 			InvertOrientation(bool bUndo);

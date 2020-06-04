@@ -82,7 +82,7 @@ void CSceneObject::OnUpdateTransform()
     }
 }
 
-bool CSceneObject::GetBox( Fbox& box ) const
+bool CSceneObject::GetBox( Fbox& box ) 
 {
 	if (!m_pReference) return false;
 	box.set(m_TBBox);

@@ -22,7 +22,7 @@
 #	include "object_factory.h"
 #endif
 
-#ifndef XRSE_FACTORY_EXPORTS
+#ifndef XRSEFACTORY_EXPORTS
 #	include "xrEProps.h"
 	
 	IPropHelper &PHelper()
@@ -236,7 +236,7 @@ void CSE_Abstract::Spawn_Write				(NET_Packet	&tNetPacket, BOOL bLocal)
 //	tNetPacket.w_u64			(m_min_spawn_interval);
 //	tNetPacket.w_u64			(m_max_spawn_interval);
 
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS
 	CScriptValueContainer::assign();
 #endif
 
@@ -245,7 +245,7 @@ void CSE_Abstract::Spawn_Write				(NET_Packet	&tNetPacket, BOOL bLocal)
 	tNetPacket.w_u16			(0);
 	STATE_Write					(tNetPacket);
 	u16 size					= u16(tNetPacket.w_tell() - position);
-//#ifdef XRSE_FACTORY_EXPORTS
+//#ifdef XRSEFACTORY_EXPORTS
 	R_ASSERT3					((m_tClassID == CLSID_SPECTATOR) || (size > sizeof(size)),
 		"object isn't successfully saved, get your backup :(",name_replace());
 //#endif
@@ -275,7 +275,7 @@ BOOL CSE_Abstract::Spawn_Read				(NET_Packet	&tNetPacket)
 	R_ASSERT					(M_SPAWN==dummy16);
 	tNetPacket.r_stringZ		(s_name			);
 	
-	string256					temp;
+	string4096					temp;
 	tNetPacket.r_stringZ		(temp);
 	set_name_replace			(temp);
 	u8							temp_gt;
@@ -434,9 +434,9 @@ xr_token game_types[]={
 #ifndef XRGAME_EXPORTS
 void CSE_Abstract::FillProps(LPCSTR pref, PropItemVec& items)
 {
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS
     m_gameType.FillProp(pref, items);
-#endif // #ifdef XRSE_FACTORY_EXPORTS
+#endif // #ifdef XRSEFACTORY_EXPORTS
 /*
 #ifdef XRGAME_EXPORTS
 #	ifdef DEBUG

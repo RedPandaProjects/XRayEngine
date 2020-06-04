@@ -42,8 +42,6 @@ CLevelMain::~CLevelMain()
 //------------------------------------------------------------------------------
 CCommandVar CLevelTool::CommandChangeTarget(CCommandVar p1, CCommandVar p2)
 {
-    return FALSE;
-    not_implemented();
 	if (Scene->GetTool(p1)->IsEnabled())
     {
 	    SetTarget	(p1,p2);
@@ -1307,6 +1305,11 @@ void CLevelMain::LoadSettings(CInifile* I)
     
 	inherited::LoadSettings(I);
     SSceneSummary::Load(I);
+}
+
+Ivector2 CLevelMain::GetRenderMousePosition() const
+{
+    return MainForm->GetRenderForm()->GetMousePos();
 }
 
 void CLevelMain::store_rt_flags(const CCustomObject* CO)

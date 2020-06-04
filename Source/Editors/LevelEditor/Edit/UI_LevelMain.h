@@ -113,6 +113,7 @@ public:
 
     virtual void	SaveSettings			(CInifile*);
     virtual void	LoadSettings			(CInifile*);
+    virtual Ivector2 GetRenderMousePosition()const;
 };    
 extern CLevelMain*	LUI;
 

@@ -13,7 +13,7 @@
 #	include "character_info.h"
 #endif // AI_COMPILER
 
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS
 #	include "ai_space.h"
 #	include "script_engine.h"
 #	pragma warning(push)
@@ -24,9 +24,9 @@
 
 #pragma comment(lib, "shlwapi.lib")
 static SFillPropData			fp_data;
-#endif // XRSE_FACTORY_EXPORTS
+#endif // XRSEFACTORY_EXPORTS
 
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS
 bool parse_bool		(luabind::object const &table, LPCSTR identifier)
 {
 	VERIFY2						(table.type() == LUA_TTABLE, "invalid loophole description passed");
@@ -67,13 +67,13 @@ BOOL is_combat_cover			(shared_str const &table_id)
 
 	return						(parse_bool(table, "is_combat_cover") ? TRUE : FALSE);
 }
-#endif // XRSE_FACTORY_EXPORTS
+#endif // XRSEFACTORY_EXPORTS
 
 CSE_SmartCover::CSE_SmartCover	(LPCSTR section) : CSE_ALifeDynamicObject(section)
 {
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS
 	fp_data.inc					();
-#endif // XRSE_FACTORY_EXPORTS
+#endif // XRSEFACTORY_EXPORTS
 
 	m_enter_min_enemy_distance	= pSettings->r_float(section, "enter_min_enemy_distance");
 	m_exit_min_enemy_distance	= pSettings->r_float(section, "exit_min_enemy_distance");
@@ -84,9 +84,9 @@ CSE_SmartCover::CSE_SmartCover	(LPCSTR section) : CSE_ALifeDynamicObject(section
 
 CSE_SmartCover::~CSE_SmartCover	()
 {
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS
 	fp_data.dec					();
-#endif // XRSE_FACTORY_EXPORTS
+#endif // XRSEFACTORY_EXPORTS
 }
 
 ISE_Shape* CSE_SmartCover::shape()
@@ -173,7 +173,7 @@ void CSE_SmartCover::UPDATE_Write(NET_Packet &tNetPacket)
 #ifndef XRGAME_EXPORTS
 void CSE_SmartCover::FillProps	(LPCSTR pref, PropItemVec& items)
 {
-#	ifdef XRSE_FACTORY_EXPORTS
+#	ifdef XRSEFACTORY_EXPORTS
 	PHelper().CreateFloat		(items, PrepareKey(pref,*s_name,"hold position time"), 	&m_hold_position_time,	0.f, 60.f);
 	RListValue *value			= PHelper().CreateRList	 	(items,	PrepareKey(pref,*s_name,"description"),			&m_description,			&*fp_data.smart_covers.begin(),	fp_data.smart_covers.size());
 	value->OnChangeEvent.bind	(this,&CSE_SmartCover::OnChangeDescription);
@@ -185,11 +185,11 @@ void CSE_SmartCover::FillProps	(LPCSTR pref, PropItemVec& items)
 		PHelper().CreateBOOL	(items, PrepareKey(pref, *s_name, "is combat cover"), &m_is_combat_cover);
 		PHelper().CreateBOOL	(items, PrepareKey(pref, *s_name, "can fire"), &m_can_fire);
 	}
-#	endif // #ifdef XRSE_FACTORY_EXPORTS
+#	endif // #ifdef XRSEFACTORY_EXPORTS
 }
 #endif // #ifndef XRGAME_EXPORTS
 
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS
 void CSE_SmartCover::set_loopholes_table_checker(BOOLValue *value){
 	value->OnChangeEvent.bind	(this,&CSE_SmartCover::OnChangeLoopholes);
 }
@@ -587,4 +587,4 @@ void CSE_SmartCover::on_render	(CDUInterface* du, ISE_AbstractLEOwner* owner, bo
 		draw_frustum(du, H.fov, H.range, 1.f, pos, dir, up, color_rgba(255,0,0,255));
 	}
 }
-#endif // #ifdef XRSE_FACTORY_EXPORTS
+#endif // #ifdef XRSEFACTORY_EXPORTS

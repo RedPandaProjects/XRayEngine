@@ -282,7 +282,7 @@ bool CEditShape::FrustumPick(const CFrustum& frustum)
 	return false;
 }
 
-bool CEditShape::GetBox(Fbox& box)  const
+bool CEditShape::GetBox(Fbox& box)  
 {
 	if (m_Box.is_valid()){
     	box.xform(m_Box,FTransform);

@@ -5,7 +5,7 @@
 
 static const float EMPTY_GROUP_SIZE = 0.5f;
 
-bool CGroupObject::GetBox(Fbox& bb) const
+bool CGroupObject::GetBox(Fbox& bb) 
 {
     bb.invalidate		();
     // update box

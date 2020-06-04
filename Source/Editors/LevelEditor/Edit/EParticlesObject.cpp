@@ -42,7 +42,7 @@ EParticlesObject::~EParticlesObject()
 }
 //----------------------------------------------------
 
-bool EParticlesObject::GetBox( Fbox& box ) const
+bool EParticlesObject::GetBox( Fbox& box ) 
 {
 	box.set( GetPosition(), GetPosition() );
 	box.min.x -= PSOBJECT_SIZE;

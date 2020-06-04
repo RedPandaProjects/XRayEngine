@@ -63,15 +63,12 @@ void C3DCursor::GetPickPoint (Fvector& src, Fvector& dst, Fvector* N)
 //---------------------------------------------------------------------------
 
 void C3DCursor::Render(){
-    not_implemented();
     if (m_Visible&&!EDevice.m_Camera.IsMoving()){
         SRayPickInfo pinf;
         Fvector start, dir, N, D;
-        POINT start_pt;
         Ivector2 pt;
-        GetCursorPos(&start_pt); 
        // start_pt=UI->GetD3DWindow()->ScreenToClient(start_pt);
-        pt.set(float(start_pt.x),float(start_pt.y));
+        pt = MainForm->GetRenderForm()->GetMousePos();
         EDevice.m_Camera.MouseRayFromPoint(start,dir,pt);
         if (LUI->PickGround(pinf.pt,start,dir, -1)){
             N.set(0,1,0);

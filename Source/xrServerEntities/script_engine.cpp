@@ -27,7 +27,7 @@
 #	endif // #ifndef USE_LUA_STUDIO
 #endif
 
-#ifndef XRSE_FACTORY_EXPORTS
+#ifndef XRSEFACTORY_EXPORTS
 #	ifdef DEBUG
 #		include "ai_debug.h"
 		extern Flags32 psAI_Flags;
@@ -135,6 +135,7 @@ CScriptEngine::CScriptEngine			()
 		m_scriptDebugger	= NULL;
 		restartDebugger		();	
 #	else // #ifndef USE_LUA_STUDIO
+	m_lua_studio_engine = 0;
 		m_lua_studio_world	= 0;
 #	endif // #ifndef USE_LUA_STUDIO
 #endif
@@ -293,7 +294,11 @@ void CScriptEngine::init				()
 		}
 	}
 #endif // #ifdef USE_LUA_STUDIO
-
+	if (strstr(Core.Params, "-lua_debug"))
+	{
+		jit_command(lua(), "debug=2");
+		jit_command(lua(), "off");
+	}
 	luabind::open						(lua());
 	setup_callbacks						();
 	export_classes						(lua());
@@ -380,7 +385,7 @@ void CScriptEngine::process_file_if_exists	(LPCSTR file_name, bool warn_if_not_e
 		FS.update_path		(S,"$game_scripts$",strconcat(sizeof(S1),S1,file_name,".script"));
 		if (!warn_if_not_exist && !FS.exist(S)) {
 #ifdef DEBUG
-#	ifndef XRSE_FACTORY_EXPORTS
+#	ifndef XRSEFACTORY_EXPORTS
 			if (psAI_Flags.test(aiNilObjectAccess))
 #	endif
 			{
