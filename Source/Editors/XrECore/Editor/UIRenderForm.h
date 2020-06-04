@@ -9,4 +9,5 @@ public:
 private:
 	Ivector2	m_mouse_position;
 	ref_texture m_rt;
+	bool m_mouse_down;
 };

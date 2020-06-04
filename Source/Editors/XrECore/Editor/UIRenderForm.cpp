@@ -3,6 +3,7 @@
 #include "ui_main.h"
 UIRenderForm::UIRenderForm()
 {
+	m_mouse_down = false;
 }
 
 UIRenderForm::~UIRenderForm()
@@ -37,11 +38,17 @@ void UIRenderForm::Draw()
 			if (ImGui::IsWindowFocused())
 			{
 
-				if (ImGui::IsMouseDown(ImGuiMouseButton_Left) || ImGui::IsMouseDown(ImGuiMouseButton_Right))
+				if ((ImGui::IsMouseDown(ImGuiMouseButton_Left) || ImGui::IsMouseDown(ImGuiMouseButton_Right)) && !m_mouse_down)
+				{
 					UI->MousePress(TShiftState(ShiftState), ImGui::GetIO().MousePos.x - canvas_pos.x, ImGui::GetIO().MousePos.y - canvas_pos.y);
+					m_mouse_down = true;
+				}
 
 				else  if (ImGui::IsMouseReleased(ImGuiMouseButton_Left) || ImGui::IsMouseReleased(ImGuiMouseButton_Right))
+				{
 					UI->MouseRelease(TShiftState(ShiftState), ImGui::GetIO().MousePos.x - canvas_pos.x, ImGui::GetIO().MousePos.y - canvas_pos.y);
+					m_mouse_down = false;
+				}
 				else
 					UI->MouseMove(TShiftState(ShiftState), ImGui::GetIO().MousePos.x - canvas_pos.x, ImGui::GetIO().MousePos.y - canvas_pos.y);
 			}

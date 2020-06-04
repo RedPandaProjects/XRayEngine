@@ -105,20 +105,19 @@ bool  TUI_CustomControl::AddEnd(TShiftState _Shift)
 
 bool TUI_CustomControl::CheckSnapList(TShiftState Shift)
 {
-    not_implemented();
-	/*if (fraLeftBar->ebSnapListMode->Down){
+	if ( MainForm->GetLeftBarForm()->IsSnapListMode()){
 	    CCustomObject* O=Scene->RayPickObject(UI->ZFar(),UI->m_CurrentRStart,UI->m_CurrentRDir,OBJCLASS_SCENEOBJECT,0,0);
         if (O){
             if (Scene->FindObjectInSnapList(O)){
-                if (Shift.Contains(ssAlt)){
+                if (Shift|ssAlt){
                     Scene->DelFromSnapList(O);
-                }else if (Shift.Contains(ssCtrl)){
+                }else if (Shift | ssCtrl){
                     Scene->DelFromSnapList(O);
                 }
             }else{
-                if (!Shift.Contains(ssCtrl)&&!Shift.Contains(ssAlt)){
+                if (!(Shift&(ssCtrl| ssAlt))){
                     Scene->AddToSnapList(O);
-                }else if (Shift.Contains(ssCtrl)){
+                }else if (Shift|ssCtrl){
                     Scene->AddToSnapList(O);
                 }
             }
@@ -126,7 +125,7 @@ bool TUI_CustomControl::CheckSnapList(TShiftState Shift)
         }else{
         	return false;
         }
-    }*/
+    }
     return false;
 }
 
@@ -139,10 +138,10 @@ bool  TUI_CustomControl::SelectStart(TShiftState Shift)
 
 	if (CheckSnapList(Shift)) return false;
     if (Shift==ssRBOnly){ ExecCommand(COMMAND_SHOWCONTEXTMENU,parent_tool->FClassID); return false;}
-    if (!(Shift|ssCtrl||Shift|ssAlt)) Scene->SelectObjects( false, cls);
+    if (!((Shift|ssCtrl)||(Shift|ssAlt))) Scene->SelectObjects( false, cls);
 
-    int cnt 		= Scene->RaySelect(Shift | ssCtrl?-1:Shift | ssAlt?0:1,parent_tool->FClassID);
-    bBoxSelection    = ((0!=cnt) && (Shift | ssCtrl||Shift | ssAlt)) || (0==cnt);
+    int cnt 		= Scene->RaySelect((Shift | ssCtrl)?-1:(Shift | ssAlt)?0:1,parent_tool->FClassID);
+    bBoxSelection    = ((0!=cnt) && ((Shift | ssCtrl)||(Shift | ssAlt))) || (0==cnt);
     if( bBoxSelection ){
         UI->EnableSelectionRect( true );
         UI->UpdateSelectionRect(UI->m_StartCp,UI->m_CurrentCp);

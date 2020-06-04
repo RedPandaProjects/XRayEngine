@@ -9,13 +9,12 @@
  
 ObjectList* EScene::GetSnapList(bool bIgnoreUse)
 {
-	/*ObjClassID cls 			= LTools->CurrentClassID();
+	ObjClassID cls 			= LTools->CurrentClassID();
     ESceneToolBase* mt 		= m_SceneTools[cls];
     if (0==mt)				return 0;
     ObjectList* snap_list	= mt->GetSnapList()?mt->GetSnapList():&m_ESO_SnapObjects;
-    return bIgnoreUse?snap_list:(fraLeftBar->ebUseSnapList->Down?snap_list:NULL);*/
-    not_implemented();
-    return 0;
+   
+    return bIgnoreUse?snap_list:(MainForm->GetLeftBarForm()->IsUseSnapList() ?snap_list:NULL);
 }
 //--------------------------------------------------------------------------------------------------
 

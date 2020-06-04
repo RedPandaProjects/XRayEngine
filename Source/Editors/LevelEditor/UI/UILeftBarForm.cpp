@@ -1,6 +1,10 @@
 #include "stdafx.h"
+#include "..\Edit\CustomObject.h"
 UILeftBarForm::UILeftBarForm()
 {
+	m_UseSnapList = false;
+	m_SnapListMode = false;
+	m_SnapItem_Current = 0;
 }
 
 UILeftBarForm::~UILeftBarForm()
@@ -10,8 +14,10 @@ UILeftBarForm::~UILeftBarForm()
 void UILeftBarForm::Draw()
 {
 	ImGui::Begin("LeftBar",0);
+	
 	if (ImGui::TreeNode("Tools"))
 	{
+		ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
 		static ObjClassID Tools[OBJCLASS_COUNT+1] = {
 													OBJCLASS_SCENEOBJECT,
 													OBJCLASS_LIGHT,
@@ -58,8 +64,72 @@ void UILeftBarForm::Draw()
 		ImGui::Separator();
 		ImGui::PopStyleVar(2);
 		ImGui::TreePop();
+
+		ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 	}
-	
+	if (ImGui::TreeNode("Snap List"))
+	{
+		ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
+		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 1));
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 4));
+		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(4, 0));
+		ImGui::Separator();
+		{
+			ImGui::BulletText("Commands", ImGuiDir_Left);
+			if (ImGui::BeginPopupContextItem("Commands", 1))
+			{
+				if (ImGui::MenuItem("Make List From Selected"))
+				{
+					ExecCommand(COMMAND_SET_SNAP_OBJECTS);
+				}
+				if (ImGui::MenuItem("Select Object From List"))
+				{
+					ExecCommand(COMMAND_SELECT_SNAP_OBJECTS);
+				}
+				ImGui::Separator();
+				if (ImGui::MenuItem("Add Selected To List"))
+				{
+					ExecCommand(COMMAND_ADD_SEL_SNAP_OBJECTS);
+				}
+				if (ImGui::MenuItem("Remove Selected From List"))
+				{
+					ExecCommand(COMMAND_DEL_SEL_SNAP_OBJECTS);
+				}
+				ImGui::EndPopup();
+			}
+			ImGui::OpenPopupOnItemClick("Commands", 0);
+		}
+		//	ImGui::Checkbox("Enable/Show Snap List", &test);
+		ImGui::Checkbox("Enable/Show Snap List", &m_UseSnapList);
+
+		ImGui::Separator();
+		ImGui::Checkbox("+/- Mode", &m_SnapListMode); ImGui::SameLine(0, 10);
+		if (ImGui::Button("X"))
+		{
+			if (ELog.DlgMsg(mtConfirmation,  mbYes | mbNo, "Are you sure to clear snap objects?") == mrYes)
+				ExecCommand(COMMAND_CLEAR_SNAP_OBJECTS);
+		}
+		ImGui::PopStyleVar(2);
+		/*
+		
+	if (lst&&!lst->empty()){
+		int idx=0;
+		ObjectIt _F=lst->begin();
+		for (;_F!=lst->end(); _F++,idx++){
+			AnsiString s; s.sprintf("%d: %s",idx,(*_F)->Name);
+			lbSnapList->Items->Add(s);
+		}
+	}*/
+		ObjectList* lst = Scene->GetSnapList(true);
+		
+		ImGui::SetNextItemWidth(-1);
+		ImGui::ListBox("##snap_list_box", &m_SnapItem_Current, [](void* data, int ind, const char** out)->bool {auto item = reinterpret_cast<ObjectList*>(data)->begin(); std::advance(item, ind); *out = (*item)->GetName(); return true; }, reinterpret_cast<void*>(lst), lst->size(), 7);
+		ImGui::TreePop();
+		ImGui::PopStyleVar(2);
+
+		ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
+	}
 	ImGui::End();
 }
 
