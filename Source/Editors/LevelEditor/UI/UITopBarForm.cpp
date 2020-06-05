@@ -177,7 +177,7 @@ void  UITopBarForm::ClickScale()
 }
 void  UITopBarForm::ClickX()
 {
-	ExecCommand(COMMAND_CHANGE_ACTION, etAxisX);
+	ExecCommand(COMMAND_CHANGE_AXIS, etAxisX);
 	m_bX = true;
 	m_bY = false;
 	m_bZ = false;
@@ -185,7 +185,7 @@ void  UITopBarForm::ClickX()
 }
 void  UITopBarForm::ClickY()
 {
-	ExecCommand(COMMAND_CHANGE_ACTION, etAxisY);
+	ExecCommand(COMMAND_CHANGE_AXIS, etAxisY);
 	m_bX = false;
 	m_bY = true;
 	m_bZ = false;
@@ -193,7 +193,7 @@ void  UITopBarForm::ClickY()
 }
 void  UITopBarForm::ClickZ()
 {
-	ExecCommand(COMMAND_CHANGE_ACTION, etAxisZ);
+	ExecCommand(COMMAND_CHANGE_AXIS, etAxisZ);
 	m_bX = false;
 	m_bY = false;
 	m_bZ = true;
@@ -202,7 +202,7 @@ void  UITopBarForm::ClickZ()
 }
 void  UITopBarForm::ClickZX()
 {
-	ExecCommand(COMMAND_CHANGE_ACTION, etAxisZX);
+	ExecCommand(COMMAND_CHANGE_AXIS, etAxisZX);
 	m_bX = false;
 	m_bY = false;
 	m_bZ = false;
