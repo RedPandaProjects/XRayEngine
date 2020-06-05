@@ -3,7 +3,6 @@
 
 // refs
 class ESceneToolBase;
-class TProperties;
 class TfrmObjectList;
 
 #include "ESceneClassList.h"
@@ -44,7 +43,7 @@ class CLevelTool: public CToolCustom
     void  	RealSetAction   	(ETAction act);
     void  	RealSetTarget   	(ObjClassID tgt,int sub_tgt, bool bForced);//=false);
 
-    TProperties* 		m_Props;
+    UIPropertiesForm* 		m_Props;
     void   	OnPropsModified		();
     void   	OnPropsClose		();
 
@@ -59,6 +58,7 @@ public:
     virtual         	~CLevelTool		();
 
     IC XrUI*            GetToolForm         ()const{ return m_ToolForm; }
+    IC UIPropertiesForm*GetProperties       ()const { return m_Props; }
     IC ObjClassID		GetTarget   		(){return target;}
     IC int          	GetSubTarget   		(){return sub_target;}
     virtual void		SetAction			(ETAction act);

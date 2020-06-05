@@ -46,6 +46,8 @@ bool CLevelTool::OnCreate()
     m_Flags.set(flChangeTarget, FALSE);
     Scene->OnCreate();
     ExecCommand(COMMAND_CHANGE_TARGET, OBJCLASS_SCENEOBJECT);
+    m_Props = xr_new < UIPropertiesForm>();
+    m_Props->SetModifiedEvent(TOnCloseEvent(this, &CLevelTool::OnPropsModified));
   /*
     ssRBOnly << ssRight;
     paParent 		= fraLeftBar->paFrames;   VERIFY(paParent);
@@ -62,7 +64,6 @@ bool CLevelTool::OnCreate()
                                                 TOnCloseEvent(this,&CLevelTool::OnPropsClose),
                           TProperties::plItemFolders|TProperties::plFolderStore|TProperties::plNoClearStore|TProperties::plFullExpand);
     pObjectListForm = TfrmObjectList::CreateForm();*/
-    not_implemented();
     return true;
 }
 //---------------------------------------------------------------------------
@@ -70,7 +71,7 @@ bool CLevelTool::OnCreate()
 void CLevelTool::OnDestroy()
 {
 	inherited::OnDestroy();
-    not_implemented();
+    xr_delete(m_Props);
     /*TfrmObjectList::DestroyForm(pObjectListForm);
 	TProperties::DestroyForm(m_Props);*/
     // scene destroing
@@ -270,9 +271,8 @@ void CLevelTool::RefreshProperties()
 
 void CLevelTool::ShowProperties(LPCSTR focus_to_item)
 {
-   /* m_Props->ShowProperties	();
     RealUpdateProperties	();
-
+    /*
 	if(focus_to_item)
     	m_Props->SelectFolder	(focus_to_item);
     else
@@ -284,14 +284,13 @@ void CLevelTool::ShowProperties(LPCSTR focus_to_item)
         }
     }
     */
-    not_implemented();
     UI->RedrawScene			();
 }
 //---------------------------------------------------------------------------
 
 void CLevelTool::RealUpdateProperties()
 {
-	/*if (m_Props->Visible)
+	if (/*m_Props->Visible*/1)
     {
 		if (m_Props->IsModified()) Scene->UndoSave();
         
@@ -302,8 +301,7 @@ void CLevelTool::RealUpdateProperties()
         Scene->FillProp				("",items,CurrentClassID());
 
 		m_Props->AssignItems		(items);
-    }*/
-    not_implemented();
+    }
 	m_Flags.set(flUpdateProperties,FALSE);
 }
 //---------------------------------------------------------------------------
@@ -311,7 +309,6 @@ void CLevelTool::RealUpdateProperties()
 void CLevelTool::OnPropsClose()
 {
 	/*if (m_Props->IsModified()) Scene->UndoSave();*/
-    not_implemented();
 }
 //---------------------------------------------------------------------------
 
