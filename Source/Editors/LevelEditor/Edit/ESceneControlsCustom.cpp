@@ -82,9 +82,9 @@ CCustomObject*  TUI_CustomControl::DefaultAddObject(TShiftState Shift, TBeforeAp
 		obj->MoveTo(p,n);
         Scene->SelectObjects(false,parent_tool->FClassID);
 		Scene->AppendObject(obj);
-		if (Shift|ssCtrl) 
+		if (Shift&ssCtrl) 
         	ExecCommand(COMMAND_SHOW_PROPERTIES);
-        if (!Shift|ssAlt) 
+        if (!(Shift&ssAlt)) 
         	ResetActionToSelect();
     }
     return obj;
@@ -109,15 +109,15 @@ bool TUI_CustomControl::CheckSnapList(TShiftState Shift)
 	    CCustomObject* O=Scene->RayPickObject(UI->ZFar(),UI->m_CurrentRStart,UI->m_CurrentRDir,OBJCLASS_SCENEOBJECT,0,0);
         if (O){
             if (Scene->FindObjectInSnapList(O)){
-                if (Shift|ssAlt){
+                if (Shift&ssAlt){
                     Scene->DelFromSnapList(O);
-                }else if (Shift | ssCtrl){
+                }else if (Shift & ssCtrl){
                     Scene->DelFromSnapList(O);
                 }
             }else{
                 if (!(Shift&(ssCtrl| ssAlt))){
                     Scene->AddToSnapList(O);
-                }else if (Shift|ssCtrl){
+                }else if (Shift&ssCtrl){
                     Scene->AddToSnapList(O);
                 }
             }
@@ -138,10 +138,10 @@ bool  TUI_CustomControl::SelectStart(TShiftState Shift)
 
 	if (CheckSnapList(Shift)) return false;
     if (Shift==ssRBOnly){ ExecCommand(COMMAND_SHOWCONTEXTMENU,parent_tool->FClassID); return false;}
-    if (!((Shift|ssCtrl)||(Shift|ssAlt))) Scene->SelectObjects( false, cls);
+    if (!((Shift&ssCtrl)||(Shift&ssAlt))) Scene->SelectObjects( false, cls);
 
-    int cnt 		= Scene->RaySelect((Shift | ssCtrl)?-1:(Shift | ssAlt)?0:1,parent_tool->FClassID);
-    bBoxSelection    = ((0!=cnt) && ((Shift | ssCtrl)||(Shift | ssAlt))) || (0==cnt);
+    int cnt 		= Scene->RaySelect((Shift & ssCtrl)?-1:(Shift & ssAlt)?0:1,parent_tool->FClassID);
+    bBoxSelection    = ((0!=cnt) && ((Shift & ssCtrl)||(Shift & ssAlt))) || (0==cnt);
     if( bBoxSelection ){
         UI->EnableSelectionRect( true );
         UI->UpdateSelectionRect(UI->m_StartCp,UI->m_CurrentCp);
@@ -159,7 +159,7 @@ bool  TUI_CustomControl::SelectEnd(TShiftState _Shift)
     if (bBoxSelection){
         UI->EnableSelectionRect( false );
         bBoxSelection = false;
-        Scene->FrustumSelect(_Shift|ssAlt?0:1,LTools->CurrentClassID());
+        Scene->FrustumSelect(_Shift&ssAlt?0:1,LTools->CurrentClassID());
     }
     return true;
 }
@@ -174,7 +174,7 @@ bool  TUI_CustomControl::MovingStart(TShiftState Shift)
     if(Shift==ssRBOnly){ ExecCommand(COMMAND_SHOWCONTEXTMENU,parent_tool->FClassID); return false;}
     if(Scene->SelectionCount(true,cls)==0) return false;
 
-    if (Shift|ssCtrl){
+    if (Shift&ssCtrl){
         ObjectList lst;
         if (Scene->GetQueryObjects(lst,LTools->CurrentClassID(),1,1,0)){
         	if (lst.size()==1){
@@ -215,7 +215,7 @@ bool  TUI_CustomControl::MovingStart(TShiftState Shift)
 
 bool  TUI_CustomControl::DefaultMovingProcess(TShiftState Shift, Fvector& amount)
 {
-    if (Shift|ssLeft||Shift|ssRight)
+    if ((Shift&ssLeft)||(Shift&ssRight))
     {
         amount.mul( m_MovingXVector, UI->m_MouseSM * UI->m_DeltaCpH.x );
         amount.mad( amount, m_MovingYVector, -UI->m_MouseSM * UI->m_DeltaCpH.y );
@@ -273,7 +273,7 @@ bool  TUI_CustomControl::RotateStart(TShiftState Shift)
 
 void  TUI_CustomControl::RotateProcess(TShiftState _Shift)
 {
-    if (_Shift|ssLeft)
+    if (_Shift&ssLeft)
     {
         float amount = -UI->m_DeltaCpH.x * UI->m_MouseSR;
 

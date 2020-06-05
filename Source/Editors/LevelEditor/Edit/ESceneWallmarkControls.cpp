@@ -25,7 +25,7 @@ bool  TUI_ControlWallmarkAdd::Start(TShiftState Shift)
     if (S->AddWallmark(UI->m_CurrentRStart,UI->m_CurrentRDir))
     {
     	wm_cnt++;
-		if (!Shift|ssAlt){ 
+		if (!(Shift&ssAlt)){ 
 		    Scene->UndoSave		();
         	ResetActionToSelect	();
             return false;
@@ -38,7 +38,7 @@ void TUI_ControlWallmarkAdd::Move(TShiftState _Shift)
 }
 bool TUI_ControlWallmarkAdd::End(TShiftState _Shift)
 {
-	if (!_Shift|ssAlt)ResetActionToSelect();
+	if (!(_Shift&ssAlt))ResetActionToSelect();
 	if (wm_cnt)	    			Scene->UndoSave		();
 	return true;
 }
@@ -51,7 +51,7 @@ TUI_ControlWallmarkMove::TUI_ControlWallmarkMove(int st, int act, ESceneToolBase
 }
 bool TUI_ControlWallmarkMove::Start(TShiftState Shift)
 {
-    if (Shift|ssCtrl){
+    if ((Shift&ssCtrl)){
 	    ESceneWallmarkTool* S 	= (ESceneWallmarkTool*)parent_tool;
     	if (S->MoveSelectedWallmarkTo(UI->m_CurrentRStart,UI->m_CurrentRDir))
             Scene->UndoSave();

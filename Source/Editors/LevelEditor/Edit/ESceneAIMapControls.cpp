@@ -41,7 +41,7 @@ void TUI_ControlAIMapNodeAdd::Move(TShiftState _Shift)
 }
 bool TUI_ControlAIMapNodeAdd::End(TShiftState _Shift)
 {
-	if (!_Shift|ssAlt) ResetActionToSelect();
+	if (!(_Shift&ssAlt)) ResetActionToSelect();
     if (append_nodes) Scene->UndoSave();
 	return true;
 }
@@ -106,7 +106,7 @@ bool  TUI_ControlAIMapNodeRotate::Start(TShiftState Shift)
 
 void  TUI_ControlAIMapNodeRotate::Move(TShiftState _Shift)
 {
-    if (_Shift|ssLeft){
+    if (_Shift&ssLeft){
         float amount = -UI->m_DeltaCpH.x * UI->m_MouseSR;
 
         if( Tools->GetSettings(etfASnap) ) CHECK_SNAP(m_fRotateSnapAngle,amount,Tools->m_RotateSnapAngle);
