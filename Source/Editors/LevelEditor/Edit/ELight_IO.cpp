@@ -183,7 +183,7 @@ bool CLight::LoadStream(IReader& F)
 	    F.r				(&d3d,sizeof(d3d));
         m_Type			= (ELight::EType)d3d.type;   	        
         m_Color.set		(d3d.diffuse); 	        
-        FPosition		= d3d.position;
+        SetPosition( d3d.position);
         m_Range			= d3d.range;			
         m_Attenuation0	= d3d.attenuation0;		
         m_Attenuation1	= d3d.attenuation1;		

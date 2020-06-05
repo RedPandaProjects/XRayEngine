@@ -88,7 +88,7 @@ void CCustomObject::OnAttach(CCustomObject* owner)
 void CCustomObject::Move(Fvector& amount)
 {
     UI->UpdateScene();
-    Fvector v=FPosition;
+    Fvector v=GetPosition();
     Fvector r=FRotation;
     if (Tools->GetSettings(etfMTSnap)){
         BOOL bVis	= Visible();
@@ -101,14 +101,14 @@ void CCustomObject::Move(Fvector& amount)
     }else{
 	    v.add(amount);
     }
-    FPosition = v;
+    SetPosition(v);
     FRotation = r;
 }
 
 void CCustomObject::MoveTo(const Fvector& pos, const Fvector& up)
 {
     UI->UpdateScene();
-    Fvector v=FPosition;
+    Fvector v=GetPosition();
     v.set(pos);
     if (Tools->GetSettings(etfNormalAlign)){
         Fmatrix 	M;
@@ -117,7 +117,7 @@ void CCustomObject::MoveTo(const Fvector& pos, const Fvector& up)
     	NormalAlign     (ret_rot, up, M.k);
         FRotation        = ret_rot;
     }
-    FPosition = v;
+    SetPosition(v);
 }
 
 void CCustomObject::RotatePivot(const Fmatrix& prev_inv, const Fmatrix& current)
@@ -128,7 +128,7 @@ void CCustomObject::RotatePivot(const Fmatrix& prev_inv, const Fmatrix& current)
     Fvector 		xyz;
     On.getXYZ		(xyz);
     FRotation		= xyz;
-    FPosition		= On.c;
+    SetPosition( On.c);
 }
 
 void CCustomObject::RotateParent(Fvector& axis, float angle)
@@ -152,30 +152,30 @@ void CCustomObject::RotateLocal(Fvector& axis, float angle)
 void CCustomObject::ScalePivot( const Fmatrix& prev_inv, const Fmatrix& current, Fvector& amount )
 {
     UI->UpdateScene();
-    Fvector p	= FPosition;
-    Fvector s	= FScale;
+    Fvector p	= GetPosition();
+    Fvector s = GetScale();;
 	s.add(amount);
 	if (s.x<EPS) s.x=EPS;
 	if (s.y<EPS) s.y=EPS;
 	if (s.z<EPS) s.z=EPS;
-    FScale		= s;
+    SetScale(s);
 
     // translate position
     prev_inv.transform_tiny	(p);
     current.transform_tiny	(p);
 
-    FPosition	= p;
+    SetPosition( p);
 }
 
 void CCustomObject::Scale( Fvector& amount )
 {
     UI->UpdateScene();
-    Fvector s	= FScale;
+    Fvector s	= GetScale();
 	s.add(amount);
     if (s.x<EPS) s.x=EPS;
     if (s.y<EPS) s.y=EPS;
     if (s.z<EPS) s.z=EPS;
-    FScale		= s;
+    SetScale(s);
 }
 
 bool CCustomObject::OnObjectNameAfterEdit(PropValue* sender, shared_str& edit_val)
@@ -192,31 +192,36 @@ bool CCustomObject::OnObjectNameAfterEdit(PropValue* sender, shared_str& edit_va
 
 void CCustomObject::OnNumChangePosition(PropValue* sender)
 {
-	NumSetPosition	(FPosition);
+	NumSetPosition	(EPosition);
 }
 void CCustomObject::OnNumChangeRotation(PropValue* sender)
 {
-	NumSetRotation	(FRotation);
+	NumSetRotation	(ERotation);
 }
 void CCustomObject::OnNumChangeScale(PropValue* sender)
 {
-	NumSetScale		(FScale);
+	NumSetScale		(EScale);
 }
 void CCustomObject::OnNameChange(PropValue* sender)
 {
+    SetName(EName.c_str());
 	ExecCommand		(COMMAND_UPDATE_PROPERTIES);
 }
 
 void CCustomObject::FillProp(LPCSTR pref, PropItemVec& items)
 {
     PropValue* V;
-    V = PHelper().CreateNameCB	(items, PrepareKey(pref, "Name"),&FName,NULL,NULL,RTextValue::TOnAfterEditEvent(this,&CCustomObject::OnObjectNameAfterEdit));
+    EName = GetName();
+    V = PHelper().CreateNameCB	(items, PrepareKey(pref, "Name"),&EName,NULL,NULL,RTextValue::TOnAfterEditEvent(this,&CCustomObject::OnObjectNameAfterEdit));
     V->OnChangeEvent.bind		(this,&CCustomObject::OnNameChange);
-    V = PHelper().CreateVector	(items, PrepareKey(pref,"Transform\\Position"), &FPosition,	-10000,	10000,0.01,2);
+    EPosition = GetPosition();
+    V = PHelper().CreateVector	(items, PrepareKey(pref,"Transform\\Position"), &EPosition,	-10000,	10000,0.01,2);
     V->OnChangeEvent.bind		(this,&CCustomObject::OnNumChangePosition);
-    V = PHelper().CreateAngle3	(items, PrepareKey(pref,"Transform\\Rotation"),	&FRotation,	-10000,	10000,0.1,1);
+    ERotation = GetRotation();
+    V = PHelper().CreateAngle3	(items, PrepareKey(pref,"Transform\\Rotation"),	&ERotation,	-10000,	10000,0.1,1);
     V->OnChangeEvent.bind		(this,&CCustomObject::OnNumChangeRotation);
-    V = PHelper().CreateVector	(items, PrepareKey(pref,"Transform\\Scale"),	&FScale, 	0.01,	10000,0.01,2);
+    EScale = GetScale();
+    V = PHelper().CreateVector	(items, PrepareKey(pref,"Transform\\Scale"),	&EScale, 	0.01,	10000,0.01,2);
     V->OnChangeEvent.bind		(this,&CCustomObject::OnNumChangeScale);
 
     if(m_CO_Flags.test(flObjectInGroup))

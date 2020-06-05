@@ -222,8 +222,8 @@ int ESceneSpawnTool::MultiRenameObjects()
             strconcat			(sizeof(pref),pref,Scene->LevelPrefix().c_str(),"_",obj->RefName());
             string256 			buf;
         	Scene->GenObjectName(obj->FClassID,buf,pref);
-            if (obj->FName!=buf){
-	            obj->FName		= buf;
+            if (xr_strcmp( obj->GetName(),buf)==0){
+	            obj->SetName(buf);
                 cnt++; 
             }
         }

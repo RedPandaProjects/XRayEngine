@@ -87,6 +87,7 @@ void CEditShape::SetScale(const Fvector& val)
 		}
     }else{
 		FScale.set(val.x,val.x,val.x);
+
     }
 	ComputeBounds	();
     UpdateTransform	();
@@ -176,14 +177,14 @@ void CEditShape::Detach()
             case cfSphere:{
                 Fsphere	T		= it->data.sphere;
                 M.transform_tiny(T.P);
-                shape->FPosition= T.P;
+                shape->SetPosition( T.P);
                 T.P.set			(0,0,0);
                 shape->add_sphere(T);
             }break;
             case cfBox:{
                 Fmatrix B		= it->data.box;
                 B.mulA_43		(M);
-                shape->FPosition= B.c;
+                shape->SetPosition(B.c);
                 B.c.set			(0,0,0);
                 shape->add_box	(B);
             }break;

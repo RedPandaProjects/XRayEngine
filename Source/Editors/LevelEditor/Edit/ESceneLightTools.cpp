@@ -80,7 +80,7 @@ void ESceneLightTool::BeforeRender()
             CLight* l 		= (CLight*)(*_F);
             l_cnt++;
             if (l->Visible()&&l->m_UseInD3D&&l->m_Flags.is_any(ELight::flAffectDynamic|ELight::flAffectStatic))
-                if (::Render->ViewBase.testSphere_dirty(l->FPosition,l->m_Range))
+                if (::Render->ViewBase.testSphere_dirty(l->GetPosition(),l->m_Range))
                 	AppendFrameLight(l);
         }
     	// set sun

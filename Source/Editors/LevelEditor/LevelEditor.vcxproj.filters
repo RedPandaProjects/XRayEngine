@@ -373,6 +373,9 @@
     <ClCompile Include="UI\Tools\UILightTool.cpp">
       <Filter>UI\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="UI\UILPropertiesFrom.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Edit\SceneSummaryInfo.h">
@@ -579,6 +582,9 @@
     </ClInclude>
     <ClInclude Include="UI\Tools\UILightTool.h">
       <Filter>UI\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UILPropertiesFrom.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

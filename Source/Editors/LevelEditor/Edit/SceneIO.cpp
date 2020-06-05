@@ -521,7 +521,7 @@ void EScene::Save(LPCSTR map_name, bool bUndo, bool bForceSaveAll)
         F->w_u32			(m_ESO_SnapObjects.size());
 
         for(ObjectIt _F=m_ESO_SnapObjects.begin();_F!=m_ESO_SnapObjects.end();++_F)
-            F->w_stringZ	((*_F)->FName);
+            F->w_stringZ	((*_F)->GetName());
 
         F->close_chunk		();
     }

@@ -377,7 +377,7 @@ bool CSpawnPoint::SSpawnData::ExportGame(SExportStreams* F, CSpawnPoint* owner)
     if (cform){
 	    CEditShape* shape		= dynamic_cast<CEditShape*>(owner->m_AttachedObject); R_ASSERT(shape);
 		shape->ApplyScale		();
-        owner->FScale 			= shape->FScale;
+        owner->SetScale( 			 shape->GetScale());
     	cform->assign_shapes	(&*shape->GetShapes().begin(),shape->GetShapes().size());
     }
     // end
@@ -606,21 +606,21 @@ void CSpawnPoint::SetPosition(const Fvector& pos)
     if(m_physics_shell)
     	return;
 	inherited::SetPosition	(pos);
-    if (m_AttachedObject) m_AttachedObject->FPosition = pos;
+    if (m_AttachedObject) m_AttachedObject->SetPosition( pos);
 }
 void CSpawnPoint::SetRotation(const Fvector& rot)
 {
 	if(m_physics_shell)
     	return;
 	inherited::SetRotation	(rot);
-    if (m_AttachedObject) m_AttachedObject->FRotation = rot;
+    if (m_AttachedObject) m_AttachedObject->SetRotation( rot);
 }
 void CSpawnPoint::SetScale(const Fvector& scale)
 {
 	if(m_physics_shell)
     	return;
 	inherited::SetScale		(scale);
-    if (m_AttachedObject) m_AttachedObject->FScale = scale;
+    if (m_AttachedObject) m_AttachedObject->SetScale( scale);
 }
 
 bool CSpawnPoint::AttachObject(CCustomObject* obj)
@@ -643,9 +643,9 @@ bool CSpawnPoint::AttachObject(CCustomObject* obj)
         DetachObject				();
         OnAppendObject				(obj);
         m_AttachedObject->OnAttach	(this);
-        FPosition 	= m_AttachedObject->GetPosition();
+        SetPosition( m_AttachedObject->GetPosition());
         FRotation 	= m_AttachedObject->GetRotation();
-         FScale 		= m_AttachedObject->FScale;
+        SetScale( 		 m_AttachedObject->GetScale());
     }
     return bAllowed;
 }
@@ -1047,7 +1047,7 @@ bool CSpawnPoint::LoadLTX(CInifile& ini, LPCSTR sect_name)
 	// BUG fix
     CEditShape* shape	= dynamic_cast<CEditShape*>(m_AttachedObject);
     if (shape)
-    	FScale 	= shape->FScale;
+    	SetScale 	( shape->GetScale());
     
     return true;
 }
@@ -1166,7 +1166,7 @@ bool CSpawnPoint::LoadStream(IReader& F)
 
 	// BUG fix
     CEditShape* shape	= dynamic_cast<CEditShape*>(m_AttachedObject);
-    if (shape) 	FScale 	= shape->FScale;
+    if (shape) 	SetScale(shape->GetScale());
     
     return true;
 }

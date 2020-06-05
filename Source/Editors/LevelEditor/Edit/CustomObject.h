@@ -41,7 +41,11 @@ struct SExportStreams{
 class  CCustomObject 
 {
 	
-
+    shared_str		EName;
+    // orientation
+    Fvector 		EPosition;
+    Fvector 		EScale;
+    Fvector 		ERotation;
 	SAnimParams*	m_MotionParams;
     COMotion*		m_Motion;
 

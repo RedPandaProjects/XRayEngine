@@ -169,7 +169,7 @@ void CLight::Render(int priority, bool strictB2F)
 bool CLight::FrustumPick(const CFrustum& frustum)
 {
 //    return (frustum.testSphere(m_Position,m_Range))?true:false;
-    return (frustum.testSphere_dirty(FPosition,VIS_RADIUS))?true:false;
+    return (frustum.testSphere_dirty(GetPosition(),VIS_RADIUS))?true:false;
 }
 
 bool CLight::RayPick(float& distance, const Fvector& start, const Fvector& direction, SRayPickInfo* pinf)

@@ -75,8 +75,8 @@ void CGroupObject::UpdatePivot(LPCSTR nm, bool center)
         }
         if (object)
         {
-            FPosition = object->GetPosition();
-            FRotation = object->GetRotation();
+            SetPosition( object->GetPosition());
+            SetRotation( object->GetRotation());
 			UpdateTransform(true);
         }
     }else
@@ -108,11 +108,11 @@ void CGroupObject::MoveTo(const Fvector& pos, const Fvector& up)
     {
     	Fvector r=it->pObject->GetRotation(); 
         r.add(dr); 
-        it->pObject->FRotation=r;
+        it->pObject->SetRotation(r);
     	Fvector v=it->pObject->GetPosition();
         prev.transform_tiny(v);
         FTransform.transform_tiny(v);
-    	it->pObject->FPosition=v;
+    	it->pObject->SetPosition(v);
     }
 }
 
@@ -127,7 +127,7 @@ void CGroupObject::NumSetPosition(const Fvector& pos)
     	Fvector v=it->pObject->GetPosition();
         prev.transform_tiny(v);
         FTransform.transform_tiny(v);
-    	it->pObject->FPosition=v;
+        it->pObject->SetPosition(v);
     }
 }
 void CGroupObject::NumSetRotation(const Fvector& rot)
@@ -143,16 +143,16 @@ void CGroupObject::NumSetRotation(const Fvector& rot)
     {
     	Fvector r=it->pObject->GetRotation(); 
         r.add(dr); 
-        it->pObject->FRotation=r;
+        it->pObject->SetRotation(r);
     	Fvector v=it->pObject->GetPosition();
         prev.transform_tiny(v);
         FTransform.transform_tiny(v);
-    	it->pObject->FPosition=v;
+        it->pObject->SetPosition(v);
     }
 }
 void CGroupObject::NumSetScale(const Fvector& scale)
 {
-	Fvector old_s = FScale;
+	Fvector old_s = GetScale();
 	inherited::NumSetScale(scale);
     Fmatrix prev; 
     prev.invert(FTransform);
@@ -161,13 +161,13 @@ void CGroupObject::NumSetScale(const Fvector& scale)
     Fvector ds; ds.sub(FScale,old_s);
 	for (ObjectsInGroup::iterator it=m_ObjectsInGroup.begin(); it!=m_ObjectsInGroup.end(); ++it)
     {
-    	Fvector s=it->pObject->FScale; 
+    	Fvector s=it->pObject->GetScale(); 
         s.add(ds); 
-        it->pObject->FScale=s;
+        it->pObject->SetScale(s);
     	Fvector v=it->pObject->GetPosition();
         prev.transform_tiny(v);
         FTransform.transform_tiny(v);
-    	it->pObject->FPosition=v;
+        it->pObject->SetPosition(v);
     }
 }
 
@@ -183,11 +183,11 @@ void CGroupObject::Move(Fvector& amount)
     {
     	Fvector r=it->pObject->GetRotation(); 
         r.add(dr); 
-        it->pObject->FRotation=r;
+        it->pObject->SetRotation(r);
     	Fvector v=it->pObject->GetPosition();
         prev.transform_tiny(v);
         FTransform.transform_tiny(v);
-    	it->pObject->FPosition=v;
+        it->pObject->SetPosition(v);
     }
 }
 void CGroupObject::RotateParent(Fvector& axis, float angle )

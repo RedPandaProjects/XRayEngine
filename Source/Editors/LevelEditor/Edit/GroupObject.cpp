@@ -334,7 +334,7 @@ bool CGroupObject::UpdateReference(bool bForceReload)
         UpdateTransform		(true);
         Fvector old_pos		= GetPosition();
         Fvector old_rot		= GetRotation();
-        Fvector old_sc		= FScale;
+        Fvector old_sc		= GetScale();
 
         if(LoadStream(*R))
         {

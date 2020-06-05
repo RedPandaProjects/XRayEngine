@@ -111,7 +111,7 @@ void EParticlesObject::RenderSingle()
 
 bool EParticlesObject::FrustumPick(const CFrustum& frustum)
 {
-    return (frustum.testSphere_dirty(FPosition,PSOBJECT_SIZE))?true:false;
+    return (frustum.testSphere_dirty(GetPosition(),PSOBJECT_SIZE))?true:false;
 }
 //----------------------------------------------------
 

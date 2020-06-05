@@ -83,17 +83,19 @@ void CGlow::Render(int priority, bool strictB2F)
             if (!Scene->RayPickObject(dist,GetPosition(),D,OBJCLASS_SCENEOBJECT,0,0)){
                 if (m_GShader){	EDevice.SetShader(m_GShader);
                 }else{			EDevice.SetShader(EDevice.m_WireShader);}
-                m_RenderSprite.Render(FPosition,m_fRadius,m_Flags.is(gfFixedSize));
-                DU_impl.DrawRomboid(FPosition, VIS_RADIUS, 0x00FF8507);
+                Fvector p = GetPosition();
+                m_RenderSprite.Render(p,m_fRadius,m_Flags.is(gfFixedSize));
+                DU_impl.DrawRomboid(p, VIS_RADIUS, 0x00FF8507);
             }else{
                 // рендерим bounding sphere
                 EDevice.SetShader(EDevice.m_WireShader);
-                DU_impl.DrawRomboid(FPosition, VIS_RADIUS, 0x00FF8507);
+                DU_impl.DrawRomboid(GetPosition(), VIS_RADIUS, 0x00FF8507);
             }
         }else{
             if (m_GShader){	EDevice.SetShader(m_GShader);
             }else{			EDevice.SetShader(EDevice.m_WireShader);}
-            m_RenderSprite.Render(FPosition,m_fRadius,m_Flags.is(gfFixedSize));
+            Fvector p = GetPosition();
+            m_RenderSprite.Render(p,m_fRadius,m_Flags.is(gfFixedSize));
         }
         if( Selected() ){
             Fbox bb; GetBox(bb);
@@ -111,7 +113,7 @@ void CGlow::Render(int priority, bool strictB2F)
 
 bool CGlow::FrustumPick(const CFrustum& frustum)
 {
-    return (frustum.testSphere_dirty(FPosition,m_fRadius))?true:false;
+    return (frustum.testSphere_dirty(GetPosition(),m_fRadius))?true:false;
 }
 
 bool CGlow::RayPick(float& distance, const Fvector& start, const Fvector& direction, SRayPickInfo* pinf)
