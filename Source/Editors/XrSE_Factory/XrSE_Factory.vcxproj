@@ -740,6 +740,9 @@
     <ProjectReference Include="..\..\XrXMLParser\XrXMLParser.vcxproj">
       <Project>{39abb344-2136-46c3-814d-8e80bc59a08e}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\XrEProps\XrEProps.vcxproj">
+      <Project>{6d47afc7-0557-4bbf-8902-b248f3621419}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

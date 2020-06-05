@@ -30,7 +30,6 @@
 extern CSE_Abstract *F_entity_Create	(LPCSTR section);
 
 extern CScriptPropertiesListHelper	*g_property_list_helper;
-extern HMODULE						prop_helper_module;
 
 #ifdef NDEBUG
 
@@ -82,8 +81,6 @@ namespace XrSE_Factory
 		xr_delete(g_property_list_helper);
 		xr_delete(g_ai_space);
 		xr_delete(g_object_factory);
-		if (prop_helper_module)
-			FreeLibrary(prop_helper_module);
 	}
 }
 //typedef void DUMMY_STUFF (const void*,const u32&,void*);
