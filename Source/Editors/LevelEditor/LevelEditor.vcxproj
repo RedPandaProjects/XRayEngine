@@ -144,6 +144,7 @@
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="UI\Tools\UILightTool.cpp" />
     <ClCompile Include="UI\Tools\UIObjectTool.cpp" />
+    <ClCompile Include="UI\Tools\UISpawnTool.cpp" />
     <ClCompile Include="UI\UILeftBarForm.cpp" />
     <ClCompile Include="UI\UIMainForm.cpp" />
     <ClCompile Include="UI\UIMainMenuForm.cpp" />
@@ -219,6 +220,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="UI\Tools\UILightTool.h" />
     <ClInclude Include="UI\Tools\UIObjectTool.h" />
+    <ClInclude Include="UI\Tools\UISpawnTool.h" />
     <ClInclude Include="UI\Tools\UIToolCustom.h" />
     <ClInclude Include="UI\UILeftBarForm.h" />
     <ClInclude Include="UI\UIMainForm.h" />

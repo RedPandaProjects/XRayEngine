@@ -75,9 +75,10 @@ void UIObjectTool::Draw()
     }
     if (ImGui::TreeNode("Current Object"))
     {
-        ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 0));
         ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(2, 4));
+
+        ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
         {
             if (ImGui::Button("Select ...", ImVec2(-1, 0)))
             {
@@ -96,10 +97,13 @@ void UIObjectTool::Draw()
     }
     if (ImGui::TreeNode("Object List"))
     {
+        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 0));
+        ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(2, 4));
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::Separator();
         m_ObjectList->Draw();
         ImGui::Separator();
+        ImGui::PopStyleVar(2);
         ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::TreePop();
     }

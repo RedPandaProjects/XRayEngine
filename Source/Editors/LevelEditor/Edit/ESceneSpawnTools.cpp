@@ -9,6 +9,7 @@
 #include "spawnpoint.h"
 #include "builder.h"
 #include "..\..\XrECore\Editor\Library.h"
+#include "UI\Tools\UISpawnTool.h"
 static HMODULE hXRSE_FACTORY = 0;
 
 CEditableObject* ESceneSpawnTool::get_draw_visual(u8 _RP_TeamID, u8 _RP_Type, const GameTypeChooser& _GameType)
@@ -146,7 +147,7 @@ void ESceneSpawnTool::CreateControls()
     AddControl		(xr_new<TUI_ControlSpawnAdd>(estDefault,etaAdd,		this));
 	// frame
 
-    //pFrame 			= xr_new<TfraSpawn>((TComponent*)0);
+    pForm 			= xr_new<UISpawnTool>();
 }
 //----------------------------------------------------
  

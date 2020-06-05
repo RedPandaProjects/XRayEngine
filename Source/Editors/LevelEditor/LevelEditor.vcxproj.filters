@@ -382,6 +382,9 @@
     <ClCompile Include="UI\UIPropertiesModal.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="UI\Tools\UISpawnTool.cpp">
+      <Filter>UI\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Edit\SceneSummaryInfo.h">
@@ -600,6 +603,9 @@
     </ClInclude>
     <ClInclude Include="UI\UIPropertiesModal.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Tools\UISpawnTool.h">
+      <Filter>UI\Tools</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

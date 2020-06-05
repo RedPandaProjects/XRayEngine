@@ -6,13 +6,14 @@
 #include "../XrECore/Editor/ui_main.h"
 #include "Scene.h"
 #include "SpawnPoint.h"
+#include "UI/Tools/UISpawnTool.h"
 //---------------------------------------------------------------------------
  TUI_ControlSpawnAdd::TUI_ControlSpawnAdd(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent){
 }
 
 bool  TUI_ControlSpawnAdd::AppendCallback(SBeforeAppendCallbackParams* p)
 {
-/*	LPCSTR ref_name = ((TfraSpawn*)parent_tool->pFrame)->Current();
+	LPCSTR ref_name = ((UISpawnTool*)parent_tool->pForm)->Current();
     if (!ref_name){
     	ELog.DlgMsg(mtInformation,"Nothing selected.");
     	return false;
@@ -24,25 +25,23 @@ bool  TUI_ControlSpawnAdd::AppendCallback(SBeforeAppendCallbackParams* p)
     }
 	p->name_prefix 	+= 	ref_name;
 	p->data 		= (void*)ref_name;
-    return (0!=p->name_prefix.length());*/
-    not_implemented();
-    return false;
+    return (0!=p->name_prefix.length());
 }
 
 bool  TUI_ControlSpawnAdd::Start(TShiftState Shift)
 {
-   /* TfraSpawn* F = (TfraSpawn*)parent_tool->pFrame;
-	if (F->ebAttachObject->Down){
+    UISpawnTool* F = (UISpawnTool*)parent_tool->pForm;
+	if (F->IsAttachObject()){
 		CCustomObject* from = Scene->RayPickObject(UI->ZFar(), UI->m_CurrentRStart, UI->m_CurrentRDir, OBJCLASS_DUMMY, 0, 0);
-        if (from->ClassID!=OBJCLASS_SPAWNPOINT){
+        if (from->FClassID!=OBJCLASS_SPAWNPOINT){
             ObjectList 	lst;
             int cnt 	= Scene->GetQueryObjects(lst,OBJCLASS_SPAWNPOINT,1,1,0);
             if (1!=cnt)	ELog.DlgMsg(mtError,"Select one shape.");
             else{
                 CSpawnPoint* base = dynamic_cast<CSpawnPoint*>(lst.back()); R_ASSERT(base);
                 if (base->AttachObject(from)){
-                    if (!Shift.Contains(ssAlt)){
-                        F->ebAttachObject->Down	= false;
+                    if (!(Shift&ssAlt)){
+                        F->SetAttachObject(false);
                         ResetActionToSelect		();
                     }
                 }else{
@@ -53,9 +52,8 @@ bool  TUI_ControlSpawnAdd::Start(TShiftState Shift)
         	ELog.DlgMsg(mtError,"Attach impossible.");
         }
     }else{
-	    DefaultAddObject(Shift,AppendCallback);             
-    }*/
-    not_implemented();
+	    DefaultAddObject(Shift, TBeforeAppendCallback(this,& TUI_ControlSpawnAdd::AppendCallback));
+    }
     return false;
 }
 
