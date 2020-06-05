@@ -8,7 +8,7 @@
 #include "SceneObject.h"
 #include "ESceneObjectTools.h"
 #include "ui_levelmain.h"
-
+#include "UI\Tools\UIObjectTool.h"
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 
 bool  TUI_ControlObjectAdd::Start(TShiftState Shift)
 {
-    /*if (Shift==ssRBOnly){ ExecCommand(COMMAND_SHOWCONTEXTMENU,OBJCLASS_SCENEOBJECT); return false;}
-    TfraObject* fraObject = (TfraObject*)parent_tool->pFrame; VERIFY(fraObject);
+   if (Shift==ssRBOnly){ ExecCommand(COMMAND_SHOWCONTEXTMENU,OBJCLASS_SCENEOBJECT); return false;}
+    UIObjectTool* fraObject = (UIObjectTool*)parent_tool->pForm; VERIFY(fraObject);
 	Fvector p,n;
 	if(!LUI->PickGround(p,UI->m_CurrentRStart,UI->m_CurrentRDir,1,&n)) return false;
     { // pick already executed (see top)
@@ -28,7 +28,7 @@ bool  TUI_ControlObjectAdd::Start(TShiftState Shift)
         if (ot->IsAppendRandomActive()&&ot->m_AppendRandomObjects.size()){
         	N = ot->m_AppendRandomObjects[Random.randI(ot->m_AppendRandomObjects.size())].c_str();  
         }else{
-            N = ((TfraObject*)parent_tool->pFrame)->Current();
+            N = ((UIObjectTool*)parent_tool->pForm)->Current();
             if(!N){
                 ELog.DlgMsg(mtInformation,"Nothing selected.");
                 return false;
@@ -43,13 +43,13 @@ bool  TUI_ControlObjectAdd::Start(TShiftState Shift)
         	ELog.DlgMsg(mtError,"TUI_ControlObjectAdd:: Can't load reference object.");
         	xr_delete(obj);
         	return false;
-        }*/
+        }
 /*        if (ref->IsDynamic()){
             ELog.DlgMsg(mtError,"TUI_ControlObjectAdd:: Can't assign dynamic object.");
             xr_delete(obj);
             return false;
         }
-*//*
+*/
         if (ot->IsAppendRandomActive()){
             Fvector S;
             if (ot->IsAppendRandomRotationActive()){
@@ -57,7 +57,7 @@ bool  TUI_ControlObjectAdd::Start(TShiftState Shift)
                 p.set(	Random.randF(ot->m_AppendRandomMinRotation.x,ot->m_AppendRandomMaxRotation.x),
                  		Random.randF(ot->m_AppendRandomMinRotation.y,ot->m_AppendRandomMaxRotation.y),
                         Random.randF(ot->m_AppendRandomMinRotation.z,ot->m_AppendRandomMaxRotation.z));
-                obj->GetRotation() = p;
+                obj->SetRotation( p);
             }
             if (ot->IsAppendRandomScaleActive()){
             	Fvector s;
@@ -69,19 +69,18 @@ bool  TUI_ControlObjectAdd::Start(TShiftState Shift)
                             Random.randF(ot->m_AppendRandomMinScale.y,ot->m_AppendRandomMaxScale.y),
                             Random.randF(ot->m_AppendRandomMinScale.z,ot->m_AppendRandomMaxScale.z));
                 }
-                obj->PScale = s;
+                obj->SetScale( s);
             }
         }
         obj->MoveTo(p,n);
 
         Scene->SelectObjects(false,OBJCLASS_SCENEOBJECT);
         Scene->AppendObject( obj );
-        if (Shift.Contains(ssCtrl)) 
+        if (Shift&ssCtrl) 
         	ExecCommand(COMMAND_SHOW_PROPERTIES);
-        if (!Shift.Contains(ssAlt)) 
+        if (!(Shift&ssAlt)) 
         	ResetActionToSelect();
-    }*/
-    not_implemented();
+    }
     return false;
 }
 

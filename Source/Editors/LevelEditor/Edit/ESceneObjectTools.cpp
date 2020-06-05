@@ -10,6 +10,7 @@
 #include "../XrECore/Editor/ui_main.h"
 #include "../XrECore/Editor/EditObject.h"
 #include "../XrECore/Editor/EditMesh.h"
+#include "UI/Tools/UIObjectTool.h"
 
 ESceneObjectTool::ESceneObjectTool():ESceneCustomOTool(OBJCLASS_SCENEOBJECT)
 {
@@ -26,6 +27,8 @@ void ESceneObjectTool::CreateControls()
 	inherited::CreateDefaultControls(estDefault);
     AddControl		(xr_new<TUI_ControlObjectAdd >(estDefault,etaAdd,		this));
 	// frame
+    pForm = xr_new< UIObjectTool>();
+    ((UIObjectTool*)pForm)->ParentTools = this;
 }
 //----------------------------------------------------
  
@@ -93,9 +96,8 @@ void ESceneObjectTool::OnChangeAppendRandomFlags(PropValue* prop)
 	_SequenceToList				(m_AppendRandomObjects,*m_AppendRandomObjectsStr);
 }
 
-void ESceneObjectTool::FillAppendRandomProperties(bool bUpdateOnly)
+void ESceneObjectTool::FillAppendRandomPropertiesBegin(bool bUpdateOnly)
 {
-	/*if (!bUpdateOnly) m_Props		= TProperties::CreateModalForm("Random Append Properties",false);
 
 	m_AppendRandomObjectsStr		= _ListToSequence(m_AppendRandomObjects).c_str();    
 
@@ -123,15 +125,20 @@ void ESceneObjectTool::FillAppendRandomProperties(bool bUpdateOnly)
     }
 	V=PHelper().CreateChoose		(items,"Objects",&m_AppendRandomObjectsStr,smObject,0,0,32);
     V->OnChangeEvent.bind			(this,&ESceneObjectTool::OnChangeAppendRandomFlags);
-
-    m_Props->AssignItems			(items);
-    
-    if (!bUpdateOnly){
-        if (mrOk==m_Props->ShowPropertiesModal())
-            Scene->UndoSave			();
-        TProperties::DestroyForm	(m_Props);
-    }*/
-    not_implemented();
+    if (bUpdateOnly)
+        UIPropertiesModal::GetProperties()->AssignItems(items);
+    else
+        UIPropertiesModal::Show(items);
+}
+bool ESceneObjectTool::FillAppendRandomPropertiesEnd()
+{
+    bool ok;
+    if(UIPropertiesModal::GetResult(ok))
+    {
+        if (ok)           Scene->UndoSave();
+        return true;
+    }
+    return false;
 }
 //----------------------------------------------------
 
@@ -162,7 +169,7 @@ void ESceneObjectTool::OnFrame		()
 	inherited::OnFrame				();
 	if (m_Flags.is(flAppendRandomUpdateProps)){
     	m_Flags.set					(flAppendRandomUpdateProps,FALSE);
-        FillAppendRandomProperties	(true);
+        FillAppendRandomPropertiesBegin	(true);
     }
 }
 

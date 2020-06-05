@@ -376,6 +376,12 @@
     <ClCompile Include="UI\UILPropertiesFrom.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="UI\Tools\UIObjectTool.cpp">
+      <Filter>UI\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UIPropertiesModal.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Edit\SceneSummaryInfo.h">
@@ -584,6 +590,15 @@
       <Filter>UI\Tools</Filter>
     </ClInclude>
     <ClInclude Include="UI\UILPropertiesFrom.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Tools\UIObjectTool.h">
+      <Filter>UI\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Tools\UIToolCustom.h">
+      <Filter>UI\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UIPropertiesModal.h">
       <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>

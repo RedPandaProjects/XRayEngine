@@ -1314,6 +1314,15 @@ Ivector2 CLevelMain::GetRenderMousePosition() const
     return MainForm->GetRenderForm()->GetMousePos();
 }
 
+void CLevelMain::RenderSpecial()
+{
+    inherited::RenderSpecial();
+    if (LTools->GetToolForm())
+    {
+        LTools->GetToolForm()->RenderSpecial();
+    }
+}
+
 void CLevelMain::store_rt_flags(const CCustomObject* CO)
 {
     if(LTools->m_LastFileName.size() && CO->GetName() && xr_strlen(CO->GetName()) )

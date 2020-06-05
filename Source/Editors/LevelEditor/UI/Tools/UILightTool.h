@@ -1,5 +1,5 @@
 #pragma once
-class UILightTool :public XrUI
+class UILightTool :public UIToolCustom
 {
 public:
 	UILightTool();

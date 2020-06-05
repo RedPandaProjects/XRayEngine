@@ -62,7 +62,8 @@ public:
     virtual void		SaveSelection      		(IWriter&);
 
     // append random
-    void				FillAppendRandomProperties	(bool bUpdateOnly=false);
+   	void			    FillAppendRandomPropertiesBegin	(bool bUpdateOnly=false);
+    bool			    FillAppendRandomPropertiesEnd   ();
     void				ActivateAppendRandom		(BOOL val){m_Flags.set(flAppendRandom,val);}
     BOOL				IsAppendRandomActive		(){return m_Flags.is(flAppendRandom);}
     BOOL				IsAppendRandomScaleActive	(){return m_Flags.is(flAppendRandomScale);}

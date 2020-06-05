@@ -343,6 +343,65 @@ bool UIChooseForm::GetResult(bool& change, shared_str& result)
       
 	return false;
 }
+bool UIChooseForm::GetResult(bool& change, xr_string& result)
+{
+    if (!Form->bOpen)
+    {
+        if (Form->m_Result == R_Ok)
+        {
+            if (!Form->m_Flags.test(cfMultiSelect))
+            {
+                VERIFY(Form->GetSelectedItem());
+            }
+            int i = 0;
+            for (auto& item : Form->m_SelectedItems)
+            {
+                if (i != 0)
+                {
+                    result.append(",");
+                }
+                result.append(item->name.c_str());
+                i++;
+            }
+            change = true;
+            xr_delete(Form);
+            return true;
+        }
+        change = false;
+        xr_delete(Form);
+        return true;
+    }
+
+    return false;
+}
+bool UIChooseForm::GetResult(bool& change, xr_vector<xr_string>& result)
+{
+    if (!Form->bOpen)
+    {
+        if (Form->m_Result == R_Ok)
+        {
+            if (!Form->m_Flags.test(cfMultiSelect))
+            {
+                VERIFY(Form->GetSelectedItem());
+            }
+            int i = 0;
+            for (auto& item : Form->m_SelectedItems)
+            {
+               
+                result.push_back(item->name.c_str());
+                i++;
+            }
+            change = true;
+            xr_delete(Form);
+            return true;
+        }
+        change = false;
+        xr_delete(Form);
+        return true;
+    }
+
+    return false;
+}
 void UIChooseForm::SelectItem(u32 choose_ID, int sel_cnt, LPCSTR init_name, TOnChooseFillItems item_fill, void* fill_param, TOnChooseSelectItem item_select, ChooseItemVec* items, u32 mask)
 {
     VERIFY(!Form);

@@ -148,6 +148,7 @@ void ESceneObjectTool::SaveSelection(IWriter& F)
 
 	inherited::SaveSelection(F);
 }
+
 //----------------------------------------------------
 
 bool ESceneObjectTool::ExportGame(SExportStreams* F)

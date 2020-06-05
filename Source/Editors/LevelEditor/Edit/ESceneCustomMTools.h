@@ -43,7 +43,7 @@ public:
     time_t				m_ModifTime;
 	// frame & Controls
     TUI_CustomControl* 	pCurControl;
-    XrUI*               pForm;
+    UIToolCustom*       pForm;
 protected:
     void            	AddControl				(TUI_CustomControl* c);
     TUI_CustomControl* 	FindControl				(int subtarget, int action);

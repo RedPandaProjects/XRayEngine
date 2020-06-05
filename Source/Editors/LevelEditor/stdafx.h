@@ -13,6 +13,8 @@
 #include "UI\UILeftBarForm.h"
 #include "UI\UILPropertiesFrom.h"
 #include "UI\UIMainForm.h"
+#include "UI\Tools\UIToolCustom.h"
+#include "UI\UIPropertiesModal.h"
 #include "Edit/UI_LevelMain.h"
 #include "Edit/UI_LevelTools.h"
 

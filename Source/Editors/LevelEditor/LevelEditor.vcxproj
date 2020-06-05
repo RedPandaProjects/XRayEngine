@@ -143,10 +143,12 @@
     <ClCompile Include="LevelEditor.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="UI\Tools\UILightTool.cpp" />
+    <ClCompile Include="UI\Tools\UIObjectTool.cpp" />
     <ClCompile Include="UI\UILeftBarForm.cpp" />
     <ClCompile Include="UI\UIMainForm.cpp" />
     <ClCompile Include="UI\UIMainMenuForm.cpp" />
     <ClCompile Include="UI\UILPropertiesFrom.cpp" />
+    <ClCompile Include="UI\UIPropertiesModal.cpp" />
     <ClCompile Include="UI\UITopBarForm.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -216,10 +218,13 @@
     <ClInclude Include="mesh_data.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="UI\Tools\UILightTool.h" />
+    <ClInclude Include="UI\Tools\UIObjectTool.h" />
+    <ClInclude Include="UI\Tools\UIToolCustom.h" />
     <ClInclude Include="UI\UILeftBarForm.h" />
     <ClInclude Include="UI\UIMainForm.h" />
     <ClInclude Include="UI\UIMainMenuForm.h" />
     <ClInclude Include="UI\UILPropertiesFrom.h" />
+    <ClInclude Include="UI\UIPropertiesModal.h" />
     <ClInclude Include="UI\UITopBarForm.h" />
     <ClInclude Include="UI\UITopBarForm_ButtonList.h" />
   </ItemGroup>
