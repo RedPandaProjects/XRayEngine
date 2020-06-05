@@ -1079,7 +1079,7 @@ void CDrawUtilities::DrawAxis(const Fmatrix& T)
     static float _kl		= 1.0f;
 
 	pt.x  = _wh;
-	pt.y  = iFloor(UI->GetRealHeight()-_wh);
+	pt.y  = iFloor(UI->GetRenderHeight()-_wh);
 
     EDevice.m_Camera.MouseRayFromPoint(M.c, dir, pt);
     M.c.mad(dir, _kl);
