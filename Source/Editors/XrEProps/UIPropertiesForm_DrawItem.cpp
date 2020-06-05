@@ -91,7 +91,7 @@ BOOL RTokenOnEdit(PropItem* prop, bool& change)
 	RTokenValue<T>* V = dynamic_cast<RTokenValue<T>*>(prop->GetFrontValue());
 	if (!V)					return FALSE;
 	T edit_value = V->GetValue();
-	prop->BeforeEdit<TokenValue<T>, T>(edit_value);
+	prop->BeforeEdit<RTokenValue<T>, T>(edit_value);
 	int index = edit_value;
 	const char* InTokens[256];
 	xr_rtoken* token_list = V->token;
