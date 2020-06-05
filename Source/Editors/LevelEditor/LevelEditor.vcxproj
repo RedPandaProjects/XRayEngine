@@ -142,6 +142,7 @@
     <ClCompile Include="LEPhysics.cpp" />
     <ClCompile Include="LevelEditor.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="UI\Tools\UILightTool.cpp" />
     <ClCompile Include="UI\UILeftBarForm.cpp" />
     <ClCompile Include="UI\UIMainForm.cpp" />
     <ClCompile Include="UI\UIMainMenuForm.cpp" />
@@ -213,6 +214,7 @@
     <ClInclude Include="LEPhysics.h" />
     <ClInclude Include="mesh_data.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="UI\Tools\UILightTool.h" />
     <ClInclude Include="UI\UILeftBarForm.h" />
     <ClInclude Include="UI\UIMainForm.h" />
     <ClInclude Include="UI\UIMainMenuForm.h" />

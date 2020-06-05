@@ -13,8 +13,8 @@
 
 #include "lephysics.h"
 
-#define DETACH_FRAME(a) 	if (a){ (a)->Hide(); 	(a)->Parent = NULL; }
-#define ATTACH_FRAME(a,b)	if (a){ (a)->Parent=(b);(a)->Show(); 		}
+#define DETACH_FRAME(a) 	if (a){ a=0; }
+#define ATTACH_FRAME(a,b)	if (a){b=a;}
 
 CLevelTool*	LTools=(CLevelTool*)Tools;
 
@@ -25,6 +25,7 @@ CLevelTool::CLevelTool()
     fFogness	= 0.9f;
     dwFogColor	= 0xffffffff;
     m_Flags.zero();
+    m_ToolForm = 0;
 }
 //---------------------------------------------------------------------------
 CLevelTool::~CLevelTool()
@@ -189,7 +190,7 @@ void  CLevelTool::RealSetTarget   (ObjClassID tgt,int sub_tgt,bool bForced)
         target 					= tgt;
         sub_target 				= sub_tgt;
         if (pCurTool){
-            //DETACH_FRAME(pCurTool->pFrame);
+            DETACH_FRAME(m_ToolForm);
             pCurTool->OnDeactivate();
         }
         pCurTool				= Scene->GetTool(tgt);
@@ -200,8 +201,8 @@ void  CLevelTool::RealSetTarget   (ObjClassID tgt,int sub_tgt,bool bForced)
 
         pCurTool->SetAction		(GetAction());
 
-        /*if (pCurTool->IsEditable())
-        	ATTACH_FRAME(pCurTool->pFrame, paParent);*/
+        if (pCurTool->IsEditable())
+        	ATTACH_FRAME(pCurTool->pForm, m_ToolForm);
     }
     UI->RedrawScene();
     //fraLeftBar->ChangeTarget(tgt);

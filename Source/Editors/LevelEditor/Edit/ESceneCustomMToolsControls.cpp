@@ -17,6 +17,7 @@ void ESceneToolBase::RemoveControls()
 	for (ControlsIt it=m_Controls.begin(); it!=m_Controls.end(); it++) 
     	xr_delete	(*it);
     m_Controls.clear();
+    xr_delete(pForm);
 }
 
 void ESceneToolBase::AddControl(TUI_CustomControl* c)

@@ -18,6 +18,8 @@ ESceneToolBase::ESceneToolBase(ObjClassID cls)
     m_EditFlags.assign	(flEnable|flVisible);
     m_ModifName			= "";
     m_ModifTime			= 0;
+    pForm = 0;
+ 
 }
 
 ESceneToolBase::~ESceneToolBase()

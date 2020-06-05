@@ -130,6 +130,7 @@ void UILeftBarForm::Draw()
 
 		ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 	}
+	if(LTools->GetToolForm())LTools->GetToolForm()->Draw();
 	ImGui::End();
 }
 

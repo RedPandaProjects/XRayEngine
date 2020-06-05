@@ -174,8 +174,8 @@ void ESceneAIMapTool::Clear(bool bOnlyNodes)
 {
 	inherited::Clear	();
 	hash_Clear			();
-	for (AINodeIt it=m_Nodes.begin(); it!=m_Nodes.end(); it++)
-    	xr_delete		(*it);
+	for (SAINode*node:m_Nodes)
+    	xr_delete		(node);
 	m_Nodes.clear_and_free();
 	if (!bOnlyNodes){
 	    m_SnapObjects.clear	();

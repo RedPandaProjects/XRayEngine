@@ -17,7 +17,7 @@ class TfrmObjectList;
 class CLevelTool: public CToolCustom
 {
 	typedef CToolCustom inherited;
-
+    XrUI*           m_ToolForm;
     int             sub_target;
     ObjClassID		target;
 
@@ -58,6 +58,7 @@ public:
                     	CLevelTool			();
     virtual         	~CLevelTool		();
 
+    IC XrUI*            GetToolForm         ()const{ return m_ToolForm; }
     IC ObjClassID		GetTarget   		(){return target;}
     IC int          	GetSubTarget   		(){return sub_target;}
     virtual void		SetAction			(ETAction act);

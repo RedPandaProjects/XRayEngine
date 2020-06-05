@@ -16,6 +16,9 @@
     <Filter Include="ServerEntities">
       <UniqueIdentifier>{04a1bd6e-c754-494c-9fa6-1fbe7ef47912}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI\Tools">
+      <UniqueIdentifier>{3e179e6c-ce08-4955-a1ad-7b268a674b30}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Edit\SceneSummaryInfo.cpp">
@@ -367,6 +370,9 @@
     <ClCompile Include="..\..\XrEngine\ObjectAnimator.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="UI\Tools\UILightTool.cpp">
+      <Filter>UI\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Edit\SceneSummaryInfo.h">
@@ -570,6 +576,9 @@
     <ClInclude Include="iniStreamImpl.h" />
     <ClInclude Include="..\..\XrRender\Private\DetailManager.h">
       <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Tools\UILightTool.h">
+      <Filter>UI\Tools</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -8,6 +8,8 @@
 #include "../XrECore/Editor/ui_main.h"
 #include "ELight.h"
 
+#include "UI/Tools/UILightTool.h"
+
 ESceneLightTool::ESceneLightTool():ESceneCustomOTool(OBJCLASS_LIGHT)
 {
 	Clear				();
@@ -273,6 +275,7 @@ void ESceneLightTool::CreateControls()
 {
 	inherited::CreateDefaultControls(estDefault);
 	// frame
+    pForm = xr_new<UILightTool>();
    // pFrame 			= xr_new<TfraLight>((TComponent*)0);
 }
 //----------------------------------------------------
