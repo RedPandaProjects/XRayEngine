@@ -6,6 +6,8 @@
 #include "EShape.h"
 #include "scene.h"
 #include "../XrECore/Editor/ui_main.h"
+
+#include "UI\Tools\UIShapeTool.h"
 //---------------------------------------------------------------------------
  TUI_ControlShapeAdd::TUI_ControlShapeAdd(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent)
 {
@@ -13,29 +15,27 @@
 
 bool  TUI_ControlShapeAdd::AfterAppendCallback(TShiftState Shift, CCustomObject* obj)
 {
-	/*CEditShape* shape 	= dynamic_cast<CEditShape*>(obj); R_ASSERT(shape);
-	TfraShape* F 		= (TfraShape*)parent_tool->pFrame;
-	if (F->ebTypeSphere->Down){
+	CEditShape* shape 	= dynamic_cast<CEditShape*>(obj); R_ASSERT(shape);
+    UIShapeTool* F 		= (UIShapeTool*)parent_tool->pForm;
+	if (F->IsSphereMode()){
     	Fsphere S;	S.identity();
     	shape->add_sphere(S);
-        if (!Shift.Contains(ssAlt)) F->ebTypeSphere->Down = false;
+        //if (!(Shift&ssAlt)) F->SetSphereMode(false);
         return true;
-	}else if (F->ebTypeBox->Down){
+	}else {
     	Fmatrix M;	M.identity();
     	shape->add_box(M);
-		if (!Shift.Contains(ssAlt)) F->ebTypeBox->Down = false;
+	//	if (!(Shift&ssAlt)) F->SetSphereMode(true);
         return true;
-    }else{
-    	ELog.DlgMsg(mtInformation,"Select shape type at first.");
-    }*/
-    not_implemented();
+    }
     return false;
 }
 
 bool  TUI_ControlShapeAdd::Start(TShiftState Shift)
 {
-	/*TfraShape* F 		= (TfraShape*)parent_tool->pFrame;
-    if (F->ebAttachShape->Down){
+    UIShapeTool* F 		= (UIShapeTool*)parent_tool->pForm;
+    if (F->IsAttachShape())
+    {
 		CEditShape* from = dynamic_cast<CEditShape*>(Scene->RayPickObject(UI->ZFar(),UI->m_CurrentRStart, UI->m_CurrentRDir, OBJCLASS_SHAPE, 0, 0));
         if (from){
             ObjectList lst;
@@ -45,16 +45,15 @@ bool  TUI_ControlShapeAdd::Start(TShiftState Shift)
                 CEditShape* base = dynamic_cast<CEditShape*>(lst.back()); R_ASSERT(base);
                 if (base!=from){
 	                base->Attach(from);
-    	            if (!Shift.Contains(ssAlt)){
-        	            F->ebAttachShape->Down 	= false;
+    	            if (!(Shift&ssAlt)){
+        	            F->SetAttachShape( false);
             	        ResetActionToSelect		();
                 	}
                 }
             }
         }
     }else
-	    DefaultAddObject(Shift,0,AfterAppendCallback);*/
-    not_implemented();
+	    DefaultAddObject(Shift,0, TAfterAppendCallback(this,&TUI_ControlShapeAdd::AfterAppendCallback));
     return false;
 }
 
