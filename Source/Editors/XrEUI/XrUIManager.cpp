@@ -28,7 +28,8 @@ void XrUIManager::Initialize(HWND hWnd, IDirect3DDevice9* device, const char* in
     // Setup Dear ImGui style
     ImGui::StyleColorsClassic();
    // ImGui::Spectrum::LoadFont();
-    //ImGui::GetStyle().IndentSpacing = 12;
+    ImGui::GetStyle().ItemSpacing = ImVec2(3,3);
+    ImGui::GetStyle().FramePadding = ImVec2(3,1);
     ImGui_ImplWin32_Init(hWnd);
     ImGui_ImplDX9_Init(device);
 
@@ -148,15 +149,17 @@ void XrUIManager::Draw()
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
         ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
         ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(3, 2));
         ImGui::Begin("Master DockSpace", NULL, window_flags);
         ImGuiID dockMain = ImGui::GetID("MyDockspace");
 
-        // Save off menu bar height for later.
         m_MenuBarHeight = ImGui::GetWindowBarHeight();
+        // Save off menu bar height for later.
 
         ImGui::DockSpace(dockMain);
         ImGui::End();
-        ImGui::PopStyleVar(3);
+        ImGui::PopStyleVar(4);
+
     }
 	for (XrUI* ui : m_UIArray)
 	{

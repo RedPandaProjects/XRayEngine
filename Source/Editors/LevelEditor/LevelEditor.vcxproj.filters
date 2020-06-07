@@ -385,6 +385,12 @@
     <ClCompile Include="UI\Tools\UISpawnTool.cpp">
       <Filter>UI\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="UI\Tools\UIShapeTool.cpp">
+      <Filter>UI\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Tools\UIWayTool.cpp">
+      <Filter>UI\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Edit\SceneSummaryInfo.h">
@@ -605,6 +611,12 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="UI\Tools\UISpawnTool.h">
+      <Filter>UI\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Tools\UIShapeTool.h">
+      <Filter>UI\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Tools\UIWayTool.h">
       <Filter>UI\Tools</Filter>
     </ClInclude>
   </ItemGroup>

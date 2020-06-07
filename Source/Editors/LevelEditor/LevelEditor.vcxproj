@@ -144,7 +144,9 @@
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="UI\Tools\UILightTool.cpp" />
     <ClCompile Include="UI\Tools\UIObjectTool.cpp" />
+    <ClCompile Include="UI\Tools\UIShapeTool.cpp" />
     <ClCompile Include="UI\Tools\UISpawnTool.cpp" />
+    <ClCompile Include="UI\Tools\UIWayTool.cpp" />
     <ClCompile Include="UI\UILeftBarForm.cpp" />
     <ClCompile Include="UI\UIMainForm.cpp" />
     <ClCompile Include="UI\UIMainMenuForm.cpp" />
@@ -220,8 +222,10 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="UI\Tools\UILightTool.h" />
     <ClInclude Include="UI\Tools\UIObjectTool.h" />
+    <ClInclude Include="UI\Tools\UIShapeTool.h" />
     <ClInclude Include="UI\Tools\UISpawnTool.h" />
     <ClInclude Include="UI\Tools\UIToolCustom.h" />
+    <ClInclude Include="UI\Tools\UIWayTool.h" />
     <ClInclude Include="UI\UILeftBarForm.h" />
     <ClInclude Include="UI\UIMainForm.h" />
     <ClInclude Include="UI\UIMainMenuForm.h" />
@@ -275,6 +279,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -282,6 +287,7 @@
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -289,12 +295,14 @@
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -302,6 +310,7 @@
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -309,6 +318,7 @@
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">

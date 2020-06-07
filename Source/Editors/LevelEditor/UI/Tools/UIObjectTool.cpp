@@ -27,8 +27,6 @@ void UIObjectTool::Draw()
     float a = 1;
     if (ImGui::TreeNode("Commands"))
     {
-        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 0));
-        ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(2, 4));
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
         {
             if (ImGui::Button("Multiple Append", ImVec2(-1, 0)))
@@ -55,28 +53,22 @@ void UIObjectTool::Draw()
             }
         }
         ImGui::Separator();
-        ImGui::PopStyleVar(2);
         ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::TreePop();
     }
     if (ImGui::TreeNode("Reference Select"))
     {
-        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 0));
-        ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(2, 4));
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
         {
             ImGui::Text("Select by Current: "); ImGui::SameLine(); if (ImGui::Button(" +")) { SelByRefObject(true); } ImGui::SameLine(); if (ImGui::Button(" -")) { SelByRefObject(false); }
             ImGui::Text("Select by Selected:"); ImGui::SameLine(); if (ImGui::Button("=%")) { MultiSelByRefObject(true); } ImGui::SameLine(); if (ImGui::Button("+%")) { MultiSelByRefObject(false); } ImGui::SameLine(); ImGui::SetNextItemWidth(-ImGui::GetTextLineHeight() - 8); ImGui::DragFloat("%", &m_selPercent, 1, 0, 100, "%.1f");
         }
         ImGui::Separator();
-        ImGui::PopStyleVar(2);
         ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::TreePop();
     }
     if (ImGui::TreeNode("Current Object"))
     {
-        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 0));
-        ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(2, 4));
 
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
         {
@@ -91,19 +83,15 @@ void UIObjectTool::Draw()
             }
         }
         ImGui::Separator();
-        ImGui::PopStyleVar(2);
         ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::TreePop();
     }
     if (ImGui::TreeNode("Object List"))
     {
-        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 0));
-        ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(2, 4));
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::Separator();
         m_ObjectList->Draw();
         ImGui::Separator();
-        ImGui::PopStyleVar(2);
         ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::TreePop();
     }

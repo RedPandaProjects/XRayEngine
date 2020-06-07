@@ -397,11 +397,32 @@ CWayPoint* CWayObject::AppendWayPoint()
 {
 	for (WPIt it=m_WayPoints.begin(); it!=m_WayPoints.end(); it++)
     	(*it)->Select(0);
-   /* m_WayPoints.push_back(xr_new<CWayPoint>(FHelper.GenerateName("wp",2,fastdelegate::bind<TFindObjectByName>(this,&CWayObject::FindWPByName),false,false).c_str()));
+    string_path buffer;
+    {
+        const char* pref = "wp";
+        for (int i = 0; true; i++)
+        {
+            bool result;
+            xr_string temp;
+            if (i == 0)
+            {
+                temp = pref;
+            }
+            else
+            {
+                temp.sprintf("%s_%02d", pref, i - 1);
+            }
+            FindWPByName(temp.c_str(), result);
+            if (!result)
+            {
+                xr_strcpy(buffer, 256, temp.c_str());
+                break;
+            }
+        }
+    }
+    m_WayPoints.push_back(xr_new<CWayPoint>(buffer));
     m_WayPoints.back()->m_bSelected=true;
-    return m_WayPoints.back();*/
-    not_implemented();
-    return 0;
+    return m_WayPoints.back();
 }
 
 void CWayObject::Select(int flag)

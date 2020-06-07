@@ -15,8 +15,6 @@ void UILightTool::Draw()
 	if (ImGui::TreeNode("Affect in D3D"))
 	{
 		ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
-		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
-		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 1));
 		ImGui::PushItemWidth(-1);
 		float size = float(ImGui::CalcItemWidth());
 		{
@@ -30,7 +28,6 @@ void UILightTool::Draw()
 		}
 
 		ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
-		ImGui::PopStyleVar(2);
 		ImGui::TreePop();
 	}
 }

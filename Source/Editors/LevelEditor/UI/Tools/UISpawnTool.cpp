@@ -20,8 +20,6 @@ void UISpawnTool::Draw()
 {
     if (ImGui::TreeNode("Reference Select"))
     {
-        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 0));
-        ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(2, 4));
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
         {
             ImGui::Text("Select by Current: "); ImGui::SameLine(); if (ImGui::Button(" +")) { SelByRefObject(true); } ImGui::SameLine(); if (ImGui::Button(" -")) { SelByRefObject(false); }
@@ -29,13 +27,10 @@ void UISpawnTool::Draw()
         }
         ImGui::Separator();
         ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
-        ImGui::PopStyleVar(2);
         ImGui::TreePop();
     } 
     if (ImGui::TreeNode("Commands"))
     {
-        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 0));
-        ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(2, 4));
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
         {
             float size = float(ImGui::CalcItemWidth());
@@ -60,19 +55,15 @@ void UISpawnTool::Draw()
         }
         ImGui::Separator();
         ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
-        ImGui::PopStyleVar(2);
         ImGui::TreePop();
     }
     if (ImGui::TreeNode("Object List"))
     {
-        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 0));
-        ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(2, 4));
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::Separator();
         m_SpawnList->Draw();
         ImGui::Separator();
         ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
-        ImGui::PopStyleVar(2);
         ImGui::TreePop();
     }
 }
@@ -155,7 +146,7 @@ void UISpawnTool::OnItemFocused(ListItem* item)
     m_Current = 0;
     if (item)
     {
-        m_Current = item->Key();
+        m_Current = (LPCSTR)item->m_Object;
     }
     ExecCommand(COMMAND_RENDER_FOCUS);
 }
