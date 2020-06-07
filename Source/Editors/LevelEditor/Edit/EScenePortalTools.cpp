@@ -7,7 +7,7 @@
 #include "portal.h"
 #include "Scene.h"
 #include "../../FreeMagic/MgcAppr3DPlaneFit.h"
-
+#include "UI\Tools\UIPortalTool.h"
 /* TODO 1 -oAlexMX -cTODO: Create tools as AI Map */
 
 void EScenePortalTool::CreateControls()
@@ -15,7 +15,8 @@ void EScenePortalTool::CreateControls()
 //	inherited::CreateControls();
     AddControl		(xr_new<TUI_ControlPortalSelect>(estDefault,etaSelect,	this));
 	// frame
-   // ((TfraPortal*)pFrame)->tool	= this;
+    pForm = xr_new <UIPortalTool> ();
+   ((UIPortalTool*)pForm)->tool	= this;
 }
 //----------------------------------------------------
 

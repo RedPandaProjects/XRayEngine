@@ -5,8 +5,7 @@
 
 //---------------------------------------------------------------------------
 // refs
-class TfraSector;
-
+class UISectorTool;
 enum ESectorAction{
     saNone,
     saAddMesh,
@@ -31,7 +30,7 @@ public:
 };
 
 class TUI_ControlSectorSelect: public TUI_CustomControl{
-    TfraSector*   	pFrame;
+    UISectorTool*   	pFrame;
 public:
     TUI_ControlSectorSelect(int st, int act, ESceneToolBase* parent);
 	virtual bool Start  (TShiftState _Shift);

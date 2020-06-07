@@ -10,6 +10,7 @@
 #include "GroupObject.h"
 #include "ui_leveltools.h"
 #include "ui_levelmain.h"
+#include "UI\Tools\UISectorTool.h"
 
 //---------------------------------------------------------------------------
 // add
@@ -20,17 +21,14 @@
 void  TUI_ControlSectorAdd::OnEnter()
 {
     m_Action = saNone;
-    not_implemented();
-    /*TfraSector* fraSector = (TfraSector*)parent_tool->pFrame; VERIFY(fraSector);
-    fraSector->paSectorActions->Show();*/
+    UISectorTool* fraSector = (UISectorTool*)parent_tool->pForm; VERIFY(fraSector);
+    fraSector->ShowEdit();
 }
 
 void  TUI_ControlSectorAdd::OnExit()
 {
-    not_implemented();
-    /*TfraSector* fraSector = (TfraSector*)parent_tool->pFrame; VERIFY(fraSector);
-    fraSector->paSectorActions->Hide();
-	fraSector = 0;*/
+    UISectorTool* fraSector = (UISectorTool*)parent_tool->pForm; VERIFY(fraSector);
+    fraSector->HideEdit();
 }
 
 void TUI_ControlSectorAdd::AddMesh(){
@@ -119,31 +117,28 @@ bool TUI_ControlSectorAdd::AddSectors()
 
 bool  TUI_ControlSectorAdd::Start(TShiftState Shift)
 {
-   /* if (Shift==ssRBOnly){ ExecCommand(COMMAND_SHOWCONTEXTMENU,OBJCLASS_SECTOR); return false;}
-    TfraSector* fraSector = (TfraSector*)parent_tool->pFrame; VERIFY(fraSector);
-    if (fraSector->ebCreateNewSingle->Down){
-    	if (AddSector()&&(!Shift.Contains(ssAlt))) fraSector->ebCreateNewSingle->Down=false;
+    if (Shift == ssRBOnly) { ExecCommand(COMMAND_SHOWCONTEXTMENU, OBJCLASS_SECTOR); return false; }
+    UISectorTool* fraSector = (UISectorTool*)parent_tool->pForm; VERIFY(fraSector);
+    if (fraSector->IsCreateNewSingle()) {
+        if (AddSector() && (!(Shift & ssAlt))) fraSector->SetCreateNewSingle(false);
         return false;
     }
-    if (fraSector->ebCreateNewMultiple->Down){
-    	if (AddSectors()&&(!Shift.Contains(ssAlt))) fraSector->ebCreateNewSingle->Down=false;
+    if (fraSector->IsCreateNewMultiple()) {
+        AddSectors();
         return false;
     }
-	if (fraSector->ebAddMesh->Down||fraSector->ebDelMesh->Down){
-		bool bBoxSelection = fraSector->ebBoxPick->Down;
-        if( bBoxSelection ){
-            UI->EnableSelectionRect( true );
-            UI->UpdateSelectionRect(UI->m_StartCp,UI->m_CurrentCp);
-			m_Action = saMeshBoxSelection;
-            return true;
-        } else {
-            if (fraSector->ebAddMesh->Down)	AddMesh();
-            if (fraSector->ebDelMesh->Down)	DelMesh();
-            return false;
-        }
-    }*/
-    not_implemented();
-    return false;
+    bool bBoxSelection = fraSector->IsBoxPick();
+    if (bBoxSelection) {
+        UI->EnableSelectionRect(true);
+        UI->UpdateSelectionRect(UI->m_StartCp, UI->m_CurrentCp);
+        m_Action = saMeshBoxSelection;
+        return true;
+    }
+    else {
+        if (fraSector->IsMeshAdd())	AddMesh();
+        else DelMesh();
+        return false;
+    }
 }
 
 void  TUI_ControlSectorAdd::Move(TShiftState _Shift)
@@ -156,8 +151,8 @@ void  TUI_ControlSectorAdd::Move(TShiftState _Shift)
 }
 
 bool  TUI_ControlSectorAdd::End(TShiftState _Shift)
-{/*
-    TfraSector* fraSector = (TfraSector*)parent_tool->pFrame; VERIFY(fraSector);
+{
+    UISectorTool* fraSector = (UISectorTool*)parent_tool->pForm; VERIFY(fraSector);
     CSector* sector=PortalUtils.GetSelectedSector();
 	if (sector){
         if (m_Action==saMeshBoxSelection){
@@ -176,8 +171,8 @@ bool  TUI_ControlSectorAdd::End(TShiftState _Shift)
                     for(EditMeshIt m_def = O_lib->m_Meshes.begin();m_def!=O_lib->m_Meshes.end();m_def++){
                         O_ref->GetFullTransformToWorld(matrix);
                     	if ((*m_def)->FrustumPick(frustum,matrix)){
-	                        if (fraSector->ebAddMesh->Down)	sector->AddMesh(O_ref,*m_def);
-    	                    if (fraSector->ebDelMesh->Down)	if (sector->DelMesh(O_ref,*m_def)) break;
+	                        if (fraSector->IsMeshAdd())	sector->AddMesh(O_ref,*m_def);
+    	                    else if (sector->DelMesh(O_ref,*m_def)) break;
                         }
                     }
                 }
@@ -191,8 +186,7 @@ bool  TUI_ControlSectorAdd::End(TShiftState _Shift)
         break;
         }
     }
-	m_Action = saNone;*/
-    not_implemented();
+	m_Action = saNone;
     return true;
 }
 
@@ -203,8 +197,7 @@ bool  TUI_ControlSectorAdd::End(TShiftState _Shift)
     pFrame 	= 0;
 }
 void TUI_ControlSectorSelect::OnEnter(){
-   // pFrame 	= (TfraSector*)parent_tool->pFrame; VERIFY(pFrame);
-    not_implemented();
+    pFrame 	= (UISectorTool*)parent_tool->pForm; VERIFY(pFrame);
 }
 void TUI_ControlSectorSelect::OnExit (){
 	pFrame = 0;
