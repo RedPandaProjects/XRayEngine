@@ -7,14 +7,13 @@
 #include "WayPoint.h"
 #include "scene.h"
 #include "ui_levelmain.h"
-
+#include "UI\Tools\UIWayTool.h"
 void ESceneWayTool::OnActivate()
 {
 	inherited::OnActivate	();
-    not_implemented();
-	/*TfraWayPoint* frame		=(TfraWayPoint*)pFrame;
-    if (sub_target==estWayModePoint)	frame->ebModePoint->Down 	= true;
-    else								frame->ebModeWay->Down 		= true;*/
+	UIWayTool* frame		=(UIWayTool*)pForm;
+    if (sub_target==estWayModePoint)	frame->SetWayMode( false);
+    else								frame->SetWayMode( true);
 }
 //----------------------------------------------------
 
@@ -24,7 +23,7 @@ void ESceneWayTool::CreateControls()
 	inherited::CreateDefaultControls(estWayModePoint);
     AddControl		(xr_new<TUI_ControlWayPointAdd>	(estWayModePoint,	etaAdd,		this));
 	// frame
-    //pFrame 			= xr_new<TfraWayPoint>((TComponent*)0);
+    pForm = xr_new< UIWayTool>();
 }
 //----------------------------------------------------
 
@@ -40,8 +39,8 @@ void ESceneWayTool::RemoveControls()
 
 bool  TUI_ControlWayPointAdd::Start(TShiftState Shift)
 {
-	/*ObjectList lst; Scene->GetQueryObjects(lst,OBJCLASS_WAY,1,1,-1);
-	TfraWayPoint* frame=(TfraWayPoint*)parent_tool->pFrame;
+	ObjectList lst; Scene->GetQueryObjects(lst,OBJCLASS_WAY,1,1,-1);
+    UIWayTool* frame=(UIWayTool*)parent_tool->pForm;
     if (1!=lst.size()){
         ELog.DlgMsg(mtInformation,"Select one WayObject.");
         return false;
@@ -53,14 +52,13 @@ bool  TUI_ControlWayPointAdd::Start(TShiftState Shift)
         CWayPoint* last_wp=obj->GetFirstSelected();
         CWayPoint* wp=obj->AppendWayPoint();
         wp->MoveTo(p);
-        if (frame->ebAutoLink->Down)
+        if (frame->IsAutoLink())
         {
             if (last_wp) last_wp->AddSingleLink(wp);
         }
         Scene->UndoSave();
     }
-    if (!Shift.Contains(ssAlt)) ResetActionToSelect();*/
-    not_implemented();
+    if (!(Shift&ssAlt)) ResetActionToSelect();
     return false;
 }
 
