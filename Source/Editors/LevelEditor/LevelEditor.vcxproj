@@ -143,6 +143,7 @@
     <ClCompile Include="LevelEditor.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="UI\Tools\UIAIMapTool.cpp" />
+    <ClCompile Include="UI\Tools\UIGroupTool.cpp" />
     <ClCompile Include="UI\Tools\UILightTool.cpp" />
     <ClCompile Include="UI\Tools\UIObjectTool.cpp" />
     <ClCompile Include="UI\Tools\UIParticlesTool.cpp" />
@@ -225,6 +226,7 @@
     <ClInclude Include="mesh_data.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="UI\Tools\UIAIMapTool.h" />
+    <ClInclude Include="UI\Tools\UIGroupTool.h" />
     <ClInclude Include="UI\Tools\UILightTool.h" />
     <ClInclude Include="UI\Tools\UIObjectTool.h" />
     <ClInclude Include="UI\Tools\UIParticlesTool.h" />

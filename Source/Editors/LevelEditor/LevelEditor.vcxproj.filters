@@ -403,6 +403,9 @@
     <ClCompile Include="UI\Tools\UIParticlesTool.cpp">
       <Filter>UI\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="UI\Tools\UIGroupTool.cpp">
+      <Filter>UI\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Edit\SceneSummaryInfo.h">
@@ -641,6 +644,9 @@
       <Filter>UI\Tools</Filter>
     </ClInclude>
     <ClInclude Include="UI\Tools\UIParticlesTool.h">
+      <Filter>UI\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Tools\UIGroupTool.h">
       <Filter>UI\Tools</Filter>
     </ClInclude>
   </ItemGroup>

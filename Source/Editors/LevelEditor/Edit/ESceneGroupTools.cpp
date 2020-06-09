@@ -7,12 +7,14 @@
 #include "Scene.h"
 #include "GroupObject.h"
 #include "../XrECore/Editor/EThumbnail.h"
-
+#include "UI/Tools/UIGroupTool.h"
 void ESceneGroupTool::CreateControls()
 {
 	inherited::CreateDefaultControls(estDefault);
     AddControl		(xr_new<TUI_ControlGroupAdd >(estDefault,etaAdd,		this));
 	// frame
+    pForm = xr_new< UIGroupTool>();
+    ((UIGroupTool*)pForm)->ParentTools = this;
 }
 //----------------------------------------------------
 
