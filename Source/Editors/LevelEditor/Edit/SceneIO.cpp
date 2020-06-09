@@ -709,7 +709,7 @@ bool EScene::ReadObjectsLTX(CInifile& ini,  LPCSTR sect_name_parent, LPCSTR sect
 
 bool EScene::ReadObjectsStream(IReader& F, u32 chunk_id, TAppendObject on_append, SPBItem* pb)
 {
-	/*R_ASSERT			(on_append);
+	R_ASSERT			(on_append);
 	bool bRes 			= true;
     IReader* OBJ 		= F.open_chunk(chunk_id);
     if (OBJ)
@@ -720,11 +720,11 @@ bool EScene::ReadObjectsStream(IReader& F, u32 chunk_id, TAppendObject on_append
             CCustomObject* obj	=NULL;
             if (ReadObjectStream(*O, obj))
             {
-                LPCSTR obj_name = obj->FName;
+                LPCSTR obj_name = obj->GetName();
                 CCustomObject* existing = FindObjectByName(obj_name,obj->FClassID);
                 if(existing)
                 {
-                	if(g_frmConflictLoadObject->m_result!=2 && g_frmConflictLoadObject->m_result!=4 && g_frmConflictLoadObject->m_result!=6)
+                	/*if(g_frmConflictLoadObject->m_result!=2 && g_frmConflictLoadObject->m_result!=4 && g_frmConflictLoadObject->m_result!=6)
                     {
                         g_frmConflictLoadObject->m_existing_object 	= existing;
                         g_frmConflictLoadObject->m_new_object 		= obj;
@@ -743,19 +743,19 @@ bool EScene::ReadObjectsStream(IReader& F, u32 chunk_id, TAppendObject on_append
                              	xr_delete(existing);
                         }break;
                     	case 3: //Insert new
-                    	case 4: //Insert new All
-                        {
+                    	case 4: //Insert new All*/
+                        
                             string256 				buf;
-    						GenObjectName			(obj->FClassID, buf, obj->Name);
-    						obj->Name				= buf;
-                        }break;
+    						GenObjectName			(obj->FClassID, buf, obj->GetName());
+    						obj->SetName(buf);
+                        /*}break;
                     	case 0: //Cancel
                     	case 5: //Skip
                     	case 6: //Skip All
                         {
                         	xr_delete(obj);
                         }break;
-                    }
+                    }*/
                 }
             	if (obj && !on_append(obj))
                 	xr_delete(obj);}
@@ -770,9 +770,7 @@ bool EScene::ReadObjectsStream(IReader& F, u32 chunk_id, TAppendObject on_append
         }
         OBJ->close();
     }
-    return bRes;*/
-    not_implemented();
-    return 0;
+    return bRes;
 }
 
 bool EScene::OnLoadAppendObject(CCustomObject* O)
