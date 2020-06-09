@@ -109,7 +109,7 @@ void UIObjectTool::RefreshList()
             ListItem* I = LHelper().CreateItem(items, it->name.c_str(), 0, ListItem::flDrawThumbnail, 0);
         }
     }
-    m_ObjectList->AssignItems(items, false, true);
+    m_ObjectList->AssignItems(items);
 }
 
 void UIObjectTool::RenderSpecial()
