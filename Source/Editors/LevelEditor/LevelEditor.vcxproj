@@ -145,6 +145,7 @@
     <ClCompile Include="UI\Tools\UIAIMapTool.cpp" />
     <ClCompile Include="UI\Tools\UILightTool.cpp" />
     <ClCompile Include="UI\Tools\UIObjectTool.cpp" />
+    <ClCompile Include="UI\Tools\UIParticlesTool.cpp" />
     <ClCompile Include="UI\Tools\UIPortalTool.cpp" />
     <ClCompile Include="UI\Tools\UISectorTool.cpp" />
     <ClCompile Include="UI\Tools\UIShapeTool.cpp" />
@@ -226,6 +227,7 @@
     <ClInclude Include="UI\Tools\UIAIMapTool.h" />
     <ClInclude Include="UI\Tools\UILightTool.h" />
     <ClInclude Include="UI\Tools\UIObjectTool.h" />
+    <ClInclude Include="UI\Tools\UIParticlesTool.h" />
     <ClInclude Include="UI\Tools\UIPortalTool.h" />
     <ClInclude Include="UI\Tools\UISectorTool.h" />
     <ClInclude Include="UI\Tools\UIShapeTool.h" />

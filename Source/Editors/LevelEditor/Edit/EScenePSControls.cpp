@@ -8,6 +8,7 @@
 #include "scene.h"
 #include "../XrECore/Editor/ui_main.h"
 
+#include "UI\Tools\UIParticlesTool.h"
 //----------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
@@ -16,8 +17,8 @@
 
 bool  TUI_ControlPSAdd::AfterAppendCallback(TShiftState Shift, CCustomObject* obj)
 {
-/*	EParticlesObject* pg= dynamic_cast<EParticlesObject*>(obj); R_ASSERT(pg);
-    LPCSTR ref_name		= ((TfraPS*)parent_tool->pFrame)->Current();
+	EParticlesObject* pg= dynamic_cast<EParticlesObject*>(obj); R_ASSERT(pg);
+    LPCSTR ref_name		= ((UIParticlesTool*)parent_tool->pForm)->Current();
     if (!ref_name){
     	ELog.DlgMsg(mtInformation,"Nothing selected.");
     	return false;
@@ -25,8 +26,7 @@ bool  TUI_ControlPSAdd::AfterAppendCallback(TShiftState Shift, CCustomObject* ob
 	if (!pg->Compile(ref_name)){
     	ELog.DlgMsg(mtInformation,"Can't compile particle system '%s'.",ref_name);
         return false;
-    }*/
-    not_implemented();
+    }
     return true;
 }
 

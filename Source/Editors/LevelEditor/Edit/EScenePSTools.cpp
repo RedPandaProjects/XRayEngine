@@ -5,12 +5,13 @@
 #include "ui_leveltools.h"
 #include "EScenePSControls.h"
 #include "EParticlesObject.h"
-
+#include "UI\Tools\UIParticlesTool.h"
 void EScenePSTool::CreateControls()
 {
 	inherited::CreateDefaultControls(estDefault);
     AddControl		(xr_new<TUI_ControlPSAdd>(estDefault,etaAdd,		this));
 	// frame
+	pForm = xr_new< UIParticlesTool>();
 }
 //----------------------------------------------------
 
