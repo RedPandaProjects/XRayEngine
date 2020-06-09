@@ -4,6 +4,7 @@
 #include "ESceneAIMapTools.h"
 #include "ui_leveltools.h"
 #include "ESceneAIMapControls.h"
+#include "UI\Tools\UIAIMapTool.h"
 
 void ESceneAIMapTool::CreateControls()
 {
@@ -14,6 +15,8 @@ void ESceneAIMapTool::CreateControls()
     AddControl(xr_new<TUI_ControlAIMapNodeMove>		(estAIMapNode,		etaMove,	this));
     AddControl(xr_new<TUI_ControlAIMapNodeRotate>	(estAIMapNode,		etaRotate,	this));
 	// frame
+	pForm = xr_new<UIAIMapTool>();
+	((UIAIMapTool*)pForm)->tool = this;
     //pFrame 			= xr_new<TfraAIMap>((TComponent*)0,this);
 }
 //----------------------------------------------------

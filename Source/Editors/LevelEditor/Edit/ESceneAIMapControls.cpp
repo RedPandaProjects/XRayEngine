@@ -6,6 +6,7 @@
 #include "../XrECore/Editor/ui_main.h"
 #include "scene.h"
 #include "ui_leveltools.h"
+#include "UI\Tools\UIAIMapTool.h"
 
 //------------------------------------------------------------------------------
 // Node Add
@@ -15,29 +16,27 @@ TUI_ControlAIMapNodeAdd::TUI_ControlAIMapNodeAdd(int st, int act, ESceneToolBase
 
 bool  TUI_ControlAIMapNodeAdd::Start(TShiftState Shift)
 {
-    not_implemented();
-	/*append_nodes = 0;                           
+    append_nodes = 0;                           
 	Fvector p;
     ESceneAIMapTool* S 		= (ESceneAIMapTool*)parent_tool;
     if (S->PickObjects(p,UI->m_CurrentRStart,UI->m_CurrentRDir,UI->ZFar())){
     	S->SelectObjects	(false);
-	    append_nodes		= S->AddNode(p,((TfraAIMap*)S->pFrame)->ebIgnoreConstraints->Down,((TfraAIMap*)S->pFrame)->ebAutoLink->Down,S->m_BrushSize);
-		if (!Shift.Contains(ssAlt)){ 
+	    append_nodes		= S->AddNode(p,((UIAIMapTool*)S->pForm)->IsIgnoreConstraints(),((UIAIMapTool*)S->pForm)->IsAutoLink(),S->m_BrushSize);
+		if (Shift&ssAlt){ 
 		    if (append_nodes) Scene->UndoSave();
         	ResetActionToSelect();
             return false;
         }else return true;
-    }*/
+    }
     return false;
 }
 void TUI_ControlAIMapNodeAdd::Move(TShiftState _Shift)
 {
-    not_implemented();
-	/*Fvector p;
+    Fvector p;
     ESceneAIMapTool* S 	= (ESceneAIMapTool*)parent_tool;
     if (S->PickObjects(p,UI->m_CurrentRStart,UI->m_CurrentRDir,UI->ZFar())){
-	    append_nodes+=S->AddNode(p,((TfraAIMap*)S->pFrame)->ebIgnoreConstraints->Down,((TfraAIMap*)S->pFrame)->ebAutoLink->Down,S->m_BrushSize);
-    }*/
+	    append_nodes+=S->AddNode(p,((UIAIMapTool*)S->pForm)->IsIgnoreConstraints(),((UIAIMapTool*)S->pForm)->IsAutoLink(),S->m_BrushSize);
+    }
 }
 bool TUI_ControlAIMapNodeAdd::End(TShiftState _Shift)
 {

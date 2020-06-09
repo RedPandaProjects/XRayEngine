@@ -532,7 +532,7 @@ void ESceneAIMapTool::BuildNodes(bool bFromSelectedOnly)
             clamp	(p,0.f,1.f);
             pb->Update(p);
             // check need abort && redraw
-            if (k%32768==0) UI->RedrawScene(true);
+            if (k%32768==0) UI->RedrawScene(false);
             if (UI->NeedAbort()) break;
         }
     }
