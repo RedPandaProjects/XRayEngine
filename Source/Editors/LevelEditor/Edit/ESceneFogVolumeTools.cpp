@@ -3,7 +3,7 @@
 
 #include "UI_LevelTools.h"
 #include "ESceneFogVolumeTools.h"
-
+#include "UI\Tools\UIFogVolTool.h"
 static const u16 FOG_VOL_TOOLS_VERSION  	= 0x0000;
 static const u16 FOG_VOL_VERSION  			= 0x0002;
 enum{
@@ -20,7 +20,8 @@ xr_token fog_vol_type[] = {
 void ESceneFogVolumeTool::CreateControls()
 {
 	inherited::CreateDefaultControls(estDefault);
-   // pFrame 			= xr_new<TfraFogVol>((TComponent*)0,this);
+    pForm 			= xr_new<UIFogVolTool>();
+    ((UIFogVolTool*)pForm)->ParentTools = this;
 }
 
 void ESceneFogVolumeTool::RemoveControls()

@@ -1,0 +1,28 @@
+#include "stdafx.h"
+#include "UIFogVolTool.h"
+#include "ESceneFogVolumeTools.h"
+UIFogVolTool::UIFogVolTool()
+{
+}
+
+UIFogVolTool::~UIFogVolTool()
+{
+}
+
+void UIFogVolTool::Draw()
+{
+	if (ImGui::TreeNode("Commands"))
+	{
+		ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
+		ImGui::PushItemWidth(-1);
+		float size = float(ImGui::CalcItemWidth());
+		{
+			if (ImGui::Button("Group Selected", ImVec2(size / 2, 0)))ParentTools->GroupSelected();
+			ImGui::SameLine(0, 2);
+			if (ImGui::Button("UnGroup Selected", ImVec2(size / 2, 0)))ParentTools->UnGroupCurrent();
+		}
+
+		ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
+		ImGui::TreePop();
+	}
+}

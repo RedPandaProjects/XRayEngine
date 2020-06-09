@@ -409,6 +409,9 @@
     <ClCompile Include="UI\Tools\UIDOTool.cpp">
       <Filter>UI\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="UI\Tools\UIFogVolTool.cpp">
+      <Filter>UI\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Edit\SceneSummaryInfo.h">
@@ -653,6 +656,9 @@
       <Filter>UI\Tools</Filter>
     </ClInclude>
     <ClInclude Include="UI\Tools\UIDOTool.h">
+      <Filter>UI\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Tools\UIFogVolTool.h">
       <Filter>UI\Tools</Filter>
     </ClInclude>
   </ItemGroup>
