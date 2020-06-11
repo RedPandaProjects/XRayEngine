@@ -10,7 +10,7 @@ class CEditableObject;
 class ECORE_API EDetail: public CDetail{
 	friend class EDetailManager;
 	friend class CDetailManager;
-    friend class TfrmDOShuffle;
+    friend class UIDOShuffle;
 
     struct EVertexIn: public fvfVertexIn
     {

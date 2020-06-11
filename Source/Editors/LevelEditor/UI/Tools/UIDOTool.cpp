@@ -1,8 +1,10 @@
 #include "stdafx.h"
 #include "UIDOTool.h"
 #include "ESceneDOTools.h"
+#include "..\UIDOShuffle.h"
 UIDOTool::UIDOTool()
 {
+	m_DOShuffle = false;
 }
 
 UIDOTool::~UIDOTool()
@@ -58,10 +60,22 @@ void UIDOTool::Draw()
 				}
 			}
 			ImGui::Separator();
-			if (ImGui::Button("Object List", ImVec2(-1, 0))) {}
+			if (ImGui::Button("Object List", ImVec2(-1, 0))) { m_DOShuffle = true; UIDOShuffle::Show(DM); }
 		}
 
 		ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 		ImGui::TreePop();
+	}
+}
+
+void UIDOTool::RenderSpecial()
+{
+	if (m_DOShuffle)
+	{
+		if (UIDOShuffle::GetResult())
+		{
+			m_DOShuffle = false;
+		}
+		UIDOShuffle::Update();
 	}
 }

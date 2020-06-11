@@ -412,6 +412,12 @@
     <ClCompile Include="UI\Tools\UIFogVolTool.cpp">
       <Filter>UI\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="UI\UIDOShuffle.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UIDOOneColor.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Edit\SceneSummaryInfo.h">
@@ -660,6 +666,12 @@
     </ClInclude>
     <ClInclude Include="UI\Tools\UIFogVolTool.h">
       <Filter>UI\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UIDOShuffle.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UIDOOneColor.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
