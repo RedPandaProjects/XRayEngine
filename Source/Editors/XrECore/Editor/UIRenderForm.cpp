@@ -52,16 +52,20 @@ void UIRenderForm::Draw()
 				else
 					UI->MouseMove(TShiftState(ShiftState), ImGui::GetIO().MousePos.x - canvas_pos.x, ImGui::GetIO().MousePos.y - canvas_pos.y);
 			}
+				
 			m_mouse_position.set(ImGui::GetIO().MousePos.x - canvas_pos.x, ImGui::GetIO().MousePos.y - canvas_pos.y);
 		}
-	
+		else  if (ImGui::IsMouseReleased(ImGuiMouseButton_Left) || ImGui::IsMouseReleased(ImGuiMouseButton_Right))
+		{
+			UI->MouseRelease(TShiftState(ShiftState), ImGui::GetIO().MousePos.x - canvas_pos.x, ImGui::GetIO().MousePos.y - canvas_pos.y);
+			m_mouse_down = false;
+		}
 		
 		UI->RTSize.set(canvas_size.x, canvas_size.y);
 		if (canvas_size.x < 50.0f) canvas_size.x = 50.0f;
 		if (canvas_size.y < 50.0f) canvas_size.y = 50.0f;
 		ImGui::InvisibleButton("canvas", canvas_size);
 		draw_list->AddImage(UI->RT->pSurface, canvas_pos, ImVec2(canvas_pos.x + canvas_size.x, canvas_pos.y + canvas_size.y));
-		ImVec2 mouse_pos_in_canvas = ImVec2(ImGui::GetIO().MousePos.x - canvas_pos.x, ImGui::GetIO().MousePos.y - canvas_pos.y);
 
 	}
 	ImGui::End();
