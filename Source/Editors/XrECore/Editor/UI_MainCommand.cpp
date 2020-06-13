@@ -6,6 +6,7 @@
 #include "ui_main.h"
 #include "UI_ToolsCustom.h"
 
+#include "UIEditLightAnim.h"
 #include "UIImageEditorForm.h"
 #include "UIMinimapEditorForm.h"
 #include "UISoundEditorForm.h"
@@ -366,6 +367,11 @@ CCommandVar 	CommandImageEditor(CCommandVar p1, CCommandVar p2)
     UIImageEditorForm::Show(false);
     return				TRUE;
 }
+CCommandVar 	CommandLightAnimEditor(CCommandVar p1, CCommandVar p2)
+{
+    UIEditLightAnim::Show();
+    return				TRUE;
+}
 
 CCommandVar 	CommandMinimapEditor(CCommandVar p1, CCommandVar p2)
 {
@@ -665,7 +671,9 @@ void TUI::RegisterCommands()
 	REGISTER_CMD_S	    (COMMAND_SET_SETTINGS,			CommandSetSettings);
 	REGISTER_CMD_S	    (COMMAND_SOUND_EDITOR,   		CommandSoundEditor);
 	REGISTER_CMD_S	    (COMMAND_SYNC_SOUNDS,    		CommandSyncSounds);
-    REGISTER_CMD_S	    (COMMAND_IMAGE_EDITOR,   		CommandImageEditor);    REGISTER_CMD_S	    (COMMAND_MINIMAP_EDITOR,   		CommandMinimapEditor);
+    REGISTER_CMD_S	    (COMMAND_IMAGE_EDITOR,   		CommandImageEditor); 
+    REGISTER_CMD_S      (COMMAND_LIGHTANIM_EDITOR,      CommandLightAnimEditor);
+    REGISTER_CMD_S	    (COMMAND_MINIMAP_EDITOR,   		CommandMinimapEditor);
 	REGISTER_CMD_S	    (COMMAND_CHECK_TEXTURES,     	CommandCheckTextures);
 	REGISTER_CMD_S	    (COMMAND_REFRESH_TEXTURES,   	CommandRefreshTextures);	
 	REGISTER_CMD_S	    (COMMAND_RELOAD_TEXTURES,    	CommandReloadTextures);

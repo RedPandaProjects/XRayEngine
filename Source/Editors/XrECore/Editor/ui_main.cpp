@@ -11,6 +11,7 @@
 #include "SoundManager.h"
 #include "PSLibrary.h"
 
+#include "UIEditLightAnim.h"
 #include "UIImageEditorForm.h"
 #include "UISoundEditorForm.h"
 #include "UIMinimapEditorForm.h"
@@ -617,6 +618,7 @@ void TUI::ProgressEnd			(SPBItem*& pbi)
 void TUI::RenderSpecial()
 {
     UIKeyPressForm::Update(EDevice.fTimeGlobal);
+    UIEditLightAnim::Update();
     UIImageEditorForm::Update();
     UISoundEditorForm::Update();
     UIMinimapEditorForm::Update();

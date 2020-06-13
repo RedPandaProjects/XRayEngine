@@ -749,7 +749,7 @@ bool ImGui::InvisibleButton(const char* str_id, const ImVec2& size_arg)
         return false;
 
     bool hovered, held;
-    bool pressed = ButtonBehavior(bb, id, &hovered, &held);
+    bool pressed = ButtonBehavior(bb, id, &hovered, &held, ImGuiButtonFlags_MouseButtonRight| ImGuiButtonFlags_MouseButtonLeft);
 
     return pressed;
 }

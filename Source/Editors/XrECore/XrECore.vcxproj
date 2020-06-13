@@ -155,6 +155,7 @@
     <ClCompile Include="Editor\ExportSkeleton.cpp" />
     <ClCompile Include="Editor\ExportSkeletonCalculateTB.cpp" />
     <ClCompile Include="Editor\GeometryCollector.cpp" />
+    <ClCompile Include="Editor\UIEditLightAnim.cpp" />
     <ClCompile Include="Editor\UIImageEditorForm.cpp" />
     <ClCompile Include="Editor\ImageManager.cpp" />
     <ClCompile Include="Editor\ImageManagerDO.cpp" />
@@ -270,6 +271,7 @@
     <ClInclude Include="Editor\ExportObjectOGF.h" />
     <ClInclude Include="Editor\ExportSkeleton.h" />
     <ClInclude Include="Editor\GeometryCollector.h" />
+    <ClInclude Include="Editor\UIEditLightAnim.h" />
     <ClInclude Include="Editor\UIImageEditorForm.h" />
     <ClInclude Include="Editor\ImageManager.h" />
     <ClInclude Include="Editor\itterate_adjacents.h" />
