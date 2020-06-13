@@ -17,6 +17,7 @@ UIDOShuffle::UIDOShuffle()
 
 UIDOShuffle::~UIDOShuffle()
 {
+	m_TextureNull.destroy();
 	ApplyChanges();
 	xr_delete(m_Props);
 	if (m_Texture) m_Texture->Release();
@@ -178,7 +179,7 @@ void UIDOShuffle::Update()
 {
 	if (Form && !Form->IsClosed())
 	{
-		if (ImGui::BeginPopupModal("Properties Modal", &Form->bOpen, ImGuiWindowFlags_NoResize, true))
+		if (ImGui::BeginPopupModal("Detail Object List", &Form->bOpen, ImGuiWindowFlags_NoResize, true))
 		{
 			Form->Draw();
 			ImGui::EndPopup();
