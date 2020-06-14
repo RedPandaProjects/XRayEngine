@@ -18,6 +18,8 @@ UIMainForm::UIMainForm()
     m_MainMenu = xr_new<UIMainMenuForm>();
     m_LeftBar = xr_new<UILeftBarForm>();
     m_Properties = xr_new<UILPropertiesFrom>();
+
+    m_Render->SetContextMenuEvent(TOnRenderContextMenu(this, &UIMainForm::DrawContextMenu));
 }
 
 UIMainForm::~UIMainForm()
@@ -45,4 +47,52 @@ bool UIMainForm::Frame()
 {
     if(UI)  return UI->Idle();
     return false;
+}
+
+void UIMainForm::DrawContextMenu()
+{
+    if (ImGui::BeginMenu("Edit"))
+    {
+        if (ImGui::MenuItem("Copy"))
+        {
+            ExecCommand(COMMAND_COPY);
+        }
+        if (ImGui::MenuItem("Paste"))
+        {
+            ExecCommand(COMMAND_PASTE);
+        }
+        ImGui::Separator();
+        if (ImGui::MenuItem("Cut"))
+        {
+            ExecCommand(COMMAND_CUT);
+        }
+        ImGui::Separator();
+        if (ImGui::MenuItem("Delete"))
+        {
+            ExecCommand(COMMAND_DELETE_SELECTION);
+        }
+        ImGui::EndMenu();
+    }
+    if (ImGui::BeginMenu("Visiblity"))
+    {
+        if (ImGui::MenuItem("Hide Selected"))
+        {
+            ExecCommand(COMMAND_HIDE_SEL, FALSE);
+        }
+        if (ImGui::MenuItem("Hide Unselected"))
+        {
+            ExecCommand(COMMAND_HIDE_UNSEL);
+        }
+        if (ImGui::MenuItem("Hide All"))
+        {
+            ExecCommand(COMMAND_HIDE_ALL, FALSE);
+        }
+        ImGui::Separator();
+        if (ImGui::MenuItem("Unhide All"))
+        {
+            ExecCommand(COMMAND_HIDE_ALL, TRUE);
+        }
+        ImGui::EndMenu();
+    }
+   
 }
