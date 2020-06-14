@@ -88,13 +88,13 @@ void UIPropertiesForm::Draw()
 	{
 		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
 		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 1));
-	
+		ImGui::PushStyleVar(ImGuiStyleVar_IndentSpacing, 5);
 		ImGui::Columns(2);
 		ImGui::Separator();
 		DrawNode(&m_GeneralNode);
 		ImGui::Columns(1);
 		ImGui::Separator();
-		ImGui::PopStyleVar(2);
+		ImGui::PopStyleVar(3);
 	}
 }
 
