@@ -4,6 +4,7 @@
 UIRenderForm::UIRenderForm()
 {
 	m_mouse_down = false;
+	m_mouse_move = false;
 }
 
 UIRenderForm::~UIRenderForm()
@@ -48,9 +49,13 @@ void UIRenderForm::Draw()
 				{
 					UI->MouseRelease(TShiftState(ShiftState), ImGui::GetIO().MousePos.x - canvas_pos.x, ImGui::GetIO().MousePos.y - canvas_pos.y);
 					m_mouse_down = false;
+					m_mouse_move = false;
 				}
 				else
+				{
 					UI->MouseMove(TShiftState(ShiftState), ImGui::GetIO().MousePos.x - canvas_pos.x, ImGui::GetIO().MousePos.y - canvas_pos.y);
+					m_mouse_move = true;
+				}
 			}
 				
 			m_mouse_position.set(ImGui::GetIO().MousePos.x - canvas_pos.x, ImGui::GetIO().MousePos.y - canvas_pos.y);
@@ -65,6 +70,15 @@ void UIRenderForm::Draw()
 		if (canvas_size.x < 50.0f) canvas_size.x = 50.0f;
 		if (canvas_size.y < 50.0f) canvas_size.y = 50.0f;
 		ImGui::InvisibleButton("canvas", canvas_size);
+		if (!m_OnContextMenu.empty()&& !m_mouse_move&& !(ShiftState& ssShift))
+		{
+			if (ImGui::BeginPopupContextItem("Menu"))
+			{
+				m_OnContextMenu();
+				ImGui::EndPopup();
+			}
+		}
+		
 		draw_list->AddImage(UI->RT->pSurface, canvas_pos, ImVec2(canvas_pos.x + canvas_size.x, canvas_pos.y + canvas_size.y));
 
 	}
