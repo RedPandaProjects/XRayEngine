@@ -10,11 +10,12 @@ UILPropertiesFrom::~UILPropertiesFrom()
 
 void UILPropertiesFrom::Draw()
 {
-	if (ImGui::Begin("Properties"))
+	if (bOpen)
 	{
-		LTools->GetProperties()->Draw();
-		
+		if (ImGui::Begin("Properties", &bOpen))
+		{
+			LTools->GetProperties()->Draw();
+		}
+		ImGui::End();
 	}
-	ImGui::End();
-
 }
