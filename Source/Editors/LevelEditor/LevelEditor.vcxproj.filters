@@ -418,6 +418,9 @@
     <ClCompile Include="UI\UIDOOneColor.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="UI\UIObjectList.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Edit\SceneSummaryInfo.h">
@@ -671,6 +674,9 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="UI\UIDOOneColor.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UIObjectList.h">
       <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>

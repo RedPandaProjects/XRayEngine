@@ -15,6 +15,7 @@
 #include "builder.h"
 #include "SoundManager_LE.h"
 #include "LevelPreferences.h"
+#include "UI\UIObjectList.h"
 
 #ifdef _LEVEL_EDITOR
 //.    if (m_Cursor->GetVisible()) RedrawScene();
@@ -1317,6 +1318,7 @@ Ivector2 CLevelMain::GetRenderMousePosition() const
 void CLevelMain::RenderSpecial()
 {
     inherited::RenderSpecial();
+    UIObjectList::Update();
     if (LTools->GetToolForm())
     {
         LTools->GetToolForm()->RenderSpecial();
