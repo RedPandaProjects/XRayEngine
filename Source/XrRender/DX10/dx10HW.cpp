@@ -321,9 +321,15 @@ void CHW::CreateDevice( HWND m_hWnd, bool move_window )
 	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 
 	UINT createDeviceFlags = 0;
-#ifdef DEBUG
-	//createDeviceFlags |= D3Dxx_CREATE_DEVICE_DEBUG;
-#endif
+	static bool GDebugRender = strstr(GetCommandLine(), TEXT("-debugrender"));
+	if (!GDebugRender)
+		GDebugRender = strstr(GetCommandLine(), TEXT("-drender"));
+
+
+	if (GDebugRender)
+	{
+		createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
+	}
    HRESULT R;
 	// Create the device
 	//	DX10 don't need it?
@@ -348,6 +354,18 @@ void CHW::CreateDevice( HWND m_hWnd, bool move_window )
 		                                  &pDevice,
 										  &FeatureLevel,		
 										  &pContext);
+   if (GDebugRender)
+   {
+	   ID3D11InfoQueue* InfoQueue = nullptr;
+	   if (SUCCEEDED(pDevice->QueryInterface(&InfoQueue)))
+	   {
+		   InfoQueue->SetBreakOnSeverity(D3D11_MESSAGE_SEVERITY_CORRUPTION, TRUE);
+		   InfoQueue->SetBreakOnSeverity(D3D11_MESSAGE_SEVERITY_ERROR, TRUE);
+		   InfoQueue->SetBreakOnSeverity(D3D11_MESSAGE_SEVERITY_WARNING, FALSE);
+
+		   InfoQueue->Release();
+	   }
+   }
 #else
    static bool GDebugRender = strstr(GetCommandLine(), TEXT("-debugrender"));
    if (!GDebugRender)
