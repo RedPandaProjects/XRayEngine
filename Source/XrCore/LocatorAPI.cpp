@@ -633,21 +633,26 @@ void CLocatorAPI::setup_fs_path		(LPCSTR fs_name)
 
 
 	string_path			full_current_directory;
-	_fullpath			(full_current_directory, fs_path, sizeof(full_current_directory));
-
-	if (xr_strlen(full_current_directory))
+	if (fs_name )
 	{
-		full_current_directory[xr_strlen(full_current_directory) - 1] = 0;
-		if (strrchr(full_current_directory, '\\'))
-			*(strrchr(full_current_directory, '\\') + 1) = 0;
-		full_current_directory[xr_strlen(full_current_directory) - 1] = 0;
-		if (strrchr(full_current_directory, '\\'))
-			*(strrchr(full_current_directory, '\\') + 1) = 0;
-		full_current_directory[xr_strlen(full_current_directory) - 1] = 0;
-		if (strrchr(full_current_directory, '\\'))
-			*(strrchr(full_current_directory, '\\') + 1) = 0;
+		_fullpath(full_current_directory, fs_path, sizeof(full_current_directory));
 	}
-
+	else
+	{
+		xr_strcpy(full_current_directory, Core.ApplicationPath);
+		if (xr_strlen(full_current_directory))
+		{
+			full_current_directory[xr_strlen(full_current_directory) - 1] = 0;
+			if (strrchr(full_current_directory, '\\'))
+				*(strrchr(full_current_directory, '\\') + 1) = 0;
+			full_current_directory[xr_strlen(full_current_directory) - 1] = 0;
+			if (strrchr(full_current_directory, '\\'))
+				*(strrchr(full_current_directory, '\\') + 1) = 0;
+			full_current_directory[xr_strlen(full_current_directory) - 1] = 0;
+			if (strrchr(full_current_directory, '\\'))
+				*(strrchr(full_current_directory, '\\') + 1) = 0;
+		}
+	}
 	FS_Path				*path = xr_new<FS_Path>(full_current_directory,"","","",0);
 #ifdef DEBUG
 	Msg					("$fs_root$ = %s", full_current_directory);
@@ -661,29 +666,40 @@ void CLocatorAPI::setup_fs_path		(LPCSTR fs_name)
 	);
 }
 
-IReader *CLocatorAPI::setup_fs_ltx	(LPCSTR fs_name)
+IReader* CLocatorAPI::setup_fs_ltx(LPCSTR fs_name)
 {
-	setup_fs_path	(fs_name);
+	setup_fs_path(fs_name);
 
-//	if (m_Flags.is(flTargetFolderOnly)) {
-//		append_path	("$fs_root$", "", 0, FALSE);
-//		return		(0);
-//	}
+	//	if (m_Flags.is(flTargetFolderOnly)) {
+	//		append_path	("$fs_root$", "", 0, FALSE);
+	//		return		(0);
+	//	}
 	string_path fs_file_name;
-	xr_strcpy(fs_file_name, FSLTX);
 	if (fs_name && *fs_name)
-		xr_strcpy(fs_file_name, fs_name);
-				
-	Log				("using fs-ltx",fs_file_name);
-
-	if (xr_strlen(fs_file_name))
 	{
-		string_path temp;
-		xr_strcpy(temp,fs_file_name);
-		fs_file_name[0] = 0;
-		xr_strcat(fs_file_name, "..\\..\\..\\");
-		xr_strcat(fs_file_name, temp);
+		xr_strcpy(fs_file_name, fs_name);
 	}
+	else
+	{
+		xr_strcpy(fs_file_name, Core.ApplicationPath);
+		if (xr_strlen(fs_file_name))
+		{
+			fs_file_name[xr_strlen(fs_file_name) - 1] = 0;
+			if (strrchr(fs_file_name, '\\'))
+				*(strrchr(fs_file_name, '\\') + 1) = 0;
+			fs_file_name[xr_strlen(fs_file_name) - 1] = 0;
+			if (strrchr(fs_file_name, '\\'))
+				*(strrchr(fs_file_name, '\\') + 1) = 0;
+			fs_file_name[xr_strlen(fs_file_name) - 1] = 0;
+			if (strrchr(fs_file_name, '\\'))
+				*(strrchr(fs_file_name, '\\') + 1) = 0;
+		}
+		xr_strcat(fs_file_name, FSLTX);
+	}
+				
+	Log				("using fs-ltx:",fs_file_name);
+
+
 
 	int				file_handle;
 	u32				file_size;
@@ -729,6 +745,9 @@ void CLocatorAPI::_initialize	(u32 flags, LPCSTR target_folder, LPCSTR fs_name)
 		xr_strcpy(tmpAppPath, sizeof(tmpAppPath), Core.ApplicationPath);
 		if (xr_strlen(tmpAppPath))
 		{
+			tmpAppPath[xr_strlen(tmpAppPath) - 1] = 0;
+			if (strrchr(tmpAppPath, '\\'))
+				*(strrchr(tmpAppPath, '\\') + 1) = 0;
 			tmpAppPath[xr_strlen(tmpAppPath) - 1] = 0;
 			if (strrchr(tmpAppPath, '\\'))
 				*(strrchr(tmpAppPath, '\\') + 1) = 0;
