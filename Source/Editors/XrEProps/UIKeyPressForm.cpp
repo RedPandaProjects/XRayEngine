@@ -2,6 +2,7 @@
 UIKeyPressForm* UIKeyPressForm::Form = nullptr;
 UIKeyPressForm::UIKeyPressForm()
 {
+	m_Ok = true;
 }
 
 UIKeyPressForm::~UIKeyPressForm()
@@ -15,7 +16,7 @@ void UIKeyPressForm::Draw()
 		ImGui::EndPopup();
 		return;
 	}
-	if (!Form->bOpen)
+	if (!bOpen)
 	{
 		ImGui::CloseCurrentPopup();
 		return;
@@ -27,6 +28,11 @@ void UIKeyPressForm::Draw()
 	else
 	{
 		ImGui::Text("PRESS ANY KEY!!!");
+	}
+	if (ImGui::Button("Cancel", ImVec2(-1, 0)))
+	{
+		m_Ok = false;
+		bOpen = false;
 	}
 	ImGui::EndPopup();
 	/*else
@@ -57,14 +63,16 @@ bool UIKeyPressForm::SetResult(const xr_shortcut& result)
 	{
 		 Form->m_Resutl= result;
 		 Form->bOpen = false;
+		 return true;
 	}
 	return false;
 }
 
-bool UIKeyPressForm::GetResult( xr_shortcut& result)
+bool UIKeyPressForm::GetResult(bool& Ok, xr_shortcut& result)
 {
 	if (Form && Form->IsClosed())
 	{
+		Ok = Form->m_Ok;
 		result = Form->m_Resutl;
 		xr_delete(Form);
 		return true;

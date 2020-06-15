@@ -36,6 +36,58 @@ xr_string	ShortcutValue::GetDrawText		(TOnDrawTextEvent )
 	{
 		switch (value->key)
 		{
+		case VK_ADD:
+			txt.append("Numpad+");
+			break;
+		case VK_SUBTRACT:
+			txt.append("Numpad-");
+			break;
+		case VK_MULTIPLY:
+			txt.append("Numpad*");
+			break;
+		case VK_DIVIDE:
+			txt.append("Numpad/");
+			break;
+		case VK_OEM_PLUS:
+			txt.append("+");
+			break;
+		case VK_OEM_MINUS:
+			txt.append("-");
+			break;
+		case VK_OEM_1:
+			txt.append(";:");
+			break;
+		case VK_OEM_COMMA:
+			txt.append(",");
+			break;
+		case VK_OEM_PERIOD:
+			txt.append(".");
+			break;
+		case VK_OEM_2:
+			txt.append("/?");
+			break;
+		case VK_OEM_4:
+			txt.append("{[");
+			break;
+		case VK_OEM_5:
+			txt.append("\\|");
+			break;
+		case VK_OEM_6:
+			txt.append("]}");
+			break;
+		case VK_OEM_7:
+			txt.append("\"\'");
+			break;
+		case VK_SPACE:
+			txt.append("Space");
+			break;
+		case VK_CANCEL:
+			txt.append("Scroll Lock");
+			break;
+		case VK_RETURN:
+			txt.append("Enter");
+			break;
+			////////////////////////////
 		case VK_LEFT:
 			txt.append("Left");
 			break;
@@ -117,18 +169,7 @@ xr_string	ShortcutValue::GetDrawText		(TOnDrawTextEvent )
 		case VK_DELETE:
 			txt.append("Delete");
 			break;
-		case VK_ADD:
-			txt.append("+");
-			break;
-		case VK_SUBTRACT:
-			txt.append("-");
-			break;
-		case VK_MULTIPLY:
-			txt.append("*");
-			break;
-		case VK_DIVIDE:
-			txt.append("/");
-			break;
+	
 		default:
 			VERIFY(0);
 			break;

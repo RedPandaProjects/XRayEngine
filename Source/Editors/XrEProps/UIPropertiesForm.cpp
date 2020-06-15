@@ -73,13 +73,17 @@ void UIPropertiesForm::Draw()
 		if (m_EditShortcutValue)
 		{
 			xr_shortcut result;
-			if (UIKeyPressForm::GetResult(result))
+			bool ok;
+			if (UIKeyPressForm::GetResult(ok,result))
 			{
-				if (m_EditShortcutValue->AfterEdit<ShortcutValue, xr_shortcut>(result))
-					if (m_EditShortcutValue->ApplyValue<ShortcutValue, xr_shortcut>(result))
-					{
-						Modified();
-					}
+				if (ok)
+				{
+					if (m_EditShortcutValue->AfterEdit<ShortcutValue, xr_shortcut>(result))
+						if (m_EditShortcutValue->ApplyValue<ShortcutValue, xr_shortcut>(result))
+						{
+							Modified();
+						}
+				}
 				m_EditShortcutValue = nullptr;
 			}
 		}

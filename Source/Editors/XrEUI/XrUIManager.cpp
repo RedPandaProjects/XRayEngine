@@ -102,6 +102,19 @@ void XrUIManager::ApplyShortCut(DWORD Key)
 	case VK_SUBTRACT:
 	case VK_MULTIPLY:
 	case VK_DIVIDE:
+	case VK_OEM_PLUS:
+	case VK_OEM_MINUS:
+	case VK_OEM_1:
+	case VK_OEM_COMMA:
+	case VK_OEM_PERIOD:
+	case VK_OEM_2:
+	case VK_OEM_4:
+	case VK_OEM_5:
+	case VK_OEM_6:
+	case VK_OEM_7:
+	case VK_SPACE:
+	case VK_CANCEL:
+	case VK_RETURN:
         IsFail = false;
         break;
 	default:
