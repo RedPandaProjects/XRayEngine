@@ -314,21 +314,19 @@ void CCustomPreferences::Save(CInifile* I)
 
 void CCustomPreferences::Draw()
 {
-    if (!ImGui::Begin("Editor Preferences",&bOpen,ImGuiWindowFlags_NoResize| ImGuiWindowFlags_AlwaysAutoResize))
-    {
-        ImGui::End();
-       
-        return;
-    }
-    if (!bOpen)
+    if (!bOpen)return;
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowMinSize, ImVec2(300, 400));
+    if (!ImGui::Begin("Editor Preferences",&bOpen))
     {
         OnClose();
         Save();
+        ImGui::PopStyleVar();
+        ImGui::End();
+        return;
     }
+    ImGui::PopStyleVar();
     {
-        ImGui::BeginChild("Edit", ImVec2(450, 250));
         m_ItemProps->Draw();
-        ImGui::EndChild();
     }
     ImGui::End();
 }
