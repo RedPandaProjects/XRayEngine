@@ -14,7 +14,7 @@ UILeftBarForm::~UILeftBarForm()
 void UILeftBarForm::Draw()
 {
 	ImGui::Begin("LeftBar",0);
-	
+	ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
 	if (ImGui::TreeNode("Tools"))
 	{
 		ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
@@ -67,6 +67,7 @@ void UILeftBarForm::Draw()
 
 		ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 	}
+	ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
 	if (ImGui::TreeNode("Snap List"))
 	{
 		ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());

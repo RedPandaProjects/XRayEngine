@@ -13,6 +13,7 @@ UIWayTool::~UIWayTool()
 
 void UIWayTool::Draw()
 {
+    ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
     if (ImGui::TreeNode("Commands"))
     {
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
@@ -33,6 +34,7 @@ void UIWayTool::Draw()
         ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::TreePop();
     }
+    ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
     if (ImGui::TreeNode("Link Command"))
     {
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());

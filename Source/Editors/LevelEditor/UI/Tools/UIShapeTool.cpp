@@ -12,6 +12,7 @@ UIShapeTool::~UIShapeTool()
 
 void UIShapeTool::Draw()
 {
+    ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
     if (ImGui::TreeNode("Commands"))
     {
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
@@ -29,6 +30,7 @@ void UIShapeTool::Draw()
         ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::TreePop();
     }
+    ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
     if (ImGui::TreeNode("Edit"))
     {
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());

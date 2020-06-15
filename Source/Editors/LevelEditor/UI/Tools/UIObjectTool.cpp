@@ -25,6 +25,7 @@ void UIObjectTool::Draw()
 {
     static bool bbool = false;
     float a = 1;
+    ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
     if (ImGui::TreeNode("Commands"))
     {
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
@@ -56,6 +57,7 @@ void UIObjectTool::Draw()
         ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::TreePop();
     }
+    ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
     if (ImGui::TreeNode("Reference Select"))
     {
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
@@ -67,6 +69,7 @@ void UIObjectTool::Draw()
         ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::TreePop();
     }
+    ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
     if (ImGui::TreeNode("Current Object"))
     {
 
@@ -86,6 +89,7 @@ void UIObjectTool::Draw()
         ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::TreePop();
     }
+    ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
     if (ImGui::TreeNode("Object List"))
     {
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());

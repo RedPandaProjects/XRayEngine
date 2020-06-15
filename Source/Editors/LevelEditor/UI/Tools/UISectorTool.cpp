@@ -16,6 +16,7 @@ UISectorTool::~UISectorTool()
 }
 void UISectorTool::Draw()
 {
+    ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
     if (ImGui::TreeNode("Command"))
     {
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
@@ -59,6 +60,7 @@ void UISectorTool::Draw()
         ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::TreePop();
     }
+    if(m_Edit)ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
     if (m_Edit && ImGui::TreeNode("Edit"))
     {
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());

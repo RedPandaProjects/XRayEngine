@@ -13,6 +13,7 @@ UIPortalTool::~UIPortalTool()
 
 void UIPortalTool::Draw()
 {
+    ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
     if (ImGui::TreeNode("Command"))
     {
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());

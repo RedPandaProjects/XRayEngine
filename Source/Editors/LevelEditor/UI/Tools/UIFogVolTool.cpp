@@ -11,6 +11,7 @@ UIFogVolTool::~UIFogVolTool()
 
 void UIFogVolTool::Draw()
 {
+	ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
 	if (ImGui::TreeNode("Commands"))
 	{
 		ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());

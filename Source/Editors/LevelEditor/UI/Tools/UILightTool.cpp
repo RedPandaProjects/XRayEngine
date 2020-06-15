@@ -12,6 +12,7 @@ UILightTool::~UILightTool()
 
 void UILightTool::Draw()
 {
+	ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
 	if (ImGui::TreeNode("Affect in D3D"))
 	{
 		ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());

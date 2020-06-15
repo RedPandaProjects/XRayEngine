@@ -18,6 +18,7 @@ UISpawnTool::~UISpawnTool()
 
 void UISpawnTool::Draw()
 {
+    ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
     if (ImGui::TreeNode("Reference Select"))
     {
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
@@ -29,6 +30,7 @@ void UISpawnTool::Draw()
         ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::TreePop();
     } 
+    ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
     if (ImGui::TreeNode("Commands"))
     {
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
@@ -57,6 +59,7 @@ void UISpawnTool::Draw()
         ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::TreePop();
     }
+    ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
     if (ImGui::TreeNode("Object List"))
     {
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());

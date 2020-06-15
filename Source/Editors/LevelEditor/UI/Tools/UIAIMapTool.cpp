@@ -17,6 +17,7 @@ UIAIMapTool::~UIAIMapTool()
 
 void UIAIMapTool::Draw()
 {
+	ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
 	if (ImGui::TreeNode("Commands"))
 	{
 		ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
@@ -47,6 +48,7 @@ void UIAIMapTool::Draw()
 		ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 		ImGui::TreePop();
 	}
+	ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
 	if (ImGui::TreeNode("AI Map Nodes"))
 	{
 		ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
@@ -58,6 +60,7 @@ void UIAIMapTool::Draw()
 		ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 		ImGui::TreePop();
 	}
+	ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
 	if (ImGui::TreeNode("Ignore materials"))
 	{
 		ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
@@ -81,6 +84,7 @@ void UIAIMapTool::Draw()
 		ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 		ImGui::TreePop();
 	}
+	ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
 	if (ImGui::TreeNode("Link Commands"))
 	{
 		ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());

@@ -28,6 +28,7 @@ UIParticlesTool::~UIParticlesTool()
 
 void UIParticlesTool::Draw()
 {
+    ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
     if (ImGui::TreeNode("Commands"))
     {
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
@@ -57,6 +58,7 @@ void UIParticlesTool::Draw()
         ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::TreePop();
     }
+    ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
     if (ImGui::TreeNode("Particles"))
     {
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());

@@ -42,6 +42,7 @@ void UIGroupTool::Draw()
 		ImGui::OpenPopupOnItemClick("Commands", 0);
 	}
 	ImGui::Separator();
+	ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
 	if (ImGui::TreeNode("Current Object"))
 	{
 		ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
@@ -68,6 +69,7 @@ void UIGroupTool::Draw()
 		ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 		ImGui::TreePop();
 	}
+	ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
 	if (ImGui::TreeNode("Reference Select"))
 	{
 		ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
@@ -79,6 +81,7 @@ void UIGroupTool::Draw()
 		ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 		ImGui::TreePop();
 	}
+	ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
 	if (ImGui::TreeNode("Pivot Alignment"))
 	{
 		ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
