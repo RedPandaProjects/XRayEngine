@@ -237,7 +237,7 @@ protected:
     void RealResetUI();
 public:
    IC  void ResetUI(bool bForced=false)  { if (!bForced)m_Flags.set(flResetUI, TRUE); if (bForced) RealResetUI(); }
-   virtual Ivector2 GetRenderMousePosition()const=0;
+   virtual Ivector2 GetRenderMousePosition()const { return Ivector2().set(0, 0); }
 };
 //---------------------------------------------------------------------------
 extern ECORE_API TUI* UI;  
