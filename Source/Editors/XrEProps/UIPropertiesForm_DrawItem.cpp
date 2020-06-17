@@ -432,8 +432,27 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 		case PROP_CTEXT:
 		{
 			CTextValue* V = dynamic_cast<CTextValue*>(node->GetFrontValue()); R_ASSERT(V);
-			node->GetDrawText();
-			ImGui::Text("%s...",node->GetDrawText().c_str());
+			{
+				char text[20];
+				xr_string str = node->GetDrawText();
+				int i = 0;
+				for (int a = 0; i < std::min(size_t(16), str.size()); i++, a++)
+				{
+					if (str[a] == '\n')
+						a++;
+					if (str[a] == '\t')
+						a++;
+					if (str[a] == '\r')
+						a++;
+					text[i] = str[a];
+				}
+				for (; i < std::min(size_t(16), str.size()) + 3; i++)
+				{
+					text[i] = '.';
+				}
+				text[i] = 0;
+				ImGui::Text(text);
+			}
 			if (ImGui::OpenPopupOnItemClick("EditText", 0))
 			{
 				if (m_EditTextValueData)xr_delete(m_EditTextValueData);
@@ -447,8 +466,27 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 		case PROP_RTEXT:
 		{
 			RTextValue* V = dynamic_cast<RTextValue*>(node->GetFrontValue()); R_ASSERT(V);
-			node->GetDrawText();
-			ImGui::Text("%s...", node->GetDrawText().c_str());
+			{
+				char text[20];
+				xr_string str = node->GetDrawText();
+				int i = 0;
+				for (int a = 0; i < std::min(size_t(16), str.size()); i++, a++)
+				{
+					if (str[a] == '\n')
+						a++;
+					if (str[a] == '\t')
+						a++;
+					if (str[a] == '\r')
+						a++;
+					text[i] = str[a];
+				}
+				for (; i < std::min(size_t(16), str.size()) + 3; i++)
+				{
+					text[i] = '.';
+				}
+				text[i] = 0;
+				ImGui::Text(text);
+			}
 			if (ImGui::OpenPopupOnItemClick("EditText", 0))
 			{
 				if (m_EditTextValueData)xr_delete(m_EditTextValueData);
@@ -463,7 +501,27 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 		case PROP_STEXT:
 		{
 			STextValue* V = dynamic_cast<STextValue*>(node->GetFrontValue()); R_ASSERT(V);
-			ImGui::Text("%s...", node->GetDrawText().c_str());
+			{
+				char text[20];
+				xr_string str = node->GetDrawText();
+				int i = 0;
+				for (int a = 0; i < std::min(size_t(16), str.size()); i++, a++)
+				{
+					if (str[a] == '\n')
+						a++;
+					if (str[a] == '\t')
+						a++;
+					if (str[a] == '\r')
+						a++;
+					text[i] = str[a];
+				}
+				for (; i < std::min(size_t(16), str.size()) + 3; i++)
+				{
+					text[i] = '.';
+				}
+				text[i] = 0;
+				ImGui::Text(text);
+			}
 			if (ImGui::OpenPopupOnItemClick("EditText", 0))
 			{
 				if (m_EditTextValueData)xr_delete(m_EditTextValueData);

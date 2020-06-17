@@ -19,7 +19,7 @@ void UITextForm::Draw()
 
     if (ImGui::Button("Load"))CLBLoad(); ImGui::SameLine(0);
     if (ImGui::Button("Save"))CLBSave(); ImGui::SameLine(0);
-    if (ImGui::Button("Clear"))CLBClear(); ImGui::SameLine(0);
+    if (ImGui::Button("Clear"))CLBClear(); 
 
     ImGui::EndGroup();
     ImGui::InputTextMultiline("", m_EditText, sizeof(m_EditText), ImVec2(500, 200));
