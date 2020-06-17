@@ -39,5 +39,9 @@ private:
 	int m_EditTextValueDataSize;
 	void DrawEditText();
 	int  DrawEditText_Callback(ImGuiInputTextCallbackData* data);
+private:
+	GameTypeChooser m_EditGameTypeChooser;
+	PropItem* m_EditGameTypeValue;
+	void DrawEditGameType();
 };
 

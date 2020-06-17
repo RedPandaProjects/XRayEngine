@@ -421,12 +421,11 @@ void UIPropertiesForm::DrawAfterFloderNode(bool is_open, Node* node )
 
 void UIPropertiesForm::DrawEditText()
 {
-	static char test[200] = "";
 
 	if (ImGui::BeginPopupContextItem("EditText",0))
 	{
 		R_ASSERT(m_EditTextValueData);
-		ImGui::PopStyleVar(2);
+		ImGui::PopStyleVar(3);
 		ImGui::InputText("##value", m_EditTextValueData, m_EditTextValueDataSize, ImGuiInputTextFlags_CallbackResize, [](ImGuiInputTextCallbackData* data)->int {return reinterpret_cast<UIPropertiesForm*>(data->UserData)->DrawEditText_Callback(data); }, reinterpret_cast<void*>(this));
 		if (ImGui::Button("Ok")) 
 		{
@@ -491,6 +490,7 @@ void UIPropertiesForm::DrawEditText()
 		ImGui::EndPopup();
 		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
 		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 1));
+		ImGui::PushStyleVar(ImGuiStyleVar_IndentSpacing, 5);
 	}
 }
 
@@ -500,5 +500,77 @@ int UIPropertiesForm::DrawEditText_Callback(ImGuiInputTextCallbackData* data)
 	m_EditTextValueDataSize = data->BufSize;
 	data->Buf = m_EditTextValueData;
 	return 0;
+}
+
+void UIPropertiesForm::DrawEditGameType()
+{
+	if (ImGui::BeginPopupContextItem("EditGameType", 0))
+	{
+		R_ASSERT(m_EditGameTypeValue);
+
+		bool test = false;
+		ImGui::PopStyleVar(3);
+		{
+			ImGui::BeginGroup();
+			{
+				bool cheked = m_EditGameTypeChooser.MatchType(eGameIDSingle);
+				if (ImGui::Checkbox("Single", &cheked))
+				{
+					m_EditGameTypeChooser.m_GameType.set(eGameIDSingle, cheked);
+				}
+			}
+			{
+				bool cheked = m_EditGameTypeChooser.MatchType(eGameIDDeathmatch);
+				if (ImGui::Checkbox("DM", &cheked))
+				{
+					m_EditGameTypeChooser.m_GameType.set(eGameIDDeathmatch, cheked);
+				}
+			}
+			{
+				bool cheked = m_EditGameTypeChooser.MatchType(eGameIDTeamDeathmatch);
+				if (ImGui::Checkbox("TDM", &cheked))
+				{
+					m_EditGameTypeChooser.m_GameType.set(eGameIDTeamDeathmatch, cheked);
+				}
+			}
+			{
+				bool cheked = m_EditGameTypeChooser.MatchType(eGameIDArtefactHunt);
+				if (ImGui::Checkbox("ArtefactHunt", &cheked))
+				{
+					m_EditGameTypeChooser.m_GameType.set(eGameIDArtefactHunt, cheked);
+				}
+			}
+			{
+				bool cheked = m_EditGameTypeChooser.MatchType(eGameIDCaptureTheArtefact);
+				if (ImGui::Checkbox("CTA", &cheked))
+				{
+					m_EditGameTypeChooser.m_GameType.set(eGameIDCaptureTheArtefact, cheked);
+				}
+			}
+			ImGui::EndGroup(); ImGui::SameLine();
+		}
+		{
+			ImGui::BeginGroup();
+			if (ImGui::Button("Ok", ImVec2(ImGui::GetFrameHeight() * 6, 0)))
+			{
+				if (m_EditGameTypeValue->AfterEdit<GameTypeValue, GameTypeChooser>(m_EditGameTypeChooser))
+					if (m_EditGameTypeValue->ApplyValue<GameTypeValue, GameTypeChooser>(m_EditGameTypeChooser))
+					{
+						Modified();
+					}
+				ImGui::CloseCurrentPopup();
+			}
+			if (ImGui::Button("Cancel", ImVec2(ImGui::GetFrameHeight() * 6, 0)))
+			{
+				m_EditGameTypeValue = nullptr;
+				ImGui::CloseCurrentPopup();
+			}
+			ImGui::EndGroup();
+		}
+		ImGui::EndPopup();
+		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 1));
+		ImGui::PushStyleVar(ImGuiStyleVar_IndentSpacing, 5);
+	}
 }
 

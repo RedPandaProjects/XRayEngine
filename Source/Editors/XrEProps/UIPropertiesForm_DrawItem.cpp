@@ -433,7 +433,7 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 		{
 			CTextValue* V = dynamic_cast<CTextValue*>(node->GetFrontValue()); R_ASSERT(V);
 			node->GetDrawText();
-			ImGui::Text(node->GetDrawText().c_str());
+			ImGui::Text("%s...",node->GetDrawText().c_str());
 			if (ImGui::OpenPopupOnItemClick("EditText", 0))
 			{
 				if (m_EditTextValueData)xr_delete(m_EditTextValueData);
@@ -448,7 +448,7 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 		{
 			RTextValue* V = dynamic_cast<RTextValue*>(node->GetFrontValue()); R_ASSERT(V);
 			node->GetDrawText();
-			ImGui::Text(node->GetDrawText().c_str());
+			ImGui::Text("%s...", node->GetDrawText().c_str());
 			if (ImGui::OpenPopupOnItemClick("EditText", 0))
 			{
 				if (m_EditTextValueData)xr_delete(m_EditTextValueData);
@@ -463,8 +463,7 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 		case PROP_STEXT:
 		{
 			STextValue* V = dynamic_cast<STextValue*>(node->GetFrontValue()); R_ASSERT(V);
-			node->GetDrawText();
-			ImGui::Text(node->GetDrawText().c_str());
+			ImGui::Text("%s...", node->GetDrawText().c_str());
 			if (ImGui::OpenPopupOnItemClick("EditText", 0))
 			{
 				if (m_EditTextValueData)xr_delete(m_EditTextValueData);
@@ -476,11 +475,22 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 		}
 			break;
 			/*case PROP_TIME:
-			break;
+			break;*/
 		
 		
 		case PROP_GAMETYPE:
-			break;*/
+		{
+			GameTypeValue* V = dynamic_cast<GameTypeValue*>(node->GetFrontValue()); R_ASSERT(V);
+			ImGui::Text(node->GetDrawText().c_str());
+			m_EditGameTypeChooser = V->GetValue();
+			node->BeforeEdit<GameTypeValue, GameTypeChooser>(m_EditGameTypeChooser);
+			if (ImGui::OpenPopupOnItemClick("EditGameType", 0))
+			{
+				m_EditGameTypeValue = node;
+			}
+			DrawEditGameType();
+		}
+			break;
 	default:
 		//not_implemented();
 		ImGui::Text("");
