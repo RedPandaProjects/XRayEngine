@@ -57,10 +57,11 @@ void XRayKinematics::LL_Validate()
 		}
 	}
 }
-
+#ifdef DEBUG
 void XRayKinematics::DebugRender(Fmatrix& XFORM)
 {
 }
+#endif
  void	XRayKinematics::Release()
 {
 	 for (u32 i = 0; i < bones->size(); i++)

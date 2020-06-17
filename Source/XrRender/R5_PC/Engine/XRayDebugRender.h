@@ -1,4 +1,5 @@
 #pragma once
+#ifdef DEBUG
 class XRayDebugRender :public IDebugRender
 {
 public:
@@ -22,3 +23,4 @@ public:
 	virtual void	DestroyDebugShader(dbgShaderHandle shdHandle);
 	virtual void	dbg_DrawTRI(Fmatrix& T, Fvector& p1, Fvector& p2, Fvector& p3, u32 C);
 };
+#endif

@@ -5,9 +5,9 @@
 const char* GGraphicsAPI[] = { TEXT("BearRenderDX11") };
 XRayRenderFactory BRenderFactory;
 XRayDUInterface  BDUInterface;
-
+#ifdef DEBUG
 XRayDebugRender BDebugRender;
-
+#endif
 BOOL APIENTRY DllMain( HANDLE hModule, 
                        DWORD  ul_reason_for_call, 
                        LPVOID lpReserved
@@ -27,7 +27,9 @@ BOOL APIENTRY DllMain( HANDLE hModule,
 		::DU						= &BDUInterface;
 		//::vid_mode_token			= inited by HW;
 		UIRender					= &GUIRender;
+#ifdef DEBUG
 		DRender						= &BDebugRender;
+#endif
 		XRayRenderConsole::Initialize();
 //	DEBUG
 		/*FS.SubPath(TEXT("%cur_shaders%"));

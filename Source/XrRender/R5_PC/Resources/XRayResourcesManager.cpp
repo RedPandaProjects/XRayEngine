@@ -362,7 +362,7 @@ BearFactoryPointer<BearRHI::BearRHIShader> XRayResourcesManager::GetPixelShader(
 		}
 		BearMap<BearStringConteniar, BearStringConteniar> Defines;
 		{
-		
+#ifdef DEBUG
 			BearString out;
 			if (XRayRenderConsole::ps_r_mesh_shader_debug&&HW->MeshShaderSupport())
 			{
@@ -382,6 +382,7 @@ BearFactoryPointer<BearRHI::BearRHIShader> XRayResourcesManager::GetPixelShader(
 				Msg(*out);
 				Msg(TEXT("------------------------------------------------------------------------"));
 			}
+#endif
 		}
 #endif
 		m_PShaders.insert(std::pair< shared_str, BearFactoryPointer<BearRHI::BearRHIShader>>(name, shader));
@@ -439,7 +440,7 @@ BearFactoryPointer<BearRHI::BearRHIShader> XRayResourcesManager::GetVertexShader
 		}
 		BearMap<BearStringConteniar, BearStringConteniar> Defines;
 		{
-
+#ifdef DEBUG
 			BearString out;
 			if (XRayRenderConsole::ps_r_mesh_shader_debug && HW->MeshShaderSupport())
 			{
@@ -459,6 +460,7 @@ BearFactoryPointer<BearRHI::BearRHIShader> XRayResourcesManager::GetVertexShader
 				Msg(*out);
 				Msg(TEXT("------------------------------------------------------------------------"));
 			}
+#endif
 		}
 #endif
 		m_VShaders.insert(std::pair< shared_str, BearFactoryPointer<BearRHI::BearRHIShader>>(name, shader));
@@ -520,7 +522,7 @@ BearFactoryPointer<BearRHI::BearRHIShader> XRayResourcesManager::GetMeshShader(s
 		}
 		Defines["GROUP_SIZE"] = *BearString().append_printf("%d", XRayRenderConsole::ps_r_mesh_shader_thread);
 		{
-
+#ifdef DEBUG
 
 			BearString out;
 			XRayShaderIncluder Includer(::Render->getShaderPath(), local_path);
@@ -537,6 +539,7 @@ BearFactoryPointer<BearRHI::BearRHIShader> XRayResourcesManager::GetMeshShader(s
 				Msg(*out);
 				Msg(TEXT("------------------------------------------------------------------------"));
 			}
+#endif
 		}
 #endif
 		m_MShaders.insert(std::pair< shared_str, BearFactoryPointer<BearRHI::BearRHIShader>>(name, shader));
