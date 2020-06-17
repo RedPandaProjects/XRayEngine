@@ -28,6 +28,7 @@ private:	// User declarations
 public:
     u32             start_w;
     u32             start_h;
+    u32             start_maximized;
 	// view
     float 			view_np;
     float 			view_fp;

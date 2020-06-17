@@ -41,7 +41,8 @@ class ECORE_API TUI: public IInputReceiver,public XrUIManager
     bool m_AppClosed;
     inline void	RealQuit() { m_AppClosed = true; }
 protected:
-    Ivector2 m_Size;
+    Ivector2    m_Size;
+    bool        m_Size_Maximize;
 protected:
     friend class CCustomPreferences;
     friend class CEditorRenderDevice;
@@ -138,7 +139,7 @@ public:
     bool 			IsModified		();
 
     bool  Idle			();
-    void 			Resize(int x, int y, bool bForced = false) { m_Size.set(x, y);   m_Flags.set(flResize | flRedraw, TRUE); if (bForced) RealResize(); }
+    void 			Resize(int x, int y, bool maximize = false, bool bForced = false) { m_Size.set(x, y); m_Size_Maximize = maximize;   m_Flags.set(flResize | flRedraw, TRUE); if (bForced) RealResize(); }
     void 			Resize(bool bForced = false) { m_Flags.set(flResize | flRedraw, TRUE); if (bForced) RealResize(); }
 
     // add, remove, changing objects/scene

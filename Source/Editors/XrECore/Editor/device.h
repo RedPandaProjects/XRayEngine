@@ -108,7 +108,7 @@ public:
     void					time_factor		(float);
 	bool 					Create			();
 	void 					Destroy			();
-    void 					Resize			(int w, int h);
+    void 					Resize			(int w, int h,bool maximized);
 	void 					ReloadTextures	();
 	void 					UnloadTextures	();
 

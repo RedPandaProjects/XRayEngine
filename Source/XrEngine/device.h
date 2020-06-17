@@ -44,6 +44,7 @@ class ENGINE_API CRenderDeviceData
 
 public:
 
+	bool									dwMaximized;
 	u32										dwWidth;
 	u32										dwHeight;
 	u32										dwPrecacheFrame;

@@ -30,6 +30,7 @@ CEditorRenderDevice::CEditorRenderDevice()
 	rsDIB_Size		= 2048;
 // default initialization
     m_ScreenQuality = 1.f;
+	dwMaximized = 0;
     dwWidth 		= dwHeight 	= 256;
     m_RenderWidth 	= m_RenderHeight 		= 256;
 	mProject.identity();
@@ -93,9 +94,11 @@ void CEditorRenderDevice::Initialize()
 
     ::Render->Initialize();
 
-	Resize(EPrefs->start_w, EPrefs->start_h);
+	Resize(EPrefs->start_w, EPrefs->start_h, EPrefs->start_maximized);
 	HW.updateWindowProps(m_hWnd);
-	::ShowWindow(m_hWnd, SW_SHOWDEFAULT);
+
+
+	::ShowWindow(m_hWnd, EPrefs->start_maximized? SW_SHOWMAXIMIZED: SW_SHOWDEFAULT);
 }
 
 void CEditorRenderDevice::ShutDown()
@@ -265,14 +268,14 @@ void CEditorRenderDevice::_Destroy(BOOL	bKeepTextures)
 }
 
 //---------------------------------------------------------------------------
-void  CEditorRenderDevice::Resize(int w, int h)
+void  CEditorRenderDevice::Resize(int w, int h, bool maximized)
 {
-	if (dwWidth == w && dwHeight == h)return;
+	if (dwWidth == w && dwHeight == h&& dwMaximized == maximized)return;
     m_RenderArea	= w*h;
 
 	dwWidth = w;
 	dwHeight = h;
-
+	dwMaximized = maximized;
 
     Reset			();
     UI->RedrawScene	();
@@ -491,7 +494,7 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 		if (UI && HW.pDevice)
 		{
-			UI->Resize(LOWORD(lParam), HIWORD(lParam));
+			UI->Resize(LOWORD(lParam), HIWORD(lParam), wParam == SIZE_MAXIMIZED);
 		}
 		/*if (g_pd3dDevice != NULL && wParam != SIZE_MINIMIZED)
 		{
@@ -500,9 +503,13 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			ResetDevice();
 		}*/
 		return 0;
+	
 	case WM_SYSCOMMAND:
+
 		if ((wParam & 0xfff0) == SC_KEYMENU) // Disable ALT application menu
+		{
 			return 0;
+		}
 		break;
 	case WM_DESTROY:
 		::PostQuitMessage(0);

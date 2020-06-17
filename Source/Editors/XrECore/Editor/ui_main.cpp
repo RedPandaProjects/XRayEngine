@@ -466,7 +466,7 @@ void TUI::RealResize()
 {
     m_Flags.set			(flResize,FALSE);
     if(m_Size.x&& m_Size.y)
-    EDevice.Resize(m_Size.x, m_Size.y);
+    EDevice.Resize(m_Size.x, m_Size.y,m_Size_Maximize);
     ExecCommand			(COMMAND_UPDATE_PROPERTIES);
 }
 void TUI::RealUpdateScene()

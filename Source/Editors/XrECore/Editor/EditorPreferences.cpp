@@ -242,6 +242,7 @@ void CCustomPreferences::Load(CInifile* I)
     object_flags.flags	= R_U32_SAFE	("editor_prefs","object_flags"		,object_flags.flags );
     start_w = R_U32_SAFE("render", "w", 1280);
     start_h = R_U32_SAFE("render", "h",800);
+    start_maximized = R_BOOL_SAFE("render", "maximized", false);
 	// read recent list    
     for (u32 i=0; i<scene_recent_count; i++){
     	shared_str fn  	= R_STRING_SAFE	("editor_prefs",xr_string().sprintf("recent_files_%d",i).c_str(),shared_str("") );
@@ -305,6 +306,7 @@ void CCustomPreferences::Save(CInifile* I)
         I->w_string("editor_prefs", L.c_str(), V.c_str());
     }
     I->w_string("editor_prefs", "weather", sWeather.c_str());
+    I->w_bool("render", "maximized", EDevice.dwMaximized);
     I->w_u32("render", "w", EDevice.dwWidth);
     I->w_u32("render", "h", EDevice.dwHeight);
     // load shortcuts
