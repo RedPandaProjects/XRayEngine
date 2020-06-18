@@ -5,7 +5,15 @@ _appdata_/
 Intermediate/
 /Lib/
 import/
-rawdata/
+#rawdata/
+rawdata/backup/
+rawdata/groups/
+rawdata/levels/
+rawdata/objects/
+rawdata/particles/
+rawdata/sounds/
+rawdata/textures/
+rawdata/*.dti
 logs/
 temp/
 #gamedata
@@ -23,3 +31,4 @@ gamedata/shaders/shared/
 gamedata/sounds/
 gamedata/spawns/
 gamedata/textures/
+/*.ini
