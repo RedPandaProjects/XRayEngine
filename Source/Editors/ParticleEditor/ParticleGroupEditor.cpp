@@ -102,7 +102,7 @@ void  PS::CPGDef::OnEffectEditClick(ButtonValue* B, bool& bDataModified, bool& b
         bSafe			= true;
     }break;
     case 2:        
-        if (ELog.DlgMsg(mtConfirmation, TMsgDlgButtons() << mbYes << mbNo,"Remove effect?") == mrYes){
+        if (ELog.DlgMsg(mtConfirmation, mbYes| mbNo,"Remove effect?") == mrYes){
         	SEffect* eff	= *(m_Effects.begin()+B->tag);
         	xr_delete		(eff);
             m_Effects.erase	(m_Effects.begin()+B->tag);
