@@ -26,8 +26,10 @@ public:
 
     bool			m_bDefLoad;
     void 			ShaderChange	(PropValue* value);
+private:
+    mutable Fvector Ftemp;
 protected:
-    virtual const Fvector& GetScale() const { Fvector F; F.set(m_fRadius, m_fRadius, m_fRadius); return F; }
+    virtual const Fvector& GetScale() const { Ftemp.set(m_fRadius, m_fRadius, m_fRadius); return Ftemp; }
 	virtual void 	SetScale		(const Fvector& sc){float v=m_fRadius; if (!fsimilar(FScale.x,sc.x)) v=sc.x; if (!fsimilar(FScale.y,sc.y)) v=sc.y; if (!fsimilar(FScale.z,sc.z)) v=sc.z; FScale.set(v,v,v); m_fRadius=v; UpdateTransform();}
 public:
 	                CGlow       (LPVOID data, LPCSTR name);
