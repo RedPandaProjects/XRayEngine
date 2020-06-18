@@ -9,7 +9,7 @@
 #include "pch.hpp"
 #include "property_color.hpp"
 
-using editor::color;
+using XrWeatherEditor::color;
 
 property_color::property_color		(
 		color_getter_type const &getter,

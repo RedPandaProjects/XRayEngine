@@ -16,7 +16,7 @@
 #include "property_collection_forward.hpp"
 #include "environment.h"
 
-namespace editor {
+namespace XrWeatherEditor {
 namespace environment {
 
 	namespace effects {
@@ -35,7 +35,7 @@ class sound_id;
 
 class ambient :
 	public CEnvAmbient,
-	public editor::property_holder_holder,
+	public XrWeatherEditor::property_holder_holder,
 	private boost::noncopyable
 {
 private:
@@ -51,7 +51,7 @@ public:
 								const shared_str& section
 							);
 			void			save				(CInifile& config);
-			void			fill				(editor::property_holder_collection* collection);
+			void			fill				(XrWeatherEditor::property_holder_collection* collection);
 	inline	shared_str const& id				() const { return m_load_section; }
 	virtual	SEffect*		create_effect		(CInifile& config, LPCSTR id);
 	virtual	SSndChannel*	create_sound_channel(CInifile& config, LPCSTR id);
@@ -81,7 +81,7 @@ public:
 			>							sound_collection_type;
 
 private:
-	typedef editor::property_holder		property_holder_type;
+	typedef XrWeatherEditor::property_holder		property_holder_type;
 
 public:
 	virtual	property_holder_type* object();
@@ -99,7 +99,7 @@ private:
 }; // class ambient
 } // namespace ambients
 } // namespace environment
-} // namespace editor
+} // namespace XrWeatherEditor
 
 #endif // #ifdef INGAME_EDITOR
 

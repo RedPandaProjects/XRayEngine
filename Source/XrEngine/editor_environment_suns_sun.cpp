@@ -16,10 +16,10 @@
 #include "editor_environment_detail.hpp"
 #include "editor_environment_suns_manager.hpp"
 
-using editor::environment::suns::sun;
-using editor::environment::suns::flare;
-using editor::environment::suns::manager;
-using editor::property_holder;
+using XrWeatherEditor::environment::suns::sun;
+using XrWeatherEditor::environment::suns::flare;
+using XrWeatherEditor::environment::suns::manager;
+using XrWeatherEditor::property_holder;
 
 sun::sun					(manager const& manager, shared_str const &id) :
 	m_manager				(manager),
@@ -73,18 +73,18 @@ void sun::id_setter			(LPCSTR value_)
 	m_id					= m_manager.unique_id(value);
 }
 
-void sun::fill				(editor::property_holder_collection* collection)
+void sun::fill				(XrWeatherEditor::property_holder_collection* collection)
 {
 	VERIFY					(!m_property_holder);
 	m_property_holder		= ::ide().create_property_holder(m_id.c_str(), collection, this);
-	editor::property_holder*properties = m_property_holder;
+	XrWeatherEditor::property_holder*properties = m_property_holder;
 	VERIFY					(properties);
 
-	typedef editor::property_holder::string_getter_type	string_getter_type;
+	typedef XrWeatherEditor::property_holder::string_getter_type	string_getter_type;
 	string_getter_type		string_getter;
 	string_getter.bind		(this, &sun::id_getter);
 
-	typedef editor::property_holder::string_setter_type	string_setter_type;
+	typedef XrWeatherEditor::property_holder::string_setter_type	string_setter_type;
 	string_setter_type		string_setter;
 	string_setter.bind		(this, &sun::id_setter);
 
@@ -125,8 +125,8 @@ void sun::fill				(editor::property_holder_collection* collection)
 		m_shader,
 		&*m_manager.m_environment.shader_ids().begin(),
 		m_manager.m_environment.shader_ids().size(),
-		editor::property_holder::value_editor_tree_view,
-		editor::property_holder::cannot_enter_text
+		XrWeatherEditor::property_holder::value_editor_tree_view,
+		XrWeatherEditor::property_holder::cannot_enter_text
 	);
 	properties->add_property(
 		"texture",
@@ -138,8 +138,8 @@ void sun::fill				(editor::property_holder_collection* collection)
 		"Texture files (*.dds)|*.dds",
 		detail::real_path("$game_textures$", "").c_str(),
 		"Select texture...",
-		editor::property_holder::cannot_enter_text,
-		editor::property_holder::remove_extension
+		XrWeatherEditor::property_holder::cannot_enter_text,
+		XrWeatherEditor::property_holder::remove_extension
 	);
 }
 

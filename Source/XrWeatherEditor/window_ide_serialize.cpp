@@ -5,11 +5,11 @@
 #include "window_levels.h"
 #include "window_weather.h"
 
-using editor::window_ide;
-using editor::window_view;
-using editor::window_levels;
-using editor::window_weather;
-using editor::window_weather_editor;
+using XrWeatherEditor::window_ide;
+using XrWeatherEditor::window_view;
+using XrWeatherEditor::window_levels;
+using XrWeatherEditor::window_weather;
+using XrWeatherEditor::window_weather_editor;
 
 using Microsoft::Win32::Registry;
 using Microsoft::Win32::RegistryKey;

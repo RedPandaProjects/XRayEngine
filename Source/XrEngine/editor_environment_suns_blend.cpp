@@ -12,8 +12,8 @@
 #include "editor_environment_suns_blend.hpp"
 #include "../XrWeatherEditor/Public/property_holder.hpp"
 
-using editor::environment::suns::blend;
-using editor::environment::suns::manager;
+using XrWeatherEditor::environment::suns::blend;
+using XrWeatherEditor::environment::suns::manager;
 
 blend::blend		() :
     m_down_time	(0.f),
@@ -29,9 +29,9 @@ void blend::load	(CInifile& config, shared_str const& section)
     m_time		=   READ_IF_EXISTS(&config, r_float,	section, "blend_time",		.1f);
 }
 
-void blend::fill	(manager const& manager, editor::property_holder* holder, editor::property_holder_collection* collection)
+void blend::fill	(manager const& manager, XrWeatherEditor::property_holder* holder, XrWeatherEditor::property_holder_collection* collection)
 {
-	editor::property_holder*	properties = holder;
+	XrWeatherEditor::property_holder*	properties = holder;
 	VERIFY						(properties);
 
 	properties->add_property	(

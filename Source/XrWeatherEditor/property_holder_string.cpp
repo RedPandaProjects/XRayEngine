@@ -35,7 +35,7 @@ using System::String;
 //				gcnew System::ComponentModel::ReadOnlyAttribute(true)
 //		
 
-editor::property_value* property_holder::add_property				(
+XrWeatherEditor::property_value* property_holder::add_property				(
 		LPCSTR identifier,
 		LPCSTR category,
 		LPCSTR description,
@@ -65,7 +65,7 @@ editor::property_value* property_holder::add_property				(
 	return						(nullptr);
 }
 
-editor::property_value* property_holder::add_property				(
+XrWeatherEditor::property_value* property_holder::add_property				(
 		LPCSTR identifier,
 		LPCSTR category,
 		LPCSTR description,
@@ -94,7 +94,7 @@ editor::property_value* property_holder::add_property				(
 	return						(nullptr);
 }
 
-editor::property_value* property_holder::add_property				(
+XrWeatherEditor::property_value* property_holder::add_property				(
 		LPCSTR identifier,
 		LPCSTR category,
 		LPCSTR description,
@@ -147,7 +147,7 @@ editor::property_value* property_holder::add_property				(
 	return						(nullptr);
 }
 
-editor::property_value* property_holder::add_property				(
+XrWeatherEditor::property_value* property_holder::add_property				(
 		LPCSTR identifier,
 		LPCSTR category,
 		LPCSTR description,
@@ -199,7 +199,7 @@ editor::property_value* property_holder::add_property				(
 	return						(nullptr);
 }
 
-editor::property_value* property_holder::add_property				(
+XrWeatherEditor::property_value* property_holder::add_property				(
 		LPCSTR identifier,
 		LPCSTR category,
 		LPCSTR description,
@@ -280,7 +280,7 @@ editor::property_value* property_holder::add_property				(
 	return						(nullptr);
 }
 
-editor::property_value* property_holder::add_property				(
+XrWeatherEditor::property_value* property_holder::add_property				(
 		LPCSTR identifier,
 		LPCSTR category,
 		LPCSTR description,
@@ -360,7 +360,7 @@ editor::property_value* property_holder::add_property				(
 	return						(nullptr);
 }
 
-editor::property_value* property_holder::add_property				(
+XrWeatherEditor::property_value* property_holder::add_property				(
 		LPCSTR identifier,
 		LPCSTR category,
 		LPCSTR description,
@@ -441,7 +441,7 @@ editor::property_value* property_holder::add_property				(
 	return						(nullptr);
 }
 
-editor::property_value* property_holder::add_property				(
+XrWeatherEditor::property_value* property_holder::add_property				(
 		LPCSTR identifier,
 		LPCSTR category,
 		LPCSTR description,

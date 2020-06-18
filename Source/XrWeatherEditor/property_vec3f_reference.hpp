@@ -14,7 +14,7 @@
 public ref class property_vec3f_reference : public property_vec3f_base {
 public:
 	typedef property_vec3f_base							inherited;
-	typedef editor::vec3f								vec3f;
+	typedef XrWeatherEditor::vec3f								vec3f;
 
 public:
 					property_vec3f_reference	(vec3f& value);

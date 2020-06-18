@@ -8,7 +8,7 @@ using namespace System::Data;
 using namespace System::Drawing;
 
 
-namespace editor {
+namespace XrWeatherEditor {
 
 	ref class window_ide;
 	/// <summary>
@@ -164,7 +164,7 @@ public:
 
 private:
 	window_ide		^m_ide;
-	editor::engine	*m_engine;
+	XrWeatherEditor::engine	*m_engine;
 	PropertyGrid^	m_property_grid;
 	Point			m_previous_location;
 	bool			m_loaded;
@@ -190,4 +190,4 @@ private:
 			Void	window_view_KeyDown			(Object^ sender, KeyEventArgs^ e);
 }; // ref class window_view
 
-} // namespace editor
+} // namespace XrWeatherEditor

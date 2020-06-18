@@ -15,7 +15,7 @@
 #include "../XrWeatherEditor/Public/property_holder.hpp"
 #include "environment.h"
 
-namespace editor {
+namespace XrWeatherEditor {
 namespace environment {
 
 class manager;
@@ -26,7 +26,7 @@ class manager;
 
 class effect :
 	public CEnvAmbient::SEffect,
-	public editor::property_holder_holder,
+	public XrWeatherEditor::property_holder_holder,
 	private boost::noncopyable
 {
 public:
@@ -34,7 +34,7 @@ public:
 	virtual					~effect		();
 			void			load		(CInifile& config);
 			void			save		(CInifile& config);
-			void			fill		(editor::property_holder_collection* collection);
+			void			fill		(XrWeatherEditor::property_holder_collection* collection);
 	inline	LPCSTR			id			() const { return m_id.c_str(); }
 
 
@@ -50,7 +50,7 @@ private:
 	void xr_stdcall	  sound_setter		(LPCSTR value);
 
 private:
-	typedef editor::property_holder	property_holder_type;
+	typedef XrWeatherEditor::property_holder	property_holder_type;
 
 public:
 	virtual	property_holder_type*object	();
@@ -66,7 +66,7 @@ public:
 
 } // namespace effects
 } // namespace environment
-} // namespace editor
+} // namespace XrWeatherEditor
 
 #endif // #ifdef INGAME_EDITOR
 

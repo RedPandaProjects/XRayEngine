@@ -13,7 +13,7 @@
 
 #include <boost/noncopyable.hpp>
 
-namespace editor {
+namespace XrWeatherEditor {
 
 class property_holder;
 class property_holder_collection;
@@ -28,7 +28,7 @@ public:
 					gradient	();
 			void	load		(CInifile& config, shared_str const& section);
 			void	save		(CInifile& config, shared_str const& section);
-			void	fill		(manager const& manager, editor::property_holder* holder, editor::property_holder_collection* collection);
+			void	fill		(manager const& manager, XrWeatherEditor::property_holder* holder, XrWeatherEditor::property_holder_collection* collection);
 
 private:
 	bool xr_stdcall	use_getter	();
@@ -44,7 +44,7 @@ private:
 
 } // namespace suns
 } // namespace environment
-} // namespace editor
+} // namespace XrWeatherEditor
 
 #endif // #ifdef INGAME_EDITOR
 

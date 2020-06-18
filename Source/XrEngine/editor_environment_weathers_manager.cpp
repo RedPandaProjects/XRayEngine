@@ -19,9 +19,9 @@
 #include "property_collection.hpp"
 #include "editor_environment_manager.hpp"
 
-using editor::environment::weathers::manager;
-using editor::environment::weathers::weather;
-using editor::environment::detail::logical_string_predicate;
+using XrWeatherEditor::environment::weathers::manager;
+using XrWeatherEditor::environment::weathers::weather;
+using XrWeatherEditor::environment::detail::logical_string_predicate;
 
 template <>
 void property_collection<manager::weather_container_type, manager>::display_name	(u32 const& item_index, LPSTR const& buffer, u32 const& buffer_size)
@@ -30,14 +30,14 @@ void property_collection<manager::weather_container_type, manager>::display_name
 }
 
 template <>
-editor::property_holder* property_collection<manager::weather_container_type, manager>::create	()
+XrWeatherEditor::property_holder* property_collection<manager::weather_container_type, manager>::create	()
 {
 	weather*						object = xr_new<weather>(&m_holder.m_manager, generate_unique_id("weather_unique_id_").c_str());
 	object->fill					(this);
 	return							(object->object());
 }
 
-manager::manager			(editor::environment::manager* manager) :
+manager::manager			(XrWeatherEditor::environment::manager* manager) :
 	m_manager						(*manager),
 	m_collection					(0),
 	m_changed						(true)
@@ -177,19 +177,19 @@ void manager::fill					(property_holder_type* holder)
 		m_collection
 	);
 
-	typedef ::editor::ide::weathers_getter_type			weathers_getter_type;
+	typedef ::XrWeatherEditor::ide::weathers_getter_type			weathers_getter_type;
 	weathers_getter_type			weathers_getter;
 	weathers_getter.bind			(this, &manager::weathers_getter);
 
-	typedef ::editor::ide::weathers_size_getter_type	weathers_size_getter_type;
+	typedef ::XrWeatherEditor::ide::weathers_size_getter_type	weathers_size_getter_type;
 	weathers_size_getter_type		weathers_size_getter;
 	weathers_size_getter.bind		(this, &manager::weathers_size_getter);
 
-	typedef ::editor::ide::frames_getter_type			frames_getter_type;
+	typedef ::XrWeatherEditor::ide::frames_getter_type			frames_getter_type;
 	frames_getter_type				frames_getter;
 	frames_getter.bind				(this, &manager::frames_getter);
 
-	typedef ::editor::ide::frames_size_getter_type		frames_size_getter_type;
+	typedef ::XrWeatherEditor::ide::frames_size_getter_type		frames_size_getter_type;
 	frames_size_getter_type			frames_size_getter;
 	frames_size_getter.bind			(this, &manager::frames_size_getter);
 
@@ -235,7 +235,7 @@ bool manager::save_current_blend		(char* buffer, u32 const& buffer_size)
 {
 	CInifile		temp(0, FALSE, FALSE, FALSE);
 
-	using editor::environment::weathers::time;
+	using XrWeatherEditor::environment::weathers::time;
 	time*			frame = static_cast<time*>(m_manager.CurrentEnv);
 	frame->save		(temp);
 

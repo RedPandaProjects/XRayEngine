@@ -13,9 +13,9 @@
 #include "property_collection_getter.hpp"
 
 using Flobbster::Windows::Forms::PropertySpec;
-using editor::property_holder_collection;
+using XrWeatherEditor::property_holder_collection;
 
-editor::property_value* property_holder::add_property				(
+XrWeatherEditor::property_value* property_holder::add_property				(
 		LPCSTR identifier,
 		LPCSTR category,
 		LPCSTR description,
@@ -41,7 +41,7 @@ editor::property_value* property_holder::add_property				(
 	return						(nullptr);
 }
 
-editor::property_value* property_holder::add_property		(
+XrWeatherEditor::property_value* property_holder::add_property		(
 		LPCSTR identifier,
 		LPCSTR category,
 		LPCSTR description,

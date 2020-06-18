@@ -3,7 +3,7 @@
 //	Created 	: 23.01.2008
 //  Modified 	: 23.01.2008
 //	Author		: Dmitriy Iassenev
-//	Description : preocmpiled header creator for editor controls library
+//	Description : preocmpiled header creator for XrWeatherEditor controls library
 ////////////////////////////////////////////////////////////////////////////
 
 #ifndef PCH_HPP_INCLUDED

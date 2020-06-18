@@ -13,7 +13,7 @@ namespace WinFormsUI {
 } // namespace WinFormsUI
 } // namespace WeifenLuo
 
-namespace editor {
+namespace XrWeatherEditor {
 
 	class engine;
 	class ide;
@@ -35,7 +35,7 @@ namespace editor {
 	public ref class window_ide : public System::Windows::Forms::Form
 	{
 	public:
-		window_ide(editor::engine	*engine)
+		window_ide(XrWeatherEditor::engine	*engine)
 		{
 			InitializeComponent	();
 			//
@@ -107,7 +107,7 @@ namespace editor {
 		}
 #pragma endregion
 protected:
-	editor::engine	*m_engine;
+	XrWeatherEditor::engine	*m_engine;
 
 private:
 	System::Drawing::Rectangle^					m_window_rectangle;
@@ -119,12 +119,12 @@ private:
 	window_weather_editor^	m_weather_editor;
 
 protected:
-	editor::ide				*m_ide;
+	XrWeatherEditor::ide				*m_ide;
 
 public:
-	editor::ide&			ide					();
+	XrWeatherEditor::ide&			ide					();
 	window_view%			view				();
-	editor::engine&			engine				();
+	XrWeatherEditor::engine&			engine				();
 
 public:
 	window_levels%			levels				();
@@ -133,7 +133,7 @@ public:
 	Microsoft::Win32::RegistryKey^ base_registry_key();
 
 private:
-			void	custom_init					(editor::engine	*engine);
+			void	custom_init					(XrWeatherEditor::engine	*engine);
 			void	custom_finalize				();
 			void	save_on_exit				();
 			void	load_on_create				();

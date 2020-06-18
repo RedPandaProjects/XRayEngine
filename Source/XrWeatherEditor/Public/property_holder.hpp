@@ -11,7 +11,7 @@
 
 class shared_str;
 
-namespace editor {
+namespace XrWeatherEditor {
 
 #pragma pack(push,4)
 struct color {
@@ -575,6 +575,6 @@ public:
 	virtual	void		attribute	(property_holder::refresh_grid_on_change_enum const& refresh_grid) = 0;
 }; // class property_value
 
-} // namespace editor
+} // namespace XrWeatherEditor
 
 #endif // ifndef EDITOR_PROPERTY_HOLDER_HPP_INCLUDED

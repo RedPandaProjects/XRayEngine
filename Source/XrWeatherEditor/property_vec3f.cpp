@@ -9,7 +9,7 @@
 #include "pch.hpp"
 #include "property_vec3f.hpp"
 
-using editor::vec3f;
+using XrWeatherEditor::vec3f;
 
 property_vec3f::property_vec3f		(
 		vec3f_getter_type const &getter,

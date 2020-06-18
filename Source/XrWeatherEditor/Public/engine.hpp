@@ -11,7 +11,7 @@
 
 class shared_str;
 
-namespace editor {
+namespace XrWeatherEditor {
 
 class property_holder;
 
@@ -76,6 +76,6 @@ public:
 	virtual	void				weather_current_time			(char const*) = 0;
 }; // class engine
 
-} // namespace editor
+} // namespace XrWeatherEditor
 
 #endif // ifndef EDITOR_ENGINE_HPP_INCLUDED

@@ -14,28 +14,28 @@
 ref class property_container;
 ref class property_holder_converter;
 
-namespace editor {
+namespace XrWeatherEditor {
 	class engine;
 	class property_holder_collection;
-} // namespace editor 
+} // namespace XrWeatherEditor 
 
-class property_holder : public editor::property_holder {
+class property_holder : public XrWeatherEditor::property_holder {
 public:
 						property_holder		(
-							editor::engine* engine,
+							XrWeatherEditor::engine* engine,
 							LPCSTR display_name,
-							editor::property_holder_collection* collection,
-							editor::property_holder_holder* holder
+							XrWeatherEditor::property_holder_collection* collection,
+							XrWeatherEditor::property_holder_holder* holder
 						);
 	virtual				~property_holder	();
 			void		on_dispose			();
 	property_container	^container			();
-	editor::engine&		engine				();
+	XrWeatherEditor::engine&		engine				();
 
 public:
-	virtual	editor::property_holder_holder*	holder	();
+	virtual	XrWeatherEditor::property_holder_holder*	holder	();
 	virtual	void	clear				();
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
@@ -47,7 +47,7 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
@@ -58,7 +58,7 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
@@ -71,7 +71,7 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
@@ -83,7 +83,7 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
@@ -95,7 +95,7 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
@@ -106,7 +106,7 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
@@ -120,7 +120,7 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
@@ -133,7 +133,7 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
@@ -147,7 +147,7 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
@@ -160,7 +160,7 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
@@ -174,7 +174,7 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
@@ -187,7 +187,7 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
@@ -201,7 +201,7 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
@@ -214,7 +214,7 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
@@ -226,7 +226,7 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
@@ -237,7 +237,7 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
@@ -251,7 +251,7 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
@@ -264,7 +264,7 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
@@ -278,7 +278,7 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
@@ -291,7 +291,7 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
@@ -303,7 +303,7 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
@@ -314,7 +314,7 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
@@ -332,7 +332,7 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
@@ -349,7 +349,7 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
@@ -365,7 +365,7 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
@@ -380,7 +380,7 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
@@ -396,7 +396,7 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
@@ -411,11 +411,11 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
-						editor::color const& default_value,
+						XrWeatherEditor::color const& default_value,
 						color_getter_type const& getter,
 						color_setter_type const& setter,
 						readonly_enum const& read_only,
@@ -423,22 +423,22 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
-						editor::color const& default_value,
-						editor::color& result,
+						XrWeatherEditor::color const& default_value,
+						XrWeatherEditor::color& result,
 						readonly_enum const& read_only,
 						notify_parent_on_change_enum const& notify_parent,
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
-						editor::vec3f const& default_value,
+						XrWeatherEditor::vec3f const& default_value,
 						vec3f_getter_type const& getter,
 						vec3f_setter_type const& setter,
 						readonly_enum const& read_only,
@@ -446,38 +446,38 @@ public:
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
-						editor::vec3f const& default_value,
-						editor::vec3f& result,
+						XrWeatherEditor::vec3f const& default_value,
+						XrWeatherEditor::vec3f& result,
 						readonly_enum const& read_only,
 						notify_parent_on_change_enum const& notify_parent,
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
-						editor::property_holder* value,
+						XrWeatherEditor::property_holder* value,
 						readonly_enum const& read_only,
 						notify_parent_on_change_enum const& notify_parent,
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
-						editor::property_holder_collection* collection,
+						XrWeatherEditor::property_holder_collection* collection,
 						readonly_enum const& read_only,
 						notify_parent_on_change_enum const& notify_parent,
 						password_char_enum const& password,
 						refresh_grid_on_change_enum const& refresh_grid
 					);
-	virtual	editor::property_value*	add_property(
+	virtual	XrWeatherEditor::property_value*	add_property(
 						LPCSTR identifier,
 						LPCSTR category,
 						LPCSTR description,
@@ -489,7 +489,7 @@ public:
 					);
 
 public:
-	typedef editor::property_holder_collection	collection_type;
+	typedef XrWeatherEditor::property_holder_collection	collection_type;
 
 	System::String^	display_name();
 	collection_type*collection	();
@@ -498,8 +498,8 @@ private:
 	gcroot<property_container^>		m_container;
 	gcroot<System::String^>			m_display_name;
 	collection_type*				m_collection;
-	editor::engine*					m_engine;
-	editor::property_holder_holder* m_holder;
+	XrWeatherEditor::engine*					m_engine;
+	XrWeatherEditor::property_holder_holder* m_holder;
 	bool							m_disposing;
 }; // class property_holder
 

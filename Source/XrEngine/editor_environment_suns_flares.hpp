@@ -14,7 +14,7 @@
 #include <boost/noncopyable.hpp>
 #include "property_collection_forward.hpp"
 
-namespace editor {
+namespace XrWeatherEditor {
 
 class property_holder;
 class property_holder_collection;
@@ -31,10 +31,10 @@ public:
 	virtual			~flares	();
 			void	load	(CInifile& config, shared_str const& section);
 			void	save	(CInifile& config, shared_str const& section);
-			void	fill	(manager const& manager, editor::property_holder* holder, editor::property_holder_collection* collection);
+			void	fill	(manager const& manager, XrWeatherEditor::property_holder* holder, XrWeatherEditor::property_holder_collection* collection);
 private:
 	typedef xr_vector<flare*>							flares_type;
-	typedef editor::property_holder_collection			property_holder_collection;
+	typedef XrWeatherEditor::property_holder_collection			property_holder_collection;
 
 public:
 	typedef property_collection<flares_type, flares>	collection_type;
@@ -48,7 +48,7 @@ private:
 
 } // namespace suns
 } // namespace environment
-} // namespace editor
+} // namespace XrWeatherEditor
 
 #endif // #ifdef INGAME_EDITOR
 

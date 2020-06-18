@@ -19,11 +19,11 @@
 #include "editor_environment_manager.hpp"
 #include "IGame_Persistent.h"
 
-using editor::environment::thunderbolts::manager;
-using editor::environment::thunderbolts::thunderbolt;
-using editor::environment::thunderbolts::thunderbolt_id;
-using editor::environment::thunderbolts::collection;
-using editor::environment::detail::logical_string_predicate;
+using XrWeatherEditor::environment::thunderbolts::manager;
+using XrWeatherEditor::environment::thunderbolts::thunderbolt;
+using XrWeatherEditor::environment::thunderbolts::thunderbolt_id;
+using XrWeatherEditor::environment::thunderbolts::collection;
+using XrWeatherEditor::environment::detail::logical_string_predicate;
 
 template <>
 void property_collection<manager::thunderbolt_container_type, manager>::display_name	(u32 const& item_index, LPSTR const& buffer, u32 const& buffer_size)
@@ -32,7 +32,7 @@ void property_collection<manager::thunderbolt_container_type, manager>::display_
 }
 
 template <>
-editor::property_holder* property_collection<manager::thunderbolt_container_type, manager>::create	()
+XrWeatherEditor::property_holder* property_collection<manager::thunderbolt_container_type, manager>::create	()
 {
 	thunderbolt*					object = xr_new<thunderbolt>(&m_holder, generate_unique_id("thunderbolt_unique_id_").c_str());
 	object->fill					(m_holder.environment(), this);
@@ -46,14 +46,14 @@ void property_collection<manager::collection_container_type, manager>::display_n
 }
 
 template <>
-editor::property_holder* property_collection<manager::collection_container_type, manager>::create	()
+XrWeatherEditor::property_holder* property_collection<manager::collection_container_type, manager>::create	()
 {
 	collection*						object = xr_new<collection>(m_holder, generate_unique_id("thunderbolt_collection_unique_id_").c_str());
 	object->fill					(this);
 	return							(object->object());
 }
 
-manager::manager					(::editor::environment::manager* environment) :
+manager::manager					(::XrWeatherEditor::environment::manager* environment) :
 	m_thunderbolt_collection		(0),
 	m_thunderbolts_changed			(true),
 	m_collections_collection		(0),
@@ -260,14 +260,14 @@ void manager::tilt_setter			(float value)
 	m_environment.p_tilt			= deg2rad(value);
 }
 
-void manager::fill					(editor::property_holder* holder)
+void manager::fill					(XrWeatherEditor::property_holder* holder)
 {
 	VERIFY							(holder);
 
-	typedef ::editor::property_holder::float_getter_type	float_getter_type;
+	typedef ::XrWeatherEditor::property_holder::float_getter_type	float_getter_type;
 	float_getter_type				float_getter;
 
-	typedef ::editor::property_holder::float_setter_type	float_setter_type;
+	typedef ::XrWeatherEditor::property_holder::float_setter_type	float_setter_type;
 	float_setter_type				float_setter;
 
 	float_getter.bind				(this, &manager::altitude_getter);
@@ -408,7 +408,7 @@ manager::thunderbolts_ids_type const& manager::collections_ids	() const
 	return							(m_collections_ids);
 }
 
-::editor::environment::manager& manager::environment() const
+::XrWeatherEditor::environment::manager& manager::environment() const
 {
 	return							(m_environment);
 }

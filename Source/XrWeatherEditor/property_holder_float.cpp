@@ -22,7 +22,7 @@ ref class property_converter_float;
 using Flobbster::Windows::Forms::PropertySpec;
 using System::String;
 
-editor::property_value* property_holder::add_property				(
+XrWeatherEditor::property_value* property_holder::add_property				(
 		LPCSTR identifier,
 		LPCSTR category,
 		LPCSTR description,
@@ -55,7 +55,7 @@ editor::property_value* property_holder::add_property				(
 	return						(nullptr);
 }
 
-editor::property_value* property_holder::add_property				(
+XrWeatherEditor::property_value* property_holder::add_property				(
 		LPCSTR identifier,
 		LPCSTR category,
 		LPCSTR description,
@@ -83,7 +83,7 @@ editor::property_value* property_holder::add_property				(
 	return						(nullptr);
 }
 
-editor::property_value* property_holder::add_property				(
+XrWeatherEditor::property_value* property_holder::add_property				(
 		LPCSTR identifier,
 		LPCSTR category,
 		LPCSTR description,
@@ -120,7 +120,7 @@ editor::property_value* property_holder::add_property				(
 	return						(nullptr);
 }
 
-editor::property_value* property_holder::add_property				(
+XrWeatherEditor::property_value* property_holder::add_property				(
 		LPCSTR identifier,
 		LPCSTR category,
 		LPCSTR description,
@@ -155,7 +155,7 @@ editor::property_value* property_holder::add_property				(
 	return						(nullptr);
 }
 
-editor::property_value* property_holder::add_property				(
+XrWeatherEditor::property_value* property_holder::add_property				(
 		LPCSTR identifier,
 		LPCSTR category,
 		LPCSTR description,
@@ -191,7 +191,7 @@ editor::property_value* property_holder::add_property				(
 	return						(nullptr);
 }
 
-editor::property_value* property_holder::add_property				(
+XrWeatherEditor::property_value* property_holder::add_property				(
 		LPCSTR identifier,
 		LPCSTR category,
 		LPCSTR description,

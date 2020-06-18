@@ -14,7 +14,7 @@
 #include "editor_environment_manager.hpp"
 #include "editor_environment_detail.hpp"
 
-using editor::environment::thunderbolts::gradient;
+using XrWeatherEditor::environment::thunderbolts::gradient;
 
 gradient::gradient	() :
 	m_property_holder	(0)
@@ -71,10 +71,10 @@ void gradient::texture_setter	(LPCSTR	value)
 }
 
 void gradient::fill	(
-		::editor::environment::manager& environment,
+		::XrWeatherEditor::environment::manager& environment,
 		LPCSTR name,
 		LPCSTR description,
-		::editor::property_holder& holder
+		::XrWeatherEditor::property_holder& holder
 	)
 {
 	VERIFY							(!m_property_holder);
@@ -109,11 +109,11 @@ void gradient::fill	(
 		fRadius.y
 	);
 
-	typedef ::editor::property_holder::string_getter_type	string_getter_type;
+	typedef ::XrWeatherEditor::property_holder::string_getter_type	string_getter_type;
 	string_getter_type	string_getter;
 	string_getter.bind	(this, &gradient::shader_getter);
 
-	typedef ::editor::property_holder::string_setter_type	string_setter_type;
+	typedef ::XrWeatherEditor::property_holder::string_setter_type	string_setter_type;
 	string_setter_type	string_setter;
 	string_setter.bind	(this, &gradient::shader_setter);
 
@@ -126,8 +126,8 @@ void gradient::fill	(
 		string_setter,
 		&*environment.shader_ids().begin(),
 		environment.shader_ids().size(),
-		editor::property_holder::value_editor_tree_view,
-		editor::property_holder::cannot_enter_text
+		XrWeatherEditor::property_holder::value_editor_tree_view,
+		XrWeatherEditor::property_holder::cannot_enter_text
 	);
 
 	string_getter.bind	(this, &gradient::texture_getter);
@@ -142,8 +142,8 @@ void gradient::fill	(
 		"Texture files (*.dds)|*.dds",
 		detail::real_path("$game_textures$", "").c_str(),
 		"Select texture...",
-		editor::property_holder::cannot_enter_text,
-		editor::property_holder::remove_extension
+		XrWeatherEditor::property_holder::cannot_enter_text,
+		XrWeatherEditor::property_holder::remove_extension
 	);
 }
 #endif // #ifdef INGAME_EDITOR

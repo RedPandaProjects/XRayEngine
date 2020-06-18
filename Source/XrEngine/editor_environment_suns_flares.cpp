@@ -16,9 +16,9 @@
 #include "editor_environment_suns_manager.hpp"
 #include "editor_environment_manager.hpp"
 
-using editor::environment::suns::flares;
-using editor::environment::suns::manager;
-using editor::environment::suns::flare;
+using XrWeatherEditor::environment::suns::flares;
+using XrWeatherEditor::environment::suns::manager;
+using XrWeatherEditor::environment::suns::flare;
 
 template <>
 void property_collection<flares::flares_type, flares>::display_name	(
@@ -32,7 +32,7 @@ void property_collection<flares::flares_type, flares>::display_name	(
 }
 
 template <>
-editor::property_holder* property_collection<flares::flares_type, flares>::create	()
+XrWeatherEditor::property_holder* property_collection<flares::flares_type, flares>::create	()
 {
 	flare*					object = xr_new<flare>();
 	object->fill			(this);
@@ -92,9 +92,9 @@ void flares::load	(CInifile& config, shared_str const& section)
 	}
 }
 
-void flares::fill	(manager const& manager, editor::property_holder* holder, editor::property_holder_collection* collection)
+void flares::fill	(manager const& manager, XrWeatherEditor::property_holder* holder, XrWeatherEditor::property_holder_collection* collection)
 {
-	editor::property_holder*properties = holder;
+	XrWeatherEditor::property_holder*properties = holder;
 	VERIFY					(properties);
 
 	properties->add_property(
@@ -112,8 +112,8 @@ void flares::fill	(manager const& manager, editor::property_holder* holder, edit
 		m_shader,
 		&*manager.m_environment.shader_ids().begin(),
 		manager.m_environment.shader_ids().size(),
-		editor::property_holder::value_editor_tree_view,
-		editor::property_holder::cannot_enter_text
+		XrWeatherEditor::property_holder::value_editor_tree_view,
+		XrWeatherEditor::property_holder::cannot_enter_text
 	);
 	properties->add_property(
 		"flares",

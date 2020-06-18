@@ -19,7 +19,7 @@ using System::Type;
 using System::String;
 using System::Object;
 using System::ComponentModel::PropertyDescriptor;
-using editor::property_holder_collection;
+using XrWeatherEditor::property_holder_collection;
 using Flobbster::Windows::Forms::PropertyBag;
 using System::ComponentModel::Design::CollectionEditor;
 

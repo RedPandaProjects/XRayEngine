@@ -14,7 +14,7 @@
 #include <boost/noncopyable.hpp>
 #include "property_collection_forward.hpp"
 
-namespace editor {
+namespace XrWeatherEditor {
 
 class property_holder;
 
@@ -28,15 +28,15 @@ class effect;
 
 class manager : private boost::noncopyable {
 public:
-							manager			(::editor::environment::manager* environment);
+							manager			(::XrWeatherEditor::environment::manager* environment);
 							~manager		();
 			void			load			();
 			void			save			();
-			void			fill			(editor::property_holder* holder);
+			void			fill			(XrWeatherEditor::property_holder* holder);
 			shared_str		unique_id		(shared_str const& id) const;
 
 public:
-	inline	::editor::environment::manager&	environment	() const {return m_environment;}
+	inline	::XrWeatherEditor::environment::manager&	environment	() const {return m_environment;}
 
 public:
 	typedef xr_vector<effect*>				effect_container_type;
@@ -46,7 +46,7 @@ public:
 	effects_ids_type const&	effects_ids		() const;
 
 private:
-	typedef editor::property_holder			property_holder_type;
+	typedef XrWeatherEditor::property_holder			property_holder_type;
 	typedef property_collection<
 				effect_container_type,
 				manager
@@ -55,7 +55,7 @@ private:
 private:
 	effect_container_type					m_effects;
 	mutable effects_ids_type				m_effects_ids;
-	::editor::environment::manager&			m_environment;
+	::XrWeatherEditor::environment::manager&			m_environment;
 	property_holder_type*					m_property_holder;
 	collection_type*						m_collection;
 	mutable bool							m_changed;
@@ -63,7 +63,7 @@ private:
 
 } // namespace effects
 } // namespace environment
-} // namespace editor
+} // namespace XrWeatherEditor
 
 #endif // #ifdef INGAME_EDITOR
 

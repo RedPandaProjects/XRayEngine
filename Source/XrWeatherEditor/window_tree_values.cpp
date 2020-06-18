@@ -3,7 +3,7 @@
 
 using System::String;
 using System::Windows::Forms::TreeNode;
-using editor::window_tree_values;
+using XrWeatherEditor::window_tree_values;
 using System::Void;
 
 ref class NodeSorter : public IComparer {

@@ -13,8 +13,8 @@
 #include "ide.hpp"
 #include "editor_environment_thunderbolts_manager.hpp"
 
-using editor::environment::thunderbolts::thunderbolt_id;
-using editor::environment::thunderbolts::manager;
+using XrWeatherEditor::environment::thunderbolts::thunderbolt_id;
+using XrWeatherEditor::environment::thunderbolts::manager;
 
 thunderbolt_id::thunderbolt_id			(manager const& manager, shared_str const& id) :
 	m_manager						(manager),
@@ -41,16 +41,16 @@ u32 thunderbolt_id::collection_size		()
 	return							(m_manager.thunderbolts_ids().size());
 }
 
-void thunderbolt_id::fill				(editor::property_holder_collection* collection)
+void thunderbolt_id::fill				(XrWeatherEditor::property_holder_collection* collection)
 {
 	VERIFY							(!m_property_holder);
 	m_property_holder				= ::ide().create_property_holder(m_id.c_str(), collection, this);
 
-	typedef editor::property_holder::string_collection_getter_type	collection_getter_type;
+	typedef XrWeatherEditor::property_holder::string_collection_getter_type	collection_getter_type;
 	collection_getter_type			collection_getter;
 	collection_getter.bind			(this, &thunderbolt_id::collection);
 
-	typedef editor::property_holder::string_collection_size_getter_type	collection_size_getter_type;
+	typedef XrWeatherEditor::property_holder::string_collection_size_getter_type	collection_size_getter_type;
 	collection_size_getter_type		collection_size_getter;
 	collection_size_getter.bind		(this, &thunderbolt_id::collection_size);
 
@@ -62,8 +62,8 @@ void thunderbolt_id::fill				(editor::property_holder_collection* collection)
 		m_id,
 		collection_getter,
 		collection_size_getter,
-		editor::property_holder::value_editor_combo_box,
-		editor::property_holder::cannot_enter_text
+		XrWeatherEditor::property_holder::value_editor_combo_box,
+		XrWeatherEditor::property_holder::cannot_enter_text
 	);
 }
 

@@ -17,11 +17,11 @@ ref class property_converter_color;
 
 using Flobbster::Windows::Forms::PropertySpec;
 
-editor::property_value* property_holder::add_property				(
+XrWeatherEditor::property_value* property_holder::add_property				(
 		LPCSTR identifier,
 		LPCSTR category,
 		LPCSTR description,
-		editor::color const& default_value,
+		XrWeatherEditor::color const& default_value,
 		color_getter_type const& getter,
 		color_setter_type const& setter,
 		readonly_enum const& read_only,
@@ -52,12 +52,12 @@ editor::property_value* property_holder::add_property				(
 	return						(nullptr);
 }
 
-editor::property_value* property_holder::add_property				(
+XrWeatherEditor::property_value* property_holder::add_property				(
 		LPCSTR identifier,
 		LPCSTR category,
 		LPCSTR description,
-		editor::color const& default_value,
-		editor::color& value,
+		XrWeatherEditor::color const& default_value,
+		XrWeatherEditor::color& value,
 		readonly_enum const& read_only,
 		notify_parent_on_change_enum const& notify_parent,
 		password_char_enum const& password,

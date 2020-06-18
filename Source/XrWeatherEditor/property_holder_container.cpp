@@ -13,11 +13,11 @@
 
 using Flobbster::Windows::Forms::PropertySpec;
 
-editor::property_value* property_holder::add_property				(
+XrWeatherEditor::property_value* property_holder::add_property				(
 		LPCSTR identifier,
 		LPCSTR category,
 		LPCSTR description,
-		editor::property_holder* value,
+		XrWeatherEditor::property_holder* value,
 		readonly_enum const& read_only,
 		notify_parent_on_change_enum const& notify_parent,
 		password_char_enum const& password,

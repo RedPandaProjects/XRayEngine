@@ -27,8 +27,8 @@
 #include "editor_environment_ambients_ambient.hpp"
 #include "xr_efflensflare.h"
 
-using editor::environment::manager;
-using editor::environment::detail::logical_string_predicate;
+using XrWeatherEditor::environment::manager;
+using XrWeatherEditor::environment::detail::logical_string_predicate;
 using particles_systems::library_interface;
 
 manager::manager												() :
@@ -40,13 +40,13 @@ manager::manager												() :
 	m_thunderbolts				(0),
 	m_weathers					(0)
 {
-	m_effects					= xr_new<editor::environment::effects::manager>(this);
-	m_sound_channels			= xr_new<editor::environment::sound_channels::manager>();
-	m_ambients					= xr_new<editor::environment::ambients::manager>(*this);
-	m_weathers					= xr_new<editor::environment::weathers::manager>(this);
-	m_suns						= xr_new<editor::environment::suns::manager>(this);
-	m_levels					= xr_new<editor::environment::levels::manager>(m_weathers);
-	m_thunderbolts				= xr_new<editor::environment::thunderbolts::manager>(this);
+	m_effects					= xr_new<XrWeatherEditor::environment::effects::manager>(this);
+	m_sound_channels			= xr_new<XrWeatherEditor::environment::sound_channels::manager>();
+	m_ambients					= xr_new<XrWeatherEditor::environment::ambients::manager>(*this);
+	m_weathers					= xr_new<XrWeatherEditor::environment::weathers::manager>(this);
+	m_suns						= xr_new<XrWeatherEditor::environment::suns::manager>(this);
+	m_levels					= xr_new<XrWeatherEditor::environment::levels::manager>(m_weathers);
+	m_thunderbolts				= xr_new<XrWeatherEditor::environment::thunderbolts::manager>(this);
 
 	load_internal				();
 	fill						();
@@ -197,7 +197,7 @@ manager::light_animator_ids_type const& manager::light_animator_ids	() const
 void manager::create_mixer	()
 {
 	VERIFY								(!CurrentEnv);
-	editor::environment::weathers::time	*object = xr_new<editor::environment::weathers::time>(this, (editor::environment::weathers::weather const*)0, "");
+	XrWeatherEditor::environment::weathers::time	*object = xr_new<XrWeatherEditor::environment::weathers::time>(this, (XrWeatherEditor::environment::weathers::weather const*)0, "");
 	CurrentEnv							= object;
 	object->fill						(0);
 }

@@ -17,11 +17,11 @@ ref class property_converter_vec3f;
 using Flobbster::Windows::Forms::PropertySpec;
 using System::String;
 
-editor::property_value* property_holder::add_property				(
+XrWeatherEditor::property_value* property_holder::add_property				(
 		LPCSTR identifier,
 		LPCSTR category,
 		LPCSTR description,
-		editor::vec3f const& default_value,
+		XrWeatherEditor::vec3f const& default_value,
 		vec3f_getter_type const& getter,
 		vec3f_setter_type const& setter,
 		readonly_enum const& read_only,
@@ -49,12 +49,12 @@ editor::property_value* property_holder::add_property				(
 	return						(nullptr);
 }
 
-editor::property_value* property_holder::add_property				(
+XrWeatherEditor::property_value* property_holder::add_property				(
 		LPCSTR identifier,
 		LPCSTR category,
 		LPCSTR description,
-		editor::vec3f const& default_value,
-		editor::vec3f& value,
+		XrWeatherEditor::vec3f const& default_value,
+		XrWeatherEditor::vec3f& value,
 		readonly_enum const& read_only,
 		notify_parent_on_change_enum const& notify_parent,
 		password_char_enum const& password,

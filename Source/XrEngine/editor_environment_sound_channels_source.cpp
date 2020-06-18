@@ -13,7 +13,7 @@
 #include "ide.hpp"
 #include "editor_environment_detail.hpp"
 
-using editor::environment::sound_channels::source;
+using XrWeatherEditor::environment::sound_channels::source;
 
 source::source				(shared_str const& source) :
 	m_source			(source),
@@ -29,7 +29,7 @@ source::~source				()
 	::ide().destroy		(m_property_holder);
 }
 
-void source::fill			(editor::property_holder_collection* collection)
+void source::fill			(XrWeatherEditor::property_holder_collection* collection)
 {
 	VERIFY				(!m_property_holder);
 	m_property_holder	= ::ide().create_property_holder(m_source.c_str(), collection, this);
@@ -44,8 +44,8 @@ void source::fill			(editor::property_holder_collection* collection)
 		"Sound files (*.ogg)|*.ogg",
 		detail::real_path("$game_sounds$", "").c_str(),
 		"Select sound...",
-		editor::property_holder::cannot_enter_text,
-		editor::property_holder::remove_extension
+		XrWeatherEditor::property_holder::cannot_enter_text,
+		XrWeatherEditor::property_holder::remove_extension
 	);
 }
 

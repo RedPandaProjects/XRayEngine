@@ -22,8 +22,8 @@ public ref class property_collection_base abstract :
 	public System::Collections::IList
 {
 public:
-	typedef editor::property_holder_collection			collection_type;
-	typedef editor::property_holder						property_holder;
+	typedef XrWeatherEditor::property_holder_collection			collection_type;
+	typedef XrWeatherEditor::property_holder						property_holder;
 	typedef System::Collections::IEnumerator			IEnumerator;
 	typedef System::Array								Array;
 	typedef System::Object								Object;

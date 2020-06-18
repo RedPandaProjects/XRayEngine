@@ -18,19 +18,19 @@
 
 #include <vcclr.h>
 
-namespace editor {
+namespace XrWeatherEditor {
 	ref class window_ide;
 	class engine;
 	class property_holder_holder;
-} // namespace editor
+} // namespace XrWeatherEditor
 
-class ide_impl : public editor::ide {
+class ide_impl : public XrWeatherEditor::ide {
 public:
-	typedef editor::window_ide							window_ide;
-	typedef editor::property_holder						property_holder;
+	typedef XrWeatherEditor::window_ide							window_ide;
+	typedef XrWeatherEditor::property_holder						property_holder;
 
 public:
-								ide_impl				(editor::engine* engine);
+								ide_impl				(XrWeatherEditor::engine* engine);
 	virtual						~ide_impl				();
 			void				window					(window_ide ^window);
 			window_ide			^window					();
@@ -47,7 +47,7 @@ public:
 	virtual	void				pause					();
 
 public:
-	virtual	property_holder*	create_property_holder	(LPCSTR display_name, editor::property_holder_collection* collection, editor::property_holder_holder* holder);
+	virtual	property_holder*	create_property_holder	(LPCSTR display_name, XrWeatherEditor::property_holder_collection* collection, XrWeatherEditor::property_holder_holder* holder);
 	virtual	void				destroy					(property_holder *&property_holder);
 	virtual	void				environment_levels		(property_holder *property_holder);
 	virtual	void				environment_weathers	(property_holder *property_holder);
@@ -59,7 +59,7 @@ public:
 								);
 
 private:
-	editor::engine*				m_engine;
+	XrWeatherEditor::engine*				m_engine;
 	gcroot<window_ide^>			m_window;
 	bool						m_paused;
 	bool						m_in_idle;

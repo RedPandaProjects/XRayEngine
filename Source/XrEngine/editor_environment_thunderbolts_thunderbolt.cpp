@@ -16,8 +16,8 @@
 #include "editor_environment_detail.hpp"
 #include "editor_environment_thunderbolts_manager.hpp"
 
-using editor::environment::thunderbolts::thunderbolt;
-using editor::environment::thunderbolts::manager;
+using XrWeatherEditor::environment::thunderbolts::thunderbolt;
+using XrWeatherEditor::environment::thunderbolts::manager;
 
 thunderbolt::thunderbolt		(manager* manager, shared_str const& id) :
 	m_manager			(*manager),
@@ -82,18 +82,18 @@ void thunderbolt::id_setter		(LPCSTR value_)
 }
 
 void thunderbolt::fill			(
-		::editor::environment::manager& environment,
-		::editor::property_holder_collection* collection
+		::XrWeatherEditor::environment::manager& environment,
+		::XrWeatherEditor::property_holder_collection* collection
 	)
 {
 	VERIFY				(!m_property_holder);
 	m_property_holder	= ::ide().create_property_holder(m_id.c_str(), collection, this);
 
-	typedef editor::property_holder::string_getter_type	string_getter_type;
+	typedef XrWeatherEditor::property_holder::string_getter_type	string_getter_type;
 	string_getter_type	string_getter;
 	string_getter.bind	(this, &thunderbolt::id_getter);
 
-	typedef editor::property_holder::string_setter_type	string_setter_type;
+	typedef XrWeatherEditor::property_holder::string_setter_type	string_setter_type;
 	string_setter_type	string_setter;
 	string_setter.bind	(this, &thunderbolt::id_setter);
 
@@ -113,8 +113,8 @@ void thunderbolt::fill			(
 		m_color_animator,
 		&*environment.light_animator_ids().begin(),
 		environment.light_animator_ids().size(),
-		editor::property_holder::value_editor_tree_view,
-		editor::property_holder::cannot_enter_text
+		XrWeatherEditor::property_holder::value_editor_tree_view,
+		XrWeatherEditor::property_holder::cannot_enter_text
 	);
 	m_property_holder->add_property(
 		"lighting model",
@@ -126,8 +126,8 @@ void thunderbolt::fill			(
 		"Lighting model files (*.dm)|*.dm",
 		detail::real_path("$game_meshes$", "").c_str(),
 		"Select lighting model...",
-		editor::property_holder::cannot_enter_text,
-		editor::property_holder::keep_extension
+		XrWeatherEditor::property_holder::cannot_enter_text,
+		XrWeatherEditor::property_holder::keep_extension
 	);
 	m_property_holder->add_property(
 		"sound",
@@ -139,8 +139,8 @@ void thunderbolt::fill			(
 		"Sound files (*.ogg)|*.ogg",
 		detail::real_path("$game_sounds$", "").c_str(),
 		"Select sound...",
-		editor::property_holder::cannot_enter_text,
-		editor::property_holder::remove_extension
+		XrWeatherEditor::property_holder::cannot_enter_text,
+		XrWeatherEditor::property_holder::remove_extension
 	);
 
 	m_center->fill		(

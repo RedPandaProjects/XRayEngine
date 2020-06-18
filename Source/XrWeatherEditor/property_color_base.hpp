@@ -49,14 +49,14 @@ public:
 public ref class property_color_base abstract :
 	public property_value,
 	public property_container_holder,
-	public editor::controls::property_mouse_events,
-	public editor::controls::property_incrementable
+	public XrWeatherEditor::controls::property_mouse_events,
+	public XrWeatherEditor::controls::property_incrementable
 {
 public:
 	typedef System::Attribute					Attribute;
 
 public:
-							property_color_base	(editor::color const% color, array<System::Attribute^>^ attributes);
+							property_color_base	(XrWeatherEditor::color const% color, array<System::Attribute^>^ attributes);
 	virtual					~property_color_base();
 							!property_color_base();
 			void			red					(float value);
@@ -66,12 +66,12 @@ public:
 public:
 	virtual System::Object	^get_value			();
 	virtual void			set_value			(System::Object ^object);
-	virtual	void			on_double_click		(editor::controls::property_grid^ property_grid);
+	virtual	void			on_double_click		(XrWeatherEditor::controls::property_grid^ property_grid);
 	virtual void			increment			(float const% increment);
 
 public:
-	virtual editor::color	get_value_raw		() = 0;
-	virtual void			set_value_raw		(editor::color color) = 0;
+	virtual XrWeatherEditor::color	get_value_raw		() = 0;
+	virtual void			set_value_raw		(XrWeatherEditor::color color) = 0;
 
 private:
 	property_container^							m_container;

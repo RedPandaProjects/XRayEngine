@@ -13,7 +13,7 @@
 
 public ref class property_collection_enumerator : public System::Collections::IEnumerator {
 public:
-	typedef editor::property_holder_collection	collection_type;
+	typedef XrWeatherEditor::property_holder_collection	collection_type;
 	typedef System::Collections::IEnumerator	IEnumerator;
 	typedef System::Array						Array;
 	typedef System::Object						Object;

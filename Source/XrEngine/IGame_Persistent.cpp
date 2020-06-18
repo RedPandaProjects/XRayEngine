@@ -39,7 +39,7 @@ IGame_Persistent::IGame_Persistent	()
 	#endif
 #else // #ifdef INGAME_EDITOR
 	if (RDEVICE.editor())
-		pEnvironment				= xr_new<editor::environment::manager>();
+		pEnvironment				= xr_new<XrWeatherEditor::environment::manager>();
 	else
 		pEnvironment				= xr_new<CEnvironment>();
 #endif // #ifdef INGAME_EDITOR

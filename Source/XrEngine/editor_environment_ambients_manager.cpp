@@ -16,9 +16,9 @@
 #include "editor_environment_detail.hpp"
 #include "editor_environment_manager.hpp"
 
-using editor::environment::ambients::manager;
-using editor::environment::ambients::ambient;
-using editor::environment::detail::logical_string_predicate;
+using XrWeatherEditor::environment::ambients::manager;
+using XrWeatherEditor::environment::ambients::ambient;
+using XrWeatherEditor::environment::detail::logical_string_predicate;
 
 template <>
 void property_collection<manager::ambient_container_type, manager>::display_name	(u32 const& item_index, LPSTR const& buffer, u32 const& buffer_size)
@@ -27,14 +27,14 @@ void property_collection<manager::ambient_container_type, manager>::display_name
 }
 
 template <>
-editor::property_holder* property_collection<manager::ambient_container_type, manager>::create	()
+XrWeatherEditor::property_holder* property_collection<manager::ambient_container_type, manager>::create	()
 {
 	ambient*				object = xr_new<ambient>(m_holder, generate_unique_id("ambient_unique_id_").c_str());
 	object->fill			(this);
 	return					(object->object());
 }
 
-manager::manager			(::editor::environment::manager const& manager) :
+manager::manager			(::XrWeatherEditor::environment::manager const& manager) :
 	m_manager				(manager),
 	m_property_holder		(0),
 	m_collection			(0),
@@ -100,7 +100,7 @@ void manager::save			()
 	xr_delete				(config);
 }
 
-void manager::fill			(editor::property_holder* holder)
+void manager::fill			(XrWeatherEditor::property_holder* holder)
 {
 	VERIFY					(holder);
 	holder->add_property	(
@@ -111,12 +111,12 @@ void manager::fill			(editor::property_holder* holder)
 	);
 }
 
-::editor::environment::effects::manager const& manager::effects_manager		() const
+::XrWeatherEditor::environment::effects::manager const& manager::effects_manager		() const
 {
 	return					(m_manager.effects());
 }
 
-::editor::environment::sound_channels::manager const& manager::sounds_manager	() const
+::XrWeatherEditor::environment::sound_channels::manager const& manager::sounds_manager	() const
 {
 	return					(m_manager.sound_channels());
 }

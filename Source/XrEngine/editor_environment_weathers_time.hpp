@@ -15,7 +15,7 @@
 #include "../XrWeatherEditor/Public/property_holder.hpp"
 #include "environment.h"
 
-namespace editor {
+namespace XrWeatherEditor {
 namespace environment {
 
 class manager;
@@ -26,18 +26,18 @@ class weather;
 
 class time :
 	public CEnvDescriptorMixer,
-	public editor::property_holder_holder,
+	public XrWeatherEditor::property_holder_holder,
 	private boost::noncopyable
 {
 private:
 	typedef CEnvDescriptorMixer			inherited;
 
 public:
-	typedef editor::property_holder		property_holder_type;
+	typedef XrWeatherEditor::property_holder		property_holder_type;
 
 public:
 										time						(
-											editor::environment::manager* manager,
+											XrWeatherEditor::environment::manager* manager,
 											weather const* weather,
 											shared_str const& id
 										);
@@ -45,7 +45,7 @@ public:
 			void						load						(CInifile& config);
 			void						load_from					(shared_str const& id, CInifile& config, shared_str const& new_id);
 			void						save						(CInifile& config);
-			void						fill						(::editor::property_holder_collection* holder);
+			void						fill						(::XrWeatherEditor::property_holder_collection* holder);
 	inline	shared_str const&			id							() const { return m_identifier; }
 	virtual	property_holder_type*		object						() { return m_property_holder; }
 	virtual	void						lerp						(CEnvironment* parent, CEnvDescriptor& A, CEnvDescriptor& B, float f, CEnvModifier& M, float m_power);
@@ -86,13 +86,13 @@ private:
 	shared_str							m_thunderbolt_collection;
 
 private:
-	editor::environment::manager&		m_manager;
+	XrWeatherEditor::environment::manager&		m_manager;
 	weather const*						m_weather;
 	property_holder_type*				m_property_holder;
 }; // class time
 } // namespace weathers
 } // namespace environment
-} // namespace editor
+} // namespace XrWeatherEditor
 
 #endif // #ifdef INGAME_EDITOR
 

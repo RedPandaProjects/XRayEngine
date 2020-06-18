@@ -15,10 +15,10 @@
 #include "editor_environment_manager.hpp"
 #include "editor_environment_detail.hpp"
 
-using editor::environment::suns::gradient;
-using editor::property_holder;
-using editor::property_holder_collection;
-using editor::environment::suns::manager;
+using XrWeatherEditor::environment::suns::gradient;
+using XrWeatherEditor::property_holder;
+using XrWeatherEditor::property_holder_collection;
+using XrWeatherEditor::environment::suns::manager;
 
 gradient::gradient			() :
 	m_use					(false),
@@ -59,13 +59,13 @@ void gradient::fill			(
 		property_holder_collection* collection
 	)
 {
-	editor::property_holder*	properties = holder;
+	XrWeatherEditor::property_holder*	properties = holder;
 	VERIFY						(properties);
 
-	typedef editor::property_holder::boolean_getter_type	boolean_getter_type;
+	typedef XrWeatherEditor::property_holder::boolean_getter_type	boolean_getter_type;
 	boolean_getter_type			boolean_getter;
 
-	typedef editor::property_holder::boolean_setter_type	boolean_setter_type;
+	typedef XrWeatherEditor::property_holder::boolean_setter_type	boolean_setter_type;
 	boolean_setter_type			boolean_setter;
 
 	boolean_getter.bind			(this, &gradient::use_getter);
@@ -105,8 +105,8 @@ void gradient::fill			(
 		m_shader,
 		&*manager.m_environment.shader_ids().begin(),
 		manager.m_environment.shader_ids().size(),
-		editor::property_holder::value_editor_tree_view,
-		editor::property_holder::cannot_enter_text
+		XrWeatherEditor::property_holder::value_editor_tree_view,
+		XrWeatherEditor::property_holder::cannot_enter_text
 	);
 	properties->add_property(
 		"texture",
@@ -118,8 +118,8 @@ void gradient::fill			(
 		"Texture files (*.dds)|*.dds",
 		detail::real_path("$game_textures$", "").c_str(),
 		"Select texture...",
-		editor::property_holder::cannot_enter_text,
-		editor::property_holder::remove_extension
+		XrWeatherEditor::property_holder::cannot_enter_text,
+		XrWeatherEditor::property_holder::remove_extension
 	);
 }
 

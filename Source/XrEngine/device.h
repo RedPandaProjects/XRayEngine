@@ -310,21 +310,21 @@ virtual		CStatsPhysics* _BCL	StatPhysics()
 #endif
 #ifdef INGAME_EDITOR
 public:
-	IC		editor::ide			*editor				() const { return m_editor; }
+	IC		XrWeatherEditor::ide			*editor				() const { return m_editor; }
 
 private:
 			void				initialize_editor	();
 			void				message_loop_editor	();
 
 private:
-	typedef editor::initialize_function_ptr			initialize_function_ptr;
-	typedef editor::finalize_function_ptr			finalize_function_ptr;
+	typedef XrWeatherEditor::initialize_function_ptr			initialize_function_ptr;
+	typedef XrWeatherEditor::finalize_function_ptr			finalize_function_ptr;
 
 private:
 	HMODULE						m_editor_module;
 	initialize_function_ptr		m_editor_initialize;
 	finalize_function_ptr		m_editor_finalize;
-	editor::ide					*m_editor;
+	XrWeatherEditor::ide					*m_editor;
 	engine_impl					*m_engine;
 #endif // #ifdef INGAME_EDITOR
 };

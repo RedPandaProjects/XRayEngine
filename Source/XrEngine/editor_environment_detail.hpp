@@ -11,7 +11,7 @@
 
 #ifdef INGAME_EDITOR
 
-namespace editor {
+namespace XrWeatherEditor {
 namespace environment {
 namespace detail {
 
@@ -24,7 +24,7 @@ struct logical_string_predicate {
 
 } // namespace detail
 } // namespace environment
-} // namespace editor
+} // namespace XrWeatherEditor
 
 #endif // #ifdef INGAME_EDITOR
 

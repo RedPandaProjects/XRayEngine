@@ -14,7 +14,7 @@
 #include <boost/noncopyable.hpp>
 #include "../XrWeatherEditor/Public/property_holder.hpp"
 
-namespace editor {
+namespace XrWeatherEditor {
 
 class property_holder_collection;
 
@@ -26,16 +26,16 @@ namespace environment {
 namespace ambients {
 
 class effect_id :
-	public editor::property_holder_holder,
+	public XrWeatherEditor::property_holder_holder,
 	private boost::noncopyable {
 public:
 							effect_id		(effects::manager const& manager, shared_str const& id);
 	virtual					~effect_id		();
-			void			fill			(editor::property_holder_collection* collection);
+			void			fill			(XrWeatherEditor::property_holder_collection* collection);
 	inline	shared_str const& id			() const { return m_id; }
 
 private:
-	typedef editor::property_holder			property_holder_type;
+	typedef XrWeatherEditor::property_holder			property_holder_type;
 
 public:
 	virtual	property_holder_type* object	();
@@ -51,7 +51,7 @@ private:
 }; // class effect_id
 } // namespace ambients
 } // namespace environment
-} // namespace editor
+} // namespace XrWeatherEditor
 
 #endif // #ifdef INGAME_EDITOR
 

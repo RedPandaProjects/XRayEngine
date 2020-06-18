@@ -12,7 +12,7 @@
 using System::String;
 
 property_file_name_value_shared_str::property_file_name_value_shared_str	(
-		editor::engine* engine,
+		XrWeatherEditor::engine* engine,
 		shared_str& value,
 		System::String^	DefaultExt_,
 		System::String^	Filter_,

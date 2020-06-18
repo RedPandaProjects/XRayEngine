@@ -9,7 +9,7 @@
 #ifndef PROPERTY_INCREMENTABLE_HPP_INCLUDED
 #define PROPERTY_INCREMENTABLE_HPP_INCLUDED
 
-namespace editor {
+namespace XrWeatherEditor {
 namespace controls {
 
 public interface class property_incrementable {
@@ -18,6 +18,6 @@ public:
 }; // interface class property_value
 
 } // namespace controls
-} // namespace editor
+} // namespace XrWeatherEditor
 
 #endif // ifndef PROPERTY_INCREMENTABLE_HPP_INCLUDED

@@ -18,9 +18,9 @@
 #include "property_collection.hpp"
 #include "editor_environment_detail.hpp"
 
-using editor::environment::suns::manager;
-using editor::environment::suns::sun;
-using editor::environment::detail::logical_string_predicate;
+using XrWeatherEditor::environment::suns::manager;
+using XrWeatherEditor::environment::suns::sun;
+using XrWeatherEditor::environment::detail::logical_string_predicate;
 
 template <>
 void property_collection<manager::container_type, manager>::display_name	(u32 const& item_index, LPSTR const& buffer, u32 const& buffer_size)
@@ -29,14 +29,14 @@ void property_collection<manager::container_type, manager>::display_name	(u32 co
 }
 
 template <>
-editor::property_holder* property_collection<manager::container_type, manager>::create	()
+XrWeatherEditor::property_holder* property_collection<manager::container_type, manager>::create	()
 {
 	sun*					object = xr_new<sun>(m_holder, generate_unique_id("sun_unique_id_").c_str());
 	object->fill			(this);
 	return					(object->object());
 }
 
-manager::manager			(::editor::environment::manager* environment) :
+manager::manager			(::XrWeatherEditor::environment::manager* environment) :
 	m_environment			(*environment),
 	m_collection			(0),
 	m_changed				(true)
@@ -132,7 +132,7 @@ void manager::add			(CInifile& config, shared_str const& section)
 	m_suns.push_back		(object);
 }
 
-void manager::fill			(editor::property_holder* holder)
+void manager::fill			(XrWeatherEditor::property_holder* holder)
 {
 	VERIFY					(holder);
 	holder->add_property	(

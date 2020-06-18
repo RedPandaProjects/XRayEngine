@@ -15,7 +15,7 @@
 #include "../XrWeatherEditor/Public/property_holder.hpp"
 #include "thunderbolt.h"
 
-namespace editor {
+namespace XrWeatherEditor {
 
 class property_holder;
 
@@ -35,10 +35,10 @@ public:
 			void		load			(CInifile& config, shared_str const& section_id, LPCSTR prefix);
 			void		save			(CInifile& config, shared_str const& section_id, LPCSTR prefix);
 			void		fill			(
-							::editor::environment::manager& environment,
+							::XrWeatherEditor::environment::manager& environment,
 							LPCSTR name,
 							LPCSTR description,
-							editor::property_holder& holder
+							XrWeatherEditor::property_holder& holder
 						);
 
 private:
@@ -55,7 +55,7 @@ private:
 
 } // namespace thunderbolts
 } // namespace environment
-} // namespace editor
+} // namespace XrWeatherEditor
 
 #endif // #ifdef INGAME_EDITOR
 

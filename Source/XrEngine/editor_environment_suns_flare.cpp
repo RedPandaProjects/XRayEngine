@@ -14,8 +14,8 @@
 #include "ide.hpp"
 #include "editor_environment_detail.hpp"
 
-using editor::environment::suns::flare;
-using editor::property_holder;
+using XrWeatherEditor::environment::suns::flare;
+using XrWeatherEditor::property_holder;
 
 flare::flare			() :
 	m_property_holder	(0),
@@ -34,12 +34,12 @@ flare::~flare			()
 	::ide().destroy		(m_property_holder);
 }
 
-editor::property_holder*	flare::object	()
+XrWeatherEditor::property_holder*	flare::object	()
 {
 	return				(m_property_holder);
 }
 
-void flare::fill		(editor::property_holder_collection* collection)
+void flare::fill		(XrWeatherEditor::property_holder_collection* collection)
 {
 	VERIFY				(!m_property_holder);
 	m_property_holder	= ::ide().create_property_holder("flare", collection, this);
@@ -55,8 +55,8 @@ void flare::fill		(editor::property_holder_collection* collection)
 		"Texture files (*.dds)|*.dds",
 		detail::real_path("$game_textures$", "").c_str(),
 		"Select texture...",
-		editor::property_holder::cannot_enter_text,
-		editor::property_holder::remove_extension
+		XrWeatherEditor::property_holder::cannot_enter_text,
+		XrWeatherEditor::property_holder::remove_extension
 	);
 	properties->add_property(
 		"opacity",

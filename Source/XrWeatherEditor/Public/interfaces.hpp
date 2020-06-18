@@ -9,7 +9,7 @@
 #ifndef EDITOR_INTERFACES_HPP_INCLUDED
 #define EDITOR_INTERFACES_HPP_INCLUDED
 
-namespace editor {
+namespace XrWeatherEditor {
 
 class ide;
 class engine;
@@ -17,6 +17,6 @@ class engine;
 typedef void (__cdecl *initialize_function_ptr)	(ide*&, engine*);
 typedef void (__cdecl *finalize_function_ptr)	(ide*&);
 
-} // namespace editor
+} // namespace XrWeatherEditor
 
 #endif // ifndef EDITOR_INTERFACES_HPP_INCLUDED

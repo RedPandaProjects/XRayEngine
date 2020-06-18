@@ -9,7 +9,7 @@ using namespace System::Windows::Forms;
 using namespace System::Data;
 using namespace System::Drawing;
 
-namespace editor {
+namespace XrWeatherEditor {
 
 	class engine;
 	ref class window_ide;
@@ -197,7 +197,7 @@ private: System::Windows::Forms::Label^  label7;
 
 private: System::Windows::Forms::Panel^  panel2;
 private: System::Windows::Forms::Panel^  panel13;
-private: editor::controls::property_grid^  blend;
+private: XrWeatherEditor::controls::property_grid^  blend;
 private: System::Windows::Forms::Panel^  panel15;
 private: System::Windows::Forms::Label^  label6;
 private: System::Windows::Forms::Panel^  panel22;
@@ -206,7 +206,7 @@ private: System::Windows::Forms::Panel^  panel11;
 private: System::Windows::Forms::Button^  CreateFromButton;
 private: System::Windows::Forms::Splitter^  splitter2;
 private: System::Windows::Forms::Panel^  panel14;
-private: editor::controls::property_grid^  target;
+private: XrWeatherEditor::controls::property_grid^  target;
 private: System::Windows::Forms::Panel^  panel20;
 private: System::Windows::Forms::Panel^  panel17;
 private: System::Windows::Forms::Label^  label5;
@@ -214,7 +214,7 @@ private: System::Windows::Forms::Panel^  panel18;
 private: System::Windows::Forms::Button^  PasteTargetButton;
 private: System::Windows::Forms::Splitter^  splitter1;
 private: System::Windows::Forms::Panel^  panel12;
-private: editor::controls::property_grid^  current;
+private: XrWeatherEditor::controls::property_grid^  current;
 private: System::Windows::Forms::Panel^  panel19;
 private: System::Windows::Forms::Panel^  panel16;
 private: System::Windows::Forms::Label^  label4;
@@ -286,7 +286,7 @@ private: System::Windows::Forms::Button^  ReloadCurrentButton;
 			this->FramesComboBox = (gcnew System::Windows::Forms::ComboBox());
 			this->panel2 = (gcnew System::Windows::Forms::Panel());
 			this->panel13 = (gcnew System::Windows::Forms::Panel());
-			this->blend = (gcnew editor::controls::property_grid());
+			this->blend = (gcnew XrWeatherEditor::controls::property_grid());
 			this->panel15 = (gcnew System::Windows::Forms::Panel());
 			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->panel22 = (gcnew System::Windows::Forms::Panel());
@@ -295,7 +295,7 @@ private: System::Windows::Forms::Button^  ReloadCurrentButton;
 			this->CreateFromButton = (gcnew System::Windows::Forms::Button());
 			this->splitter2 = (gcnew System::Windows::Forms::Splitter());
 			this->panel14 = (gcnew System::Windows::Forms::Panel());
-			this->target = (gcnew editor::controls::property_grid());
+			this->target = (gcnew XrWeatherEditor::controls::property_grid());
 			this->panel20 = (gcnew System::Windows::Forms::Panel());
 			this->panel17 = (gcnew System::Windows::Forms::Panel());
 			this->label5 = (gcnew System::Windows::Forms::Label());
@@ -303,7 +303,7 @@ private: System::Windows::Forms::Button^  ReloadCurrentButton;
 			this->PasteTargetButton = (gcnew System::Windows::Forms::Button());
 			this->splitter1 = (gcnew System::Windows::Forms::Splitter());
 			this->panel12 = (gcnew System::Windows::Forms::Panel());
-			this->current = (gcnew editor::controls::property_grid());
+			this->current = (gcnew XrWeatherEditor::controls::property_grid());
 			this->panel19 = (gcnew System::Windows::Forms::Panel());
 			this->panel16 = (gcnew System::Windows::Forms::Panel());
 			this->label4 = (gcnew System::Windows::Forms::Label());
@@ -946,10 +946,10 @@ private: System::Windows::Forms::Button^  ReloadCurrentButton;
 		}
 #pragma endregion
 public:
-	typedef ::editor::ide::weathers_getter_type			weathers_getter_type;
-	typedef ::editor::ide::weathers_size_getter_type	weathers_size_getter_type;
-	typedef ::editor::ide::frames_getter_type			frames_getter_type;
-	typedef ::editor::ide::frames_size_getter_type		frames_size_getter_type;
+	typedef ::XrWeatherEditor::ide::weathers_getter_type			weathers_getter_type;
+	typedef ::XrWeatherEditor::ide::weathers_size_getter_type	weathers_size_getter_type;
+	typedef ::XrWeatherEditor::ide::frames_getter_type			frames_getter_type;
+	typedef ::XrWeatherEditor::ide::frames_size_getter_type		frames_size_getter_type;
 
 public:
 			void		weathers_ids				(

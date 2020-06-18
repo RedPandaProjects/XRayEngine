@@ -13,7 +13,7 @@
 
 public ref class property_float_reference :
 	public property_value,
-	public editor::controls::property_incrementable
+	public XrWeatherEditor::controls::property_incrementable
 {
 public:
 							property_float_reference	(float& value, float const% increment_factor);

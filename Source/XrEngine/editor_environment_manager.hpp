@@ -13,7 +13,7 @@
 
 #include "environment.h"
 
-namespace editor {
+namespace XrWeatherEditor {
 	class property_holder;
 
 namespace environment {
@@ -72,14 +72,14 @@ public:
 			light_animator_ids_type const&		light_animator_ids		() const;
 
 public:
-	typedef editor::property_holder										property_holder_type;
-	typedef editor::environment::suns::manager							suns_manager_type;
-	typedef editor::environment::levels::manager						levels_manager_type;
-	typedef editor::environment::effects::manager						effects_manager_type;
-	typedef editor::environment::sound_channels::manager				sound_channels_manager_type;
-	typedef editor::environment::ambients::manager						ambients_manager_type;
-	typedef editor::environment::thunderbolts::manager					thunderbolts_manager_type;
-	typedef editor::environment::weathers::manager						weathers_manager_type;
+	typedef XrWeatherEditor::property_holder										property_holder_type;
+	typedef XrWeatherEditor::environment::suns::manager							suns_manager_type;
+	typedef XrWeatherEditor::environment::levels::manager						levels_manager_type;
+	typedef XrWeatherEditor::environment::effects::manager						effects_manager_type;
+	typedef XrWeatherEditor::environment::sound_channels::manager				sound_channels_manager_type;
+	typedef XrWeatherEditor::environment::ambients::manager						ambients_manager_type;
+	typedef XrWeatherEditor::environment::thunderbolts::manager					thunderbolts_manager_type;
+	typedef XrWeatherEditor::environment::weathers::manager						weathers_manager_type;
 
 public:
 	inline	suns_manager_type const&			suns					() const { VERIFY(m_suns); 			return (*m_suns);			}
@@ -113,7 +113,7 @@ private:
 	weathers_manager_type*						m_weathers;
 }; // class manager
 } // namespace environment
-} // namespace editor
+} // namespace XrWeatherEditor
 
 #endif // #ifdef INGAME_EDITOR
 

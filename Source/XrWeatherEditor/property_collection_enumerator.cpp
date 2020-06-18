@@ -40,7 +40,7 @@ Object^ property_collection_enumerator::Current::get			()
 	if (m_cursor >= (int)m_collection->size())
 		throw					(gcnew InvalidOperationException());
 
-	editor::property_holder*	holder_raw = m_collection->item((u32)m_cursor);
+	XrWeatherEditor::property_holder*	holder_raw = m_collection->item((u32)m_cursor);
 	property_holder*			holder = dynamic_cast<property_holder*>(holder_raw);
 	VERIFY						(holder);
 	return						(holder->container());

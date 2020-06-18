@@ -15,11 +15,11 @@
 
 template <typename container_type, typename holder_type>
 class property_collection :
-	public editor::property_holder_collection,
+	public XrWeatherEditor::property_holder_collection,
 	private boost::noncopyable
 {
 public:
-	typedef editor::property_holder					property_holder;
+	typedef XrWeatherEditor::property_holder					property_holder;
 
 public:
 	inline						property_collection	(container_type* container, holder_type* holder, bool* changed = 0);

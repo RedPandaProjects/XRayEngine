@@ -13,8 +13,8 @@
 
 public ref class property_integer_enum_value : public property_integer {
 public:
-	typedef editor::property_holder::integer_getter_type	integer_getter_type;
-	typedef editor::property_holder::integer_setter_type	integer_setter_type;
+	typedef XrWeatherEditor::property_holder::integer_getter_type	integer_getter_type;
+	typedef XrWeatherEditor::property_holder::integer_setter_type	integer_setter_type;
 	typedef Pair<int, System::String^>						ValuePair;
 
 private:

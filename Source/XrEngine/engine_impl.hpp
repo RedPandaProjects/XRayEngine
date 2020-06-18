@@ -15,7 +15,7 @@
 
 class IInputReceiver;
 
-class engine_impl : public editor::engine {
+class engine_impl : public XrWeatherEditor::engine {
 public:
 						engine_impl				();
 	virtual				~engine_impl			();
@@ -49,9 +49,9 @@ private:
 	virtual	void		track_weather			(float const& time);
 	virtual	float		track_weather			();
 
-	virtual	editor::property_holder*	current_frame_property_holder	();
-	virtual	editor::property_holder*	blend_frame_property_holder		();
-	virtual	editor::property_holder*	target_frame_property_holder	();
+	virtual	XrWeatherEditor::property_holder*	current_frame_property_holder	();
+	virtual	XrWeatherEditor::property_holder*	blend_frame_property_holder		();
+	virtual	XrWeatherEditor::property_holder*	target_frame_property_holder	();
 
 	virtual	void		save_weathers			();
 

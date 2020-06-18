@@ -13,12 +13,12 @@
 ide_impl* g_ide = nullptr;
 namespace XRay
 {
-	namespace Editor
+	namespace XrWeatherEditor
 	{
-		private ref class window_ide_final : public editor::window_ide {
+		private ref class window_ide_final : public ::XrWeatherEditor::window_ide {
 		public:
-			window_ide_final(editor::ide*& ide, editor::engine* engine) :
-				editor::window_ide(engine)
+			window_ide_final(::XrWeatherEditor::ide*& ide,:: XrWeatherEditor::engine* engine) :
+				::XrWeatherEditor::window_ide(engine)
 			{
 				m_ide = ide;
 				Application::Idle += gcnew System::EventHandler(this, &window_ide_final::on_idle);
@@ -38,7 +38,7 @@ namespace XRay
 				if (m_engine && m_engine->on_message((HWND)m.HWnd.ToInt32(), m.Msg, m.WParam.ToInt32(), m.LParam.ToInt32(), result))
 					return;
 
-				editor::window_ide::WndProc(m);
+				::XrWeatherEditor::window_ide::WndProc(m);
 			}
 
 		private:
@@ -58,7 +58,7 @@ namespace XRay
 		};
 
 
-		void initialize_impl(editor::ide*& ide, editor::engine* engine)
+		void initialize_impl(::XrWeatherEditor::ide*& ide, ::XrWeatherEditor::engine* engine)
 		{
 			VERIFY(!g_ide);
 			g_ide = new ide_impl(engine);
@@ -73,13 +73,13 @@ namespace XRay
 WINOLEAPI  CoInitializeEx(IN LPVOID pvReserved, IN DWORD dwCoInit);
 #pragma comment(lib,"ole32.lib")
 
-extern "C" __declspec(dllexport)	void initialize	(editor::ide*& ide, editor::engine* engine)
+extern "C" __declspec(dllexport)	void initialize	(XrWeatherEditor::ide*& ide, XrWeatherEditor::engine* engine)
 {
 	CoInitializeEx	(NULL, COINIT_APARTMENTTHREADED);
-	XRay::Editor::initialize_impl	(ide, engine);
+	XRay::XrWeatherEditor::initialize_impl	(ide, engine);
 }
 
-extern "C" __declspec(dllexport)	void finalize	(editor::ide*& ide)
+extern "C" __declspec(dllexport)	void finalize	(XrWeatherEditor::ide*& ide)
 {
 	delete			(ide);
 	ide				= nullptr;

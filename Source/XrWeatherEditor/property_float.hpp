@@ -13,11 +13,11 @@
 
 public ref class property_float :
 	public property_value,
-	public editor::controls::property_incrementable
+	public XrWeatherEditor::controls::property_incrementable
 {
 public:
-	typedef editor::property_holder::float_getter_type	float_getter_type;
-	typedef editor::property_holder::float_setter_type	float_setter_type;
+	typedef XrWeatherEditor::property_holder::float_getter_type	float_getter_type;
+	typedef XrWeatherEditor::property_holder::float_setter_type	float_setter_type;
 
 public:
 							property_float	(

@@ -20,7 +20,7 @@
 
 ENGINE_API extern CConsole* Console;
 
-using editor::property_holder;
+using XrWeatherEditor::property_holder;
 
 engine_impl::engine_impl		() :
 	m_input_receiver(xr_new<IInputReceiver>()),
@@ -258,7 +258,7 @@ property_holder* engine_impl::current_frame_property_holder	()
 		return				(0);
 
 	return					(
-		((editor::environment::weathers::time&)(
+		((XrWeatherEditor::environment::weathers::time&)(
 			*environment.Current[0]
 		)).object()
 	);
@@ -271,7 +271,7 @@ property_holder* engine_impl::blend_frame_property_holder	()
 		return				(0);
 
 	return					(
-		((editor::environment::weathers::time&)(
+		((XrWeatherEditor::environment::weathers::time&)(
 			*environment.CurrentEnv
 		)).object()
 	);
@@ -284,7 +284,7 @@ property_holder* engine_impl::target_frame_property_holder	()
 		return				(0);
 
 	return					(
-		((editor::environment::weathers::time&)(
+		((XrWeatherEditor::environment::weathers::time&)(
 			*environment.Current[1]
 		)).object()
 	);
@@ -323,14 +323,14 @@ float engine_impl::weather_time_factor	()
 void engine_impl::save_weathers			()
 {
 	CEnvironment&					environment = g_pGamePersistent->Environment();
-	editor::environment::manager&	manager = dynamic_cast<editor::environment::manager&>(environment);
+	XrWeatherEditor::environment::manager&	manager = dynamic_cast<XrWeatherEditor::environment::manager&>(environment);
 	manager.save					();
 }
 
 bool engine_impl::save_time_frame		(char* buffer, u32 const& buffer_size)
 {
 	CEnvironment&					environment = g_pGamePersistent->Environment();
-	editor::environment::manager&	manager = dynamic_cast<editor::environment::manager&>(environment);
+	XrWeatherEditor::environment::manager&	manager = dynamic_cast<XrWeatherEditor::environment::manager&>(environment);
 	return							(
 		manager.weathers().save_current_blend(
 			buffer,
@@ -342,7 +342,7 @@ bool engine_impl::save_time_frame		(char* buffer, u32 const& buffer_size)
 bool engine_impl::paste_current_time_frame	(char const* buffer, u32 const& buffer_size)
 {
 	CEnvironment&					environment = g_pGamePersistent->Environment();
-	editor::environment::manager&	manager = dynamic_cast<editor::environment::manager&>(environment);
+	XrWeatherEditor::environment::manager&	manager = dynamic_cast<XrWeatherEditor::environment::manager&>(environment);
 	return							(
 		manager.weathers().paste_current_time_frame(
 			buffer,
@@ -354,7 +354,7 @@ bool engine_impl::paste_current_time_frame	(char const* buffer, u32 const& buffe
 bool engine_impl::paste_target_time_frame	(char const* buffer, u32 const& buffer_size)
 {
 	CEnvironment&					environment = g_pGamePersistent->Environment();
-	editor::environment::manager&	manager = dynamic_cast<editor::environment::manager&>(environment);
+	XrWeatherEditor::environment::manager&	manager = dynamic_cast<XrWeatherEditor::environment::manager&>(environment);
 	return							(
 		manager.weathers().paste_target_time_frame(
 			buffer,
@@ -366,7 +366,7 @@ bool engine_impl::paste_target_time_frame	(char const* buffer, u32 const& buffer
 bool engine_impl::add_time_frame		(char const* buffer, u32 const& buffer_size)
 {
 	CEnvironment&					environment = g_pGamePersistent->Environment();
-	editor::environment::manager&	manager = dynamic_cast<editor::environment::manager&>(environment);
+	XrWeatherEditor::environment::manager&	manager = dynamic_cast<XrWeatherEditor::environment::manager&>(environment);
 	return							(
 		manager.weathers().add_time_frame	(
 			buffer,
@@ -398,21 +398,21 @@ void engine_impl::weather_current_time			(char const* time)
 void engine_impl::reload_current_time_frame		()
 {
 	CEnvironment&					environment = g_pGamePersistent->Environment();
-	editor::environment::manager&	manager = dynamic_cast<editor::environment::manager&>(environment);
+	XrWeatherEditor::environment::manager&	manager = dynamic_cast<XrWeatherEditor::environment::manager&>(environment);
 	manager.weathers().reload_current_time_frame();
 }
 
 void engine_impl::reload_target_time_frame		()
 {
 	CEnvironment&					environment = g_pGamePersistent->Environment();
-	editor::environment::manager&	manager = dynamic_cast<editor::environment::manager&>(environment);
+	XrWeatherEditor::environment::manager&	manager = dynamic_cast<XrWeatherEditor::environment::manager&>(environment);
 	manager.weathers().reload_target_time_frame();
 }
 
 void engine_impl::reload_current_weather		()
 {
 	CEnvironment&					environment = g_pGamePersistent->Environment();
-	editor::environment::manager&	manager = dynamic_cast<editor::environment::manager&>(environment);
+	XrWeatherEditor::environment::manager&	manager = dynamic_cast<XrWeatherEditor::environment::manager&>(environment);
 
 	float const game_time						= g_pGamePersistent->Environment().GetGameTime();
 	manager.weathers().reload_current_weather	();
@@ -428,7 +428,7 @@ void engine_impl::reload_current_weather		()
 void engine_impl::reload_weathers				()
 {
 	CEnvironment&					environment = g_pGamePersistent->Environment();
-	editor::environment::manager&	manager = dynamic_cast<editor::environment::manager&>(environment);
+	XrWeatherEditor::environment::manager&	manager = dynamic_cast<XrWeatherEditor::environment::manager&>(environment);
 
 	float const game_time						= g_pGamePersistent->Environment().GetGameTime();
 	manager.weathers().reload					();

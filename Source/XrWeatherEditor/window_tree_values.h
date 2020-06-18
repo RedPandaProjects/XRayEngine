@@ -9,7 +9,7 @@ using namespace System::Windows::Forms;
 using namespace System::Data;
 using namespace System::Drawing;
 
-namespace editor {
+namespace XrWeatherEditor {
 
 	/// <summary>
 	/// Summary for window_tree_values

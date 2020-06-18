@@ -13,7 +13,7 @@
 
 ref class property_container;
 
-using editor::controls::property_grid;
+using XrWeatherEditor::controls::property_grid;
 
 using System::Windows::Forms::GridItem;
 using System::Windows::Forms::MouseEventHandler;

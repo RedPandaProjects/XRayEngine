@@ -13,8 +13,8 @@
 
 public ref class property_boolean_values_value : public property_boolean {
 public:
-	typedef editor::property_holder::boolean_getter_type	boolean_getter_type;
-	typedef editor::property_holder::boolean_setter_type	boolean_setter_type;
+	typedef XrWeatherEditor::property_holder::boolean_getter_type	boolean_getter_type;
+	typedef XrWeatherEditor::property_holder::boolean_setter_type	boolean_setter_type;
 
 private:
 	typedef property_boolean								inherited;

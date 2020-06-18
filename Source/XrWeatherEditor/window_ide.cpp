@@ -6,15 +6,15 @@
 #include "window_weather.h"
 #include "window_weather_editor.h"
 
-using editor::window_ide;
-using editor::window_view;
-using editor::window_levels;
-using editor::window_weather;
-using editor::window_weather_editor;
+using XrWeatherEditor::window_ide;
+using XrWeatherEditor::window_view;
+using XrWeatherEditor::window_levels;
+using XrWeatherEditor::window_weather;
+using XrWeatherEditor::window_weather_editor;
 
 using VS2005Style::Extender;
 
-void window_ide::custom_init				(editor::engine	*engine)
+void window_ide::custom_init				(XrWeatherEditor::engine	*engine)
 {
 	SuspendLayout						();
 
@@ -58,7 +58,7 @@ window_weather% window_ide::weather									()
 	return								(*m_weather);
 }
 
-editor::engine& window_ide::engine			()
+XrWeatherEditor::engine& window_ide::engine			()
 {
 	VERIFY								(m_engine);
 	return								(*m_engine);
@@ -111,7 +111,7 @@ Void window_ide::window_ide_FormClosing		(System::Object^  sender, System::Windo
 	m_engine->disconnect				();
 }
 
-editor::ide& window_ide::ide				()
+XrWeatherEditor::ide& window_ide::ide				()
 {
 	VERIFY								(m_ide);
 	return								(*m_ide);

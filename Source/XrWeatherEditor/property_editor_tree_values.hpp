@@ -11,9 +11,9 @@
 
 #include "property_holder_include.hpp"
 
-namespace editor {
+namespace XrWeatherEditor {
 	ref class window_tree_values;
-} // namespace editor
+} // namespace XrWeatherEditor
 
 public ref class property_editor_tree_values : public System::Drawing::Design::UITypeEditor {
 private:
@@ -36,7 +36,7 @@ public:
 									) override;
 
 private:
-	editor::window_tree_values^		m_dialog;
+	XrWeatherEditor::window_tree_values^		m_dialog;
 }; // ref class property_editor_tree_values
 
 #endif // ifndef PROPERTY_EDITOR_TREE_VALUES_HPP_INCLUDED

@@ -17,8 +17,8 @@ public ref class property_integer_values_value :
 	public property_integer_values_value_base
 {
 public:
-	typedef editor::property_holder::integer_getter_type	integer_getter_type;
-	typedef editor::property_holder::integer_setter_type	integer_setter_type;
+	typedef XrWeatherEditor::property_holder::integer_getter_type	integer_getter_type;
+	typedef XrWeatherEditor::property_holder::integer_setter_type	integer_setter_type;
 
 private:
 	typedef property_integer								inherited;

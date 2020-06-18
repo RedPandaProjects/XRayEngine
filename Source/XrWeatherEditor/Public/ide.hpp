@@ -9,7 +9,7 @@
 #ifndef EDITOR_IDE_HPP_INCLUDED
 #define EDITOR_IDE_HPP_INCLUDED
 
-namespace editor {
+namespace XrWeatherEditor {
 
 class property_holder;
 class property_holder_collection;
@@ -42,6 +42,6 @@ public:
 								) = 0;
 }; // class ide
 
-} // namespace editor
+} // namespace XrWeatherEditor
 
 #endif // ifndef EDITOR_IDE_HPP_INCLUDED

@@ -14,7 +14,7 @@
 #include <boost/noncopyable.hpp>
 #include "../XrWeatherEditor/Public/property_holder.hpp"
 
-namespace editor {
+namespace XrWeatherEditor {
 
 class property_holder_collection;
 
@@ -22,16 +22,16 @@ namespace environment {
 namespace sound_channels {
 
 class source :
-	public editor::property_holder_holder,
+	public XrWeatherEditor::property_holder_holder,
 	private boost::noncopyable {
 public:
 							source		(shared_str const& source);
 							~source		();
-			void			fill		(editor::property_holder_collection* collection);
+			void			fill		(XrWeatherEditor::property_holder_collection* collection);
 	inline	LPCSTR			id			() const { return m_source.c_str(); }
 
 private:
-	typedef editor::property_holder		property_holder_type;
+	typedef XrWeatherEditor::property_holder		property_holder_type;
 
 public:
 	virtual	property_holder_type* object();
@@ -42,7 +42,7 @@ private:
 }; // class source
 } // namespace sound_channels
 } // namespace environment
-} // namespace editor
+} // namespace XrWeatherEditor
 
 #endif // #ifdef INGAME_EDITOR
 

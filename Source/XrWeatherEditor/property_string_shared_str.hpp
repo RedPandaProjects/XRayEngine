@@ -11,20 +11,20 @@
 
 #include "property_holder_include.hpp"
 
-namespace editor {
+namespace XrWeatherEditor {
 	class engine;
-} // namespace editor
+} // namespace XrWeatherEditor
 
 public ref class property_string_shared_str : public property_value {
 public:
-							property_string_shared_str	(editor::engine* engine, shared_str& value);
+							property_string_shared_str	(XrWeatherEditor::engine* engine, shared_str& value);
 	virtual					~property_string_shared_str	();
 							!property_string_shared_str	();
 	virtual System::Object	^get_value					();
 	virtual void			set_value					(System::Object ^object);
 
 private:
-	editor::engine* m_engine;
+	XrWeatherEditor::engine* m_engine;
 	shared_str*		m_value;
 }; // ref class property_string_shared_str
 

@@ -16,12 +16,12 @@
 #include "../XrWeatherEditor/Public/ide.hpp"
 #include "ide.hpp"
 
-using editor::environment::levels::manager;
+using XrWeatherEditor::environment::levels::manager;
 
 static LPCSTR s_default_weather_id	= "[default]";
 static LPCSTR s_level_section_id	= "levels";
 
-manager::manager					(::editor::environment::weathers::manager* weathers) :
+manager::manager					(::XrWeatherEditor::environment::weathers::manager* weathers) :
 	m_weathers						(*weathers),
 	m_property_holder				(0)
 {
@@ -127,11 +127,11 @@ void manager::fill					()
 	VERIFY							(!m_property_holder);
 	m_property_holder				= ::ide().create_property_holder("levels");
 
-	typedef editor::property_holder::string_collection_getter_type	collection_getter_type;
+	typedef XrWeatherEditor::property_holder::string_collection_getter_type	collection_getter_type;
 	collection_getter_type			collection_getter;
 	collection_getter.bind			(this, &manager::collection);
 
-	typedef editor::property_holder::string_collection_size_getter_type	collection_size_getter_type;
+	typedef XrWeatherEditor::property_holder::string_collection_size_getter_type	collection_size_getter_type;
 	collection_size_getter_type		collection_size_getter;
 	collection_size_getter.bind		(this, &manager::collection_size);
 
@@ -149,8 +149,8 @@ void manager::fill					()
 			(*i).second.second,
 			collection_getter,
 			collection_size_getter,
-			editor::property_holder::value_editor_combo_box,
-			editor::property_holder::cannot_enter_text
+			XrWeatherEditor::property_holder::value_editor_combo_box,
+			XrWeatherEditor::property_holder::cannot_enter_text
 		);
 	}
 

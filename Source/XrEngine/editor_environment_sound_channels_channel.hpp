@@ -16,7 +16,7 @@
 #include "property_collection_forward.hpp"
 #include "environment.h"
 
-namespace editor {
+namespace XrWeatherEditor {
 
 class property_holder_collection;
 
@@ -28,7 +28,7 @@ class manager;
 
 class channel :
 	public CEnvAmbient::SSndChannel,
-	public editor::property_holder_holder,
+	public XrWeatherEditor::property_holder_holder,
 	private boost::noncopyable
 {
 private:
@@ -39,7 +39,7 @@ public:
 	virtual					~channel	();
 			void			load		(CInifile& config);
 			void			save		(CInifile& config);
-			void			fill		(editor::property_holder_collection* collection);
+			void			fill		(XrWeatherEditor::property_holder_collection* collection);
 	inline	LPCSTR			id			() const { return m_load_section.c_str(); }
 	virtual	sounds_type&	sounds		();
 
@@ -50,7 +50,7 @@ public:
 	typedef xr_vector<source*>			sound_container_type;
 
 private:
-	typedef editor::property_holder		property_holder_type;
+	typedef XrWeatherEditor::property_holder		property_holder_type;
 	typedef property_collection<
 				sound_container_type,
 				channel
@@ -67,7 +67,7 @@ private:
 }; // class channel
 } // namespace sound_channels
 } // namespace environment
-} // namespace editor
+} // namespace XrWeatherEditor
 
 #endif // #ifdef INGAME_EDITOR
 

@@ -20,8 +20,8 @@ private:
 	typedef property_string									inherited;
 
 public:
-	typedef editor::property_holder::string_getter_type		string_getter_type;
-	typedef editor::property_holder::string_setter_type		string_setter_type;
+	typedef XrWeatherEditor::property_holder::string_getter_type		string_getter_type;
+	typedef XrWeatherEditor::property_holder::string_setter_type		string_setter_type;
 
 public:
 							property_file_name_value	(

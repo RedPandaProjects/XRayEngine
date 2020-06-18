@@ -15,7 +15,7 @@
 #include "../XrWeatherEditor/Public/property_holder.hpp"
 #include "xr_efflensflare.h"
 
-namespace editor {
+namespace XrWeatherEditor {
 
 class property_holder;
 class property_holder_collection;
@@ -28,7 +28,7 @@ class manager;
 
 class sun :
 	public CLensFlare,
-	public editor::property_holder_holder,
+	public XrWeatherEditor::property_holder_holder,
 	private boost::noncopyable
 {
 public:
@@ -36,7 +36,7 @@ public:
 								~sun		();
 			void				load		(CInifile& config);
 			void				save		(CInifile& config);
-			void				fill		(editor::property_holder_collection* collection);
+			void				fill		(XrWeatherEditor::property_holder_collection* collection);
 
 private:
 			LPCSTR xr_stdcall	id_getter	() const;
@@ -51,7 +51,7 @@ private:
     shared_str					m_shader;
     shared_str					m_texture;
 	manager const&				m_manager;
-	editor::property_holder*	m_property_holder;
+	XrWeatherEditor::property_holder*	m_property_holder;
     float						m_radius;
     bool						m_use;
     bool						m_ignore_color;
@@ -59,7 +59,7 @@ private:
 
 } // namespace suns
 } // namespace environment
-} // namespace editor
+} // namespace XrWeatherEditor
 
 #endif // #ifdef INGAME_EDITOR
 

@@ -17,7 +17,7 @@
 struct SThunderboltDesc;
 struct SThunderboltCollection;
 
-namespace editor {
+namespace XrWeatherEditor {
 
 class property_holder;
 
@@ -33,11 +33,11 @@ class collection;
 
 class manager : private boost::noncopyable {
 public:
-							manager		(::editor::environment::manager* environment);
+							manager		(::XrWeatherEditor::environment::manager* environment);
 							~manager	();
 			void			load		();
 			void			save		();
-			void			fill		(editor::property_holder* holder);
+			void			fill		(XrWeatherEditor::property_holder* holder);
 			SThunderboltDesc*		description		(CInifile& config, shared_str const& section) const;
 			SThunderboltCollection*	get_collection	(shared_str const& section);
 
@@ -54,7 +54,7 @@ public:
 public:
 	thunderbolts_ids_type const& thunderbolts_ids	() const;
 	collections_ids_type const& collections_ids		() const;
-	::editor::environment::manager&	environment		() const;
+	::XrWeatherEditor::environment::manager&	environment		() const;
 
 private:
 			void			load_thunderbolts		();
@@ -63,7 +63,7 @@ private:
 			void			save_collections		();
 
 private:
-	typedef editor::property_holder		property_holder_type;
+	typedef XrWeatherEditor::property_holder		property_holder_type;
 	typedef property_collection<
 				thunderbolt_container_type,
 				manager
@@ -93,11 +93,11 @@ private:
 	mutable thunderbolts_ids_type		m_thunderbolts_ids;
 	mutable collections_ids_type		m_collections_ids;
 	property_holder_type*				m_property_holder;
-	::editor::environment::manager&		m_environment;
+	::XrWeatherEditor::environment::manager&		m_environment;
 }; // class manager
 } // namespace thunderbolts
 } // namespace environment
-} // namespace editor
+} // namespace XrWeatherEditor
 
 #endif // #ifdef INGAME_EDITOR
 

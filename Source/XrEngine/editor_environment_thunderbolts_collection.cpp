@@ -15,10 +15,10 @@
 #include "editor_environment_thunderbolts_thunderbolt_id.hpp"
 #include "editor_environment_thunderbolts_manager.hpp"
 
-using editor::environment::thunderbolts::thunderbolt_id;
-using editor::environment::thunderbolts::collection;
-using editor::environment::thunderbolts::manager;
-using editor::property_holder;
+using XrWeatherEditor::environment::thunderbolts::thunderbolt_id;
+using XrWeatherEditor::environment::thunderbolts::collection;
+using XrWeatherEditor::environment::thunderbolts::manager;
+using XrWeatherEditor::property_holder;
 
 template <>
 void property_collection<collection::container_type, collection>::display_name	(u32 const& item_index, LPSTR const& buffer, u32 const& buffer_size)
@@ -27,7 +27,7 @@ void property_collection<collection::container_type, collection>::display_name	(
 }
 
 template <>
-editor::property_holder* property_collection<collection::container_type, collection>::create	()
+XrWeatherEditor::property_holder* property_collection<collection::container_type, collection>::create	()
 {
 	thunderbolt_id*		object = xr_new<thunderbolt_id>(m_holder.m_manager, "");
 	object->fill		(this);
@@ -94,16 +94,16 @@ void collection::id_setter				(LPCSTR value_)
 	section				= m_manager.unique_collection_id(value);
 }
 
-void collection::fill					(editor::property_holder_collection* collection)
+void collection::fill					(XrWeatherEditor::property_holder_collection* collection)
 {
 	VERIFY				(!m_property_holder);
 	m_property_holder	= ::ide().create_property_holder(section.c_str());
 
-	typedef editor::property_holder::string_getter_type	string_getter_type;
+	typedef XrWeatherEditor::property_holder::string_getter_type	string_getter_type;
 	string_getter_type	string_getter;
 	string_getter.bind	(this, &collection::id_getter);
 
-	typedef editor::property_holder::string_setter_type	string_setter_type;
+	typedef XrWeatherEditor::property_holder::string_setter_type	string_setter_type;
 	string_setter_type	string_setter;
 	string_setter.bind	(this, &collection::id_setter);
 

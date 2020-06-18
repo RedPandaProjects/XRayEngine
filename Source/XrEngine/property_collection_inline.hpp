@@ -59,7 +59,7 @@ void PROPERTY_COLLECTION::insert						(property_holder* holder, u32 const& posit
 
 	VERIFY				(position <= m_container.size());
 	
-	editor::property_holder_holder*	value_raw = holder->holder();
+	XrWeatherEditor::property_holder_holder*	value_raw = holder->holder();
 	VERIFY				(value_raw);
 	
 	typedef typename container_type::value_type	value_type;
@@ -82,7 +82,7 @@ void PROPERTY_COLLECTION::erase							(u32 const& position)
 }
 
 SPECIALIZATION
-editor::property_holder* PROPERTY_COLLECTION::item		(u32 const& position)
+XrWeatherEditor::property_holder* PROPERTY_COLLECTION::item		(u32 const& position)
 {
 	return				(m_container[position]->object());
 }
@@ -111,7 +111,7 @@ int PROPERTY_COLLECTION::index							(property_holder* holder)
 }
 
 SPECIALIZATION
-void PROPERTY_COLLECTION::destroy						(editor::property_holder* holder)
+void PROPERTY_COLLECTION::destroy						(XrWeatherEditor::property_holder* holder)
 {
 	delete_data			(holder->holder());
 }

@@ -321,20 +321,21 @@ void CHW::CreateDevice( HWND m_hWnd, bool move_window )
 	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 
 	UINT createDeviceFlags = 0;
-	static bool GDebugRender = strstr(GetCommandLine(), TEXT("-debugrender"));
-	if (!GDebugRender)
-		GDebugRender = strstr(GetCommandLine(), TEXT("-drender"));
-
-
-	if (GDebugRender)
-	{
-		createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
-	}
+	
    HRESULT R;
 	// Create the device
 	//	DX10 don't need it?
 	//u32 GPU		= selectGPU();
 #ifdef USE_DX11
+   static bool GDebugRender = strstr(GetCommandLine(), TEXT("-debugrender"));
+   if (!GDebugRender)
+	   GDebugRender = strstr(GetCommandLine(), TEXT("-drender"));
+
+
+   if (GDebugRender)
+   {
+	   createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
+   }
     D3D_FEATURE_LEVEL pFeatureLevels[] =
     {
         D3D_FEATURE_LEVEL_11_0,

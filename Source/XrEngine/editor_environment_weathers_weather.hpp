@@ -15,7 +15,7 @@
 #include "../XrWeatherEditor/Public/property_holder.hpp"
 #include "property_collection_forward.hpp"
 
-namespace editor {
+namespace XrWeatherEditor {
 namespace environment {
 
 	class manager;
@@ -26,11 +26,11 @@ class manager;
 class time;
 
 class weather :
-	public editor::property_holder_holder,
+	public XrWeatherEditor::property_holder_holder,
 	private boost::noncopyable
 {
 public:
-	typedef editor::property_holder	property_holder_type;
+	typedef XrWeatherEditor::property_holder	property_holder_type;
 
 public:
 									weather				(
@@ -40,7 +40,7 @@ public:
 	virtual							~weather			();
 			void					load				();
 			void					save				();
-			void					fill				(::editor::property_holder_collection* holder);
+			void					fill				(::XrWeatherEditor::property_holder_collection* holder);
 	inline	shared_str const&		id					() const { return m_id; }
 			shared_str				unique_id			(shared_str const& current, shared_str const& id) const;
 			shared_str				generate_unique_id	() const;
@@ -85,7 +85,7 @@ public:
 }; // class weather
 } // namespace weathers
 } // namespace environment
-} // namespace editor
+} // namespace XrWeatherEditor
 
 #endif // #ifdef INGAME_EDITOR
 

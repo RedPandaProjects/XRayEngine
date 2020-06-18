@@ -15,9 +15,9 @@
 #include "editor_environment_sound_channels_source.hpp"
 #include "editor_environment_sound_channels_manager.hpp"
 
-using editor::environment::sound_channels::channel;
-using editor::environment::sound_channels::source;
-using editor::environment::sound_channels::manager;
+using XrWeatherEditor::environment::sound_channels::channel;
+using XrWeatherEditor::environment::sound_channels::source;
+using XrWeatherEditor::environment::sound_channels::manager;
 
 template <>
 void property_collection<channel::sound_container_type, channel>::display_name	(u32 const& item_index, LPSTR const& buffer, u32 const& buffer_size)
@@ -26,7 +26,7 @@ void property_collection<channel::sound_container_type, channel>::display_name	(
 }
 
 template <>
-editor::property_holder* property_collection<channel::sound_container_type, channel>::create	()
+XrWeatherEditor::property_holder* property_collection<channel::sound_container_type, channel>::create	()
 {
 	source*					object = xr_new<source>("");
 	object->fill			(this);
@@ -113,16 +113,16 @@ void channel::id_setter		(LPCSTR value_)
 	m_load_section		= m_manager.unique_id(value);
 }
 
-void channel::fill			(editor::property_holder_collection* collection)
+void channel::fill			(XrWeatherEditor::property_holder_collection* collection)
 {
 	VERIFY				(!m_property_holder);
 	m_property_holder	= ::ide().create_property_holder(m_load_section.c_str(), collection, this);
 
-	typedef editor::property_holder::string_getter_type	string_getter_type;
+	typedef XrWeatherEditor::property_holder::string_getter_type	string_getter_type;
 	string_getter_type	string_getter;
 	string_getter.bind	(this, &channel::id_getter);
 
-	typedef editor::property_holder::string_setter_type	string_setter_type;
+	typedef XrWeatherEditor::property_holder::string_setter_type	string_setter_type;
 	string_setter_type	string_setter;
 	string_setter.bind	(this, &channel::id_setter);
 

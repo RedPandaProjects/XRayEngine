@@ -17,8 +17,8 @@
 #include "editor_environment_effects_manager.hpp"
 #include "editor_environment_detail.hpp"
 
-using editor::environment::effects::effect;
-using editor::environment::effects::manager;
+using XrWeatherEditor::environment::effects::effect;
+using XrWeatherEditor::environment::effects::manager;
 
 effect::effect			(manager const& manager, shared_str const& id) :
 	m_manager			(manager),
@@ -97,16 +97,16 @@ void effect::wind_blast_longitude_setter	(float value)
 	wind_blast_direction.setHP	(deg2rad(value), 0.f);
 }
 
-void effect::fill		(editor::property_holder_collection* collection)
+void effect::fill		(XrWeatherEditor::property_holder_collection* collection)
 {
 	VERIFY				(!m_property_holder);
 	m_property_holder	= ::ide().create_property_holder(m_id.c_str(), collection, this);
 
-	typedef editor::property_holder::string_getter_type	string_getter_type;
+	typedef XrWeatherEditor::property_holder::string_getter_type	string_getter_type;
 	string_getter_type	string_getter;
 	string_getter.bind	(this, &effect::id_getter);
 
-	typedef editor::property_holder::string_setter_type	string_setter_type;
+	typedef XrWeatherEditor::property_holder::string_setter_type	string_setter_type;
 	string_setter_type	string_setter;
 	string_setter.bind	(this, &effect::id_setter);
 
@@ -140,8 +140,8 @@ void effect::fill		(editor::property_holder_collection* collection)
 		particles,
 		&*m_manager.environment().particle_ids().begin(),
 		m_manager.environment().particle_ids().size(),
-		editor::property_holder::value_editor_tree_view,
-		editor::property_holder::cannot_enter_text
+		XrWeatherEditor::property_holder::value_editor_tree_view,
+		XrWeatherEditor::property_holder::cannot_enter_text
 	);
 
 	string_getter.bind	(this, &effect::sound_getter);
@@ -157,8 +157,8 @@ void effect::fill		(editor::property_holder_collection* collection)
 		"Sound files (*.ogg)|*.ogg",
 		detail::real_path("$game_sounds$", "").c_str(),
 		"Select sound...",
-		editor::property_holder::cannot_enter_text,
-		editor::property_holder::remove_extension
+		XrWeatherEditor::property_holder::cannot_enter_text,
+		XrWeatherEditor::property_holder::remove_extension
 	);
 	m_property_holder->add_property	(
 		"wind gust factor",
@@ -193,10 +193,10 @@ void effect::fill		(editor::property_holder_collection* collection)
 		1000.f
 	);
 
-	typedef ::editor::property_holder::float_getter_type	float_getter_type;
+	typedef ::XrWeatherEditor::property_holder::float_getter_type	float_getter_type;
 	float_getter_type	float_getter;
 
-	typedef ::editor::property_holder::float_setter_type	float_setter_type;
+	typedef ::XrWeatherEditor::property_holder::float_setter_type	float_setter_type;
 	float_setter_type	float_setter;
 
 	float_getter.bind	(this, &effect::wind_blast_longitude_getter);
@@ -213,7 +213,7 @@ void effect::fill		(editor::property_holder_collection* collection)
 	);
 }
 
-editor::property_holder* effect::object	()
+XrWeatherEditor::property_holder* effect::object	()
 {
 	return				(m_property_holder);
 }

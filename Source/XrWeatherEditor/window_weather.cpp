@@ -10,7 +10,7 @@
 #include "window_view.h"
 #include "window_weather_editor.h"
 
-using editor::window_weather;
+using XrWeatherEditor::window_weather;
 using System::Object;
 
 Void window_weather::window_weather_Leave			(Object^ sender, EventArgs^ e)

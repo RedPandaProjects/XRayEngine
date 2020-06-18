@@ -12,7 +12,7 @@
 #include "property_value.hpp"
 #include "property_mouse_events.hpp"
 
-namespace editor {
+namespace XrWeatherEditor {
 namespace controls {
 
 public ref class property_grid : public System::Windows::Forms::PropertyGrid
@@ -43,6 +43,6 @@ private:
 }; // ref class property_grid
 
 } // namespace controls
-} // namespace editor
+} // namespace XrWeatherEditor
 
 #endif // #define PROPERTY_GRID_HPP_INCLUDED
