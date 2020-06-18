@@ -153,7 +153,7 @@ CCommandVar CLevelTool::CommandMultiRenameObjects(CCommandVar p1, CCommandVar p2
 {
     if( !Scene->locked() )
     {
-        if (mrYes==ELog.DlgMsg(mtConfirmation, TMsgDlgButtons()<<mbYes<<mbNo, "Are you sure to rename selected objects?"))
+        if (mrYes==ELog.DlgMsg(mtConfirmation, mbYes |mbNo, "Are you sure to rename selected objects?"))
         {
 			int cnt			= Scene->MultiRenameObjects();
             if (cnt)
@@ -613,7 +613,7 @@ CCommandVar CommandOptions(CCommandVar p1, CCommandVar p2)
 CCommandVar CommandBuild(CCommandVar p1, CCommandVar p2)
 {
     if( !Scene->locked() ){
-        if (mrYes==ELog.DlgMsg(mtConfirmation, TMsgDlgButtons()<<mbYes<<mbNo, "Are you sure to build level?"))
+        if (mrYes==ELog.DlgMsg(mtConfirmation, mbYes |mbNo, "Are you sure to build level?"))
             return				Builder.Compile(false);
     }else{
         ELog.DlgMsg( mtError, "Scene sharing violation" );
@@ -623,7 +623,7 @@ CCommandVar CommandBuild(CCommandVar p1, CCommandVar p2)
 CCommandVar CommandMakeAIMap(CCommandVar p1, CCommandVar p2)
 {
     if( !Scene->locked() ){
-        if (mrYes==ELog.DlgMsg(mtConfirmation, TMsgDlgButtons()<<mbYes<<mbNo, "Are you sure to export ai-map?"))
+        if (mrYes==ELog.DlgMsg(mtConfirmation, mbYes |mbNo, "Are you sure to export ai-map?"))
             return 				Builder.MakeAIMap( );
     }else{
         ELog.DlgMsg( mtError, "Scene sharing violation" );
@@ -633,7 +633,7 @@ CCommandVar CommandMakeAIMap(CCommandVar p1, CCommandVar p2)
 CCommandVar CommandMakeGame(CCommandVar p1, CCommandVar p2)
 {
     if( !Scene->locked() ){
-        if (mrYes==ELog.DlgMsg(mtConfirmation, TMsgDlgButtons()<<mbYes<<mbNo, "Are you sure to export game?"))
+        if (mrYes==ELog.DlgMsg(mtConfirmation, mbYes |mbNo, "Are you sure to export game?"))
             return				Builder.MakeGame( );
     }else{
         ELog.DlgMsg( mtError, "Scene sharing violation" );
@@ -643,7 +643,7 @@ CCommandVar CommandMakeGame(CCommandVar p1, CCommandVar p2)
 CCommandVar CommandMakeDetails(CCommandVar p1, CCommandVar p2)
 {
     if( !Scene->locked() ){
-        if (mrYes==ELog.DlgMsg(mtConfirmation, TMsgDlgButtons()<<mbYes<<mbNo, "Are you sure to export details?"))
+        if (mrYes==ELog.DlgMsg(mtConfirmation, mbYes |mbNo, "Are you sure to export details?"))
             return 				Builder.MakeDetails();
     }else{
         ELog.DlgMsg( mtError, "Scene sharing violation" );
@@ -653,7 +653,7 @@ CCommandVar CommandMakeDetails(CCommandVar p1, CCommandVar p2)
 CCommandVar CommandMakeHOM(CCommandVar p1, CCommandVar p2)
 {
     if( !Scene->locked() ){
-        if (mrYes==ELog.DlgMsg(mtConfirmation, TMsgDlgButtons()<<mbYes<<mbNo, "Are you sure to export HOM?"))
+        if (mrYes==ELog.DlgMsg(mtConfirmation, mbYes |mbNo, "Are you sure to export HOM?"))
             return				Builder.MakeHOM();
     }else{
         ELog.DlgMsg( mtError, "Scene sharing violation" );
@@ -663,7 +663,7 @@ CCommandVar CommandMakeHOM(CCommandVar p1, CCommandVar p2)
 CCommandVar CommandMakeSOM(CCommandVar p1, CCommandVar p2)
 {
     if( !Scene->locked() ){
-        if (mrYes==ELog.DlgMsg(mtConfirmation, TMsgDlgButtons()<<mbYes<<mbNo, "Are you sure to export Sound Occlusion Model?"))
+        if (mrYes==ELog.DlgMsg(mtConfirmation, mbYes |mbNo, "Are you sure to export Sound Occlusion Model?"))
             return				Builder.MakeSOM();
     }else{
         ELog.DlgMsg( mtError, "Scene sharing violation" );

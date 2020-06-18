@@ -38,7 +38,7 @@ bool CSceneObject::LoadLTX(CInifile& ini, LPCSTR sect_name)
             {
                 xr_string _message;
                 _message = "Object ["+ref_name+"] not found. Relace it with ["+_new_name+"] or select other from library?";
-                mr = ELog.DlgMsg(mtConfirmation,TMsgDlgButtons() << mbYes << mbNo, _message.c_str());
+                mr = ELog.DlgMsg(mtConfirmation,mbYes |mbNo, _message.c_str());
                 if(mrYes==mr)
                 {
                     bRes = SetReference(_new_name.c_str());
@@ -47,7 +47,7 @@ bool CSceneObject::LoadLTX(CInifile& ini, LPCSTR sect_name)
             if(!bRes)
             {
                 if(mr == mrNone)
-                    mr = ELog.DlgMsg(mtConfirmation,TMsgDlgButtons() << mbYes << mbNo, "Object not found. Do you want to select it from library?");
+                    mr = ELog.DlgMsg(mtConfirmation,mbYes |mbNo, "Object not found. Do you want to select it from library?");
                 else
                     mr = mrNone;
 
@@ -125,7 +125,7 @@ bool CSceneObject::LoadStream(IReader& F)
             {
                 xr_string _message;
                 _message = "Object ["+xr_string(buf)+"] not found. Relace it with ["+_new_name+"] or select other from library?";
-                mr = ELog.DlgMsg(mtConfirmation,TMsgDlgButtons() << mbYes << mbNo, _message.c_str());
+                mr = ELog.DlgMsg(mtConfirmation,mbYes |mbNo, _message.c_str());
                 if(mrYes==mr)
                 {
                     bRes = SetReference(_new_name.c_str());
@@ -134,7 +134,7 @@ bool CSceneObject::LoadStream(IReader& F)
             if(!bRes)
             {
                 if(mr == mrNone)
-                    mr = ELog.DlgMsg(mtConfirmation,TMsgDlgButtons() << mbYes << mbNo, "Object not found. Do you want to select it from library?");
+                    mr = ELog.DlgMsg(mtConfirmation,mbYes |mbNo, "Object not found. Do you want to select it from library?");
                 else
                     mr = mrNone;
 

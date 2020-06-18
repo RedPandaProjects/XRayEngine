@@ -389,7 +389,7 @@ bool EScene::Validate(bool bNeedOkMsg, bool bTestPortal, bool bTestHOM, bool bTe
         }
         if (!bHasHOM)
 			Msg("!Level doesn't contain HOM objects!");
-//.			if (mrNo==ELog.DlgMsg(mtConfirmation,TMsgDlgButtons() << mbYes << mbNo,"Level doesn't contain HOM.\nContinue anyway?"))
+//.			if (mrNo==ELog.DlgMsg(mtConfirmation,mbYes |mbNo,"Level doesn't contain HOM.\nContinue anyway?"))
 //.				return false;
     }
     if (ObjCount(OBJCLASS_SPAWNPOINT)==0){

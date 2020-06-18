@@ -195,7 +195,7 @@ void ESceneGroupTool::SaveSelectedObject()
     }else
 	if(scnt>1)
     {
-        if(mrYes != ELog.DlgMsg(mtConfirmation, TMsgDlgButtons() << mbYes << mbNo, "Process multiple objects?") )
+        if(mrYes != ELog.DlgMsg(mtConfirmation, mbYes | mbNo, "Process multiple objects?") )
         	return;
     }
     

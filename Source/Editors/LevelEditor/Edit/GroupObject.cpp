@@ -76,7 +76,7 @@ bool CGroupObject::LL_AppendObject(CCustomObject* object)
     }
     if(object->GetOwner())
     {
-        if (mrNo==ELog.DlgMsg(mtConfirmation,TMsgDlgButtons() << mbYes << mbNo,"Object '%s' already in group '%s'. Change group?",object->GetName(),object->GetOwner()->GetName()))
+        if (mrNo==ELog.DlgMsg(mtConfirmation,mbYes |mbNo,"Object '%s' already in group '%s'. Change group?",object->GetName(),object->GetOwner()->GetName()))
         	return false;
             
 	    object->OnDetach();

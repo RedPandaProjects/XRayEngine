@@ -79,7 +79,7 @@ void CSpawnPoint::CLE_Visual::OnChangeVisual	()
         if(NULL==visual && !g_tmp_lock)
         {
          xr_string _msg = "Model [" + xr_string(source->visual_name.c_str())+"] not found. Do you want to select it from library?";
-              int mr = ELog.DlgMsg(mtConfirmation,TMsgDlgButtons() << mbYes << mbNo, _msg.c_str());
+              int mr = ELog.DlgMsg(mtConfirmation,mbYes |mbNo, _msg.c_str());
               LPCSTR _new_val = 0;
               g_tmp_lock = true;
              /* if (mr==mrYes && TfrmChoseItem::SelectItem(smVisual,_new_val, 1) )
