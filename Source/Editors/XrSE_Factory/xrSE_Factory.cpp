@@ -33,12 +33,7 @@ extern CScriptPropertiesListHelper	*g_property_list_helper;
 
 #ifdef NDEBUG
 
-namespace std {
-	void terminate			()
-	{
-		abort				();
-	}
-} // namespace std
+
 
 #endif // #ifdef NDEBUG
 

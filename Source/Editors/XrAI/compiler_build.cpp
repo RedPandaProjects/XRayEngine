@@ -6,7 +6,7 @@
 #include "motion_simulator.h"
 
 #pragma warning(disable:4995)
-#include <freemagic/MgcAppr3DPlaneFit.h>
+#include "../freemagic/MgcAppr3DPlaneFit.h"
 #pragma warning(default:4995)
 
 IC void SnapXZ	(Fvector&	V)
@@ -89,7 +89,7 @@ BOOL	CreateNode(Fvector& vAt, vertex& N)
 			float	tri_min_range	= flt_max;
 			int		tri_selected	= -1;
 			float	range,u,v;
-			for (i=0; i<u32(tris.size()); i++) 
+			for (u32 i=0; i<u32(tris.size()); i++) 
 			{
 				if (CDB::TestRayTri(P,D,tris[i].v,u,v,range,false)) 
 				{
@@ -193,7 +193,7 @@ BOOL	CreateNode(Fvector& vAt, vertex& N)
 				float	tri_min_range	= flt_max;
 				int		tri_selected	= -1;
 				float	range,u,v;
-				for (i=0; i<float(tris.size()); i++) 
+				for (u32 i=0; i<u32(tris.size()); i++)
 				{
 					if (CDB::TestRayTri(P,D,tris[i].v,u,v,range,false)) 
 					{
