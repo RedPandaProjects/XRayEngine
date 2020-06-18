@@ -660,6 +660,7 @@ LONG WINAPI UnhandledFilter	(_EXCEPTION_POINTERS *pExceptionInfo)
 			Debug.get_on_dialog()	(true);
 
 		MessageBox			(NULL,"Fatal error occured\n\nPress OK to abort program execution","Fatal error",MB_OK|MB_ICONERROR|MB_SYSTEMMODAL);
+		exit(-1);
 	}
 #endif // USE_OWN_ERROR_MESSAGE_WINDOW
 
