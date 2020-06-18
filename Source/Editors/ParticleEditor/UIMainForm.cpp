@@ -37,7 +37,6 @@ void UIMainForm::Draw()
     m_TopBar->Draw();
     m_RightBar->Draw();
     m_LeftBar->Draw();
-    ImGui::ShowDemoWindow(&bOpen);
     m_Render->Draw();
 }
 

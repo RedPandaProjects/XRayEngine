@@ -287,13 +287,7 @@ void CParticleTool::OnDeviceDestroy()
 
 void CParticleTool::SelectPreviewObject(int p)
 {
-    not_implemented();
-  /*  LPCSTR fn;
-    if (!TfrmChoseItem::SelectItem(smObject,fn,1,m_EditObject?m_EditObject->GetName():0)) return;
-    Lib.RemoveEditObject(m_EditObject);
-    m_EditObject = fn?Lib.CreateEditObject(fn):0;
-//	ZoomObject(TRUE);
-    UI->RedrawScene();*/
+
 }
 
 void CParticleTool::ResetPreviewObject()
@@ -627,7 +621,6 @@ void CParticleTool::CommandJumpToItem()
         	break;
         }
     }*/
-   not_implemented();
 }
 
 PS::CPEDef*	CParticleTool::FindPE(LPCSTR name)
