@@ -143,6 +143,7 @@ void _SynchronizeTextures()
 
 CActorTools::CActorTools()
 {
+    m_ChooseSkeletonBones = false;
     m_Props = 0;
     m_pEditObject = 0;
     m_bObjectModified = false;
@@ -219,7 +220,6 @@ void CActorTools::RenderEnvironment()
 
 void CActorTools::OnFrame()
 {
-    not_implemented_low();
     if (!m_bReady) return;
     //.    if (m_KeyBar) m_KeyBar->UpdateBar();
     m_PreviewObject.Update();
@@ -496,7 +496,6 @@ void CActorTools::Clear()
 
 void CActorTools::OnShowHint(AStringVec& SS)
 {
-    not_implemented();
 }
 extern xr_string MakeFullBoneName(CBone* bone);
 bool  CActorTools::MouseStart(TShiftState Shift)
@@ -779,7 +778,6 @@ void CActorTools::OnObjectModified(void)
 
 void CActorTools::ShowClipMaker()
 {
-    not_implemented();
 }
 
 bool CActorTools::Import(LPCSTR initial, LPCSTR obj_name)
@@ -1116,43 +1114,31 @@ bool CActorTools::GetSelectionPosition(Fmatrix& result)
 
 void PreviewModel::OnCreate()
 {
-    not_implemented_low();
+    
 }
 
 void PreviewModel::OnDestroy()
 {
-    not_implemented_low();
 }
 
 void PreviewModel::Clear()
 {
-    not_implemented_low();
 }
 
 void PreviewModel::SelectObject()
 {
-    not_implemented();
 }
 
 void PreviewModel::SetPreferences()
 {
-   /* PropItemVec items;
-    PHelper().CreateFlag32(items, "Scroll", &m_Flags, pmScroll);
-    PHelper().CreateFloat(items, "Speed (m/c)", &m_fSpeed, -10000.f, 10000.f, 0.01f, 2);
-    PHelper().CreateFloat(items, "Segment (m)", &m_fSegment, -10000.f, 10000.f, 0.01f, 2);
-    PHelper().CreateToken32(items, "Scroll axis", (u32*)&m_ScrollAxis, sa_token);
-    m_Props->AssignItems(items);*/
-    not_implemented_low();
 }
 
 void PreviewModel::Render()
 {
-    not_implemented_low();
 }
 
 void PreviewModel::Update()
 {
-    not_implemented_low();
 }
 
 

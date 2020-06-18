@@ -114,6 +114,8 @@ class CActorTools: public CToolCustom
 {
 	typedef CToolCustom inherited;
 
+    bool m_ChooseSkeletonBones;
+
     Fmatrix				m_AVTransform;
 	CEditableObject*	m_pEditObject;
 
@@ -320,6 +322,8 @@ public:
 	CCommandVar 		CommandOptimizeMotions(CCommandVar p1, CCommandVar p2);
     CCommandVar 		CommandMakeThumbnail(CCommandVar p1, CCommandVar p2);
     CCommandVar			CommandBatchConvert	(CCommandVar p1, CCommandVar p2);
+public:
+    void RenderSpecial();
 };
 
 extern CActorTools*	ATools;

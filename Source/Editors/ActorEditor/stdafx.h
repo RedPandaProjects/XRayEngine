@@ -16,12 +16,3 @@
 #include "UIMainForm.h"
 #include "UI_ActorMain.h"
 #include "UI_ActorTools.h"
-inline void not_implemented_low()
-{
-}
-inline void not_implemented()
-{
-	if (IsDebuggerPresent())
-		DebugBreak();
-	R_ASSERT(0);
-}

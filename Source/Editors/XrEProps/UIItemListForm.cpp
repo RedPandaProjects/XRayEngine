@@ -85,6 +85,23 @@ bool UIItemListForm::GetSelected(RStringVec& items) const
 	items.push_back(m_SelectedItem->key);
 	return true;
 }
+int UIItemListForm::GetSelected(LPCSTR pref, ListItemsVec& items, bool bOnlyObject)
+{
+	ListItem* prop = m_SelectedItem;
+
+
+	if (prop && (!bOnlyObject || (bOnlyObject && prop->m_Object)))
+	{
+		xr_string key = *prop->key;
+		if (pref) {
+			if (0 == key.find(pref))
+				items.push_back(prop);
+		}
+		else
+			items.push_back(prop);
+	}
+	return items.size();
+}
 void UIItemListForm::AssignItems(ListItemsVec& items, const char* name_selection, bool clear_floder)
 {
 	ClearList();

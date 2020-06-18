@@ -128,15 +128,13 @@ void CActorTools::OnMotionEditClick(ButtonValue* V, bool& bModif, bool& bSafe)
     }break;
     case 1:{ // delete
     	ListItemsVec items;
-     /*   if (m_ObjectItems->GetSelected(MOTIONS_PREFIX,items,true)){
-            if (ELog.DlgMsg(mtConfirmation, TMsgDlgButtons() << mbYes << mbNo, "Delete selected %d item(s)?",items.size()) == mrYes){
+     if (m_ObjectItems->GetSelected(MOTIONS_PREFIX,items,true)){
+            if (ELog.DlgMsg(mtConfirmation,  mbYes |mbNo, "Delete selected %d item(s)?",items.size()) == mrYes){
             	for (ListItemsIt it=items.begin(); it!=items.end(); it++){
                 	VERIFY((*it)->m_Object);
 	                RemoveMotion(((CSMotion*)(*it)->m_Object)->Name()); 
                 }
-		    	m_ObjectItems->LockUpdating();
 				SelectListItem(MOTIONS_PREFIX,0,true,false,false);
-		    	m_ObjectItems->UnlockUpdating();
                 ExecCommand(COMMAND_UPDATE_PROPERTIES);
 				OnMotionKeysModified();
                 bModif = false;
@@ -145,11 +143,10 @@ void CActorTools::OnMotionEditClick(ButtonValue* V, bool& bModif, bool& bSafe)
             }
    
         }else
-        	ELog.DlgMsg(mtInformation,"Select at least one motion.");*/
-        not_implemented();
+        	ELog.DlgMsg(mtInformation,"Select at least one motion.");
     }break;
     case 2:{ // save
-     /*   int mr=ELog.DlgMsg(mtConfirmation, "Save selected motions only?");
+     int mr=ELog.DlgMsg(mtConfirmation, "Save selected motions only?");
         if (mr!=mrCancel){
             if (EFS.GetSaveName(_smotion_,fn,0,1)){
                 switch (mr){
@@ -158,7 +155,7 @@ void CActorTools::OnMotionEditClick(ButtonValue* V, bool& bModif, bool& bSafe)
                 }
             }
         }
-        bModif = false;*/     not_implemented();
+        bModif = false;
     }break;
 	}
 }
@@ -490,7 +487,7 @@ void  CActorTools::OnBoneCreateDeleteClick(ButtonValue* V, bool& bModif, bool& b
             	Msg("! Select 1 bone please.");
                 return;
             }
-           if (ELog.DlgMsg(mtConfirmation, TMsgDlgButtons() << mbYes << mbNo, "Delete selected bone?") == mrYes)
+           if (ELog.DlgMsg(mtConfirmation,  mbYes | mbNo, "Delete selected bone?") == mrYes)
            {
            		m_pEditObject->DeleteBone(sel_bones[0]);
             	bModif = true;
@@ -505,34 +502,8 @@ void  CActorTools::OnBoneCreateDeleteClick(ButtonValue* V, bool& bModif, bool& b
                 return;
             }
             LPCSTR _bone_name 		= 0;
-
-       /*   if (TfrmChoseItem::SelectItem(smSkeletonBonesInObject, _bone_name, 1, 0, 0, m_pEditObject) )
-          {
-            Msg("selected bone %s", _bone_name);
-            CBone* BSelected	 		= m_pEditObject->FindBoneByName(_bone_name);
-            R_ASSERT					(BSelected);
-
-            CBone* BEditable 			= sel_bones[0];
-            Fmatrix matrix1, matrix2;
-            Fvector offset, rotate1, rotate2, rotate;
-            float length = 0.01f;
-
-            m_pEditObject->GotoBindPose();
-
-			matrix1.identity();
-			matrix2.identity();
-            GetBindAbsolutePosition	(BEditable, matrix1);
-            GetBindAbsolutePosition	(BSelected, matrix2);
-
-            Fmatrix R;
-            R.mul(matrix1.invert(), matrix2).getXYZi(rotate);
-            offset.set(R.c);
-
-            BEditable->SetRestParams		(length, offset, rotate);
-
-            m_pEditObject->GotoBindPose();
-          }*/
-            not_implemented();
+            UIChooseForm::SelectItem(smSkeletonBonesInObject, 1, 0, 0, m_pEditObject);
+            m_ChooseSkeletonBones = true;
         }break;
 	}
     if(bModif)
@@ -542,6 +513,50 @@ void  CActorTools::OnBoneCreateDeleteClick(ButtonValue* V, bool& bModif, bool& b
     }
 }
 
+void CActorTools::RenderSpecial()
+{
+    if (m_ChooseSkeletonBones)
+    {
+
+        xr_string str;
+        bool ok;
+        if (UIChooseForm::GetResult(ok, str))
+        {
+            if (ok)
+            {
+
+                BoneVec 		sel_bones;
+                m_pEditObject->GetSelectedBones(sel_bones);
+                Msg("selected bone %s", str.c_str());
+                CBone* BSelected = m_pEditObject->FindBoneByName(str.c_str());
+                R_ASSERT(BSelected);
+
+                CBone* BEditable = sel_bones[0];
+                Fmatrix matrix1, matrix2;
+                Fvector offset, rotate1, rotate2, rotate;
+                float length = 0.01f;
+
+                m_pEditObject->GotoBindPose();
+
+                matrix1.identity();
+                matrix2.identity();
+                GetBindAbsolutePosition(BEditable, matrix1);
+                GetBindAbsolutePosition(BSelected, matrix2);
+
+                Fmatrix R;
+                R.mul(matrix1.invert(), matrix2).getXYZi(rotate);
+                offset.set(R.c);
+
+                BEditable->SetRestParams(length, offset, rotate);
+
+                m_pEditObject->GotoBindPose();
+            }
+            m_ChooseSkeletonBones = false;
+            UIChooseForm::Update();
+        }
+
+    }
+}
 bool CActorTools::OnBoneNameAfterEdit	(PropValue* sender, shared_str& edit_val)
 {
 	R_ASSERT(m_pEditObject);
@@ -793,12 +808,11 @@ void CActorTools::FillObjectProperties(PropItemVec& items, LPCSTR pref, ListItem
 
 void CActorTools::SelectListItem(LPCSTR pref, LPCSTR name, bool bVal, bool bLeaveSel, bool bExpand)
 {
-    not_implemented_low();
-	/*xr_string nm = (name&&name[0])?PrepareKey(pref,name).c_str():xr_string(pref).c_str();
-	m_ObjectItems->SelectItem(nm.c_str(),bVal,bLeaveSel,bExpand);
+	xr_string nm = (name&&name[0])?PrepareKey(pref,name).c_str():xr_string(pref).c_str();
+	m_ObjectItems->SelectItem(nm.c_str());
 	if (pref){
-    	m_ObjectItems->SelectItem(pref,true,true,bExpand);
-    }*/
+    	m_ObjectItems->SelectItem(pref);
+    }
 }
 //------------------------------------------------------------------------------
 

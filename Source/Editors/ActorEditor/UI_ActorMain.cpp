@@ -209,6 +209,7 @@ CCommandVar CActorTools::CommandBatchConvert(CCommandVar p1, CCommandVar p2)
 }
 
 
+
 char* CActorMain::GetCaption()
 {
 	return ATools->GetEditFileName().empty()?"noname":ATools->GetEditFileName().c_str();
@@ -235,7 +236,7 @@ void CActorMain::RealUpdateScene()
 void CActorMain::ResetStatus()
 {
 	VERIFY(m_bReady);
-    not_implemented_low();
+    
    /* if (fraBottomBar->paStatus->Caption!=""){
 	    fraBottomBar->paStatus->Caption=""; fraBottomBar->paStatus->Repaint();
     }*/
@@ -243,7 +244,7 @@ void CActorMain::ResetStatus()
 void CActorMain::SetStatus(LPCSTR s, bool bOutLog)
 {
 	VERIFY(m_bReady);
-    not_implemented_low();
+    
     /*if (fraBottomBar->paStatus->Caption!=s)
     {
 	    fraBottomBar->paStatus->Caption=s; fraBottomBar->paStatus->Repaint();
@@ -260,7 +261,7 @@ void CActorMain::ProgressDraw()
 void CActorMain::OutCameraPos()
 {
 	VERIFY(m_bReady);
-    not_implemented_low();
+    
    /* AnsiString s;
 	const Fvector& c 	= EDevice.m_Camera.GetPosition();
 	s.sprintf("C: %3.1f, %3.1f, %3.1f",c.x,c.y,c.z);
@@ -271,7 +272,7 @@ void CActorMain::OutCameraPos()
 //---------------------------------------------------------------------------
 void CActorMain::OutUICursorPos()
 {
-    not_implemented_low();
+    
 /*	VERIFY(fraBottomBar);
     AnsiString s; POINT pt;
     GetCursorPos(&pt);
@@ -281,7 +282,7 @@ void CActorMain::OutUICursorPos()
 //---------------------------------------------------------------------------
 void CActorMain::OutGridSize()
 {
-    not_implemented_low();
+    
 	/*VERIFY(fraBottomBar);
     AnsiString s;
     s.sprintf("Grid: %1.1f",EPrefs->grid_cell_size);
@@ -290,7 +291,7 @@ void CActorMain::OutGridSize()
 //---------------------------------------------------------------------------
 void CActorMain::OutInfo()
 {
-    not_implemented_low();
+    
 	//fraBottomBar->paSel->Caption = Tools->GetInfo();
 }
 //---------------------------------------------------------------------------
@@ -373,13 +374,11 @@ CCommandVar CommandLoadFirstRecent(CCommandVar p1, CCommandVar p2)
 }
 CCommandVar CommandFileMenu(CCommandVar p1, CCommandVar p2)
 {
-    not_implemented();
   //  FHelper.ShowPPMenu(fraLeftBar->pmSceneFile, 0);
     return TRUE;
 }
 CCommandVar CommandRefreshUIBar(CCommandVar p1, CCommandVar p2)
 {
-    not_implemented_low();
     //not_implemented();
   /*  fraTopBar->RefreshBar();
     fraLeftBar->RefreshBar();
@@ -400,14 +399,12 @@ CCommandVar CommandSaveUIBar(CCommandVar p1, CCommandVar p2)
 }
 CCommandVar CommandUpdateToolBar(CCommandVar p1, CCommandVar p2)
 {
-    not_implemented_low();
     //not_implemented();
   //  fraLeftBar->UpdateBar();
     return TRUE;
 }
 CCommandVar CommandUpdateCaption(CCommandVar p1, CCommandVar p2)
 {
-    not_implemented_low();
     //not_implemented();
     //frmMain->UpdateCaption();
     return TRUE;

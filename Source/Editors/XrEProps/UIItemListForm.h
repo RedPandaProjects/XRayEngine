@@ -19,6 +19,7 @@ public:
 	void AssignItems(ListItemsVec& items,const char*name_selection=nullptr,bool clear_floder=true);
 	IC const ListItemsVec& GetItems()const {return m_Items;}
 	bool GetSelected(RStringVec& items)const;
+	int GetSelected(LPCSTR pref, ListItemsVec& items, bool bOnlyObject);
 public:
 	enum {
 		fMenuEdit =			(1<<0),
