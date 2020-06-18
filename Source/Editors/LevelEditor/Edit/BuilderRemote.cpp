@@ -130,7 +130,7 @@ void SceneBuilder::SaveBuildAsObject()
     for(u32 i=0;i<l_materials.size(); ++i)
     {
     	b_material& m		= l_materials[i];
-        b_texture&	t 		= l_textures[m.surfidx];
+        b_texture_real&	t 		= l_textures[m.surfidx];
 	    _splitpath			(t.name, 0, tex_path, tex_name, 0 );
 
         sprintf				(tmp,"newmtl %s", tex_name);
@@ -185,13 +185,13 @@ void SceneBuilder::SaveBuildAsObject()
     total_tcs				+= idx*3;
 
 	//faces
-    b_texture* last_texture = NULL;
+    b_texture_real* last_texture = NULL;
 	for(idx=0; idx<l_face_it; ++idx)
 	{
 		const b_face& it			= l_faces[idx];
 
         b_material& m				= l_materials[it.dwMaterial];
-        b_texture&	t 				= l_textures[m.surfidx];
+        b_texture_real&	t 				= l_textures[m.surfidx];
         if(last_texture != &t)
         {
 	    	_splitpath			(t.name, 0, 0, tex_name, 0 );
@@ -234,7 +234,7 @@ void SceneBuilder::SaveBuildAsObject()
 			const b_face& it		= m.m_pFaces[fi];
 
             b_material& m			= l_materials[it.dwMaterial];
-            b_texture&	t 			= l_textures[m.surfidx];
+            b_texture_real&	t 			= l_textures[m.surfidx];
             if(last_texture != &t)
             {
                 _splitpath			(t.name, 0, 0, tex_name, 0 );
@@ -377,7 +377,7 @@ void SceneBuilder::SaveBuild()
         F->close_chunk	();
 
         F->open_chunk	(EB_Textures);
-        F->w			(l_textures.data(),sizeof(b_texture)*l_textures.size());
+        F->w			(l_textures.data(),sizeof(b_texture_real)*l_textures.size());
         F->close_chunk	();
 
         F->open_chunk 	(EB_Glows);
@@ -1223,7 +1223,7 @@ int SceneBuilder::BuildTexture(const char* name)
     }
     int tex_idx     	= FindInTextures(name);
     if(tex_idx<0){
-		b_texture       tex;
+		b_texture_real       tex;
         ZeroMemory(&tex,sizeof(tex));
 		strcpy          (tex.name,name);
     	l_textures.push_back(tex);

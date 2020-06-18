@@ -62,7 +62,7 @@ public:
     xr_vector<sb_light_control>	l_light_control;
     xr_vector<b_light_static>	l_light_static;
     xr_vector<b_light_dynamic>	l_light_dynamic;
-    xr_vector<b_texture>       	l_textures;
+    xr_vector<b_texture_real>       	l_textures;
     xr_vector<b_shader>        	l_shaders;
     xr_vector<b_shader>        	l_shaders_xrlc;
     xr_vector<b_material>      	l_materials;
