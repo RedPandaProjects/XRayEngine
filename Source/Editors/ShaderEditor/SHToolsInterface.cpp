@@ -59,9 +59,12 @@ void ISHTools::ZoomObject(bool bOnlySel)
 xr_string ISHTools::ViewGetCurrentItem(bool bFolderOnly)
 {
     xr_string name;
-    R_ASSERT(0);
-/*	TElTreeItem* item 	= Ext.m_Items->GetSelected();
-    FHelper.MakeName	(item,0,name,bFolderOnly);*/
+    RStringVec lst;
+    Ext.m_Items->GetSelected(lst);
+    if (lst.size() == 1)
+    {
+        name = lst[0].c_str();
+    }
     return name;
 }
 //---------------------------------------------------------------------------
