@@ -22,6 +22,7 @@ TUI* 	UI			= 0;
 
 TUI::TUI()
 {
+    m_HConsole = 0;
 	UI				= this;
     m_AppClosed = false;
     m_bAppActive 	= false;
@@ -602,6 +603,11 @@ SPBItem* TUI::ProgressStart		(float max_val, LPCSTR text)
     m_ProgressItems.push_back	(item);
     ELog.Msg					(mtInformation,text);
     ProgressDraw				();
+    if (!m_HConsole)
+    {
+        AllocConsole();
+        m_HConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    }
 	return item;
 }
 void TUI::ProgressEnd			(SPBItem*& pbi)
@@ -612,6 +618,28 @@ void TUI::ProgressEnd			(SPBItem*& pbi)
         m_ProgressItems.erase	(it);
         xr_delete				(pbi);
         ProgressDraw			();
+        if (m_ProgressItems.size() == 0)
+        {
+            FreeConsole();
+            m_HConsole = 0;
+        }
+    }
+}
+
+void TUI::ProgressDraw()
+{
+    SPBItem* pbi = UI->ProgressLast();
+    if (pbi) 
+    {
+        xr_string txt;
+        float 		p, m;
+        pbi->GetInfo(txt, p, m);
+        // progress
+        int val = fis_zero(m) ? 0 : (int)((p / m) * 100);
+        string2048 out;
+        xr_sprintf(out,"[%d%%]%s\r\n", val, txt.c_str());
+        DWORD  dw;
+        WriteConsole(m_HConsole, out, xr_strlen(out), &dw, NULL);
     }
 }
 

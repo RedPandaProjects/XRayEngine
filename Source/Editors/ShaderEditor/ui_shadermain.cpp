@@ -149,6 +149,7 @@ void CShaderMain::SetStatus(LPCSTR s, bool bOutLog)
 }
 void CShaderMain::ProgressDraw()
 {
+    inherited::ProgressDraw();
 	//fraBottomBar->RedrawBar();
 }
 //---------------------------------------------------------------------------

@@ -253,7 +253,7 @@ void CActorMain::SetStatus(LPCSTR s, bool bOutLog)
 
 void CActorMain::ProgressDraw()
 {
-    not_implemented_low();
+    inherited::ProgressDraw();
 	/*fraBottomBar->RedrawBar();*/
 }
 //---------------------------------------------------------------------------

@@ -210,6 +210,7 @@ void CParticleMain::SetStatus(LPCSTR s, bool bOutLog)
 }
 void CParticleMain::ProgressDraw()
 {
+    inherited::ProgressDraw();
 /*	fraBottomBar->RedrawBar();*/
 }
 //---------------------------------------------------------------------------

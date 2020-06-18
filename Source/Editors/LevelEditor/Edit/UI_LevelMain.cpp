@@ -1246,6 +1246,7 @@ void CLevelMain::SetStatus(LPCSTR s, bool bOutLog)
 }
 void CLevelMain::ProgressDraw()
 {
+    inherited::ProgressDraw();
 	//fraBottomBar->RedrawBar();
 }
 //---------------------------------------------------------------------------
