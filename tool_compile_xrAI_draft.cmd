@@ -1,0 +1,1 @@
+start Bin\Win32\Development\xrai.exe -f test -draft -keep_temp_files
