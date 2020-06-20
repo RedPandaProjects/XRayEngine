@@ -445,6 +445,7 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 						a++;
 					text[i] = str[a];
 				}
+				if(str.size()>16||str.size()==0)
 				for (; i < std::min(size_t(16), str.size()) + 3; i++)
 				{
 					text[i] = '.';
@@ -479,6 +480,7 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 						a++;
 					text[i] = str[a];
 				}
+				if (str.size() > 16 || str.size() == 0)
 				for (; i < std::min(size_t(16), str.size()) + 3; i++)
 				{
 					text[i] = '.';
@@ -514,6 +516,7 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 						a++;
 					text[i] = str[a];
 				}
+				if (str.size() > 16 || str.size() == 0)
 				for (; i < std::min(size_t(16), str.size()) + 3; i++)
 				{
 					text[i] = '.';
