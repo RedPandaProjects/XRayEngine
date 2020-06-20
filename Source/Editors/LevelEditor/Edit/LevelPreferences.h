@@ -14,6 +14,8 @@ protected:
     virtual void 	Save				(CInifile*);
 public:
     virtual void	FillProp          	(PropItemVec& items);
+	bool OpenObjectList;
+	bool OpenProperties;
 };
 //---------------------------------------------------------------------------
 #endif

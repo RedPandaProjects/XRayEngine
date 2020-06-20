@@ -271,6 +271,9 @@ void CLevelTool::RefreshProperties()
 void CLevelTool::ShowProperties(LPCSTR focus_to_item)
 {
     RealUpdateProperties	();
+    if(MainForm)
+        MainForm->GetPropertiesFrom()->Open();
+   
     /*
 	if(focus_to_item)
     	m_Props->SelectFolder	(focus_to_item);
