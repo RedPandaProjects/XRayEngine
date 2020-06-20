@@ -113,7 +113,8 @@ void  CLight::OnAttenuationDraw(CanvasValue* sender)
             else		canvas->LineTo(x0+d,y);
         }
     }*/
-    not_implemented();
+    R_ASSERT(!"Сорян забыл релизовать");
+
 }
 
 void 	CLight::OnPointDataChange(PropValue* value)

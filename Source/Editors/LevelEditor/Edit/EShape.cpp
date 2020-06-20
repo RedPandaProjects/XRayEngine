@@ -469,7 +469,7 @@ void CEditShape::OnFrame()
 	inherited::OnFrame();
     if(m_shape_type==eShapeLevelBound)
     {
-        not_implemented();
+        R_ASSERT(!"Сорян забыл релизовать");
     /*	TfraShape* F 		= (TfraShape*)ParentTool->pFrame;
     	BOOL bVis = F->ebEditLevelBoundMode->Down;
     	m_RT_Flags.set(flRT_Visible, bVis);*/

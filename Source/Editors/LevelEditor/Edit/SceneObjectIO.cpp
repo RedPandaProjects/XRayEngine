@@ -52,7 +52,8 @@ bool CSceneObject::LoadLTX(CInifile& ini, LPCSTR sect_name)
                     mr = mrNone;
 
                 LPCSTR new_val = 0;
-                not_implemented();
+                R_ASSERT(!"Сорян забыл релизовать");
+
                /* if ( (mr==mrNone||mr==mrYes) && TfrmChoseItem::SelectItem(smObject,new_val,1))
                 {
                     bRes = SetReference(new_val);
@@ -139,7 +140,8 @@ bool CSceneObject::LoadStream(IReader& F)
                     mr = mrNone;
 
                 LPCSTR new_val = 0;
-                not_implemented();
+                R_ASSERT(!"Сорян забыл релизовать");
+
                 /*if ( (mr==mrNone||mr==mrYes) && TfrmChoseItem::SelectItem(smObject,new_val,1))
                 {
                     bRes = SetReference(new_val);

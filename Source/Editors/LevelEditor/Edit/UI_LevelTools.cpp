@@ -265,7 +265,6 @@ bool CLevelTool::Pick(TShiftState Shift)
 
 void CLevelTool::RefreshProperties()
 {
-    not_implemented();
 	//m_Props->RefreshForm();
 }
 
@@ -330,7 +329,6 @@ bool CLevelTool::IfModified()
     case esEditScene:		return Scene->IfModified();
     default: THROW;
     }*/
-    not_implemented();
     return false;
 }
 //---------------------------------------------------------------------------
@@ -341,7 +339,7 @@ void CLevelTool::ZoomObject(BOOL bSelectedOnly)
         Scene->ZoomExtents(CurrentClassID(),bSelectedOnly);
     } else {
         if (UI->GetEState()==esEditLibrary){
-            not_implemented();//   TfrmEditLibrary::ZoomObject();
+           //   TfrmEditLibrary::ZoomObject();
         }
     }
 }
@@ -388,7 +386,7 @@ void  CLevelTool::OnFrame()
         }
         if (m_Flags.is(flUpdateProperties)) 	RealUpdateProperties();
         if (m_Flags.is(flUpdateObjectList)) 	RealUpdateObjectList();
-        if (est==esEditLightAnim)  not_implemented(); //TfrmEditLightAnim::OnIdle();
+        //TfrmEditLightAnim::OnIdle();
     }
 }
 //---------------------------------------------------------------------------
@@ -417,7 +415,7 @@ void  CLevelTool::Render()
     EEditorState est 		= UI->GetEState();
     // draw scene
     switch(est){
-    case esEditLibrary: 	/*TfrmEditLibrary::OnRender();*/ not_implemented(); 	break;
+    case esEditLibrary: 	/*TfrmEditLibrary::OnRender();*/ 	break;
     case esEditLightAnim:
     case esEditScene:
     	Scene->Render(EDevice.m_Camera.GetTransform()); 
@@ -434,13 +432,13 @@ void  CLevelTool::Render()
 
 void CLevelTool::ShowObjectList()
 {
-    not_implemented(); //if (pObjectListForm) pObjectListForm->ShowObjectList();
+ //if (pObjectListForm) pObjectListForm->ShowObjectList();
 }
 //---------------------------------------------------------------------------
 
 void CLevelTool::RealUpdateObjectList()
 {
-    not_implemented(); //if (pObjectListForm) pObjectListForm->UpdateObjectList();
+   //if (pObjectListForm) pObjectListForm->UpdateObjectList();
 	m_Flags.set(flUpdateObjectList,FALSE);
 }
 //---------------------------------------------------------------------------

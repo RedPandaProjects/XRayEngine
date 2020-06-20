@@ -155,7 +155,7 @@ void ESceneLightTool::OnControlAppendClick(ButtonValue* sender, bool& bDataModif
 
 void ESceneLightTool::OnControlRenameRemoveClick(ButtonValue* V, bool& bDataModified, bool& bSafe)
 {
-    not_implemented();
+    R_ASSERT(!"Сорян забыл релизовать");
    /* xr_string item_name = V->Owner()->Item()->Text;
     switch (V->btn_num){
     case 0:{ 

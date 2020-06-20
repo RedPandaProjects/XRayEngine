@@ -113,7 +113,6 @@ void   FillSpawnItems	(ChooseItemVec& lst, void* param)
 ESceneSpawnTool::ESceneSpawnTool():ESceneCustomOTool(OBJCLASS_SPAWNPOINT)
 {
 	m_Flags.zero();
-    not_implemented();
     UIChooseForm::AppendEvents	(smSpawnItem,		"Select Spawn Item",		FillSpawnItems,		0,0,0,0);
     m_Classes.clear			();
     CInifile::Root const& data 	= pSettings->sections();

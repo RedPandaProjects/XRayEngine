@@ -23,13 +23,3 @@
 #include "../XrECore/Editor/EditMesh.h"
 #include "../XrECore/Editor/D3DUtils.h"
 #include "scene.h"
-inline void not_implemented_low()
-{
-}
-inline void not_implemented()
-{
-	return ;
-	if (IsDebuggerPresent())
-		DebugBreak();
-	R_ASSERT(0);
-}

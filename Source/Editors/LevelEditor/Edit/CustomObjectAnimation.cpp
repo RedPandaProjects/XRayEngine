@@ -159,7 +159,7 @@ void 	CCustomObject::OnMotionCommandsClick(ButtonValue* value, bool& bModif, boo
     	AnimationDeleteKey	(m_MotionParams->t_current);
     break;
     case 2:{
-        not_implemented();
+        R_ASSERT(!"Сорян забыл релизовать");
     	/*TProperties* P 		= TProperties::CreateModalForm("Scale keys");
         PropItemVec items;
         float from_time=m_MotionParams->min_t,to_time=m_MotionParams->max_t,scale_factor=1.f;
@@ -178,7 +178,7 @@ void 	CCustomObject::OnMotionCommandsClick(ButtonValue* value, bool& bModif, boo
         }*/
     }break;
     case 3:{
-        not_implemented();
+        R_ASSERT(!"Сорян забыл релизовать");
     /*	TProperties* P 		= TProperties::CreateModalForm("Normalize keys");
         PropItemVec items;
         float from_time=m_MotionParams->min_t,to_time=m_MotionParams->max_t,speed=5.f;

@@ -87,7 +87,8 @@ void CSpawnPoint::CLE_Visual::OnChangeVisual	()
                   source->visual_name  =  _new_val;
                   visual = ::Render->model_Create(source->visual_name.c_str());
               }*/
-              not_implemented();
+              R_ASSERT(!"Сорян забыл релизовать");
+
               g_tmp_lock = false;
 
         }

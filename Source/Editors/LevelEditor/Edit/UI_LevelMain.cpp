@@ -69,18 +69,15 @@ CCommandVar CommandLibraryEditor(CCommandVar p1, CCommandVar p2)
     }else{
         TfrmEditLibrary::ShowEditor();
     }*/
-    not_implemented();
     return TRUE;
 }
 CCommandVar CommandLAnimEditor(CCommandVar p1, CCommandVar p2)
 {
-    not_implemented();
     //TfrmEditLightAnim::ShowEditor();
     return TRUE;
 }
 CCommandVar CommandFileMenu(CCommandVar p1, CCommandVar p2)
 {
-    not_implemented();
     //FHelper.ShowPPMenu(fraLeftBar->pmSceneFile,0);
     return TRUE;
 }
@@ -372,7 +369,6 @@ CCommandVar CommandShowClipEditor(CCommandVar p1, CCommandVar p2)
         R_ASSERT					(KA);
    		g_clip_maker->ShowEditor	(KA);
     }*/
-    not_implemented();
     return 							TRUE;
 }
 
@@ -422,45 +418,40 @@ CCommandVar CommandReloadObjects(CCommandVar p1, CCommandVar p2)
 
 CCommandVar CommandCut(CCommandVar p1, CCommandVar p2)
 {
-  /*  if( !Scene->locked() ){
+    if( !Scene->locked() ){
         Scene->CutSelection(LTools->CurrentClassID());
-        fraLeftBar->miPaste->Enabled = true;
-        fraLeftBar->miPaste2->Enabled = true;
+       /* fraLeftBar->miPaste->Enabled = true;
+        fraLeftBar->miPaste2->Enabled = true;*/
         Scene->UndoSave	();
         return 			TRUE;
     } else {
         ELog.DlgMsg( mtError, "Scene sharing violation" );
         return 			FALSE;
-    }*/
-    not_implemented();
+    }
     return FALSE;
 }
 CCommandVar CommandCopy(CCommandVar p1, CCommandVar p2)
 {
-  /*  if( !Scene->locked() ){
+      if( !Scene->locked() ){
         Scene->CopySelection(LTools->CurrentClassID());
-        fraLeftBar->miPaste->Enabled = true;
-        fraLeftBar->miPaste2->Enabled = true;
         return 			TRUE;
     } else {
         ELog.DlgMsg		( mtError, "Scene sharing violation" );
         return 			FALSE;
-    }*/
-    not_implemented();
+    }
     return FALSE;
 }
 
 CCommandVar CommandPaste(CCommandVar p1, CCommandVar p2)
 {
-    /*if( !Scene->locked() ){
+    if( !Scene->locked() ){
         Scene->PasteSelection();
         Scene->UndoSave	();
         return 			TRUE;
     } else {
         ELog.DlgMsg		( mtError, "Scene sharing violation" );
         return  		FALSE;
-    }*/
-    not_implemented();
+    }
     return FALSE;
 }
 
@@ -592,7 +583,6 @@ CCommandVar CommandSceneHighlightTexture(CCommandVar p1, CCommandVar p2)
         ELog.DlgMsg( mtError, "Scene sharing violation" );
     }
     return 						FALSE;*/
-    not_implemented();
     return FALSE;
 }
 
@@ -801,7 +791,6 @@ CCommandVar CommandSelectSnapObjects(CCommandVar p1, CCommandVar p2)
 CCommandVar CommandRefreshSnapObjects(CCommandVar p1, CCommandVar p2)
 {
  //   fraLeftBar->UpdateSnapList();
-    not_implemented();
     return 						TRUE;
 }
 /*
@@ -1036,7 +1025,6 @@ bool EditLibPickObjectGeometry(  Fvector& hitpoint,  const Fvector& start, const
     	RetrieveSceneObjPointAndNormal( hitpoint,  hitnormal, pinf, bSnap );
         return true;
     }*/
-    not_implemented();
     return false;
 }
 
@@ -1215,7 +1203,6 @@ void CLevelMain::ShowContextMenu(int cls)
     RedrawScene(true);
     fraLeftBar->pmObjectContext->TrackButton = tbRightButton;
     fraLeftBar->pmObjectContext->Popup(pt.x,pt.y);*/
-    not_implemented();
 }
 //---------------------------------------------------------------------------
 
@@ -1239,7 +1226,6 @@ void CLevelMain::SetStatus(LPCSTR s, bool bOutLog)
 	    fraBottomBar->paStatus->Caption=s; fraBottomBar->paStatus->Repaint();
     	if (bOutLog&&s&&s[0]) ELog.Msg(mtInformation,s);
     }*/
-    not_implemented();
 }
 void CLevelMain::ProgressDraw()
 {

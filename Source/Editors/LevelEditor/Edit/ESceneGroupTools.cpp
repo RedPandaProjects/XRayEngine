@@ -112,7 +112,6 @@ void   FillGroupItems(ChooseItemVec& items, void* param)
 
 void ESceneGroupTool::AlignToObject()
 {
-    not_implemented();
     ObjectList& lst 	= m_Objects;
     int sel_cnt			= 0;
     if (!lst.empty())
@@ -122,6 +121,7 @@ void ESceneGroupTool::AlignToObject()
 		{
         	if ((*it)->Selected())
 			{
+                R_ASSERT(!"Сорян забыл релизовать");
 			    /*sel_cnt++;
                 if (TfrmChoseItem::SelectItem(smCustom, nm, 1, nm, FillGroupItems, *it))
 				{

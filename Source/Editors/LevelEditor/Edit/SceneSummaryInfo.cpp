@@ -108,7 +108,8 @@ void SSceneSummary::STextureInfo::OnHighlightClick(ButtonValue* sender, bool& bD
     case 2: Scene->HighlightTexture	((LPCSTR)sender->tag,true,info.width,info.height,true); break;
     case 3: ExecCommand(COMMAND_CLEAR_DEBUG_DRAW); break;
 	}*/
-    not_implemented();
+    R_ASSERT(!"Сорян забыл релизовать");
+
     bDataModified 	= false;
     bSafe 			= false;
 }
@@ -211,8 +212,8 @@ void SSceneSummary::OnHighlightClick(ButtonValue* V, bool& bDataModified, bool& 
         }
     }break;
     case 1: ExecCommand(COMMAND_CLEAR_DEBUG_DRAW); break;
-	}*/
-    not_implemented();
+	}*/    R_ASSERT(!"Сорян забыл релизовать");
+
     bDataModified 	= false;
     bSafe 			= false;
     

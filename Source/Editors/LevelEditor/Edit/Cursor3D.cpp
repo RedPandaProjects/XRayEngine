@@ -119,7 +119,6 @@ void C3DCursor::Render(){
 
 bool C3DCursor::PrepareBrush()
 {
-    not_implemented();
     SRayPickInfo pinf;
     bool bPickObject, bPickGround;
     Fvector N, D;
