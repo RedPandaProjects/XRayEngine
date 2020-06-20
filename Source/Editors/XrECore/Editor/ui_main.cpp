@@ -555,11 +555,15 @@ bool TUI::OnCreate()
 
     m_bReady		= true;
 
-    if (!CreateMailslot()){
-    	ELog.DlgMsg	(mtError,"Can't create mail slot.\nIt's possible two Editors started.");
+    if (!CreateMailslot()) {
+        ELog.DlgMsg(mtError, "Can't create mail slot.\nIt's possible two Editors started.");
         return 		false;
     }
-
+    string_path log_path;
+    if (!FS.exist(log_path,_temp_,""))
+    {
+        VerifyPath(log_path);
+    }
     if (!FS.path_exist(_local_root_)){
     	ELog.DlgMsg	(mtError,"Undefined Editor local directory.");
         return 		false;
