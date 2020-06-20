@@ -40,7 +40,14 @@ void load_prop_helper			()
 CScriptPropertiesListHelper *properties_helper()
 {
 	if (!g_property_list_helper)
-		ai().script_engine().script_log	(ScriptStorage::eLuaMessageTypeError,"Editor is not started, therefore prop_helper cannot be accessed!");
+	{
+		static	bool			first_time = true;
+		if (first_time) {
+			first_time = false;
+			load_prop_helper();
+		}
+	}
+		//ai().script_engine().script_log	(ScriptStorage::eLuaMessageTypeError,"Editor is not started, therefore prop_helper cannot be accessed!");
 
 	return								(g_property_list_helper);
 }
