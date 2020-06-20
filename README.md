@@ -5,7 +5,7 @@ It is open source version of the original XRay Engine 1.6, used in game S.T.A.L.
 ### Supported Platform
 |Platform|Configurations|Status|
 |---|---|---|
-|Windows|Debug/Development/Release (x86)|[![Build status](https://ci.appveyor.com/api/projects/status/sa747tq57y0aad2w?svg=true)](https://ci.appveyor.com/project/BearIvan/unrealengine)|
+|Windows|Debug/Development/Release (x86)|[![Build status](https://ci.appveyor.com/api/projects/status/l7x79iufq7n0mcs0/branch/master?svg=true)](https://ci.appveyor.com/project/BearIvan/xrayengine/branch/master)|
 
 ###  General Upgrade:
 * PORT Vanilla engine on visual studio 2019
