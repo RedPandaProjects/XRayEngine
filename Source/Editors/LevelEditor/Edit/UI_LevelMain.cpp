@@ -466,19 +466,17 @@ CCommandVar CommandPaste(CCommandVar p1, CCommandVar p2)
 
 CCommandVar CommandLoadSelection(CCommandVar p1, CCommandVar p2)
 {
-   /* if( !Scene->locked() )
+    if( !Scene->locked() )
     {
         xr_string fn			= LTools->m_LastSelectionName;
-        if( EFS.GetOpenName( _maps_, fn ) )
+        if( EFS.GetOpenName(EDevice.m_hWnd, _maps_, fn ) )
         {
         	LPCSTR maps_path	= FS.get_path(_maps_)->m_Path;
         	if (fn.c_str()==strstr(fn.c_str(),maps_path))
 		        LTools->m_LastSelectionName = fn.c_str()+xr_strlen(maps_path);
             UI->SetStatus		("Fragment loading...");
 
-			g_frmConflictLoadObject->m_result = 0;
             Scene->LoadSelection(fn.c_str());
-			g_frmConflictLoadObject->m_result = 4; //auto-rename
 
             UI->ResetStatus		();
             Scene->UndoSave		();
@@ -489,8 +487,7 @@ CCommandVar CommandLoadSelection(CCommandVar p1, CCommandVar p2)
         }               	
     } else {
         ELog.DlgMsg( mtError, "Scene sharing violation" );
-    }*/
-    not_implemented();
+    }
     return FALSE;
 }        
 CCommandVar CommandSaveSelection(CCommandVar p1, CCommandVar p2)
