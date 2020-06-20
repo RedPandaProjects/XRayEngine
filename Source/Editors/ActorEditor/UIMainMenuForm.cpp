@@ -57,21 +57,29 @@ void UIMainMenuForm::Draw()
             if (ImGui::MenuItem("Preferences", "")) { ExecCommand(COMMAND_PREVIEW_OBJ_PREF); }
             ImGui::EndMenu();
         }
-        if (ImGui::BeginMenu("Image"))
+        if (ImGui::BeginMenu("Editors"))
         {
-            if (ImGui::MenuItem("Image Editor", "")) { ExecCommand(COMMAND_IMAGE_EDITOR); }
-            ImGui::Separator();
-            if (ImGui::MenuItem("Synchronize Textures", "")) { ExecCommand(COMMAND_REFRESH_TEXTURES); }
-            if (ImGui::MenuItem("Cheack New Textures", "")) { ExecCommand(COMMAND_CHECK_TEXTURES); }
+            if (ImGui::BeginMenu("Image"))
+            {
+                if (ImGui::MenuItem("Image Editor", "")) { ExecCommand(COMMAND_IMAGE_EDITOR); }
+                ImGui::Separator();
+                if (ImGui::MenuItem("Synchronize Textures", "")) { ExecCommand(COMMAND_REFRESH_TEXTURES); }
+                if (ImGui::MenuItem("Cheack New Textures", "")) { ExecCommand(COMMAND_CHECK_TEXTURES); }
+                ImGui::EndMenu();
+            }
+            if (ImGui::BeginMenu("Sounds"))
+            {
+                if (ImGui::MenuItem("Sound Editor", "")) { ExecCommand(COMMAND_SOUND_EDITOR); }
+                ImGui::Separator();
+                if (ImGui::MenuItem("Synchronize Sounds", "")) { ExecCommand(COMMAND_SYNC_SOUNDS); }
+                ImGui::EndMenu();
+            }
+            if (ImGui::MenuItem("Light Anim Editor", "")) { ExecCommand(COMMAND_LIGHTANIM_EDITOR); }
+            if (ImGui::MenuItem("Minimap Editor", "")) { ExecCommand(COMMAND_MINIMAP_EDITOR); }
             ImGui::EndMenu();
         }
-        if (ImGui::BeginMenu("Sounds"))
-        {
-            if (ImGui::MenuItem("Sound Editor", "")) { ExecCommand(COMMAND_SOUND_EDITOR); }
-            ImGui::Separator();
-            if (ImGui::MenuItem("Synchronize Sounds", "")) { ExecCommand(COMMAND_SYNC_SOUNDS); }
-            ImGui::EndMenu();
-        }
+
+       
         if (ImGui::BeginMenu("Options"))
         {
             if (ImGui::BeginMenu("Render"))
@@ -225,15 +233,23 @@ void UIMainMenuForm::Draw()
                     psDeviceFlags.set(rsRenderRealTime, selected);
                 }
             }
-   
+            ImGui::Separator();
+            {
+                bool selected = psDeviceFlags.test(rsStatistic);
+                if (ImGui::MenuItem("Stats", "", &selected)) { psDeviceFlags.set(rsStatistic, selected);  UI->RedrawScene(); }
+
+            }
+            ImGui::Separator();
+            if (ImGui::MenuItem("Preferences", "")) { ExecCommand(COMMAND_EDITOR_PREF); }
             ImGui::EndMenu();
         }
-        if (ImGui::BeginMenu("Other"))
+        if (ImGui::BeginMenu("Windows"))
         {
-            if (ImGui::MenuItem("Minimap Editor", "")) { ExecCommand(COMMAND_MINIMAP_EDITOR); }
-            if (ImGui::MenuItem("Log", "")) { ExecCommand(COMMAND_LOG_COMMANDS); }
-            if (ImGui::MenuItem("Preferences", "")) { ExecCommand(COMMAND_EDITOR_PREF); }
-            if (ImGui::MenuItem("Stats", "")) { psDeviceFlags.set(rsStatistic, !psDeviceFlags.is(rsStatistic));  UI->RedrawScene();  }
+            {
+                bool selected = AllowLogCommands();
+
+                if (ImGui::MenuItem("Log", "", &selected)) { ExecCommand(COMMAND_LOG_COMMANDS); }
+            }
             ImGui::EndMenu();
         }
         ImGui::EndMainMenuBar();
