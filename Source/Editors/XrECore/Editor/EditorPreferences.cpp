@@ -199,7 +199,7 @@ void CCustomPreferences::Edit()
     // save changed options
 }
 //---------------------------------------------------------------------------
-
+extern bool bAllowLogCommands;
 void CCustomPreferences::Load(CInifile* I)
 {
     psDeviceFlags.flags		= R_U32_SAFE	("editor_prefs","device_flags",	psDeviceFlags.flags);
@@ -243,6 +243,8 @@ void CCustomPreferences::Load(CInifile* I)
     start_w = R_U32_SAFE("render", "w", 1280);
     start_h = R_U32_SAFE("render", "h",800);
     start_maximized = R_BOOL_SAFE("render", "maximized", false);
+
+    bAllowLogCommands = R_BOOL_SAFE("windows", "log", false);
 	// read recent list    
     for (u32 i=0; i<scene_recent_count; i++){
     	shared_str fn  	= R_STRING_SAFE	("editor_prefs",xr_string().sprintf("recent_files_%d",i).c_str(),shared_str("") );
@@ -255,6 +257,7 @@ void CCustomPreferences::Load(CInifile* I)
     }
     sWeather = R_STRING_SAFE	("editor_prefs", "weather", shared_str("") );
     // load shortcuts
+
     LoadShortcuts		(I);
 
     UI->LoadSettings	(I);
@@ -309,6 +312,7 @@ void CCustomPreferences::Save(CInifile* I)
     I->w_bool("render", "maximized", EDevice.dwMaximized);
     I->w_u32("render", "w", EDevice.dwWidth);
     I->w_u32("render", "h", EDevice.dwHeight);
+    I->w_bool("windows", "log", bAllowLogCommands);
     // load shortcuts
     SaveShortcuts(I);
     UI->SaveSettings(I);
