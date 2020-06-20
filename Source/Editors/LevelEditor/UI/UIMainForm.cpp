@@ -1,6 +1,8 @@
 #include "stdafx.h"
-
+#include "../XrECore/Editor/EditorPreferences.h"
+#include "Edit\LevelPreferences.h"
 #include "../XrECore/Editor/EditorChooseEvents.h"
+#include "UI\UIObjectList.h"
 UIMainForm* MainForm = nullptr;
 UIMainForm::UIMainForm()
 {
@@ -18,12 +20,21 @@ UIMainForm::UIMainForm()
     m_MainMenu = xr_new<UIMainMenuForm>();
     m_LeftBar = xr_new<UILeftBarForm>();
     m_Properties = xr_new<UILPropertiesFrom>();
-
     m_Render->SetContextMenuEvent(TOnRenderContextMenu(this, &UIMainForm::DrawContextMenu));
+    if (dynamic_cast<CLevelPreferences*>(EPrefs)->OpenObjectList)
+    {
+        UIObjectList::Show();
+    }
+    if (!dynamic_cast<CLevelPreferences*>(EPrefs)->OpenProperties)
+    {
+        m_Properties->Close();
+    }
 }
 
 UIMainForm::~UIMainForm()
 {
+    dynamic_cast<CLevelPreferences*>(EPrefs)->OpenProperties = !m_Properties->IsClosed();
+    dynamic_cast<CLevelPreferences*>(EPrefs)->OpenObjectList = UIObjectList::IsOpen();
     ClearChooseEvents();
     xr_delete(m_Properties);
     xr_delete(m_LeftBar);
@@ -94,5 +105,11 @@ void UIMainForm::DrawContextMenu()
         }
         ImGui::EndMenu();
     }
+    ImGui::Separator();
+    if (ImGui::MenuItem("Properties"))
+    {
+        ExecCommand(COMMAND_SHOW_PROPERTIES);
+    }
+   
    
 }
