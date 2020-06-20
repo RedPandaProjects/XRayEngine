@@ -522,7 +522,7 @@ bool TUI::Idle()
     Sleep(1);
 
     OnFrame			();
-    if(m_bAppActive)
+    if (m_bAppActive && !m_Flags.is(flNeedQuit) && !m_AppClosed)
     RealRedrawScene();
 
     // test quit
