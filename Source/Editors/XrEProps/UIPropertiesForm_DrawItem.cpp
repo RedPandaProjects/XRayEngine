@@ -29,9 +29,8 @@ inline bool DrawNumeric(PropItem* item, bool& change, bool read_only)
 		{
 			change = item->ApplyValue< NumericValue<T>, T>(temp);
 		}
-		return true;
 	}
-	
+	return true;
 }
 template<>
 inline bool DrawNumeric<float>(PropItem* item, bool& change, bool read_only)
