@@ -7,11 +7,20 @@
 #include "scene.h"
 #include "ui_levelmain.h"
 #include "ui_leveltools.h"
+#include "UI\UIObjectList.h"
 //---------------------------------------------------------------------------
 
 void CLevelPreferences::Load(CInifile* I)
 {
-	inherited::Load		(I);                         
+	inherited::Load		(I);        
+    {
+        OpenObjectList = R_BOOL_SAFE("windows", "object_list", false);
+     
+    }
+    {
+        OpenProperties = R_BOOL_SAFE("windows", "properties", true);
+      
+    }
     SceneToolsMapPairIt _I 	= Scene->FirstTool();
     SceneToolsMapPairIt _E 	= Scene->LastTool();
     for (; _I!=_E; _I++)
@@ -22,6 +31,8 @@ void CLevelPreferences::Load(CInifile* I)
 void CLevelPreferences::Save(CInifile* I)
 {
 	inherited::Save		(I);
+    I->w_bool("windows", "object_list", OpenObjectList);
+    I->w_bool("windows", "properties", OpenProperties);
     SceneToolsMapPairIt _I 	= Scene->FirstTool();
     SceneToolsMapPairIt _E 	= Scene->LastTool();
     for (; _I!=_E; _I++)

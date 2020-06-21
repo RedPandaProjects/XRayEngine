@@ -1,8 +1,10 @@
 #include "stdafx.h"
 #include "UIShapeTool.h"
 #include "EShape.h"
+#include "ESceneShapeTools.h"
 UIShapeTool::UIShapeTool()
 {
+    Tool = nullptr;
     m_AttachShape = false;
 }
 
@@ -49,6 +51,26 @@ void UIShapeTool::Draw()
                     for (ObjectIt it = lst.begin(); it != lst.end(); it++)
                         ((CEditShape*)*it)->Detach();
                 }
+            }
+        }
+        ImGui::Separator();
+        ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
+        ImGui::TreePop();
+    }
+    ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
+    if (ImGui::TreeNode("Level Bound"))
+    {
+        ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
+        {
+            if (ImGui::Checkbox("Edit Level Bound", &EditLevelBound))
+            {
+                if (EditLevelBound)
+                    Tool->OnEditLevelBounds(false);
+            }
+            if(EditLevelBound)
+            if (ImGui::Button("Recalc", ImVec2(-1, 0)))
+            {
+                Tool->OnEditLevelBounds(true);
             }
         }
         ImGui::Separator();

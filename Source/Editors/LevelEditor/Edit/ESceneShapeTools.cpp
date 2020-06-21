@@ -12,6 +12,7 @@ void ESceneShapeTool::CreateControls()
 	inherited::CreateDefaultControls(estDefault);
     AddControl		(xr_new<TUI_ControlShapeAdd>(estDefault,etaAdd,	this));
     pForm = xr_new< UIShapeTool>();
+    ((UIShapeTool*)pForm)->Tool = this;
 }
 //----------------------------------------------------
 
@@ -81,11 +82,11 @@ void ESceneShapeTool::OnEditLevelBounds(bool recalc)
 void ESceneShapeTool::OnActivate()
 {
 	inherited::OnActivate();
-	//((TfraShape*)pFrame)->ebEditLevelBoundMode->Down = false;
+	((UIShapeTool*)pForm)->EditLevelBound = false;
 }
 
 void ESceneShapeTool::OnDeactivate()
 {
 	inherited::OnDeactivate();
-	//((TfraShape*)pFrame)->ebEditLevelBoundMode->Down = false;
+    ((UIShapeTool*)pForm)->EditLevelBound = false;
 }

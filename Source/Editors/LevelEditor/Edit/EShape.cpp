@@ -5,7 +5,7 @@
 #include "EShape.h"
 #include "du_box.h"
 #include "Scene.h"
-
+#include "UI\Tools\UIShapeTool.h"
 #define SHAPE_COLOR_TRANSP		0x3C808080
 #define SHAPE_COLOR_EDGE		0xFF202020
 
@@ -469,10 +469,9 @@ void CEditShape::OnFrame()
 	inherited::OnFrame();
     if(m_shape_type==eShapeLevelBound)
     {
-        R_ASSERT(!"Сорян забыл релизовать");
-    /*	TfraShape* F 		= (TfraShape*)ParentTool->pFrame;
-    	BOOL bVis = F->ebEditLevelBoundMode->Down;
-    	m_RT_Flags.set(flRT_Visible, bVis);*/
+        UIShapeTool* F 		= (UIShapeTool*)FParentTools->pForm;
+    	BOOL bVis = F->EditLevelBound;
+    	m_RT_Flags.set(flRT_Visible, bVis);
     }
 }
 
