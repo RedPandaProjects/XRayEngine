@@ -65,15 +65,10 @@ BOOL TokenOnEdit(PropItem* prop, bool& change)
 	T edit_value  = V->GetValue();
 	prop->BeforeEdit<TokenValue<T>, T>(edit_value);
 	int index = edit_value;
-	const char* InTokens[256];
 	xr_token* token_list = V->token;
-	int i = 0;
-	for (; token_list[i].name; i++)
-	{
-		InTokens[i] = token_list[i].name;
-	}
-
-	if (ImGui::Combo("##value", &index, InTokens, i))
+	int cnt = 0;
+	for (; token_list[cnt].name; cnt++){}
+	if (ImGui::Combo("##value", &index, [](void* data, int idx, const char** out_text)->bool {*out_text = reinterpret_cast<xr_token*>(data)[idx].name;return true;},reinterpret_cast<void*>(token_list),cnt))
 	{
 		T new_val = index;
 		if (prop->AfterEdit<TokenValue<T>, T>(new_val))
@@ -94,12 +89,7 @@ BOOL RTokenOnEdit(PropItem* prop, bool& change)
 	int index = edit_value;
 	const char* InTokens[256];
 	xr_rtoken* token_list = V->token;
-	int i = 0;
-	for (;i< V->token_count; i++)
-	{
-		InTokens[i] = token_list[i].name.c_str();
-	}
-	if (ImGui::Combo("##value", &index, InTokens, i))
+	if (ImGui::Combo("##value", &index, [](void* data, int idx, const char** out_text)->bool {*out_text = reinterpret_cast<xr_token*>(data)[idx].name; return true; }, reinterpret_cast<void*>(token_list), V->token_count))
 	{
 		T new_val = index;
 		if (prop->AfterEdit<RTokenValue<T>, T>(new_val))
@@ -287,7 +277,7 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 
 		xr_string text = node->GetDrawText().c_str();
 		if (!text[0])text = "<none>";
-		if (ImGui::Button(text.c_str()))
+		if (ImGui::Button(text.c_str(),ImVec2(-1,0)))
 		{
 			PropItem* prop = node;
 
@@ -388,7 +378,6 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 		CListValue* V = dynamic_cast<CListValue*>(node->GetFrontValue()); R_ASSERT(V);
 		LPCSTR edit_value = V->value;
 		int index = 0;
-		const char* InTokens[256];
 		int i = 0;
 		for (; i < V->item_count; i++)
 		{
@@ -396,9 +385,8 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 			{
 				index = i;
 			}
-			InTokens[i] = V->items[i].c_str();
 		}
-		if (ImGui::Combo("##value", &index, InTokens, i))
+		if (ImGui::Combo("##value", &index, [](void* data, int idx, const char** out_text)->bool {*out_text = reinterpret_cast<xr_string*>(data)[idx].c_str(); return true; }, reinterpret_cast<void*>(V->items), i))
 		{
 			if (node->AfterEdit<CListValue, xr_string>(V->items[index]))
 				if (node->ApplyValue<CListValue, LPCSTR>(V->items[index].c_str()))Modified();
@@ -418,9 +406,8 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 			{
 				index = i;
 			}
-			InTokens[i] = V->items[i].c_str();
 		}
-		if (ImGui::Combo("##value", &index, InTokens, i))
+		if (ImGui::Combo("##value", &index, [](void* data, int idx, const char** out_text)->bool {*out_text = reinterpret_cast<shared_str*>(data)[idx].c_str(); return true; }, reinterpret_cast<void*>(V->items), i))
 		{
 			if (node->AfterEdit<RListValue, shared_str>(V->items[index]))
 				if (node->ApplyValue<RListValue, shared_str>(V->items[index]))Modified();
