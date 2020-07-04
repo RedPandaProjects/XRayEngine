@@ -5,7 +5,7 @@
 #include "pch.h"
 #include "occRasterizer.h"
 #include "../../xrEngine/GameFont.h"
-
+#pragma optimize off
  
 float	psOSSR		= .001f;
 
@@ -91,20 +91,18 @@ void CHOM::Load()
 	CL.calc_adjacency(adjacency);
 
 	// Create RASTER-triangles
-	m_pTris = new occTri[CL.getTS()];
+	m_pTris = xr_alloc<occTri>(u32(CL.getTS()));
 	for (u32 it = 0; it < CL.getTS(); it++)
 	{
 		CDB::TRI& clT = CL.getT()[it];
-		occTri&	rT = m_pTris[it];
-
+		occTri& rT = m_pTris[it];
 		Fvector& v0 = CL.getV()[clT.verts[0]];
 		Fvector& v1 = CL.getV()[clT.verts[1]];
 		Fvector& v2 = CL.getV()[clT.verts[2]];
-
 		rT.adjacent[0] = (0xffffffff == adjacency[3 * it + 0]) ? ((occTri*)(-1)) : (m_pTris + adjacency[3 * it + 0]);
 		rT.adjacent[1] = (0xffffffff == adjacency[3 * it + 1]) ? ((occTri*)(-1)) : (m_pTris + adjacency[3 * it + 1]);
 		rT.adjacent[2] = (0xffffffff == adjacency[3 * it + 2]) ? ((occTri*)(-1)) : (m_pTris + adjacency[3 * it + 2]);
-		rT.flags = u32(clT.dummy);
+		rT.flags = clT.dummy;
 		rT.area = Area(v0, v1, v2);
 		if (rT.area < EPS_L) {
 			Msg("! Invalid HOM triangle (%f,%f,%f)-(%f,%f,%f)-(%f,%f,%f)", VPUSH(v0), VPUSH(v1), VPUSH(v2));
@@ -113,20 +111,10 @@ void CHOM::Load()
 		rT.skip = 0;
 		rT.center.add(v0, v1).add(v2).div(3.f);
 	}
-	// Make cache
-	string_path LevelName;
-	xr_strcpy(LevelName, FS.get_path("$level$")->m_Add);
-	xr_strcat(LevelName, "cform_hom.cache");
-	IReader* pReaderCache = FS.r_open("$level_cache$", LevelName);
 
 	// Create AABB-tree
 	m_pModel = xr_new<CDB::MODEL>();
-	if (pReaderCache && pReaderCache->length() > 4 && pReaderCache->r_u32() == crc)
-		m_pModel->build(CL.getV(), int(CL.getVS()), CL.getT(), int(CL.getTS()),0, 0);
-	else
-	{
-		m_pModel->build(CL.getV(), int(CL.getVS()), CL.getT(), int(CL.getTS()));
-	}
+	m_pModel->build(CL.getV(), int(CL.getVS()), CL.getT(), int(CL.getTS()));
 	bEnabled = TRUE;
 	S->close();
 	FS.r_close(fs);

@@ -27,16 +27,24 @@ void CParticlesObject::Init	(LPCSTR p_name, IRender_Sector* S, BOOL bAutoRemove)
 	m_bAutoRemove			= bAutoRemove;
 	float time_limit		= 0.0f;
 
-	if(!g_dedicated_server)
+	if (!g_dedicated_server)
 	{
 		// create visual
-		renderable.visual		= Render->model_CreateParticles(p_name);
+		renderable.visual = Render->model_CreateParticles(p_name);
 #ifdef DEBUG
-		if (!renderable.visual)return;
+		if (renderable.visual)
+		{
 #endif
-		VERIFY					(renderable.visual);
-		IParticleCustom* V		= smart_cast<IParticleCustom*>(renderable.visual);  VERIFY(V);
-		time_limit				= V->GetTimeLimit();
+			VERIFY(renderable.visual);
+			IParticleCustom* V = smart_cast<IParticleCustom*>(renderable.visual);  VERIFY(V);
+			time_limit = V->GetTimeLimit();
+#ifdef DEBUG
+		}
+		else
+		{
+			time_limit = 1.0f;
+		}
+#endif
 	}else
 	{
 		time_limit					= 1.0f;

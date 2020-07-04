@@ -167,7 +167,8 @@ IRender_Glow* XRayRenderInterface::glow_create()
 
 IRenderVisual* XRayRenderInterface::model_CreateParticles(LPCSTR name)
 {
-	return xr_new<XRayRenderVisual>();
+	return nullptr;
+	//return xr_new<XRayRenderVisual>();
 }
 
 IRenderVisual* XRayRenderInterface::model_Create(LPCSTR name, IReader* data)
