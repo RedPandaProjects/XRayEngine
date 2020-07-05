@@ -32,21 +32,26 @@ void UIRenderForm::Draw()
 		ImVec2 canvas_pos = ImGui::GetCursorScreenPos();
 		ImVec2 canvas_size = ImGui::GetContentRegionAvail();
 		ImVec2 mouse_pos = ImGui::GetIO().MousePos;
+		bool cursor_in_zone = true;
 		if (mouse_pos.x < canvas_pos.x)
 		{
+			cursor_in_zone = false;
 			mouse_pos.x = canvas_pos.x;
 		}
 		if (mouse_pos.y < canvas_pos.y)
 		{
+			cursor_in_zone = false;
 			mouse_pos.y = canvas_pos.y;
 		}
 
 		if (mouse_pos.x > canvas_pos.x + canvas_size.x)
 		{
+			cursor_in_zone = false;
 			mouse_pos.x = canvas_pos.x + canvas_size.x;
 		}
 		if (mouse_pos.y > canvas_pos.y + canvas_size.y)
 		{
+			cursor_in_zone = false;
 			mouse_pos.y = canvas_pos.y + canvas_size.y;
 		}
 
@@ -54,13 +59,13 @@ void UIRenderForm::Draw()
 		if (ImGui::IsWindowFocused())
 		{
 
-			if ((ImGui::IsMouseDown(ImGuiMouseButton_Left) || ImGui::IsMouseDown(ImGuiMouseButton_Right)) && !m_mouse_down)
+			if ((ImGui::IsMouseDown(ImGuiMouseButton_Left) || ImGui::IsMouseDown(ImGuiMouseButton_Right)) && !m_mouse_down&& cursor_in_zone)
 			{
 				UI->MousePress(TShiftState(ShiftState), mouse_pos.x - canvas_pos.x, mouse_pos.y - canvas_pos.y);
 				m_mouse_down = true;
 			}
 
-			else  if (ImGui::IsMouseReleased(ImGuiMouseButton_Left) || ImGui::IsMouseReleased(ImGuiMouseButton_Right))
+			else  if ((ImGui::IsMouseReleased(ImGuiMouseButton_Left) || ImGui::IsMouseReleased(ImGuiMouseButton_Right) )&& m_mouse_down)
 			{
 				UI->MouseRelease(TShiftState(ShiftState), mouse_pos.x - canvas_pos.x, mouse_pos.y - canvas_pos.y);
 				m_mouse_down = false;
