@@ -14,4 +14,5 @@ private:
 	TOnRenderContextMenu m_OnContextMenu;
 	bool m_mouse_down;
 	bool m_mouse_move;
+	bool m_shiftstate_down;
 };

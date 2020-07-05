@@ -5,6 +5,7 @@ UIRenderForm::UIRenderForm()
 {
 	m_mouse_down = false;
 	m_mouse_move = false;
+	m_shiftstate_down = false;
 }
 
 UIRenderForm::~UIRenderForm()
@@ -55,7 +56,7 @@ void UIRenderForm::Draw()
 			mouse_pos.y = canvas_pos.y + canvas_size.y;
 		}
 
-
+		bool curent_shiftstate_down = m_shiftstate_down;
 		if (ImGui::IsWindowFocused())
 		{
 
@@ -70,19 +71,22 @@ void UIRenderForm::Draw()
 				UI->MouseRelease(TShiftState(ShiftState), mouse_pos.x - canvas_pos.x, mouse_pos.y - canvas_pos.y);
 				m_mouse_down = false;
 				m_mouse_move = false;
+				m_shiftstate_down = false;
 			}
 			else if (m_mouse_down)
 			{
 				UI->MouseMove(TShiftState(ShiftState), mouse_pos.x - canvas_pos.x, mouse_pos.y - canvas_pos.y);
 				m_mouse_move = true;
+				m_shiftstate_down = m_shiftstate_down||( ShiftState & (ssShift | ssCtrl | ssAlt));
 			}
 		}
 		else  if (m_mouse_down)
 		{
 			UI->MouseRelease(TShiftState(ShiftState), mouse_pos.x - canvas_pos.x, mouse_pos.y - canvas_pos.y);
 			m_mouse_down = false;
+			m_mouse_move = false;
+			m_shiftstate_down = false;
 		}
-
 		m_mouse_position.set(mouse_pos.x - canvas_pos.x, mouse_pos.y - canvas_pos.y);
 
 
@@ -91,7 +95,7 @@ void UIRenderForm::Draw()
 		UI->RTSize.set(canvas_size.x, canvas_size.y);
 		
 		ImGui::InvisibleButton("canvas", canvas_size);
-		if (!m_OnContextMenu.empty() && !m_mouse_move && !(ShiftState & ssShift))
+		if (!m_OnContextMenu.empty()&& !curent_shiftstate_down)
 		{
 			if (ImGui::BeginPopupContextItem("Menu"))
 			{
