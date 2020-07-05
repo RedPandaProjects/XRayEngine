@@ -81,10 +81,10 @@ void UIRenderForm::Draw()
 		m_mouse_position.set(mouse_pos.x - canvas_pos.x, mouse_pos.y - canvas_pos.y);
 
 
-
+		if (canvas_size.x < 32.0f) canvas_size.x = 32.0f;
+		if (canvas_size.y < 32.0f) canvas_size.y = 32.0f;
 		UI->RTSize.set(canvas_size.x, canvas_size.y);
-		if (canvas_size.x < 50.0f) canvas_size.x = 50.0f;
-		if (canvas_size.y < 50.0f) canvas_size.y = 50.0f;
+		
 		ImGui::InvisibleButton("canvas", canvas_size);
 		if (!m_OnContextMenu.empty() && !m_mouse_move && !(ShiftState & ssShift))
 		{

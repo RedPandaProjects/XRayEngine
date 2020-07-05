@@ -457,19 +457,8 @@ void CEditorRenderDevice::DestryWindow()
 }
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	if (UI &&UI->WndProcHandler(hWnd, msg, wParam, lParam))
-		return true;
-
 	switch (msg)
 	{
-	case WM_KEYDOWN: 
-	case WM_SYSKEYDOWN:
-		if(UI)UI->KeyDown(wParam,UI->GetShiftState());
-		break;
-	case WM_KEYUP:
-	case WM_SYSKEYUP:
-		if (UI)UI->KeyUp(wParam, UI->GetShiftState());
-		break;
 	case WM_ACTIVATE:
 	{
 		u16 fActive = LOWORD(wParam);
@@ -485,11 +474,27 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			}
 			else
 			{
+				
 				if (UI)UI->OnAppDeactivate();
 			}
 		}
 	}
 	break;
+	}
+	if (UI &&UI->WndProcHandler(hWnd, msg, wParam, lParam))
+		return true;
+
+	switch (msg)
+	{
+	case WM_KEYDOWN: 
+	case WM_SYSKEYDOWN:
+		if(UI)UI->KeyDown(wParam,UI->GetShiftState());
+		break;
+	case WM_KEYUP:
+	case WM_SYSKEYUP:
+		if (UI)UI->KeyUp(wParam, UI->GetShiftState());
+		break;
+	
 	case WM_SIZE:
 
 		if (UI && HW.pDevice)

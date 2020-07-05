@@ -361,7 +361,7 @@ void TUI::Redraw()
 	PrepareRedraw();
     try{
     
-        if (u32(RTSize.x * EDevice.m_ScreenQuality) != RT->dwWidth || u32(RTSize.y * EDevice.m_ScreenQuality) != RT->dwHeight)
+        if (u32(RTSize.x * EDevice.m_ScreenQuality) != RT->dwWidth || u32(RTSize.y * EDevice.m_ScreenQuality) != RT->dwHeight|| !RT->pSurface)
         {
             GetRenderWidth() = RTSize.x * EDevice.m_ScreenQuality;
             GetRenderHeight() = RTSize.y * EDevice.m_ScreenQuality;
@@ -381,11 +381,12 @@ void TUI::Redraw()
 
         if (EDevice.Begin())
         {
+            if (psDeviceFlags.is(rsRenderRealTime))
+                m_Flags.set(flRedraw, TRUE);
             if (m_Flags.is(flRedraw))
             {
-                if (!psDeviceFlags.is(rsRenderRealTime))
-                    m_Flags.set(flRedraw, FALSE);
-
+               
+                m_Flags.set(flRedraw, FALSE);
                 RCache.set_RT(RT->pRT);
                 RCache.set_ZB(ZB->pRT);
                 EDevice.Statistic->RenderDUMP_RT.Begin();
@@ -430,7 +431,6 @@ void TUI::Redraw()
                 // draw axis
                 DU_impl.DrawAxis(EDevice.m_Camera.GetTransform());
 
-                RDEVICE.b_is_Active = true;
 
                 EDevice.Statistic->RenderDUMP_RT.End();
                 EDevice.Statistic->Show(EDevice.pSystemFont);
@@ -438,7 +438,6 @@ void TUI::Redraw()
                 EDevice.pSystemFont->OnRender();
                 EDevice.SetRS(D3DRS_FILLMODE, EDevice.dwFillMode);
                 EDevice.seqRender.Process(rp_Render);
-                RDEVICE.b_is_Active = false;
                 RCache.set_RT(HW.pBaseRT);
                 RCache.set_ZB(HW.pBaseZB);
             }
