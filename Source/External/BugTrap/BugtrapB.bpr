@@ -1,0 +1,253 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!-- C++Builder XML Project -->
+<PROJECT>
+  <MACROS>
+    <VERSION value="BCB.06.00"/>
+    <PROJECT value="BugtrapB.dll"/>
+    <OBJFILES value="AboutDlg.obj BugTrap.obj BugTrapNet.obj BugTrapUI.obj BugTrapUtils.obj 
+      CMapi.obj ColHelper.obj Encoding.obj EnumProcess.obj FileStream.obj 
+      Globals.obj HexView.obj HyperLink.obj ImageView.obj InputStream.obj 
+      LayoutManager.obj LogFile.obj MachineInfoDlg.obj MachineStateDlg.obj 
+      MainDlg.obj MemStream.obj NetThunks.obj OutputStream.obj PreviewDlg.obj 
+      ResManager.obj SendMailDlg.obj SimpleDlg.obj Splitter.obj StdAfx.obj 
+      StrHolder.obj StrStream.obj SymEngine.obj SymEngineNet.obj TextFormat.obj 
+      TextLogFile.obj TextView.obj TransferProgressDlg.obj WaitCursor.obj 
+      WaitDlg.obj XmlLogFile.obj XmlReader.obj XmlWriter.obj"/>
+    <RESFILES value=""/>
+    <IDLFILES value=""/>
+    <IDLGENFILES value=""/>
+    <DEFFILE value=""/>
+    <RESDEPEN value="$(RESFILES)"/>
+    <LIBFILES value=""/>
+    <LIBRARIES value=""/>
+    <SPARELIBS value="rtl.lib"/>
+    <PACKAGES value="vcl.bpi rtl.bpi dbrtl.bpi adortl.bpi vcldb.bpi vclx.bpi bdertl.bpi 
+      vcldbx.bpi ibxpress.bpi dsnap.bpi cds.bpi bdecds.bpi qrpt.bpi teeui.bpi 
+      teedb.bpi tee.bpi dss.bpi teeqr.bpi visualclx.bpi visualdbclx.bpi 
+      dsnapcrba.bpi dsnapcon.bpi bcbsmp.bpi vclie.bpi xmlrtl.bpi inet.bpi 
+      inetdbbde.bpi inetdbxpress.bpi inetdb.bpi nmfast.bpi webdsnap.bpi 
+      bcbie.bpi websnap.bpi soaprtl.bpi dclocx.bpi dbexpress.bpi dbxcds.bpi 
+      indy.bpi bcb2kaxserver.bpi editor.bpi"/>
+    <PATHCPP value=".;"/>
+    <PATHPAS value=".;"/>
+    <PATHRC value=".;"/>
+    <PATHASM value=".;"/>
+    <DEBUGLIBPATH value="$(BCB)\lib\debug"/>
+    <RELEASELIBPATH value="$(BCB)\lib\release"/>
+    <LINKER value="ilink32"/>
+    <USERDEFINES value="_DEBUG"/>
+    <SYSDEFINES value="NO_STRICT;_RTLDLL;USEPACKAGES"/>
+    <MAINSOURCE value="BugtrapB.bpf"/>
+    <INCLUDEPATH value="BugTrap;$(BCB)\include;$(BCB)\include\vcl"/>
+    <LIBPATH value="$(BCB)\Projects\Lib;BugTrap;$(BCB)\lib\obj;$(BCB)\lib"/>
+    <WARNINGS value="-w-par"/>
+    <OTHERFILES value=""/>
+  </MACROS>
+  <OPTIONS>
+    <IDLCFLAGS value="-IBugTrap -I$(BCB)\include -I$(BCB)\include\vcl -src_suffix cpp -D_DEBUG 
+      -boa"/>
+    <CFLAG1 value="-WD -Od -H=$(BCB)\lib\vcl60.csm -Hc -Vx -Ve -xf -xp -VF -ff -X- -r- -ps 
+      -a4 -6 -b- -k -y -v -vi- -tWD -tWM -c"/>
+    <PFLAGS value="-$YD -$W -$O- -$A8 -v -JPHNE -M"/>
+    <RFLAGS value=""/>
+    <AFLAGS value="/mu /w2 /zi"/>
+    <LFLAGS value="-D&quot;&quot; -aa -Tpd -x -Gn -Gi -v"/>
+    <OTHERFILES value=""/>
+  </OPTIONS>
+  <LINKER>
+    <ALLOBJ value="c0d32.obj $(PACKAGES) Memmgr.Lib sysinit.obj $(OBJFILES)"/>
+    <ALLRES value="$(RESFILES)"/>
+    <ALLLIB value="$(LIBFILES) $(LIBRARIES) import32.lib cp32mti.lib"/>
+    <OTHERFILES value=""/>
+  </LINKER>
+  <FILELIST>
+      <FILE FILENAME="BugtrapB.bpf" FORMNAME="" UNITNAME="BugtrapB" CONTAINERID="BPF" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="VersionInfo.h" FORMNAME="" UNITNAME="VersionInfo.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="WaitCursor.h" FORMNAME="" UNITNAME="WaitCursor.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="WaitDlg.h" FORMNAME="" UNITNAME="WaitDlg.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="XmlLogFile.h" FORMNAME="" UNITNAME="XmlLogFile.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="XmlReader.h" FORMNAME="" UNITNAME="XmlReader.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="XmlWriter.h" FORMNAME="" UNITNAME="XmlWriter.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="AboutDlg.cpp" FORMNAME="" UNITNAME="AboutDlg" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="BugTrap.cpp" FORMNAME="" UNITNAME="BugTrap" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="BugTrapNet.cpp" FORMNAME="" UNITNAME="BugTrapNet" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="BugTrapUI.cpp" FORMNAME="" UNITNAME="BugTrapUI" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="BugTrapUtils.cpp" FORMNAME="" UNITNAME="BugTrapUtils" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="CMapi.cpp" FORMNAME="" UNITNAME="CMapi" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="ColHelper.cpp" FORMNAME="" UNITNAME="ColHelper" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="Encoding.cpp" FORMNAME="" UNITNAME="Encoding" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="EnumProcess.cpp" FORMNAME="" UNITNAME="EnumProcess" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="FileStream.cpp" FORMNAME="" UNITNAME="FileStream" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="Globals.cpp" FORMNAME="" UNITNAME="Globals" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="HexView.cpp" FORMNAME="" UNITNAME="HexView" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="HyperLink.cpp" FORMNAME="" UNITNAME="HyperLink" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="ImageView.cpp" FORMNAME="" UNITNAME="ImageView" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="InputStream.cpp" FORMNAME="" UNITNAME="InputStream" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="LayoutManager.cpp" FORMNAME="" UNITNAME="LayoutManager" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="LogFile.cpp" FORMNAME="" UNITNAME="LogFile" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="MachineInfoDlg.cpp" FORMNAME="" UNITNAME="MachineInfoDlg" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="MachineStateDlg.cpp" FORMNAME="" UNITNAME="MachineStateDlg" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="MainDlg.cpp" FORMNAME="" UNITNAME="MainDlg" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="MemStream.cpp" FORMNAME="" UNITNAME="MemStream" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="NetThunks.cpp" FORMNAME="" UNITNAME="NetThunks" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="OutputStream.cpp" FORMNAME="" UNITNAME="OutputStream" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="PreviewDlg.cpp" FORMNAME="" UNITNAME="PreviewDlg" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="ResManager.cpp" FORMNAME="" UNITNAME="ResManager" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="SendMailDlg.cpp" FORMNAME="" UNITNAME="SendMailDlg" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="SimpleDlg.cpp" FORMNAME="" UNITNAME="SimpleDlg" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="Splitter.cpp" FORMNAME="" UNITNAME="Splitter" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="StdAfx.cpp" FORMNAME="" UNITNAME="StdAfx" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="StrHolder.cpp" FORMNAME="" UNITNAME="StrHolder" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="StrStream.cpp" FORMNAME="" UNITNAME="StrStream" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="SymEngine.cpp" FORMNAME="" UNITNAME="SymEngine" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="SymEngineNet.cpp" FORMNAME="" UNITNAME="SymEngineNet" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="TextFormat.cpp" FORMNAME="" UNITNAME="TextFormat" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="TextLogFile.cpp" FORMNAME="" UNITNAME="TextLogFile" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="TextView.cpp" FORMNAME="" UNITNAME="TextView" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="TransferProgressDlg.cpp" FORMNAME="" UNITNAME="TransferProgressDlg" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="WaitCursor.cpp" FORMNAME="" UNITNAME="WaitCursor" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="WaitDlg.cpp" FORMNAME="" UNITNAME="WaitDlg" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="XmlLogFile.cpp" FORMNAME="" UNITNAME="XmlLogFile" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="XmlReader.cpp" FORMNAME="" UNITNAME="XmlReader" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="XmlWriter.cpp" FORMNAME="" UNITNAME="XmlWriter" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="AboutDlg.h" FORMNAME="" UNITNAME="AboutDlg.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="Array.h" FORMNAME="" UNITNAME="Array.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="BaseStream.h" FORMNAME="" UNITNAME="BaseStream.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="BTAtlWindow.h" FORMNAME="" UNITNAME="BTAtlWindow.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="BTMfcWindow.h" FORMNAME="" UNITNAME="BTMfcWindow.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="BTTrace.h" FORMNAME="" UNITNAME="BTTrace.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="BugTrap.h" FORMNAME="" UNITNAME="BugTrap.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="BugTrapNet.h" FORMNAME="" UNITNAME="BugTrapNet.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="BugTrapUI.h" FORMNAME="" UNITNAME="BugTrapUI.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="BugTrapUtils.h" FORMNAME="" UNITNAME="BugTrapUtils.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="CMapi.h" FORMNAME="" UNITNAME="CMapi.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="ColHelper.h" FORMNAME="" UNITNAME="ColHelper.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="Encoding.h" FORMNAME="" UNITNAME="Encoding.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="EnumProcess.h" FORMNAME="" UNITNAME="EnumProcess.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="FileStream.h" FORMNAME="" UNITNAME="FileStream.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="Globals.h" FORMNAME="" UNITNAME="Globals.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="Hash.h" FORMNAME="" UNITNAME="Hash.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="HexView.h" FORMNAME="" UNITNAME="HexView.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="HyperLink.h" FORMNAME="" UNITNAME="HyperLink.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="ImageView.h" FORMNAME="" UNITNAME="ImageView.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="InPlaceNew.h" FORMNAME="" UNITNAME="InPlaceNew.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="InputStream.h" FORMNAME="" UNITNAME="InputStream.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="InterfacePtr.h" FORMNAME="" UNITNAME="InterfacePtr.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="LayoutManager.h" FORMNAME="" UNITNAME="LayoutManager.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="LeakWatcher.h" FORMNAME="" UNITNAME="LeakWatcher.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="List.h" FORMNAME="" UNITNAME="List.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="LogFile.h" FORMNAME="" UNITNAME="LogFile.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="LogLink.h" FORMNAME="" UNITNAME="LogLink.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="MachineInfoDlg.h" FORMNAME="" UNITNAME="MachineInfoDlg.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="MachineStateDlg.h" FORMNAME="" UNITNAME="MachineStateDlg.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="MainDlg.h" FORMNAME="" UNITNAME="MainDlg.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="MemStream.h" FORMNAME="" UNITNAME="MemStream.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="NetThunks.h" FORMNAME="" UNITNAME="NetThunks.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="OutputStream.h" FORMNAME="" UNITNAME="OutputStream.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="PreviewDlg.h" FORMNAME="" UNITNAME="PreviewDlg.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="ResManager.h" FORMNAME="" UNITNAME="ResManager.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="StrHolder.h" FORMNAME="" UNITNAME="StrHolder.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="resource.h" FORMNAME="" UNITNAME="resource.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="SendMailDlg.h" FORMNAME="" UNITNAME="SendMailDlg.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="SimpleDlg.h" FORMNAME="" UNITNAME="SimpleDlg.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="SmartPtr.h" FORMNAME="" UNITNAME="SmartPtr.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="Splitter.h" FORMNAME="" UNITNAME="Splitter.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="StdAfx.h" FORMNAME="" UNITNAME="StdAfx.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="Stream.h" FORMNAME="" UNITNAME="Stream.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="StrStream.h" FORMNAME="" UNITNAME="StrStream.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="SymEngine.h" FORMNAME="" UNITNAME="SymEngine.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="SymEngineNet.h" FORMNAME="" UNITNAME="SymEngineNet.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="TextFormat.h" FORMNAME="" UNITNAME="TextFormat.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="TextLogFile.h" FORMNAME="" UNITNAME="TextLogFile.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="TextView.h" FORMNAME="" UNITNAME="TextView.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="TransferProgressDlg.h" FORMNAME="" UNITNAME="TransferProgressDlg.h" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="res\Bug.ico" FORMNAME="" UNITNAME="Bug.ico" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="res\Checkmark.bmp" FORMNAME="" UNITNAME="Checkmark.bmp" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="res\ImageToolbar.bmp" FORMNAME="" UNITNAME="ImageToolbar.bmp" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="res\SortArrows.bmp" FORMNAME="" UNITNAME="SortArrows.bmp" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="res\Upload.avi" FORMNAME="" UNITNAME="Upload.avi" CONTAINERID="" DESIGNCLASS="" LOCALCOMMAND=""/>
+  </FILELIST>
+  <BUILDTOOLS>
+  </BUILDTOOLS>
+
+  <IDEOPTIONS>
+[Version Info]
+IncludeVerInfo=0
+AutoIncBuild=0
+MajorVer=1
+MinorVer=0
+Release=0
+Build=0
+Debug=0
+PreRelease=0
+Special=0
+Private=0
+DLL=0
+Locale=1049
+CodePage=1251
+
+[Version Info Keys]
+CompanyName=
+FileDescription=
+FileVersion=1.0.0.0
+InternalName=
+LegalCopyright=
+LegalTrademarks=
+OriginalFilename=
+ProductName=
+ProductVersion=1.0.0.0
+Comments=
+
+[HistoryLists\hlIncludePath]
+Count=1
+Item0=BugTrap;$(BCB)\include;$(BCB)\include\vcl
+
+[HistoryLists\hlLibraryPath]
+Count=2
+Item0=$(BCB)\Projects\Lib;BugTrap;$(BCB)\lib\obj;$(BCB)\lib
+Item1=BugTrap;$(BCB)\lib\obj;$(BCB)\lib
+
+[HistoryLists\hlDebugSourcePath]
+Count=1
+Item0=$(BCB)\source\vcl
+
+[HistoryLists\hlConditionals]
+Count=1
+Item0=_DEBUG
+
+[Debugging]
+DebugSourceDirs=$(BCB)\source\vcl
+
+[Parameters]
+RunParams=
+Launcher=
+UseLauncher=0
+DebugCWD=
+HostApplication=
+RemoteHost=
+RemotePath=
+RemoteLauncher=
+RemoteCWD=
+RemoteDebug=0
+
+[Compiler]
+ShowInfoMsgs=0
+LinkDebugVcl=0
+LinkCGLIB=0
+
+[CORBA]
+AddServerUnit=1
+AddClientUnit=1
+PrecompiledHeaders=1
+
+[Language]
+ActiveLang=
+ProjectLang=
+RootDir=
+
+[Linker]
+LibPrefix=
+LibSuffix=
+LibVersion=
+  </IDEOPTIONS>
+</PROJECT>

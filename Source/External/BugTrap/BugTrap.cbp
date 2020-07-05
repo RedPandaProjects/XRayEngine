@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="BugTrap" />
+		<Option pch_mode="2" />
+		<Option compiler="bcc" />
+		<Build>
+			<Target title="Debug Win32">
+				<Option output="D:\Games\STALKER_SRC\trunk\binaries\BugTrapD" prefix_auto="1" extension_auto="1" />
+				<Option object_output="D:\Games\STALKER_SRC\trunk\Debug Win32\BugTrap" />
+				<Option type="3" />
+				<Option compiler="bcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="/DWIN32" />
+					<Add option="/DDEBUG" />
+					<Add option="/D_WINDOWS" />
+					<Add option="/D_USRDLL" />
+					<Add option="/DBUGTRAP_EXPORTS" />
+					<Add option="/Od" />
+				</Compiler>
+				<Linker>
+					<Add option="/pdb:D:\Games\STALKER_SRC\trunk\binaries\$(TargetName).pdb" />
+					<Add option='/DEF:&quot;BugTrap.def&quot;' />
+					<Add library="ws2_32" />
+					<Add library="comctl32" />
+					<Add library="shlwapi" />
+					<Add library="version" />
+					<Add library="wininet" />
+				</Linker>
+			</Target>
+			<Target title="Release Win32">
+				<Option output="D:\Games\STALKER_SRC\trunk\binaries\BugTrapB" prefix_auto="1" extension_auto="1" />
+				<Option object_output="D:\Games\STALKER_SRC\trunk\Release Win32\BugTrap" />
+				<Option type="3" />
+				<Option compiler="bcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="/DWIN32" />
+					<Add option="/DNDEBUG" />
+					<Add option="/D_WINDOWS" />
+					<Add option="/D_USRDLL" />
+					<Add option="/DBUGTRAP_EXPORTS" />
+					<Add option="/W4" />
+					<Add option="/Zi" />
+					<Add option="/Ob1" />
+					<Add option="/O1" />
+					<Add option="/MD" />
+				</Compiler>
+				<Linker>
+					<Add option="/INCREMENTAL:NO" />
+					<Add option="/pdb:D:\Games\STALKER_SRC\trunk\binaries\$(TargetName).pdb" />
+					<Add option='/DEF:&quot;BugTrap.def&quot;' />
+					<Add library="ws2_32" />
+					<Add library="comctl32" />
+					<Add library="shlwapi" />
+					<Add library="version" />
+					<Add library="wininet" />
+				</Linker>
+			</Target>
+			<Target title="MASTER_GOLD Win32">
+				<Option output="D:\Games\STALKER_SRC\trunk\binaries\BugTrap" prefix_auto="1" extension_auto="1" />
+				<Option object_output="D:\Games\STALKER_SRC\trunk\MASTER_GOLD Win32\BugTrap" />
+				<Option type="3" />
+				<Option compiler="bcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="/DWIN32" />
+					<Add option="/DNDEBUG" />
+					<Add option="/D_WINDOWS" />
+					<Add option="/D_USRDLL" />
+					<Add option="/DBUGTRAP_EXPORTS" />
+					<Add option="/W4" />
+					<Add option="/Zi" />
+					<Add option="/Ob1" />
+					<Add option="/O1" />
+					<Add option="/MD" />
+				</Compiler>
+				<Linker>
+					<Add option="/INCREMENTAL:NO" />
+					<Add option="/pdb:D:\Games\STALKER_SRC\trunk\binaries\$(TargetName).pdb" />
+					<Add option='/DEF:&quot;BugTrap.def&quot;' />
+					<Add library="ws2_32" />
+					<Add library="comctl32" />
+					<Add library="shlwapi" />
+					<Add library="version" />
+					<Add library="wininet" />
+				</Linker>
+			</Target>
+			<Target title="NDEBUG Win32">
+				<Option output="$(SolutionDir)NDEBUG Win32\BugTrapD" prefix_auto="1" extension_auto="1" />
+				<Option object_output="NDEBUG Win32" />
+				<Option type="3" />
+				<Option compiler="bcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="/DWIN32" />
+					<Add option="/DDEBUG" />
+					<Add option="/D_WINDOWS" />
+					<Add option="/D_USRDLL" />
+					<Add option="/DBUGTRAP_EXPORTS" />
+					<Add option="/W4" />
+					<Add option="/Zi" />
+					<Add option="/Od" />
+					<Add option="/MD" />
+				</Compiler>
+				<Linker>
+					<Add option="/pdb:$(SolutionDir)NDEBUG Win32\$(TargetName).pdb" />
+					<Add option='/DEF:&quot;BugTrap.def&quot;' />
+					<Add library="ws2_32" />
+					<Add library="comctl32" />
+					<Add library="shlwapi" />
+					<Add library="version" />
+					<Add library="wininet" />
+				</Linker>
+			</Target>
+		</Build>
+		<Unit filename="AboutDlg.cpp" />
+		<Unit filename="AboutDlg.h" />
+		<Unit filename="Array.h" />
+		<Unit filename="BTAtlWindow.h" />
+		<Unit filename="BTMfcWindow.h" />
+		<Unit filename="BTTrace.h" />
+		<Unit filename="BaseStream.h" />
+		<Unit filename="BugTrap.cpp" />
+		<Unit filename="BugTrap.def" />
+		<Unit filename="BugTrap.h" />
+		<Unit filename="BugTrap.rc">
+			<Option compilerVar="WINDRES" />
+		</Unit>
+		<Unit filename="BugTrapNet.cpp" />
+		<Unit filename="BugTrapNet.h" />
+		<Unit filename="BugTrapUI.cpp" />
+		<Unit filename="BugTrapUI.h" />
+		<Unit filename="BugTrapUtils.cpp" />
+		<Unit filename="BugTrapUtils.h" />
+		<Unit filename="CMapi.cpp" />
+		<Unit filename="CMapi.h" />
+		<Unit filename="ColHelper.cpp" />
+		<Unit filename="ColHelper.h" />
+		<Unit filename="Encoding.cpp" />
+		<Unit filename="Encoding.h" />
+		<Unit filename="EnumProcess.cpp" />
+		<Unit filename="EnumProcess.h" />
+		<Unit filename="FileStream.cpp" />
+		<Unit filename="FileStream.h" />
+		<Unit filename="Globals.cpp" />
+		<Unit filename="Globals.h" />
+		<Unit filename="Hash.h" />
+		<Unit filename="HexView.cpp" />
+		<Unit filename="HexView.h" />
+		<Unit filename="HyperLink.cpp" />
+		<Unit filename="HyperLink.h" />
+		<Unit filename="ImageView.cpp" />
+		<Unit filename="ImageView.h" />
+		<Unit filename="InPlaceNew.h" />
+		<Unit filename="InputStream.cpp" />
+		<Unit filename="InputStream.h" />
+		<Unit filename="InterfacePtr.h" />
+		<Unit filename="LayoutManager.cpp" />
+		<Unit filename="LayoutManager.h" />
+		<Unit filename="LeakWatcher.h" />
+		<Unit filename="List.h" />
+		<Unit filename="LogFile.cpp" />
+		<Unit filename="LogFile.h" />
+		<Unit filename="LogLink.h" />
+		<Unit filename="MachineInfoDlg.cpp" />
+		<Unit filename="MachineInfoDlg.h" />
+		<Unit filename="MachineStateDlg.cpp" />
+		<Unit filename="MachineStateDlg.h" />
+		<Unit filename="MainDlg.cpp" />
+		<Unit filename="MainDlg.h" />
+		<Unit filename="MemStream.cpp" />
+		<Unit filename="MemStream.h" />
+		<Unit filename="NetThunks.cpp" />
+		<Unit filename="NetThunks.h" />
+		<Unit filename="OutputStream.cpp" />
+		<Unit filename="OutputStream.h" />
+		<Unit filename="PreviewDlg.cpp" />
+		<Unit filename="PreviewDlg.h" />
+		<Unit filename="ResManager.cpp" />
+		<Unit filename="ResManager.h" />
+		<Unit filename="SendMailDlg.cpp" />
+		<Unit filename="SendMailDlg.h" />
+		<Unit filename="SimpleDlg.cpp" />
+		<Unit filename="SimpleDlg.h" />
+		<Unit filename="SmartPtr.h" />
+		<Unit filename="Splitter.cpp" />
+		<Unit filename="Splitter.h" />
+		<Unit filename="StrHolder.cpp" />
+		<Unit filename="StrHolder.h" />
+		<Unit filename="StrStream.cpp" />
+		<Unit filename="StrStream.h" />
+		<Unit filename="Stream.h" />
+		<Unit filename="SymEngine.cpp" />
+		<Unit filename="SymEngine.h" />
+		<Unit filename="SymEngineNet.cpp" />
+		<Unit filename="SymEngineNet.h" />
+		<Unit filename="TextFormat.cpp" />
+		<Unit filename="TextFormat.h" />
+		<Unit filename="TextLogFile.cpp" />
+		<Unit filename="TextLogFile.h" />
+		<Unit filename="TextView.cpp" />
+		<Unit filename="TextView.h" />
+		<Unit filename="TransferProgressDlg.cpp" />
+		<Unit filename="TransferProgressDlg.h" />
+		<Unit filename="VersionInfo.h" />
+		<Unit filename="WaitCursor.cpp" />
+		<Unit filename="WaitCursor.h" />
+		<Unit filename="WaitDlg.cpp" />
+		<Unit filename="WaitDlg.h" />
+		<Unit filename="XmlLogFile.cpp" />
+		<Unit filename="XmlLogFile.h" />
+		<Unit filename="XmlReader.cpp" />
+		<Unit filename="XmlReader.h" />
+		<Unit filename="XmlWriter.cpp" />
+		<Unit filename="XmlWriter.h" />
+		<Unit filename="res\Bug.ico" />
+		<Unit filename="res\CheckMark.bmp" />
+		<Unit filename="res\ImageToolbar.bmp" />
+		<Unit filename="res\SortArrows.bmp" />
+		<Unit filename="res\Upload.avi" />
+		<Unit filename="resource.h" />
+		<Unit filename="stdafx.cpp" />
+		<Unit filename="stdafx.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

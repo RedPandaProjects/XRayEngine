@@ -27,7 +27,9 @@ extern bool shared_str_initialized;
     #	define DEBUG_INVOKE	__asm int 3
         static BOOL			bException	= FALSE;
 #endif
-
+#ifndef _DEBUG
+#define USE_BUG_TRAP
+#endif
 #ifndef USE_BUG_TRAP
 #	include <exception>
 #endif
@@ -40,18 +42,13 @@ extern bool shared_str_initialized;
 #include <dbghelp.h>						// MiniDump flags
 
 #ifdef USE_BUG_TRAP
-#	include "../3rd party/bugtrap/bugtrap/bugtrap.h"						// for BugTrap functionality
-    #ifndef __BORLANDC__
-        #	pragma comment(lib,"BugTrap.lib")		// Link to ANSI DLL
-    #else
-        #	pragma comment(lib,"BugTrapB.lib")		// Link to ANSI DLL
-    #endif
+#	include "../External/BugTrap/BugTrap.h"						// for BugTrap functionality
 #endif // USE_BUG_TRAP
 
 #include <new.h>							// for _set_new_mode
 #include <signal.h>							// for signals
 
-#ifdef DEBUG
+#ifdef _DEBUG
 #	define USE_OWN_ERROR_MESSAGE_WINDOW
 #else // DEBUG
 #	define USE_OWN_MINI_DUMP
