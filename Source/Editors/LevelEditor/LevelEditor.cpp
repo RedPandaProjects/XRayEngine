@@ -5,7 +5,7 @@ class ISE_Abstract;
 #include "..\XrSE_Factory\xrSE_Factory_import_export.h"
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {
-    Debug._initialize(false);
+    if(!IsDebuggerPresent()) Debug._initialize(false);
     Core._initialize("Actor", ELogCallback, 1, "fs.ltx", true);
     XrSE_Factory::initialize();
     Tools = xr_new<CLevelTool>();

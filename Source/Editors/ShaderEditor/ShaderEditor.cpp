@@ -3,7 +3,7 @@
 #include "stdafx.h"
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {
-    Debug._initialize(false);
+    if (!IsDebuggerPresent()) Debug._initialize(false);
     Core._initialize("Shader", ELogCallback, 1, "fs.ltx", true);
 
     Tools = xr_new<CShaderTool>();
