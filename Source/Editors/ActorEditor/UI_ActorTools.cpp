@@ -276,9 +276,10 @@ void CActorTools::OnFrame()
     if (m_Flags.is(flRefreshSubProps))
     {
         m_Flags.set(flRefreshSubProps, FALSE);
-     //   m_ObjectItems->GetSelected(0, items, false);
-        xr_vector<ListItem*> nul;
-        OnObjectItemsFocused(nul);
+
+        xr_vector<ListItem*> items;
+        m_ObjectItems->GetSelected(0, items, false);
+        OnObjectItemsFocused(items);
     }
 
     if (m_Flags.is(flRefreshProps))
