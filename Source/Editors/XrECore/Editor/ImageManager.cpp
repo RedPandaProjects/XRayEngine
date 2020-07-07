@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #pragma hdrstop
 
+#include "..\BearBundle\BearGraphics\BearGraphics.hpp"
+
 #include "ImageManager.h"
 #include "xrImage_Resampler.h"
 #include "..\Engine\Image.h"
@@ -40,7 +42,7 @@ bool Stbi_Load(LPCSTR full_name, U32Vec& data, u32& w, u32& h, u32& a)
         h 					= img.dwHeight;
         a					= img.bAlpha;
         data.resize			(w*h);
-		for(int y=0;y<h;y++) CopyMemory			(data.data()+y*w,img.pData+((h-y-1) * w),sizeof(u32)*w);
+		for(int y=0;y<h;y++) CopyMemory			(data.data()+y*w,img.pData+(y * w),sizeof(u32)*w);
 		if (!IsValidSize(w,h))	ELog.Msg(mtError,"Texture (%s) - invalid size: [%d, %d]",full_name,w,h);
         return true;
     }else{
@@ -57,6 +59,20 @@ bool Stbi_Load(LPCSTR full_name, U32Vec& data, u32& w, u32& h, u32& a)
             stbi_image_free(raw_data);
 			if (!IsValidSize(w,h))	ELog.Msg(mtError,"Texture (%s) - invalid size: [%d, %d]",full_name,w,h);
             return true;
+        }
+        else
+        {
+            BearImage img;
+            if (img.LoadDDSFromFile(full_name))
+            {
+                img.ClearMipLevels();
+                img.Convert(TPF_R8G8B8A8);
+                w = img.GetSize().x;
+                h = img.GetSize().y;
+                data.resize(w * h);
+                CopyMemory(data.data(), *img, w * h*4);
+                return true;
+            }
         }
 
     }
