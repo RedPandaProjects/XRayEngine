@@ -445,12 +445,64 @@ void  CActorTools::OnBindTransformChange(PropValue* V)
 	UI->RedrawScene();
 }
 
+void CActorTools::OnTypeChange(PropValue* V)
+{
+    u32 current_type = m_pEditObject->m_objectFlags.flags & (CEditableObject::eoDynamic | CEditableObject::eoHOM | CEditableObject::eoSoundOccluder | CEditableObject::eoMultipleUsage);
+    m_pEditObject->m_objectFlags.flags = m_pEditObjectType;
+    
+    if (current_type != m_pEditObjectType)
+    {
+        if (m_pEditObjectType == CEditableObject::eoMultipleUsage)
+        {
+            m_pEditObject->m_objectFlags.flags |= CEditableObject::eoUsingLOD;
+        }
+    }
+    RefreshSubProperties();
+}
+
+void CActorTools::OnUsingLodFlagChange(PropValue* V)
+{
+    RefreshSubProperties();
+}
+
+void CActorTools::OnMakeThumbnailClick(ButtonValue* sender, bool& bModif, bool& bSafe)
+{
+    R_ASSERT(m_pEditObject);
+    switch (sender->btn_num) 
+    {
+    case 0:
+    {
+        MakeThumbnail();
+    }
+    break;
+    }
+  
+}
+
+void CActorTools::OnMakeLODClick(ButtonValue* sender, bool& bModif, bool& bSafe)
+{
+    R_ASSERT(m_pEditObject);
+    switch (sender->btn_num)
+    {
+    case 0:
+    {
+        GenerateLOD(true);
+    }
+    case 1:
+    {
+        GenerateLOD(false);
+    }
+    break;
+    }
+}
+
 void  CActorTools::OnBoneShapeClick(ButtonValue* V, bool& bModif, bool& bSafe)
 {
 	R_ASSERT(m_pEditObject);
-    switch (V->btn_num){
-    case 0: m_pEditObject->GenerateBoneShape(false); break;
-    case 1: m_pEditObject->GenerateBoneShape(true); break;
+    switch (V->btn_num)
+    {
+        case 0: m_pEditObject->GenerateBoneShape(false); break;
+        case 1: m_pEditObject->GenerateBoneShape(true); break;
 	}
 }
 
@@ -788,24 +840,49 @@ void CActorTools::FillSurfaceProperties(PropItemVec& items, LPCSTR pref, ListIte
     }
 }
 //------------------------------------------------------------------------------
+xr_token eo_type_token[] = {
+    { "Static",					0},
+    { "Dynamic",				CEditableObject::eoDynamic},
+    { "HOM",					CEditableObject::eoHOM},
+    { "Multiple Usage",			CEditableObject::eoMultipleUsage},
+    { "Sound Occluder",			CEditableObject::eoSoundOccluder},
+    { 0,						0}
+};
 
 void CActorTools::FillObjectProperties(PropItemVec& items, LPCSTR pref, ListItem* sender)
 {
-	R_ASSERT(m_pEditObject);
-    PropValue* V=0;
-    PHelper().CreateFlag32			(items, "Object\\Flags\\Make Progressive",	&m_pEditObject->m_objectFlags,			CEditableObject::eoProgressive);
-    PHelper().CreateFlag32			(items, "Object\\Flags\\HQ Geometry",	&m_pEditObject->m_objectFlags,			CEditableObject::eoHQExport);
+    R_ASSERT(m_pEditObject);
+    PropValue* V = 0;
+    m_pEditObjectType = m_pEditObject->m_objectFlags.flags & (CEditableObject::eoDynamic | CEditableObject::eoHOM | CEditableObject::eoSoundOccluder | CEditableObject::eoMultipleUsage);
+    PHelper().CreateToken32(items, "Object\\Object Type", &m_pEditObjectType, eo_type_token)->OnChangeEvent.bind(this, &CActorTools::OnTypeChange);
 
-    V=PHelper().CreateVector		(items, "Object\\Transform\\Position",		&m_pEditObject->a_vPosition, 	-10000,	10000,0.01,2);
-    V->OnChangeEvent.bind			(this,&CActorTools::OnChangeTransform);
-    V=PHelper().CreateAngle3		(items, "Object\\Transform\\Rotation",		&m_pEditObject->a_vRotate, 		-10000,	10000,0.1,1);
-    V->OnChangeEvent.bind			(this,&CActorTools::OnChangeTransform);
-    V=PHelper().CreateCaption		(items, "Object\\Transform\\BBox Min",		shared_str().printf("{%3.2f, %3.2f, %3.2f}",VPUSH(m_pEditObject->GetBox().min)));
-    V=PHelper().CreateCaption		(items, "Object\\Transform\\BBox Max",		shared_str().printf("{%3.2f, %3.2f, %3.2f}",VPUSH(m_pEditObject->GetBox().max)));
+    if (m_pEditObjectType & CEditableObject::eoDynamic)
+    {
+        PHelper().CreateFlag32(items, "Object\\Flags\\Make Progressive", &m_pEditObject->m_objectFlags, CEditableObject::eoProgressive);
+        PHelper().CreateFlag32(items, "Object\\Flags\\HQ Geometry", &m_pEditObject->m_objectFlags, CEditableObject::eoHQExport);
+    }
+    else if (m_pEditObjectType & CEditableObject::eoMultipleUsage)
+    {
+        PHelper().CreateFlag32(items, "Object\\Flags\\Using LOD", &m_pEditObject->m_objectFlags, CEditableObject::eoUsingLOD)->OnChangeEvent.bind(this, &CActorTools::OnUsingLodFlagChange);
+    }
 
-//.    PHelper().CreateChoose		 (items, "Object\\LOD\\Reference",  			&m_pEditObject->m_LODs, smObject);
-    PHelper().CreateChoose			(items, "Object\\LOD\\Reference",  			&m_pEditObject->m_LODs, smVisual);
-    m_pEditObject->FillSummaryProps	("Object\\Summary",items);
+    V = PHelper().CreateVector(items, "Object\\Transform\\Position", &m_pEditObject->a_vPosition, -10000, 10000, 0.01, 2);
+    V->OnChangeEvent.bind(this, &CActorTools::OnChangeTransform);
+    V = PHelper().CreateAngle3(items, "Object\\Transform\\Rotation", &m_pEditObject->a_vRotate, -10000, 10000, 0.1, 1);
+    V->OnChangeEvent.bind(this, &CActorTools::OnChangeTransform);
+    V = PHelper().CreateVector(items, "Object\\Transform\\Scale", &m_pEditObject->t_vScale, -10000, 10000, 0.1, 1);
+    V->OnChangeEvent.bind(this, &CActorTools::OnChangeTransform);
+    V = PHelper().CreateCaption(items, "Object\\Transform\\BBox Min", shared_str().printf("{%3.2f, %3.2f, %3.2f}", VPUSH(m_pEditObject->GetBox().min)));
+    V = PHelper().CreateCaption(items, "Object\\Transform\\BBox Max", shared_str().printf("{%3.2f, %3.2f, %3.2f}", VPUSH(m_pEditObject->GetBox().max)));
+
+    //.    PHelper().CreateChoose		 (items, "Object\\LOD\\Reference",  			&m_pEditObject->m_LODs, smObject);
+    PHelper().CreateChoose(items, "Object\\LOD\\Reference", &m_pEditObject->m_LODs, smVisual);
+    if (m_pEditObject->m_objectFlags.flags & CEditableObject::eoUsingLOD)
+    {
+        PHelper().CreateButton(items, "Object\\LOD\\Action", "Make HQ,Make LQ", ButtonValue::flFirstOnly)->OnBtnClickEvent.bind(this, &CActorTools::OnMakeLODClick);
+    }
+    PHelper().CreateButton(items, "Object\\Action", "Make Thumbnail", ButtonValue::flFirstOnly)->OnBtnClickEvent.bind(this, &CActorTools::OnMakeThumbnailClick);
+    m_pEditObject->FillSummaryProps("Object\\Summary", items);
 }
 //------------------------------------------------------------------------------
 

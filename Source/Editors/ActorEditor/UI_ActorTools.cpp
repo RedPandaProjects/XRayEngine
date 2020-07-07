@@ -23,6 +23,7 @@ void EngineModel::DeleteVisual		()
 
 void	   EngineModel::		OnRender			()
 {
+    //Tools->GetSelectionPosition(m_object_xform);
 	UpdateObjectXform(Fmatrix());
 }
 
@@ -173,7 +174,8 @@ void CActorTools::Render()
     if (!m_bReady) return;
     PrepareLighting();
     m_PreviewObject.Render();
-    if (m_pEditObject) {
+    if (m_pEditObject) 
+    {
         m_RenderObject.OnRender();
         if (m_RenderObject.IsRenderable() && MainForm->GetLeftBarForm()->GetRenderMode() == UILeftBarForm::Render_Engine)
         {
@@ -206,7 +208,7 @@ void CActorTools::Render()
         else
         {
             // update transform matrix
-            m_pEditObject->UpdateObjectXform(m_AVTransform);
+            
             m_pEditObject->RenderSkeletonSingle(m_AVTransform);
         }
     }
@@ -226,11 +228,12 @@ void CActorTools::OnFrame()
     if (m_pEditObject)
     {
         // update matrix
-        Fmatrix	mTranslate, mRotate;
+        Fmatrix	mTranslate, mRotate, mScale;
         mRotate.setHPB(m_pEditObject->a_vRotate.y, m_pEditObject->a_vRotate.x, m_pEditObject->a_vRotate.z);
         mTranslate.translate(m_pEditObject->a_vPosition);
+        mScale.scale(m_pEditObject->t_vScale);
         m_AVTransform.mul(mTranslate, mRotate);
-
+        m_AVTransform.mulB_43(mScale);
 
         if (!MainForm->GetLeftBarForm()->GetRenderMode() == UILeftBarForm::Render_Engine)
             m_pEditObject->OnFrame();
@@ -272,7 +275,17 @@ void CActorTools::OnFrame()
         m_Flags.set(flRefreshShaders, FALSE);
         m_pEditObject->OnDeviceDestroy();
     }
-
+    if (m_Flags.is(flMakeThumbnail))
+    {
+        m_Flags.set(flMakeThumbnail, FALSE);
+        RealMakeThumbnail();
+    }
+    if (m_Flags.is(flGenerateLODHQ)|| m_Flags.is(flGenerateLODLQ))
+    {
+        RealGenerateLOD(m_Flags.is(flGenerateLODHQ));
+        m_Flags.set(flGenerateLODHQ, FALSE);
+        m_Flags.set(flGenerateLODLQ, FALSE);
+    }
     if (m_Flags.is(flRefreshSubProps))
     {
         m_Flags.set(flRefreshSubProps, FALSE);
@@ -986,7 +999,7 @@ void CActorTools::OptimizeMotions()
     }
 }
 
-void CActorTools::MakeThumbnail()
+void CActorTools::RealMakeThumbnail()
 {
     if (CurrentObject()) {
         CEditableObject* obj = CurrentObject();
@@ -1009,6 +1022,47 @@ void CActorTools::MakeThumbnail()
     else {
         ELog.DlgMsg(mtError, "Can't create thumbnail. Empty scene.");
     }
+}
+
+void CActorTools::RealGenerateLOD(bool hq)
+{
+    if (m_pEditObject)
+    {
+        bool engine_render = MainForm->GetLeftBarForm()->GetRenderMode() == UILeftBarForm::Render_Engine;
+        MainForm->GetLeftBarForm()->SetRenderMode(false);
+        CEditableObject* O = m_pEditObject;
+
+        if (O && O->IsMUStatic())
+        {
+            BOOL bLod = O->m_objectFlags.is(CEditableObject::eoUsingLOD);
+            O->m_objectFlags.set(CEditableObject::eoUsingLOD, FALSE);
+            xr_string tex_name;
+            tex_name = EFS.ChangeFileExt(O->GetName(), "");
+
+            string_path fname;
+            FS.update_path(fname, _objects_, "");
+
+            if (tex_name.find(fname) == 0)
+            {
+                tex_name.erase(0, xr_strlen(fname));
+            }
+
+            string_path				tmp;
+            strcpy(tmp, tex_name.c_str()); _ChangeSymbol(tmp, '\\', '_'); _ChangeSymbol(tmp, ':', '_');
+            tex_name = xr_string("lod_") + tmp;
+            tex_name = ImageLib.UpdateFileName(tex_name);
+            ImageLib.CreateLODTexture(O, tex_name.c_str(), LOD_IMAGE_SIZE, LOD_IMAGE_SIZE, LOD_SAMPLE_COUNT, O->Version(), hq ? 4/*7*/ : 1);
+            O->OnDeviceDestroy();
+            O->m_objectFlags.set(CEditableObject::eoUsingLOD, bLod);
+            ELog.Msg(mtInformation, "LOD for object '%s' successfully created.", O->GetName());
+        }
+        else
+        {
+            ELog.Msg(mtError, "Can't create LOD texture from non 'Multiple Usage' object.", O->GetName());
+        }
+        MainForm->GetLeftBarForm()->SetRenderMode(engine_render);
+    }
+
 }
 
 bool CActorTools::BatchConvert(LPCSTR fn)

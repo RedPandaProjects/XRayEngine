@@ -118,7 +118,7 @@ class CActorTools: public CToolCustom
 
     Fmatrix				m_AVTransform;
 	CEditableObject*	m_pEditObject;
-
+    u32                 m_pEditObjectType;
     bool				m_bObjectModified;
     shared_str			m_tmp_mot_refs;
     EEditMode			m_EditMode;
@@ -157,6 +157,12 @@ class CActorTools: public CToolCustom
     
 	void   	OnBindTransformChange	(PropValue* V);
 
+    void  OnTypeChange(PropValue* V);
+
+    void  OnUsingLodFlagChange(PropValue* V);
+
+    void OnMakeThumbnailClick(ButtonValue* sender, bool& bModif, bool& bSafe);
+    void OnMakeLODClick(ButtonValue* sender, bool& bModif, bool& bSafe);
     SMotionVec 			appended_motions;
 protected:
 	// flags
@@ -168,12 +174,16 @@ protected:
     	flUpdateMotionKeys 	= (1<<4),
     	flUpdateMotionDefs	= (1<<5),
         flReadOnlyMode 		= (1<<6),
+        flMakeThumbnail     = (1<<7),
+        flGenerateLODLQ = (1 << 8),
+        flGenerateLODHQ = (1 << 9),
     };
     Flags32				m_Flags;
     
     void				RefreshSubProperties	(){m_Flags.set(flRefreshSubProps,TRUE);}
     void				RefreshShaders			(){m_Flags.set(flRefreshShaders,TRUE);}
-
+    void				MakeThumbnail           (){ m_Flags.set(flMakeThumbnail, TRUE); }
+    void				GenerateLOD(bool hq) { m_Flags.set(hq? flGenerateLODHQ: flGenerateLODLQ, TRUE); }
   //  void   	PMMotionItemClick		(TObject *Sender);
     
     void				RealUpdateProperties	();
@@ -292,7 +302,8 @@ public:
 	void 				RemoveMarksChannel	(bool b12);
 	void 				AddMarksChannel		(bool b12);
     void				OptimizeMotions		();
-    void				MakeThumbnail		();
+    void				RealMakeThumbnail();
+    void				RealGenerateLOD(bool hq);
     bool				BatchConvert		(LPCSTR fn);
 
 
