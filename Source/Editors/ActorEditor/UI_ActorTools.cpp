@@ -277,7 +277,8 @@ void CActorTools::OnFrame()
     {
         m_Flags.set(flRefreshSubProps, FALSE);
      //   m_ObjectItems->GetSelected(0, items, false);
-        OnObjectItemFocused(0);
+        xr_vector<ListItem*> nul;
+        OnObjectItemsFocused(nul);
     }
 
     if (m_Flags.is(flRefreshProps))
@@ -298,8 +299,9 @@ bool CActorTools::OnCreate()
     
     inherited::OnCreate();
     m_ObjectItems = xr_new<UIItemListForm>();
+    m_ObjectItems->m_Flags.set(UIItemListForm::fMultiSelect,true);
     m_Props = xr_new<UIPropertiesForm>();
-    m_ObjectItems->SetOnItemFocusedEvent(TOnILItemFocused(this, &CActorTools::OnObjectItemFocused));
+    m_ObjectItems->SetOnItemsFocusedEvent(TOnILItemsFocused(this, &CActorTools::OnObjectItemsFocused));
      m_PreviewObject.OnCreate();
 
     // key bar

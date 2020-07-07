@@ -142,7 +142,7 @@ class CActorTools: public CToolCustom
 	void   	OnMarksControlClick12		(ButtonValue* sender, bool& bModif, bool& bSafe);
 	void   	OnMarksControlClick34		(ButtonValue* sender, bool& bModif, bool& bSafe);
 
-    void   	OnObjectItemFocused		(ListItem* items);
+    void   	OnObjectItemsFocused		(xr_vector<ListItem*>& items);
 
     void  		OnBoneShapeClick  		(ButtonValue* sender, bool& bModif, bool& bSafe);
     void  		OnBoneCreateDeleteClick (ButtonValue* sender, bool& bModif, bool& bSafe);

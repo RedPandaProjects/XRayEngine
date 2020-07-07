@@ -5,7 +5,7 @@
 #include "SkeletonAnimated.h"
 //------------------------------------------------------------------------------
 
-void  CActorTools::OnObjectItemFocused(ListItem* prop)
+void  CActorTools::OnObjectItemsFocused(xr_vector<ListItem*>& items)
 {
     PropItemVec props;
     m_EditMode = emObject;
@@ -16,35 +16,38 @@ void  CActorTools::OnObjectItemFocused(ListItem* prop)
         //.	    StopMotion					();     // ����� ��-�� ���� ��� �� �������� �������� � ������ ������
         m_pEditObject->SelectBones(false);
     }
-
-    if (prop)
+    for (ListItem* prop : items)
     {
-        m_EditMode = EEditMode(prop->Type());
-        switch (m_EditMode)
+
+        if (prop)
         {
-        case emObject:
-            FillObjectProperties(props, OBJECT_PREFIX, prop);
+            m_EditMode = EEditMode(prop->Type());
+            switch (m_EditMode)
+            {
+            case emObject:
+                FillObjectProperties(props, OBJECT_PREFIX, prop);
+                break;
+            case emMotion:
+            {
+                LPCSTR m_name = ExtractMotionName(prop->Key());
+                u16 slot = ExtractMotionSlot(prop->Key());
+                FillMotionProperties(props, MOTIONS_PREFIX, prop);
+                SetCurrentMotion(m_name, slot);
+            }
             break;
-        case emMotion:
-        {
-            LPCSTR m_name = ExtractMotionName(prop->Key());
-            u16 slot = ExtractMotionSlot(prop->Key());
-            FillMotionProperties(props, MOTIONS_PREFIX, prop);
-            SetCurrentMotion(m_name, slot);
-        }
-        break;
-        case emBone:
-        {
-            FillBoneProperties(props, BONES_PREFIX, prop);
-            CBone* BONE = (CBone*)prop->m_Object;
-            if (BONE) 			BONE->Select(TRUE);
-        }
-        break;
-        case emSurface:
-            FillSurfaceProperties(props, SURFACES_PREFIX, prop);
+            case emBone:
+            {
+                FillBoneProperties(props, BONES_PREFIX, prop);
+                CBone* BONE = (CBone*)prop->m_Object;
+                if (BONE) 			BONE->Select(TRUE);
+            }
             break;
-        case emMesh:
-            break;
+            case emSurface:
+                FillSurfaceProperties(props, SURFACES_PREFIX, prop);
+                break;
+            case emMesh:
+                break;
+            }
         }
     }
 
@@ -179,7 +182,7 @@ void CActorTools::RealUpdateProperties()
         }
     }
 
-    m_ObjectItems->AssignItems(items);//,"",true);
+    m_ObjectItems->AssignItems(items,nullptr,true,true);//,"",true);
     // if appended motions exist - select it
     if (!appended_motions.empty()) {
         SelectListItem(MOTIONS_PREFIX, 0, true, false, true);
