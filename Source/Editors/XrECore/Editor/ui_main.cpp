@@ -441,7 +441,11 @@ void TUI::Redraw()
                 RCache.set_RT(HW.pBaseRT);
                 RCache.set_ZB(HW.pBaseZB);
             }
+
             try {
+                EDevice.SetRS(D3DRS_FILLMODE, D3DFILL_SOLID);
+                Draw();
+                EDevice.SetRS(D3DRS_FILLMODE, EDevice.dwFillMode);
                 // end draw
                 EDevice.End();
             }

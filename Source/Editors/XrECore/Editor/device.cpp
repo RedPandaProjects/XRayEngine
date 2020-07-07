@@ -338,18 +338,7 @@ void CEditorRenderDevice::End()
 {
 	VERIFY(HW.pDevice);
 	VERIFY(b_is_Ready);
-
-
-    
-
 	g_bRendering = 	FALSE;
-	if (UI)
-	{
-		EDevice.SetRS(D3DRS_FILLMODE,D3DFILL_SOLID);
-		UI->Draw();
-		EDevice.SetRS(D3DRS_FILLMODE, EDevice.dwFillMode);
-	}
-
 	// end scene
 	RCache.OnFrameEnd();
     CHK_DX(HW.pDevice->EndScene());
