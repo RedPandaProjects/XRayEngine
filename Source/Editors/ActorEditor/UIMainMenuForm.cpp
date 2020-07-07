@@ -19,8 +19,6 @@ void UIMainMenuForm::Draw()
             if (ImGui::MenuItem("Save", "")) { ExecCommand(COMMAND_SAVE, xr_string(ATools->m_LastFileName.c_str()), 0); }
             if (ImGui::MenuItem("Save as ...", "")) { ExecCommand(COMMAND_SAVE,0, 1); }
             ImGui::Separator();
-            if (ImGui::MenuItem("Make Thumbnail", "")) { ExecCommand(COMMAND_MAKE_THUMBNAIL); }
-            ImGui::Separator();
             if (ImGui::BeginMenu("Open Recent", "")) 
             {
                 for (auto& str : EPrefs->scene_recent_list)
