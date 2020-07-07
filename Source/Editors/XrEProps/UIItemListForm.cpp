@@ -3,7 +3,6 @@
 
 UIItemListForm::UIItemListForm()
 {
-	m_SelectedItem = nullptr;
 	m_Flags.zero();
 	m_UseMenuEdit = false;
 }
@@ -33,7 +32,8 @@ void UIItemListForm::Draw()
 void UIItemListForm::ClearList()
 {
 	m_GeneralNode = Node();
-	m_SelectedItem = nullptr;
+
+	ClearSelectedItems();
 	for (ListItem* item : m_Items)
 	{
 		xr_delete(item);
@@ -44,10 +44,10 @@ void UIItemListForm::ClearList()
 
 void UIItemListForm::RemoveSelectItem()
 {
-	if (m_SelectedItem == nullptr)return;
+	if (!m_SelectedItems.size()||m_Flags.test(fMultiSelect))return;
 	for (auto b = m_Items.begin(), e = m_Items.end(); b != e; b++)
 	{
-		if (*b == m_SelectedItem)
+		if (*b == m_SelectedItems.back())
 		{
 			m_Items.erase(b);
 			break;
@@ -64,46 +64,69 @@ void UIItemListForm::RemoveSelectItem()
 
 void UIItemListForm::ClearSelected()
 {
-	m_SelectedItem = nullptr;
+	ClearSelectedItems();
 	if (!OnItemFocusedEvent.empty())
-		OnItemFocusedEvent(m_SelectedItem);
+		OnItemFocusedEvent(0);
+	if (m_Flags.test(fMultiSelect))
+	{
+		if (!OnItemsFocusedEvent.empty())
+			OnItemsFocusedEvent(m_SelectedItems);
+	}
 }
 
 void UIItemListForm::SelectItem(const char* name)
 {
 	if (name == nullptr)return;
 	Node* N = SelectObject(&m_GeneralNode, name);
-	if (N)m_SelectedItem = N->Object;
-	if (!OnItemFocusedEvent.empty())
-		OnItemFocusedEvent(m_SelectedItem);
+	if (m_Flags.test(fMultiSelect))
+	{
+		ClearSelectedItems();
+		N->Object->selected = true;
+		if (N)m_SelectedItems.push_back(N->Object);
+		if (!OnItemFocusedEvent.empty())
+			OnItemFocusedEvent(N->Object);
+		if (!OnItemsFocusedEvent.empty())
+			OnItemsFocusedEvent(m_SelectedItems);
+	}
+	else
+	{
+		ClearSelectedItems();
+		if (N)m_SelectedItems.push_back( N->Object);
+		if (!OnItemFocusedEvent.empty())
+			OnItemFocusedEvent(N->Object);
+	}
 }
 
 bool UIItemListForm::GetSelected(RStringVec& items) const
 {
-	if (m_SelectedItem == nullptr)
-		return false;
-	items.push_back(m_SelectedItem->key);
+	for (ListItem* prop : m_SelectedItems)
+	{
+		items.push_back(prop->key);
+	}
 	return true;
 }
 int UIItemListForm::GetSelected(LPCSTR pref, ListItemsVec& items, bool bOnlyObject)
 {
-	ListItem* prop = m_SelectedItem;
-
-
-	if (prop && (!bOnlyObject || (bOnlyObject && prop->m_Object)))
+	for (ListItem* prop : m_SelectedItems)
 	{
-		xr_string key = *prop->key;
-		if (pref) {
-			if (0 == key.find(pref))
+		if (prop && (!bOnlyObject || (bOnlyObject && prop->m_Object)))
+		{
+			xr_string key = *prop->key;
+			if (pref) {
+				if (0 == key.find(pref))
+					items.push_back(prop);
+			}
+			else
 				items.push_back(prop);
 		}
-		else
-			items.push_back(prop);
 	}
 	return items.size();
 }
-void UIItemListForm::AssignItems(ListItemsVec& items, const char* name_selection, bool clear_floder)
+void UIItemListForm::AssignItems(ListItemsVec& items, const char* name_selection, bool clear_floder, bool save_selected)
 {
+	RStringVec selection_items;
+	if(save_selected)
+		GetSelected(selection_items);
 	ClearList();
 	m_Items = items;
 	
@@ -126,7 +149,28 @@ void UIItemListForm::AssignItems(ListItemsVec& items, const char* name_selection
 	if (name_selection)
 	{
 		Node*N =  SelectObject(&m_GeneralNode, name_selection);
-		if (N)m_SelectedItem = N->Object;
+		ClearSelectedItems();
+		if (m_Flags.test(fMultiSelect))
+		{
+			N->Object->selected = true;
+		}
+		if (N)m_SelectedItems.push_back(N->Object);
+	}
+	if (save_selected)
+	{
+		for (shared_str& name : selection_items)
+		{
+			Node* N = Find(&m_GeneralNode, name.c_str());
+			if (N)
+			{
+				if (m_Flags.test(fMultiSelect))
+				{
+					N->Object->selected = true;
+				}
+				m_SelectedItems.push_back(N->Object);
+			}
+				
+		}
 	}
 }
 
@@ -338,8 +382,18 @@ void UIItemListForm::DrawItem(Node* Node)
 {
 	if (!Node->Object->Visible())return;
 	ImGuiTreeNodeFlags Flags = ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
-	if (m_SelectedItem == Node->Object)
-		Flags |= ImGuiTreeNodeFlags_Bullet;
+	if (m_Flags.test(fMultiSelect))
+	{
+		if (Node->Object&& Node->Object->selected)
+			Flags |= ImGuiTreeNodeFlags_Bullet;
+		if (m_SelectedItems.size()&&m_SelectedItems.back() == Node->Object)
+			Flags |= ImGuiTreeNodeFlags_Selected;
+	}
+	else
+	{
+		if (m_SelectedItems.size() && m_SelectedItems.back() == Node->Object)
+			Flags |= ImGuiTreeNodeFlags_Selected;
+	}
 	if (m_edit_node == Node)
 		Flags |= ImGuiTreeNodeFlags_Selected;
 	ImGui::TreeNodeEx(Node->Name.c_str(), Flags);
@@ -354,12 +408,40 @@ void UIItemListForm::DrawItem(Node* Node)
 			xr_strcpy(m_edit_name,Node->Name.c_str());
 		}
 	}
-
+	
 	if (ImGui::IsItemClicked())
 	{
-		if (!OnItemFocusedEvent.empty())
-			OnItemFocusedEvent(Node->Object);
-		m_SelectedItem = Node->Object;
+		if (m_Flags.test(fMultiSelect))
+		{
+			if (!ImGui::GetIO().KeyCtrl)
+			{
+				ClearSelectedItems();
+			}
+			if (Node->Object->selected)
+			{
+				Node->Object->selected = false;
+				auto p = std::find_if(m_SelectedItems.begin(), m_SelectedItems.end(), [&Node](ListItem* a) {return a == Node->Object; });
+				VERIFY(p != m_SelectedItems.end());
+				m_SelectedItems.erase(p);
+			}
+			else
+			{
+				Node->Object->selected = true;
+				m_SelectedItems.push_back(Node->Object);
+				if (!OnItemFocusedEvent.empty())
+					OnItemFocusedEvent(Node->Object);
+				if (!OnItemsFocusedEvent.empty())
+					OnItemsFocusedEvent(m_SelectedItems);
+			}
+		}
+		else
+		{
+			ClearSelectedItems();
+			m_SelectedItems.push_back(Node->Object);
+			if (!OnItemFocusedEvent.empty())
+				OnItemFocusedEvent(Node->Object);
+		}
+
 	}
 }
 
@@ -378,20 +460,32 @@ bool UIItemListForm::IsDrawFloder(Node* node)
 
 void UIItemListForm::IsItemClicked(Node* Node)
 {
-	m_SelectedItem = Node->Object;
+	ClearSelectedItems();
+	m_SelectedItems.push_back(Node->Object);
 	if (!OnItemFocusedEvent.empty())
 		OnItemFocusedEvent(Node->Object);
+	if (m_Flags.test(fMultiSelect))
+	{
+		if (!OnItemsFocusedEvent.empty())
+			OnItemsFocusedEvent(m_SelectedItems);
+	}
 }
 
 bool UIItemListForm::IsFloderBullet(Node* Node)
 {
-	if (Node->Object != nullptr)
-		return m_SelectedItem == Node->Object;
 	return false;
 }
 
 bool UIItemListForm::IsFloderSelected(Node* Node)
 {
+	if (m_Flags.test(fMultiSelect))
+	{
+		return Node->Object->selected;
+	}
+	else if (m_SelectedItems.size() && m_SelectedItems.back() == Node->Object)
+	{
+		return true;
+	}
 	return Node == m_edit_node;
 }
 
@@ -415,6 +509,15 @@ void UIItemListForm::EventRemoveNode(Node* Node, const char* path)
 		type = TYPE_OBJECT;
 	}
 	if (!OnItemRemoveEvent.empty())OnItemRemoveEvent(path, type);
+}
+
+void UIItemListForm::ClearSelectedItems()
+{
+	for (auto ptr : m_SelectedItems)
+	{
+		ptr->selected = false;
+	}
+	m_SelectedItems.clear();
 }
 
 void UIItemListForm::ClearObject(Node* N)

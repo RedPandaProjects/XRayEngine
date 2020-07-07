@@ -2,6 +2,7 @@
 class XREPROPS_API UIItemListForm :
 	public XrUI, private FolderHelper<ListItem,true>
 {
+	TOnILItemsFocused	OnItemsFocusedEvent;
 	TOnILItemFocused	OnItemFocusedEvent;
 	TOnItemRemove	OnItemRemoveEvent;
 	TOnItemRename	OnItemRenameEvent;
@@ -16,13 +17,14 @@ public:
 	void RemoveSelectItem();
 	void ClearSelected();
 	void SelectItem(const char* name);
-	void AssignItems(ListItemsVec& items,const char*name_selection=nullptr,bool clear_floder=true);
+	void AssignItems(ListItemsVec& items, const char* name_selection = nullptr, bool clear_floder = true, bool save_selected = false);
 	IC const ListItemsVec& GetItems()const {return m_Items;}
 	bool GetSelected(RStringVec& items)const;
 	int GetSelected(LPCSTR pref, ListItemsVec& items, bool bOnlyObject);
 public:
 	enum {
 		fMenuEdit =			(1<<0),
+		fMultiSelect =		(1<<1),
 	};
 	Flags32 m_Flags;
 private:
@@ -31,6 +33,7 @@ private:
 	string4096 m_edit_path;
 	Node* m_edit_node;
 public:
+	IC void		SetOnItemsFocusedEvent(TOnILItemsFocused e) { OnItemsFocusedEvent = e; }
 	IC void		SetOnItemFocusedEvent(TOnILItemFocused e)	{ OnItemFocusedEvent = e; }
 	IC void		SetOnItemRemoveEvent(TOnItemRemove e)		{ OnItemRemoveEvent = e; }
 	IC void		SetOnItemRenameEvent(TOnItemRename e)		{ OnItemRenameEvent = e; }
@@ -49,7 +52,8 @@ private:
 public:
 	Node m_GeneralNode;
 	ListItemsVec m_Items;
-	ListItem* m_SelectedItem;
+	ListItemsVec m_SelectedItems;
+	void ClearSelectedItems();
 	bool m_UseMenuEdit;
 	void ClearObject(Node* Node);
 };

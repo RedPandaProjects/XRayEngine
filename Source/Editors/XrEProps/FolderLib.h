@@ -341,6 +341,8 @@ public:
 			else
 			{
 				DrawAfterFloderNode(false, N);
+				if (ImGui::IsItemClicked() && N->Object)
+					IsItemClicked(N);
 			}
 			if (N->Selected)N->Selected = false;
 		}
