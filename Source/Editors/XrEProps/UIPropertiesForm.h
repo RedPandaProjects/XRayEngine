@@ -43,5 +43,7 @@ private:
 	GameTypeChooser m_EditGameTypeChooser;
 	PropItem* m_EditGameTypeValue;
 	void DrawEditGameType();
+private:
+	void RemoveMixed(Node* Node);
 };
 

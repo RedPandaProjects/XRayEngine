@@ -256,7 +256,7 @@ void UIPropertiesForm::DrawItem(Node* node)
 			ImGui::NextColumn();
 			if (ImGui::Button("(Mixed)", ImVec2(-1, 0)))
 			{
-				node->Object->m_Flags.set(PropItem::flIgnoreMixed, 1);
+				RemoveMixed(node);
 			}
 			ImGui::NextColumn();
 		}
