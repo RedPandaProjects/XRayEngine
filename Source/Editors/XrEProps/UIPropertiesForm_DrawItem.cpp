@@ -64,13 +64,19 @@ BOOL TokenOnEdit(PropItem* prop, bool& change)
 	if (!V)					return FALSE;
 	T edit_value  = V->GetValue();
 	prop->BeforeEdit<TokenValue<T>, T>(edit_value);
-	int index = edit_value;
+	int index = 0; 
 	xr_token* token_list = V->token;
 	int cnt = 0;
-	for (; token_list[cnt].name; cnt++){}
+	for (; token_list[cnt].name; cnt++)
+	{
+		if (token_list[cnt].id == edit_value)
+		{
+			index = cnt;
+		}
+	}
 	if (ImGui::Combo("##value", &index, [](void* data, int idx, const char** out_text)->bool {*out_text = reinterpret_cast<xr_token*>(data)[idx].name;return true;},reinterpret_cast<void*>(token_list),cnt))
 	{
-		T new_val = index;
+		T new_val = token_list[index].id;
 		if (prop->AfterEdit<TokenValue<T>, T>(new_val))
 			change = prop->ApplyValue<TokenValue<T>, T>(new_val);
 	}
@@ -86,12 +92,19 @@ BOOL RTokenOnEdit(PropItem* prop, bool& change)
 	if (!V)					return FALSE;
 	T edit_value = V->GetValue();
 	prop->BeforeEdit<RTokenValue<T>, T>(edit_value);
-	int index = edit_value;
-	const char* InTokens[256];
+	int index = 0;
+
 	xr_rtoken* token_list = V->token;
+	for (int cnt=0; V->token_count>cnt; cnt++)
+	{
+		if (token_list[cnt].id == edit_value)
+		{
+			index = cnt;
+		}
+	}
 	if (ImGui::Combo("##value", &index, [](void* data, int idx, const char** out_text)->bool {*out_text = reinterpret_cast<xr_token*>(data)[idx].name; return true; }, reinterpret_cast<void*>(token_list), V->token_count))
 	{
-		T new_val = index;
+		T new_val = token_list[index].id;
 		if (prop->AfterEdit<RTokenValue<T>, T>(new_val))
 			change = prop->ApplyValue<RTokenValue<T>, T>(new_val);
 	}
@@ -398,7 +411,6 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 		RListValue* V = dynamic_cast<RListValue*>(node->GetFrontValue()); R_ASSERT(V);
 		LPCSTR edit_value = V->value? V->value->c_str():0;
 		int index = 0;
-		const char* InTokens[256];
 		int i = 0;
 		for (; i < V->item_count; i++)
 		{
