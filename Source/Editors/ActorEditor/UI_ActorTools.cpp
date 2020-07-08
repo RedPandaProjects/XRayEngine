@@ -521,13 +521,29 @@ bool  CActorTools::MouseStart(TShiftState Shift)
     case etaSelect:
         switch (m_EditMode)
         {
-        case emBone:
-        {
-            CBone* B = m_pEditObject->PickBone(UI->m_CurrentRStart, UI->m_CurrentRDir, m_AVTransform);
-            bool bVal = B ? (Shift|ssAlt) ? false : ((Shift|ssCtrl) ? !B->Selected() : true) : false;
-            SelectListItem(BONES_PREFIX, B ? MakeFullBoneName(B).c_str() : 0, bVal, (Shift|ssCtrl) || (Shift|ssAlt), true);
-        }break;
+            case emBone:
+            {
+                CBone* B = m_pEditObject->PickBone(UI->m_CurrentRStart, UI->m_CurrentRDir, m_AVTransform);
+                bool bVal = B ? (Shift | ssAlt) ? false : ((Shift | ssCtrl) ? !B->Selected() : true) : false;
+                SelectListItem(BONES_PREFIX, B ? MakeFullBoneName(B).c_str() : 0, bVal, (Shift | ssCtrl) || (Shift | ssAlt), true);
+            }
+            break;
+            case emSurface:
+            {
+                SRayPickInfo pinf;
+                float dis = UI->ZFar();
+                Fmatrix iTransform;
+                iTransform.invert(m_AVTransform);
+                if (m_pEditObject->RayPick(dis, UI->m_CurrentRStart, UI->m_CurrentRDir, iTransform, &pinf))
+                {
+                    CSurface* surf = pinf.e_mesh->GetSurfaceByFaceID(pinf.inf.id);
+                    xr_string s_name = xr_string("Surfaces\\") + xr_string(surf->_Name());
+                    m_ObjectItems->SelectItem(s_name.c_str());
+                }
+            }
+            break;
         }
+
         break;
     case etaAdd:
         break;
