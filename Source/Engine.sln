@@ -151,6 +151,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BugTrap", "External\BugTrap
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XrGameSOC", "XrGameSOC\XrGameSOC.vcxproj", "{1A55ED80-8CD5-49AA-882F-5CFD33D4741E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XrGameCS", "XrGameCS\XrGameCS.vcxproj", "{BBE4A2FC-4EA8-4B3A-842B-5433D518E914}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -822,6 +824,18 @@ Global
 		{1A55ED80-8CD5-49AA-882F-5CFD33D4741E}.Release|x64.Build.0 = Release|x64
 		{1A55ED80-8CD5-49AA-882F-5CFD33D4741E}.Release|x86.ActiveCfg = Release|Win32
 		{1A55ED80-8CD5-49AA-882F-5CFD33D4741E}.Release|x86.Build.0 = Release|Win32
+		{BBE4A2FC-4EA8-4B3A-842B-5433D518E914}.Debug|x64.ActiveCfg = Debug|x64
+		{BBE4A2FC-4EA8-4B3A-842B-5433D518E914}.Debug|x64.Build.0 = Debug|x64
+		{BBE4A2FC-4EA8-4B3A-842B-5433D518E914}.Debug|x86.ActiveCfg = Debug|Win32
+		{BBE4A2FC-4EA8-4B3A-842B-5433D518E914}.Debug|x86.Build.0 = Debug|Win32
+		{BBE4A2FC-4EA8-4B3A-842B-5433D518E914}.Development|x64.ActiveCfg = Development|x64
+		{BBE4A2FC-4EA8-4B3A-842B-5433D518E914}.Development|x64.Build.0 = Development|x64
+		{BBE4A2FC-4EA8-4B3A-842B-5433D518E914}.Development|x86.ActiveCfg = Development|Win32
+		{BBE4A2FC-4EA8-4B3A-842B-5433D518E914}.Development|x86.Build.0 = Development|Win32
+		{BBE4A2FC-4EA8-4B3A-842B-5433D518E914}.Release|x64.ActiveCfg = Release|x64
+		{BBE4A2FC-4EA8-4B3A-842B-5433D518E914}.Release|x64.Build.0 = Release|x64
+		{BBE4A2FC-4EA8-4B3A-842B-5433D518E914}.Release|x86.ActiveCfg = Release|Win32
+		{BBE4A2FC-4EA8-4B3A-842B-5433D518E914}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
