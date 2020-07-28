@@ -669,7 +669,7 @@ BOOL SceneBuilder::BuildMesh(	const Fmatrix& parent,
         {
 			st_Face& face = mesh->m_Faces[*f_it];
             float _a		= CalcArea(mesh->m_Vertices[face.pv[0].pindex],mesh->m_Vertices[face.pv[1].pindex],mesh->m_Vertices[face.pv[2].pindex]);
-	    	if (!_valid(_a) || (_a<EPS))
+	    	if (!_valid(_a) || (_a<EPS_S))
             {
             	Fvector p0,p1,p2;
 
@@ -1444,7 +1444,7 @@ BOOL SceneBuilder::CompileStatic(bool b_selected_only)
         SSimpleImage merged_image;
         xr_string fn_color	= ChangeFileExt	(MakeLevelPath(LEVEL_LODS_TEX_NAME).c_str(),".dds").c_str();
         xr_string fn_normal	= ChangeFileExt	(MakeLevelPath(LEVEL_LODS_NRM_NAME).c_str(),".dds").c_str();
-        if (1==ImageLib.CreateMergedTexture	(2,images,merged_image,512,2048,64,2048,offsets,scales,rotated,remap)){
+        if (1==ImageLib.CreateMergedTexture	(2,images,merged_image,512,4096,64,4096,offsets,scales,rotated,remap)){
             // all right, make texture
             STextureParams 		tp;
             tp.width			= merged_image.w;
@@ -1467,7 +1467,7 @@ BOOL SceneBuilder::CompileStatic(bool b_selected_only)
 		        pb->Inc();
 			}
         }else{
-            ELog.DlgMsg		(mtError,"Failed to build merged LOD texture. Merged texture more than [2048x2048].");
+            ELog.DlgMsg		(mtError,"Failed to build merged LOD texture. Merged texture more than [4096x4096].");
         	bResult			= FALSE;
         }
         UI->ProgressEnd(pb);

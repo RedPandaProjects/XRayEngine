@@ -26,7 +26,7 @@
 //----------------------------------------------------
 
 #define MAX_WALLMARK_COUNT			500
-#define MAX_WALLMARK_VERTEX_COUNT	512
+#define MAX_WALLMARK_VERTEX_COUNT	8192
 #define COMPILER_SHADER				"def_shaders\\def_vertex_ghost_no_shadow"
 
 ESceneWallmarkTool::ESceneWallmarkTool():ESceneToolBase(OBJCLASS_WM)
@@ -664,10 +664,12 @@ int	ESceneWallmarkTool::ObjectCount()
 
 BOOL ESceneWallmarkTool::AddWallmark_internal(const Fvector& start, const Fvector& dir, shared_str sh, shared_str tx, float width, float height, float rotate)
 {
+    /*
 	if (ObjectCount()>=MAX_WALLMARK_COUNT){
     	ELog.DlgMsg			(mtError,"Maximum wallmark per level is reached [Max: %d].",MAX_WALLMARK_COUNT);
     	return FALSE;
     }
+    */
     
     if (0==sh.size()){
     	ELog.DlgMsg			(mtError,"Select texture before add wallmark.");
