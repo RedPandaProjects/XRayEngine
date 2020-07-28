@@ -187,7 +187,7 @@ void UIAIMapTool::SideClick(int tag)
 	UI->RedrawScene();
 }
 //---------------------------------------------------------------------------
-void UIAIMapTool::RenderSpecial()
+void UIAIMapTool::OnDrawUI()
 {
 	if (m_ChooseIgnoreMaterials)
 	{

@@ -1186,7 +1186,7 @@ void CLevelMain::RealUpdateScene()
 	inherited::RealUpdateScene	();
 	if (GetEState()==esEditScene){
 	    Scene->OnObjectsUpdate	();
-    	LTools->OnObjectsUpdate	(); // обновить все что как-то связано с объектами
+    	LTools->OnObjectsUpdate	(); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	    RedrawScene				();
     }
 }
@@ -1240,7 +1240,7 @@ void CLevelMain::OutCameraPos()
         const Fvector& c 	= EDevice.m_Camera.GetPosition();
         s.sprintf("C: %3.1f, %3.1f, %3.1f",c.x,c.y,c.z);
     //	const Fvector& hpb 	= EDevice.m_Camera.GetHPB();
-    //	s.sprintf(" Cam: %3.1f°, %3.1f°, %3.1f°",rad2deg(hpb.y),rad2deg(hpb.x),rad2deg(hpb.z));
+    //	s.sprintf(" Cam: %3.1fпїЅ, %3.1fпїЅ, %3.1fпїЅ",rad2deg(hpb.y),rad2deg(hpb.x),rad2deg(hpb.z));
        // fraBottomBar->paCamera->Caption=s; fraBottomBar->paCamera->Repaint();
 
     }
@@ -1299,13 +1299,13 @@ Ivector2 CLevelMain::GetRenderMousePosition() const
     return MainForm->GetRenderForm()->GetMousePos();
 }
 
-void CLevelMain::RenderSpecial()
+void CLevelMain::OnDrawUI()
 {
-    inherited::RenderSpecial();
+    inherited::OnDrawUI();
     UIObjectList::Update();
     if (LTools->GetToolForm())
     {
-        LTools->GetToolForm()->RenderSpecial();
+        LTools->GetToolForm()->OnDrawUI();
     }
 }
 

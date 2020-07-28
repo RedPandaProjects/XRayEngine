@@ -116,7 +116,7 @@ void UIObjectTool::RefreshList()
     m_ObjectList->AssignItems(items);
 }
 
-void UIObjectTool::RenderSpecial()
+void UIObjectTool::OnDrawUI()
 {
     if (m_Selection)
     {

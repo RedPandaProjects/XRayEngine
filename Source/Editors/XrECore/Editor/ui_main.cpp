@@ -650,7 +650,7 @@ void TUI::ProgressDraw()
     }
 }
 
-void TUI::RenderSpecial()
+void TUI::OnDrawUI()
 {
     UIKeyPressForm::Update(EDevice.fTimeGlobal);
     UIEditLightAnim::Update();

@@ -54,7 +54,7 @@ void XrUIManager::ResetEnd()
 }
 
 
-void XrUIManager::RenderSpecial()
+void XrUIManager::OnDrawUI()
 {
 }
 
@@ -179,7 +179,7 @@ void XrUIManager::Draw()
 		ui->Draw();
 	}
 
-    RenderSpecial();
+    OnDrawUI();
     ImGui::EndFrame();
     ImGui::Render();
     ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());

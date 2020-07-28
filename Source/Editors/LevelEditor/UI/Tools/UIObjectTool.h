@@ -8,7 +8,7 @@ public:
 	virtual void Draw();
 	void RefreshList();
 	IC const char* Current() { return m_Current; }
-	virtual void RenderSpecial();
+	virtual void OnDrawUI();
 	ESceneObjectTool* ParentTools;
 private:
 	void OnItemFocused(ListItem*item);

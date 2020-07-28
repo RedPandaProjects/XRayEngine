@@ -4,9 +4,9 @@
 
 #include "UI_ParticleTools.h"
 #include "UI_ParticleMain.h"
-void CParticleTool::RenderSpecial()
+void CParticleTool::OnDrawUI()
 {
-    if (m_LibPED)m_LibPED->RenderSpecial();
+    if (m_LibPED)m_LibPED->OnDrawUI();
     if (m_CreatingParticle)
     {
         bool change;

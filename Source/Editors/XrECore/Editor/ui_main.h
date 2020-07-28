@@ -234,7 +234,7 @@ public:
     ref_rt				ZB;
     _vector2<u32>            RTSize;
 protected:
-    virtual void RenderSpecial();
+    virtual void OnDrawUI();
     void RealResetUI();
     HANDLE m_HConsole;
 public:

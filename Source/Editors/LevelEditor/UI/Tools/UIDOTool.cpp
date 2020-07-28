@@ -69,7 +69,7 @@ void UIDOTool::Draw()
 	}
 }
 
-void UIDOTool::RenderSpecial()
+void UIDOTool::OnDrawUI()
 {
 	if (m_DOShuffle)
 	{

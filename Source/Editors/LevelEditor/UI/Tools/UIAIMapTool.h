@@ -6,7 +6,7 @@ public:
 	UIAIMapTool();
 	virtual ~UIAIMapTool();
 	virtual void Draw();
-	virtual void RenderSpecial();
+	virtual void OnDrawUI();
 	ESceneAIMapTool* tool;
 	IC bool IsIgnoreConstraints()const { return m_IgnoreConstraints; }
 	IC bool IsAutoLink()const { return m_AutoLink; }

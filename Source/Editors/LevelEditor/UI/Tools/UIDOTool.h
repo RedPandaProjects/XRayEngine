@@ -6,7 +6,7 @@ public:
 	UIDOTool();
 	virtual ~UIDOTool();
 	virtual void Draw();
-	virtual void RenderSpecial();
+	virtual void OnDrawUI();
 	EDetailManager* DM;
 private:
 	bool m_DOShuffle;

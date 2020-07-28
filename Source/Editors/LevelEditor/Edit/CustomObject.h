@@ -209,7 +209,7 @@ public:
 	virtual bool 	GetUTBox		(Fbox& box){return false;}
 	virtual void 	OnSceneUpdate	(){;}
     virtual void 	OnObjectRemove	(const CCustomObject* object){;}
-    virtual bool 	OnSelectionRemove(){return true;} // возвращает можно ли его удалять вообще
+    virtual bool 	OnSelectionRemove(){return true;} // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
 	virtual void 	OnDeviceCreate	(){;}
 	virtual void 	OnDeviceDestroy	(){;}
@@ -230,6 +230,7 @@ public:
 public:
 	static void		SnapMove		(Fvector& pos, Fvector& rot, const Fmatrix& rotRP, const Fvector& amount);
 	static void		NormalAlign		(Fvector& rot, const Fvector& up, const Fvector& dir);
+    virtual void    OnDrawUI();
 };
 
 //----------------------------------------------------

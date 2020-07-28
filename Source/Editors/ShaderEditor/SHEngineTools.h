@@ -84,8 +84,8 @@ friend class TfrmShaderProperties;
 
     void 					ParseBlender		(IBlender* B, CParseBlender& P);
 
-	CMemoryWriter			m_BlenderStream;	// пользоваться функциями обновления стрима для синхронизации
-    bool 					m_bUpdateCurrent;	// если менялся объект непосредственно  Update____From___()
+	CMemoryWriter			m_BlenderStream;	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    bool 					m_bUpdateCurrent;	// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ  Update____From___()
     bool					m_bCurBlenderChanged;
 
     void 					Save				(CMemoryWriter& F);
@@ -163,7 +163,7 @@ public:
 
     virtual void			ZoomObject			(bool bOnlySel);
 	virtual void 			OnShowHint			(AStringVec& ss);
-    virtual void            RenderSpecial       ();
+    virtual void            OnDrawUI       ();
 private:
     void                    AppendItem(LPCSTR path, CLASS_ID cls, IBlender* parent=nullptr);
 };

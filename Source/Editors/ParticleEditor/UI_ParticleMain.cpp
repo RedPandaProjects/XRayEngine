@@ -160,10 +160,10 @@ void CParticleMain::RegisterCommands()
 	REGISTER_CMD_CE	(COMMAND_CREATE_GROUP_FROM_SELECTED,"Particles\\CreateGroupFromEffect",	PTools, CParticleTool::CreateGroupFromSelected, true);
 }
 
-void CParticleMain::RenderSpecial()
+void CParticleMain::OnDrawUI()
 {
-    inherited::RenderSpecial();
-    PTools->RenderSpecial();
+    inherited::OnDrawUI();
+    PTools->OnDrawUI();
 }
 
 char* CParticleMain::GetCaption()
@@ -221,7 +221,7 @@ void CParticleMain::OutCameraPos()
 	const Fvector& c 	= EDevice.m_Camera.GetPosition();
 	s.sprintf("C: %3.1f, %3.1f, %3.1f",c.x,c.y,c.z);
 //	const Fvector& hpb 	= EDevice.m_Camera.GetHPB();
-//	s.sprintf(" Cam: %3.1f°, %3.1f°, %3.1f°",rad2deg(hpb.y),rad2deg(hpb.x),rad2deg(hpb.z));
+//	s.sprintf(" Cam: %3.1fï¿½, %3.1fï¿½, %3.1fï¿½",rad2deg(hpb.y),rad2deg(hpb.x),rad2deg(hpb.z));
     fraBottomBar->paCamera->Caption=s; fraBottomBar->paCamera->Repaint();*/
 }
 //---------------------------------------------------------------------------

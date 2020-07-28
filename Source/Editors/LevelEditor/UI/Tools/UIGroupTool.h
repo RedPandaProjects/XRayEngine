@@ -6,7 +6,7 @@ public:
 	UIGroupTool();
 	virtual ~UIGroupTool();
 	virtual void Draw();
-	virtual void RenderSpecial();
+	virtual void OnDrawUI();
 	ESceneGroupTool* ParentTools;
 private:
 	void MultiSelByRefObject(bool clear_prev);

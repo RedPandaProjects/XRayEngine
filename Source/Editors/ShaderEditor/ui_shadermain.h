@@ -35,7 +35,7 @@ public:
     // commands
 	virtual	void		RegisterCommands	(); 
 protected:
-    virtual void    RenderSpecial();
+    virtual void    OnDrawUI();
 };    
 
 #endif //UI_MainCommandH

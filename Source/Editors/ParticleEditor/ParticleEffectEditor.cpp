@@ -72,7 +72,7 @@ void PS::CPEDef::FillActionList(ChooseItemVec& items, void* param)
     for(int i=0; actions_token[i].name; i++)
         items.push_back(SChooseItem(actions_token[i].name,actions_token[i].info));
 }
-void  PS::CPEDef::RenderSpecial()
+void  PS::CPEDef::OnDrawUI()
 {
     if (m_EditChoose)
     {

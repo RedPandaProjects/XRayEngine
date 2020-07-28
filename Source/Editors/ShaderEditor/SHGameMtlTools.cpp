@@ -57,7 +57,7 @@ void CSHGameMtlTools::OnFrame()
 
     }
 }
-void CSHGameMtlTools::RenderSpecial()
+void CSHGameMtlTools::OnDrawUI()
 {
     if (m_CreatingMtl )
     {

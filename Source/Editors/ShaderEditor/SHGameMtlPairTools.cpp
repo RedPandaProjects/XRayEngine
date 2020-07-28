@@ -23,9 +23,9 @@ void CSHGameMtlPairTools::OnFrame()
 {
 	inherited::OnFrame();
 }
-void CSHGameMtlPairTools::RenderSpecial()
+void CSHGameMtlPairTools::OnDrawUI()
 {
-    if (m_MtlPair)m_MtlPair->RenderSpecial();
+    if (m_MtlPair)m_MtlPair->OnDrawUI();
 }
 //---------------------------------------------------------------------------
 

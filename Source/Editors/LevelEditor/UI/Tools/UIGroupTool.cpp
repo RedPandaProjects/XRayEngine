@@ -95,7 +95,7 @@ void UIGroupTool::Draw()
 	}
 }
 
-void UIGroupTool::RenderSpecial()
+void UIGroupTool::OnDrawUI()
 {
 	if (m_ChooseGroup)
 	{

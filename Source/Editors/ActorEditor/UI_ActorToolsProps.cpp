@@ -568,7 +568,7 @@ void  CActorTools::OnBoneCreateDeleteClick(ButtonValue* V, bool& bModif, bool& b
     }
 }
 
-void CActorTools::RenderSpecial()
+void CActorTools::OnDrawUI()
 {
     if (m_ChooseSkeletonBones)
     {

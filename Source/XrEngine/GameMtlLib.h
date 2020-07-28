@@ -112,13 +112,13 @@ public:
     float				fPHBounceStartVelocity;	// ?
 	float				fPHBouncing;            // ?
 	// shoot&bounce&visibility&flotation
-    float		    	fFlotationFactor;		// 0.f - 1.f   	(1.f-полностью проходимый)
-    float				fShootFactor;			// 0.f - 1.f	(1.f-полностью простреливаемый)
-    float				fShootFactorMP;			// 0.f - 1.f	(1.f-полностью простреливаемый)
+    float		    	fFlotationFactor;		// 0.f - 1.f   	(1.f-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+    float				fShootFactor;			// 0.f - 1.f	(1.f-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+    float				fShootFactorMP;			// 0.f - 1.f	(1.f-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
     float				fBounceDamageFactor;	// 0.f - 100.f
-    float				fInjuriousSpeed; 		// 0.f - ...	(0.f-не отбирает здоровье (скорость уменьшения здоровья))
-    float				fVisTransparencyFactor;	// 0.f - 1.f	(1.f-полностью прозрачный)
-    float				fSndOcclusionFactor;	// 0.f - 1.f    (1.f-полностью слышен)
+    float				fInjuriousSpeed; 		// 0.f - ...	(0.f-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ))
+    float				fVisTransparencyFactor;	// 0.f - 1.f	(1.f-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+    float				fSndOcclusionFactor;	// 0.f - 1.f    (1.f-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ)
 	float				fDensityFactor;
 public:
 	SGameMtl			()
@@ -230,7 +230,7 @@ public:
 #ifdef _EDITOR
 	void 				FillProp		(PropItemVec& values);
     void				TransferFromParent(SGameMtlPair* parent);
-    void                RenderSpecial();
+    void                OnDrawUI();
 #endif
 #ifdef DEBUG
 	LPCSTR				dbg_Name		();

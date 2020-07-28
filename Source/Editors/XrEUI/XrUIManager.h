@@ -30,7 +30,7 @@ public:
 	inline float GetMenuBarHeight()const { return m_MenuBarHeight; }
 	inline TShiftState GetShiftState()const { return m_ShiftState; };
 protected:
-	virtual void RenderSpecial();
+	virtual void OnDrawUI();
 private:
 	float m_MenuBarHeight;
 	void ApplyShortCut(DWORD Key);

@@ -587,7 +587,7 @@ bool CGameMtlLibrary::Save()
     return fs.save_to	(fn);
 }
 
-void  SGameMtlPair::RenderSpecial()
+void  SGameMtlPair::OnDrawUI()
 {
     if (m_EditParent)
     {

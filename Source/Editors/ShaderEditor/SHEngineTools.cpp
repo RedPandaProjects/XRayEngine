@@ -863,7 +863,7 @@ void CSHEngineTools::OnShowHint(AStringVec& ss)
     }
 }
 
-void CSHEngineTools::RenderSpecial()
+void CSHEngineTools::OnDrawUI()
 {
     if (m_CreatingBlender|| m_SetCustomObject)
     {

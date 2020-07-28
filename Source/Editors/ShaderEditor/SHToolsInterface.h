@@ -39,7 +39,7 @@ protected:
 
 	BOOL					m_bModified;
 
-    BOOL					m_bLockUpdate;		// если менялся объект непосредственно  Update____From___()
+    BOOL					m_bLockUpdate;		// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ  Update____From___()
 
     xr_string				m_LastSelection;
 public:
@@ -91,7 +91,7 @@ public:
 
     virtual void			ZoomObject			(bool bOnlySel);
 	virtual void 			OnShowHint			(AStringVec& ss){;}
-    virtual void            RenderSpecial() {}
+    virtual void            OnDrawUI() {}
     virtual void            OnCloneItem(LPCSTR parent_path, LPCSTR new_full_name);
     virtual void            OnCreateItem(LPCSTR path);
 };

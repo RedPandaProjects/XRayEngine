@@ -2,5 +2,5 @@
 class UIToolCustom:public XrUI
 {
 public :
-	virtual void RenderSpecial() {}
+	virtual void OnDrawUI() {}
 };

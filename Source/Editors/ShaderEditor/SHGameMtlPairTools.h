@@ -44,7 +44,7 @@ public:
 
     virtual void			OnDeviceCreate		(){;}
     virtual void			OnDeviceDestroy		(){;}
-    virtual void            RenderSpecial       ();
+    virtual void            OnDrawUI       ();
 };
 //---------------------------------------------------------------------------
 #endif // SHGameMaterialToolsH

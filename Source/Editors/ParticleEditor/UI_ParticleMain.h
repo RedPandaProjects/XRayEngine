@@ -47,7 +47,7 @@ public:
 
     // commands
 	virtual	void	RegisterCommands		(); 
-    virtual void RenderSpecial();
+    virtual void OnDrawUI();
 };    
 extern CParticleMain*	PUI;
 //---------------------------------------------------------------------------

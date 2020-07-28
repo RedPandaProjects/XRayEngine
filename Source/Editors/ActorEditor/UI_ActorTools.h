@@ -334,7 +334,7 @@ public:
     CCommandVar 		CommandMakeThumbnail(CCommandVar p1, CCommandVar p2);
     CCommandVar			CommandBatchConvert	(CCommandVar p1, CCommandVar p2);
 public:
-    void RenderSpecial();
+    void OnDrawUI();
 };
 
 extern CActorTools*	ATools;

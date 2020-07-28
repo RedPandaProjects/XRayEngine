@@ -177,7 +177,7 @@ public:
 	CCommandVar			CommandClear			(CCommandVar p1, CCommandVar p2);
 	CCommandVar			CommandPlayCurrent		(CCommandVar p1, CCommandVar p2);
 	CCommandVar			CommandStopCurrent		(CCommandVar p1, CCommandVar p2);
-    void RenderSpecial();
+    void OnDrawUI();
 };
 #define SYSTEM_PREFIX 	"Systems"
 #define EFFECT_PREFIX 	"Effects"

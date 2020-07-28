@@ -139,7 +139,7 @@ namespace PS
 		void   	FillActionList		(ChooseItemVec& items, void* param);
         bool 				Validate 			(bool bMsg);
 		void 				Compile				(EPAVec& v);
-		void				RenderSpecial();
+		void				OnDrawUI();
 #endif
 	};
 };

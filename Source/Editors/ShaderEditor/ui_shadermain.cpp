@@ -96,12 +96,12 @@ void CShaderMain::RegisterCommands()
     REGISTER_CMD_S	(COMMAND_UPDATE_CAPTION,	CommandUpdateCaption);
 }
 
-void CShaderMain::RenderSpecial()
+void CShaderMain::OnDrawUI()
 {
-    TUI::RenderSpecial();
+    TUI::OnDrawUI();
     for (auto& tool : STools->m_Tools)
     {
-        tool.second->RenderSpecial();
+        tool.second->OnDrawUI();
     }
 }
 
@@ -160,7 +160,7 @@ void CShaderMain::OutCameraPos()
 	const Fvector& c 	= EDevice.m_Camera.GetPosition();
 	s.sprintf("C: %3.1f, %3.1f, %3.1f",c.x,c.y,c.z);
 //	const Fvector& hpb 	= EDevice.m_Camera.GetHPB();
-//	s.sprintf(" Cam: %3.1f°, %3.1f°, %3.1f°",rad2deg(hpb.y),rad2deg(hpb.x),rad2deg(hpb.z));
+//	s.sprintf(" Cam: %3.1fï¿½, %3.1fï¿½, %3.1fï¿½",rad2deg(hpb.y),rad2deg(hpb.x),rad2deg(hpb.z));
     fraBottomBar->paCamera->Caption=s; fraBottomBar->paCamera->Repaint();*/
 }
 //---------------------------------------------------------------------------
