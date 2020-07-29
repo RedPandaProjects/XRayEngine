@@ -5,7 +5,7 @@
 #include "stdafx.h"
 #include "EngineAPI.h"
 #include "../xrcdb/xrXRC.h"
-
+#include "../XrAPI/xrGameManager.h"
 #include "securom_api.h"
 
 extern xr_token* vid_quality_token;
@@ -158,7 +158,14 @@ void CEngineAPI::Initialize(void)
 
 	// game	
 	{
-		LPCSTR			g_name	= "xrGame.dll";
+		LPCSTR			g_name	= "XrGame.dll";
+		switch (xrGameManager::GetGame())
+		{
+		case EGame::CS:
+			g_name = "XrGameCS.dll";
+			break;
+		}
+
 		Log				("Loading DLL:",g_name);
 		hGame			= LoadLibrary	(g_name);
 		if (0==hGame)	R_CHK			(GetLastError());

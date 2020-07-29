@@ -14,6 +14,7 @@
 #include "../Private/dxRenderDeviceRender.h"
 #include "../Private/dxWallMarkArray.h"
 #include "../Private/dxUIShader.h"
+#include "../../XrAPI/xrGameManager.h"
 //#include "../../xrServerEntities/smart_cast.h"
  
 using	namespace		R_dsgraph;
@@ -48,31 +49,41 @@ ShaderElement*			CRender::rimp_select_sh_static	(dxRender_Visual	*pVisual, float
 }
 
 //////////////////////////////////////////////////////////////////////////
-void					CRender::create					()
+void					CRender::create()
 {
-	L_DB				= 0;
-	L_Shadows			= 0;
-	L_Projector			= 0;
+	L_DB = 0;
+	L_Shadows = 0;
+	L_Projector = 0;
 
-	Device.seqFrame.Add	(this,REG_PRIORITY_HIGH+0x12345678);
+	Device.seqFrame.Add(this, REG_PRIORITY_HIGH + 0x12345678);
 
 	// c-setup
-	dxRenderDeviceRender::Instance().Resources->RegisterConstantSetup("L_dynamic_pos",		&r1_dlight_binder_PR);
-	dxRenderDeviceRender::Instance().Resources->RegisterConstantSetup("L_dynamic_color",	&r1_dlight_binder_color);
-	dxRenderDeviceRender::Instance().Resources->RegisterConstantSetup("L_dynamic_xform",	&r1_dlight_binder_xform);
+	dxRenderDeviceRender::Instance().Resources->RegisterConstantSetup("L_dynamic_pos", &r1_dlight_binder_PR);
+	dxRenderDeviceRender::Instance().Resources->RegisterConstantSetup("L_dynamic_color", &r1_dlight_binder_color);
+	dxRenderDeviceRender::Instance().Resources->RegisterConstantSetup("L_dynamic_xform", &r1_dlight_binder_xform);
 
 	// distortion
-	u32		v_dev	= CAP_VERSION(HW.Caps.raster_major, HW.Caps.raster_minor);
-	u32		v_need	= CAP_VERSION(1,4);
-	if ( v_dev >= v_need )						o.distortion = TRUE;
+	u32		v_dev = CAP_VERSION(HW.Caps.raster_major, HW.Caps.raster_minor);
+	u32		v_need = CAP_VERSION(1, 4);
+	if (v_dev >= v_need)						o.distortion = TRUE;
 	else										o.distortion = FALSE;
-	if (strstr(Core.Params,"-nodistort"))		o.distortion = FALSE;
+	if (strstr(Core.Params, "-nodistort"))		o.distortion = FALSE;
+
+	if (xrGameManager::GetGame() == EGame::CS)
+	{
+		o.distortion = FALSE;
+	}
+
 	Msg				("* distortion: %s, dev(%d),need(%d)",o.distortion?"used":"unavailable",v_dev,v_need);
 
 	//	Color mapping
 	if ( v_dev >= v_need )						o.color_mapping = TRUE;
 	else										o.color_mapping = FALSE;
 	if (strstr(Core.Params,"-nocolormap"))		o.color_mapping = FALSE;
+	if (xrGameManager::GetGame() == EGame::CS)
+	{
+		o.color_mapping = FALSE;
+	}
 	Msg				("* color_mapping: %s, dev(%d),need(%d)",o.color_mapping?"used":"unavailable",v_dev,v_need);
 
 	m_skinning					= -1;

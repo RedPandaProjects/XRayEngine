@@ -84,7 +84,7 @@ public:
 	virtual void			OnConnected			();
 	virtual	void			RenderActiveItemUI	();
 	virtual	bool			RenderActiveItemUIQuery();
-	virtual void			OnScreenResolutionChanged() {}
+	virtual void			OnScreenResolutionChanged();
 	//Lain: added
 				void		SetRenderable       (bool renderable) { m_Renderable = renderable; }
 				bool		IsRenderable        () { return m_Renderable; }

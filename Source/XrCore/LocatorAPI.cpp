@@ -13,7 +13,7 @@
 #include "FS_internal.h"
 #include "stream_reader.h"
 #include "file_stream_reader.h"
-
+#include "..\XrAPI\xrGameManager.h"
 const u32 BIG_FILE_READER_WINDOW_SIZE	= 1024*1024;
 
 //typedef void DUMMY_STUFF (const void*,const u32&,void*);
@@ -26,7 +26,7 @@ const u32 BIG_FILE_READER_WINDOW_SIZE	= 1024*1024;
 
 
 #define FSLTX	"fsgame.ltx"
-
+#define FSLTX_CS	"fsgame_cs.ltx"
 struct _open_file
 {
 	union {
@@ -694,7 +694,15 @@ IReader* CLocatorAPI::setup_fs_ltx(LPCSTR fs_name)
 			if (strrchr(fs_file_name, '\\'))
 				*(strrchr(fs_file_name, '\\') + 1) = 0;
 		}
-		xr_strcat(fs_file_name, FSLTX);
+		switch (xrGameManager::GetGame())
+		{
+		case EGame::CS:
+			xr_strcat(fs_file_name, FSLTX_CS);
+			break;
+		default:
+			xr_strcat(fs_file_name, FSLTX);
+			break;
+		}
 	}
 				
 	Log				("using fs-ltx:",fs_file_name);

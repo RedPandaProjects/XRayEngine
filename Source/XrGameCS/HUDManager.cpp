@@ -375,3 +375,15 @@ void CHUDManager::net_Relcase( CObject* obj )
 	DBG_PH_NetRelcase( obj );
 #endif
 }
+
+void CHUDManager::OnScreenResolutionChanged()
+{
+//	pUI->HideShownDialogs();
+
+	xr_delete(pWpnScopeXml);
+
+	pUI->UnLoad();
+	pUI->Load(pUI->UIGame());
+
+	pUI->OnConnected();
+}

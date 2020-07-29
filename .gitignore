@@ -1,6 +1,7 @@
 Source/.vs/
 gamedata/shaders/r5/.vs/
 _appdata_/
+_appdata_cs_/
 /Bin/
 Intermediate/
 /Lib/
@@ -17,6 +18,7 @@ rawdata/*.dti
 logs/
 temp/
 #gamedata
+gamedata_cs/
 gamedata/*.*
 gamedata/ai/
 gamedata/anims/
