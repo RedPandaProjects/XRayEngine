@@ -13,7 +13,7 @@
 #include "team_hierarchy_holder.h"
 #include "squad_hierarchy_holder.h"
 #include "group_hierarchy_holder.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "../xrRender/Public/Kinematics.h"
 #include "monster_community.h"
 #include "ai_space.h"
 #include "alife_simulator.h"

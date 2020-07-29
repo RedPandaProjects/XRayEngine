@@ -13,9 +13,9 @@
 
 ///////////////////////////////////////////////////////////////
 ///#pragma warning(disable:4995)
-//#include "../3rd party/ode/ode/src/collision_kernel.h"
-//#include "../3rd party/ode/ode/src/joint.h"
-//#include "../3rd party/ode/ode/src/objects.h"
+//#include "../External/Ode/collision_kernel.h"
+//#include "../External/Ode/joint.h"
+//#include "../External/Ode/objects.h"
 
 //#pragma warning(default:4995)
 ///////////////////////////////////////////////////////////////////

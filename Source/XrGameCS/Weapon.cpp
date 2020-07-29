@@ -11,7 +11,7 @@
 #include "level.h"
 #include "xr_level_controller.h"
 #include "game_cl_base.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "../xrRender/Public/Kinematics.h"
 #include "ai_object_location.h"
 #include "mathutils.h"
 #include "object_broker.h"
@@ -1693,13 +1693,13 @@ void CWeapon::debug_draw_firedeps()
 		CDebugRenderer			&render = Level().debug_renderer();
 
 		if(hud_adj_mode==5)
-			render.draw_aabb(get_LastFP(),	0.005f,0.005f,0.005f,D3DCOLOR_XRGB(255,0,0));
+			render.draw_aabb(get_LastFP(),	0.005f,0.005f,0.005f,color_xrgb(255,0,0));
 
 		if(hud_adj_mode==6)
-			render.draw_aabb(get_LastFP2(),	0.005f,0.005f,0.005f,D3DCOLOR_XRGB(0,0,255));
+			render.draw_aabb(get_LastFP2(),	0.005f,0.005f,0.005f,color_xrgb(0,0,255));
 
 		if(hud_adj_mode==7)
-			render.draw_aabb(get_LastSP(),		0.005f,0.005f,0.005f,D3DCOLOR_XRGB(0,255,0));
+			render.draw_aabb(get_LastSP(),		0.005f,0.005f,0.005f,color_xrgb(0,255,0));
 	}
 #endif // DEBUG
 }

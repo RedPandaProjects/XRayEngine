@@ -2,8 +2,8 @@
 #include "uistaticitem.h"
 #include "hudmanager.h"
 
-#include "../Include/xrRender/UIRender.h"
-#include "../Include/xrRender/UIShader.h"
+#include "../xrRender/Public/UIRender.h"
+#include "../xrRender/Public/UIShader.h"
 
 void CreateUIGeom()
 {

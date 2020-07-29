@@ -8,7 +8,7 @@
 #include "hit.h"
 #include "PHDestroyable.h"
 #include "car.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "../xrRender/Public/Kinematics.h"
 #include "ExtendedGeom.h"
 
 CCar::SWheel::SWheelCollisionParams::SWheelCollisionParams()

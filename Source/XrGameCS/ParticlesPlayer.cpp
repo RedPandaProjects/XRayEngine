@@ -5,7 +5,7 @@
 #include "stdafx.h"
 #include "ParticlesPlayer.h"
 #include "../xrEngine/xr_object.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "../xrRender/Public/Kinematics.h"
 //-------------------------------------------------------------------------------------
 static void generate_orthonormal_basis(const Fvector& dir,Fmatrix &result)
 {

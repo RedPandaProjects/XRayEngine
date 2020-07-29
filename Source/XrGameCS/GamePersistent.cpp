@@ -3,7 +3,7 @@
 #include "../xrEngine/fmesh.h"
 #include "../xrEngine/xr_ioconsole.h"
 #include "../xrEngine/gamemtllib.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "../xrRender/Public/Kinematics.h"
 #include "profiler.h"
 #include "MainMenu.h"
 #include "UICursor.h"
@@ -711,7 +711,7 @@ void CGamePersistent::LoadTitle(LPCSTR str)
 {
 	string512			buff;
 	sprintf_s			(buff, "%s...", CStringTable().translate(str).c_str());
-	pApp->LoadTitleInt	(buff);
+	pApp->LoadTitleInt	(buff,"","");
 }
 
 bool CGamePersistent::CanBePaused()

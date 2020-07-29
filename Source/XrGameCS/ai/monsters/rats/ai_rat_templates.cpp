@@ -11,7 +11,7 @@
 #include "../../ai_monsters_misc.h"
 #include "../../../game_graph.h"
 #include "../../../magic_box3.h"
-#include "../../../../Include/xrRender/RenderVisual.h"
+#include "../../../../xrRender/Public/RenderVisual.h"
 #include "../../../ai_object_location.h"
 #include "../../../level_graph.h"
 #include "../../../movement_manager.h"
@@ -529,12 +529,12 @@ void CAI_Rat::draw_way()
 		vertex = m_path->vertex(i);
 		P2 = ai().level_graph().vertex_position(vertex->data().level_vertex_id());
 		if (!fis_zero(P1.distance_to_sqr(P2),EPS_L))
-			Level().debug_renderer().draw_line			(Fidentity,P1,P2,D3DCOLOR_XRGB(0,0,255));
+			Level().debug_renderer().draw_line			(Fidentity,P1,P2,color_xrgb(0,0,255));
 		m_sphere.identity();
 		m_sphere.scale(0.25, 0.25, 0.25);
 		m_sphere.translate_add(P2);
-		Level().debug_renderer().draw_ellipse(m_sphere, D3DCOLOR_XRGB(0,255,255));
-		//Level().debug_renderer().draw_aabb			(P1,0.5f,0.5f,0.5f,D3DCOLOR_XRGB(0,255,255));
+		Level().debug_renderer().draw_ellipse(m_sphere, color_xrgb(0,255,255));
+		//Level().debug_renderer().draw_aabb			(P1,0.5f,0.5f,0.5f,color_xrgb(0,255,255));
 	}
 
 	vertex = m_path->vertex(0);
@@ -542,11 +542,11 @@ void CAI_Rat::draw_way()
 	vertex = m_path->vertex(m_path->vertex_count() - 1);
 	P2 = ai().level_graph().vertex_position(vertex->data().level_vertex_id());
 	if (!fis_zero(P1.distance_to_sqr(P2),EPS_L))
-		Level().debug_renderer().draw_line			(Fidentity,P1,P2,D3DCOLOR_XRGB(0,0,255));
+		Level().debug_renderer().draw_line			(Fidentity,P1,P2,color_xrgb(0,0,255));
 	m_sphere.identity();
 	m_sphere.scale(0.25, 0.25, 0.25);
 	m_sphere.translate_add(P2);
-	Level().debug_renderer().draw_ellipse(m_sphere, D3DCOLOR_XRGB(0,255,255));
-	//Level().debug_renderer().draw_aabb			(P1,0.5f,0.5f,0.5f,D3DCOLOR_XRGB(0,255,255));
+	Level().debug_renderer().draw_ellipse(m_sphere, color_xrgb(0,255,255));
+	//Level().debug_renderer().draw_aabb			(P1,0.5f,0.5f,0.5f,color_xrgb(0,255,255));
 }
 #endif

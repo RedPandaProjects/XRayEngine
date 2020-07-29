@@ -7,6 +7,7 @@
 #pragma once
 
 #include "../xrEngine/igame_level.h"
+#include "../xrEngine/CustomHUD.h"
 #include "../xrEngine/IGame_Persistent.h"
 #include "../xrNetServer/net_client.h"
 #include "script_export_space.h"
@@ -220,19 +221,19 @@ protected:
 	bool						synchronize_map_data	();
 	bool						synchronize_client		();
 
-	bool	xr_stdcall			net_start1				();
-	bool	xr_stdcall			net_start2				();
-	bool	xr_stdcall			net_start3				();
-	bool	xr_stdcall			net_start4				();
-	bool	xr_stdcall			net_start5				();
-	bool	xr_stdcall			net_start6				();
+	bool				net_start1				();
+	bool				net_start2				();
+	bool				net_start3				();
+	bool				net_start4				();
+	bool				net_start5				();
+	bool				net_start6				();
 
-	bool	xr_stdcall			net_start_client1				();
-	bool	xr_stdcall			net_start_client2				();
-	bool	xr_stdcall			net_start_client3				();
-	bool	xr_stdcall			net_start_client4				();
-	bool	xr_stdcall			net_start_client5				();
-	bool	xr_stdcall			net_start_client6				();
+	bool				net_start_client1				();
+	bool				net_start_client2				();
+	bool				net_start_client3				();
+	bool				net_start_client4				();
+	bool				net_start_client5				();
+	bool				net_start_client6				();
 
 	void						net_OnChangeSelfName			(NET_Packet* P);
 
@@ -306,7 +307,7 @@ public:
 #ifdef DEBUG
 	IC CDebugRenderer				&debug_renderer				();
 #endif
-	void	__stdcall				script_gc					();			// GC-cycle
+	void					script_gc					();			// GC-cycle
 
 	IC CPHCommander					&ph_commander				();
 	IC CPHCommander					&ph_commander_scripts		();
@@ -379,6 +380,12 @@ public:
 			file_transfer::client_site*					m_file_transfer;
 
 	DECLARE_SCRIPT_REGISTER_FUNCTION
+	public:
+
+		virtual	shared_str			OpenDemoFile(LPCSTR demo_file_name) {
+			return "";
+		}
+		virtual void				net_StartPlayDemo() {}
 };
 add_to_type_list(CLevel)
 #undef script_type_list
@@ -389,7 +396,7 @@ IC game_cl_GameState&	Game()		{ return *Level().game;					}
 	u32					GameID();
 
 
-IC CHUDManager&			HUD()		{ return *((CHUDManager*)Level().pHUD);	}
+IC CHUDManager&			HUD()		{ return *((CHUDManager*)g_hud);	}
 
 #ifdef DEBUG
 IC CLevelDebug&			DBG()		{return *((CLevelDebug*)Level().m_level_debug);}

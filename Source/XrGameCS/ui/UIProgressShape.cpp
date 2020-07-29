@@ -2,8 +2,8 @@
 #include "UIProgressShape.h"
 
 #include "UIStatic.h"
-#include "../Include/xrRender/UIShader.h"
-#include "../Include/xrRender/UIRender.h"
+#include "../xrRender/Public/UIShader.h"
+#include "../xrRender/Public/UIRender.h"
 
 CUIProgressShape::CUIProgressShape()
 {

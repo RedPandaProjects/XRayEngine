@@ -5,7 +5,7 @@
 #include "PhysicsShell.h"
 #include "Physics.h"
 #include "../xrEngine/xr_collide_form.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "../xrRender/Public/Kinematics.h"
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction

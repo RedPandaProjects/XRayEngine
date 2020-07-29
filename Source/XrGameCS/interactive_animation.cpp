@@ -7,7 +7,7 @@
 #include	"mathutils.h"
 #include	"phobject.h"
 
-#include	"../Include/xrRender/KinematicsAnimated.h"
+#include	"../xrRender/Public/KinematicsAnimated.h"
 
 
 

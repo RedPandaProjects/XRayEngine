@@ -81,7 +81,7 @@ public:
 		inherited::process_impl				(false);
 	}
 
-			void __stdcall	process				()
+			void 	process				()
 	{
 		m_object->build_level_path			();
 	}

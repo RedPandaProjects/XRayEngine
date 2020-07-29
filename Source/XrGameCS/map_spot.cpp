@@ -11,7 +11,7 @@
 #include "ui/UITextureMaster.h"
 #include "ui/UIHelper.h"
 
-#include "../Include/xrRender/UIShader.h"
+#include "../xrRender/Public/UIShader.h"
 
 CMapSpot::CMapSpot(CMapLocation* ml)
 :m_map_location(ml)

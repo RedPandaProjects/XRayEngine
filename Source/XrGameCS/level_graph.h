@@ -18,7 +18,7 @@
 #include "level_graph_space.h"
 #include "game_graph_space.h"
 
-#include "../Include/xrRender/DebugShader.h"
+#include "../xrRender/Public/DebugShader.h"
 
 namespace LevelGraph {
 	class	CHeader;

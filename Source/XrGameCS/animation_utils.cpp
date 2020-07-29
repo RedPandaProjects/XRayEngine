@@ -1,7 +1,7 @@
 #include "stdafx.h"
 
 #include "animation_utils.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "../xrRender/Public/Kinematics.h"
 #include "../xrEngine/bone.h"
 #include "game_object_space.h"
 

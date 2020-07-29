@@ -15,7 +15,7 @@
 #include "hit.h"
 #include "PHDestroyable.h"
 #include "Car.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "../xrRender/Public/Kinematics.h"
 #include "ai_object_location.h"
 #include "game_cl_base.h"
 #include "../xrEngine/motion.h"

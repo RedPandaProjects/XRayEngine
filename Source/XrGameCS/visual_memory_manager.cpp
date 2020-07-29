@@ -10,7 +10,7 @@
 #include "visual_memory_manager.h"
 #include "ai/stalker/ai_stalker.h"
 #include "memory_space_impl.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "../xrRender/Public/Kinematics.h"
 #include "ai_object_location.h"
 #include "level_graph.h"
 #include "stalker_movement_manager_smart_cover.h"

@@ -13,11 +13,11 @@
 #include "../xrEngine/igame_persistent.h"
 #include "artefact.h"
 #include "ai_object_location.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "../xrRender/Public/Kinematics.h"
 #include "zone_effector.h"
 #include "breakableobject.h"
 #include "GamePersistent.h"
-
+#include "..\XrEngine\xr_collide_form.h"
 #define WIND_RADIUS (4*Radius())	//расстояние до актера, когда появляется ветер 
 #define FASTMODE_DISTANCE (50.f)	//distance to camera from sphere, when zone switches to fast update sequence
 

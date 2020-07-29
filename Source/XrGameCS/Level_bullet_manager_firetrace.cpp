@@ -11,15 +11,16 @@
 #include "gamepersistent.h"
 #include "game_cl_base.h"
 #include "xrmessages.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "../xrRender/Public/Kinematics.h"
 #include "Actor.h"
 #include "AI/Stalker/ai_stalker.h"
 #include "character_info.h"
 #include "game_cl_base_weapon_usage_statistic.h"
-#include "../xrEngine/xr_collide_defs.h"
+#include "../XrCDB/xr_collide_defs.h"
 #include "weapon.h"
 #include "ik/math3d.h"
 #include "actor.h"
+#include "../XrEngine/xr_collide_form.h"
 
 //константы ShootFactor, определ€ющие 
 //поведение пули при столкновении с объектом

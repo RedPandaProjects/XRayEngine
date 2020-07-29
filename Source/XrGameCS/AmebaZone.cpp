@@ -1,7 +1,7 @@
 #include "stdafx.h"
 /*
 #include "CustomZone.h"
-#include "../Include/xrRender/KinematicsAnimated.h"
+#include "../xrRender/Public/KinematicsAnimated.h"
 #include "ZoneVisual.h"
 #include "PHObject.h"
 #include "PHMovementControl.h"

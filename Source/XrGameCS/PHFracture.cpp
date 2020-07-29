@@ -3,13 +3,13 @@
 #include "Physics.h"
 #include "PHElement.h"
 #include "PHShell.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "../xrRender/Public/Kinematics.h"
 
 #include "../xrEngine/bone.h"
 
 #pragma warning(disable:4995)
 #pragma warning(disable:4267)
-#include "../3rd party/ode/ode/src/joint.h"
+#include "../External/Ode/joint.h"
 #pragma warning(default:4995)
 #pragma warning(default:4267)
 extern	class CPHWorld	*ph_world;

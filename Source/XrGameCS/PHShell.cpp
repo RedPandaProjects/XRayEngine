@@ -10,19 +10,19 @@
 #include "SpaceUtils.h"
 #include "MathUtils.h"
 #include "PhysicsShellHolder.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "../xrRender/Public/Kinematics.h"
 #include "PHCollideValidator.h"
 #include "game_object_space.h"
 //#pragma warning(disable:4995)
 //#pragma warning(disable:4267)
-//#include "../3rd party/ode/ode/src/collision_kernel.h"
+//#include "../External/Ode/collision_kernel.h"
 //#pragma warning(default:4995)
 //#pragma warning(default:4267)
 ///////////////////////////////////////////////////////////////
 ///#pragma warning(disable:4995)
 
-//#include "../3rd party/ode/ode/src/joint.h"
-//#include "../3rd party/ode/ode/src/objects.h"
+//#include "../External/Ode/joint.h"
+//#include "../External/Ode/objects.h"
 
 //#pragma warning(default:4995)
 ///////////////////////////////////////////////////////////////////
@@ -232,8 +232,8 @@ void CPHShell::PhDataUpdate(dReal step){
 		ReanableObject();
 #if 0
 	DBG_OpenCashedDraw();
-	dbg_draw_velocity	( 0.1f, D3DCOLOR_XRGB( 255, 0, 0 ) ); 
-	dbg_draw_force		( 0.1f, D3DCOLOR_XRGB( 0, 0, 255 ) ); 
+	dbg_draw_velocity	( 0.1f, color_xrgb( 255, 0, 0 ) ); 
+	dbg_draw_force		( 0.1f, color_xrgb( 0, 0, 255 ) ); 
 	DBG_ClosedCashedDraw( 10000 );
 	//dbg_draw_geometry
 #endif
@@ -1202,7 +1202,7 @@ void CPHShell::SetCallbacks( )
 	};
 	std::for_each( elements.begin(), elements.end(), set_bone_callback() );
 
-	struct set_bone_reference: private boost::noncopyable
+	struct set_bone_reference
 	{
 		IKinematics &K;
 		set_bone_reference( IKinematics &K_ ): K( K_ ){}

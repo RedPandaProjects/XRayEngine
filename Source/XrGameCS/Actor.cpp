@@ -50,7 +50,7 @@
 #include "../xrEngine/cl_intersect.h"
 #include "ExtendedGeom.h"
 #include "alife_registry_wrappers.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "../xrRender/Public/Kinematics.h"
 #include "artefact.h"
 #include "CharacterPhysicsSupport.h"
 #include "material_manager.h"
@@ -66,7 +66,7 @@
 #include "location_manager.h"
 #include "player_hud.h"
 
-#include "../Include/xrRender/UIRender.h"
+#include "../xrRender/Public/UIRender.h"
 
 #include "ai_object_location.h"
 
@@ -444,7 +444,7 @@ void	CActor::Hit							(SHit* pHDS)
 	if(ph_dbg_draw_mask.test(phDbgCharacterControl)) {
 		DBG_OpenCashedDraw();
 		Fvector to;to.add(Position(),Fvector().mul(HDS.dir,HDS.phys_impulse()));
-		DBG_DrawLine(Position(),to,D3DCOLOR_XRGB(124,124,0));
+		DBG_DrawLine(Position(),to,color_xrgb(124,124,0));
 		DBG_ClosedCashedDraw(500);
 	}
 #endif // DEBUG
@@ -1549,11 +1549,11 @@ void CActor::OnItemDrop(CInventoryItem *inventory_item)
 	CInventoryOwner::OnItemDrop(inventory_item);
 
 	CArtefact* artefact = smart_cast<CArtefact*>(inventory_item);
-	if(artefact && artefact->m_eItemCurrPlace == eItemPlaceBelt)
+	if(artefact && artefact->m_eItemCurrPlace == EItemPlaceBelt)
 		MoveArtefactBelt(artefact, false);
 
 	CCustomOutfit* outfit		= smart_cast<CCustomOutfit*>(inventory_item);
-	if(outfit && inventory_item->m_eItemCurrPlace==eItemPlaceSlot)
+	if(outfit && inventory_item->m_eItemCurrPlace==EItemPlaceSlot)
 	{
 		outfit->ApplySkinModel	(this, false, false);
 	}
@@ -1580,7 +1580,7 @@ void CActor::OnItemRuck		(CInventoryItem *inventory_item, EItemPlace previous_pl
 	CInventoryOwner::OnItemRuck(inventory_item, previous_place);
 
 	CArtefact* artefact = smart_cast<CArtefact*>(inventory_item);
-	if(artefact && previous_place == eItemPlaceBelt)
+	if(artefact && previous_place == EItemPlaceBelt)
 		MoveArtefactBelt(artefact, false);
 }
 void CActor::OnItemBelt		(CInventoryItem *inventory_item, EItemPlace previous_place)

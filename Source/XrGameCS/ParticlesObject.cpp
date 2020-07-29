@@ -6,8 +6,8 @@
 
 #include "ParticlesObject.h"
 #include "../xrEngine/defines.h"
-#include "../Include/xrRender/RenderVisual.h"
-#include "../Include/xrRender/ParticleCustom.h"
+#include "../xrRender/Public/RenderVisual.h"
+#include "../xrRender/Public/ParticleCustom.h"
 #include "../xrEngine/render.h"
 #include "../xrEngine/IGame_Persistent.h"
 #include "../xrEngine/environment.h"

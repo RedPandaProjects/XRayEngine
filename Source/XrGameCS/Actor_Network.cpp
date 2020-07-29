@@ -16,7 +16,7 @@
 #include "game_cl_base.h"
 #include "infoportion.h"
 #include "alife_registry_wrappers.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "../xrRender/Public/Kinematics.h"
 #include "client_spawn_manager.h"
 #include "hit.h"
 #include "PHDestroyable.h"
@@ -40,6 +40,8 @@
 #include "actor_statistic_mgr.h"
 #include "characterphysicssupport.h"
 #include "game_cl_base_weapon_usage_statistic.h"
+
+#include "..\XrEngine\xr_collide_form.h"
 
 #ifdef DEBUG
 #	include "debug_renderer.h"
@@ -1529,7 +1531,7 @@ void	CActor::OnRender_Network()
 		};
 
 		//drawing speed vectors
-		for (i=0; i<2; i++)
+		for (int i=0; i<2; i++)
 		{
 			c = float(i);
 			for (u32 k=0; k<3; k++)

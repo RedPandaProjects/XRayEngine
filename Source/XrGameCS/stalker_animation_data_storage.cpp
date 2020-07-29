@@ -10,7 +10,7 @@
 #include "stalker_animation_data_storage.h"
 #include "stalker_animation_data.h"
 #include "object_broker.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "../xrRender/Public/Kinematics.h"
 
 CStalkerAnimationDataStorage	*g_stalker_animation_data_storage = 0;
 

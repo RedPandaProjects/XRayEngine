@@ -9,7 +9,7 @@
 
 #include "HUDManager.h"
 #include "level.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "../xrRender/Public/Kinematics.h"
 #include "../xrEngine/camerabase.h"
 #include "inventory.h"
 #include "game_base_space.h"
@@ -17,6 +17,7 @@
 #include "UIGameCustom.h"
 #include "actorEffector.h"
 #include "CustomOutfit.h"
+#include "..\XrEngine\xr_collide_form.h"
 
 static const float		TIME_2_HIDE					= 5.f;
 static const float		TORCH_INERTION_CLAMP		= PI_DIV_6;

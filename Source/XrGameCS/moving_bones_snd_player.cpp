@@ -2,7 +2,7 @@
 
 #include	"moving_bones_snd_player.h"
 
-#include "../Include/xrRender/Kinematics.h"
+#include "../xrRender/Public/Kinematics.h"
 #include "../xrEngine/bone.h"
 
 #include "gameobject.h"

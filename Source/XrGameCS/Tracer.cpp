@@ -2,8 +2,8 @@
 #include "Tracer.h"
 #include "../xrEngine/render.h"
 
-#include "../Include/xrRender/UIShader.h"
-#include "../Include/xrRender/UIRender.h"        
+#include "../xrRender/Public/UIShader.h"
+#include "../xrRender/Public/UIRender.h"        
 
 const u32	MAX_TRACERS	= (1024*5);
 const float TRACER_SIZE = 0.13f;

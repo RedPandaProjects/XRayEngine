@@ -52,7 +52,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -124,23 +124,26 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>WIN32;_DEBUG;XRGAMECS_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>;dSINGLE;;WIN32;_DEBUG;XRGAMECS_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>.;..\XrServerEntitiesCS\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>XrEngine.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;XRGAMECS_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>;dSINGLE;;WIN32;NDEBUG;XRGAMECS_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>.;..\XrServerEntitiesCS\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -148,15 +151,17 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>XrEngine.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">
     <ClCompile>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;DEBUG;XRGAMECS_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>;dSINGLE;;WIN32;DEBUG;XRGAME_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>.;..\XrServerEntitiesCS\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -164,27 +169,31 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>XrEngine.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PreprocessorDefinitions>_DEBUG;XRGAMECS_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>;dSINGLE;;_DEBUG;XRGAMECS_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>.;..\XrServerEntitiesCS\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>XrEngine.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NDEBUG;XRGAMECS_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>;dSINGLE;;NDEBUG;XRGAMECS_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>.;..\XrServerEntitiesCS\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -192,15 +201,17 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>XrEngine.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development|x64'">
     <ClCompile>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>DEBUG;XRGAMECS_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>;dSINGLE;;DEBUG;XRGAMECS_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>.;..\XrServerEntitiesCS\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -208,115 +219,116 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>XrEngine.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\xrGameSpy\gamespy\md5.h" />
-    <ClInclude Include="..\xrServerEntities\ai_sounds.h" />
-    <ClInclude Include="..\xrServerEntities\alife_human_brain.h" />
-    <ClInclude Include="..\xrServerEntities\alife_human_brain_inline.h" />
-    <ClInclude Include="..\xrServerEntities\alife_monster_brain.h" />
-    <ClInclude Include="..\xrServerEntities\alife_monster_brain_inline.h" />
-    <ClInclude Include="..\xrServerEntities\alife_space.h" />
-    <ClInclude Include="..\xrServerEntities\associative_vector.h" />
-    <ClInclude Include="..\xrServerEntities\associative_vector_compare_predicate.h" />
-    <ClInclude Include="..\xrServerEntities\associative_vector_compare_predicate_inline.h" />
-    <ClInclude Include="..\xrServerEntities\associative_vector_inline.h" />
-    <ClInclude Include="..\xrServerEntities\character_info.h" />
-    <ClInclude Include="..\xrServerEntities\character_info_defs.h" />
-    <ClInclude Include="..\xrServerEntities\clsid_game.h" />
-    <ClInclude Include="..\xrServerEntities\doug_lea_memory_allocator.h" />
-    <ClInclude Include="..\xrServerEntities\DrawUtils.h" />
-    <ClInclude Include="..\xrServerEntities\FastDelegate.h" />
-    <ClInclude Include="..\xrServerEntities\gametype_chooser.h" />
-    <ClInclude Include="..\xrServerEntities\game_base_space.h" />
-    <ClInclude Include="..\xrServerEntities\game_graph_space.h" />
-    <ClInclude Include="..\xrServerEntities\InfoPortionDefs.h" />
-    <ClInclude Include="..\xrServerEntities\inventory_space.h" />
-    <ClInclude Include="..\xrServerEntities\ItemListTypes.h" />
-    <ClInclude Include="..\xrServerEntities\LevelGameDef.h" />
-    <ClInclude Include="..\xrServerEntities\lua_studio.h" />
-    <ClInclude Include="..\xrServerEntities\mslotutils.h" />
-    <ClInclude Include="..\xrServerEntities\object_broker.h" />
-    <ClInclude Include="..\xrServerEntities\object_cloner.h" />
-    <ClInclude Include="..\xrServerEntities\object_comparer.h" />
-    <ClInclude Include="..\xrServerEntities\object_destroyer.h" />
-    <ClInclude Include="..\xrServerEntities\object_factory.h" />
-    <ClInclude Include="..\xrServerEntities\object_factory_impl.h" />
-    <ClInclude Include="..\xrServerEntities\object_factory_inline.h" />
-    <ClInclude Include="..\xrServerEntities\object_factory_space.h" />
-    <ClInclude Include="..\xrServerEntities\object_interfaces.h" />
-    <ClInclude Include="..\xrServerEntities\object_item_abstract.h" />
-    <ClInclude Include="..\xrServerEntities\object_item_abstract_inline.h" />
-    <ClInclude Include="..\xrServerEntities\object_item_client_server.h" />
-    <ClInclude Include="..\xrServerEntities\object_item_client_server_inline.h" />
-    <ClInclude Include="..\xrServerEntities\object_item_script.h" />
-    <ClInclude Include="..\xrServerEntities\object_item_single.h" />
-    <ClInclude Include="..\xrServerEntities\object_item_single_inline.h" />
-    <ClInclude Include="..\xrServerEntities\object_loader.h" />
-    <ClInclude Include="..\xrServerEntities\object_saver.h" />
-    <ClInclude Include="..\xrServerEntities\object_type_traits.h" />
-    <ClInclude Include="..\xrServerEntities\pch_script.h" />
-    <ClInclude Include="..\xrServerEntities\PHNetState.h" />
-    <ClInclude Include="..\xrServerEntities\PHSynchronize.h" />
-    <ClInclude Include="..\xrServerEntities\PropertiesListTypes.h" />
-    <ClInclude Include="..\xrServerEntities\restriction_space.h" />
-    <ClInclude Include="..\xrServerEntities\script_callStack.h" />
-    <ClInclude Include="..\xrServerEntities\script_debugger.h" />
-    <ClInclude Include="..\xrServerEntities\script_debugger_messages.h" />
-    <ClInclude Include="..\xrServerEntities\script_debugger_threads.h" />
-    <ClInclude Include="..\xrServerEntities\script_engine.h" />
-    <ClInclude Include="..\xrServerEntities\script_engine_export.h" />
-    <ClInclude Include="..\xrServerEntities\script_engine_inline.h" />
-    <ClInclude Include="..\xrServerEntities\script_engine_space.h" />
-    <ClInclude Include="..\xrServerEntities\script_export_macroses.h" />
-    <ClInclude Include="..\xrServerEntities\script_export_space.h" />
-    <ClInclude Include="..\xrServerEntities\script_fcolor.h" />
-    <ClInclude Include="..\xrServerEntities\script_flags.h" />
-    <ClInclude Include="..\xrServerEntities\script_fmatrix.h" />
-    <ClInclude Include="..\xrServerEntities\script_fvector.h" />
-    <ClInclude Include="..\xrServerEntities\script_ini_file.h" />
-    <ClInclude Include="..\xrServerEntities\script_ini_file_inline.h" />
-    <ClInclude Include="..\xrServerEntities\script_lua_helper.h" />
-    <ClInclude Include="..\xrServerEntities\script_net_packet.h" />
-    <ClInclude Include="..\xrServerEntities\script_process.h" />
-    <ClInclude Include="..\xrServerEntities\script_process_inline.h" />
-    <ClInclude Include="..\xrServerEntities\script_reader.h" />
-    <ClInclude Include="..\xrServerEntities\script_rtoken_list.h" />
-    <ClInclude Include="..\xrServerEntities\script_rtoken_list_inline.h" />
-    <ClInclude Include="..\xrServerEntities\script_sound_type.h" />
-    <ClInclude Include="..\xrServerEntities\script_space_forward.h" />
-    <ClInclude Include="..\xrServerEntities\script_stack_tracker.h" />
-    <ClInclude Include="..\xrServerEntities\script_stack_tracker_inline.h" />
-    <ClInclude Include="..\xrServerEntities\script_storage.h" />
-    <ClInclude Include="..\xrServerEntities\script_storage_inline.h" />
-    <ClInclude Include="..\xrServerEntities\script_storage_space.h" />
-    <ClInclude Include="..\xrServerEntities\script_thread.h" />
-    <ClInclude Include="..\xrServerEntities\script_thread_inline.h" />
-    <ClInclude Include="..\xrServerEntities\script_token_list.h" />
-    <ClInclude Include="..\xrServerEntities\script_token_list_inline.h" />
-    <ClInclude Include="..\xrServerEntities\script_value_container.h" />
-    <ClInclude Include="..\xrServerEntities\script_value_container_impl.h" />
-    <ClInclude Include="..\xrServerEntities\ShapeData.h" />
-    <ClInclude Include="..\xrServerEntities\shared_data.h" />
-    <ClInclude Include="..\xrServerEntities\smart_cast.h" />
-    <ClInclude Include="..\xrServerEntities\smart_cast_impl0.h" />
-    <ClInclude Include="..\xrServerEntities\smart_cast_impl1.h" />
-    <ClInclude Include="..\xrServerEntities\smart_cast_impl2.h" />
-    <ClInclude Include="..\xrServerEntities\specific_character.h" />
-    <ClInclude Include="..\xrServerEntities\WaveForm.h" />
-    <ClInclude Include="..\xrServerEntities\xml_str_id_loader.h" />
-    <ClInclude Include="..\xrServerEntities\xrEProps.h" />
-    <ClInclude Include="..\xrServerEntities\xrMessages.h" />
-    <ClInclude Include="..\xrServerEntities\xrServer_Objects.h" />
-    <ClInclude Include="..\xrServerEntities\xrServer_Objects_Abstract.h" />
-    <ClInclude Include="..\xrServerEntities\xrServer_Objects_ALife.h" />
-    <ClInclude Include="..\xrServerEntities\xrServer_Objects_ALife_All.h" />
-    <ClInclude Include="..\xrServerEntities\xrServer_Objects_ALife_Items.h" />
-    <ClInclude Include="..\xrServerEntities\xrServer_Objects_ALife_Monsters.h" />
-    <ClInclude Include="..\xrServerEntities\xrServer_Object_Base.h" />
-    <ClInclude Include="..\xrServerEntities\xrServer_script_macroses.h" />
-    <ClInclude Include="..\xrServerEntities\xrServer_Space.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\ai_sounds.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\alife_human_brain.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\alife_human_brain_inline.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\alife_monster_brain.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\alife_monster_brain_inline.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\alife_space.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\associative_vector.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\associative_vector_compare_predicate.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\associative_vector_compare_predicate_inline.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\associative_vector_inline.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\character_info.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\character_info_defs.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\clsid_game.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\doug_lea_memory_allocator.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\DrawUtils.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\FastDelegate.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\gametype_chooser.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\game_base_space.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\game_graph_space.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\InfoPortionDefs.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\inventory_space.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\ItemListTypes.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\LevelGameDef.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\lua_studio.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\mslotutils.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\object_broker.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\object_cloner.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\object_comparer.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\object_destroyer.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\object_factory.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\object_factory_impl.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\object_factory_inline.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\object_factory_space.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\object_interfaces.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\object_item_abstract.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\object_item_abstract_inline.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\object_item_client_server.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\object_item_client_server_inline.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\object_item_script.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\object_item_single.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\object_item_single_inline.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\object_loader.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\object_saver.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\object_type_traits.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\pch_script.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\PHNetState.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\PHSynchronize.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\PropertiesListTypes.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\restriction_space.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_callStack.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_debugger.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_debugger_messages.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_debugger_threads.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_engine.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_engine_export.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_engine_inline.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_engine_space.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_export_macroses.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_export_space.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_fcolor.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_flags.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_fmatrix.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_fvector.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_ini_file.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_ini_file_inline.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_lua_helper.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_net_packet.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_process.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_process_inline.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_reader.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_rtoken_list.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_rtoken_list_inline.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_sound_type.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_space_forward.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_stack_tracker.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_stack_tracker_inline.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_storage.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_storage_inline.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_storage_space.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_thread.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_thread_inline.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_token_list.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_token_list_inline.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_value_container.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\script_value_container_impl.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\ShapeData.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\shared_data.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\smart_cast.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\smart_cast_impl0.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\smart_cast_impl1.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\smart_cast_impl2.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\specific_character.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\WaveForm.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\xml_str_id_loader.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\xrEProps.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\xrMessages.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\xrServer_Objects.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\xrServer_Objects_Abstract.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\xrServer_Objects_ALife.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\xrServer_Objects_ALife_All.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\xrServer_Objects_ALife_Items.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\xrServer_Objects_ALife_Monsters.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\xrServer_Object_Base.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\xrServer_script_macroses.h" />
+    <ClInclude Include="..\XrServerEntitiesCS\xrServer_Space.h" />
     <ClInclude Include="abstract_location_selector.h" />
     <ClInclude Include="abstract_location_selector_inline.h" />
     <ClInclude Include="abstract_path_manager.h" />
@@ -1868,11 +1880,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">
       </PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\alife_human_brain.cpp" />
-    <ClCompile Include="..\xrServerEntities\alife_monster_brain.cpp" />
-    <ClCompile Include="..\xrServerEntities\alife_space.cpp" />
-    <ClCompile Include="..\xrServerEntities\character_info.cpp" />
-    <ClCompile Include="..\xrServerEntities\doug_lea_memory_allocator.c">
+    <ClCompile Include="..\XrServerEntitiesCS\alife_human_brain.cpp" />
+    <ClCompile Include="..\XrServerEntitiesCS\alife_monster_brain.cpp" />
+    <ClCompile Include="..\XrServerEntitiesCS\alife_space.cpp" />
+    <ClCompile Include="..\XrServerEntitiesCS\character_info.cpp" />
+    <ClCompile Include="..\XrServerEntitiesCS\doug_lea_memory_allocator.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -1888,9 +1900,9 @@
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Level2</WarningLevel>
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">Level2</WarningLevel>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\gametype_chooser.cpp" />
-    <ClCompile Include="..\xrServerEntities\LevelGameDef.cpp" />
-    <ClCompile Include="..\xrServerEntities\lua_studio.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\gametype_chooser.cpp" />
+    <ClCompile Include="..\XrServerEntitiesCS\LevelGameDef.cpp" />
+    <ClCompile Include="..\XrServerEntitiesCS\lua_studio.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -1900,9 +1912,16 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\object_factory.cpp" />
-    <ClCompile Include="..\xrServerEntities\object_factory_register.cpp" />
-    <ClCompile Include="..\xrServerEntities\object_factory_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\object_factory.cpp" />
+    <ClCompile Include="..\XrServerEntitiesCS\object_factory_register.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">pch_script.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pch_script.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
+    </ClCompile>
+    <ClCompile Include="..\XrServerEntitiesCS\object_factory_script.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -1912,7 +1931,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\object_item_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\object_item_script.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -1922,7 +1941,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\pch_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\pch_script.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
@@ -1936,12 +1955,12 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\PHNetState.cpp" />
-    <ClCompile Include="..\xrServerEntities\PHSynchronize.cpp" />
-    <ClCompile Include="..\xrServerEntities\script_callStack.cpp" />
-    <ClCompile Include="..\xrServerEntities\script_debugger.cpp" />
-    <ClCompile Include="..\xrServerEntities\script_debugger_threads.cpp" />
-    <ClCompile Include="..\xrServerEntities\script_engine.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\PHNetState.cpp" />
+    <ClCompile Include="..\XrServerEntitiesCS\PHSynchronize.cpp" />
+    <ClCompile Include="..\XrServerEntitiesCS\script_callStack.cpp" />
+    <ClCompile Include="..\XrServerEntitiesCS\script_debugger.cpp" />
+    <ClCompile Include="..\XrServerEntitiesCS\script_debugger_threads.cpp" />
+    <ClCompile Include="..\XrServerEntitiesCS\script_engine.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -1951,7 +1970,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_engine_export.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_engine_export.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
@@ -1965,7 +1984,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_engine_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_engine_script.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -1975,7 +1994,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_fcolor_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_fcolor_script.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -1985,7 +2004,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_flags_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_flags_script.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -1995,7 +2014,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_fmatrix_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_fmatrix_script.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -2005,7 +2024,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_fvector_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_fvector_script.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -2015,8 +2034,8 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_ini_file.cpp" />
-    <ClCompile Include="..\xrServerEntities\script_ini_file_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_ini_file.cpp" />
+    <ClCompile Include="..\XrServerEntitiesCS\script_ini_file_script.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -2026,7 +2045,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_lua_helper.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_lua_helper.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -2036,7 +2055,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_net_packet_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_net_packet_script.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -2046,7 +2065,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_process.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_process.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -2056,7 +2075,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_reader_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_reader_script.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -2066,7 +2085,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_rtoken_list_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_rtoken_list_script.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -2076,7 +2095,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_sound_type_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_sound_type_script.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -2086,19 +2105,21 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_stack_tracker.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_stack_tracker.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">false</ExcludedFromBuild>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Development|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_storage.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_storage.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -2108,7 +2129,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_thread.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_thread.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -2118,8 +2139,8 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_token_list.cpp" />
-    <ClCompile Include="..\xrServerEntities\script_token_list_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_token_list.cpp" />
+    <ClCompile Include="..\XrServerEntitiesCS\script_token_list_script.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -2129,20 +2150,20 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\smart_cast.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\smart_cast.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">Use</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\smart_cast_stats.cpp" />
-    <ClCompile Include="..\xrServerEntities\specific_character.cpp" />
-    <ClCompile Include="..\xrServerEntities\xrServer_Factory.cpp" />
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects.cpp" />
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_Abstract.cpp" />
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_ALife.cpp" />
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_ALife_Items.cpp" />
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_ALife_Items_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\smart_cast_stats.cpp" />
+    <ClCompile Include="..\XrServerEntitiesCS\specific_character.cpp" />
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Factory.cpp" />
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects.cpp" />
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_Abstract.cpp" />
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_ALife.cpp" />
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_ALife_Items.cpp" />
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_ALife_Items_script.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -2152,7 +2173,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_ALife_Items_script2.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_ALife_Items_script2.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -2162,7 +2183,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_ALife_Items_script3.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_ALife_Items_script3.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -2172,8 +2193,8 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_ALife_Monsters.cpp" />
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_ALife_Monsters_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_ALife_Monsters.cpp" />
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_ALife_Monsters_script.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -2183,7 +2204,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_ALife_Monsters_script2.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_ALife_Monsters_script2.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -2193,7 +2214,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrserver_objects_alife_monsters_script3.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrserver_objects_alife_monsters_script3.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -2203,7 +2224,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_ALife_Monsters_script4.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_ALife_Monsters_script4.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -2213,7 +2234,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_ALife_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_ALife_script.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -2223,7 +2244,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_ALife_script2.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_ALife_script2.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -2233,7 +2254,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_ALife_script3.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_ALife_script3.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -2243,7 +2264,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_script.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -2253,7 +2274,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_script2.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_script2.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Mixed|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -2263,7 +2284,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrServer_Object_Base.cpp" />
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Object_Base.cpp" />
     <ClCompile Include="action_base_script.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
@@ -4235,7 +4256,11 @@
     <ClCompile Include="pp_effector_distance.cpp" />
     <ClCompile Include="profiler.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Development|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="property_evaluator_script.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -5507,7 +5532,9 @@
     <ClCompile Include="ui\UICustomSpin.cpp" />
     <ClCompile Include="ui\UIDebugFonts.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Development|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="ui\UIDialogWnd.cpp" />
     <ClCompile Include="ui\UIDiaryWnd2.cpp" />
@@ -6311,6 +6338,32 @@
     <ClCompile Include="ZoneVisual.cpp" />
     <ClCompile Include="zone_effector.cpp" />
     <ClCompile Include="ZudaArtifact.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\External\Crypto\Crypto.vcxproj">
+      <Project>{376f4128-2bf6-47a3-a76d-4585a5a36be0}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\External\Luabind\Luabind.vcxproj">
+      <Project>{18c37994-f2f2-46c0-bd55-bc738e8b9d89}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\XrAPI\XrAPI.vcxproj">
+      <Project>{ff16ef0a-8a51-4c36-9213-4aa87cb4b317}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\XrCDB\XrCDB.vcxproj">
+      <Project>{7e263157-2fc0-42d7-a676-dd6049bb60f5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\XrCore\XrCore.vcxproj">
+      <Project>{da642d7c-4fff-43dc-98f8-3f96caf1e4ba}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\XrEngine\XrEngine.vcxproj">
+      <Project>{2820680f-79fe-4477-a14c-007f273a5fa8}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\XrSound\XrSound.vcxproj">
+      <Project>{57601b62-902a-4ec8-bcc7-b6a2e30b0676}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\XrXMLParser\XrXMLParser.vcxproj">
+      <Project>{39abb344-2136-46c3-814d-8e80bc59a08e}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

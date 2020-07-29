@@ -2,7 +2,7 @@
 
 #include "../control_animation_base.h"
 #include "../ai_monster_defs.h"
-#include "../../../../Include/xrRender/KinematicsAnimated.h"
+#include "../../../../xrRender/Public/KinematicsAnimated.h"
 
 class CController;
 

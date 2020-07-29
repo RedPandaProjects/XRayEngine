@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ui_base.h"
-//.#include "../Include/xrRender/FactoryPtr.h"
+//.#include "../xrRender/Public/FactoryPtr.h"
 //. class IUIShader;
 class CUIStatic;
 

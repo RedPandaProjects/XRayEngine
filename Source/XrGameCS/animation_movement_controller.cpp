@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "animation_movement_controller.h"
 
-#include "../Include/xrRender/Kinematics.h"
+#include "../xrRender/Public/Kinematics.h"
 #include "game_object_space.h"
 #include "matrix_utils.h"
 #ifdef	 DEBUG
@@ -75,7 +75,7 @@ animation_movement_controller::~animation_movement_controller( )
 
 IC bool is_blending_in( CBlend &b)
 {
-	return b.blend == CBlend::eAccrue && b.blendPower - EPS > b.blendAmount;
+	return b.blend_state() == CBlend::eAccrue && b.blendPower - EPS > b.blendAmount;
 
 }
 

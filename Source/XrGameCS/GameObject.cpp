@@ -1,7 +1,7 @@
 #include "pch_script.h"
 #include "GameObject.h"
-//#include "../Include/xrRender/RenderVisual.h"
-#include "../Include/xrRender/RenderVisual.h"
+//#include "../xrRender/Public/RenderVisual.h"
+#include "../xrRender/Public/RenderVisual.h"
 #include "PhysicsShell.h"
 #include "ai_space.h"
 #include "CustomMonster.h" 
@@ -16,7 +16,7 @@
 #include "xrServer_Objects_ALife_Items.h"
 #include "game_cl_base.h"
 #include "object_factory.h"
-#include "../Include/xrRender/Kinematics.h"
+#include "../xrRender/Public/Kinematics.h"
 #include "ai_object_location_impl.h"
 #include "game_graph.h"
 #include "ai_debug.h"
@@ -29,7 +29,7 @@
 #include "ai_obstacle.h"
 #include "magic_box3.h"
 #include "animation_movement_controller.h"
-
+#include "..\XrEngine\xr_collide_form.h"
 extern MagicBox3 MagicMinBox (int iQuantity, const Fvector* akPoint);
 
 #pragma warning(push)

@@ -7,9 +7,9 @@
 #include "../../xrEngine/xr_input.h"
 #include "../xr_level_controller.h"
 
-#include "../Include/xrRender/UISequenceVideoItem.h"
-#include "../Include/xrRender/UIShader.h"
-#include "../Include/xrRender/UIRender.h"
+#include "../xrRender/Public/UISequenceVideoItem.h"
+#include "../xrRender/Public/UIShader.h"
+#include "../xrRender/Public/UIRender.h"
 #include "uicursor.h"
 
 extern ENGINE_API BOOL bShowPauseString;

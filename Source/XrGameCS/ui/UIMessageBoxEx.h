@@ -21,7 +21,7 @@ public:
 	LPCSTR			GetTextEditURL		();
 
 	CUIWndCallback::void_function		func_on_ok;
-	void xr_stdcall	OnOKClicked			(CUIWindow*, void*);
+	void 	OnOKClicked			(CUIWindow*, void*);
 
 	virtual bool	IR_OnKeyboardPress	(int dik);
 

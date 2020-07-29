@@ -161,15 +161,15 @@ void	dbg_draw_viewport( const T &cam_info, float _viewport_near )
 	const Fvector	bottom_left = Fvector().sub( near_plane_center,  right ).sub( up );
 	const Fvector	bottom_right = Fvector().add( near_plane_center,  right ).sub( up );
 	
-	DBG_DrawLine( cam_info.Position(), top_left, D3DCOLOR_XRGB(255, 0, 0 ) );
-	DBG_DrawLine( cam_info.Position(), top_right, D3DCOLOR_XRGB(255, 0, 0 ) );
-	DBG_DrawLine( cam_info.Position(), bottom_left, D3DCOLOR_XRGB(255, 0, 0 ) );
-	DBG_DrawLine( cam_info.Position(), bottom_right, D3DCOLOR_XRGB(255, 0, 0 ) );
+	DBG_DrawLine( cam_info.Position(), top_left, color_xrgb(255, 0, 0 ) );
+	DBG_DrawLine( cam_info.Position(), top_right, color_xrgb(255, 0, 0 ) );
+	DBG_DrawLine( cam_info.Position(), bottom_left, color_xrgb(255, 0, 0 ) );
+	DBG_DrawLine( cam_info.Position(), bottom_right, color_xrgb(255, 0, 0 ) );
 
-	DBG_DrawLine( top_right, top_left, D3DCOLOR_XRGB(255, 0, 0 ) );
-	DBG_DrawLine( bottom_right, top_right, D3DCOLOR_XRGB(255, 0, 0 ) );
-	DBG_DrawLine( top_left, bottom_left, D3DCOLOR_XRGB(255, 0, 0 ) );
-	DBG_DrawLine( bottom_left, bottom_right, D3DCOLOR_XRGB(255, 0, 0 ) );
+	DBG_DrawLine( top_right, top_left, color_xrgb(255, 0, 0 ) );
+	DBG_DrawLine( bottom_right, top_right, color_xrgb(255, 0, 0 ) );
+	DBG_DrawLine( top_left, bottom_left, color_xrgb(255, 0, 0 ) );
+	DBG_DrawLine( bottom_left, bottom_right, color_xrgb(255, 0, 0 ) );
 
 }
 #endif
@@ -250,7 +250,8 @@ void	CActor::cam_Lookout	( const Fmatrix &xform, float camera_height )
 					da			= PI/1000.f;
 					if (!fis_zero(r_torso.roll))
 						da		*= r_torso.roll/_abs(r_torso.roll);
-					for (float angle=0.f; _abs(angle)<_abs(alpha); angle+=da)
+					float angle = 0.f;
+					for (; _abs(angle)<_abs(alpha); angle+=da)
 					{
 						Fvector				pt;
 						calc_gl_point( pt, xform, radius, angle );

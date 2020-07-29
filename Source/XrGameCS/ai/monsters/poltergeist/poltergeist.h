@@ -2,7 +2,7 @@
 #include "../BaseMonster/base_monster.h"
 #include "../telekinesis.h"
 #include "../energy_holder.h"
-#include "../../../../xrServerEntities/script_export_space.h"
+#include "../../../../XrServerEntitiesCS/script_export_space.h"
 
 class CPhysicsShellHolder;
 class CStateManagerPoltergeist;
@@ -69,7 +69,7 @@ public:
 			ref_sound m_strange_sound;
 	
 	// Movement
-			Fvector m_current_position;		// Позиция на ноде
+			Fvector m_current_position;		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ
 
 	// Dynamic Height
 			u32		time_height_updated;

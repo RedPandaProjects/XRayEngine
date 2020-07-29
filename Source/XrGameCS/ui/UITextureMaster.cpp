@@ -12,7 +12,7 @@
 #include "UITextureMaster.h"
 #include "uiabstract.h"
 #include "xrUIXmlParser.h"
-#include "../Include/xrRender/UIShader.h"
+#include "../xrRender/Public/UIShader.h"
 
 xr_map<shared_str, TEX_INFO>	CUITextureMaster::m_textures;
 

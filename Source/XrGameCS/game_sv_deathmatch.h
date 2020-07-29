@@ -96,7 +96,7 @@ protected:
 	u32								m_dwWarmUp_CurTime;
 	bool							m_bInWarmUp;
 	
-				void	__stdcall	net_Relcase				(CObject* O);
+				void		net_Relcase				(CObject* O);
 
 public:
 									game_sv_Deathmatch		();
@@ -203,7 +203,7 @@ public:
 	virtual		u32					GetNumTeams				() {return teams.size();};
 
 	// adtitional methods for predicates
-	void		__stdcall			RespawnPlayerAsSpectator(IClient* client);
+	void					RespawnPlayerAsSpectator(IClient* client);
 protected:
 	virtual		void				WriteGameState			(CInifile& ini, LPCSTR sect, bool bRoundResult);
 	shared_str m_not_free_ammo_str;

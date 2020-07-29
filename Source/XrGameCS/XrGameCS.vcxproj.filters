@@ -2973,7 +2973,7 @@
     <ClInclude Include="sound_collection_storage_inline.h">
       <Filter>AI\AComponents\SoundPlayer\sound_collection_storage</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\restriction_space.h">
+    <ClInclude Include="..\XrServerEntitiesCS\restriction_space.h">
       <Filter>AI\AComponents\SpaceRestrictionManager</Filter>
     </ClInclude>
     <ClInclude Include="space_restriction_manager.h">
@@ -3237,7 +3237,7 @@
     <ClInclude Include="alife_simulator_inline.h">
       <Filter>AI\ALife</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\alife_space.h">
+    <ClInclude Include="..\XrServerEntitiesCS\alife_space.h">
       <Filter>AI\ALife</Filter>
     </ClInclude>
     <ClInclude Include="alife_interaction_manager.h">
@@ -3261,10 +3261,10 @@
     <ClInclude Include="alife_combat_manager_inline.h">
       <Filter>AI\ALife\interaction_manager\combat_manager</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\alife_human_brain.h">
+    <ClInclude Include="..\XrServerEntitiesCS\alife_human_brain.h">
       <Filter>AI\ALife\interaction_manager\server_entities\human\brain</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\alife_human_brain_inline.h">
+    <ClInclude Include="..\XrServerEntitiesCS\alife_human_brain_inline.h">
       <Filter>AI\ALife\interaction_manager\server_entities\human\brain</Filter>
     </ClInclude>
     <ClInclude Include="alife_human_brain_save.h">
@@ -3279,10 +3279,10 @@
     <ClInclude Include="alife_human_object_handler_save.h">
       <Filter>AI\ALife\interaction_manager\server_entities\human\object_handler</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\alife_monster_brain.h">
+    <ClInclude Include="..\XrServerEntitiesCS\alife_monster_brain.h">
       <Filter>AI\ALife\interaction_manager\server_entities\monster_abstract\brain</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\alife_monster_brain_inline.h">
+    <ClInclude Include="..\XrServerEntitiesCS\alife_monster_brain_inline.h">
       <Filter>AI\ALife\interaction_manager\server_entities\monster_abstract\brain</Filter>
     </ClInclude>
     <ClInclude Include="alife_monster_movement_manager.h">
@@ -4803,7 +4803,7 @@
     <ClInclude Include="game_graph_inline.h">
       <Filter>AI\ANavigation\GameGraph</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\game_graph_space.h">
+    <ClInclude Include="..\XrServerEntitiesCS\game_graph_space.h">
       <Filter>AI\ANavigation\GameGraph</Filter>
     </ClInclude>
     <ClInclude Include="game_level_cross_table.h">
@@ -5028,13 +5028,13 @@
     <ClInclude Include="patrol_point_inline.h">
       <Filter>AI\ANavigation\PatrolPaths\PatrolPoint</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_export_macroses.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_export_macroses.h">
       <Filter>AI\AScript</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_export_space.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_export_space.h">
       <Filter>AI\AScript</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_space_forward.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_space_forward.h">
       <Filter>AI\AScript</Filter>
     </ClInclude>
     <ClInclude Include="script_bind_macroses.h">
@@ -5130,13 +5130,13 @@
     <ClInclude Include="script_effector_wrapper_inline.h">
       <Filter>AI\AScript\ScriptClasses\ScriptEffector\ScriptEffectorWrapper</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_flags.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_flags.h">
       <Filter>AI\AScript\ScriptClasses\ScriptFlags</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_fmatrix.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_fmatrix.h">
       <Filter>AI\AScript\ScriptClasses\ScriptFmatrix</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_fvector.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_fvector.h">
       <Filter>AI\AScript\ScriptClasses\ScriptFvector</Filter>
     </ClInclude>
     <ClInclude Include="script_game_object.h">
@@ -5151,28 +5151,28 @@
     <ClInclude Include="script_hit_inline.h">
       <Filter>AI\AScript\ScriptClasses\ScriptHit</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_ini_file.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_ini_file.h">
       <Filter>AI\AScript\ScriptClasses\ScriptIniFile</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_ini_file_inline.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_ini_file_inline.h">
       <Filter>AI\AScript\ScriptClasses\ScriptIniFile</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_token_list.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_token_list.h">
       <Filter>AI\AScript\ScriptClasses\ScriptIniFile\ScriptTokenList</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_token_list_inline.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_token_list_inline.h">
       <Filter>AI\AScript\ScriptClasses\ScriptIniFile\ScriptTokenList</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_rtoken_list.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_rtoken_list.h">
       <Filter>AI\AScript\ScriptClasses\ScriptIniFile\ScriptRTokenList</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_rtoken_list_inline.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_rtoken_list_inline.h">
       <Filter>AI\AScript\ScriptClasses\ScriptIniFile\ScriptRTokenList</Filter>
     </ClInclude>
     <ClInclude Include="script_monster_hit_info.h">
       <Filter>AI\AScript\ScriptClasses\ScriptMonsterHitInfo</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_net_packet.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_net_packet.h">
       <Filter>AI\AScript\ScriptClasses\ScriptNetPacket</Filter>
     </ClInclude>
     <ClInclude Include="script_render_device.h">
@@ -5181,7 +5181,7 @@
     <ClInclude Include="script_sound_info.h">
       <Filter>AI\AScript\ScriptClasses\ScriptSoundInfo</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_sound_type.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_sound_type.h">
       <Filter>AI\AScript\ScriptClasses\ScriptSoundType</Filter>
     </ClInclude>
     <ClInclude Include="script_ui_registrator.h">
@@ -5193,7 +5193,7 @@
     <ClInclude Include="key_binding_registrator.h">
       <Filter>AI\AScript\ScriptClasses\KeyBindings</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_reader.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_reader.h">
       <Filter>AI\AScript\ScriptClasses\ScriptReader</Filter>
     </ClInclude>
     <ClInclude Include="fs_registrator.h">
@@ -5226,7 +5226,7 @@
     <ClInclude Include="script_lanim.h">
       <Filter>AI\AScript\ScriptClasses\ScriptLAnim</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_fcolor.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_fcolor.h">
       <Filter>AI\AScript\ScriptClasses\ScriptFcolor</Filter>
     </ClInclude>
     <ClInclude Include="script_particles.h">
@@ -5241,70 +5241,70 @@
     <ClInclude Include="script_sound_inline.h">
       <Filter>AI\AScript\ScriptClasses\ScriptSound</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\mslotutils.h">
+    <ClInclude Include="..\XrServerEntitiesCS\mslotutils.h">
       <Filter>AI\AScript\ScriptDebugger</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_callStack.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_callStack.h">
       <Filter>AI\AScript\ScriptDebugger</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_debugger.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_debugger.h">
       <Filter>AI\AScript\ScriptDebugger</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_debugger_messages.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_debugger_messages.h">
       <Filter>AI\AScript\ScriptDebugger</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_debugger_threads.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_debugger_threads.h">
       <Filter>AI\AScript\ScriptDebugger</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_lua_helper.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_lua_helper.h">
       <Filter>AI\AScript\ScriptDebugger</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_engine.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_engine.h">
       <Filter>AI\AScript\ScriptEngine</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_engine_export.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_engine_export.h">
       <Filter>AI\AScript\ScriptEngine</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_engine_inline.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_engine_inline.h">
       <Filter>AI\AScript\ScriptEngine</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_engine_space.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_engine_space.h">
       <Filter>AI\AScript\ScriptEngine</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_process.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_process.h">
       <Filter>AI\AScript\ScriptProcess</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_process_inline.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_process_inline.h">
       <Filter>AI\AScript\ScriptProcess</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_storage.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_storage.h">
       <Filter>AI\AScript\ScriptStorage</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_storage_inline.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_storage_inline.h">
       <Filter>AI\AScript\ScriptStorage</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_storage_space.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_storage_space.h">
       <Filter>AI\AScript\ScriptStorage</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_thread.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_thread.h">
       <Filter>AI\AScript\ScriptThread</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_thread_inline.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_thread_inline.h">
       <Filter>AI\AScript\ScriptThread</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_stack_tracker.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_stack_tracker.h">
       <Filter>AI\AScript\ScriptThread\ScriptStackTracker</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_stack_tracker_inline.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_stack_tracker_inline.h">
       <Filter>AI\AScript\ScriptThread\ScriptStackTracker</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\doug_lea_memory_allocator.h">
+    <ClInclude Include="..\XrServerEntitiesCS\doug_lea_memory_allocator.h">
       <Filter>AI\AScript\memory_allocator</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\lua_studio.h">
+    <ClInclude Include="..\XrServerEntitiesCS\lua_studio.h">
       <Filter>AI\AScript\lua_studio</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\ai_sounds.h">
+    <ClInclude Include="..\XrServerEntitiesCS\ai_sounds.h">
       <Filter>AI\ASound</Filter>
     </ClInclude>
     <ClInclude Include="ai_space.h">
@@ -5313,7 +5313,7 @@
     <ClInclude Include="ai_space_inline.h">
       <Filter>AI\ASpace</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\pch_script.h">
+    <ClInclude Include="..\XrServerEntitiesCS\pch_script.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="StdAfx.h">
@@ -5379,7 +5379,7 @@
     <ClInclude Include="Tracer.h">
       <Filter>Core\Client\Level\Bullet Manager</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\LevelGameDef.h">
+    <ClInclude Include="..\XrServerEntitiesCS\LevelGameDef.h">
       <Filter>Core\Client\Level\SeniorityHierarchyHolder</Filter>
     </ClInclude>
     <ClInclude Include="seniority_hierarchy_holder.h">
@@ -5598,10 +5598,10 @@
     <ClInclude Include="InfoPortion.h">
       <Filter>Core\Client\Objects\tasks_info_dialogs</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\InfoPortionDefs.h">
+    <ClInclude Include="..\XrServerEntitiesCS\InfoPortionDefs.h">
       <Filter>Core\Client\Objects\tasks_info_dialogs</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\xml_str_id_loader.h">
+    <ClInclude Include="..\XrServerEntitiesCS\xml_str_id_loader.h">
       <Filter>Core\Client\Objects\tasks_info_dialogs</Filter>
     </ClInclude>
     <ClInclude Include="GameTask.h">
@@ -5652,7 +5652,7 @@
     <ClInclude Include="Inventory.h">
       <Filter>Core\Client\Objects\inventory</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\inventory_space.h">
+    <ClInclude Include="..\XrServerEntitiesCS\inventory_space.h">
       <Filter>Core\Client\Objects\inventory</Filter>
     </ClInclude>
     <ClInclude Include="attachable_item.h">
@@ -5697,10 +5697,10 @@
     <ClInclude Include="character_community.h">
       <Filter>Core\Client\Objects\inventory\InventoryOwner\character_info</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\character_info.h">
+    <ClInclude Include="..\XrServerEntitiesCS\character_info.h">
       <Filter>Core\Client\Objects\inventory\InventoryOwner\character_info</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\character_info_defs.h">
+    <ClInclude Include="..\XrServerEntitiesCS\character_info_defs.h">
       <Filter>Core\Client\Objects\inventory\InventoryOwner\character_info</Filter>
     </ClInclude>
     <ClInclude Include="character_rank.h">
@@ -5718,7 +5718,7 @@
     <ClInclude Include="monster_community.h">
       <Filter>Core\Client\Objects\inventory\InventoryOwner\character_info</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\specific_character.h">
+    <ClInclude Include="..\XrServerEntitiesCS\specific_character.h">
       <Filter>Core\Client\Objects\inventory\InventoryOwner\character_info</Filter>
     </ClInclude>
     <ClInclude Include="relation_registry.h">
@@ -6141,7 +6141,7 @@
     <ClInclude Include="NET_Queue.h">
       <Filter>Core\Common\NET Shared</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\xrMessages.h">
+    <ClInclude Include="..\XrServerEntitiesCS\xrMessages.h">
       <Filter>Core\Common\NET Shared</Filter>
     </ClInclude>
     <ClInclude Include="secure_messaging.h">
@@ -6153,64 +6153,64 @@
     <ClInclude Include="xr_dsa_verifyer.h">
       <Filter>Core\Common\NET Shared\SecureMessages</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\object_broker.h">
+    <ClInclude Include="..\XrServerEntitiesCS\object_broker.h">
       <Filter>Core\Common\ObjectBroker</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\object_cloner.h">
+    <ClInclude Include="..\XrServerEntitiesCS\object_cloner.h">
       <Filter>Core\Common\ObjectBroker</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\object_comparer.h">
+    <ClInclude Include="..\XrServerEntitiesCS\object_comparer.h">
       <Filter>Core\Common\ObjectBroker</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\object_destroyer.h">
+    <ClInclude Include="..\XrServerEntitiesCS\object_destroyer.h">
       <Filter>Core\Common\ObjectBroker</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\object_interfaces.h">
+    <ClInclude Include="..\XrServerEntitiesCS\object_interfaces.h">
       <Filter>Core\Common\ObjectBroker</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\object_loader.h">
+    <ClInclude Include="..\XrServerEntitiesCS\object_loader.h">
       <Filter>Core\Common\ObjectBroker</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\object_saver.h">
+    <ClInclude Include="..\XrServerEntitiesCS\object_saver.h">
       <Filter>Core\Common\ObjectBroker</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\object_type_traits.h">
+    <ClInclude Include="..\XrServerEntitiesCS\object_type_traits.h">
       <Filter>Core\Common\ObjectBroker</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\clsid_game.h">
+    <ClInclude Include="..\XrServerEntitiesCS\clsid_game.h">
       <Filter>Core\Common\ObjectFactory</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\object_factory.h">
+    <ClInclude Include="..\XrServerEntitiesCS\object_factory.h">
       <Filter>Core\Common\ObjectFactory</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\object_factory_impl.h">
+    <ClInclude Include="..\XrServerEntitiesCS\object_factory_impl.h">
       <Filter>Core\Common\ObjectFactory</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\object_factory_inline.h">
+    <ClInclude Include="..\XrServerEntitiesCS\object_factory_inline.h">
       <Filter>Core\Common\ObjectFactory</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\object_factory_space.h">
+    <ClInclude Include="..\XrServerEntitiesCS\object_factory_space.h">
       <Filter>Core\Common\ObjectFactory</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\object_item_abstract.h">
+    <ClInclude Include="..\XrServerEntitiesCS\object_item_abstract.h">
       <Filter>Core\Common\ObjectFactory\object_item_abstract</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\object_item_abstract_inline.h">
+    <ClInclude Include="..\XrServerEntitiesCS\object_item_abstract_inline.h">
       <Filter>Core\Common\ObjectFactory\object_item_abstract</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\object_item_client_server.h">
+    <ClInclude Include="..\XrServerEntitiesCS\object_item_client_server.h">
       <Filter>Core\Common\ObjectFactory\object_item_client_server</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\object_item_client_server_inline.h">
+    <ClInclude Include="..\XrServerEntitiesCS\object_item_client_server_inline.h">
       <Filter>Core\Common\ObjectFactory\object_item_client_server</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\object_item_script.h">
+    <ClInclude Include="..\XrServerEntitiesCS\object_item_script.h">
       <Filter>Core\Common\ObjectFactory\object_item_script</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\object_item_single.h">
+    <ClInclude Include="..\XrServerEntitiesCS\object_item_single.h">
       <Filter>Core\Common\ObjectFactory\object_item_single</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\object_item_single_inline.h">
+    <ClInclude Include="..\XrServerEntitiesCS\object_item_single_inline.h">
       <Filter>Core\Common\ObjectFactory\object_item_single</Filter>
     </ClInclude>
     <ClInclude Include="profiler.h">
@@ -6228,19 +6228,19 @@
     <ClInclude Include="random32.h">
       <Filter>Core\Common\Random32</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\shared_data.h">
+    <ClInclude Include="..\XrServerEntitiesCS\shared_data.h">
       <Filter>Core\Common\Shared</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\smart_cast.h">
+    <ClInclude Include="..\XrServerEntitiesCS\smart_cast.h">
       <Filter>Core\Common\SmartCast</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\smart_cast_impl0.h">
+    <ClInclude Include="..\XrServerEntitiesCS\smart_cast_impl0.h">
       <Filter>Core\Common\SmartCast</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\smart_cast_impl1.h">
+    <ClInclude Include="..\XrServerEntitiesCS\smart_cast_impl1.h">
       <Filter>Core\Common\SmartCast</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\smart_cast_impl2.h">
+    <ClInclude Include="..\XrServerEntitiesCS\smart_cast_impl2.h">
       <Filter>Core\Common\SmartCast</Filter>
     </ClInclude>
     <ClInclude Include="string_table.h">
@@ -6249,16 +6249,16 @@
     <ClInclude Include="string_table_defs.h">
       <Filter>Core\Common\StringTable</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\associative_vector.h">
+    <ClInclude Include="..\XrServerEntitiesCS\associative_vector.h">
       <Filter>Core\Common\associative_vector\vector</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\associative_vector_inline.h">
+    <ClInclude Include="..\XrServerEntitiesCS\associative_vector_inline.h">
       <Filter>Core\Common\associative_vector\vector</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\associative_vector_compare_predicate.h">
+    <ClInclude Include="..\XrServerEntitiesCS\associative_vector_compare_predicate.h">
       <Filter>Core\Common\associative_vector\compare</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\associative_vector_compare_predicate_inline.h">
+    <ClInclude Include="..\XrServerEntitiesCS\associative_vector_compare_predicate_inline.h">
       <Filter>Core\Common\associative_vector\compare</Filter>
     </ClInclude>
     <ClInclude Include="RegistryFuncs.h">
@@ -6279,28 +6279,28 @@
     <ClInclude Include="xrServer.h">
       <Filter>Core\Server</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\xrServer_Space.h">
+    <ClInclude Include="..\XrServerEntitiesCS\xrServer_Space.h">
       <Filter>Core\Server</Filter>
     </ClInclude>
     <ClInclude Include="xrServerMapSync.h">
       <Filter>Core\Server</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\DrawUtils.h">
+    <ClInclude Include="..\XrServerEntitiesCS\DrawUtils.h">
       <Filter>Core\Server\Editor</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\FastDelegate.h">
+    <ClInclude Include="..\XrServerEntitiesCS\FastDelegate.h">
       <Filter>Core\Server\Editor</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\ItemListTypes.h">
+    <ClInclude Include="..\XrServerEntitiesCS\ItemListTypes.h">
       <Filter>Core\Server\Editor</Filter>
     </ClInclude>
     <ClInclude Include="PropertiesListHelper.h">
       <Filter>Core\Server\Editor</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\WaveForm.h">
+    <ClInclude Include="..\XrServerEntitiesCS\WaveForm.h">
       <Filter>Core\Server\Editor</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\xrEProps.h">
+    <ClInclude Include="..\XrServerEntitiesCS\xrEProps.h">
       <Filter>Core\Server\Editor</Filter>
     </ClInclude>
     <ClInclude Include="game_base.h">
@@ -6312,7 +6312,7 @@
     <ClInclude Include="game_base_menu_events.h">
       <Filter>Core\Server\Games</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\game_base_space.h">
+    <ClInclude Include="..\XrServerEntitiesCS\game_base_space.h">
       <Filter>Core\Server\Games</Filter>
     </ClInclude>
     <ClInclude Include="game_cl_artefacthunt.h">
@@ -6474,43 +6474,43 @@
     <ClInclude Include="id_generator.h">
       <Filter>Core\Server\ID_Generator</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\gametype_chooser.h">
+    <ClInclude Include="..\XrServerEntitiesCS\gametype_chooser.h">
       <Filter>Core\Server\ServerEntities</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\PropertiesListTypes.h">
+    <ClInclude Include="..\XrServerEntitiesCS\PropertiesListTypes.h">
       <Filter>Core\Server\ServerEntities</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\ShapeData.h">
+    <ClInclude Include="..\XrServerEntitiesCS\ShapeData.h">
       <Filter>Core\Server\ServerEntities</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\xrServer_Objects_Abstract.h">
+    <ClInclude Include="..\XrServerEntitiesCS\xrServer_Objects_Abstract.h">
       <Filter>Core\Server\ServerEntities</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\xrServer_Objects_ALife_All.h">
+    <ClInclude Include="..\XrServerEntitiesCS\xrServer_Objects_ALife_All.h">
       <Filter>Core\Server\ServerEntities</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\xrServer_script_macroses.h">
+    <ClInclude Include="..\XrServerEntitiesCS\xrServer_script_macroses.h">
       <Filter>Core\Server\ServerEntities</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\xrServer_Object_Base.h">
+    <ClInclude Include="..\XrServerEntitiesCS\xrServer_Object_Base.h">
       <Filter>Core\Server\ServerEntities\objects</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\xrServer_Objects.h">
+    <ClInclude Include="..\XrServerEntitiesCS\xrServer_Objects.h">
       <Filter>Core\Server\ServerEntities\objects</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\xrServer_Objects_ALife.h">
+    <ClInclude Include="..\XrServerEntitiesCS\xrServer_Objects_ALife.h">
       <Filter>Core\Server\ServerEntities\objects_alife</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\xrServer_Objects_ALife_Items.h">
+    <ClInclude Include="..\XrServerEntitiesCS\xrServer_Objects_ALife_Items.h">
       <Filter>Core\Server\ServerEntities\objects_alife_items</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\xrServer_Objects_ALife_Monsters.h">
+    <ClInclude Include="..\XrServerEntitiesCS\xrServer_Objects_ALife_Monsters.h">
       <Filter>Core\Server\ServerEntities\objects_alife_monsters</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_value_container.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_value_container.h">
       <Filter>Core\Server\ServerEntities\script_value_container</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\script_value_container_impl.h">
+    <ClInclude Include="..\XrServerEntitiesCS\script_value_container_impl.h">
       <Filter>Core\Server\ServerEntities\script_value_container</Filter>
     </ClInclude>
     <ClInclude Include="xrServer_svclient_validation.h">
@@ -6603,10 +6603,10 @@
     <ClInclude Include="PHContactBodyEffector.h">
       <Filter>Physics\Base\Objects\BodyEffectors</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\PHNetState.h">
+    <ClInclude Include="..\XrServerEntitiesCS\PHNetState.h">
       <Filter>Physics\Base\Objects\PHNet</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\PHSynchronize.h">
+    <ClInclude Include="..\XrServerEntitiesCS\PHSynchronize.h">
       <Filter>Physics\Base\Objects\PHNet</Filter>
     </ClInclude>
     <ClInclude Include="PHMoveStorage.h">
@@ -7760,7 +7760,7 @@
     <ClCompile Include="alife_simulator_script.cpp">
       <Filter>AI\ALife</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\alife_space.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\alife_space.cpp">
       <Filter>AI\ALife</Filter>
     </ClCompile>
     <ClCompile Include="alife_interaction_manager.cpp">
@@ -7784,7 +7784,7 @@
     <ClCompile Include="alife_human_abstract.cpp">
       <Filter>AI\ALife\interaction_manager\server_entities\human</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\alife_human_brain.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\alife_human_brain.cpp">
       <Filter>AI\ALife\interaction_manager\server_entities\human\brain</Filter>
     </ClCompile>
     <ClCompile Include="alife_human_brain_script.cpp">
@@ -7802,7 +7802,7 @@
     <ClCompile Include="alife_monster_base.cpp">
       <Filter>AI\ALife\interaction_manager\server_entities\monster_abstract</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\alife_monster_brain.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\alife_monster_brain.cpp">
       <Filter>AI\ALife\interaction_manager\server_entities\monster_abstract\brain</Filter>
     </ClCompile>
     <ClCompile Include="alife_monster_brain_script.cpp">
@@ -8726,13 +8726,13 @@
     <ClCompile Include="script_effector_wrapper.cpp">
       <Filter>AI\AScript\ScriptClasses\ScriptEffector\ScriptEffectorWrapper</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_flags_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_flags_script.cpp">
       <Filter>AI\AScript\ScriptClasses\ScriptFlags</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_fmatrix_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_fmatrix_script.cpp">
       <Filter>AI\AScript\ScriptClasses\ScriptFmatrix</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_fvector_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_fvector_script.cpp">
       <Filter>AI\AScript\ScriptClasses\ScriptFvector</Filter>
     </ClCompile>
     <ClCompile Include="script_game_object.cpp">
@@ -8780,25 +8780,25 @@
     <ClCompile Include="script_hit_script.cpp">
       <Filter>AI\AScript\ScriptClasses\ScriptHit</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_ini_file.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_ini_file.cpp">
       <Filter>AI\AScript\ScriptClasses\ScriptIniFile</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_ini_file_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_ini_file_script.cpp">
       <Filter>AI\AScript\ScriptClasses\ScriptIniFile</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_token_list.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_token_list.cpp">
       <Filter>AI\AScript\ScriptClasses\ScriptIniFile\ScriptTokenList</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_token_list_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_token_list_script.cpp">
       <Filter>AI\AScript\ScriptClasses\ScriptIniFile\ScriptTokenList</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_rtoken_list_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_rtoken_list_script.cpp">
       <Filter>AI\AScript\ScriptClasses\ScriptIniFile\ScriptRTokenList</Filter>
     </ClCompile>
     <ClCompile Include="script_monster_hit_info_script.cpp">
       <Filter>AI\AScript\ScriptClasses\ScriptMonsterHitInfo</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_net_packet_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_net_packet_script.cpp">
       <Filter>AI\AScript\ScriptClasses\ScriptNetPacket</Filter>
     </ClCompile>
     <ClCompile Include="script_render_device_script.cpp">
@@ -8807,7 +8807,7 @@
     <ClCompile Include="script_sound_info_script.cpp">
       <Filter>AI\AScript\ScriptClasses\ScriptSoundInfo</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_sound_type_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_sound_type_script.cpp">
       <Filter>AI\AScript\ScriptClasses\ScriptSoundType</Filter>
     </ClCompile>
     <ClCompile Include="ScriptXMLInit.cpp">
@@ -8819,7 +8819,7 @@
     <ClCompile Include="key_binding_registrator_script.cpp">
       <Filter>AI\AScript\ScriptClasses\KeyBindings</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_reader_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_reader_script.cpp">
       <Filter>AI\AScript\ScriptClasses\ScriptReader</Filter>
     </ClCompile>
     <ClCompile Include="fs_registrator_script.cpp">
@@ -8834,7 +8834,7 @@
     <ClCompile Include="script_lanim.cpp">
       <Filter>AI\AScript\ScriptClasses\ScriptLAnim</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_fcolor_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_fcolor_script.cpp">
       <Filter>AI\AScript\ScriptClasses\ScriptFcolor</Filter>
     </ClCompile>
     <ClCompile Include="script_particles.cpp">
@@ -8849,46 +8849,46 @@
     <ClCompile Include="script_sound_script.cpp">
       <Filter>AI\AScript\ScriptClasses\ScriptSound</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_callStack.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_callStack.cpp">
       <Filter>AI\AScript\ScriptDebugger</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_debugger.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_debugger.cpp">
       <Filter>AI\AScript\ScriptDebugger</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_debugger_threads.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_debugger_threads.cpp">
       <Filter>AI\AScript\ScriptDebugger</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_lua_helper.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_lua_helper.cpp">
       <Filter>AI\AScript\ScriptDebugger</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_engine.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_engine.cpp">
       <Filter>AI\AScript\ScriptEngine</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_engine_export.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_engine_export.cpp">
       <Filter>AI\AScript\ScriptEngine</Filter>
     </ClCompile>
     <ClCompile Include="script_engine_help.cpp">
       <Filter>AI\AScript\ScriptEngine</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_engine_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_engine_script.cpp">
       <Filter>AI\AScript\ScriptEngine</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_process.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_process.cpp">
       <Filter>AI\AScript\ScriptProcess</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_storage.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_storage.cpp">
       <Filter>AI\AScript\ScriptStorage</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_thread.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_thread.cpp">
       <Filter>AI\AScript\ScriptThread</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\script_stack_tracker.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\script_stack_tracker.cpp">
       <Filter>AI\AScript\ScriptThread\ScriptStackTracker</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\doug_lea_memory_allocator.c">
+    <ClCompile Include="..\XrServerEntitiesCS\doug_lea_memory_allocator.c">
       <Filter>AI\AScript\memory_allocator</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\lua_studio.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\lua_studio.cpp">
       <Filter>AI\AScript\lua_studio</Filter>
     </ClCompile>
     <ClCompile Include="ai_sounds.cpp">
@@ -8897,7 +8897,7 @@
     <ClCompile Include="ai_space.cpp">
       <Filter>AI\ASpace</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\pch_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\pch_script.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="StdAfx.cpp">
@@ -9011,7 +9011,7 @@
     <ClCompile Include="Tracer.cpp">
       <Filter>Core\Client\Level\Bullet Manager</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\LevelGameDef.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\LevelGameDef.cpp">
       <Filter>Core\Client\Level\SeniorityHierarchyHolder</Filter>
     </ClCompile>
     <ClCompile Include="seniority_hierarchy_holder.cpp">
@@ -9305,7 +9305,7 @@
     <ClCompile Include="character_community.cpp">
       <Filter>Core\Client\Objects\inventory\InventoryOwner\character_info</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\character_info.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\character_info.cpp">
       <Filter>Core\Client\Objects\inventory\InventoryOwner\character_info</Filter>
     </ClCompile>
     <ClCompile Include="character_rank.cpp">
@@ -9317,7 +9317,7 @@
     <ClCompile Include="monster_community.cpp">
       <Filter>Core\Client\Objects\inventory\InventoryOwner\character_info</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\specific_character.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\specific_character.cpp">
       <Filter>Core\Client\Objects\inventory\InventoryOwner\character_info</Filter>
     </ClCompile>
     <ClCompile Include="relation_registry.cpp">
@@ -9818,16 +9818,16 @@
     <ClCompile Include="xr_dsa_verifyer.cpp">
       <Filter>Core\Common\NET Shared\SecureMessages</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\object_factory.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\object_factory.cpp">
       <Filter>Core\Common\ObjectFactory</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\object_factory_register.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\object_factory_register.cpp">
       <Filter>Core\Common\ObjectFactory</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\object_factory_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\object_factory_script.cpp">
       <Filter>Core\Common\ObjectFactory</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\object_item_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\object_item_script.cpp">
       <Filter>Core\Common\ObjectFactory\object_item_script</Filter>
     </ClCompile>
     <ClCompile Include="profiler.cpp">
@@ -9836,10 +9836,10 @@
     <ClCompile Include="random32.cpp">
       <Filter>Core\Common\Random32</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\smart_cast.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\smart_cast.cpp">
       <Filter>Core\Common\SmartCast</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\smart_cast_stats.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\smart_cast_stats.cpp">
       <Filter>Core\Common\SmartCast</Filter>
     </ClCompile>
     <ClCompile Include="string_table.cpp">
@@ -10058,64 +10058,64 @@
     <ClCompile Include="gamespy\CdkeyDecode\cdkeydecode.c">
       <Filter>Core\Server\GameSpy\CdkeyDecode</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\gametype_chooser.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\gametype_chooser.cpp">
       <Filter>Core\Server\ServerEntities</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrServer_Factory.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Factory.cpp">
       <Filter>Core\Server\ServerEntities</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_Abstract.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_Abstract.cpp">
       <Filter>Core\Server\ServerEntities</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrServer_Object_Base.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Object_Base.cpp">
       <Filter>Core\Server\ServerEntities\objects</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects.cpp">
       <Filter>Core\Server\ServerEntities\objects</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_script.cpp">
       <Filter>Core\Server\ServerEntities\objects</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_script2.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_script2.cpp">
       <Filter>Core\Server\ServerEntities\objects</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_ALife.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_ALife.cpp">
       <Filter>Core\Server\ServerEntities\objects_alife</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_ALife_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_ALife_script.cpp">
       <Filter>Core\Server\ServerEntities\objects_alife</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_ALife_script2.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_ALife_script2.cpp">
       <Filter>Core\Server\ServerEntities\objects_alife</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_ALife_script3.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_ALife_script3.cpp">
       <Filter>Core\Server\ServerEntities\objects_alife</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_ALife_Items.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_ALife_Items.cpp">
       <Filter>Core\Server\ServerEntities\objects_alife_items</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_ALife_Items_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_ALife_Items_script.cpp">
       <Filter>Core\Server\ServerEntities\objects_alife_items</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_ALife_Items_script2.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_ALife_Items_script2.cpp">
       <Filter>Core\Server\ServerEntities\objects_alife_items</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_ALife_Items_script3.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_ALife_Items_script3.cpp">
       <Filter>Core\Server\ServerEntities\objects_alife_items</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_ALife_Monsters.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_ALife_Monsters.cpp">
       <Filter>Core\Server\ServerEntities\objects_alife_monsters</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_ALife_Monsters_script.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_ALife_Monsters_script.cpp">
       <Filter>Core\Server\ServerEntities\objects_alife_monsters</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_ALife_Monsters_script2.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_ALife_Monsters_script2.cpp">
       <Filter>Core\Server\ServerEntities\objects_alife_monsters</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrserver_objects_alife_monsters_script3.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrserver_objects_alife_monsters_script3.cpp">
       <Filter>Core\Server\ServerEntities\objects_alife_monsters</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\xrServer_Objects_ALife_Monsters_script4.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\xrServer_Objects_ALife_Monsters_script4.cpp">
       <Filter>Core\Server\ServerEntities\objects_alife_monsters</Filter>
     </ClCompile>
     <ClCompile Include="xrServer_perform_GameExport.cpp">
@@ -10220,10 +10220,10 @@
     <ClCompile Include="PHContactBodyEffector.cpp">
       <Filter>Physics\Base\Objects\BodyEffectors</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\PHNetState.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\PHNetState.cpp">
       <Filter>Physics\Base\Objects\PHNet</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\PHSynchronize.cpp">
+    <ClCompile Include="..\XrServerEntitiesCS\PHSynchronize.cpp">
       <Filter>Physics\Base\Objects\PHNet</Filter>
     </ClCompile>
     <ClCompile Include="PHMoveStorage.cpp">
