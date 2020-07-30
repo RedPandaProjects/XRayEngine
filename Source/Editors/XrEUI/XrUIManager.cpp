@@ -65,61 +65,64 @@ void XrUIManager::ApplyShortCut(DWORD Key)
 	{
 		IsFail = false;
 	}
-	if (Key >= '0' && Key <= '9')
+	else if (Key >= '0' && Key <= '9')
 	{
-		IsFail = false;
+		IsFail = true;
 	}
-	switch (Key)
-	{
-	case VK_LEFT:
-	case VK_RIGHT:
-	case VK_UP:
-	case VK_DOWN:
-	case VK_NUMPAD0:
-	case VK_NUMPAD1:
-	case VK_NUMPAD2:
-	case VK_NUMPAD3:
-	case VK_NUMPAD4:
-	case VK_NUMPAD5:
-	case VK_NUMPAD6:
-	case VK_NUMPAD7:
-	case VK_NUMPAD8:
-	case VK_NUMPAD9:
-	case VK_F1:
-	case VK_F2:
-	case VK_F3:
-	case VK_F4:
-	case VK_F5:
-	case VK_F6:
-	case VK_F7:
-	case VK_F8:
-	case VK_F9:
-	case VK_F10:
-	case VK_F11:
-	case VK_F12:
-	case VK_DELETE:
-	case VK_ADD:
-	case VK_SUBTRACT:
-	case VK_MULTIPLY:
-	case VK_DIVIDE:
-	case VK_OEM_PLUS:
-	case VK_OEM_MINUS:
-	case VK_OEM_1:
-	case VK_OEM_COMMA:
-	case VK_OEM_PERIOD:
-	case VK_OEM_2:
-	case VK_OEM_4:
-	case VK_OEM_5:
-	case VK_OEM_6:
-	case VK_OEM_7:
-	case VK_SPACE:
-	case VK_CANCEL:
-	case VK_RETURN:
-        IsFail = false;
-        break;
-	default:
-		break;
-	}
+    else
+    {
+        switch (Key)
+        {
+        case VK_LEFT:
+        case VK_RIGHT:
+        case VK_UP:
+        case VK_DOWN:
+        case VK_NUMPAD0:
+        case VK_NUMPAD1:
+        case VK_NUMPAD2:
+        case VK_NUMPAD3:
+        case VK_NUMPAD4:
+        case VK_NUMPAD5:
+        case VK_NUMPAD6:
+        case VK_NUMPAD7:
+        case VK_NUMPAD8:
+        case VK_NUMPAD9:
+        case VK_F1:
+        case VK_F2:
+        case VK_F3:
+        case VK_F4:
+        case VK_F5:
+        case VK_F6:
+        case VK_F7:
+        case VK_F8:
+        case VK_F9:
+        case VK_F10:
+        case VK_F11:
+        case VK_F12:
+        case VK_DELETE:
+        case VK_ADD:
+        case VK_SUBTRACT:
+        case VK_MULTIPLY:
+        case VK_DIVIDE:
+        case VK_OEM_PLUS:
+        case VK_OEM_MINUS:
+        case VK_OEM_1:
+        case VK_OEM_COMMA:
+        case VK_OEM_PERIOD:
+        case VK_OEM_2:
+        case VK_OEM_4:
+        case VK_OEM_5:
+        case VK_OEM_6:
+        case VK_OEM_7:
+        case VK_SPACE:
+        case VK_CANCEL:
+        case VK_RETURN:
+            IsFail = false;
+            break;
+        default:
+            break;
+        }
+    }
     if (IsFail)return;
 
     int ShiftState = ssNone;
