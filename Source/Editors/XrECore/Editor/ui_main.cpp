@@ -658,6 +658,7 @@ void TUI::OnDrawUI()
     UISoundEditorForm::Update();
     UIMinimapEditorForm::Update();
     UILogForm::Update();
+    EDevice.seqDrawUI.Process(rp_DrawUI);
 }
 
 void TUI::RealResetUI()

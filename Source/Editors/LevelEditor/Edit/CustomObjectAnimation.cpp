@@ -6,6 +6,7 @@
 #include "envelope.h"
 #include "../XrECore/Editor/D3DUtils.h"
 #include "../XrECore/Editor/ui_main.h"
+#include "../UI/UIPropertiesModal.h"
 
 void  CCustomObject::OnMotionableChange(PropValue* sender)
 {
@@ -147,7 +148,53 @@ void 	CCustomObject::OnMotionControlClick(ButtonValue* value, bool& bModif, bool
     ExecCommand 			(COMMAND_UPDATE_PROPERTIES);
     bModif = false;
 }
+void CCustomObject::OnDrawUI()
+{
+    switch (m_ButtonId)
+    {
+    case 2:
+    {
+        bool ok = false;
+        if (UIPropertiesModal::GetResult(ok))
+        {
+            if (ok)
+            {
+                m_Motion->ScaleKeys(m_FromTime, m_ToTime, m_ScaleFactor);
+            }
+            float mx; m_Motion->GetLength(0, &mx);
+            if (m_MotionParams->max_t < mx)
+            {
+                m_MotionParams->max_t = mx;
+                m_Motion->SetParam(m_MotionParams->min_t * 30.f, m_MotionParams->max_t * 30.f, 30.f);
+            }
+            EDevice.seqDrawUI.Remove(this);
+        }
+        UIPropertiesModal::Update();
+    }
+    break;
+    case 3:
+    {
+        bool ok = false;
+        if (UIPropertiesModal::GetResult(ok))
+        {
+            if (ok)
+            {
+                m_Motion->NormalizeKeys(m_FromTime, m_ToTime, m_Speed);
+            }
+            float mx; m_Motion->GetLength(0, &mx);
+            if (m_MotionParams->max_t < mx) 
+            {
+                m_MotionParams->max_t = mx;
+                m_Motion->SetParam(m_MotionParams->min_t * 30.f, m_MotionParams->max_t * 30.f, 30.f);
+            }
+            EDevice.seqDrawUI.Remove(this);
+        }
+        UIPropertiesModal::Update();
+    }
+    break;
+    }
 
+}
 void 	CCustomObject::OnMotionCommandsClick(ButtonValue* value, bool& bModif, bool& bSafe)
 {
 	ButtonValue* B = dynamic_cast<ButtonValue*>(value); R_ASSERT(B);
@@ -159,42 +206,29 @@ void 	CCustomObject::OnMotionCommandsClick(ButtonValue* value, bool& bModif, boo
     	AnimationDeleteKey	(m_MotionParams->t_current);
     break;
     case 2:{
-        R_ASSERT(!"Сорян забыл релизовать");
-    	/*TProperties* P 		= TProperties::CreateModalForm("Scale keys");
         PropItemVec items;
-        float from_time=m_MotionParams->min_t,to_time=m_MotionParams->max_t,scale_factor=1.f;
-		PHelper().CreateFloat	(items,"From Time", 	&from_time, 	from_time, to_time, 	1.f/30.f, 3);
-		PHelper().CreateFloat	(items,"To Time",   	&to_time, 		from_time, to_time, 	1.f/30.f, 3);
-		PHelper().CreateFloat	(items,"Scale",			&scale_factor, 	-1000.f, 1000.f);
-        P->AssignItems		(items);
-        if (mrOk==P->ShowPropertiesModal()){
-        	m_Motion->ScaleKeys(from_time,to_time,scale_factor);
-        }
-        TProperties::DestroyForm(P);
-        float mx; m_Motion->GetLength(0,&mx);
-        if (m_MotionParams->max_t<mx){ 
-        	m_MotionParams->max_t=mx;
-			m_Motion->SetParam	(m_MotionParams->min_t*30.f,m_MotionParams->max_t*30.f,30.f);
-        }*/
+        m_FromTime = m_MotionParams->min_t;
+        m_ToTime = m_MotionParams->max_t;
+        m_ScaleFactor = 1.f;
+		PHelper().CreateFloat	(items,"From Time", 	&m_FromTime, m_FromTime, m_ToTime, 	1.f/30.f, 3);
+		PHelper().CreateFloat	(items,"To Time",   	&m_ToTime, m_FromTime, m_ToTime, 	1.f/30.f, 3);
+		PHelper().CreateFloat	(items,"Scale",			&m_ScaleFactor, 	-1000.f, 1000.f);
+        UIPropertiesModal::Show(items);
+        m_ButtonId = 2;
+        EDevice.seqDrawUI.Add(this);
     }break;
     case 3:{
-        R_ASSERT(!"Сорян забыл релизовать");
-    /*	TProperties* P 		= TProperties::CreateModalForm("Normalize keys");
+        m_ButtonId = 3;
         PropItemVec items;
-        float from_time=m_MotionParams->min_t,to_time=m_MotionParams->max_t,speed=5.f;
-		PHelper().CreateFloat	(items,"From Time", 	&from_time, 	from_time, to_time, 	1.f/30.f, 3);
-		PHelper().CreateFloat	(items,"To Time",   	&to_time, 		from_time, to_time, 	1.f/30.f, 3);
-		PHelper().CreateFloat	(items,"Speed (m/sec)", &speed, 		0.f, 100.f);
-        P->AssignItems		(items);
-        if (mrOk==P->ShowPropertiesModal()){
-        	m_Motion->NormalizeKeys(from_time,to_time,speed);
-        }
-        TProperties::DestroyForm(P);
-        float mx; m_Motion->GetLength(0,&mx);
-        if (m_MotionParams->max_t<mx){ 
-        	m_MotionParams->max_t=mx;
- 			m_Motion->SetParam	(m_MotionParams->min_t*30.f,m_MotionParams->max_t*30.f,30.f);
-        }*/
+        m_FromTime = m_MotionParams->min_t;
+        m_ToTime = m_MotionParams->max_t;
+        m_Speed=5.f;
+		PHelper().CreateFloat	(items,"From Time", 	&m_FromTime, m_FromTime, m_ToTime, 	1.f/30.f, 3);
+		PHelper().CreateFloat	(items,"To Time",   	&m_ToTime, m_FromTime, m_ToTime, 	1.f/30.f, 3);
+		PHelper().CreateFloat	(items,"Speed (m/sec)", &m_Speed, 		0.f, 100.f);
+        UIPropertiesModal::Show(items);
+        m_ButtonId = 3;
+        EDevice.seqDrawUI.Add(this);
     }break;
     case 4:{
     	float mn,mx;

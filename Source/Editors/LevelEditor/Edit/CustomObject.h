@@ -38,7 +38,7 @@ struct SExportStreams{
 	SExportStreamItem	fog_vol;
 };
 
-class  CCustomObject 
+class  CCustomObject:public pureDrawUI
 {
 	
     shared_str		EName;
@@ -230,6 +230,12 @@ public:
 public:
 	static void		SnapMove		(Fvector& pos, Fvector& rot, const Fmatrix& rotRP, const Fvector& amount);
 	static void		NormalAlign		(Fvector& rot, const Fvector& up, const Fvector& dir);
+private:
+    int m_ButtonId;
+    float m_FromTime;
+    float m_ToTime;
+    float m_ScaleFactor;
+    float m_Speed;
     virtual void    OnDrawUI();
 };
 

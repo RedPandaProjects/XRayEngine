@@ -94,6 +94,9 @@ public:
 	CRegistrator	<pureAppEnd			>			seqAppEnd;
 	CRegistrator	<pureFrame			>			seqFrame;
 	CRegistrator	<pureScreenResolutionChanged>	seqResolutionChanged;
+#ifdef _EDITOR
+	CRegistrator	<pureDrawUI			>			seqDrawUI;
+#endif
 
 	HWND									m_hWnd;
 //	CStats*									Statistic;

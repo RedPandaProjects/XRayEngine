@@ -56,9 +56,7 @@ void CCustomObject::NormalAlign(Fvector& rot, const Fvector& up, const Fvector& 
     mR.set(vR,vN,vD,vR);
     mR.getXYZ(rot);
 }
-void CCustomObject::OnDrawUI()
-{
-}
+
 //------------------------------------------------------------------------------
 
 void CCustomObject::OnDetach()
