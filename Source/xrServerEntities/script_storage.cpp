@@ -276,8 +276,11 @@ void CScriptStorage::reinit	()
 {
 	if (m_virtual_machine)
 		lua_close			(m_virtual_machine);
-
-	m_virtual_machine		= lua_newstate(lua_alloc, NULL);
+#ifdef _WIN64
+	m_virtual_machine = luaL_newstate();
+#else 
+	m_virtual_machine = lua_newstate(lua_alloc, NULL);
+#endif
 
 	if (!m_virtual_machine) {
 		Msg					("! ERROR : Cannot initialize script virtual machine!");
