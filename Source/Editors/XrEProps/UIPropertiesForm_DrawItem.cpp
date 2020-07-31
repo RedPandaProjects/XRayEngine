@@ -102,7 +102,7 @@ BOOL RTokenOnEdit(PropItem* prop, bool& change)
 			index = cnt;
 		}
 	}
-	if (ImGui::Combo("##value", &index, [](void* data, int idx, const char** out_text)->bool {*out_text = reinterpret_cast<xr_token*>(data)[idx].name; return true; }, reinterpret_cast<void*>(token_list), V->token_count))
+	if (ImGui::Combo("##value", &index, [](void* data, int idx, const char** out_text)->bool {*out_text = reinterpret_cast<xr_rtoken*>(data)[idx].name.c_str(); return true; }, reinterpret_cast<void*>(token_list), V->token_count))
 	{
 		T new_val = token_list[index].id;
 		if (prop->AfterEdit<RTokenValue<T>, T>(new_val))
@@ -143,7 +143,7 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 			if (!DrawNumeric<float>(node, change, m_Flags.test(plReadOnly)))
 				if (!DrawNumeric<u8>(node, change, m_Flags.test(plReadOnly)))
 					if (!DrawNumeric<s8>(node, change, m_Flags.test(plReadOnly)))
-						if (!DrawNumeric<u16>(node, change, m_Flags.test(plReadOnly)))
+						if (!DrawNumeric<s16>(node, change, m_Flags.test(plReadOnly)))
 							if (!DrawNumeric<u16>(node, change, m_Flags.test(plReadOnly)))
 								if (!DrawNumeric<s32>(node, change, m_Flags.test(plReadOnly)))
 									R_ASSERT(false);

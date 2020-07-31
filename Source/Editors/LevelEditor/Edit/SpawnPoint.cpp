@@ -56,20 +56,36 @@ void CSE_Visual::set_visual	   	(LPCSTR name, bool load)
 //------------------------------------------------------------------------------
 // CLE_Visual
 //------------------------------------------------------------------------------
-CSpawnPoint::CLE_Visual::CLE_Visual(CSE_Visual* src)
+CLE_Visual::CLE_Visual(CSE_Visual* src)
 {
 	source				= src;
     visual				= 0;
 }
 
-bool CSpawnPoint::CLE_Visual::g_tmp_lock = false;
+bool CLE_Visual::g_tmp_lock = false;
 
-CSpawnPoint::CLE_Visual::~CLE_Visual()
+CLE_Visual::~CLE_Visual()
 {
 	::Render->model_Delete	(visual,TRUE);
 }
 
-void CSpawnPoint::CLE_Visual::OnChangeVisual	()
+void CLE_Visual::OnDrawUI()
+{
+    bool ok;
+    shared_str name;
+    if (UIChooseForm::GetResult(ok, name))
+    {
+        if (ok)
+        {
+            source->visual_name = name;
+            visual = ::Render->model_Create(source->visual_name.c_str());
+        }
+        EDevice.seqDrawUI.Remove(this);
+    }
+    UIChooseForm::Update();
+}
+
+void CLE_Visual::OnChangeVisual	()
 {
     ::Render->model_Delete	(visual,TRUE);
     if (source->visual_name.size())
@@ -82,12 +98,11 @@ void CSpawnPoint::CLE_Visual::OnChangeVisual	()
               int mr = ELog.DlgMsg(mtConfirmation,mbYes |mbNo, _msg.c_str());
               LPCSTR _new_val = 0;
               g_tmp_lock = true;
-             /* if (mr==mrYes && TfrmChoseItem::SelectItem(smVisual,_new_val, 1) )
+              if (mr == mrYes)
               {
-                  source->visual_name  =  _new_val;
-                  visual = ::Render->model_Create(source->visual_name.c_str());
-              }*/
-              R_ASSERT(!"Сорян забыл релизовать");
+                  UIChooseForm::SelectItem(smVisual, 1);
+                  EDevice.seqDrawUI.Add(this);
+              }
 
               g_tmp_lock = false;
 
@@ -97,7 +112,7 @@ void CSpawnPoint::CLE_Visual::OnChangeVisual	()
     ExecCommand				(COMMAND_UPDATE_PROPERTIES);
 }
 
-void CSpawnPoint::CLE_Visual::PlayAnimation ()
+void CLE_Visual::PlayAnimation ()
 {
      if(g_tmp_lock) 			return;
     // play motion if skeleton
@@ -115,7 +130,7 @@ void CSpawnPoint::CLE_Visual::PlayAnimation ()
     	K->CalculateBones();
 }
 
-void CSpawnPoint::CLE_Visual::StopAllAnimations()
+void CLE_Visual::StopAllAnimations()
 {
      if(g_tmp_lock) return;
     // play motion if skeleton
@@ -127,7 +142,7 @@ void CSpawnPoint::CLE_Visual::StopAllAnimations()
     }
 }
 
-void CSpawnPoint::CLE_Visual::PlayAnimationFirstFrame()
+void CLE_Visual::PlayAnimationFirstFrame()
 {
      if(g_tmp_lock) return;
     // play motion if skeleton
@@ -159,7 +174,7 @@ struct SetBlendLastFrameCB : public IterateBlendsCallback
     }
 } g_Set_blend_last_frame_CB;
 
-void CSpawnPoint::CLE_Visual::PlayAnimationLastFrame()
+void CLE_Visual::PlayAnimationLastFrame()
 {
      if(g_tmp_lock) return;
     // play motion if skeleton
@@ -189,7 +204,7 @@ struct TogglelendCB : public IterateBlendsCallback
     }
 } g_toggle_pause_blendCB;
 
-void CSpawnPoint::CLE_Visual::PauseAnimation ()
+void CLE_Visual::PauseAnimation ()
 {
      if(g_tmp_lock) return;
      

@@ -113,7 +113,27 @@ void  CLight::OnAttenuationDraw(CanvasValue* sender)
             else		canvas->LineTo(x0+d,y);
         }
     }*/
-    R_ASSERT(!"Сорян забыл релизовать");
+#define WIETH 90
+#define HEIGHT 80.f
+    float d_cost = m_Range / WIETH;
+    static float values[WIETH] = {};
+
+    for (int i = 0; i < WIETH; i++)
+    {
+        values[i] = 0;
+    }
+
+    if (!(fis_zero(m_Attenuation0) && fis_zero(m_Attenuation1) && fis_zero(m_Attenuation2))) {
+        for (int d = 1; d < WIETH + 1; d++) {
+            float R = d * d_cost;
+            float b = m_Brightness / (m_Attenuation0 + m_Attenuation1 * R + m_Attenuation2 * R * R);
+            b -= m_Brightness * R / (m_Range * (m_Attenuation0 + m_Attenuation1 * m_Range + m_Attenuation2 * m_Range * m_Range));
+            float bb = (HEIGHT * b);
+            float y = floorf(bb); clamp(y, 0.f, HEIGHT);
+            values[d - 1] = y;
+        }
+    }
+    ImGui::PlotLines("##LinesSound", values, IM_ARRAYSIZE(values), 0, 0, 0, HEIGHT, ImVec2(0, HEIGHT), 4);
 
 }
 

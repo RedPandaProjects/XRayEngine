@@ -155,8 +155,8 @@ void ESceneLightTool::OnControlAppendClick(ButtonValue* sender, bool& bDataModif
 
 void ESceneLightTool::OnControlRenameRemoveClick(ButtonValue* V, bool& bDataModified, bool& bSafe)
 {
-    R_ASSERT(!"Сорян забыл релизовать");
-   /* xr_string item_name = V->Owner()->Item()->Text;
+    R_ASSERT(!"Выведено из эксплотации");
+  /*  xr_string item_name = V->Owner()->Item()->Text;
     switch (V->btn_num){
     case 0:{ 
     	xr_string new_name=item_name;
@@ -291,6 +291,28 @@ CCustomObject* ESceneLightTool::CreateObject(LPVOID data, LPCSTR name)
 	CCustomObject* O	= xr_new<CLight>(data,name);
     O->FParentTools		= this;
     return O;
+}
+void ESceneLightTool::OnDrawUI()
+{
+    xr_string result;
+    bool ok = false;
+    if (UITextForm::GetResult(ok,result))
+    {
+        if (ok)
+        {
+            if (FindLightControl(result.c_str())) {
+                ELog.DlgMsg(mtError, "Duplicate name found.");
+            }
+            else if (result.empty() || result.find("\\")!=result.npos) {
+                ELog.DlgMsg(mtError, "Invalid control name.");
+            }
+            else {
+                RTokenVecIt it = FindLightControlIt(result.c_str());
+                it->rename(result.c_str());
+            }
+        }
+    }
+    UITextForm::Update();
 }
 //----------------------------------------------------
 

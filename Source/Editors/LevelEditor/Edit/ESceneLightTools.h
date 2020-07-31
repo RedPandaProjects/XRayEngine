@@ -82,6 +82,8 @@ public:
     void				RemoveLightControl		(LPCSTR name);
 
     virtual CCustomObject* CreateObject			(LPVOID data, LPCSTR name);
+private:
+    virtual void OnDrawUI();
 };
 #endif // ESceneCustomOToolsH
 

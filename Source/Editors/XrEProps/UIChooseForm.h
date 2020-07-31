@@ -48,6 +48,7 @@ public:
     virtual void Draw();
     static void SetNullTexture(ImTextureID Texture);
     static void Update();
+    static bool IsActive();
     static bool GetResult(bool&change,shared_str&result);
     static bool GetResult(bool& change, xr_string& result);
     static bool GetResult(bool& change, xr_vector<xr_string>& result);

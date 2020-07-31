@@ -18,7 +18,7 @@ public:
         sttLast
     }; // не забывать токен менять
 private:
-	struct STextureInfo{
+	struct STextureInfo {
     	shared_str 			file_name;
         STextureParams  	info;
     	ESummaryTextureType type;

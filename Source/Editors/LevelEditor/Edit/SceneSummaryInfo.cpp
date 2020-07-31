@@ -100,19 +100,18 @@ void SSceneSummary::STextureInfo::Prepare	()
 
 void SSceneSummary::STextureInfo::OnHighlightClick(ButtonValue* sender, bool& bDataModified, bool& bSafe)
 {
-	/*ButtonValue* V = dynamic_cast<ButtonValue*>(sender); R_ASSERT(V);
-    xr_string item_name = sender->Owner()->Item()->Text;
+	ButtonValue* V = dynamic_cast<ButtonValue*>(sender); R_ASSERT(V);
     switch (V->btn_num){
     case 0: Scene->HighlightTexture	((LPCSTR)sender->tag,false,info.width,info.height,false); break;
     case 1: Scene->HighlightTexture	((LPCSTR)sender->tag,true,info.width,info.height,false); break;
     case 2: Scene->HighlightTexture	((LPCSTR)sender->tag,true,info.width,info.height,true); break;
     case 3: ExecCommand(COMMAND_CLEAR_DEBUG_DRAW); break;
-	}*/
-    R_ASSERT(!"Сорян забыл релизовать");
+	}
 
     bDataModified 	= false;
     bSafe 			= false;
 }
+
 
 void SSceneSummary::STextureInfo::FillProp	(PropItemVec& items, LPCSTR main_pref, u32& mem_use)
 {
@@ -201,7 +200,6 @@ void SSceneSummary::OnFileClick(ButtonValue* sender, bool& bModif, bool& bSafe)
 }
 void SSceneSummary::OnHighlightClick(ButtonValue* V, bool& bDataModified, bool& bSafe)
 {
-   /* xr_string item_name = V->Owner()->Item()->Text;
     switch (V->btn_num){
     case 0:{ 
     	ExecCommand				(COMMAND_CLEAR_DEBUG_DRAW);
@@ -212,7 +210,7 @@ void SSceneSummary::OnHighlightClick(ButtonValue* V, bool& bDataModified, bool& 
         }
     }break;
     case 1: ExecCommand(COMMAND_CLEAR_DEBUG_DRAW); break;
-	}*/    R_ASSERT(!"Сорян забыл релизовать");
+	}
 
     bDataModified 	= false;
     bSafe 			= false;

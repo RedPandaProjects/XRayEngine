@@ -17,7 +17,23 @@ class CSE_Motion;
 class CObjectAnimator;
 class ISE_Abstract;
 
-
+class CLE_Visual :private pureDrawUI
+{
+    virtual void OnDrawUI();
+public:
+    static bool     g_tmp_lock;
+    CSE_Visual* source;
+    IRenderVisual* visual;
+    void 			OnChangeVisual();
+    void			StopAllAnimations();
+    void 			PlayAnimation();
+    void 			PlayAnimationFirstFrame();
+    void 			PlayAnimationLastFrame();
+    void 			PauseAnimation();
+public:
+    CLE_Visual(CSE_Visual* src);
+    virtual			~CLE_Visual();
+};
 class CSpawnPoint : public CCustomObject,
 	public CPhysicsShellHolderEditorBase
 {
@@ -25,22 +41,7 @@ class CSpawnPoint : public CCustomObject,
 
     friend class    SceneBuilder;
 public:                           
-    class CLE_Visual
-    {
-    public:
-        static bool     g_tmp_lock;
-    	CSE_Visual*		source;
-        IRenderVisual*	visual;
-        void 			OnChangeVisual			();
-        void			StopAllAnimations		();
-        void 			PlayAnimation			();
-        void 			PlayAnimationFirstFrame	();
-        void 			PlayAnimationLastFrame	();
-        void 			PauseAnimation			();
-    public:
-						CLE_Visual		(CSE_Visual* src);
-        virtual			~CLE_Visual		();
-    };
+   
     class CLE_Motion
     {
     public:

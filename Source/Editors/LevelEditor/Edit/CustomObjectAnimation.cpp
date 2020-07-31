@@ -168,6 +168,7 @@ void CCustomObject::OnDrawUI()
                 m_Motion->SetParam(m_MotionParams->min_t * 30.f, m_MotionParams->max_t * 30.f, 30.f);
             }
             EDevice.seqDrawUI.Remove(this);
+            m_ButtonId = 0;
         }
         UIPropertiesModal::Update();
     }
@@ -188,6 +189,7 @@ void CCustomObject::OnDrawUI()
                 m_Motion->SetParam(m_MotionParams->min_t * 30.f, m_MotionParams->max_t * 30.f, 30.f);
             }
             EDevice.seqDrawUI.Remove(this);
+            m_ButtonId = 0;
         }
         UIPropertiesModal::Update();
     }

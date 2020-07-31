@@ -46,13 +46,7 @@ bool CSceneObject::LoadLTX(CInifile& ini, LPCSTR sect_name)
             }
             if(!bRes)
             {
-                if(mr == mrNone)
-                    mr = ELog.DlgMsg(mtConfirmation,mbYes |mbNo, "Object not found. Do you want to select it from library?");
-                else
-                    mr = mrNone;
-
-                LPCSTR new_val = 0;
-                R_ASSERT(!"Сорян забыл релизовать");
+             
 
                /* if ( (mr==mrNone||mr==mrYes) && TfrmChoseItem::SelectItem(smObject,new_val,1))
                 {
@@ -134,13 +128,7 @@ bool CSceneObject::LoadStream(IReader& F)
             }
             if(!bRes)
             {
-                if(mr == mrNone)
-                    mr = ELog.DlgMsg(mtConfirmation,mbYes |mbNo, "Object not found. Do you want to select it from library?");
-                else
-                    mr = mrNone;
-
-                LPCSTR new_val = 0;
-                R_ASSERT(!"Сорян забыл релизовать");
+     
 
                 /*if ( (mr==mrNone||mr==mrYes) && TfrmChoseItem::SelectItem(smObject,new_val,1))
                 {

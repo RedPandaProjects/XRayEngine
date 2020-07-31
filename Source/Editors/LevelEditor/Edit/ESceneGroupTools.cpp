@@ -8,6 +8,7 @@
 #include "GroupObject.h"
 #include "../XrECore/Editor/EThumbnail.h"
 #include "UI/Tools/UIGroupTool.h"
+
 void ESceneGroupTool::CreateControls()
 {
 	inherited::CreateDefaultControls(estDefault);
@@ -109,31 +110,49 @@ void   FillGroupItems(ChooseItemVec& items, void* param)
     for (ObjectIt it=grp_lst.begin(); it!=grp_lst.end(); ++it)
 	    items.push_back	(SChooseItem((*it)->GetName(),""));
 }
-
+void ESceneGroupTool::OnDrawUI()
+{
+    if ((*m_ChooseIt)->Selected())
+    {
+        if (UIChooseForm::IsActive())
+        {
+            bool ok;
+            xr_string name;
+            if (UIChooseForm::GetResult(ok, name))
+            {
+                m_ChooseCnt++;
+                if (ok)
+                {
+                    ((CGroupObject*)(*m_ChooseIt))->UpdatePivot(name.c_str(), false);
+                }
+                m_ChooseIt++;
+            }
+            UIChooseForm::Update();
+        }
+        else
+        {
+            UIChooseForm::SelectItem(smCustom, 1, "", FillGroupItems, *m_ChooseIt);
+        }
+       
+    }
+    else
+    {
+        m_ChooseIt++;
+    }
+    if (m_ChooseIt == m_Objects.end())
+    {
+        if (0 == m_ChooseCnt)
+            ELog.Msg(mtError, "Nothing selected.");
+        else 
+            Scene->UndoSave();
+        EDevice.seqDrawUI.Remove(this);
+    }
+}
 void ESceneGroupTool::AlignToObject()
 {
-    ObjectList& lst 	= m_Objects;
-    int sel_cnt			= 0;
-    if (!lst.empty())
-	{
-        LPCSTR nm;
-    	for (ObjectIt it=lst.begin(); it!=lst.end(); ++it)
-		{
-        	if ((*it)->Selected())
-			{
-                R_ASSERT(!"Сорян забыл релизовать");
-			    /*sel_cnt++;
-                if (TfrmChoseItem::SelectItem(smCustom, nm, 1, nm, FillGroupItems, *it))
-				{
-                    ((CGroupObject*)(*it))->UpdatePivot(nm,false);
-                }else 
-					break;*/
-            }
-        }
-        Scene->UndoSave();
-    }
-    if (0==sel_cnt)	
-		ELog.Msg(mtError,"Nothing selected.");
+    m_ChooseIt = m_Objects.begin();
+    m_ChooseCnt = 0;
+    EDevice.seqDrawUI.Add(this);  
 }
 //----------------------------------------------------
 

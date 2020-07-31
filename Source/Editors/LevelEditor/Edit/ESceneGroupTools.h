@@ -4,11 +4,14 @@
 
 #include "ESceneCustomOTools.h"
 
-class ESceneGroupTool: public ESceneCustomOTool
+class ESceneGroupTool: public ESceneCustomOTool,private pureDrawUI
 {
 	typedef ESceneCustomOTool inherited;
     xr_string			m_CurrentObject;
     xr_vector<bool>		m_stored_state;
+    ObjectIt m_ChooseIt;
+    int m_ChooseCnt;
+    virtual void OnDrawUI();
 protected:
     // controls
     virtual void 		CreateControls			();

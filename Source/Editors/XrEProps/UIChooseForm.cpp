@@ -310,8 +310,14 @@ void UIChooseForm::Update()
     }
 
 }
+bool UIChooseForm::IsActive()
+{
+    return Form;
+}
+
 bool UIChooseForm::GetResult(bool& change, shared_str& result)
 {
+    if (!Form)return false;
     if (!Form->bOpen)
     {
         if (Form->m_Result == R_Ok)
