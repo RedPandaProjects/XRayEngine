@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #pragma hdrstop
-
 #define transform_dir(idx,res,SX,SY,SZ,T1)									\
 __asm	movzx		eax, WORD PTR [esi][idx*(TYPE u16)]S.m					\
 __asm	movaps		res, SX													\

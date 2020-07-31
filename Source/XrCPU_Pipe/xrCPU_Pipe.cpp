@@ -11,10 +11,6 @@ extern xrSkin2W			xrSkin2W_x86;
 extern xrSkin3W			xrSkin3W_x86;
 extern xrSkin4W			xrSkin4W_x86;
 
-extern xrSkin1W			xrSkin1W_SSE;
-extern xrSkin2W			xrSkin2W_SSE;
-extern xrSkin3W			xrSkin3W_SSE;
-extern xrSkin4W			xrSkin4W_SSE;
 
 extern xrSkin4W			xrSkin4W_thread;
 
