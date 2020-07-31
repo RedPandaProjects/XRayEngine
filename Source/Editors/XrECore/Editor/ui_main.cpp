@@ -356,6 +356,7 @@ void TUI::PrepareRedraw()
 
     RCache.set_xform_world	(Fidentity);
 }
+extern ENGINE_API BOOL g_bRendering;
 void TUI::Redraw()
 {
 	PrepareRedraw();
@@ -444,6 +445,7 @@ void TUI::Redraw()
 
             try {
                 EDevice.SetRS(D3DRS_FILLMODE, D3DFILL_SOLID);
+                g_bRendering = FALSE;
                 Draw();
                 EDevice.SetRS(D3DRS_FILLMODE, EDevice.dwFillMode);
                 // end draw
