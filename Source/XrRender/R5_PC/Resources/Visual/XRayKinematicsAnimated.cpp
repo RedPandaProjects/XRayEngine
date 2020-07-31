@@ -110,12 +110,12 @@ void	XRayKinematicsAnimated::LL_DumpBlends_dbg()
 
 #endif
 
-bsize	XRayKinematicsAnimated::LL_PartBlendsCount(bsize bone_part_id)
+u32	XRayKinematicsAnimated::LL_PartBlendsCount(u32 bone_part_id)
 {
 	return blend_cycle(bone_part_id).size();
 }
 
-CBlend* XRayKinematicsAnimated::LL_PartBlend(bsize bone_part_id, bsize n)
+CBlend* XRayKinematicsAnimated::LL_PartBlend(u32 bone_part_id, u32 n)
 {
 	if (LL_PartBlendsCount(bone_part_id) <= n)
 		return 0;

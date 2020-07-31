@@ -264,7 +264,7 @@ IC void FillSprite_fpu	(FVF::LIT*& pv, const Fvector& T, const Fvector& R, const
 	pv->set		(c.x+pos.x,c.y+pos.y,c.z+pos.z, clr, rb.x,rb.y);	pv++;
 	pv->set		(b.x+pos.x,b.y+pos.y,b.z+pos.z,	clr, rb.x,lt.y);	pv++;
 }
-
+/*
 __forceinline void fsincos( const float angle , float &sine , float &cosine )
 { __asm {
     fld			DWORD PTR [angle]
@@ -273,7 +273,7 @@ __forceinline void fsincos( const float angle , float &sine , float &cosine )
     fstp		DWORD PTR [eax]
     mov			eax , DWORD PTR [sine]
     fstp		DWORD PTR [eax]
-} }
+} }*/
 
 
 IC void FillSprite	(FVF::LIT*& pv, const Fvector& T, const Fvector& R, const Fvector& pos, const Fvector2& lt, const Fvector2& rb, float r1, float r2, u32 clr, float sina , float cosa )
@@ -409,8 +409,8 @@ __forceinline void magnitude_sse( Fvector &vec , float &res )
 
 void ParticleRenderStream( LPVOID lpvParams )
 {
-			float sina = 0.0f , cosa = 0.0f;
-			DWORD angle = 0xFFFFFFFF;
+			float sina = 0.0f , cosa = 1.0f;
+			float angle = 0.0f;
 
 			PRS_PARAMS* pParams = (PRS_PARAMS *) lpvParams;
 
@@ -427,15 +427,12 @@ void ParticleRenderStream( LPVOID lpvParams )
 				rb.set			(1.f,1.f);
 
 				_mm_prefetch( (char*) &particles[i + 1] , _MM_HINT_NTA );
-
-				if ( angle != *((DWORD*)&m.rot.x) ) {
-					angle = *((DWORD*)&m.rot.x);
-					__asm {
-						fld			DWORD PTR [angle]
-						fsincos
-						fstp		DWORD PTR [cosa]
-						fstp		DWORD PTR [sina]
-					}
+				
+				if ( angle != m.rot.x) 
+				{
+					angle = m.rot.x;
+					cosa = cosf(angle);
+					sina = sinf(angle);
 				}
 
 				_mm_prefetch( 64 + (char*) &particles[i + 1] , _MM_HINT_NTA );

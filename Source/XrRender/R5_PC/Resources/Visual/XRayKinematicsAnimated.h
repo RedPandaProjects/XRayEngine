@@ -95,8 +95,8 @@ public:
 	std::pair<LPCSTR, LPCSTR>	LL_MotionDefName_dbg(MotionID	ID);
 	void						LL_DumpBlends_dbg();
 #endif
-	bsize							LL_PartBlendsCount(bsize bone_part_id);
-	CBlend* LL_PartBlend(bsize bone_part_id, bsize n);
+	u32							LL_PartBlendsCount(u32 bone_part_id);
+	CBlend* LL_PartBlend(u32 bone_part_id, u32 n);
 	void						LL_IterateBlends(IterateBlendsCallback& callback);
 
 	void						SetUpdateTracksCalback(IUpdateTracksCallback* callback);
