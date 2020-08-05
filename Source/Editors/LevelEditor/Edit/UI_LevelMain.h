@@ -79,14 +79,11 @@ class CLevelMain: public TUI{
     virtual void 	RealUpdateScene			();
     virtual void 	RealQuit				();
 public:
-	CInifile*		m_rt_object_props;
     C3DCursor*   	m_Cursor;
 public:
     				CLevelMain 				();
     virtual 		~CLevelMain				();
 
-    void			store_rt_flags			(const CCustomObject* CO);
-    void			restore_rt_flags		(CCustomObject* CO);
 
     virtual LPSTR	GetCaption				();
 
