@@ -200,10 +200,12 @@ public:
     void			OnDeviceDestroy		();
 
     // mailslot
+#if 0
 	bool 			CreateMailslot		();
 	void 			CheckMailslot		();
 	void 			OnReceiveMail		(LPCSTR msg);
 	void 			SendMail			(LPCSTR name, LPCSTR dest, LPCSTR msg);
+#endif
 
     void			CheckWindowPos		(HWND* form);
 
