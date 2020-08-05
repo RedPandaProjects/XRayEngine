@@ -32,7 +32,7 @@ void UIObjectTool::Draw()
         {
             if (ImGui::Button("Multiple Append", ImVec2(-1, 0)))
             {
-                UIChooseForm::SelectItem(smObject, 32, 0);
+                UIChooseForm::SelectItem(smObject, 512, 0);
                 m_MultiAppend = true;
             }
         }
