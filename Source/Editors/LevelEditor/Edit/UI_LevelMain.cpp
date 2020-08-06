@@ -277,12 +277,6 @@ CCommandVar CommandSave(CCommandVar p1, CCommandVar p2)
 
                 UI->SetStatus	("Level saving...");
 
-                if(LUI->m_rt_object_props->section_exist(temp_fn.c_str()))
-                {
-                    CInifile::Sect& S1 	= LUI->m_rt_object_props->r_section(temp_fn.c_str());
-                    S1.Data.clear		();
-                }
-
                 Scene->SaveLTX	(temp_fn.c_str(), false, (p2==66));
 
                 UI->ResetStatus	();
@@ -1274,22 +1268,13 @@ void CLevelMain::RealQuit()
 }
 //---------------------------------------------------------------------------
 
-#define INI_RTP_NAME(buf) 		{FS.update_path(buf,"$local_root$","rt_object_props.ltx");}
-
 void CLevelMain::SaveSettings(CInifile* I)
 {
-	m_rt_object_props->save_as();
-    
 	inherited::SaveSettings(I);
     SSceneSummary::Save(I);
 }
 void CLevelMain::LoadSettings(CInifile* I)
 {
-	string_path			fn;
-	INI_RTP_NAME		(fn);
-	m_rt_object_props = CInifile::Create(fn,FALSE);
-	m_rt_object_props->save_at_end(FALSE);
-    
 	inherited::LoadSettings(I);
     SSceneSummary::Load(I);
 }
@@ -1306,26 +1291,6 @@ void CLevelMain::OnDrawUI()
     if (LTools->GetToolForm())
     {
         LTools->GetToolForm()->OnDrawUI();
-    }
-}
-
-void CLevelMain::store_rt_flags(const CCustomObject* CO)
-{
-    if(LTools->m_LastFileName.size() && CO->GetName() && xr_strlen(CO->GetName()) )
-    {
-   	m_rt_object_props->remove_line(LTools->m_LastFileName.c_str(), CO->GetName());
-	if(CO->Selected() || !CO->Visible())
-    	m_rt_object_props->w_u32(LTools->m_LastFileName.c_str(), CO->GetName(), CO->m_RT_Flags.get()&(CCustomObject::flRT_Selected|CCustomObject::flRT_Visible));
-    }
-}
-
-void CLevelMain::restore_rt_flags(CCustomObject* CO)
-{
-	if(CO->GetName() && LTools->m_LastFileName.size() && m_rt_object_props->line_exist(LTools->m_LastFileName.c_str(), CO->GetName()))
-    {
-		u32 fl = m_rt_object_props->r_u32(LTools->m_LastFileName.c_str(), CO->GetName());
-        CO->m_RT_Flags.set	(CCustomObject::flRT_Visible|CCustomObject::flRT_Selected|CCustomObject::flRT_SelectedLast, FALSE);
-        CO->m_RT_Flags.or	(fl);
     }
 }
 

@@ -125,7 +125,6 @@ bool  CCustomObject::LoadLTX(CInifile& ini, LPCSTR sect_name)
   */
 //        m_MotionParams->t_current = ini.r_float		(sect_name, "motion_params_t");
     }
-   	LUI->restore_rt_flags	(this);
 	return true;
 }
 
@@ -167,7 +166,6 @@ bool CCustomObject::LoadStream(IReader& F)
 
 	UpdateTransform	();
 
-   	LUI->restore_rt_flags	(this);
 	return true;
 }
 
@@ -195,7 +193,6 @@ void CCustomObject::SaveLTX(CInifile& ini, LPCSTR sect_name)
         ini.w_float		(sect_name, "motion_params_t", m_MotionParams->t_current);
     }
 */
-   	LUI->store_rt_flags	(this);
 }
 
 void CCustomObject::SaveStream(IWriter& F)
@@ -226,7 +223,6 @@ void CCustomObject::SaveStream(IWriter& F)
         F.w_float		(m_MotionParams->t_current);
         F.close_chunk	();
     }
-   	LUI->store_rt_flags	(this);
 }
 //----------------------------------------------------
 #include "ESceneCustomOTools.h"
