@@ -42,58 +42,10 @@ namespace FPU
 	u16			_64	=0;
 	u16			_64r=0;
 
-	XRCORE_API void 	m24		()	{
-		u16		p	= _24;
-		__asm fldcw p;	
-	}
-	XRCORE_API void 	m24r	()	{
-		u16		p	= _24r;
-		__asm fldcw p;  
-	}
-	XRCORE_API void 	m53		()	{
-		u16		p	= _53;
-		__asm fldcw p;	
-	}
-	XRCORE_API void 	m53r	()	{
-		u16		p	= _53r;
-		__asm fldcw p;	
-	}
-	XRCORE_API void 	m64		()	{ 
-		u16		p	= _64;
-		__asm fldcw p;	
-	}
-	XRCORE_API void 	m64r	()	{
-		u16		p	= _64r;
-		__asm fldcw p;  
-	}
+	
 
 	void		initialize		()
 	{
-		_clear87	();
-
-		_control87	( _PC_24,   MCW_PC );
-		_control87	( _RC_CHOP, MCW_RC );
-		_24			= getFPUsw();	// 24, chop
-		_control87	( _RC_NEAR, MCW_RC );
-		_24r		= getFPUsw();	// 24, rounding
-
-		_control87	( _PC_53,   MCW_PC );
-		_control87	( _RC_CHOP, MCW_RC );
-		_53			= getFPUsw();	// 53, chop
-		_control87	( _RC_NEAR, MCW_RC );
-		_53r		= getFPUsw();	// 53, rounding
-
-		_control87	( _PC_64,   MCW_PC );
-		_control87	( _RC_CHOP, MCW_RC );
-		_64			= getFPUsw();	// 64, chop
-		_control87	( _RC_NEAR, MCW_RC );
-		_64r		= getFPUsw();	// 64, rounding
-
-#ifndef XRCORE_STATIC
-
-		m24r		();
-
-#endif	//XRCORE_STATIC
 
 		::Random.seed	( u32(CPU::GetCLK()%(1i64<<32i64)) );
 	}

@@ -355,7 +355,7 @@ void CALLBACK PreErrorHandler	(INT_PTR)
 	if (*g_bug_report_file)
 		BT_AddLogFile		(g_bug_report_file);
 
-	BT_MakeSnapshot			( 0 );
+	BT_SaveSnapshot			( 0 );
 #endif // USE_BUG_TRAP
 }
 
