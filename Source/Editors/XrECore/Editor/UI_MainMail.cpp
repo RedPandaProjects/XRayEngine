@@ -4,7 +4,7 @@
 
 #include "ui_main.h"
 //---------------------------------------------------------------------------
-
+#if 0
 bool TUI::CreateMailslot()
 {
 	xr_string slot_name = xr_string("\\\\.\\mailslot\\")+xr_string(UI->EditorName());
@@ -125,4 +125,4 @@ void TUI::SendMail(LPCSTR name, LPCSTR dest, LPCSTR msg)
 }
 //---------------------------------------------------------------------------
 
-
+#endif
