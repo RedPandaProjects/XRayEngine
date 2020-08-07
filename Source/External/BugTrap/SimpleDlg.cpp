@@ -1,6 +1,6 @@
 /*
  * This is a part of the BugTrap package.
- * Copyright (c) 2005-2007 IntelleSoft.
+ * Copyright (c) 2005-2009 IntelleSoft.
  * All rights reserved.
  *
  * Description: BugTrap simplified dialog.
@@ -49,13 +49,10 @@ static void SimpleDlg_OnCommand(HWND hwnd, int id, HWND hwndCtl, UINT codeNotify
 	switch (id)
 	{
 	case IDC_MAILTO:
-		SendReport(hwnd);
+		MailTempReportEx(hwnd);
 		break;
 	case IDC_SUBMIT_BUG:
-		if (*g_szSupportHost && g_nSupportPort)
-			SubmitReport(hwnd);
-		else if (*g_szSupportEMail)
-			SendReport(hwnd);
+		SubmitTempReport(hwnd);
 		break;
 	case IDC_MORE:
 		EndDialog(hwnd, TRUE);
@@ -161,8 +158,7 @@ static HBRUSH SimpleDlg_OnCtlColor(HWND hwnd, HDC hdc, HWND hwndChild, int type)
 		int nChildID = GetDlgCtrlID(hwndChild);
 		if (nChildID == IDC_INTRO_BKGND ||
 			nChildID == IDC_INTRO1 ||
-			nChildID == IDC_INTRO2 ||
-			nChildID == IDC_DESCRIPTION)
+			nChildID == IDC_INTRO2)
 		{
 			_ASSERTE(g_pResManager != NULL);
 			SetBkColor(hdc, GetSysColor(COLOR_WINDOW));

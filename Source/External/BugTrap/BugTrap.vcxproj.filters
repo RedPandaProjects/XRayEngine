@@ -232,6 +232,27 @@
     <ClCompile Include="TextFormat.cpp">
       <Filter>Encodings\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AnimProgressBar.cpp">
+      <Filter>Dialogs\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AssemblyInfo.cpp">
+      <Filter>Dialogs\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DescribeErrorDlg.cpp">
+      <Filter>Dialogs\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InMemLogFile.cpp">
+      <Filter>Dialogs\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LogStream.cpp">
+      <Filter>Dialogs\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleImportTable.cpp">
+      <Filter>Dialogs\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ThemeXP.cpp">
+      <Filter>Dialogs\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AboutDlg.h">
@@ -268,9 +289,6 @@
       <Filter>Collections\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Hash.h">
-      <Filter>Collections\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="InPlaceNew.h">
       <Filter>Collections\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="InterfacePtr.h">
@@ -405,6 +423,27 @@
     <ClInclude Include="TextFormat.h">
       <Filter>Encodings\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AnimProgressBar.h">
+      <Filter>Dialogs\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Buffer.h">
+      <Filter>Dialogs\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DescribeErrorDlg.h">
+      <Filter>Dialogs\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InMemLogFile.h">
+      <Filter>Dialogs\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LogStream.h">
+      <Filter>Dialogs\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleImportTable.h">
+      <Filter>Dialogs\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ThemeXP.h">
+      <Filter>Dialogs\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\Bug.ico">
@@ -427,10 +466,14 @@
     <None Include="res\Upload.avi">
       <Filter>Accessories\Resource Files</Filter>
     </None>
+    <None Include="res\KeyPair.snk" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="BugTrap.rc">
       <Filter>Accessories\Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
   </ItemGroup>
 </Project>

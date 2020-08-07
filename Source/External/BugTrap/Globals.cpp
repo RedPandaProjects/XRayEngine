@@ -1,6 +1,6 @@
 /*
  * This is a part of the BugTrap package.
- * Copyright (c) 2005-2007 IntelleSoft.
+ * Copyright (c) 2005-2009 IntelleSoft.
  * All rights reserved.
  *
  * Description: Global variables definitions.
@@ -28,11 +28,13 @@ static BOOL IsNT(void)
 	OSVERSIONINFO osvi;
 	osvi.dwOSVersionInfoSize = sizeof(osvi);
 	GetVersionEx(&osvi);
-	return (osvi.dwPlatformId == VER_PLATFORM_WIN32_NT);
+	return (osvi.dwPlatformId >= VER_PLATFORM_WIN32_NT);
 }
 
 /// BugTrap module handle.
 HINSTANCE g_hInstance = NULL;
+/// Module of interest handle
+extern HINSTANCE g_hModule = NULL;
 /// Application name.
 TCHAR g_szAppName[MAX_PATH] = _T("");
 /// Application version number.
@@ -61,6 +63,8 @@ TCHAR g_szInternalReportFilePath[MAX_PATH] = _T("");
 DWORD g_dwFlags = BTF_NONE;
 /// Type of action which is performed in response to the error.
 BUGTRAP_ACTIVITY g_eActivityType = BTA_SHOWUI;
+/// Application terminaation mode.
+BUGTRAP_EXITMODE g_eExitMode = BTEM_TERMINATEAPP;
 /// Type of produced mini-dump. See @a MINIDUMP_TYPE for details.
 MINIDUMP_TYPE g_eDumpType = MiniDumpWithDataSegs;
 /// Format of error report.
@@ -75,8 +79,6 @@ BT_ErrHandler g_pfnPostErrHandler = NULL;
 INT_PTR g_nPostErrHandlerParam = 0;
 /// Pointer to the exception information.
 PEXCEPTION_POINTERS g_pExceptionPointers = NULL;
-/// Exception thread ID.
-DWORD g_dwExceptionThreadID = 0;
 /// True if application runs on Windows NT platform.
 BOOL g_bWinNT = IsNT();
 /// Custom resources manager.

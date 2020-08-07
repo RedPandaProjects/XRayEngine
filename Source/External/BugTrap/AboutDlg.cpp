@@ -1,6 +1,6 @@
 /*
  * This is a part of the BugTrap package.
- * Copyright (c) 2005-2007 IntelleSoft.
+ * Copyright (c) 2005-2009 IntelleSoft.
  * All rights reserved.
  *
  * Description: About dialog.
@@ -17,7 +17,6 @@
 #include "AboutDlg.h"
 #include "BugTrapUI.h"
 #include "BugTrapUtils.h"
-#include "Globals.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -29,7 +28,7 @@
  */
 
 /// E-mail hyper-link control.
-static CHyperLink g_hlEMail;
+static CHyperLink g_hlURL;
 
 /**
  * @brief WM_COMMAND handler of About dialog.
@@ -65,12 +64,11 @@ static BOOL AboutDlg_OnInitDialog(HWND hwnd, HWND hwndFocus, LPARAM lParam)
 	HWND hwndCtl = GetDlgItem(hwnd, IDCANCEL);
 	SetFocus(hwndCtl);
 
-	hwndCtl = GetDlgItem(hwnd, IDC_EMAIL);
-	TCHAR szLinkURL[MAX_PATH] = _T("mailto:");
-	int nLinkPrefixLen = _tcslen(szLinkURL);
-	GetWindowText(hwndCtl, szLinkURL + nLinkPrefixLen, countof(szLinkURL) - nLinkPrefixLen);
-	g_hlEMail.SetLinkURL(szLinkURL);
-	g_hlEMail.Attach(hwndCtl);
+	hwndCtl = GetDlgItem(hwnd, IDC_URL);
+	TCHAR szLinkURL[MAX_PATH];
+	GetWindowText(hwndCtl, szLinkURL, countof(szLinkURL));
+	g_hlURL.SetLinkURL(szLinkURL);
+	g_hlURL.Attach(hwndCtl);
 
 	return FALSE;
 }
@@ -82,7 +80,7 @@ static BOOL AboutDlg_OnInitDialog(HWND hwnd, HWND hwndFocus, LPARAM lParam)
 static void AboutDlg_OnDestroy(HWND hwnd)
 {
 	hwnd;
-	g_hlEMail.Detach();
+	g_hlURL.Detach();
 }
 
 /**
