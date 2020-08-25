@@ -313,7 +313,7 @@
 
 #ifdef _WIN64
 typedef __int64 OA_NATIVE_INT;
-#elif WIN32
+#elif _WIN32
 typedef int __w64 OA_NATIVE_INT;
 #else
 #include <dlfcn.h>

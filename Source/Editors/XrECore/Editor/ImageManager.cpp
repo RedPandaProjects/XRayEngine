@@ -63,10 +63,10 @@ bool Stbi_Load(LPCSTR full_name, U32Vec& data, u32& w, u32& h, u32& a)
         else
         {
             BearImage img;
-            if (img.LoadDDSFromFile(full_name))
+            if (img.LoadFromFile(full_name))
             {
                 img.ClearMipLevels();
-                img.Convert(TPF_R8G8B8A8);
+                img.Convert(BearTexturePixelFormat::R8G8B8A8);
                 w = img.GetSize().x;
                 h = img.GetSize().y;
                 data.resize(w * h);
