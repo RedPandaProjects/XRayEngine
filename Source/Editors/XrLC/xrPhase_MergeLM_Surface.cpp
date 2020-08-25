@@ -2,7 +2,7 @@
 #include "build.h"
 #include "xrPhase_MergeLM_Rect.h"
 #include "../xrLCLight/xrdeflector.h"
-
+#include <intrin.h>
 #include <mmintrin.h>
 #include <emmintrin.h>
 

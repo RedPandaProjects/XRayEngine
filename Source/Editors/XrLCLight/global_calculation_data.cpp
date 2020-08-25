@@ -191,9 +191,9 @@ void global_claculation_data::xrLoad()
 							clMsg		("- loading: %s",N);
 							string_path name;
 							R_ASSERT2(Surface_Detect(name, N), "Can't load surface");
-							R_ASSERT2(BT.pSurface.LoadDDSFromFile(name), "Can't load surface");
+							R_ASSERT2(BT.pSurface.LoadFromFile(name), "Can't load surface");
 							BT.pSurface.ClearMipLevels();
-							BT.pSurface.Convert(TPF_R8G8B8A8);
+							BT.pSurface.Convert(BearTexturePixelFormat::R8G8B8A8);
 							BT.THM.SetHasSurface(TRUE);
 							if ((BT.pSurface.GetSize().x != BT.dwWidth) || (BT.pSurface.GetSize().y != BT.dwHeight))
 								Msg		("! THM doesn't correspond to the texture: %dx%d -> %dx%d", BT.dwWidth, BT.dwHeight, BT.pSurface.GetSize().x, BT.pSurface.GetSize().y);
