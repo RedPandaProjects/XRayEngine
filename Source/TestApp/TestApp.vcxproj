@@ -220,6 +220,25 @@
       <FileType>Document</FileType>
     </Text>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="hit.hlsl">
+      <FileType>Document</FileType>
+    </Text>
+    <Text Include="miss.hlsl">
+      <FileType>Document</FileType>
+    </Text>
+    <Text Include="raygen.hlsl">
+      <FileType>Document</FileType>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="texture.ps.hlsl">
+      <FileType>Document</FileType>
+    </Text>
+    <Text Include="texture.vs.hlsl">
+      <FileType>Document</FileType>
+    </Text>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

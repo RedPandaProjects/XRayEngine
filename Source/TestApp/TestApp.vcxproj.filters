@@ -20,8 +20,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="test.ps.hlsl" />
-    <FxCompile Include="test.vs.hlsl" />
-    <FxCompile Include="common.h.hlsl" />
+    <Text Include="common.h.hlsl" />
+    <Text Include="test.ps.hlsl" />
+    <Text Include="test.vs.hlsl" />
+    <Text Include="hit.hlsl" />
+    <Text Include="miss.hlsl" />
+    <Text Include="raygen.hlsl" />
+    <Text Include="texture.ps.hlsl" />
+    <Text Include="texture.vs.hlsl" />
   </ItemGroup>
 </Project>
