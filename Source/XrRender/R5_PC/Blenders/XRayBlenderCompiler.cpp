@@ -60,21 +60,21 @@ inline  size_t GetSize(BearVertexFormat format)
 {
 	switch (format)
 	{
-	case VF_R32_FLOAT:
+	case BearVertexFormat::R32_FLOAT:
 		return sizeof(float) * 1;
-	case VF_R32G32_FLOAT:
+	case BearVertexFormat::R32G32_FLOAT:
 		return sizeof(float) * 2;
-	case VF_R32G32B32_FLOAT:
+	case BearVertexFormat::R32G32B32_FLOAT:
 		return sizeof(float) * 3;
-	case VF_R32G32B32A32_FLOAT:
+	case BearVertexFormat::R32G32B32A32_FLOAT:
 		return sizeof(float) * 4;
-	case VF_R32_INT:
+	case BearVertexFormat::R32_INT:
 		return sizeof(int);
-	case VF_R8:
+	case BearVertexFormat::R8:
 		return sizeof(char);
-	case VF_R8G8:
+	case BearVertexFormat::R8G8:
 		return sizeof(char)*2;
-	case VF_R8G8B8A8:
+	case BearVertexFormat::R8G8B8A8:
 		return sizeof(int);
 	default:
 		return 0;
@@ -176,11 +176,11 @@ void XRayBlenderCompiler::SetInputLayout(BearPipelineGraphicsDescription& Descri
 	case FVF::F_0W:
 	case FVF::F_1W:
 	{
-		Description.InputLayout.Elements[0] = BearInputLayoutElement("position", VF_R32G32B32A32_FLOAT, 0);
-		Description.InputLayout.Elements[1] = BearInputLayoutElement("normal", VF_R8G8B8A8, 16);
-		Description.InputLayout.Elements[2] = BearInputLayoutElement("tangent", VF_R8G8B8A8, 20);
-		Description.InputLayout.Elements[3] = BearInputLayoutElement("binormal", VF_R8G8B8A8, 24);
-		Description.InputLayout.Elements[4] = BearInputLayoutElement("uv1t", VF_R32G32_FLOAT, 28);
+		Description.InputLayout.Elements[0] = BearInputLayoutElement("position", BearVertexFormat::R32G32B32A32_FLOAT, 0);
+		Description.InputLayout.Elements[1] = BearInputLayoutElement("normal", BearVertexFormat::R8G8B8A8, 16);
+		Description.InputLayout.Elements[2] = BearInputLayoutElement("tangent", BearVertexFormat::R8G8B8A8, 20);
+		Description.InputLayout.Elements[3] = BearInputLayoutElement("binormal", BearVertexFormat::R8G8B8A8, 24);
+		Description.InputLayout.Elements[4] = BearInputLayoutElement("uv1t", BearVertexFormat::R32G32_FLOAT, 28);
 		Description.InputLayout.Elements[5] = BearInputLayoutElement();
 
 	}
@@ -188,45 +188,45 @@ void XRayBlenderCompiler::SetInputLayout(BearPipelineGraphicsDescription& Descri
 	break;
 	case FVF::F_2W:
 	{
-		Description.InputLayout.Elements[0] = BearInputLayoutElement("position", VF_R32G32B32A32_FLOAT, 0);
-		Description.InputLayout.Elements[1] = BearInputLayoutElement("normal", VF_R8G8B8A8, 16);
-		Description.InputLayout.Elements[2] = BearInputLayoutElement("tangent", VF_R8G8B8A8, 20);
-		Description.InputLayout.Elements[3] = BearInputLayoutElement("binormal", VF_R8G8B8A8, 24);
-		Description.InputLayout.Elements[4] = BearInputLayoutElement("uv1t", VF_R32G32B32A32_FLOAT, 28);
+		Description.InputLayout.Elements[0] = BearInputLayoutElement("position", BearVertexFormat::R32G32B32A32_FLOAT, 0);
+		Description.InputLayout.Elements[1] = BearInputLayoutElement("normal", BearVertexFormat::R8G8B8A8, 16);
+		Description.InputLayout.Elements[2] = BearInputLayoutElement("tangent", BearVertexFormat::R8G8B8A8, 20);
+		Description.InputLayout.Elements[3] = BearInputLayoutElement("binormal", BearVertexFormat::R8G8B8A8, 24);
+		Description.InputLayout.Elements[4] = BearInputLayoutElement("uv1t", BearVertexFormat::R32G32B32A32_FLOAT, 28);
 		Description.InputLayout.Elements[5] = BearInputLayoutElement();
 		return;
 		break;
 	}
 	case FVF::F_3W:
 	{
-		Description.InputLayout.Elements[0] = BearInputLayoutElement("position", VF_R32G32B32A32_FLOAT, 0);
-		Description.InputLayout.Elements[1] = BearInputLayoutElement("normal", VF_R8G8B8A8, 16);
-		Description.InputLayout.Elements[2] = BearInputLayoutElement("tangent", VF_R8G8B8A8, 20);
-		Description.InputLayout.Elements[3] = BearInputLayoutElement("binormal", VF_R8G8B8A8, 24);
-		Description.InputLayout.Elements[4] = BearInputLayoutElement("uv1t", VF_R32G32B32A32_FLOAT, 28);
+		Description.InputLayout.Elements[0] = BearInputLayoutElement("position", BearVertexFormat::R32G32B32A32_FLOAT, 0);
+		Description.InputLayout.Elements[1] = BearInputLayoutElement("normal", BearVertexFormat::R8G8B8A8, 16);
+		Description.InputLayout.Elements[2] = BearInputLayoutElement("tangent", BearVertexFormat::R8G8B8A8, 20);
+		Description.InputLayout.Elements[3] = BearInputLayoutElement("binormal", BearVertexFormat::R8G8B8A8, 24);
+		Description.InputLayout.Elements[4] = BearInputLayoutElement("uv1t", BearVertexFormat::R32G32B32A32_FLOAT, 28);
 		Description.InputLayout.Elements[5] = BearInputLayoutElement();
 	}
 	return;
 	break;
 	case FVF::F_4W:
 	{
-		Description.InputLayout.Elements[0] = BearInputLayoutElement("position", VF_R32G32B32A32_FLOAT, 0);
-		Description.InputLayout.Elements[1] = BearInputLayoutElement("normal", VF_R8G8B8A8, 16);
-		Description.InputLayout.Elements[2] = BearInputLayoutElement("tangent", VF_R8G8B8A8, 20);
-		Description.InputLayout.Elements[3] = BearInputLayoutElement("binormal", VF_R8G8B8A8, 24);
-		Description.InputLayout.Elements[4] = BearInputLayoutElement("uv1t", VF_R32G32_FLOAT, 28);
-		Description.InputLayout.Elements[5] = BearInputLayoutElement("indices_t", VF_R8G8B8A8, 36);
+		Description.InputLayout.Elements[0] = BearInputLayoutElement("position", BearVertexFormat::R32G32B32A32_FLOAT, 0);
+		Description.InputLayout.Elements[1] = BearInputLayoutElement("normal", BearVertexFormat::R8G8B8A8, 16);
+		Description.InputLayout.Elements[2] = BearInputLayoutElement("tangent", BearVertexFormat::R8G8B8A8, 20);
+		Description.InputLayout.Elements[3] = BearInputLayoutElement("binormal", BearVertexFormat::R8G8B8A8, 24);
+		Description.InputLayout.Elements[4] = BearInputLayoutElement("uv1t", BearVertexFormat::R32G32_FLOAT, 28);
+		Description.InputLayout.Elements[5] = BearInputLayoutElement("indices_t", BearVertexFormat::R8G8B8A8, 36);
 		Description.InputLayout.Elements[6] = BearInputLayoutElement();
 	}
 	return;
 	break;
 	case FVF::F_R1LMap:
 	{
-		Description.InputLayout.Elements[0] = BearInputLayoutElement("position", VF_R32G32B32_FLOAT, 0);
-		Description.InputLayout.Elements[1] = BearInputLayoutElement("normal", VF_R8G8B8A8, 12);
-		Description.InputLayout.Elements[2] = BearInputLayoutElement("tangent", VF_R8G8B8A8, 16);
-		Description.InputLayout.Elements[3] = BearInputLayoutElement("binormal", VF_R8G8B8A8, 20);
-		Description.InputLayout.Elements[4] = BearInputLayoutElement("uv1t", VF_R16G16B16A16_SINT, 24);
+		Description.InputLayout.Elements[0] = BearInputLayoutElement("position", BearVertexFormat::R32G32B32_FLOAT, 0);
+		Description.InputLayout.Elements[1] = BearInputLayoutElement("normal", BearVertexFormat::R8G8B8A8, 12);
+		Description.InputLayout.Elements[2] = BearInputLayoutElement("tangent", BearVertexFormat::R8G8B8A8, 16);
+		Description.InputLayout.Elements[3] = BearInputLayoutElement("binormal", BearVertexFormat::R8G8B8A8, 20);
+		Description.InputLayout.Elements[4] = BearInputLayoutElement("uv1t", BearVertexFormat::R16G16B16A16_SINT, 24);
 		Description.InputLayout.Elements[5] = BearInputLayoutElement();
 
 	}
@@ -234,19 +234,19 @@ void XRayBlenderCompiler::SetInputLayout(BearPipelineGraphicsDescription& Descri
 	break;
 	case FVF::F_R1Vert:
 	{
-		Description.InputLayout.Elements[0] = BearInputLayoutElement("position", VF_R32G32B32_FLOAT, 0);
-		Description.InputLayout.Elements[1] = BearInputLayoutElement("normal", VF_R8G8B8A8, 12);
-		Description.InputLayout.Elements[2] = BearInputLayoutElement("tangent", VF_R8G8B8A8, 16);
-		Description.InputLayout.Elements[3] = BearInputLayoutElement("binormal", VF_R8G8B8A8, 20);
-		Description.InputLayout.Elements[4] = BearInputLayoutElement("color", VF_R8G8B8A8, 24);
-		Description.InputLayout.Elements[5] = BearInputLayoutElement("uv1t", VF_R16G16_SINT, 28);
+		Description.InputLayout.Elements[0] = BearInputLayoutElement("position", BearVertexFormat::R32G32B32_FLOAT, 0);
+		Description.InputLayout.Elements[1] = BearInputLayoutElement("normal", BearVertexFormat::R8G8B8A8, 12);
+		Description.InputLayout.Elements[2] = BearInputLayoutElement("tangent", BearVertexFormat::R8G8B8A8, 16);
+		Description.InputLayout.Elements[3] = BearInputLayoutElement("binormal", BearVertexFormat::R8G8B8A8, 20);
+		Description.InputLayout.Elements[4] = BearInputLayoutElement("color", BearVertexFormat::R8G8B8A8, 24);
+		Description.InputLayout.Elements[5] = BearInputLayoutElement("uv1t", BearVertexFormat::R16G16_SINT, 28);
 		Description.InputLayout.Elements[6] = BearInputLayoutElement();
 	}
 	return;
 	break;
 	case FVF::F_XVert:
 	{
-		Description.InputLayout.Elements[0] = BearInputLayoutElement("position", VF_R32G32B32_FLOAT, 0);
+		Description.InputLayout.Elements[0] = BearInputLayoutElement("position", BearVertexFormat::R32G32B32_FLOAT, 0);
 		Description.InputLayout.Elements[1] = BearInputLayoutElement();
 
 	}
@@ -254,11 +254,11 @@ void XRayBlenderCompiler::SetInputLayout(BearPipelineGraphicsDescription& Descri
 	break;
 	case FVF::F_MUModel:
 	{
-		Description.InputLayout.Elements[0] = BearInputLayoutElement("position", VF_R32G32B32_FLOAT, 0);
-		Description.InputLayout.Elements[1] = BearInputLayoutElement("normal", VF_R8G8B8A8, 12);
-		Description.InputLayout.Elements[2] = BearInputLayoutElement("tangent", VF_R8G8B8A8, 16);
-		Description.InputLayout.Elements[3] = BearInputLayoutElement("binormal", VF_R8G8B8A8, 20);
-		Description.InputLayout.Elements[4] = BearInputLayoutElement("uv1t", VF_R16G16B16A16_SINT, 24);
+		Description.InputLayout.Elements[0] = BearInputLayoutElement("position", BearVertexFormat::R32G32B32_FLOAT, 0);
+		Description.InputLayout.Elements[1] = BearInputLayoutElement("normal", BearVertexFormat::R8G8B8A8, 12);
+		Description.InputLayout.Elements[2] = BearInputLayoutElement("tangent", BearVertexFormat::R8G8B8A8, 16);
+		Description.InputLayout.Elements[3] = BearInputLayoutElement("binormal", BearVertexFormat::R8G8B8A8, 20);
+		Description.InputLayout.Elements[4] = BearInputLayoutElement("uv1t", BearVertexFormat::R16G16B16A16_SINT, 24);
 		Description.InputLayout.Elements[5] = BearInputLayoutElement();
 
 	}
@@ -266,45 +266,45 @@ void XRayBlenderCompiler::SetInputLayout(BearPipelineGraphicsDescription& Descri
 	return;
 	case FVF::F_LOD:
 	{
-		Description.InputLayout.Elements[0] = BearInputLayoutElement("position0t", VF_R32G32B32_FLOAT, 0);
-		Description.InputLayout.Elements[1] = BearInputLayoutElement("position1t", VF_R32G32B32_FLOAT, 12);
+		Description.InputLayout.Elements[0] = BearInputLayoutElement("position0t", BearVertexFormat::R32G32B32_FLOAT, 0);
+		Description.InputLayout.Elements[1] = BearInputLayoutElement("position1t", BearVertexFormat::R32G32B32_FLOAT, 12);
 
-		Description.InputLayout.Elements[2] = BearInputLayoutElement("normal0t", VF_R32G32B32_FLOAT, 24);
-		Description.InputLayout.Elements[3] = BearInputLayoutElement("normal1t", VF_R32G32B32_FLOAT, 36);
+		Description.InputLayout.Elements[2] = BearInputLayoutElement("normal0t", BearVertexFormat::R32G32B32_FLOAT, 24);
+		Description.InputLayout.Elements[3] = BearInputLayoutElement("normal1t", BearVertexFormat::R32G32B32_FLOAT, 36);
 
-		Description.InputLayout.Elements[4] = BearInputLayoutElement("sun_af", VF_R8G8B8A8, 48);
+		Description.InputLayout.Elements[4] = BearInputLayoutElement("sun_af", BearVertexFormat::R8G8B8A8, 48);
 
-		Description.InputLayout.Elements[5] = BearInputLayoutElement("uv0t", VF_R32G32_FLOAT, 52);
-		Description.InputLayout.Elements[6] = BearInputLayoutElement("uv1t", VF_R32G32_FLOAT, 60);
+		Description.InputLayout.Elements[5] = BearInputLayoutElement("uv0t", BearVertexFormat::R32G32_FLOAT, 52);
+		Description.InputLayout.Elements[6] = BearInputLayoutElement("uv1t", BearVertexFormat::R32G32_FLOAT, 60);
 
-		Description.InputLayout.Elements[7] = BearInputLayoutElement("rgbh0t", VF_R8G8B8A8, 68);
-		Description.InputLayout.Elements[8] = BearInputLayoutElement("rgbh1t", VF_R8G8B8A8, 72);
+		Description.InputLayout.Elements[7] = BearInputLayoutElement("rgbh0t", BearVertexFormat::R8G8B8A8, 68);
+		Description.InputLayout.Elements[8] = BearInputLayoutElement("rgbh1t", BearVertexFormat::R8G8B8A8, 72);
 		Description.InputLayout.Elements[9] = BearInputLayoutElement();
 	}
 
 	return;
 	case FVF::F_V_BUILD:
 	{
-		Description.InputLayout.Elements[0] = BearInputLayoutElement("position", VF_R32G32B32A32_FLOAT, 0);
-		Description.InputLayout.Elements[1] = BearInputLayoutElement("uv0t", VF_R32G32_FLOAT, 16);
-		Description.InputLayout.Elements[2] = BearInputLayoutElement("uv1t", VF_R32G32_FLOAT, 24);
-		Description.InputLayout.Elements[3] = BearInputLayoutElement("uv2t", VF_R32G32_FLOAT, 32);
-		Description.InputLayout.Elements[4] = BearInputLayoutElement("uv3t", VF_R32G32_FLOAT, 40);
+		Description.InputLayout.Elements[0] = BearInputLayoutElement("position", BearVertexFormat::R32G32B32A32_FLOAT, 0);
+		Description.InputLayout.Elements[1] = BearInputLayoutElement("uv0t", BearVertexFormat::R32G32_FLOAT, 16);
+		Description.InputLayout.Elements[2] = BearInputLayoutElement("uv1t", BearVertexFormat::R32G32_FLOAT, 24);
+		Description.InputLayout.Elements[3] = BearInputLayoutElement("uv2t", BearVertexFormat::R32G32_FLOAT, 32);
+		Description.InputLayout.Elements[4] = BearInputLayoutElement("uv3t", BearVertexFormat::R32G32_FLOAT, 40);
 		Description.InputLayout.Elements[5] = BearInputLayoutElement();
 
 	}
 	return;
 	case FVF::F_V_FILTER:
 	{
-		Description.InputLayout.Elements[0] = BearInputLayoutElement("position", VF_R32G32B32A32_FLOAT, 0);
-		Description.InputLayout.Elements[1] = BearInputLayoutElement("uv0t", VF_R32G32B32A32_FLOAT, 16);
-		Description.InputLayout.Elements[2] = BearInputLayoutElement("uv1t", VF_R32G32B32A32_FLOAT, 32);
-		Description.InputLayout.Elements[3] = BearInputLayoutElement("uv2t", VF_R32G32B32A32_FLOAT, 48);
-		Description.InputLayout.Elements[4] = BearInputLayoutElement("uv3t", VF_R32G32B32A32_FLOAT, 64);
-		Description.InputLayout.Elements[5] = BearInputLayoutElement("uv4t", VF_R32G32B32A32_FLOAT, 80);
-		Description.InputLayout.Elements[6] = BearInputLayoutElement("uv5t", VF_R32G32B32A32_FLOAT, 96);
-		Description.InputLayout.Elements[7] = BearInputLayoutElement("uv6t", VF_R32G32B32A32_FLOAT, 112);
-		Description.InputLayout.Elements[8] = BearInputLayoutElement("uv7t", VF_R32G32B32A32_FLOAT, 128);
+		Description.InputLayout.Elements[0] = BearInputLayoutElement("position", BearVertexFormat::R32G32B32A32_FLOAT, 0);
+		Description.InputLayout.Elements[1] = BearInputLayoutElement("uv0t", BearVertexFormat::R32G32B32A32_FLOAT, 16);
+		Description.InputLayout.Elements[2] = BearInputLayoutElement("uv1t", BearVertexFormat::R32G32B32A32_FLOAT, 32);
+		Description.InputLayout.Elements[3] = BearInputLayoutElement("uv2t", BearVertexFormat::R32G32B32A32_FLOAT, 48);
+		Description.InputLayout.Elements[4] = BearInputLayoutElement("uv3t", BearVertexFormat::R32G32B32A32_FLOAT, 64);
+		Description.InputLayout.Elements[5] = BearInputLayoutElement("uv4t", BearVertexFormat::R32G32B32A32_FLOAT, 80);
+		Description.InputLayout.Elements[6] = BearInputLayoutElement("uv5t", BearVertexFormat::R32G32B32A32_FLOAT, 96);
+		Description.InputLayout.Elements[7] = BearInputLayoutElement("uv6t", BearVertexFormat::R32G32B32A32_FLOAT, 112);
+		Description.InputLayout.Elements[8] = BearInputLayoutElement("uv7t", BearVertexFormat::R32G32B32A32_FLOAT, 128);
 		Description.InputLayout.Elements[9] = BearInputLayoutElement();
 
 	}
@@ -359,19 +359,19 @@ void XRayBlenderCompiler::SetInputLayout(BearPipelineGraphicsDescription& Descri
 			Description.InputLayout.Elements[Count].Name = StrideArray[i].name;
 			if ((D3DFVF_TEXCOORDSIZE1(3) & int(VertexState)) == D3DFVF_TEXCOORDSIZE1(3))
 			{
-				Description.InputLayout.Elements[Count].Type = VF_R32_FLOAT;
+				Description.InputLayout.Elements[Count].Type = BearVertexFormat::R32_FLOAT;
 			}
 			else if ((D3DFVF_TEXCOORDSIZE3(3) & int(VertexState)) == D3DFVF_TEXCOORDSIZE3(3))
 			{
-				Description.InputLayout.Elements[Count].Type = VF_R32G32B32_FLOAT;
+				Description.InputLayout.Elements[Count].Type = BearVertexFormat::R32G32B32_FLOAT;
 			}
 			else if ((D3DFVF_TEXCOORDSIZE4(3) & int(VertexState)) == D3DFVF_TEXCOORDSIZE4(3))
 			{
-				Description.InputLayout.Elements[Count].Type = VF_R32G32B32A32_FLOAT;
+				Description.InputLayout.Elements[Count].Type = BearVertexFormat::R32G32B32A32_FLOAT;
 			}
 			else
 			{
-				Description.InputLayout.Elements[Count].Type = VF_R32G32_FLOAT;
+				Description.InputLayout.Elements[Count].Type = BearVertexFormat::R32G32_FLOAT;
 			}
 			if (Count == 0)
 			{
@@ -388,19 +388,19 @@ void XRayBlenderCompiler::SetInputLayout(BearPipelineGraphicsDescription& Descri
 			Description.InputLayout.Elements[Count].Name = StrideArray[i].name;
 			if ((D3DFVF_TEXCOORDSIZE1(2) & int(VertexState)) == D3DFVF_TEXCOORDSIZE1(2))
 			{
-				Description.InputLayout.Elements[Count].Type = VF_R32_FLOAT;
+				Description.InputLayout.Elements[Count].Type = BearVertexFormat::R32_FLOAT;
 			}
 			else if ((D3DFVF_TEXCOORDSIZE3(2) & int(VertexState)) == D3DFVF_TEXCOORDSIZE3(2))
 			{
-				Description.InputLayout.Elements[Count].Type = VF_R32G32B32_FLOAT;
+				Description.InputLayout.Elements[Count].Type = BearVertexFormat::R32G32B32_FLOAT;
 			}
 			else if ((D3DFVF_TEXCOORDSIZE4(2) & int(VertexState)) == D3DFVF_TEXCOORDSIZE4(2))
 			{
-				Description.InputLayout.Elements[Count].Type = VF_R32G32B32A32_FLOAT;
+				Description.InputLayout.Elements[Count].Type = BearVertexFormat::R32G32B32A32_FLOAT;
 			}
 			else
 			{
-				Description.InputLayout.Elements[Count].Type = VF_R32G32_FLOAT;
+				Description.InputLayout.Elements[Count].Type = BearVertexFormat::R32G32_FLOAT;
 			}
 			if (Count == 0)
 			{
@@ -417,19 +417,19 @@ void XRayBlenderCompiler::SetInputLayout(BearPipelineGraphicsDescription& Descri
 			Description.InputLayout.Elements[Count].Name = StrideArray[i].name;
 			if ((D3DFVF_TEXCOORDSIZE1(1) & int(VertexState)) == D3DFVF_TEXCOORDSIZE1(1))
 			{
-				Description.InputLayout.Elements[Count].Type = VF_R32_FLOAT;
+				Description.InputLayout.Elements[Count].Type = BearVertexFormat::R32_FLOAT;
 			}
 			else if ((D3DFVF_TEXCOORDSIZE3(1) & int(VertexState)) == D3DFVF_TEXCOORDSIZE3(1))
 			{
-				Description.InputLayout.Elements[Count].Type = VF_R32G32B32_FLOAT;
+				Description.InputLayout.Elements[Count].Type = BearVertexFormat::R32G32B32_FLOAT;
 			}
 			else if ((D3DFVF_TEXCOORDSIZE4(1) & int(VertexState)) == D3DFVF_TEXCOORDSIZE4(1))
 			{
-				Description.InputLayout.Elements[Count].Type = VF_R32G32B32A32_FLOAT;
+				Description.InputLayout.Elements[Count].Type = BearVertexFormat::R32G32B32A32_FLOAT;
 			}
 			else
 			{
-				Description.InputLayout.Elements[Count].Type = VF_R32G32_FLOAT;
+				Description.InputLayout.Elements[Count].Type = BearVertexFormat::R32G32_FLOAT;
 			}
 			if (Count == 0)
 			{
@@ -450,22 +450,22 @@ void XRayBlenderCompiler::SetInputLayout(BearPipelineGraphicsDescription& Descri
 			if ((D3DFVF_TEXCOORDSIZE1(0) & int(VertexState)) == D3DFVF_TEXCOORDSIZE1(0))
 			{
 
-				Description.InputLayout.Elements[Count].Type = VF_R32_FLOAT;
+				Description.InputLayout.Elements[Count].Type = BearVertexFormat::R32_FLOAT;
 			}
 			else if ((D3DFVF_TEXCOORDSIZE3(0) & int(VertexState)) == D3DFVF_TEXCOORDSIZE3(0))
 			{
 
-				Description.InputLayout.Elements[Count].Type = VF_R32G32B32_FLOAT;
+				Description.InputLayout.Elements[Count].Type = BearVertexFormat::R32G32B32_FLOAT;
 			}
 			else if ((D3DFVF_TEXCOORDSIZE4(0) & int(VertexState)) == D3DFVF_TEXCOORDSIZE4(0))
 			{
 
-				Description.InputLayout.Elements[Count].Type = VF_R32G32B32A32_FLOAT;
+				Description.InputLayout.Elements[Count].Type = BearVertexFormat::R32G32B32A32_FLOAT;
 			}
 			else
 			{
 
-				Description.InputLayout.Elements[Count].Type = VF_R32G32_FLOAT;
+				Description.InputLayout.Elements[Count].Type = BearVertexFormat::R32G32_FLOAT;
 			}
 			if (Count == 0)
 			{

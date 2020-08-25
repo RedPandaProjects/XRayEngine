@@ -12,20 +12,20 @@ XRayBlenderClouds::~XRayBlenderClouds()
 void XRayBlenderClouds::InitializeGraphics()
 {
 	BearRootSignatureDescription RootSignatureDescription;
-	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = ST_Vertex;
-	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_GlobalUniform)].Shader = ST_ALL;
+	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = BearShaderType::Vertex;
+	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_GlobalUniform)].Shader = BearShaderType::ALL;
 
-	RootSignatureDescription.SRVResources[0].Shader = ST_Pixel;
-	RootSignatureDescription.SRVResources[1].Shader = ST_Pixel;
-	RootSignatureDescription.Samplers[0].Shader = ST_Pixel;
+	RootSignatureDescription.SRVResources[0].Shader = BearShaderType::Pixel;
+	RootSignatureDescription.SRVResources[1].Shader = BearShaderType::Pixel;
+	RootSignatureDescription.Samplers[0].Shader = BearShaderType::Pixel;
 	RootSignature[0][0] = GResourcesManager->CreateRootSignature(RootSignatureDescription);
 
 	BearPipelineGraphicsDescription PipelineDescription;
 	PipelineDescription.RenderPass = GRenderTarget->RenderPass_Generic;
 
 	PipelineDescription.BlendState.RenderTarget[0].Enable = true;
-	PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BF_SRC_ALPHA;
-	PipelineDescription.BlendState.RenderTarget[0].ColorDst = BF_INV_SRC_ALPHA;
+	PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BearBlendFactor::SrcAlpha;
+	PipelineDescription.BlendState.RenderTarget[0].ColorDst = BearBlendFactor::InvSrcAlpha;
 
 	CreatePipeline(0, 0, PipelineDescription, "effects\\clouds", "effects\\clouds", SVD_CLOUDS);
 	

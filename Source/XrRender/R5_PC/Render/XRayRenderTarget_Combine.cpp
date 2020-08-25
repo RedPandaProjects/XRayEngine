@@ -22,7 +22,7 @@ void XRayRenderTarget::RenderCombine1()
 }
 void XRayRenderTarget::RenderCombine2()
 {
-	HW->Context->ClearState();
+	HW->Context->ClearFrameBuffer();
 	HW->Context->Unlock(GRenderTarget->FrameBuffer_Generic1);
 
 	RenderBloom();

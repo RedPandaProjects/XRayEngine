@@ -13,9 +13,9 @@ void XRayBlenderLightplanes::InitializeGraphics()
 {
 	{
 		BearRootSignatureDescription RootSignatureDescription;
-		RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = ST_Vertex;
-		RootSignatureDescription.SRVResources[0].Shader = ST_Pixel;
-		RootSignatureDescription.Samplers[0].Shader = ST_Pixel;
+		RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = BearShaderType::Vertex;
+		RootSignatureDescription.SRVResources[0].Shader = BearShaderType::Pixel;
+		RootSignatureDescription.Samplers[0].Shader = BearShaderType::Pixel;
 		RootSignature[0][0] = GResourcesManager->CreateRootSignature(RootSignatureDescription);
 	}
 	{
@@ -23,14 +23,14 @@ void XRayBlenderLightplanes::InitializeGraphics()
 		PipelineDescription.RenderPass = GRenderTarget->RenderPass_Generic;
 		{
 			PipelineDescription.BlendState.RenderTarget[0].Enable = true;
-			PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BF_SRC_ALPHA;
-			PipelineDescription.BlendState.RenderTarget[0].ColorDst = BF_INV_SRC_ALPHA;
+			PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BearBlendFactor::SrcAlpha;
+			PipelineDescription.BlendState.RenderTarget[0].ColorDst = BearBlendFactor::InvSrcAlpha;
 		}
 		{
 			PipelineDescription.DepthStencilState.DepthEnable = true;
 			PipelineDescription.DepthStencilState.StencillEnable = true;
-			PipelineDescription.DepthStencilState.FrontFace.StencilPassOp = SO_REPLACE;
-			PipelineDescription.DepthStencilState.FrontFace.StencilTest = CF_ALWAYS;
+			PipelineDescription.DepthStencilState.FrontFace.StencilPassOp = BearStencilOp::Replace;
+			PipelineDescription.DepthStencilState.FrontFace.StencilTest =  BearCompareFunction::Always;
 		}
 		CreatePipeline(0, 0, PipelineDescription, "effects\\lightplanes", "effects\\lightplanes", SVD_R1Vert);
 	}

@@ -58,7 +58,7 @@ void XRayRenderTarget::RenderBloom()
 		m_Bloom_Shader.E[0][0].Set(HW->Context, FVF::F_V_BUILD);
 		HW->Context->SetVertexBuffer(m_Bloom_Build_VertexBuffer);
 		HW->Context->Draw(6);
-		HW->Context->ClearState();
+		HW->Context->ClearFrameBuffer();
 		HW->Context->Unlock(GRenderTarget->FrameBuffer_Bloom_1);
 	}
 	if(0)
@@ -96,7 +96,7 @@ void XRayRenderTarget::RenderBloom()
 		HW->Context->SetVertexBuffer(m_Bloom_FastFilter_VertexBuffer);
 		HW->Context->Draw(6);
 
-		HW->Context->ClearState();
+		HW->Context->ClearFrameBuffer();
 		HW->Context->Unlock(GRenderTarget->FrameBuffer_Bloom_2);
 
 		HW->Context->Lock(GRenderTarget->FrameBuffer_Bloom_3);
@@ -107,7 +107,7 @@ void XRayRenderTarget::RenderBloom()
 		HW->Context->SetVertexBuffer(m_Bloom_FastFilter_VertexBuffer);
 		HW->Context->Draw(6);
 
-		HW->Context->ClearState();
+		HW->Context->ClearFrameBuffer();
 		HW->Context->Unlock(GRenderTarget->FrameBuffer_Bloom_3);
 	}
 	else
@@ -315,7 +315,7 @@ void XRayRenderTarget::RenderBloom()
 		HW->Context->SetVertexBuffer(m_Bloom_Filter_VertexBuffer);
 		HW->Context->Draw(6);
 
-		HW->Context->ClearState();
+		HW->Context->ClearFrameBuffer();
 		HW->Context->Unlock(GRenderTarget->FrameBuffer_Bloom_2);
 
 		HW->Context->Lock(GRenderTarget->FrameBuffer_Bloom_3);
@@ -327,7 +327,7 @@ void XRayRenderTarget::RenderBloom()
 		HW->Context->SetVertexBuffer(m_Bloom_Filter_VertexBuffer);
 		HW->Context->Draw(6,6);
 
-		HW->Context->ClearState();
+		HW->Context->ClearFrameBuffer();
 		HW->Context->Unlock(GRenderTarget->FrameBuffer_Bloom_3);
 	
 	}

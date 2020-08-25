@@ -12,19 +12,19 @@ XRayBlenderHudFont2::~XRayBlenderHudFont2()
 void XRayBlenderHudFont2::InitializeGraphics()
 {
 	BearRootSignatureDescription RootSignatureDescription;
-	RootSignatureDescription.Samplers[0].Shader = ST_Pixel;
-	RootSignatureDescription.SRVResources[0].Shader = ST_Pixel;
-	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = ST_Vertex;
+	RootSignatureDescription.Samplers[0].Shader = BearShaderType::Pixel;
+	RootSignatureDescription.SRVResources[0].Shader = BearShaderType::Pixel;
+	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = BearShaderType::Vertex;
 
 	RootSignature[0][0] = GResourcesManager->CreateRootSignature(RootSignatureDescription);
 
 	BearPipelineGraphicsDescription PipelineDescription;
 	PipelineDescription.BlendState.RenderTarget[0].Enable = true;
-	PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BF_SRC_ALPHA;
-	PipelineDescription.BlendState.RenderTarget[0].ColorDst = BF_INV_SRC_ALPHA;
-	PipelineDescription.BlendState.RenderTarget[0].AlphaSrc = BF_SRC_ALPHA;
-	PipelineDescription.BlendState.RenderTarget[0].AlphaDst = BF_DEST_ALPHA;
-	PipelineDescription.BlendState.RenderTarget[0].Alpha = BO_MAX;
+	PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BearBlendFactor::SrcAlpha;
+	PipelineDescription.BlendState.RenderTarget[0].ColorDst = BearBlendFactor::InvSrcAlpha;
+	PipelineDescription.BlendState.RenderTarget[0].AlphaSrc = BearBlendFactor::SrcAlpha;
+	PipelineDescription.BlendState.RenderTarget[0].AlphaDst = BearBlendFactor::DestAlpha;
+	PipelineDescription.BlendState.RenderTarget[0].Alpha = BearBlendOp::Max;
 	PipelineDescription.RenderPass = GRenderTarget->RenderPass_Generic;
 	CreatePipeline(0, 0, PipelineDescription, "hud\\notransform_tl", "hud\\font2", SVD_TL);
 }

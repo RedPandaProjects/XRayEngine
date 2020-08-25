@@ -218,7 +218,7 @@ void XRayRenderDeviceRender::Clear()
 void XRayRenderDeviceRender::End()
 {
 	if (GRenderTarget->IsRenderHUD())HW->Context->EndEvent();
-	HW->Context->ClearState();
+	HW->Context->ClearFrameBuffer();
 	HW->Context->Unlock(GRenderTarget->FrameBuffer_Generic2);
 	
 	HW->Context->Lock(HW->Viewport);

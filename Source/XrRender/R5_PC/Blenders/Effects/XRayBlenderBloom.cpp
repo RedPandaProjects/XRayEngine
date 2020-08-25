@@ -12,12 +12,12 @@ XRayBlenderBloom::~XRayBlenderBloom()
 void XRayBlenderBloom::InitializeGraphics()
 {
 	BearRootSignatureDescription RootSignatureDescription;
-	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = ST_Vertex;
-	RootSignatureDescription.SRVResources[0].Shader = ST_Pixel;
-	RootSignatureDescription.Samplers[0].Shader = ST_Pixel;
+	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = BearShaderType::Vertex;
+	RootSignatureDescription.SRVResources[0].Shader = BearShaderType::Pixel;
+	RootSignatureDescription.Samplers[0].Shader = BearShaderType::Pixel;
 	RootSignature[0][3] = GResourcesManager->CreateRootSignature(RootSignatureDescription);
 	RootSignature[0][4] = RootSignature[0][1];
-	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_GlobalUniform)].Shader = ST_Pixel;
+	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_GlobalUniform)].Shader = BearShaderType::Pixel;
 	RootSignature[0][0] = GResourcesManager->CreateRootSignature(RootSignatureDescription);
 	RootSignature[0][1] = RootSignature[0][0];
 	RootSignature[0][2] = RootSignature[0][1];
@@ -32,8 +32,8 @@ void XRayBlenderBloom::InitializeGraphics()
 	CreatePipeline(0, 4, PipelineDescription, "hud\\notransform_build", "effects\\bloom\\bloom_filter_f", SVD_V_BUILD);
 	{
 		PipelineDescription.BlendState.RenderTarget[0].Enable = true;
-		PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BF_SRC_ALPHA;
-		PipelineDescription.BlendState.RenderTarget[0].ColorDst = BF_INV_SRC_ALPHA;
+		PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BearBlendFactor::SrcAlpha ;
+		PipelineDescription.BlendState.RenderTarget[0].ColorDst = BearBlendFactor::InvSrcAlpha;
 	}
 	CreatePipeline(0, 0, PipelineDescription, "hud\\notransform_build", "effects\\bloom\\bloom_build", SVD_V_BUILD);
 	

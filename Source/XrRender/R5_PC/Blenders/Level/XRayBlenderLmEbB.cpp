@@ -37,13 +37,13 @@ void XRayBlenderLmEbB::InitializeGraphics()
 {
 	{
 		BearRootSignatureDescription RootSignatureDescription;
-		RootSignatureDescription.Samplers[0].Shader = ST_Pixel;
-		RootSignatureDescription.SRVResources[0].Shader = ST_Pixel;
-		RootSignatureDescription.SRVResources[1].Shader = ST_Pixel;
-		RootSignatureDescription.SRVResources[2].Shader = ST_Pixel;
-		RootSignatureDescription.SRVResources[3].Shader = ST_Pixel;
-		RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = ST_Vertex;
-		RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_GlobalUniform)].Shader = ST_ALL;
+		RootSignatureDescription.Samplers[0].Shader = BearShaderType::Pixel;
+		RootSignatureDescription.SRVResources[0].Shader = BearShaderType::Pixel;
+		RootSignatureDescription.SRVResources[1].Shader = BearShaderType::Pixel;
+		RootSignatureDescription.SRVResources[2].Shader = BearShaderType::Pixel;
+		RootSignatureDescription.SRVResources[3].Shader = BearShaderType::Pixel;
+		RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = BearShaderType::Vertex;
+		RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_GlobalUniform)].Shader = BearShaderType::ALL;
 
 		RootSignature[0][0] = GResourcesManager->CreateRootSignature(RootSignatureDescription);
 	}
@@ -53,8 +53,8 @@ void XRayBlenderLmEbB::InitializeGraphics()
 		{
 			PipelineDescription.DepthStencilState.DepthEnable = true;
 			PipelineDescription.DepthStencilState.StencillEnable = true;
-			PipelineDescription.DepthStencilState.FrontFace.StencilPassOp = SO_REPLACE;
-			PipelineDescription.DepthStencilState.FrontFace.StencilTest = CF_ALWAYS;
+			PipelineDescription.DepthStencilState.FrontFace.StencilPassOp = BearStencilOp::Replace;
+			PipelineDescription.DepthStencilState.FrontFace.StencilTest =  BearCompareFunction::Always;
 		}
 
 		PipelineDescription.RenderPass = GRenderTarget->RenderPass_Base;
@@ -62,8 +62,8 @@ void XRayBlenderLmEbB::InitializeGraphics()
 		{
 			PipelineDescription.RenderPass = GRenderTarget->RenderPass_Generic;
 			PipelineDescription.BlendState.RenderTarget[0].Enable = true;
-			PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BF_SRC_ALPHA;
-			PipelineDescription.BlendState.RenderTarget[0].ColorDst = BF_INV_SRC_ALPHA;
+			PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BearBlendFactor::SrcAlpha;
+			PipelineDescription.BlendState.RenderTarget[0].ColorDst = BearBlendFactor::InvSrcAlpha;
 		}
 
 		CreatePipeline(0, SE_NORMAL_HQ, PipelineDescription, GetVertexShaderName("level\\lmap\\lmape",false, oBlend.value),GetPixelShaderName( "level\\lmap\\lmape",false,false, oBlend.value), SVD_R1LMap);

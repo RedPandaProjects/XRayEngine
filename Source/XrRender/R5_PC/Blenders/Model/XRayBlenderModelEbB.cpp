@@ -36,25 +36,25 @@ void XRayBlenderModelEbB::Load(IReader & fs, u16 version)
 void XRayBlenderModelEbB::InitializeGraphics()
 {
 	BearRootSignatureDescription RootSignatureDescription;
-	RootSignatureDescription.Samplers[0].Shader = ST_Pixel;
-	RootSignatureDescription.SRVResources[0].Shader = ST_Pixel;
-	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = ST_Vertex;
+	RootSignatureDescription.Samplers[0].Shader = BearShaderType::Pixel;
+	RootSignatureDescription.SRVResources[0].Shader = BearShaderType::Pixel;
+	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = BearShaderType::Vertex;
 	RootSignature[1][0] = GResourcesManager->CreateRootSignature(RootSignatureDescription);
-	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Skinned)].Shader = ST_Vertex;
+	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Skinned)].Shader = BearShaderType::Vertex;
 	RootSignature[0][0] = GResourcesManager->CreateRootSignature(RootSignatureDescription);
 	BearPipelineGraphicsDescription PipelineDescription;
 	PipelineDescription.DepthStencilState.DepthEnable = true;
 	PipelineDescription.DepthStencilState.StencillEnable = true;
-	PipelineDescription.DepthStencilState.FrontFace.StencilPassOp = SO_REPLACE;
-	PipelineDescription.DepthStencilState.FrontFace.StencilTest = CF_ALWAYS;
+	PipelineDescription.DepthStencilState.FrontFace.StencilPassOp = BearStencilOp::Replace;
+	PipelineDescription.DepthStencilState.FrontFace.StencilTest =  BearCompareFunction::Always;
 	PipelineDescription.RenderPass = GRenderTarget->RenderPass_Base;
 	if (oBlend.value)
 	{
 		PipelineDescription.RenderPass = GRenderTarget->RenderPass_Generic;
 		PipelineDescription.DepthStencilState.EnableDepthWrite = false;
 		PipelineDescription.BlendState.RenderTarget[0].Enable = true;
-		PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BF_SRC_ALPHA;
-		PipelineDescription.BlendState.RenderTarget[0].ColorDst = BF_INV_SRC_ALPHA;
+		PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BearBlendFactor::SrcAlpha;
+		PipelineDescription.BlendState.RenderTarget[0].ColorDst = BearBlendFactor::InvSrcAlpha;
 	}
 	//CreatePipeline(1, PipelineDescription, "default", "default", SVD_M);
 	CreatePipeline(1, SE_NORMAL_HQ, PipelineDescription, GetVertexShaderName("model\\model_0w", false, oBlend.value), GetPixelShaderName("model\\model", false, false, oBlend.value), SVD_0W);

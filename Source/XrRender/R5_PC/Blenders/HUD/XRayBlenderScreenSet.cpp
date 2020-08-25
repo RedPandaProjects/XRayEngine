@@ -69,68 +69,68 @@ void XRayBlenderScreenSet::Load(IReader & fs, u16 version)
 void XRayBlenderScreenSet::InitializeGraphics()
 {
 	BearRootSignatureDescription RootSignatureDescription;
-	RootSignatureDescription.Samplers[0].Shader = ST_Pixel;
-	RootSignatureDescription.SRVResources[0].Shader = ST_Pixel;
-	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = ST_Vertex;
+	RootSignatureDescription.Samplers[0].Shader = BearShaderType::Pixel;
+	RootSignatureDescription.SRVResources[0].Shader = BearShaderType::Pixel;
+	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = BearShaderType::Vertex;
 	RootSignature[0][0] = GResourcesManager->CreateRootSignature(RootSignatureDescription);
 	RootSignature[0][1] = RootSignature[0][0];
 
 	BearPipelineGraphicsDescription PipelineDescription;
 	PipelineDescription.RenderPass = GRenderTarget->RenderPass_Generic;
 
-	PipelineDescription.BlendState.RenderTarget[0].AlphaSrc = BF_SRC_ALPHA;
-	PipelineDescription.BlendState.RenderTarget[0].AlphaDst = BF_DEST_ALPHA;
-	PipelineDescription.BlendState.RenderTarget[0].Alpha = BO_MAX;
+	PipelineDescription.BlendState.RenderTarget[0].AlphaSrc = BearBlendFactor::SrcAlpha;
+	PipelineDescription.BlendState.RenderTarget[0].AlphaDst = BearBlendFactor::DestAlpha;
+	PipelineDescription.BlendState.RenderTarget[0].Alpha = BearBlendOp::Max;
 	switch (oBlend.IDselected)
 	{
 	case 0:	// SET
 		break;
 	case 1: // BLEND
 		PipelineDescription.BlendState.RenderTarget[0].Enable = true;
-		PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BF_SRC_ALPHA;
-		PipelineDescription.BlendState.RenderTarget[0].ColorDst = BF_INV_SRC_ALPHA;
+		PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BearBlendFactor::SrcAlpha;
+		PipelineDescription.BlendState.RenderTarget[0].ColorDst = BearBlendFactor::InvSrcAlpha;
 
 		break;
 	case 2:	// ADD
 		PipelineDescription.BlendState.RenderTarget[0].Enable = true;
-		PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BF_ONE;
-		PipelineDescription.BlendState.RenderTarget[0].ColorDst = BF_ONE;
+		PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BearBlendFactor::One;
+		PipelineDescription.BlendState.RenderTarget[0].ColorDst = BearBlendFactor::One;
 		break;
 	case 3:	// MUL
-		PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BF_DEST_COLOR;
-		PipelineDescription.BlendState.RenderTarget[0].ColorDst = BF_ZERO;
+		PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BearBlendFactor::DestColor;
+		PipelineDescription.BlendState.RenderTarget[0].ColorDst = BearBlendFactor::Zero;
 		break;
 	case 4:	// MUL_2X
 		PipelineDescription.BlendState.RenderTarget[0].Enable = true;
-		PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BF_DEST_COLOR;
-		PipelineDescription.BlendState.RenderTarget[0].ColorDst = BF_SRC_COLOR;
+		PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BearBlendFactor::DestColor;
+		PipelineDescription.BlendState.RenderTarget[0].ColorDst = BearBlendFactor::SrcColor;
 		break;
 	case 5:	// ALPHA-ADD
 		PipelineDescription.BlendState.RenderTarget[0].Enable = true;
-		PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BF_SRC_ALPHA;
-		PipelineDescription.BlendState.RenderTarget[0].ColorDst = BF_ONE;
+		PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BearBlendFactor::SrcAlpha;
+		PipelineDescription.BlendState.RenderTarget[0].ColorDst = BearBlendFactor::One;
 		break;
 	case 6:	// MUL_2X + A-test
 		PipelineDescription.BlendState.RenderTarget[0].Enable = true;
-		PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BF_DEST_COLOR;
-		PipelineDescription.BlendState.RenderTarget[0].ColorDst = BF_SRC_COLOR;
+		PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BearBlendFactor::DestColor;
+		PipelineDescription.BlendState.RenderTarget[0].ColorDst = BearBlendFactor::SrcColor;
 		break;
 	case 7:	// SET (2r)
 		break;
 	case 8: // BLEND (2r)
 		PipelineDescription.BlendState.RenderTarget[0].Enable = true;
-		PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BF_SRC_ALPHA;
-		PipelineDescription.BlendState.RenderTarget[0].ColorDst = BF_INV_SRC_ALPHA;
+		PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BearBlendFactor::SrcAlpha;
+		PipelineDescription.BlendState.RenderTarget[0].ColorDst = BearBlendFactor::InvSrcAlpha;
 		break;
 	case 9: // BLEND (2r)
 		PipelineDescription.BlendState.RenderTarget[0].Enable = true;
-		PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BF_SRC_ALPHA;
-		PipelineDescription.BlendState.RenderTarget[0].ColorDst = BF_INV_SRC_ALPHA;
+		PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BearBlendFactor::SrcAlpha;
+		PipelineDescription.BlendState.RenderTarget[0].ColorDst = BearBlendFactor::InvSrcAlpha;
 		break;
 	}
-	PipelineDescription.TopologyType = TT_TRIANGLE_LIST;
+	PipelineDescription.TopologyType = BearTopologyType::TriangleList;
 	CreatePipeline(0, 0,PipelineDescription,"hud\\notransform_tl", "hud\\hud",SVD_TL);
-	PipelineDescription.TopologyType = TT_TRIANGLE_STRIP;
+	PipelineDescription.TopologyType = BearTopologyType::TriangleStrip;
 	CreatePipeline(0, 1, PipelineDescription, "hud\\notransform_tl", "hud\\hud", SVD_TL);
 
 }
@@ -161,7 +161,7 @@ void XRayBlenderScreenSet::Compile(XRayShader & shader)
 	switch (oBlend.IDselected)
 	{
 	case 6:
-		shader.SetBlend(XRayShader::BF_SRC_ALPHA, XRayShader::BF_INV_SRC_ALPHA);
+		shader.SetBlend(XRayShader::BearBlendFactor::SrcAlpha, XRayShader::BearBlendFactor::InvSrcAlpha);
 		break;
 	default:
 		break;
@@ -171,30 +171,30 @@ void XRayBlenderScreenSet::Compile(XRayShader & shader)
 	case 0:	// SET
 		break;
 	case 1: // BLEND
-		shader.SetBlend(XRayShader::BF_SRC_ALPHA, XRayShader::BF_INV_SRC_ALPHA);
+		shader.SetBlend(XRayShader::BearBlendFactor::SrcAlpha, XRayShader::BearBlendFactor::InvSrcAlpha);
 		break;
 	case 2:	// ADD
-		shader.SetBlend(XRayShader::BF_ONE, XRayShader::BF_ONE);
+		shader.SetBlend(XRayShader::BearBlendFactor::One, XRayShader::BearBlendFactor::One);
 		break;
 	case 3:	// MUL
-		shader.SetBlend(XRayShader::BF_DEST_COLOR, XRayShader::BF_ZERO);
+		shader.SetBlend(XRayShader::BearBlendFactor::DestColor, XRayShader::BearBlendFactor::Zero);
 		break;
 	case 4:	// MUL_2X
-		shader.SetBlend(XRayShader::BF_DEST_COLOR, XRayShader::BF_SRC_COLOR);
+		shader.SetBlend(XRayShader::BearBlendFactor::DestColor, XRayShader::BearBlendFactor::SrcColor);
 		break;
 	case 5:	// ALPHA-ADD
-		shader.SetBlend(XRayShader::BF_SRC_ALPHA, XRayShader::BF_ONE);
+		shader.SetBlend(XRayShader::BearBlendFactor::SrcAlpha, XRayShader::BearBlendFactor::One);
 		break;
 	case 6:	// MUL_2X + A-test
-		shader.SetBlend(XRayShader::BF_DEST_COLOR, XRayShader::BF_SRC_COLOR);
+		shader.SetBlend(XRayShader::BearBlendFactor::DestColor, XRayShader::BearBlendFactor::SrcColor);
 		break;
 	case 7:	// SET (2r)
 		break;
 	case 8: // BLEND (2r)
-		shader.SetBlend(XRayShader::BF_SRC_ALPHA, XRayShader::BF_INV_SRC_ALPHA);
+		shader.SetBlend(XRayShader::BearBlendFactor::SrcAlpha, XRayShader::BearBlendFactor::InvSrcAlpha);
 		break;
 	case 9: // BLEND (2r)
-		shader.SetBlend(XRayShader::BF_SRC_ALPHA, XRayShader::BF_INV_SRC_ALPHA);
+		shader.SetBlend(XRayShader::BearBlendFactor::SrcAlpha, XRayShader::BearBlendFactor::InvSrcAlpha);
 		break;
 	}
 }

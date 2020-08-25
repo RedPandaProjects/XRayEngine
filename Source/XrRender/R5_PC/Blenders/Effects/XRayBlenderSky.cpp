@@ -12,12 +12,12 @@ XRayBlenderSky::~XRayBlenderSky()
 void XRayBlenderSky::InitializeGraphics()
 {
 	BearRootSignatureDescription RootSignatureDescription;
-	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = ST_Vertex;
-	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_GlobalUniform)].Shader = ST_ALL;
+	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = BearShaderType::Vertex;
+	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_GlobalUniform)].Shader = BearShaderType::ALL;
 
-	RootSignatureDescription.SRVResources[0].Shader = ST_Pixel;
-	RootSignatureDescription.SRVResources[1].Shader = ST_Pixel;
-	RootSignatureDescription.Samplers[0].Shader = ST_Pixel;
+	RootSignatureDescription.SRVResources[0].Shader = BearShaderType::Pixel;
+	RootSignatureDescription.SRVResources[1].Shader = BearShaderType::Pixel;
+	RootSignatureDescription.Samplers[0].Shader = BearShaderType::Pixel;
 	RootSignature[0][0] = GResourcesManager->CreateRootSignature(RootSignatureDescription);
 
 	BearPipelineGraphicsDescription PipelineDescription;

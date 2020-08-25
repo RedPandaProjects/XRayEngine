@@ -7,49 +7,49 @@ XRayRenderTarget::XRayRenderTarget()
 
 	{
 		RTVBloom = GResourcesManager->GetTexture(RT_BLOOM);
-		RTVBloom->Texture = BearRenderInterface::CreateTexture2D(RDEVICE.dwWidth, RDEVICE.dwHeight, RTF_R32G32B32A32F);
+		RTVBloom->Texture = BearRenderInterface::CreateTexture2D(RDEVICE.dwWidth, RDEVICE.dwHeight, BearRenderTargetFormat::R32G32B32A32F);
 
 		RTVBloom1 = GResourcesManager->GetTexture(RT_BLOOM_1);
-		RTVBloom1->Texture = BearRenderInterface::CreateTexture2D(RT_BLOOM_SIZE_X, RT_BLOOM_SIZE_Y, RTF_R32G32B32A32F);
+		RTVBloom1->Texture = BearRenderInterface::CreateTexture2D(RT_BLOOM_SIZE_X, RT_BLOOM_SIZE_Y, BearRenderTargetFormat::R32G32B32A32F);
 
 		RTVBloom2 = GResourcesManager->GetTexture(RT_BLOOM_2);
-		RTVBloom2->Texture = BearRenderInterface::CreateTexture2D(RT_BLOOM_SIZE_X, RT_BLOOM_SIZE_Y, RTF_R32G32B32A32F);
+		RTVBloom2->Texture = BearRenderInterface::CreateTexture2D(RT_BLOOM_SIZE_X, RT_BLOOM_SIZE_Y, BearRenderTargetFormat::R32G32B32A32F);
 
 		RTVBloom3 = GResourcesManager->GetTexture(RT_BLOOM_3);
-		RTVBloom3->Texture = BearRenderInterface::CreateTexture2D(RT_BLOOM_SIZE_X, RT_BLOOM_SIZE_Y, RTF_R32G32B32A32F);
+		RTVBloom3->Texture = BearRenderInterface::CreateTexture2D(RT_BLOOM_SIZE_X, RT_BLOOM_SIZE_Y, BearRenderTargetFormat::R32G32B32A32F);
 	}
 
 
 	RTVCompute = GResourcesManager->GetTexture(RT_COMPUTE);
-	RTVCompute->Texture = BearRenderInterface::CreateTexture2D(RDEVICE.dwWidth, RDEVICE.dwHeight, RTF_R32G32B32A32F);
+	RTVCompute->Texture = BearRenderInterface::CreateTexture2D(RDEVICE.dwWidth, RDEVICE.dwHeight, BearRenderTargetFormat::R32G32B32A32F);
 
 	RTVBasicColor = GResourcesManager->GetTexture(RT_BASIC);
-	RTVBasicColor->Texture = BearRenderInterface::CreateTexture2D(RDEVICE.dwWidth, RDEVICE.dwHeight, RTF_R32G32B32A32F);
+	RTVBasicColor->Texture = BearRenderInterface::CreateTexture2D(RDEVICE.dwWidth, RDEVICE.dwHeight, BearRenderTargetFormat::R32G32B32A32F);
 	DSVBasic = GResourcesManager->GetTexture(DS_BASIC);
-	DSVBasic->Texture = BearRenderInterface::CreateTexture2D(RDEVICE.dwWidth, RDEVICE.dwHeight, DSF_DEPTH32F_STENCIL8);
+	DSVBasic->Texture = BearRenderInterface::CreateTexture2D(RDEVICE.dwWidth, RDEVICE.dwHeight, BearDepthStencilFormat::Depth32FStencil8);
 
 	RTVGeneric1 = GResourcesManager->GetTexture(RT_GENERIC1);
-	RTVGeneric1->Texture = BearRenderInterface::CreateTexture2D(RDEVICE.dwWidth, RDEVICE.dwHeight, RTF_R32G32B32A32F);
+	RTVGeneric1->Texture = BearRenderInterface::CreateTexture2D(RDEVICE.dwWidth, RDEVICE.dwHeight, BearRenderTargetFormat::R32G32B32A32F);
 
 	RTVGeneric2 = GResourcesManager->GetTexture(RT_GENERIC2);
-	RTVGeneric2->Texture = BearRenderInterface::CreateTexture2D(RDEVICE.dwWidth, RDEVICE.dwHeight, RTF_R32G32B32A32F);
+	RTVGeneric2->Texture = BearRenderInterface::CreateTexture2D(RDEVICE.dwWidth, RDEVICE.dwHeight, BearRenderTargetFormat::R32G32B32A32F);
 
 	{
 
 		BearRenderPassDescription RenderPassDescription;
 		RenderPassDescription.RenderTargets[0].Clear = true;
 		RenderPassDescription.RenderTargets[0].Color = BearColor::Transparent;
-		RenderPassDescription.RenderTargets[0].Format = RTF_R32G32B32A32F;
+		RenderPassDescription.RenderTargets[0].Format = BearRenderTargetFormat::R32G32B32A32F;
 		RenderPassDescription.RenderTargets[1].Clear = true;
 		RenderPassDescription.RenderTargets[1].Color = BearColor::Transparent;
-		RenderPassDescription.RenderTargets[1].Format = RTF_R32G32B32A32F;
+		RenderPassDescription.RenderTargets[1].Format = BearRenderTargetFormat::R32G32B32A32F;
 		RenderPassDescription.RenderTargets[2].Clear = true;
 		RenderPassDescription.RenderTargets[2].Color = BearColor::Transparent;
-		RenderPassDescription.RenderTargets[2].Format = RTF_R32G32B32A32F;
+		RenderPassDescription.RenderTargets[2].Format = BearRenderTargetFormat::R32G32B32A32F;
 		RenderPassDescription.DepthStencil.Clear = true;
 		RenderPassDescription.DepthStencil.Depth = 1.f;
 		RenderPassDescription.DepthStencil.Stencil = 0;
-		RenderPassDescription.DepthStencil.Format = DSF_DEPTH32F_STENCIL8;
+		RenderPassDescription.DepthStencil.Format = BearDepthStencilFormat::Depth32FStencil8;
 		RenderPass_Base = BearRenderInterface::CreateRenderPass(RenderPassDescription);
 
 
@@ -69,9 +69,9 @@ XRayRenderTarget::XRayRenderTarget()
 		BearRenderPassDescription RenderPassDescription;
 		RenderPassDescription.RenderTargets[0].Clear = false;
 		RenderPassDescription.RenderTargets[0].Color = BearColor::Transparent;
-		RenderPassDescription.RenderTargets[0].Format = RTF_R32G32B32A32F;
+		RenderPassDescription.RenderTargets[0].Format = BearRenderTargetFormat::R32G32B32A32F;
 		RenderPassDescription.DepthStencil.Clear = false;
-		RenderPassDescription.DepthStencil.Format = DSF_DEPTH32F_STENCIL8;
+		RenderPassDescription.DepthStencil.Format = BearDepthStencilFormat::Depth32FStencil8;
 		RenderPass_Generic = BearRenderInterface::CreateRenderPass(RenderPassDescription);
 	}
 	{
@@ -92,7 +92,7 @@ XRayRenderTarget::XRayRenderTarget()
 		BearRenderPassDescription RenderPassDescription;
 		RenderPassDescription.RenderTargets[0].Clear = true;
 		RenderPassDescription.RenderTargets[0].Color = BearColor::Transparent;
-		RenderPassDescription.RenderTargets[0].Format = RTF_R32G32B32A32F;
+		RenderPassDescription.RenderTargets[0].Format = BearRenderTargetFormat::R32G32B32A32F;
 		RenderPass_Bloom = BearRenderInterface::CreateRenderPass(RenderPassDescription);
 	}
 	{
@@ -243,7 +243,7 @@ void XRayRenderTarget::Render()
 		
 	}
 	
-	HW->Context->ClearState();
+	HW->Context->ClearFrameBuffer();
 	HW->Context->Unlock(GRenderTarget->FrameBuffer_Base);
 	RenderCombine1();
 	{

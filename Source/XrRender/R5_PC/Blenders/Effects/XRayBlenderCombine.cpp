@@ -13,21 +13,21 @@ void XRayBlenderCombine::InitializeGraphics()
 {
 	{
 		BearRootSignatureDescription RootSignatureDescription;
-		RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = ST_Vertex;
-		RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_GlobalUniform)].Shader = ST_Pixel;
-		RootSignatureDescription.SRVResources[0].Shader = ST_Pixel;
-		RootSignatureDescription.SRVResources[1].Shader = ST_Pixel;
-		RootSignatureDescription.Samplers[0].Shader = ST_Pixel;
+		RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = BearShaderType::Vertex;
+		RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_GlobalUniform)].Shader = BearShaderType::Pixel;
+		RootSignatureDescription.SRVResources[0].Shader = BearShaderType::Pixel;
+		RootSignatureDescription.SRVResources[1].Shader = BearShaderType::Pixel;
+		RootSignatureDescription.Samplers[0].Shader = BearShaderType::Pixel;
 		RootSignature[0][0] = GResourcesManager->CreateRootSignature(RootSignatureDescription);
 	}
 	{
 		BearRootSignatureDescription RootSignatureDescription;
-		RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = ST_Vertex;
-		RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_GlobalUniform)].Shader = ST_Pixel;
-		RootSignatureDescription.SRVResources[1].Shader = ST_Pixel;
-		RootSignatureDescription.SRVResources[0].Shader = ST_Pixel;
-		RootSignatureDescription.Samplers[0].Shader = ST_Pixel;
-		RootSignatureDescription.Samplers[1].Shader = ST_Pixel;
+		RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = BearShaderType::Vertex;
+		RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_GlobalUniform)].Shader = BearShaderType::Pixel;
+		RootSignatureDescription.SRVResources[1].Shader = BearShaderType::Pixel;
+		RootSignatureDescription.SRVResources[0].Shader = BearShaderType::Pixel;
+		RootSignatureDescription.Samplers[0].Shader = BearShaderType::Pixel;
+		RootSignatureDescription.Samplers[1].Shader = BearShaderType::Pixel;
 		RootSignature[0][1] = GResourcesManager->CreateRootSignature(RootSignatureDescription);
 	}
 
@@ -41,16 +41,16 @@ void XRayBlenderCombine::InitializeGraphics()
 	{
 		PipelineDescription.DepthStencilState.DepthEnable = true;
 		PipelineDescription.DepthStencilState.EnableDepthWrite = false;
-		PipelineDescription.DepthStencilState.DepthTest = CF_ALWAYS;
+		PipelineDescription.DepthStencilState.DepthTest = BearCompareFunction::Always;
 		PipelineDescription.DepthStencilState.StencilWriteMask = 0;
-		PipelineDescription.DepthStencilState.StencillEnable = true;
-		PipelineDescription.DepthStencilState.FrontFace.StencilTest = CF_EQUAL;
+		PipelineDescription.DepthStencilState.StencillEnable = true; 
+		PipelineDescription.DepthStencilState.FrontFace.StencilTest = BearCompareFunction::Equal;
 	}
 
 	{
 		PipelineDescription.BlendState.RenderTarget[0].Enable = true;
-		PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BF_SRC_ALPHA;
-		PipelineDescription.BlendState.RenderTarget[0].ColorDst = BF_INV_SRC_ALPHA;
+		PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BearBlendFactor::SrcAlpha;
+		PipelineDescription.BlendState.RenderTarget[0].ColorDst = BearBlendFactor::InvSrcAlpha;
 	}
 
 	CreatePipeline(0,0, PipelineDescription, "hud\\notransform_tl", "effects\\combine\\combine_1", SVD_TL);

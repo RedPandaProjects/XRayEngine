@@ -12,10 +12,10 @@ XRayBlenderSun::~XRayBlenderSun()
 void XRayBlenderSun::InitializeGraphics()
 {
 	BearRootSignatureDescription RootSignatureDescription;
-	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = ST_Vertex;
+	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = BearShaderType::Vertex;
 
-	RootSignatureDescription.SRVResources[0].Shader = ST_Pixel;
-	RootSignatureDescription.Samplers[0].Shader = ST_Pixel;
+	RootSignatureDescription.SRVResources[0].Shader = BearShaderType::Pixel;
+	RootSignatureDescription.Samplers[0].Shader = BearShaderType::Pixel;
 	RootSignature[0][0] = GResourcesManager->CreateRootSignature(RootSignatureDescription);
 
 	BearPipelineGraphicsDescription PipelineDescription;
@@ -23,8 +23,8 @@ void XRayBlenderSun::InitializeGraphics()
 	{
 
 		PipelineDescription.BlendState.RenderTarget[0].Enable = true;
-		PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BF_SRC_ALPHA;
-		PipelineDescription.BlendState.RenderTarget[0].ColorDst = BF_ONE;
+		PipelineDescription.BlendState.RenderTarget[0].ColorSrc = BearBlendFactor::SrcAlpha;
+		PipelineDescription.BlendState.RenderTarget[0].ColorDst = BearBlendFactor::One;
 	}
 	CreatePipeline(0, 0, PipelineDescription, "effects\\sun", "hud\\hud", SVD_LIT);
 	

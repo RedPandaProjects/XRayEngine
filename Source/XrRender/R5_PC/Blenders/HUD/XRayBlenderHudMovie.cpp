@@ -12,9 +12,9 @@ XRayBlenderHudMovie::~XRayBlenderHudMovie()
 void XRayBlenderHudMovie::InitializeGraphics()
 {
 	BearRootSignatureDescription RootSignatureDescription;
-	RootSignatureDescription.Samplers[0].Shader = ST_Pixel;
-	RootSignatureDescription.SRVResources[0].Shader = ST_Pixel;
-	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = ST_Vertex;
+	RootSignatureDescription.Samplers[0].Shader = BearShaderType::Pixel;
+	RootSignatureDescription.SRVResources[0].Shader = BearShaderType::Pixel;
+	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = BearShaderType::Vertex;
 	
 	RootSignature[0][0] = GResourcesManager->CreateRootSignature(RootSignatureDescription);
 

@@ -48,7 +48,7 @@ XRayTexture::XRayTexture(shared_str texture)
 			u32 _w = pTheora->Width(false);
 			u32 _h = pTheora->Height(false);
 
-			Texture2D = BearRenderInterface::CreateTexture2D(_w, _h, 1, 1, TPF_R8G8B8A8, TU_DYNAMIC);;
+			Texture2D = BearRenderInterface::CreateTexture2D(_w, _h, 1, 1, BearTexturePixelFormat::R8G8B8A8, BearTextureUsage::Dynamic);;
 			Texture = Texture2D;
 			m_size.set(static_cast<float>(_w), static_cast<float>(_h));
 		}
@@ -82,8 +82,8 @@ XRayTexture::XRayTexture(shared_str texture)
 				{
 					IReader* fs = FS.r_open(fn);
 					BearMemoryStream stream_image(fs->pointer(), fs->length());
-					R_ASSERT(image.LoadDDSFromStream(stream_image));
-					Texture2D = BearRenderInterface::CreateTexture2D(image.GetSize().x, image.GetSize().y, image.GetMips(), image.GetDepth(), image.GetFormat(), TU_STATIC, *image);
+					R_ASSERT(image.LoadFromStream(stream_image));
+					Texture2D = BearRenderInterface::CreateTexture2D(image.GetSize().x, image.GetSize().y, image.GetMips(), image.GetDepth(), image.GetFormat(), BearTextureUsage::Static, *image);
 					SeqTextures.push_back(Texture2D);
 					FS.r_close(fs);
 				}
@@ -99,16 +99,16 @@ XRayTexture::XRayTexture(shared_str texture)
 	{
 		IReader* _fs = FS.r_open(fn);
 		BearMemoryStream stream_image(_fs->pointer(),_fs->length());
-		R_ASSERT(image.LoadDDSFromStream(stream_image));
+		R_ASSERT(image.LoadFromStream(stream_image));
 		if (image.IsCubeMap())
 		{
-			TextureCube = BearRenderInterface::CreateTextureCube(image.GetSize().x, image.GetSize().y, image.GetMips(), image.GetDepth(), image.GetFormat(), TU_STATIC, *image);
+			TextureCube = BearRenderInterface::CreateTextureCube(image.GetSize().x, image.GetSize().y, image.GetMips(), image.GetDepth(), image.GetFormat(), BearTextureUsage::Static, *image);
 			Texture = TextureCube;
 			m_type = TT_Cube;
 		}
 		else
 		{
-			Texture2D = BearRenderInterface::CreateTexture2D(image.GetSize().x, image.GetSize().y, image.GetMips(), image.GetDepth(), image.GetFormat(), TU_STATIC, *image);
+			Texture2D = BearRenderInterface::CreateTexture2D(image.GetSize().x, image.GetSize().y, image.GetMips(), image.GetDepth(), image.GetFormat(), BearTextureUsage::Static, *image);
 			Texture = Texture2D;
 			m_type = TT_Default;
 		}
@@ -121,8 +121,8 @@ XRayTexture::XRayTexture(shared_str texture)
 	{
 		IReader* _fs = FS.r_open(fn);
 		BearMemoryStream stream_image(_fs->pointer(), _fs->length());
-		R_ASSERT(image.LoadDDSFromStream(stream_image));
-		Texture2D = BearRenderInterface::CreateTexture2D(image.GetSize().x, image.GetSize().y, image.GetMips(), image.GetDepth(), image.GetFormat(), TU_STATIC, *image);
+		R_ASSERT(image.LoadFromStream(stream_image));
+		Texture2D = BearRenderInterface::CreateTexture2D(image.GetSize().x, image.GetSize().y, image.GetMips(), image.GetDepth(), image.GetFormat(), BearTextureUsage::Static, *image);
 		m_type = TT_Default;
 		Texture = Texture2D;
 		m_size.set(image.GetSize().x, image.GetSize().y);
@@ -132,8 +132,8 @@ XRayTexture::XRayTexture(shared_str texture)
 	{
 		IReader* _fs = FS.r_open(fn);
 		BearMemoryStream stream_image(_fs->pointer(), _fs->length());
-		R_ASSERT(image.LoadDDSFromStream(stream_image));
-		Texture2D = BearRenderInterface::CreateTexture2D(image.GetSize().x, image.GetSize().y, image.GetMips(), image.GetDepth(), image.GetFormat(), TU_STATIC, *image);
+		R_ASSERT(image.LoadFromStream(stream_image));
+		Texture2D = BearRenderInterface::CreateTexture2D(image.GetSize().x, image.GetSize().y, image.GetMips(), image.GetDepth(), image.GetFormat(), BearTextureUsage::Static, *image);
 		m_type = TT_Default;
 		Texture = Texture2D;
 		m_size.set(static_cast<float>(image.GetSize().x), static_cast<float>(image.GetSize().y));
@@ -145,8 +145,8 @@ XRayTexture::XRayTexture(shared_str texture)
 		R_ASSERT(FS.exist(fn, "$game_textures$", "ed\\ed_not_existing_texture", ".dds"));
 		IReader* _fs = FS.r_open(fn);
 		BearMemoryStream stream_image(_fs->pointer(), _fs->length());
-		R_ASSERT(image.LoadDDSFromStream(stream_image));
-		Texture2D = BearRenderInterface::CreateTexture2D(image.GetSize().x, image.GetSize().y, image.GetMips(), image.GetDepth(), image.GetFormat(), TU_STATIC, *image);
+		R_ASSERT(image.LoadFromStream(stream_image));
+		Texture2D = BearRenderInterface::CreateTexture2D(image.GetSize().x, image.GetSize().y, image.GetMips(), image.GetDepth(), image.GetFormat(), BearTextureUsage::Static, *image);
 		m_size.set(static_cast<float>(image.GetSize().x), static_cast<float>(image.GetSize().y));
 		Texture = Texture2D;
 		FS.r_close(_fs);

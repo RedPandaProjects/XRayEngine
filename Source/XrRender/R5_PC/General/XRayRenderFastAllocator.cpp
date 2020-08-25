@@ -1,6 +1,6 @@
 #include "pch.h"
-#define DEBUG_FAST_MEMORY
-#ifdef DEBUG_FAST_MEMORY
+#define DEBUG_FASTMEMORY
+#ifdef DEBUG_FASTMEMORY
 static size_t LCounter = 0;
 #endif
 XRayRenderFastAllocator* GRenderFastAllocator = 0;
@@ -17,7 +17,7 @@ XRayRenderFastAllocator::~XRayRenderFastAllocator()
         Buffer* buffer = m_firstBuffer;
         m_firstBuffer = buffer->next;
         xr_free(buffer);
-#ifdef DEBUG_FAST_MEMORY
+#ifdef DEBUG_FASTMEMORY
         LCounter--;
 #endif
     }
@@ -26,11 +26,11 @@ XRayRenderFastAllocator::~XRayRenderFastAllocator()
         Buffer* buffer = m_firstFreeBuffer;
         m_firstFreeBuffer = buffer->next;
         xr_free(buffer);
-#ifdef DEBUG_FAST_MEMORY
+#ifdef DEBUG_FASTMEMORY
         LCounter--;
 #endif
     }
-#ifdef DEBUG_FAST_MEMORY
+#ifdef DEBUG_FASTMEMORY
     R_ASSERT(LCounter == 0);
 #endif
 }
@@ -97,7 +97,7 @@ XRayRenderFastAllocator::Buffer* XRayRenderFastAllocator::AllocaBuffer()
         out->next = m_firstBuffer;
         return out;
     }
-#ifdef DEBUG_FAST_MEMORY
+#ifdef DEBUG_FASTMEMORY
     LCounter++;
 #endif
     return xr_new<Buffer>(m_firstBuffer);

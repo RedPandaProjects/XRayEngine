@@ -34,20 +34,20 @@ void XRayBlenderTree::InitializeGraphics()
 {
 	{
 		BearRootSignatureDescription RootSignatureDescription;
-		RootSignatureDescription.Samplers[0].Shader = ST_Pixel;
-		RootSignatureDescription.SRVResources[0].Shader = ST_Pixel;
-		RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = ST_Vertex;
-		RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Tree)].Shader = ST_Vertex;
-		RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_GlobalUniform)].Shader = ST_ALL;
+		RootSignatureDescription.Samplers[0].Shader = BearShaderType::Pixel;
+		RootSignatureDescription.SRVResources[0].Shader = BearShaderType::Pixel;
+		RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = BearShaderType::Vertex;
+		RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Tree)].Shader = BearShaderType::Vertex;
+		RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_GlobalUniform)].Shader = BearShaderType::ALL;
 		if (!oNotAnTree.value)
 		{
-			RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_AlphaRef)].Shader = ST_Pixel;
+			RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_AlphaRef)].Shader = BearShaderType::Pixel;
 		}
 		RootSignature[0][0] = GResourcesManager->CreateRootSignature(RootSignatureDescription);
 		RootSignature[0][1] = RootSignature[0][0];
 		RootSignature[1][1] = RootSignature[0][0];
-		RootSignatureDescription.SRVResources[1].Shader = ST_Pixel;
-		RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_DetailScalar)].Shader = ST_Vertex;
+		RootSignatureDescription.SRVResources[1].Shader = BearShaderType::Pixel;
+		RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_DetailScalar)].Shader = BearShaderType::Vertex;
 		RootSignature[1][0] = GResourcesManager->CreateRootSignature(RootSignatureDescription);
 
 	}
@@ -55,8 +55,8 @@ void XRayBlenderTree::InitializeGraphics()
 		BearPipelineGraphicsDescription PipelineDescription;
 		PipelineDescription.DepthStencilState.DepthEnable = true;
 		PipelineDescription.DepthStencilState.StencillEnable = true;
-		PipelineDescription.DepthStencilState.FrontFace.StencilPassOp = SO_REPLACE;
-		PipelineDescription.DepthStencilState.FrontFace.StencilTest = CF_ALWAYS;
+		PipelineDescription.DepthStencilState.FrontFace.StencilPassOp = BearStencilOp::Replace;
+		PipelineDescription.DepthStencilState.FrontFace.StencilTest =  BearCompareFunction::Always;
 		PipelineDescription.RenderPass = GRenderTarget->RenderPass_Base;
 
 

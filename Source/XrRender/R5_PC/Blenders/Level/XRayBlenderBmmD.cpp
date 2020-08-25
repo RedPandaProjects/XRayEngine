@@ -48,23 +48,23 @@ void XRayBlenderBmmD::Load(IReader & fs, u16 version)
 void XRayBlenderBmmD::InitializeGraphics()
 {
 	BearRootSignatureDescription RootSignatureDescription;
-	RootSignatureDescription.Samplers[0].Shader = ST_Pixel;
+	RootSignatureDescription.Samplers[0].Shader = BearShaderType::Pixel;
 
-	RootSignatureDescription.SRVResources[0].Shader = ST_Pixel;
-	RootSignatureDescription.SRVResources[1].Shader = ST_Pixel;
-	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = ST_Vertex;
-	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_DetailScalar)].Shader = ST_Vertex;
-	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_GlobalUniform)].Shader = ST_ALL;
+	RootSignatureDescription.SRVResources[0].Shader = BearShaderType::Pixel;
+	RootSignatureDescription.SRVResources[1].Shader = BearShaderType::Pixel;
+	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = BearShaderType::Vertex;
+	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_DetailScalar)].Shader = BearShaderType::Vertex;
+	RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_GlobalUniform)].Shader = BearShaderType::ALL;
 
 	RootSignature[0][1] = GResourcesManager->CreateRootSignature(RootSignatureDescription);
 
-	RootSignatureDescription.SRVResources[2].Shader = ST_Pixel;
+	RootSignatureDescription.SRVResources[2].Shader = BearShaderType::Pixel;
 	RootSignature[0][0] = GResourcesManager->CreateRootSignature(RootSignatureDescription);
-/*	RootSignatureDescription.SRVResources[3].Shader = ST_Pixel;
-	RootSignatureDescription.SRVResources[4].Shader = ST_Pixel;
-	RootSignatureDescription.SRVResources[5].Shader = ST_Pixel;
-	RootSignatureDescription.SRVResources[6].Shader = ST_Pixel;
-	RootSignatureDescription.SRVResources[7].Shader = ST_Pixel*/
+/*	RootSignatureDescription.SRVResources[3].Shader = BearShaderType::Pixel;
+	RootSignatureDescription.SRVResources[4].Shader = BearShaderType::Pixel;
+	RootSignatureDescription.SRVResources[5].Shader = BearShaderType::Pixel;
+	RootSignatureDescription.SRVResources[6].Shader = BearShaderType::Pixel;
+	RootSignatureDescription.SRVResources[7].Shader = BearShaderType::Pixel*/
 		;
 
 
@@ -72,8 +72,8 @@ void XRayBlenderBmmD::InitializeGraphics()
 	BearPipelineGraphicsDescription PipelineDescription;
 	PipelineDescription.DepthStencilState.DepthEnable = true;
 	PipelineDescription.DepthStencilState.StencillEnable = true;
-	PipelineDescription.DepthStencilState.FrontFace.StencilPassOp = SO_REPLACE;
-	PipelineDescription.DepthStencilState.FrontFace.StencilTest = CF_ALWAYS;
+	PipelineDescription.DepthStencilState.FrontFace.StencilPassOp = BearStencilOp::Replace;
+	PipelineDescription.DepthStencilState.FrontFace.StencilTest =  BearCompareFunction::Always;
 	PipelineDescription.RenderPass = GRenderTarget->RenderPass_Base;
 
 	CreatePipeline(0, 0, PipelineDescription, "level\\terrain", "level\\terrain_hq", SVD_R1LMap);
@@ -84,35 +84,35 @@ void XRayBlenderBmmD::InitializeMesh()
 {
 	{
 		BearRootSignatureDescription RootSignatureDescription;
-		RootSignatureDescription.Samplers[0].Shader = ST_Pixel;
+		RootSignatureDescription.Samplers[0].Shader = BearShaderType::Pixel;
 
-		RootSignatureDescription.SRVResources[0].Shader = ST_Pixel;
-		RootSignatureDescription.SRVResources[1].Shader = ST_Pixel;
+		RootSignatureDescription.SRVResources[0].Shader = BearShaderType::Pixel;
+		RootSignatureDescription.SRVResources[1].Shader = BearShaderType::Pixel;
 
-		RootSignatureDescription.SRVResources[MSS_Vertices].Shader = ST_Mesh;
-		RootSignatureDescription.SRVResources[MSS_Vertices].DescriptorType = DT_Buffer;
-		RootSignatureDescription.SRVResources[MSS_Meshlets].Shader = ST_Mesh;
-		RootSignatureDescription.SRVResources[MSS_Meshlets].DescriptorType = DT_Buffer;
-		RootSignatureDescription.SRVResources[MSS_UniqueVertexIndices].Shader = ST_Mesh;
-		RootSignatureDescription.SRVResources[MSS_UniqueVertexIndices].DescriptorType = DT_Buffer;
-		RootSignatureDescription.SRVResources[MSS_PrimitiveIndices].Shader = ST_Mesh;
-		RootSignatureDescription.SRVResources[MSS_PrimitiveIndices].DescriptorType = DT_Buffer;
+		RootSignatureDescription.SRVResources[MSS_Vertices].Shader = BearShaderType::Mesh;
+		RootSignatureDescription.SRVResources[MSS_Vertices].DescriptorType = BearSRVDescriptorType::Buffer;
+		RootSignatureDescription.SRVResources[MSS_Meshlets].Shader = BearShaderType::Mesh;
+		RootSignatureDescription.SRVResources[MSS_Meshlets].DescriptorType = BearSRVDescriptorType::Buffer;
+		RootSignatureDescription.SRVResources[MSS_UniqueVertexIndices].Shader = BearShaderType::Mesh;
+		RootSignatureDescription.SRVResources[MSS_UniqueVertexIndices].DescriptorType = BearSRVDescriptorType::Buffer;
+		RootSignatureDescription.SRVResources[MSS_PrimitiveIndices].Shader = BearShaderType::Mesh;
+		RootSignatureDescription.SRVResources[MSS_PrimitiveIndices].DescriptorType = BearSRVDescriptorType::Buffer;
 
-		RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = ST_Mesh;
-		RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_DetailScalar)].Shader = ST_Mesh;
-		RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_GlobalUniform)].Shader = ST_ALL;
+		RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_Transformation)].Shader = BearShaderType::Mesh;
+		RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_DetailScalar)].Shader = BearShaderType::Mesh;
+		RootSignatureDescription.UniformBuffers[XRayUniformAllocator::GetRegister(XRayUniformAllocator::UT_GlobalUniform)].Shader = BearShaderType::ALL;
 
 
 		RootSignature[0][1] = GResourcesManager->CreateRootSignature(RootSignatureDescription);
-		RootSignatureDescription.SRVResources[2].Shader = ST_Pixel;
+		RootSignatureDescription.SRVResources[2].Shader = BearShaderType::Pixel;
 		RootSignature[0][0] = GResourcesManager->CreateRootSignature(RootSignatureDescription);
 	}
 	{
 		BearPipelineMeshDescription PipelineDescription;
 		PipelineDescription.DepthStencilState.DepthEnable = true;
 		PipelineDescription.DepthStencilState.StencillEnable = true;
-		PipelineDescription.DepthStencilState.FrontFace.StencilPassOp = SO_REPLACE;
-		PipelineDescription.DepthStencilState.FrontFace.StencilTest = CF_ALWAYS;
+		PipelineDescription.DepthStencilState.FrontFace.StencilPassOp = BearStencilOp::Replace;
+		PipelineDescription.DepthStencilState.FrontFace.StencilTest =  BearCompareFunction::Always;
 		PipelineDescription.RenderPass = GRenderTarget->RenderPass_Base;
 
 		CreatePipeline(0, 0, PipelineDescription, "level\\terrain", "level\\terrain_hq", SVD_R1LMap);
