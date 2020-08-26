@@ -30,12 +30,14 @@ namespace Opcode {
 namespace CDB
 {
 	// Triangle
-	class XRCDB_API TRI						//*** 16 bytes total (was 32 :)
+	class  TRI						//*** 16 bytes total (was 32 :)
 	{
 	public:
+		TRI() {}
 		u32				verts	[3];		// 3*4 = 12b
 		union	{
 			u32			dummy;				// 4b
+			void* pointer;
 			struct {
 				u32		material:14;		// 
 				u32		suppress_shadows:1;	// 
@@ -44,6 +46,7 @@ namespace CDB
 			};
 		};
 	public:
+		IC static size_t Size() { return 16; }
 		IC u32			IDvert	(u32 ID)		{ return verts[ID];	}
 	};
 

@@ -117,8 +117,17 @@ void	CObjectSpace::	Load				(  IReader* F, CDB::build_callback build_callback  )
 	hdrCFORM					H;
 	F->r						(&H,sizeof(hdrCFORM));
 	Fvector*	verts			= (Fvector*)F->pointer();
-	CDB::TRI*	tris			= (CDB::TRI*)(verts+H.vertcount);
-	Create						( verts, tris, H, build_callback );
+	xr_vector< CDB::TRI> tris(H.facecount);
+	{
+		u8* tris_pointer = (u8*)(verts + H.vertcount);
+		for (size_t i = 0; i < H.facecount; i++)
+		{
+			memcpy(&tris[i], tris_pointer, CDB::TRI::Size());
+			tris_pointer += CDB::TRI::Size();
+		}
+		Create(verts, tris.data(), H, build_callback);
+
+	}
 	FS.r_close					(F);
 }
 

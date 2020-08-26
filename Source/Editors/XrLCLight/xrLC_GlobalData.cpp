@@ -173,14 +173,14 @@ void		xrLC_GlobalData	::				initialize		()
 
 //*((u32*)&F)
 
-base_Face* convert_nax( u32 dummy )
+base_Face* convert_nax( void* dummy )
 {
-	return (base_Face*)(*((void**)&dummy));
+	return (base_Face*)(dummy);
 }
 
-u32 convert_nax( base_Face* F )
+void* convert_nax( base_Face* F )
 {
-	return *((u32*)&F);
+	return (void*)F;
 }
 
 void write( IWriter	&w, const CDB::TRI &tri )
@@ -192,7 +192,7 @@ void write( IWriter	&w, const CDB::TRI &tri )
 void write( IWriter	&w, const CDB::TRI &tri, const xrLC_GlobalData  &lc_global_data )
 {
 	::write( w, tri );
-	const base_Face* F=  convert_nax( tri.dummy );
+	const base_Face* F=  convert_nax( tri.pointer );
 	VERIFY( &lc_global_data );
 	lc_global_data.write( w, F );
 }
@@ -210,7 +210,7 @@ void read( INetReader	&r, CDB::TRI &tri, xrLC_GlobalData  &lc_global_data  )
 	VERIFY( &lc_global_data );
 	base_Face* F = 0;
 	lc_global_data.read( r, F );
-	tri.dummy = convert_nax( F );
+	tri.pointer = convert_nax( F );
 }
 
 static xr_vector<Fvector> verts;
