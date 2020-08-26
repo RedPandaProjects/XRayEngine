@@ -51,6 +51,7 @@ extern u32*		Surface_Load	(char* name, u32& w, u32& h);
 extern void		Surface_Init	();
 inline bool Surface_Detect(string_path& F, LPSTR N)
 {
+	
 	FS.update_path(F, "$game_textures$", strconcat(sizeof(F), F, N, ".dds"));
 	FILE* file = fopen(F, "rb");
 	if (file)
@@ -121,12 +122,12 @@ void xrLoad(LPCSTR name, bool draft_mode)
 			Status			("Processing textures...");
 			{
 				F = fs->open_chunk	(EB_Textures);
-				u32 tex_count		= F->length()/sizeof(b_texture);
+				u32 tex_count		= F->length()/sizeof(b_texture_real);
 				for (u32 t=0; t<tex_count; t++)
 				{
 					Progress		(float(t)/float(tex_count));
 
-					b_texture		TEX;
+					b_texture_real		TEX;
 					F->r			(&TEX,sizeof(TEX));
 
 					b_BuildTexture	BT;
@@ -139,7 +140,6 @@ void xrLoad(LPCSTR name, bool draft_mode)
 						*extension	= 0;
 
 					xr_strlwr		(N);
-
 					if (0==xr_strcmp(N,"level_lods"))	{
 						// HACK for merged lod textures
 						BT.dwWidth	= 1024;
@@ -150,8 +150,11 @@ void xrLoad(LPCSTR name, bool draft_mode)
 						xr_strcat		(N,".thm");
 						IReader* THM	= FS.r_open("$game_textures$",N);
 //						if (!THM)		continue;
-						
+
+
 						R_ASSERT2		(THM,	N);
+
+						if (strchr(N, '.')) *(strchr(N, '.')) = 0;
 
 						// version
 						u32 version				= 0;
