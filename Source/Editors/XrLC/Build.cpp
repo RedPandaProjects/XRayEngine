@@ -190,7 +190,8 @@ void CBuild::Run	(LPCSTR P)
 	FPU::m64r					();
 	Phase						("Optimizing...");
 	mem_Compact					();
-	PreOptimize					();
+	if(strstr(Core.Params,"-no_optimize") == 0)
+		PreOptimize					();
 	CorrectTJunctions			();
 
 	//****************************************** HEMI-Tesselate
