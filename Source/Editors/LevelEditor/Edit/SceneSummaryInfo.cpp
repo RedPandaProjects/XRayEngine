@@ -153,7 +153,7 @@ void SSceneSummary::STextureInfo::FillProp	(PropItemVec& items, LPCSTR main_pref
         }
         ButtonValue* B 		= PHelper().CreateButton(items,PrepareKey(pref.c_str(),"Highlight Texture"), "Select,Density =,Density +,Clear", 0);
 		B->OnBtnClickEvent.bind(this,&SSceneSummary::STextureInfo::OnHighlightClick);
-        B->tag 				= (int)(*file_name);
+        B->tag 				= (size_t)(*file_name);
     }
 }
 void SSceneSummary::STextureInfo::Export	(IWriter* F, u32& mem_use)

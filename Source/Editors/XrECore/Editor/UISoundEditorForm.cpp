@@ -231,7 +231,7 @@ void UISoundEditorForm::OnItemsFocused(ListItem* item)
 
         CanvasValue* C = 0;
         C = PHelper().CreateCanvas(props, "Attenuation", "", 64);
-        C->tag = (int)this;
+        C->tag = (size_t)this;
         C->OnDrawCanvasEvent.bind(this, &UISoundEditorForm::OnAttenuationDraw);
         //		C->OnTestEqual.bind			(this,&TfrmSoundLib::OnPointDataTestEqual);
         B = PHelper().CreateButton(props, "Auto Att", "By Min,By Max", ButtonValue::flFirstOnly);

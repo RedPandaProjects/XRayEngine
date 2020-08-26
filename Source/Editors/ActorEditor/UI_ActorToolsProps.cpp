@@ -725,7 +725,7 @@ void CActorTools::FillBoneProperties(PropItemVec& items, LPCSTR pref, ListItem* 
 	        PHelper().CreateVector	(items, PrepareKey(pref,"Bone\\Shape\\Box\\Center"),		&BONE->shape.box.m_translate, -10000.f, 10000.f);
 	        B=PHelper().CreateButton(items, PrepareKey(pref,"Bone\\Shape\\Box\\Align Axis"),	"X,Y,Z",0);
             B->OnBtnClickEvent.bind	(this,&CActorTools::OnBoxAxisClick);
-            B->tag 					= (int)BONE;
+            B->tag 					= (size_t)BONE;
 	        PHelper().CreateVector	(items, PrepareKey(pref,"Bone\\Shape\\Box\\Half Size"),  	&BONE->shape.box.m_halfsize, 0.f, 1000.f);
         break;
         case SBoneShape::stSphere:
@@ -736,7 +736,7 @@ void CActorTools::FillBoneProperties(PropItemVec& items, LPCSTR pref, ListItem* 
 	        PHelper().CreateVector	(items, PrepareKey(pref,"Bone\\Shape\\Cylinder\\Center"),	&BONE->shape.cylinder.m_center, -10000.f, 10000.f);
 	        B=PHelper().CreateButton(items, PrepareKey(pref,"Bone\\Shape\\Cylinder\\Align Axis"),"X,Y,Z",0);
             B->OnBtnClickEvent.bind	(this,&CActorTools::OnCylinderAxisClick);
-            B->tag 					= (int)BONE;
+            B->tag 					= (size_t)BONE;
 	        PHelper().CreateFloat  	(items, PrepareKey(pref,"Bone\\Shape\\Cylinder\\Height"),	&BONE->shape.cylinder.m_height, 0.f, 1000.f);
 	        PHelper().CreateFloat  	(items, PrepareKey(pref,"Bone\\Shape\\Cylinder\\Radius"),	&BONE->shape.cylinder.m_radius, 0.f, 1000.f);
         break;

@@ -169,7 +169,7 @@ void CLight::FillAttProp(LPCSTR pref, PropItemVec& items)
     B->OnBtnClickEvent.bind	(this,&CLight::OnAutoClick);
 	CanvasValue* C=0;
     C=PHelper().CreateCanvas	(items,	PrepareKey(pref, "Attenuation\\Graphic"),	"", 64);
-    C->tag					= (int)this;
+    C->tag					= (size_t)this;
     C->OnDrawCanvasEvent.bind(this,&CLight::OnAttenuationDraw);
     C->OnTestEqual.bind		(this,&CLight::OnPointDataTestEqual);
 }

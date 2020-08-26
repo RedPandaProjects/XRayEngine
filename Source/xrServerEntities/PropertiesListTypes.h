@@ -62,7 +62,7 @@ class PropValue
 protected:
 	PropItem*			m_Owner;
 public:
-	u32					tag;
+	size_t					tag;
 public:
 	// base events
 	typedef fastdelegate::FastDelegate1<PropValue*> TOnChange;
@@ -485,7 +485,7 @@ public:
 
 //------------------------------------------------------------------------------
 template <class T>
-IC xr_string draw_sprintf(xr_string& s, const T& V, int tag)
+IC xr_string draw_sprintf(xr_string& s, const T& V, size_t tag)
 {  string256 tmp; xr_sprintf(tmp,sizeof(tmp),"%d",V); s=tmp; return s;}
 //------------------------------------------------------------------------------
 IC xr_string draw_sprintf(xr_string& s, const float& V, int dec)
