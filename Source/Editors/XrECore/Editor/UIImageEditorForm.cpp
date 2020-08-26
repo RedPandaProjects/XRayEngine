@@ -118,12 +118,14 @@ void UIImageEditorForm::Show(bool bImport)
 void UIImageEditorForm::ImportTextures()
 {
     VERIFY(!Form);
-    Form = xr_new< UIImageEditorForm>();
-    int new_cnt = ImageLib.GetLocalNewTextures(Form->texture_map);
+    FS_FileSet TextureMap;
+    int new_cnt = ImageLib.GetLocalNewTextures(TextureMap);
     if (new_cnt)
     {
         if (ELog.DlgMsg(mtInformation, "Found %d new texture(s)", new_cnt))
         {
+            Form = xr_new< UIImageEditorForm>();
+            Form->texture_map.swap(TextureMap);
             Show(true);
         }
     }
