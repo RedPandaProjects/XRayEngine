@@ -71,6 +71,14 @@ bool Stbi_Load(LPCSTR full_name, U32Vec& data, u32& w, u32& h, u32& a)
                 h = img.GetSize().y;
                 data.resize(w * h);
                 CopyMemory(data.data(), *img, w * h*4);
+                for (bsize i = 0; i < w * h; i++)
+                {
+                    data[i]= color_rgba(color_get_B(data[i]), color_get_G(data[i]), color_get_R(data[i]), color_get_A(data[i]));
+                }
+                for (bsize i = 0; i < h/2; i++)
+                {
+                    bear_swap(data.data()+(i*w), data.data() + ((h - (i+1)) * w), w);
+                }
                 return true;
             }
         }
@@ -133,8 +141,11 @@ void CImageManager::CreateTextureThumbnail(ETextureThumbnail* THM, const xr_stri
     xr_string fn 	= EFS.ChangeFileExt(base_name,".tga");
     if (!Stbi_Load(fn.c_str(),data,w,h,a))
     {
-    	ELog.Msg(mtError,"Can't load texture '%s'.\nCheck file existence",fn.c_str());
-     	return;
+        if (!Stbi_Load(base_name, data, w, h, a))
+        {
+            ELog.Msg(mtError, "Can't load texture '%s'.\nCheck file existence", fn.c_str());
+            return;
+        }
     }
     MakeThumbnailImage(THM,data.data(),w,h,a);
 
@@ -470,7 +481,7 @@ int CImageManager::GetTexturesRaw(FS_FileSet& files, BOOL bFolders)
 //------------------------------------------------------------------------------
 int CImageManager::GetLocalNewTextures(FS_FileSet& files)
 {
-    return FS.file_list(files,_import_,FS_ListFiles|FS_RootOnly,"*.tga,*.bmp");
+    return FS.file_list(files,_import_,FS_ListFiles|FS_RootOnly,"*.tga,*.bmp,*.dds,*.png,*.jpg");
 }
 //------------------------------------------------------------------------------
 // проверяет соответствие размера текстур
