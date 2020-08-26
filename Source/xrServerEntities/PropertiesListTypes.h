@@ -485,7 +485,7 @@ public:
 
 //------------------------------------------------------------------------------
 template <class T>
-IC xr_string draw_sprintf(xr_string& s, const T& V, size_t tag)
+IC xr_string draw_sprintf(xr_string& s, const T& V, int tag)
 {  string256 tmp; xr_sprintf(tmp,sizeof(tmp),"%d",V); s=tmp; return s;}
 //------------------------------------------------------------------------------
 IC xr_string draw_sprintf(xr_string& s, const float& V, int dec)
