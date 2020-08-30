@@ -208,7 +208,12 @@ static void *lua_alloc		(void *ud, void *ptr, size_t osize, size_t nsize) {
 // export
 void	CResourceManager::LS_Load			()
 {
-	LSVM			= lua_newstate(lua_alloc, NULL);
+#ifdef _WIN64
+	LSVM = luaL_newstate();
+#else
+	LSVM = lua_newstate(lua_alloc, NULL);
+#endif
+
 	if (!LSVM)		{
 		Msg			("! ERROR : Cannot initialize LUA VM!");
 		return;
