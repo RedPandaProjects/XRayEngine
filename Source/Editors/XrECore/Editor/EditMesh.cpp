@@ -418,11 +418,12 @@ void CEditableMesh::GetFacePT(u32 fid, const Fvector* pt[3])
 
 int CEditableMesh::GetFaceCount(bool bMatch2Sided, bool bIgnoreOCC)
 {
+	static shared_str occ_name = "materials\\occ";
 	int f_cnt = 0;
     for (SurfFacesPairIt sp_it=m_SurfFaces.begin(); sp_it!=m_SurfFaces.end(); sp_it++)
     {
     	CSurface* S = sp_it->first;
-        if(S->m_GameMtlName=="materials\\occ" && bIgnoreOCC)
+        if(S->m_GameMtlName== occ_name && bIgnoreOCC)
         	continue;
             
     	if (bMatch2Sided){
