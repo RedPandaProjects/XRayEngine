@@ -724,7 +724,7 @@ static HRESULT create_shader				(
 
 	ID3DShaderReflection *pReflection = 0;
 
-	HRESULT const _hr	= D3DReflect( buffer, buffer_size, IID_ID3D11ShaderReflection_WINSDK, (void**)&pReflection);
+	HRESULT const _hr	= D3DReflect( buffer, buffer_size, IID_ID3D11ShaderReflection, (void**)&pReflection);
 	if (SUCCEEDED(_hr) && pReflection)
 	{
 		// Parse constant table data
@@ -739,16 +739,15 @@ static HRESULT create_shader				(
 
 	return				_hr;
 }
-EXTERN_C CONST DECLSPEC_SELECTANY GUID IID_ID3D11ShaderReflection_WINSDK =
-{ 0x8d536ca1, 0x0cca, 0x4956, 0xa8, 0x37, 0x78, 0x69, 0x63, 0x75, 0x55, 0x84 };
-static HRESULT create_shader				(
-		LPCSTR const	pTarget,
-		DWORD const*	buffer,
-		u32	const		buffer_size,
-		LPCSTR const	file_name,
-		void*&			result,
-		bool const		disasm
-	)
+
+static HRESULT create_shader(
+	LPCSTR const	pTarget,
+	DWORD const* buffer,
+	u32	const		buffer_size,
+	LPCSTR const	file_name,
+	void*& result,
+	bool const		disasm
+)
 {
 	HRESULT		_result = E_FAIL;
 	if (pTarget[0] == 'p') {
@@ -768,7 +767,7 @@ static HRESULT create_shader				(
 
 #ifdef USE_DX11
 
-		_result			= D3DReflect( buffer, buffer_size, IID_ID3D11ShaderReflection_WINSDK, (void**)&pReflection);
+		_result			= D3DReflect( buffer, buffer_size, IID_ID3D11ShaderReflection, (void**)&pReflection);
 #else
 		_result			= D3D10ReflectShader( buffer, buffer_size, &pReflection);
 #endif
@@ -804,7 +803,7 @@ static HRESULT create_shader				(
 
 		ID3DShaderReflection *pReflection = 0;
 #ifdef USE_DX11
-		_result			= D3DReflect( buffer, buffer_size, IID_ID3D11ShaderReflection_WINSDK, (void**)&pReflection);
+		_result			= D3DReflect( buffer, buffer_size, IID_ID3D11ShaderReflection, (void**)&pReflection);
 #else
 		_result			= D3D10ReflectShader( buffer, buffer_size, &pReflection);
 #endif
@@ -852,7 +851,7 @@ static HRESULT create_shader				(
 		ID3DShaderReflection *pReflection = 0;
 
 #ifdef USE_DX11
-		_result			= D3DReflect( buffer, buffer_size, IID_ID3D11ShaderReflection_WINSDK, (void**)&pReflection);
+		_result			= D3DReflect( buffer, buffer_size, IID_ID3D11ShaderReflection, (void**)&pReflection);
 #else
 		_result			= D3D10ReflectShader( buffer, buffer_size, &pReflection);
 #endif
@@ -888,7 +887,7 @@ static HRESULT create_shader				(
 //		ID3DShaderReflection *pReflection = 0;
 //
 //#ifdef USE_DX11
-//		_result			= D3DReflect( buffer, buffer_size, IID_ID3D11ShaderReflection_WINSDK, (void**)&pReflection);
+//		_result			= D3DReflect( buffer, buffer_size, IID_ID3D11ShaderReflection, (void**)&pReflection);
 //#else
 //		_result			= D3D10ReflectShader( buffer, buffer_size, &pReflection);
 //#endif

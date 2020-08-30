@@ -14,10 +14,10 @@
 #pragma warning( 4 : 4244 )
 #pragma warning(disable:4237)
 
-#include "directx\d3d10_1.h"
-#include "directx\d3d11.h"
+#include <d3d10_1.h>
+#include <d3d11.h>
 #include "directx\D3Dx10core.h"
-#include "directx\D3DCompiler.h"
+#include <D3DCompiler.h>
 
 #include "../Private/xrD3DDefs.h"
 

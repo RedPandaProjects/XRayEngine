@@ -14,9 +14,9 @@
 #pragma warning( 4 : 4244 )
 #pragma warning(disable:4237)
 
-#include "directx\D3D11.h"
+#include <D3D11.h>
 #include "directx\D3Dx11core.h"
-#include "directx\D3DCompiler.h"
+#include <D3DCompiler.h>
 
 #include "../Private/xrD3DDefs.h"
 
