@@ -358,6 +358,7 @@ void CBuild::Load	(const b_params& Params, const IReader& _in_FS)
 						R_ASSERT2(Surface_Detect(name, N), "Can't load surface");
 						R_ASSERT2(BT.pSurface.LoadFromFile(name), "Can't load surface");
 						BT.pSurface.ClearMipLevels();
+						BT.THM.SetHasSurface(true);
 						BT.pSurface.Convert(BearTexturePixelFormat::R8G8B8A8);
 						if ((BT.pSurface.GetSize().x != BT.dwWidth) || (BT.pSurface.GetSize().y != BT.dwHeight))
 						{

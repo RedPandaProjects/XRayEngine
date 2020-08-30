@@ -61,8 +61,19 @@ void global_claculation_data::xrLoad()
 		R_ASSERT			(CFORM_CURRENT_VERSION==H.version);
 		
 		Fvector*	verts	= (Fvector*)fs->pointer();
-		CDB::TRI*	tris	= (CDB::TRI*)(verts+H.vertcount);
-		RCAST_Model.build	( verts, H.vertcount, tris, H.facecount );
+
+
+		xr_vector< CDB::TRI> tris(H.facecount);
+		{
+			u8* tris_pointer = (u8*)(verts + H.vertcount);
+			for (u32 i = 0; i < H.facecount; i++)
+			{
+				memcpy(&tris[i], tris_pointer, CDB::TRI::Size());
+				tris_pointer += CDB::TRI::Size();
+			}
+
+		}
+		RCAST_Model.build	( verts, H.vertcount, tris.data(), H.facecount );
 		Msg("* Level CFORM: %dK",RCAST_Model.memory()/1024);
 
 		g_rc_faces.resize	(H.facecount);
