@@ -496,7 +496,6 @@ static Sphere UpdateSupport4 (int i, Vector3** apkPerm, Support& rkSupp)
         iIndex = 13;
     }
 
-    assert( iIndex != -1 );
 
     Sphere kMinimal = akS[iIndex];
 
@@ -559,6 +558,8 @@ static Sphere UpdateSupport4 (int i, Vector3** apkPerm, Support& rkSupp)
     case 13:
         rkSupp.m_aiIndex[0] = i;
         break;
+    default:
+        rkSupp.m_iQuantity = 5;
     }
 
     return kMinimal;
@@ -577,6 +578,8 @@ static UpdateFunction gs_aoUpdate[5] =
 Sphere Mgc::MinSphere (int iQuantity, const Vector3* akPoint)
 {
     // initialize random number generator
+    size_t CountRestart = 0;
+    restart:
     static bool s_bFirstTime = true;
     if ( s_bFirstTime )
     {
@@ -617,8 +620,14 @@ Sphere Mgc::MinSphere (int iQuantity, const Vector3* akPoint)
             {
                 if ( !PointInsideSphere(*apkPerm[i],kMinimal) )
                 {
-                    Sphere kSph = gs_aoUpdate[kSupp.m_iQuantity](i,apkPerm,
-                        kSupp);
+                    Sphere kSph = gs_aoUpdate[kSupp.m_iQuantity](i,apkPerm,kSupp);
+                    if (kSupp.m_iQuantity == 5)
+                    {
+                        assert(CountRestart < 1000);
+                        delete[] apkPerm;
+                        CountRestart++;
+                        goto restart;
+                    }
                     if ( kSph.Radius() > kMinimal.Radius() )
                     {
                         kMinimal = kSph;
