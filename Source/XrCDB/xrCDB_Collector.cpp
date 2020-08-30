@@ -330,6 +330,19 @@ namespace CDB
 		flags.push_back(_flags);
 	}
 
+	void	CollectorPacked::add_face_D(
+		const Fvector& v0, const Fvector& v1, const Fvector& v2,	// vertices
+		void*pointer, u32 _flags										// misc
+	)
+	{
+		TRI T;
+		T.verts[0] = VPack(v0);
+		T.verts[1] = VPack(v1);
+		T.verts[2] = VPack(v2);
+		T.pointer = pointer;
+		faces.push_back(T);
+		flags.push_back(_flags);
+	}
 	u32		CollectorPacked::VPack(const Fvector& V)
 	{
 		u32 P = 0xffffffff;
