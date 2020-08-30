@@ -62,9 +62,11 @@ void st_LevelOptions::SetHighQuality()
 
 
 #define MAX_VISUALS 16384
-
+extern char* s_fake_array;
 EScene::EScene()
 {
+    s_fake_array = xr_new<char>(64 * 1024 * 1024);
+
 	m_Valid = false;
 	m_Locked = 0;
 
@@ -72,7 +74,7 @@ EScene::EScene()
         m_SceneTools.insert(mk_pair((ObjClassID)i,(ESceneToolBase*)NULL));
 
     // first init scene graph for objects
-    mapRenderObjects.init(MAX_VISUALS);
+   // mapRenderObjects.init(MAX_VISUALS);
 // 	Build options
     m_SummaryInfo	= 0;
     //ClearSnapList	(false);
@@ -83,9 +85,9 @@ EScene::EScene()
 EScene::~EScene()
 {
 	//xr_delete(g_frmConflictLoadObject);
-
 	VERIFY( m_Valid == false );
     m_ESO_SnapObjects.clear	();
+    xr_free(s_fake_array);
 }
 
 void EScene::OnCreate()

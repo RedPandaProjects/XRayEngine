@@ -1068,7 +1068,7 @@ BOOL SceneBuilder::BuildLight(CLight* e)
     
     L.controller_ID	= BuildLightControl(e->GetLControlName()); //BuildLightControl(LCONTROL_STATIC); 
 
-	svector<u16,16>* lpSectors;
+    svector<u16, 16>* lpSectors = nullptr;
     if (e->m_Flags.is(ELight::flAffectDynamic)){
 		svector<u16,16> sectors;
         lpSectors		= &sectors;

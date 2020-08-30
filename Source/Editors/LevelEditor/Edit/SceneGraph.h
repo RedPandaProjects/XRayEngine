@@ -1,5 +1,5 @@
 #pragma once
-
+#if 0
 template<class K, class T>
 class FixedMAP
 {
@@ -202,3 +202,4 @@ public:
 			CB(nodes+i);
 	}
 };
+#endif
