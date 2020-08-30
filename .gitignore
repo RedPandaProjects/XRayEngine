@@ -34,3 +34,4 @@ gamedata/sounds/
 gamedata/spawns/
 gamedata/textures/
 /*.ini
+*.vcxproj.user
