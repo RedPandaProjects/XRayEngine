@@ -202,14 +202,14 @@ void screenshot_manager::shedule_Update(u32 dt)
 			}
 		}
 #endif //#ifdef DEBUG*/
-		DWORD	process_affinity_mask;
-		DWORD	tmp_dword;
+		PDWORD_PTR	process_affinity_mask;
+		PDWORD_PTR	tmp_dword;
 		GetProcessAffinityMask(
 			GetCurrentProcess(),
-			&process_affinity_mask,
-			&tmp_dword);
+			process_affinity_mask,
+			tmp_dword);
 		process_screenshot(
-			btwCount1(static_cast<u32>(process_affinity_mask)) == 1
+			btwCount1(static_cast<u32>(*process_affinity_mask)) == 1
 		);
 	}
 /*	if (is_drawing_downloads())
