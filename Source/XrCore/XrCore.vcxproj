@@ -418,6 +418,7 @@
     <ClInclude Include="_math.h" />
     <ClInclude Include="_matrix.h" />
     <ClInclude Include="_matrix33.h" />
+    <ClInclude Include="_matrix_sse.h" />
     <ClInclude Include="_obb.h" />
     <ClInclude Include="_plane.h" />
     <ClInclude Include="_plane2.h" />

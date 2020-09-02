@@ -553,6 +553,9 @@
     <ClInclude Include="ELocatorAPI.h">
       <Filter>FS\LocatorAPI</Filter>
     </ClInclude>
+    <ClInclude Include="_matrix_sse.h">
+      <Filter>Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="FileSystem.h">
