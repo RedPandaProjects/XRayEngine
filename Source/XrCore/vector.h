@@ -295,6 +295,35 @@ IC _matrix<T>& _matrix<T>::mk_xform	(const _quaternion<T> &Q, const Tvector &V)
 	_41 = V.x;					_42 = V.y;					_43 = V.z;					_44 = 1;
 	return *this;
 }
+#ifdef USE_SSE
+IC _matrix<float>& _matrix<float>::rotation(const _quaternion<float>& Q)
+{
+	float xx = Q.x * Q.x; float yy = Q.y * Q.y; float zz = Q.z * Q.z;
+	float xy = Q.x * Q.y; float xz = Q.x * Q.z; float yz = Q.y * Q.z;
+	float wx = Q.w * Q.x; float wy = Q.w * Q.y; float wz = Q.w * Q.z;
+
+
+	R[0] = _mm_set_ps(1 - 2 * (yy + zz), 2 * (xy - wz), 2 * (xz + wy), 0);
+	R[1] = _mm_set_ps(2 * (xy + wz), 1 - 2 * (xx + zz), 2 * (yz - wx), 0);
+	R[2] = _mm_set_ps(2 * (xz - wy), 2 * (yz + wx), 1 - 2 * (xx + yy), 0);
+	R[3] = _mm_set_ps(0, 0, 0, 1);
+	return *this;
+}
+
+IC _matrix<float>& _matrix<float>::mk_xform(const _quaternion<float>& Q, const Tvector& V)
+{
+	float xx = Q.x * Q.x; float yy = Q.y * Q.y; float zz = Q.z * Q.z;
+	float xy = Q.x * Q.y; float xz = Q.x * Q.z; float yz = Q.y * Q.z;
+	float wx = Q.w * Q.x; float wy = Q.w * Q.y; float wz = Q.w * Q.z;
+
+	R[0] = _mm_set_ps(1 - 2 * (yy + zz), 2 * (xy - wz), 2 * (xz + wy), 0);
+	R[1] = _mm_set_ps(2 * (xy + wz), 1 - 2 * (xx + zz), 2 * (yz - wx), 0);
+	R[2] = _mm_set_ps(2 * (xz - wy), 2 * (yz + wx), 1 - 2 * (xx + yy), 0);
+	R[3] = _mm_set_ps(V.x, V.y, V.z, 1);
+	return *this;
+}
+
+#endif
 
 #define TRACE_QZERO_TOLERANCE	0.1f
 template <class T>

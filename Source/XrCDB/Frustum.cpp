@@ -194,10 +194,17 @@ void CFrustum::CreateFromPortal(sPoly* poly, Fvector& vPN, Fvector& vBase, Fmatr
 
 	// Far clipping plane
 	Fmatrix &M	= mFullXFORM;
-	P.n.x		= -(M._14 - M._13);
-	P.n.y		= -(M._24 - M._23);
-	P.n.z		= -(M._34 - M._33);
-	P.d			= -(M._44 - M._43);
+
+	Fvector4 Matrix[4];
+	Matrix[0] = M.get_row(0);
+	Matrix[1] = M.get_row(1);
+	Matrix[2] = M.get_row(2);
+	Matrix[3] = M.get_row(3);
+
+	P.n.x		= -( Matrix[0].w - Matrix[0].z);
+	P.n.y		= -( Matrix[1].w - Matrix[1].z);
+	P.n.z		= -(Matrix[2].w - Matrix[2].z);
+	P.d			= -(Matrix[3].w - Matrix[3].z);
 	float denom = 1.0f / P.n.magnitude();
 	P.n.x		*= denom;
 	P.n.y		*= denom;
@@ -361,64 +368,68 @@ void CFrustum::CreateFromMatrix(Fmatrix &M, u32 mask)
 {
 	VERIFY			(_valid(M));
 	p_count			= 0;
-
+	Fvector4 Matrix[4];
+	Matrix[0] = M.get_row(0);
+	Matrix[1] = M.get_row(1);
+	Matrix[2] = M.get_row(2);
+	Matrix[3] = M.get_row(3);
 	// Left clipping plane
 	if (mask&FRUSTUM_P_LEFT)
 	{
-		planes[p_count].n.x		= -(M._14 + M._11);
-		planes[p_count].n.y		= -(M._24 + M._21);
-		planes[p_count].n.z		= -(M._34 + M._31);
-		planes[p_count].d		= -(M._44 + M._41);
+		planes[p_count].n.x		= -( Matrix[0].w + Matrix[0].x);
+		planes[p_count].n.y		= -( Matrix[1].w + Matrix[1].x);
+		planes[p_count].n.z		= -(Matrix[2].w + Matrix[2].x);
+		planes[p_count].d		= -(Matrix[3].w + Matrix[3].x);
 		p_count++;
 	}
 
 	// Right clipping plane
 	if (mask&FRUSTUM_P_RIGHT)
 	{
-		planes[p_count].n.x		= -(M._14 - M._11);
-		planes[p_count].n.y		= -(M._24 - M._21);
-		planes[p_count].n.z		= -(M._34 - M._31);
-		planes[p_count].d		= -(M._44 - M._41);
+		planes[p_count].n.x		= -( Matrix[0].w - Matrix[0].x);
+		planes[p_count].n.y		= -( Matrix[1].w - Matrix[1].x);
+		planes[p_count].n.z		= -(Matrix[2].w - Matrix[2].x);
+		planes[p_count].d		= -(Matrix[3].w - Matrix[3].x);
 		p_count++;
 	}
 
 	// Top clipping plane
 	if (mask&FRUSTUM_P_TOP)
 	{
-		planes[p_count].n.x		= -(M._14 - M._12);
-		planes[p_count].n.y		= -(M._24 - M._22);
-		planes[p_count].n.z		= -(M._34 - M._32);
-		planes[p_count].d		= -(M._44 - M._42);
+		planes[p_count].n.x		= -( Matrix[0].w - Matrix[0].y);
+		planes[p_count].n.y		= -( Matrix[1].w - Matrix[1].y);
+		planes[p_count].n.z		= -(Matrix[2].w - Matrix[2].y);
+		planes[p_count].d		= -(Matrix[3].w - Matrix[3].y);
 		p_count++;
 	}
 
 	// Bottom clipping plane
 	if (mask&FRUSTUM_P_BOTTOM)
 	{
-		planes[p_count].n.x		= -(M._14 + M._12);
-		planes[p_count].n.y		= -(M._24 + M._22);
-		planes[p_count].n.z		= -(M._34 + M._32);
-		planes[p_count].d		= -(M._44 + M._42);
+		planes[p_count].n.x		= -( Matrix[0].w + Matrix[0].y);
+		planes[p_count].n.y		= -( Matrix[1].w + Matrix[1].y);
+		planes[p_count].n.z		= -(Matrix[2].w + Matrix[2].y);
+		planes[p_count].d		= -(Matrix[3].w + Matrix[3].y);
 		p_count++;
 	}
 
 	// Far clipping plane
 	if (mask&FRUSTUM_P_FAR)
 	{
-		planes[p_count].n.x		= -(M._14 - M._13);
-		planes[p_count].n.y		= -(M._24 - M._23);
-		planes[p_count].n.z		= -(M._34 - M._33);
-		planes[p_count].d		= -(M._44 - M._43);
+		planes[p_count].n.x		= -( Matrix[0].w - Matrix[0].z);
+		planes[p_count].n.y		= -( Matrix[1].w - Matrix[1].z);
+		planes[p_count].n.z		= -(Matrix[2].w - Matrix[2].z);
+		planes[p_count].d		= -(Matrix[3].w - Matrix[3].z);
 		p_count++;
 	}
 
 	// Near clipping plane
 	if (mask&FRUSTUM_P_NEAR)
 	{
-		planes[p_count].n.x		= -(M._14 + M._13);
-		planes[p_count].n.y		= -(M._24 + M._23);
-		planes[p_count].n.z		= -(M._34 + M._33);
-		planes[p_count].d		= -(M._44 + M._43);
+		planes[p_count].n.x		= -( Matrix[0].w + Matrix[0].z);
+		planes[p_count].n.y		= -( Matrix[1].w + Matrix[1].z);
+		planes[p_count].n.z		= -(Matrix[2].w + Matrix[2].z);
+		planes[p_count].d		= -(Matrix[3].w + Matrix[3].z);
 		p_count++;
 	}
 

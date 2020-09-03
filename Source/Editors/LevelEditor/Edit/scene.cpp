@@ -62,11 +62,14 @@ void st_LevelOptions::SetHighQuality()
 
 
 #define MAX_VISUALS 16384
+#ifdef USE_ARENA_ALLOCATOR
 extern char* s_fake_array;
+#endif
 EScene::EScene()
 {
+#ifdef USE_ARENA_ALLOCATOR
     s_fake_array = xr_new<char>(64 * 1024 * 1024);
-
+#endif
 	m_Valid = false;
 	m_Locked = 0;
 
@@ -87,7 +90,9 @@ EScene::~EScene()
 	//xr_delete(g_frmConflictLoadObject);
 	VERIFY( m_Valid == false );
     m_ESO_SnapObjects.clear	();
+#ifdef USE_ARENA_ALLOCATOR
     xr_free(s_fake_array);
+#endif
 }
 
 void EScene::OnCreate()

@@ -116,10 +116,10 @@ public:
 	virtual void						spatial_move		();
 	void								spatial_update		(float eps_P, float eps_R);
 
-	ICF Fvector&						Direction			() 					{ return renderable.xform.k;		}
-	ICF const Fvector&					Direction			() 			const	{ return renderable.xform.k;		}
-	ICF Fvector&						Position			() 					{ return renderable.xform.c;		}
-	ICF const Fvector&					Position			() 			const	{ return renderable.xform.c;		}
+	ICF Fvector&						Direction			() 					{ return renderable.xform.get_k();		}
+	ICF const Fvector&					Direction			() 			const	{ return renderable.xform.get_k();		}
+	ICF Fvector&						Position			() 					{ return renderable.xform.get_c();		}
+	ICF const Fvector&					Position			() 			const	{ return renderable.xform.get_c();		}
 	virtual float						Radius				()			const;
 	virtual const Fbox&					BoundingBox			()			const;
 	

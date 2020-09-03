@@ -50,10 +50,7 @@ namespace FVF {
 			// Finally, scale the vertices to screen coords.
 			// Note 1: device coords range from -1 to +1 in the viewport.
 			// Note 2: the p.z-coordinate will be used in the z-buffer.
-			p.w =   matSet._14*v.x + matSet._24*v.y + matSet._34*v.z + matSet._44;
-			p.x	=  (matSet._11*v.x + matSet._21*v.y + matSet._31*v.z + matSet._41)/p.w;
-			p.y	= -(matSet._12*v.x + matSet._22*v.y + matSet._32*v.z + matSet._42)/p.w;
-			p.z	=  (matSet._13*v.x + matSet._23*v.y + matSet._33*v.z + matSet._43)/p.w;
+			matSet.transform(p, v); p.y *= -1;
 		};
 	};
 	const u32 F_TL0uv	= D3DFVF_XYZRHW | D3DFVF_DIFFUSE;
@@ -78,10 +75,7 @@ namespace FVF {
 			// Finally, scale the vertices to screen coords.
 			// Note 1: device coords range from -1 to +1 in the viewport.
 			// Note 2: the p.z-coordinate will be used in the z-buffer.
-			p.w =   matSet._14*v.x + matSet._24*v.y + matSet._34*v.z + matSet._44;
-			p.x	=  (matSet._11*v.x + matSet._21*v.y + matSet._31*v.z + matSet._41)/p.w;
-			p.y	= -(matSet._12*v.x + matSet._22*v.y + matSet._32*v.z + matSet._42)/p.w;
-			p.z	=  (matSet._13*v.x + matSet._23*v.y + matSet._33*v.z + matSet._43)/p.w;
+			matSet.transform(p, v); p.y *= -1;
 		};
 	};
 	const u32 F_TL	= D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1;
@@ -108,10 +102,7 @@ namespace FVF {
 			// Finally, scale the vertices to screen coords.
 			// Note 1: device coords range from -1 to +1 in the viewport.
 			// Note 2: the p.z-coordinate will be used in the z-buffer.
-			p.w =   matSet._14*v.x + matSet._24*v.y + matSet._34*v.z + matSet._44;
-			p.x	=  (matSet._11*v.x + matSet._21*v.y + matSet._31*v.z + matSet._41)/p.w;
-			p.y	= -(matSet._12*v.x + matSet._22*v.y + matSet._32*v.z + matSet._42)/p.w;
-			p.z	=  (matSet._13*v.x + matSet._23*v.y + matSet._33*v.z + matSet._43)/p.w;
+			matSet.transform(p, v); p.y *= -1;
 		};
 	};
 	const u32 F_TL2uv	= D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX2;

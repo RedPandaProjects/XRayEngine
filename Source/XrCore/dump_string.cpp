@@ -6,11 +6,16 @@ std::string get_string( const Fvector& v )
 }
 std::string get_string( const Fmatrix& dop )
 {
+	Fvector4 Matrix[4];
+	Matrix[0] = dop.get_row(0);
+	Matrix[1] = dop.get_row(1);
+	Matrix[2] = dop.get_row(2);
+	Matrix[3] = dop.get_row(3);
 	return make_string	("\n%f,%f,%f,%f\n%f,%f,%f,%f\n%f,%f,%f,%f\n%f,%f,%f,%f\n",
-		dop.i.x, dop.i.y, dop.i.z, dop._14_,
-		dop.j.x, dop.j.y, dop.j.z, dop._24_,
-		dop.k.x, dop.k.y, dop.k.z, dop._34_,
-		dop.c.x, dop.c.y, dop.c.z, dop._44_
+		Matrix[0].x, Matrix[0].y, Matrix[0].z, Matrix[0].w,
+		Matrix[1].x, Matrix[1].y, Matrix[1].z, Matrix[1].w,
+		Matrix[2].x, Matrix[2].y, Matrix[2].z, Matrix[2].w,
+		Matrix[3].x, Matrix[3].y, Matrix[3].z, Matrix[3].w
 	);
 }
 std::string get_string(const Fbox &box)
@@ -34,13 +39,20 @@ void dump( LPCSTR name, const Fvector &v )
 	Msg( "%s", dump_string( name, v ).c_str() );
 }
 
-std::string dump_string( LPCSTR name, const Fmatrix &form )
+std::string dump_string( LPCSTR name, const Fmatrix &dop )
 {
-	return 
-	make_string( "%s, _14_=%f \n", dump_string( make_string( "%s.i, ", name ).c_str(), form.i ).c_str( ) , form._14_ )	+ 
-	make_string( "%s, _24_=%f \n", dump_string( make_string( "%s.j, ", name ).c_str(), form.j ).c_str( ) , form._24_ )	+  
-	make_string( "%s, _34_=%f \n", dump_string( make_string( "%s.k, ", name ).c_str(), form.k ).c_str( ) , form._34_  ) +  
-	make_string( "%s, _44_=%f \n", dump_string( make_string( "%s.c, ", name ).c_str(), form.c ).c_str( ) , form._44_ );  
+	
+	Fvector4 Matrix[4];
+	Matrix[0] = dop.get_row(0);
+	Matrix[1] = dop.get_row(1);
+	Matrix[2] = dop.get_row(2);
+	Matrix[3] = dop.get_row(3);
+	return make_string("\n%s[%f,%f,%f,%f]\n%s[%f,%f,%f,%f]\n%s[%f,%f,%f,%f]\n%s[%f,%f,%f,%f]\n",
+		name,Matrix[0].x, Matrix[0].y, Matrix[0].z, Matrix[0].w,
+		name, Matrix[1].x, Matrix[1].y, Matrix[1].z, Matrix[1].w,
+		name, Matrix[2].x, Matrix[2].y, Matrix[2].z, Matrix[2].w,
+		name, Matrix[3].x, Matrix[3].y, Matrix[3].z, Matrix[3].w
+	);
 }
 
 void dump( LPCSTR name, const Fmatrix &form )

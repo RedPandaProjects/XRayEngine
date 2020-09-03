@@ -333,10 +333,12 @@ void NET_Packet::skip_stringZ()
 
 void NET_Packet::r_matrix(Fmatrix& M)
 {
-	r_vec3	(M.i);	M._14_	= 0;
-	r_vec3	(M.j);	M._24_	= 0;
-	r_vec3	(M.k);	M._34_	= 0;
-	r_vec3	(M.c);	M._44_	= 1;
+	Fvector I, J, K, C;
+	r_vec3	(I);	
+	r_vec3	(J);	
+	r_vec3	(K);	
+	r_vec3	(C);	
+	M.set(I, J, K, C);
 }
 
 void NET_Packet::r_clientID(ClientID& C)

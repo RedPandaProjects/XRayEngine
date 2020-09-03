@@ -197,7 +197,7 @@ void CODEGeom::	clear_motion_history( bool set_unspecified )
 #ifdef	DEBUG
 	Fmatrix m;
 	get_xform( m );
-	if( Fvector().sub( m.c, cast_fv ( dGeomGetUserData( geom() )->last_pos ) ).magnitude() > EPS )
+	if( Fvector().sub( m.get_c(), cast_fv ( dGeomGetUserData( geom() )->last_pos ) ).magnitude() > EPS )
 		Msg("! WRONG THING" );
 #endif
 }

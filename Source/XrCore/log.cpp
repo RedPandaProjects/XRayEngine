@@ -144,13 +144,17 @@ void Log				(const char *msg, const Fvector &dop) {
 void Log				(const char *msg, const Fmatrix &dop)	{
 	u32			buffer_size = (xr_strlen(msg) + 2 + 4*( 4*(64 + 1) + 1 ) + 1) * sizeof(char);
 	PSTR buf	= (PSTR)_alloca( buffer_size );
-
+	Fvector4 Matrix[4];
+	Matrix[0] = dop.get_row(0);
+	Matrix[1] = dop.get_row(1);
+	Matrix[2] = dop.get_row(2);
+	Matrix[3] = dop.get_row(3);
 	xr_sprintf	(buf, buffer_size,"%s:\n%f,%f,%f,%f\n%f,%f,%f,%f\n%f,%f,%f,%f\n%f,%f,%f,%f\n",
 		msg,
-		dop.i.x, dop.i.y, dop.i.z, dop._14_,
-		dop.j.x, dop.j.y, dop.j.z, dop._24_,
-		dop.k.x, dop.k.y, dop.k.z, dop._34_,
-		dop.c.x, dop.c.y, dop.c.z, dop._44_
+		Matrix[0].x, Matrix[0].y, Matrix[0].z, Matrix[0].w,
+		Matrix[1].x, Matrix[1].y, Matrix[1].z, Matrix[1].w,
+		Matrix[2].x, Matrix[2].y, Matrix[2].z, Matrix[2].w,
+		Matrix[3].x, Matrix[3].y, Matrix[3].z, Matrix[3].w
 	);
 	Log			(buf);
 }

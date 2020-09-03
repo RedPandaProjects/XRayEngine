@@ -366,7 +366,10 @@ private:
 		}
 };
 
-IC float DET(const Fmatrix &a){
+IC float DET(const Fmatrix &a)
+{
+
+
 	return
 		(( a._11 * ( a._22 * a._33 - a._23 * a._32 ) -
 		a._12 * ( a._21 * a._33 - a._23 * a._31 ) +

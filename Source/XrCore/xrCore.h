@@ -83,6 +83,9 @@
 #include <math.h>
 #include <string.h>
 #include <typeinfo>
+#include <intrin.h>
+
+#define USE_SSE
 //#include <process.h>
 
 #ifndef DEBUG

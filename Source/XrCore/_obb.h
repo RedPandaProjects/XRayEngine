@@ -60,17 +60,14 @@ public:
 	}
 	IC void			xform_get(Tmatrix& D) const
 	{
-		D.i.set(m_rotate.i); D._14_ = 0;
-		D.j.set(m_rotate.j); D._24_ = 0;
-		D.k.set(m_rotate.k); D._34_ = 0;
-		D.c.set(m_translate);D._44_ = 1;
+		D.set(m_rotate.i, m_rotate.j, m_rotate.k, m_translate);
 	}
 	IC SelfRef		xform_set(const Tmatrix& S)
 	{
-		m_rotate.i.set	(S.i);
-		m_rotate.j.set	(S.j);
-		m_rotate.k.set	(S.k);
-		m_translate.set	(S.c);
+		m_rotate.i.set	(S.get_i());
+		m_rotate.j.set	(S.get_j());
+		m_rotate.k.set	(S.get_k());
+		m_translate.set	(S.get_c());
 		return *this;
 	}
 	IC void			xform_full(Tmatrix& D) const
