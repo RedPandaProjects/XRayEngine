@@ -75,7 +75,7 @@ void CPHShell::Activate(const Fmatrix &m0,float dt01,const Fmatrix &m2,bool disa
 	//mXFORM.set(m0);
 	//Activate(disable);
 	Fvector lin_vel;
-	lin_vel.sub(m2.c,m0.c);
+	lin_vel.sub(m2.get_c(),m0.get_c());
 	set_LinearVel(lin_vel);
 }
 

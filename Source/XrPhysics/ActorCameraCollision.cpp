@@ -101,11 +101,8 @@ static void get_viewport_geom(Fvector &box, Fmatrix &form, const CCameraBase &ca
 {
 	box.z = _viewport_near / 2.f;
 	tviewport_size ( inl_ph_world().Device(), _viewport_near, camera, box.x, box.y );
-	form.identity();
-	form.i.set( camera.Right() );
-	form.j.set( camera.Up() );
-	form.k.set( camera.Direction() );
-	form.c.mad( camera.Position(), camera.Direction(), _viewport_near/2.f );
+	form.set( camera.Right() , camera.Up(), camera.Direction() ,
+	Fvector().mad( camera.Position(), camera.Direction(), _viewport_near/2.f ));
 #ifdef DEBUG
 	if( !_valid( form ) )
 	{
@@ -198,8 +195,7 @@ void set_camera_collision( const Fvector &box_size, const Fmatrix &xform, CPhysi
 
 	box->set_size( bs );
 	Fmatrix m = Fidentity;
-	m.c.z-= box_size.z;
-	m.c.y-= box_size.y*0.5f;
+	m.append_row(3,0,-box_size.y * 0.5f,-box_size.z,0);
 	box->set_local_form_bt( m );
 	//CBoxGeom* character_collision_geom = smart_cast<CBoxGeom*>( roote->geometry( 1 ) );
 	CCylinderGeom* character_collision_geom = smart_cast<CCylinderGeom*>( roote->geometry( 1 ) );
@@ -215,13 +211,13 @@ void set_camera_collision( const Fvector &box_size, const Fmatrix &xform, CPhysi
 	character_collision_geom->set_radius( character_collision_box_size.x );
 	VERIFY( _valid(xform) );
 	Fmatrix character_collision_geom_local_xform( Fmatrix().invert(xform) );
-	Fvector shift_fv = Fvector().mul(  xform.k, camera_collision_character_shift_z );
+	Fvector shift_fv = Fvector().mul(  xform.get_k(), camera_collision_character_shift_z );
 	shift_fv.y = 0;
 	character_collision_geom_local_xform.transform_dir( shift_fv );
 
 	//character_collision_geom_local_xform.c.set( 0, -0.8f, 0 );
-	character_collision_geom_local_xform.c.set(
-		Fvector().mul( character_collision_geom_local_xform.j, -camera_collision_character_gl_shift_y ).add( 
+	character_collision_geom_local_xform.set_c(
+		Fvector().mul( character_collision_geom_local_xform.get_j(), -camera_collision_character_gl_shift_y ).add( 
 		Fvector( ).set( shift_fv )
 		)
 	);
@@ -342,7 +338,7 @@ void	collide_camera( CCameraBase & camera, float _viewport_near, IPhysicsShellHo
 #ifdef	DEBUG
 	if( dbg_draw_camera_collision )
 	{
-		debug_output().DBG_DrawMatrix( Fmatrix().translate( xform.c ), 1 );
+		debug_output().DBG_DrawMatrix( Fmatrix().translate( xform.get_c() ), 1 );
 		shell->dbg_draw_geometry( 1, D3DCOLOR_XRGB(0, 0, 255 ) );
 	}
 #endif

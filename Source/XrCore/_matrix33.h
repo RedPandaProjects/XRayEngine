@@ -37,9 +37,12 @@ public:
 	}
 	IC SelfRef set(const _matrix<T> &a) 
 	{
-    	_11=a._11; _12=a._12; _13=a._13;
-    	_21=a._21; _22=a._22; _23=a._23;
-    	_31=a._31; _32=a._32; _33=a._33;
+        Fvector i =a.get_i();
+        Fvector j = a.get_j();
+        Fvector k = a.get_k();
+    	_11=i.x; _12=i.y; _13=i.z;
+    	_21=j.x; _22=j.y; _23=j.z;
+    	_31=k.x; _32=k.y; _33=k.z;
 		return *this;
 	}
 	IC SelfRef identity(void) {

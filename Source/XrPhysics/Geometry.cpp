@@ -168,7 +168,7 @@ void	CODEGeom::	get_Box	( Fmatrix& form, Fvector&	sz )const
 	get_xform( form );
 	Fvector c;
 	t_get_box( this, form, sz, c );
-	form.c = c;
+	form.set_c( c);
 }
 /*
 void CODEGeom::get_global_form_bt(Fmatrix& form)
@@ -181,7 +181,8 @@ void CODEGeom::get_global_form_bt(Fmatrix& form)
 */
 void CODEGeom::set_static_ref_form(const Fmatrix& form)
 {
-	dGeomSetPosition(geometry_transform(),form.c.x,form.c.y,form.c.z);
+	Fvector c = form.get_c();
+	dGeomSetPosition(geometry_transform(),c.x,c.y,c.z);
 	Fmatrix33 m33;
 	m33.set(form);
 	dMatrix3 R;
@@ -450,7 +451,8 @@ void	CODEGeom::	set_local_form_bt	( const Fmatrix& xform )
 	dMatrix3 R;
 	PHDynamicData::FMXtoDMX( xform,R );
 	dGeomSetRotation( geom(), R );
-	dGeomSetPosition( geom(), xform.c.x, xform.c.y, xform.c.z );
+	Fvector c = xform.get_c();
+	dGeomSetPosition( geom(), c.x,c.y, c.z );
 }
 
 void CBoxGeom::get_Extensions( const Fvector& axis, float center_prg, float& lo_ext, float& hi_ext ) const
@@ -517,21 +519,14 @@ const Fvector& CBoxGeom::local_center()
 
 void CBoxGeom::get_local_form(Fmatrix& form)
 {
-	form._14=0;
-	form._24=0;
-	form._34=0;
-	form._44=1;
-	form.i.set(m_box.m_rotate.i);
-	form.j.set(m_box.m_rotate.j);
-	form.k.set(m_box.m_rotate.k);
-	form.c.set(m_box.m_translate);
+	form.set(m_box.m_rotate.i, m_box.m_rotate.j, m_box.m_rotate.k, m_box.m_translate);
 }
 void CBoxGeom::set_local_form(const Fmatrix& form)
 {
-	m_box.m_rotate.i.set(form.i);
-	m_box.m_rotate.j.set(form.j);
-	m_box.m_rotate.k.set(form.k);
-	m_box.m_translate.set(form.c);
+	m_box.m_rotate.i.set(form.get_i());
+	m_box.m_rotate.j.set(form.get_j());
+	m_box.m_rotate.k.set(form.get_k());
+	m_box.m_translate.set(form.get_c());
 }
 
 
@@ -623,11 +618,11 @@ const Fvector& CSphereGeom::local_center()
 void CSphereGeom::get_local_form(Fmatrix& form)
 {
 	form.identity();
-	form.c.set(m_sphere.P);
+	form.set_c(m_sphere.P);
 }
 void CSphereGeom::set_local_form(const Fmatrix& form)
 {
-	m_sphere.P.set(form.c);
+	m_sphere.P.set(form.get_c());
 }
 dGeomID CSphereGeom::create()
 {
@@ -700,18 +695,19 @@ const Fvector& CCylinderGeom::local_center()
 
 void CCylinderGeom::get_local_form(Fmatrix& form)
 {
-	form._14=0;
+	/*form._14=0;
 	form._24=0;
 	form._34=0;
 	form._44=1;
-	form.j.set(m_cylinder.m_direction);
-	Fvector::generate_orthonormal_basis(form.j,form.k,form.i);
-	form.c.set(m_cylinder.m_center);
+	form.j.set(m_cylinder.m_direction);*/
+	Fvector i, k;
+	Fvector::generate_orthonormal_basis(m_cylinder.m_direction,k,i);
+	form.set(i, m_cylinder.m_direction,k,m_cylinder.m_center);
 }
 void CCylinderGeom::set_local_form(const Fmatrix& form)
 {
-	m_cylinder.m_center.set(form.c);
-	m_cylinder.m_direction.set(form.j);
+	m_cylinder.m_center.set(form.get_c());
+	m_cylinder.m_direction.set(form.get_j());
 }
 dGeomID CCylinderGeom::create()
 {
@@ -753,7 +749,7 @@ void	CODEGeom::	dbg_draw			( float scale, u32 color, Flags32 flags )const
 	Fmatrix m;
 	get_xform( m );
 	debug_output().DBG_DrawMatrix( m, 0.02f );
-	debug_output().DBG_DrawPoint( m.c, 0.001f, D3DCOLOR_XRGB(0, 255, 255 ) );
+	debug_output().DBG_DrawPoint( m.get_c(), 0.001f, D3DCOLOR_XRGB(0, 255, 255 ) );
 }
 
 
@@ -785,7 +781,7 @@ void	CSphereGeom::	dbg_draw			( float scale, u32 color, Flags32 flags )const
 	VERIFY( g );
 	dGeomSphereGetRadius( g );
 
-	debug_output().DBG_DrawPoint( m.c, dGeomSphereGetRadius( g ), color );
+	debug_output().DBG_DrawPoint( m.get_c(), dGeomSphereGetRadius( g ), color );
 
 }
 

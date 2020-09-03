@@ -137,21 +137,26 @@ public:
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-IC void own_axis(const Fmatrix& m,Fvector& axis){
-	if(m._11==1.f) {axis.set(1.f,0.f,0.f); return;}
-	float k=m._13*m._21-m._11*m._23+m._23;
+IC void own_axis(const Fmatrix& m,Fvector& axis)
+{
+	Fvector4 row1, row2;
+	row1 = m.get_row(0);
+	row2 = m.get_row(1);
+	if(row1.x==1.f) {axis.set(1.f,0.f,0.f); return;}
+	float k=row1.z*row2.x-row1.x*row2.z+row2.z;
 
-	if(k==0.f){
-		if(m._13==0.f) {axis.set(0.f,0.f,1.f);return;}
-		float k1=m._13/(1.f-m._11);
+	if(k==0.f)
+	{
+		if(row1.z==0.f) {axis.set(0.f,0.f,1.f);return;}
+		float k1=row1.z/(1.f-row1.x);
 		axis.z=_sqrt(1.f/(1.f+k1*k1));
 		axis.x=axis.z*k1;
 		axis.y=0.f;
 		return;
 	}
 
-	float k_zy=-(m._12*m._21-m._11*m._22+m._11+m._22-1.f)/k;
-	float k_xy=(m._12+m._13*k_zy)/(1.f-m._11);
+	float k_zy=-(row1.y*row2.x-row1.x*row2.y+row1.x+row2.y-1.f)/k;
+	float k_xy=(row1.y+row1.z*k_zy)/(1.f-row1.x);
 	axis.y=_sqrt(1.f/(k_zy*k_zy+k_xy*k_xy+1.f));
 	axis.x=axis.y*k_xy;
 	axis.z=axis.y*k_zy;
