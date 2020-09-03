@@ -1031,7 +1031,7 @@ bool CExportSkeleton::ExportMotionKeys(IWriter& F)
                 int	_y 				= int(q.y*KEY_Quant); clamp(_y,-32767,32767); Kr.y =  (s16)_y;
                 int	_z 				= int(q.z*KEY_Quant); clamp(_z,-32767,32767); Kr.z =  (s16)_z;
                 int	_w 				= int(q.w*KEY_Quant); clamp(_w,-32767,32767); Kr.w =  (s16)_w;
-                Kt.set				(mat.c);//B->_Offset());
+                Kt.set				(mat.get_c());//B->_Offset());
             }
         }
         // free temp storage

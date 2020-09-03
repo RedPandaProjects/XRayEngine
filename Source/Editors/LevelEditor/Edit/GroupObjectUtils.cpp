@@ -204,7 +204,7 @@ void CGroupObject::RotateParent(Fvector& axis, float angle )
         Fvector 	xyz;
         On.getXYZ	(xyz);
         it->pObject->NumSetRotation(xyz);
-        it->pObject->NumSetPosition(On.c);
+        it->pObject->NumSetPosition(On.get_c());
     }
 }
 
@@ -222,7 +222,7 @@ void CGroupObject::RotateLocal(Fvector& axis, float angle )
         Fvector 	xyz;
         On.getXYZ	(xyz);
         it->pObject->NumSetRotation(xyz);
-        it->pObject->NumSetPosition(On.c);
+        it->pObject->NumSetPosition(On.get_c());
     }
 }
 

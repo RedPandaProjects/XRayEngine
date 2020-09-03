@@ -119,9 +119,9 @@ void CLight::Render(int priority, bool strictB2F)
 //			dir.setHP		(GetRotation().y,GetRotation().x);
 //			DU.DrawCone		(Fidentity, GetPosition(), dir, Selected()?m_Range:VIS_RADIUS, radius2, clr, true, false);
         	if (Selected())
-            	DU_impl.DrawSpotLight( GetPosition(), FTransformR.k, m_Range, m_Cone, clr );
+            	DU_impl.DrawSpotLight( GetPosition(), FTransformR.get_k(), m_Range, m_Cone, clr );
             else
-            	DU_impl.DrawSpotLight( GetPosition(), FTransformR.k, VIS_RADIUS, m_Cone, clr );
+            	DU_impl.DrawSpotLight( GetPosition(), FTransformR.get_k(), VIS_RADIUS, m_Cone, clr );
         }break;
         default: THROW;
         }

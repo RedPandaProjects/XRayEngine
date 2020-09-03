@@ -345,12 +345,12 @@ static Fvector PT [5] = {
 	if(!bSelected)
 		C.a		*= 0.6f;
 
-	du->DrawIndexedPrimitive(2/*D3DPT_LINELIST*/, 8, parent.c, PT, 6, IL, 16, C.get());
+	du->DrawIndexedPrimitive(2/*D3DPT_LINELIST*/, 8, parent.get_c(), PT, 6, IL, 16, C.get());
 	C.mul_rgba(0.75f);
-	du->DrawIndexedPrimitive(4/*D3DPT_TRIANGLELIST*/, 4, parent.c, PT, 6, IT, 12, C.get());
+	du->DrawIndexedPrimitive(4/*D3DPT_TRIANGLELIST*/, 4, parent.get_c(), PT, 6, IT, 12, C.get());
 	
 	if(bSelected)
-		du->DrawSelectionBox(parent.c, Fvector().set(0.5f,1.0f,0.5f),NULL);
+		du->DrawSelectionBox(parent.get_c(), Fvector().set(0.5f,1.0f,0.5f),NULL);
 #	endif // #ifdef XRSEFACTORY_EXPORTS
 }
 
@@ -1529,16 +1529,16 @@ void CSE_ALifeObjectHangingLamp::on_render(CDUInterface* du, ISE_AbstractLEOwner
 		}
 		if (bSelected){
 			if (flags.is(flTypeSpot)){
-				du->DrawSpotLight	(main_xform.c, main_xform.k, range, spot_cone_angle, clr);
+				du->DrawSpotLight	(main_xform.get_c(), main_xform.get_k(), range, spot_cone_angle, clr);
 			}else{
-				du->DrawLineSphere	(main_xform.c, range, clr, true);
+				du->DrawLineSphere	(main_xform.get_c(), range, clr, true);
 			}
 			if(flags.is(flPointAmbient) )
-				du->DrawLineSphere	(ambient_xform.c, m_ambient_radius, clr, true);
+				du->DrawLineSphere	(ambient_xform.get_c(), m_ambient_radius, clr, true);
 		}
-		du->DrawPointLight		(main_xform.c,VIS_RADIUS, clr);
+		du->DrawPointLight		(main_xform.get_c(),VIS_RADIUS, clr);
 		if(flags.is(flPointAmbient) )
-			du->DrawPointLight	(ambient_xform.c,VIS_RADIUS, clr);
+			du->DrawPointLight	(ambient_xform.get_c(),VIS_RADIUS, clr);
 	}
 }
 #endif // #ifndef XRGAME_EXPORTS

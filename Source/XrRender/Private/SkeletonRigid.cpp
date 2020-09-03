@@ -100,7 +100,7 @@ void check_kinematics(CKinematics* _k, LPCSTR s)
 {
 	CKinematics* K = _k;
 	Fmatrix&	MrootBone		= K->LL_GetBoneInstance(K->LL_GetBoneRoot()).mTransform;
-	if(MrootBone.c.y >10000)
+	if(MrootBone.get_c().y >10000)
 	{	
 		Msg("all bones transform:--------[%s]",s);
 		

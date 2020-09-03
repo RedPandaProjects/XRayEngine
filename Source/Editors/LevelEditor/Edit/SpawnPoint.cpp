@@ -796,7 +796,7 @@ void CSpawnPoint::RenderSimBox()
     box.get_CD( c, s );
     Fmatrix	m;
     m.scale(Fvector().mul(s,2));
-    m.c.set(c);
+    m.set_c(c);
                  
                //     B.mulA_43			(_Transform());
 	RCache.set_xform_world(m);
@@ -1456,7 +1456,7 @@ bool CSpawnPoint::OnChooseQuery(LPCSTR specific)
      {
      	 Fmatrix	m;
          UpdateObjectXform(m);
-         FPosition.set(m.c);
+         FPosition.set(m.get_c());
          //m.getXYZi(	FRotation );
          m.getXYZ (	FRotation );
          UpdateTransform();

@@ -913,12 +913,10 @@ bool CPHSimpleCharacter::ValidateWalkOnMesh()
 #ifdef DEBUG
 	if(debug_output().ph_dbg_draw_mask().test(phDbgCharacterControl))
 	{
-		Fmatrix m;m.identity();
-		m.i.set(sd_dir);
-		m.k.set(accel);
-		m.c.set(center);
+		Fmatrix m;
+		m.set(sd_dir, Fvector(), sd_dir, center);
 		debug_output().DBG_DrawOBB(m,obb,D3DCOLOR_XRGB(0,255,0));
-		m.c.set(center_forbid);
+		m.set(sd_dir, Fvector(), sd_dir, center_forbid);
 		debug_output().DBG_DrawOBB(m,obb_fb,D3DCOLOR_XRGB(255,0,0));
 	}
 #endif
@@ -1466,7 +1464,7 @@ u16 CPHSimpleCharacter::RetriveContactBone()
 		for(u16 i=0;i<count;++i)
 		{
 			Fvector c_to_bone;
-			c_to_bone.sub(bone_instances[i].mTransform.c,pos_in_object);
+			c_to_bone.sub(bone_instances[i].mTransform.get_c(),pos_in_object);
 			float temp_sq_dist=c_to_bone.square_magnitude();
 			if(temp_sq_dist<sq_dist)
 			{

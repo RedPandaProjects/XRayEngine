@@ -767,7 +767,7 @@ BOOL SceneBuilder::BuildObject(CSceneObject* obj)
 
 	if(m_save_as_object)
 	{
-		cv.k.z 			= -1.f;
+        cv.mirrorZ_over();
 
 		Fmatrix 	TM;
 
@@ -865,7 +865,7 @@ BOOL SceneBuilder::BuildMUObject(CSceneObject* obj)
 			
 			Fmatrix cv 			= Fidentity;
 
-			cv.k.z 				= -1.f;
+            cv.mirrorZ_over();
 
 			Fmatrix 			TM;
 

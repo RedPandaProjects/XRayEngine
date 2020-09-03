@@ -349,10 +349,10 @@ IC void q_add_scaled_basem( Fquaternion &q, const Fquaternion &base, const Fquat
 }
 
 IC float DET(const Fmatrix &a){
-	return
-		(( a._11 * ( a._22 * a._33 - a._23 * a._32 ) -
+	return a.get_det();
+	/*	(( a._11 * ( a._22 * a._33 - a._23 * a._32 ) -
 		a._12 * ( a._21 * a._33 - a._23 * a._31 ) +
-		a._13 * ( a._21 * a._32 - a._22 * a._31 ) ));
+		a._13 * ( a._21 * a._32 - a._22 * a._31 ) ));*/
 }
 
 IC bool check_scale(const Fmatrix &m)

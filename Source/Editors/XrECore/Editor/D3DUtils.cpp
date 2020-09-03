@@ -585,7 +585,7 @@ void CDrawUtilities::dbgDrawPlacement(const Fvector& p, int sz, u32 clr, LPCSTR 
 {
 	VERIFY( EDevice.b_is_Ready );
     Fvector c;
-	float w	= p.x*EDevice.mFullTransform._14 + p.y*EDevice.mFullTransform._24 + p.z*EDevice.mFullTransform._34 + EDevice.mFullTransform._44;
+    float w = EDevice.mFullTransform.get_w(p); 
     if (w<0) return; // culling
 
 	float s = (float)sz;
@@ -826,11 +826,7 @@ void CDrawUtilities::DrawCylinder(const Fmatrix& parent, const Fvector& center, 
     L_right.crossproduct(L_up,L_dir);           L_right.normalize       ();
     L_up.crossproduct   (L_dir,L_right);        L_up.normalize          ();
 
-    Fmatrix         	mR;
-    mR.i                = L_right;              mR._14          = 0;
-    mR.j                = L_up;                 mR._24          = 0;
-    mR.k                = L_dir;                mR._34          = 0;
-    mR.c                = center;		  		mR._44          = 1;
+    Fmatrix         	mR; mR.set(L_right, L_up, L_dir, center);
 
     // final xform
     Fmatrix xf;			xf.mul (mR,mScale);
@@ -852,11 +848,7 @@ void CDrawUtilities::DrawCone	(const Fmatrix& parent, const Fvector& apex, const
     L_right.crossproduct(L_up,L_dir);           L_right.normalize       ();
     L_up.crossproduct   (L_dir,L_right);        L_up.normalize          ();
 
-    Fmatrix         	mR;
-    mR.i                = L_right;              mR._14          = 0;
-    mR.j                = L_up;                 mR._24          = 0;
-    mR.k                = L_dir;                mR._34          = 0;
-    mR.c                = apex;			  		mR._44          = 1;
+    Fmatrix         	mR; mR.set(L_right, L_up, L_dir, apex);
 
     // final xform
     Fmatrix xf;			xf.mul (mR,mScale);
@@ -875,11 +867,7 @@ void CDrawUtilities::DrawPlane	(const Fvector& p, const Fvector& n, const Fvecto
     L_right.crossproduct(L_up,L_dir);           L_right.normalize	();
     L_dir.crossproduct  (L_right,L_up);        	L_dir.normalize		();
 
-    Fmatrix         	mR;
-    mR.i                = L_right;              mR._14          = 0;
-    mR.j                = L_up;                 mR._24          = 0;
-    mR.k                = L_dir;                mR._34          = 0;
-    mR.c                = p;			  		mR._44          = 1;
+    Fmatrix         	mR;mR.set(L_right, L_up, L_dir, p);
 	
 	// fill VB
 	_VertexStream*	Stream	= &RCache.Vertex;
@@ -1081,8 +1069,8 @@ void CDrawUtilities::DrawAxis(const Fmatrix& T)
 	pt.x  = _wh;
 	pt.y  = iFloor(UI->GetRenderHeight()-_wh);
 
-    EDevice.m_Camera.MouseRayFromPoint(M.c, dir, pt);
-    M.c.mad(dir, _kl);
+    EDevice.m_Camera.MouseRayFromPoint(M.get_c(), dir, pt);
+    M.set_c(Fvector().mad(dir, _kl));
     m_axis_object->Render	(M, 2, false);
 }
 
@@ -1091,22 +1079,22 @@ void CDrawUtilities::DrawObjectAxis(const Fmatrix& T, float sz, BOOL sel)
 	VERIFY( EDevice.b_is_Ready );
    // RCache.set_xform_world	(Fidentity);
 	_VertexStream*	Stream	= &RCache.Vertex;
-    Fvector c,r,n,d;
-	float w	= T.c.x*EDevice.mFullTransform._14 + T.c.y*EDevice.mFullTransform._24 + T.c.z*EDevice.mFullTransform._34 + EDevice.mFullTransform._44;
+    Fvector c, r, n, d,Tc = T.get_c();
+	float w	= EDevice.mFullTransform.get_w(Tc);
     if (w<0) 
     return; // culling
 
 	float s = w*sz;
 
-	EDevice.mFullTransform.transform(c,T.c);
-    r.mul(T.i,s); 
-    r.add(T.c); 	
+	EDevice.mFullTransform.transform(c,Tc);
+    r.mul(T.get_i(),s); 
+    r.add(Tc); 	
     EDevice.mFullTransform.transform(r);
-    n.mul(T.j,s); 
-    n.add(T.c); 	
+    n.mul(T.get_j(),s);
+    n.add(Tc); 	
     EDevice.mFullTransform.transform(n);
-    d.mul(T.k,s); 
-    d.add(T.c); 	
+    d.mul(T.get_k(),s);
+    d.add(Tc); 	
     EDevice.mFullTransform.transform(d);
 	c.x = (float)iFloor(_x2real(c.x)); 
     c.y = (float)iFloor(_y2real(-c.y));
@@ -1299,7 +1287,8 @@ void CDrawUtilities::OnRender()
 void CDrawUtilities::OutText(const Fvector& pos, LPCSTR text, u32 color, u32 shadow_color)
 {
 	Fvector p;
-	float w	= pos.x*EDevice.mFullTransform._14 + pos.y*EDevice.mFullTransform._24 + pos.z*EDevice.mFullTransform._34 + EDevice.mFullTransform._44;
+    
+    float w = EDevice.mFullTransform.get_w(pos);
 	if (w>=0){
 		EDevice.mFullTransform.transform(p,pos);
 		p.x = (float)iFloor(_x2real(p.x)); p.y = (float)iFloor(_y2real(-p.y));

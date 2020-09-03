@@ -276,9 +276,14 @@ void	CDetailManager::hw_Render_dump		(ref_constant x_array, u32 var_id, u32 lod_
 					// Build matrix ( 3x4 matrix, last row - color )
 					float		scale		= Instance.scale_calculated;
 					Fmatrix&	M			= Instance.mRotY;
-					c_storage[base+0].set	(M._11*scale,	M._21*scale,	M._31*scale,	M._41	);
-					c_storage[base+1].set	(M._12*scale,	M._22*scale,	M._32*scale,	M._42	);
-					c_storage[base+2].set	(M._13*scale,	M._23*scale,	M._33*scale,	M._43	);
+					Fvector4 r1, r2, r3,r4;
+					r1 = M.get_row(0);
+					r2 = M.get_row(1);
+					r3 = M.get_row(2);
+					r4 = M.get_row(3);
+					c_storage[base+0].set	(r1.x*scale, r2.x *scale, r3.x *scale,	r4.x	);
+					c_storage[base+1].set	(r1.y*scale, r2.y *scale, r3.y *scale, r4.y);
+					c_storage[base+2].set	(r1.z *scale, r2.z *scale, r3.z *scale, r4.z);
 
 					// Build color
 #if RENDER==R_R1

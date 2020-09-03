@@ -445,7 +445,7 @@ void pDomain::transform(const pDomain& domain, const Fmatrix& m)
 void pDomain::transform_dir(const pDomain& domain, const Fmatrix& m)
 {
 	Fmatrix M=m;
-	M.c.set(0,0,0);
+	M.set_c(Fvector().set(0, 0, 0));
 	transform(domain,M);
 }
  

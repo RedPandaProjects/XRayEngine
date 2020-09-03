@@ -109,7 +109,7 @@ void CParticleEffect::UpdateParent(const Fmatrix& m, const Fvector& velocity, BO
 	m_RT_Flags.set			(flRT_XFORM, bXFORM);
 	if (bXFORM)				m_XFORM.set	(m);
 	else{
-		m_InitialPosition	= m.c;
+		m_InitialPosition	= m.get_c();
         ParticleManager()->Transform(m_HandleActionList,m,velocity);
 	}
 }
@@ -670,27 +670,35 @@ void CParticleEffect::Render(float )
                     if ((speed<EPS_S)&&m_Def->m_Flags.is(CPEDef::dfWorldAlign)){
                     	Fmatrix	M;  	
                         M.setXYZ			(m_Def->m_APDefaultRotation);
+						Fvector k = M.get_k();
+						Fvector i = M.get_i();
                         if (m_RT_Flags.is(flRT_XFORM)){
                             Fvector p;
                             m_XFORM.transform_tiny(p,m.pos);
 	                        M.mulA_43		(m_XFORM);
-                            FillSprite		(pv,M.k,M.i,p,lt,rb,r_x,r_y,m.color,m.rot.x);
+                            FillSprite		(pv,k,i,p,lt,rb,r_x,r_y,m.color,m.rot.x);
                         }else{
-                            FillSprite		(pv,M.k,M.i,m.pos,lt,rb,r_x,r_y,m.color,m.rot.x);
+                            FillSprite		(pv,k,i,m.pos,lt,rb,r_x,r_y,m.color,m.rot.x);
                         }
                     }else if ((speed>=EPS_S)&&m_Def->m_Flags.is(CPEDef::dfFaceAlign)){
-                    	Fmatrix	M;  		M.identity();
-                        M.k.div				(m.vel,speed);            
-                        M.j.set 			(0,1,0);	if (_abs(M.j.dotproduct(M.k))>.99f)  M.j.set(0,0,1);
-                        M.i.crossproduct	(M.j,M.k);	M.i.normalize	();
-                        M.j.crossproduct   	(M.k,M.i);	M.j.normalize  ();
+                    	Fmatrix	M;  		
+						Fvector k;
+						Fvector i;
+						Fvector j;
+						k.div(m.vel, speed);
+                        j.set 			(0,1,0);	
+						if (_abs(j.dotproduct(k))>.99f)  
+							j.set(0,0,1);
+                        i.crossproduct(j,k);	i.normalize	();
+                        j.crossproduct(k,i);	i.normalize  ();
+						M.set(i, j, k, Fvector().set(0, 0, 0));
                         if (m_RT_Flags.is(flRT_XFORM)){
                             Fvector p;
                             m_XFORM.transform_tiny(p,m.pos);
 	                        M.mulA_43		(m_XFORM);
-                            FillSprite		(pv,M.j,M.i,p,lt,rb,r_x,r_y,m.color,m.rot.x);
+                            FillSprite		(pv,j,i,p,lt,rb,r_x,r_y,m.color,m.rot.x);
                         }else{
-                            FillSprite		(pv,M.j,M.i,m.pos,lt,rb,r_x,r_y,m.color,m.rot.x);
+                            FillSprite		(pv,j,i,m.pos,lt,rb,r_x,r_y,m.color,m.rot.x);
                         }
                     }else{
 						Fvector 			dir;

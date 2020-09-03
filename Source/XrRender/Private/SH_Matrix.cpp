@@ -40,21 +40,27 @@ void CMatrix::Calculate()
 			return;
 		case modeS_refl:
 			{
-				float Ux= .5f*RDEVICE.mView._11, Uy= .5f*RDEVICE.mView._21, Uz= .5f*RDEVICE.mView._31, Uw = .5f;
-				float Vx=-.5f*RDEVICE.mView._12, Vy=-.5f*RDEVICE.mView._22, Vz=-.5f*RDEVICE.mView._32, Vw = .5f;
+				Fvector i = RDEVICE.mView.get_i();
+				Fvector j = RDEVICE.mView.get_j();
+				Fvector k = RDEVICE.mView.get_k();
 
-				xform._11=Ux; xform._12=Vx; xform._13=0; xform._14=0;
-				xform._21=Uy; xform._22=Vy; xform._23=0; xform._24=0;
-				xform._31=Uz; xform._32=Vz; xform._33=0; xform._34=0;
-				xform._41=Uw; xform._42=Vw; xform._43=0; xform._44=0;
+				float Ux= .5f*i.x, Uy= .5f*j.x, Uz= .5f* k.x, Uw = .5f;
+				float Vx=-.5f*i.y, Vy=-.5f*j.y, Vz=-.5f* k.y, Vw = .5f;
+
+				float Matrix[] =
+				{
+					Ux,Vx,0,0,
+					Uy,Vy,0,0,
+					Uz, Vz, 0, 0,
+					Uw, Vw, 0, 0
+				};
+				xform = Matrix;
 			}
 			return;
 		case modeC_refl:
 			{
 				Fmatrix	M	= RDEVICE.mView;
-				M._41		= 0.f;
-				M._42		= 0.f;
-				M._43		= 0.f;
+				M.set_c(Fvector().set(0,0,0));
 				xform.invert(M);
 			}
 			return;
