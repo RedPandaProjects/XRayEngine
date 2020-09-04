@@ -1265,7 +1265,7 @@ void	EPATurbulence::Render		(const Fmatrix& parent)
 
 void PS::CPEDef::Render(const Fmatrix& parent)
 {
-	Fmatrix trans; trans.translate(parent.c);
+	Fmatrix trans; trans.translate(parent.get_c());
 	for (EPAVecIt it=m_EActionList.begin(); it!=m_EActionList.end(); it++)
         if ((*it)->flags.is(EParticleAction::flDraw|EParticleAction::flEnabled)){
         	PBool* ar = (*it)->_bool_safe("Allow Rotate");

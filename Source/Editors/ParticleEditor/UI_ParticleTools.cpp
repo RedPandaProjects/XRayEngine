@@ -177,7 +177,7 @@ void CParticleTool::OnFrame()
     	m_ParentAnimator->Update(EDevice.fTimeDelta);
         if (m_ParentAnimator->IsPlaying()){
         	Fvector new_vel;
-            new_vel.sub (m_ParentAnimator->XFORM().c,m_Transform.c);
+            new_vel.sub (m_ParentAnimator->XFORM().get_c(),m_Transform.get_c());
             new_vel.div (EDevice.fTimeDelta);
             m_Vel.lerp	(m_Vel,new_vel,0.9);
             m_Transform	= m_ParentAnimator->XFORM();
@@ -685,7 +685,7 @@ bool CParticleTool::MouseStart(TShiftState Shift)
                 float dist = UI->ZFar();
                 SRayPickInfo pinf;
                 if (m_EditObject->RayPick(dist,UI->m_CurrentRStart,UI->m_CurrentRDir,Fidentity,&pinf))
-                    m_Transform.c.set(pinf.pt);
+                    m_Transform.set_c(pinf.pt);
             }else{
                 // pick grid
                 Fvector normal={0.f, 1.f, 0.f};
@@ -694,12 +694,17 @@ bool CParticleTool::MouseStart(TShiftState Shift)
                 float alpha = - UI->m_CurrentRStart.dotproduct(normal) / clcheck;
                 if( alpha <= 0 ) return false;
 
-                m_Transform.c.mad(UI->m_CurrentRStart,UI->m_CurrentRDir,alpha);
+              
 
-                if (m_Settings.is(etfGSnap)){
-                    m_Transform.c.x = snapto( m_Transform.c.x, m_MoveSnap );
-                    m_Transform.c.z = snapto( m_Transform.c.z, m_MoveSnap );
-                    m_Transform.c.y = 0.f;
+                if (m_Settings.is(etfGSnap))
+                {
+                    Fvector c;
+                    c.mad(UI->m_CurrentRStart, UI->m_CurrentRDir, alpha);
+                    m_Transform.set_c(Fvector().set(snapto(c.x, m_MoveSnap), snapto(c.z, m_MoveSnap), 0));
+                }
+                else
+                {
+                    m_Transform.set_c(Fvector().mad(UI->m_CurrentRStart, UI->m_CurrentRDir, alpha));
                 }
             }
         }
@@ -724,7 +729,7 @@ void CParticleTool::MouseMove(TShiftState Shift)
     case etaSelect: break;
     case etaAdd: 	break;
     case etaMove:	
-    	m_Transform.c.add(m_MovedAmount); 
+    	m_Transform.append_row(3,m_MovedAmount); 
     break;
     case etaRotate:{
     	Fmatrix mR; mR.identity();
