@@ -38,6 +38,8 @@ CEditableObject::CEditableObject(LPCSTR name):
 	m_physics_shell(0),
     m_object_xform(0)
 {
+    m_FaceCount = -1;
+    m_VertexCount = -1;
 	m_LibName		= name;
 
 	m_objectFlags.zero	();
@@ -131,10 +133,11 @@ void CEditableObject::ClearGeometry ()
 
 int CEditableObject::GetFaceCount(bool bMatch2Sided, bool bIgnoreOCC)
 {
-	int cnt=0;
+    if (m_FaceCount)return m_FaceCount;
+    m_FaceCount =0;
     for(EditMeshIt m = m_Meshes.begin();m!=m_Meshes.end();m++)
-        cnt+=(*m)->GetFaceCount(bMatch2Sided, bIgnoreOCC);
-	return cnt;
+        m_FaceCount +=(*m)->GetFaceCount(bMatch2Sided, bIgnoreOCC);
+	return m_FaceCount;
 }
 
 int CEditableObject::GetSurfFaceCount(const char* surf_name){
@@ -145,11 +148,13 @@ int CEditableObject::GetSurfFaceCount(const char* surf_name){
 	return cnt;
 }
 
-int CEditableObject::GetVertexCount(){
-	int cnt=0;
+int CEditableObject::GetVertexCount()
+{
+    if (m_VertexCount)return m_VertexCount;
+    m_VertexCount =0;
     for(EditMeshIt m = m_Meshes.begin();m!=m_Meshes.end();m++)
-        cnt+=(*m)->GetVertexCount();
-	return cnt;
+        m_VertexCount +=(*m)->GetVertexCount();
+	return m_VertexCount;
 }
 
 void CEditableObject::UpdateBox()

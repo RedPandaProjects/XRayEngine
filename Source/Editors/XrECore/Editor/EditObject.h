@@ -208,7 +208,7 @@ public:
 	Fvector 		t_vPosition;
     Fvector			t_vScale;
     Fvector			t_vRotate;
-
+   
     bool			bOnModified;
     IC bool			IsModified				(){return bOnModified;}
     IC void 		Modified				(){bOnModified=true;}
@@ -492,6 +492,8 @@ virtual	const IBoneData&_BCL	GetBoneData(u16 bone_id) const 															{ ret
 #endif
 private:
    	virtual	IKinematics*	 	_BCL	ObjectKinematics		()				 										{ return this;}
+    int m_FaceCount;
+    int m_VertexCount;
 
 };
 //----------------------------------------------------

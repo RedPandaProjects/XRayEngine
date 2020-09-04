@@ -212,7 +212,7 @@ void EScene::OnFrame( float dT )
     SceneToolsMapPairIt t_it 	= m_SceneTools.begin();
     SceneToolsMapPairIt t_end 	= m_SceneTools.end();
     for (; t_it!=t_end; t_it++)
-        if (t_it->second && t_it->second->IsEnabled())		
+        if (t_it->second && t_it->second->IsEnabled() && t_it->second->IsVisible())
         	t_it->second->OnFrame();
 
     if(m_RTFlags.test(flUpdateSnapList) )
