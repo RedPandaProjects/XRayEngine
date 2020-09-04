@@ -24,6 +24,7 @@ void	   _BCL			CEditorRenderDevice::RemoveSeqFrame(pureFrame* f) { seqFrame.Remo
 //---------------------------------------------------------------------------
 CEditorRenderDevice::CEditorRenderDevice()
 {
+	RadiusRender = 400;
 	psDeviceFlags.assign(rsStatistic|rsFilterLinear|rsFog|rsDrawGrid);
 // dynamic buffer size
 	rsDVB_Size		= 2048;

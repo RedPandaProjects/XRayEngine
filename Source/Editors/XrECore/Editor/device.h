@@ -44,6 +44,7 @@ public:
 
     Fmaterial				m_DefaultMat;
 public:
+	float RadiusRender;
    // u32 					dwWidth, dwHeight;
 	u32 					m_RenderWidth, m_RenderHeight;
     float					m_RenderArea;

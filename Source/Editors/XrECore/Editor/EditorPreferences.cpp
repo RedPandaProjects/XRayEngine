@@ -141,6 +141,7 @@ void CCustomPreferences::FillProp(PropItemVec& props)
     PHelper().CreateU32		(props,"Scene\\Common\\Undo Level", 		    &scene_undo_level,	0, 		125);
     PHelper().CreateFloat	(props,"Scene\\Grid\\Cell Size", 	           	&grid_cell_size,	0.1f,	10.f);
     PHelper().CreateU32		(props,"Scene\\Grid\\Cell Count", 	           	&grid_cell_count,	10, 	1000);
+    PHelper().CreateFloat(props, "Scene\\RadiusRender", &EDevice.RadiusRender,10.f,100000.f);
 
     PHelper().CreateBOOL	(props,"Tools\\Box Pick\\Limited Depth",		&bp_lim_depth);
     PHelper().CreateBOOL	(props,"Tools\\Box Pick\\Back Face Culling",	&bp_cull);
@@ -240,6 +241,9 @@ void CCustomPreferences::Load(CInifile* I)
     scene_clear_color	= R_U32_SAFE	("editor_prefs","scene_clear_color"	,scene_clear_color	);
 
     object_flags.flags	= R_U32_SAFE	("editor_prefs","object_flags"		,object_flags.flags );
+    EDevice.RadiusRender = R_FLOAT_SAFE("render", "render_radius", EDevice.RadiusRender);
+
+
     start_w = R_U32_SAFE("render", "w", 1280);
     start_h = R_U32_SAFE("render", "h",800);
     start_maximized = R_BOOL_SAFE("render", "maximized", false);
@@ -313,6 +317,8 @@ void CCustomPreferences::Save(CInifile* I)
     I->w_u32("render", "w", EDevice.dwWidth);
     I->w_u32("render", "h", EDevice.dwHeight);
     I->w_bool("windows", "log", bAllowLogCommands);
+    I->w_float("render", "render_radius", EDevice.RadiusRender);
+
     // load shortcuts
     SaveShortcuts(I);
     UI->SaveSettings(I);

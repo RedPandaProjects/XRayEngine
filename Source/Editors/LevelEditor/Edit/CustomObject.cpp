@@ -46,10 +46,17 @@ CCustomObject::~CCustomObject()
 	xr_delete				(m_Motion);
     xr_delete				(m_MotionParams);
 }
-
 bool CCustomObject::IsRender()
 {
 	Fbox bb; GetBox(bb);
+    float distance = 0.f;
+    {
+        Fvector center;
+        bb.getcenter(center);
+        distance = center.distance_to(EDevice.vCameraPosition);
+    }
+    if (distance > bb.getradius() + EDevice.RadiusRender)
+        return false;
     return ::Render->occ_visible(bb)||( Selected() && m_CO_Flags.is_any(flRenderAnyWayIfSelected|flMotion) );
 }
 
