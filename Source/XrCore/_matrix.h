@@ -33,6 +33,7 @@ public:
 	typedef Self&		SelfRef;
 	typedef const Self&	SelfCRef;
 	typedef _vector3<T>	Tvector;
+	typedef _vector4<T> Tvector4;
 public:
 	union {
 		struct {						// Direct definition
@@ -49,7 +50,133 @@ public:
         };
 		T m[4][4];					// Array
 	};
+	_matrix() {}
+	_matrix(T a1, T a2, T a3, T a4,
+		T b1, T b2, T b3, T b4,
+		T c1, T c2, T c3, T c4,
+		T d1, T d2, T d3, T d4
+	)
+	{
+		T Matrix[] = { a1, a2, a3, a4,
+			b1, b2, b3, b4,
+			c1, c2, c3, c4,
+			d1, d2, d3, d4 };
+		memcpy(m, Matrix, 16 * sizeof(T));
+	}
+	_matrix(const T* Matrix)
+	{
+		memcpy(m, Matrix, 16 * sizeof(T));
+	}
+	_matrix(const Self& right) { copy(right); }
+	IC void set_row(size_t Row, const Tvector4& V)
+	{
+		set_row(Row, V.x, V.y, V.z, V.w);
+	}
+	IC void set_row(size_t Row, T x, T y, T z, T w)
+	{
+		VERIFY(Row < 4);
+		m[Row] = { x, y, z, w };
+	}
+	IC void set_row(size_t Row, const Fvector3& V)
+	{
+		set_row(Row, V.x, V.y, V.z);
+	}
+	IC void set_row(size_t Row, T x, T y, T z)
+	{
+		VERIFY(Row < 4);
+		m[Row][0] = x;
+		m[Row][1] = y;
+		m[Row][2] = z;
+	}
+	IC void set_i(const Fvector3& V)
+	{
+		set_row(0, V);
+	}
+	IC void set_j(const Fvector3& V)
+	{
+		set_row(1, V);
+	}
+	IC void set_k(const Fvector3& V)
+	{
+		set_row(2, V);
+	}
+	IC void set_c(const Fvector3& V)
+	{
+		set_row(3, V);
+	}
+	IC Tvector4 get_row(size_t Row) const
+	{
+		VERIFY(Row < 4);
 
+		return Tvector4().set(m[Row][0], m[Row][1], m[Row][2], m[Row][3]);
+	}
+
+	IC Tvector got_row_as_vector3(size_t Row) const
+	{
+		VERIFY(Row < 4);
+		return Fvector3().set(m[Row][0], m[Row][1], m[Row][2]);
+	}
+	IC Fvector3 get_i()const
+	{
+		return got_row_as_vector3(0);
+	}
+	IC Fvector3 get_j() const
+	{
+		return got_row_as_vector3(1);
+	}
+	IC Fvector3 get_k() const
+	{
+		return got_row_as_vector3(2);
+	}
+	IC Fvector3 get_c() const
+	{
+		return got_row_as_vector3(3);
+	}
+	IC void append_row(size_t Row, const Tvector4& V)
+	{
+		append_row(Row, V.x, V.y, V.z, V.w);
+	}
+	IC void append_row(size_t Row, const Tvector& V)
+	{
+		append_row(Row, V.x, V.y, V.z, 0);
+	}
+	IC void append_row(size_t Row, T x, T y, T z, T w)
+	{
+		VERIFY(Row < 4);
+		m[Row][0] += x;
+		m[Row][0] += y;
+		m[Row][0] += z;
+		m[Row][0] += w;
+	}
+	IC void mul_row(size_t Row, T x, T y, T z, T w)
+	{
+		VERIFY(Row < 4);
+		m[Row][0] *= x;
+		m[Row][0] *= y;
+		m[Row][0] *= z;
+		m[Row][0] *= w;
+	}
+	IC T get_det() const
+	{
+		return	((_11 * (_22 * _33 - _23 * _32) -
+			_12 * (_21 * _33 - _23 * _31) +
+			_13 * (_21 * _32 - _22 * _31)));
+
+	}
+	IC Self& operator=(const Self& right)
+	{
+		copy(right);
+		return *this;
+	}
+	IC Self& operator=(const T* Matrix)
+	{
+		memcpy(m, Matrix, 16 * sizeof(T));
+		return *this;
+	}
+	IC void copy(const Self& right)
+	{
+		memcpy(m, right.m, 16 * sizeof(T));
+	}
 	// Class members
 	ICF	SelfRef	set			(const Self &a) 
 	{
@@ -595,6 +722,10 @@ public:
 	IC	void	getXYZ	(Tvector& xyz) const{getXYZ(xyz.x,xyz.y,xyz.z);}
 	IC	void	getXYZi	(T& x, T& y, T& z) const{getHPB(y,x,z);x*=-1.f;y*=-1.f;z*=-1.f;}
 	IC	void	getXYZi	(Tvector& xyz) const{getXYZ(xyz.x,xyz.y,xyz.z);xyz.mul(-1.f);}
+	IC  float	get_w(Tvector const& pos)
+	{
+		return pos.x*_14 + pos.y*_24 + pos.z*_34 + _44;
+	}
 };
 
 typedef		_matrix<float>	Fmatrix;
