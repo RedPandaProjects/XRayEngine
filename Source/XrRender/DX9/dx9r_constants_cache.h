@@ -46,23 +46,26 @@ public:
 		case RC_2x4:
 		{
 			c_f.dirty(L.index, L.index + 2);
-			Fvector4 Matrix[2];
+			Fvector4 Matrix[4];
 			Matrix[0] = A.get_row(0);
 			Matrix[1] = A.get_row(1);
-			it[0].set(Matrix[0]);
-			it[1].set(Matrix[1]);
+			Matrix[2] = A.get_row(2);
+			Matrix[3] = A.get_row(3);
+			it[0].set(Matrix[0].x, Matrix[1].x, Matrix[2].x, Matrix[3].x);
+			it[1].set(Matrix[0].y, Matrix[1].y, Matrix[2].y, Matrix[3].y);
 		}
 			break;
 		case RC_3x4:
 		{
 			c_f.dirty(L.index, L.index + 3);
-			Fvector4 Matrix[3];
+			Fvector4 Matrix[4];
 			Matrix[0] = A.get_row(0);
 			Matrix[1] = A.get_row(1);
 			Matrix[2] = A.get_row(2);
-			it[0].set(Matrix[0]);
-			it[1].set(Matrix[1]);
-			it[2].set(Matrix[2]);
+			Matrix[3] = A.get_row(3);
+			it[0].set(Matrix[0].x, Matrix[1].x, Matrix[2].x, Matrix[3].x);
+			it[1].set(Matrix[0].y, Matrix[1].y, Matrix[2].y, Matrix[3].y);
+			it[2].set(Matrix[0].z, Matrix[1].z, Matrix[2].z, Matrix[3].z);
 		}
 			break;
 		case RC_4x4:
@@ -74,10 +77,10 @@ public:
 			Matrix[3] = A.get_row(3);
 
 			c_f.dirty(L.index, L.index + 4);
-			it[0].set(Matrix[0]);
-			it[1].set(Matrix[1]);
-			it[2].set(Matrix[2]);
-			it[3].set(Matrix[3]);
+			it[0].set(Matrix[0].x, Matrix[1].x, Matrix[2].x, Matrix[3].x);
+			it[1].set(Matrix[0].y, Matrix[1].y, Matrix[2].y, Matrix[3].y);
+			it[2].set(Matrix[0].z, Matrix[1].z, Matrix[2].z, Matrix[3].z);
+			it[3].set(Matrix[0].w, Matrix[1].w, Matrix[2].w, Matrix[3].w);
 		}
 			break;
 		default:
