@@ -521,6 +521,12 @@ IC bool	_IsValidShader(dxRender_Visual* visual, u32 priority, bool strictB2F)
         return (priority==visual->shader->E[0]->flags.iPriority)&&(strictB2F==visual->shader->E[0]->flags.bStrictB2F);
     return false;
 }
+IC bool	_IsValidShaderSkeleton(dxRender_Visual* visual, u32 priority, bool strictB2F)
+{
+	if (visual->shader&& visual->shader->E[1])
+		return (priority == visual->shader->E[1]->flags.iPriority) && (strictB2F == visual->shader->E[1]->flags.bStrictB2F);
+	return false;
+}
 
 void 	CModelPool::Render(dxRender_Visual* m_pVisual, const Fmatrix& mTransform, int priority, bool strictB2F, float m_fLOD)
 {
@@ -541,8 +547,8 @@ void 	CModelPool::Render(dxRender_Visual* m_pVisual, const Fmatrix& mTransform, 
                 I = pV->children.begin		();
                 E = pV->children.end		();
                 for (; I!=E; I++){
-                    if (_IsValidShader(*I,priority,strictB2F)){
-                        RCache.set_Shader		((*I)->shader?(*I)->shader:EDevice.m_WireShader);
+                    if (_IsValidShaderSkeleton(*I,priority,strictB2F)){
+                        RCache.set_Element		((*I)->shader->E[1]);
                         RCache.set_xform_world	(mTransform);
                         (*I)->Render		 	(m_fLOD);
                     }

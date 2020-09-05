@@ -116,7 +116,15 @@ public:
 
 	void 					apply_lmaterial			(){}
     
-    virtual LPCSTR			getShaderPath			(){return "R1\\";}
+	virtual LPCSTR			getShaderPath()
+	{
+#ifndef _EDITOR
+		return "R1\\";
+#else
+		return "editor\\";
+#endif
+	}
+
 
 	virtual HRESULT			CompileShader			(
 		LPCSTR          	pSrcData,
