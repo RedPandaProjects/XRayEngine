@@ -1,7 +1,6 @@
 #pragma once
-
 template <>
-struct _matrix<float>
+ struct _MM_ALIGN16 _matrix<float>
 {
 public:
 	typedef float			TYPE;
@@ -10,7 +9,7 @@ public:
 	typedef const Self& SelfCRef;
 	typedef _vector3<float>	Tvector;
 public:
-	__m128 R[4];
+	_MM_ALIGN16 __m128 R[4];
 	_matrix() {}
 	_matrix(float a1,float a2,float a3,float a4,
 		float b1, float b2, float b3, float b4,
@@ -25,10 +24,10 @@ public:
 	}
 	_matrix(const float*Matrix) 
 	{
-		R[0] = _mm_load_ps(Matrix);
-		R[1] = _mm_load_ps(Matrix+4);
-		R[2] = _mm_load_ps(Matrix+8);
-		R[3] = _mm_load_ps(Matrix+12);
+		R[0] = set_ps(Matrix[0], Matrix[1], Matrix[2], Matrix[3]);
+		R[1] = set_ps(Matrix[0+4], Matrix[1+4], Matrix[2+4], Matrix[3+4]);
+		R[2] = set_ps(Matrix[0+8], Matrix[1 + 8], Matrix[2 + 8], Matrix[3 + 8]);
+		R[3] = set_ps(Matrix[0 + 12], Matrix[1 + 12], Matrix[2 + 12], Matrix[3 + 12]);
 	}
 	_matrix(const Self& right) { copy(right); }
 	IC void set_row(size_t Row,const Fvector4&V)
@@ -69,7 +68,7 @@ public:
 	IC Fvector4 get_row(size_t Row) const
 	{
 		VERIFY(Row < 4);
-		float RowData[4];
+		_MM_ALIGN16 float RowData[4];
 		_mm_store_ps(RowData, R[Row]);
 		return Fvector4().set(RowData[0], RowData[1], RowData[2], RowData[3]);
 	}
@@ -77,7 +76,7 @@ public:
 	IC Fvector got_row_as_vector3(size_t Row) const
 	{
 		VERIFY(Row < 4);
-		float RowData[4];
+		_MM_ALIGN16 float RowData[4];
 		_mm_store_ps(RowData, R[Row]);
 		return Fvector().set(RowData[0], RowData[1], RowData[2]);
 	}
@@ -117,15 +116,15 @@ public:
 	}
 	IC float get_det() const
 	{
-		__m128 R1 = swizzle<1, 0, 0, 0>(R[1]);
-		__m128 R2 = swizzle<2, 2, 1, 1>(R[2]);
+		_MM_ALIGN16 __m128 R1 = swizzle<1, 0, 0, 0>(R[1]);
+		_MM_ALIGN16 __m128 R2 = swizzle<2, 2, 1, 1>(R[2]);
 
-		__m128 R3 = swizzle<1, 0, 0, 0>(R[2]);
-		__m128 R4 = swizzle<2, 2, 1, 1>(R[1]);
+		_MM_ALIGN16 __m128 R3 = swizzle<1, 0, 0, 0>(R[2]);
+		_MM_ALIGN16 __m128 R4 = swizzle<2, 2, 1, 1>(R[1]);
 
-		__m128 R5 = _mm_sub_ps(_mm_mul_ps(R1, R2), _mm_mul_ps(R3, R4));
+		_MM_ALIGN16 __m128 R5 = _mm_sub_ps(_mm_mul_ps(R1, R2), _mm_mul_ps(R3, R4));
 		R5 = _mm_mul_ps(R[0], R5);
-		float Result[4];
+		_MM_ALIGN16 float Result[4];
 		_mm_store_ps(Result, R5);
 		return Result[0] - Result[1] + Result[2];
 
@@ -137,10 +136,10 @@ public:
 	}
 	IC Self& operator=(const float* Matrix)
 	{
-		R[0] = _mm_load_ps(Matrix);
-		R[1] = _mm_load_ps(Matrix + 4);
-		R[2] = _mm_load_ps(Matrix + 8);
-		R[3] = _mm_load_ps(Matrix + 12);
+		R[0] = set_ps(Matrix[0], Matrix[1], Matrix[2], Matrix[3]);
+		R[1] = set_ps(Matrix[0 + 4], Matrix[1 + 4], Matrix[2 + 4], Matrix[3 + 4]);
+		R[2] = set_ps(Matrix[0 + 8], Matrix[1 + 8], Matrix[2 + 8], Matrix[3 + 8]);
+		R[3] = set_ps(Matrix[0 + 12], Matrix[1 + 12], Matrix[2 + 12], Matrix[3 + 12]);
 		return *this;
 	}
 	IC void copy(const Self& right)
@@ -212,7 +211,7 @@ public:
 	{
 		VERIFY((this != &A) && (this != &B));
 
-		__m128 RMask = set_ps(1, 1, 1, 0);
+		_MM_ALIGN16 __m128 RMask = set_ps(1, 1, 1, 0);
 
 		R[0] = _mm_mul_ps(A.R[0], swizzle<0, 0, 0, 0>(B.R[0]));
 		R[0] = _mm_add_ps(R[0], _mm_mul_ps(A.R[1], swizzle<1, 1, 1, 1>(B.R[0])));
@@ -261,17 +260,17 @@ public:
 	IC	SelfRef	invert(const Self& a)
 	{		
 		
-		__m128 R1 = swizzle<1, 0, 0, 0>(a.R[1]);
-		__m128 R2 = swizzle<2, 2, 1, 1>(a.R[2]);
+		_MM_ALIGN16 __m128 R1 = swizzle<1, 0, 0, 0>(a.R[1]);
+		_MM_ALIGN16 __m128 R2 = swizzle<2, 2, 1, 1>(a.R[2]);
 
-		__m128 R3 = swizzle<1, 0, 0, 0>(a.R[2]);
-		__m128 R4 = swizzle<2, 2, 1, 1>(a.R[1]);
+		_MM_ALIGN16 __m128 R3 = swizzle<1, 0, 0, 0>(a.R[2]);
+		_MM_ALIGN16 __m128 R4 = swizzle<2, 2, 1, 1>(a.R[1]);
 
-		__m128 R5 = _mm_sub_ps(_mm_mul_ps(R1, R2), _mm_mul_ps(R3, R4));
+		_MM_ALIGN16 __m128 R5 = _mm_sub_ps(_mm_mul_ps(R1, R2), _mm_mul_ps(R3, R4));
 		R5 = _mm_mul_ps(a.R[0], R5);
 #ifdef _DEBUG
 		{
-			float Result[4];
+			_MM_ALIGN16 float Result[4];
 			_mm_store_ps(Result, R5);
 			float fDetInv = Result[0] - Result[1] + Result[2];
 			VERIFY(_abs(fDetInv) > flt_zero);
@@ -279,7 +278,7 @@ public:
 #endif 
 
 		R1 = _mm_add_ps(_mm_sub_ps(swizzle<0, 0, 0, 0>(R5), swizzle<1, 1, 1, 1>(R5)), swizzle<2, 2, 2, 2>(R5));
-		__m128 R7 = _mm_rcp_ps(R1);
+		_MM_ALIGN16 __m128 R7 = _mm_rcp_ps(R1);
 		/*
 		_11 = fDetInv * (a._22 * a._33 - a._23 * a._32);
 		_12 = -fDetInv * (a._12 * a._33 - a._13 * a._32);
@@ -373,7 +372,7 @@ public:
 		[1][2]->[1][2]
 		[1][3]->[1][2]
 		*/
-		__m128 R6 = _mm_movehl_ps(a.R[1], a.R[2]);
+		_MM_ALIGN16 __m128 R6 = _mm_movehl_ps(a.R[1], a.R[2]);
 		R6 = swizzle<0, 0, 2, 2>(R6);
 		/*
 		R2*R6-R3*R5
@@ -407,13 +406,13 @@ public:
 
 	IC	bool	invert_b(const Self& a) 
 	{	
-		__m128 R1 = swizzle<1, 0, 0, 0>(a.R[1]);
-		__m128 R2 = swizzle<2, 2, 1, 1>(a.R[2]);
+		_MM_ALIGN16 __m128 R1 = swizzle<1, 0, 0, 0>(a.R[1]);
+		_MM_ALIGN16 __m128 R2 = swizzle<2, 2, 1, 1>(a.R[2]);
 
-		__m128 R3 = swizzle<1, 0, 0, 0>(a.R[2]);
-		__m128 R4 = swizzle<2, 2, 1, 1>(a.R[1]);
+		_MM_ALIGN16 __m128 R3 = swizzle<1, 0, 0, 0>(a.R[2]);
+		_MM_ALIGN16 __m128 R4 = swizzle<2, 2, 1, 1>(a.R[1]);
 
-		__m128 R5 = _mm_sub_ps(_mm_mul_ps(R1, R2), _mm_mul_ps(R3, R4));
+		_MM_ALIGN16 __m128 R5 = _mm_sub_ps(_mm_mul_ps(R1, R2), _mm_mul_ps(R3, R4));
 		R5 = _mm_mul_ps(a.R[0], R5);
 
 		R1 = _mm_add_ps(_mm_sub_ps(swizzle<0, 0, 0, 0>(R5), swizzle<1, 1, 1, 1>(R5)), swizzle<2, 2, 2, 2>(R5));
@@ -422,7 +421,7 @@ public:
 		_mm_store_ps1(&fDetInv, R1);
 		if (_abs(fDetInv) <= flt_zero)	return	false;
 
-		__m128 R7 = _mm_rcp_ps(R1);
+		_MM_ALIGN16 __m128 R7 = _mm_rcp_ps(R1);
 		/*
 		[0][0]->[1][0]
 		[0][1]->[0][0]
@@ -470,7 +469,7 @@ public:
 		[1][2]->[1][2]
 		[1][3]->[1][2]
 		*/
-		__m128 R6 = _mm_movehl_ps(a.R[1], a.R[2]);
+		_MM_ALIGN16 __m128 R6 = _mm_movehl_ps(a.R[1], a.R[2]);
 		R6 = swizzle<0, 0, 2, 2>(R6);
 		R[0] = _mm_mul_ps(_mm_mul_ps(_mm_sub_ps(_mm_mul_ps(R2, R6), _mm_mul_ps(R3, R5)), R7), set_ps(1, -1, 1, 0));
 		R[1] = _mm_mul_ps(_mm_mul_ps(_mm_sub_ps(_mm_mul_ps(R1, R6), _mm_mul_ps(R3, R4)), R7), set_ps(-1, 1, -1, 0));
@@ -641,7 +640,7 @@ public:
 	{
 		float Cosine = _cos(Angle);
 		float Sine = _sin(Angle);
-		float M[4];
+		_MM_ALIGN16 float M[4];
 		M[0] = axis.x * axis.x + (1 - axis.x * axis.x) * Cosine;
 		M[1] = axis.x * axis.y * (1 - Cosine) + axis.z * Sine;
 		M[2] = axis.x * axis.z * (1 - Cosine) - axis.y * Sine;
@@ -728,7 +727,7 @@ public:
 	}
 	IC	SelfRef	mul(const Self& A, float v) 
 	{
-		__m128 V = set_ps(v, v, v, v);
+		_MM_ALIGN16 __m128 V = set_ps(v, v, v, v);
 
 		R[0] = _mm_mul_ps(A.R[0], V);
 		R[1] = _mm_mul_ps(A.R[1], V);
@@ -737,7 +736,7 @@ public:
 		return *this;
 	}
 	IC	SelfRef	mul(float v) {
-		__m128 V = set_ps(v, v, v, v);
+		_MM_ALIGN16 __m128 V = set_ps(v, v, v, v);
 
 		R[0] = _mm_mul_ps(R[0], V);
 		R[1] = _mm_mul_ps(R[1], V);
@@ -838,9 +837,9 @@ public:
 
 	IC	SelfRef	inertion(const Self& mat, float v)
 	{
-		__m128 RegA = _mm_load_ps1(&v);
+		_MM_ALIGN16 __m128 RegA = _mm_load_ps1(&v);
 		float iv = 1.f - v;
-		__m128 RegB = _mm_load_ps1(&iv);
+		_MM_ALIGN16 __m128 RegB = _mm_load_ps1(&iv);
 
 		R[0] = _mm_add_ps(_mm_mul_ps(R[0], RegA), _mm_mul_ps(mat.R[0], RegB));
 		R[1] = _mm_add_ps(_mm_mul_ps(R[1], RegA), _mm_mul_ps(mat.R[1], RegB));
@@ -852,44 +851,44 @@ public:
 	IC	void	transform_tiny(Tvector& dest, const Tvector& v)	const // preferred to use
 	{
 
-		__m128 RegV = set_ps(v.x, v.y, v.z, 0);
-		__m128 RegResult = _mm_mul_ps(swizzle<0,0,0,0>(RegV), R[0]);
+		_MM_ALIGN16 __m128 RegV = set_ps(v.x, v.y, v.z, 0);
+		_MM_ALIGN16 __m128 RegResult = _mm_mul_ps(swizzle<0,0,0,0>(RegV), R[0]);
 		RegResult = _mm_add_ps(RegResult, _mm_mul_ps(swizzle<1,1,1,1>(RegV), R[1]));
 		RegResult = _mm_add_ps(RegResult, _mm_mul_ps(swizzle<2,2,2,2>(RegV), R[2]));
 		RegResult = _mm_add_ps(RegResult, R[3]);
-		float Result[4];
+		_MM_ALIGN16 float Result[4];
 		_mm_store_ps(Result, RegResult);
 		dest.set(Result[0], Result[1], Result[2]);
 		
 	}
 	IC	void	transform_tiny32(Fvector2& dest, const Tvector& v)	const // preferred to use
 	{
-		__m128 RegV = set_ps(v.x, v.y, v.z, 0);
-		__m128 RegResult = _mm_mul_ps(swizzle<0,0,0,0>(RegV), R[0]);
+		_MM_ALIGN16 __m128 RegV = set_ps(v.x, v.y, v.z, 0);
+		_MM_ALIGN16 __m128 RegResult = _mm_mul_ps(swizzle<0,0,0,0>(RegV), R[0]);
 		RegResult = _mm_add_ps(RegResult, _mm_mul_ps(swizzle<1,1,1,1>(RegV), R[1]));
 		RegResult = _mm_add_ps(RegResult, _mm_mul_ps(swizzle<2,2,2,2>(RegV), R[2]));
 		RegResult = _mm_add_ps(RegResult, R[3]);
-		float Result[4];
+		_MM_ALIGN16 float Result[4];
 		_mm_store_ps(Result, RegResult);
 		dest.set(Result[0], Result[1]);
 	}
 	IC	void	transform_tiny23(Tvector& dest, const Fvector2& v)	const // preferred to use
 	{
-		__m128 RegV = set_ps(v.x, v.y, 0, 0);
-		__m128 RegResult = _mm_mul_ps(swizzle<0,0,0,0>(RegV), R[0]);
+		_MM_ALIGN16 __m128 RegV = set_ps(v.x, v.y, 0, 0);
+		_MM_ALIGN16 __m128 RegResult = _mm_mul_ps(swizzle<0,0,0,0>(RegV), R[0]);
 		RegResult = _mm_add_ps(RegResult, _mm_mul_ps(swizzle<1,1,1,1>(RegV), R[1]));
 		RegResult = _mm_add_ps(RegResult, R[3]);
-		float Result[4];
+		_MM_ALIGN16 float Result[4];
 		_mm_store_ps(Result, RegResult);
 		dest.set(Result[0], Result[1], Result[2]);
 	}
 	IC	void	transform_dir(Tvector& dest, const Tvector& v)	const 	// preferred to use
 	{
-		__m128 RegV = set_ps(v.x, v.y, v.z, 0);
-		__m128 RegResult = _mm_mul_ps(swizzle<0,0,0,0>(RegV), R[0]);
+		_MM_ALIGN16 __m128 RegV = set_ps(v.x, v.y, v.z, 0);
+		_MM_ALIGN16 __m128 RegResult = _mm_mul_ps(swizzle<0,0,0,0>(RegV), R[0]);
 		RegResult = _mm_add_ps(RegResult, _mm_mul_ps(swizzle<1,1,1,1>(RegV), R[1]));
 		RegResult = _mm_add_ps(RegResult, _mm_mul_ps(swizzle<2,2,2,2>(RegV), R[2]));
-		float Result[4];
+		_MM_ALIGN16 float Result[4];
 		_mm_store_ps(Result, RegResult);
 		dest.set(Result[0], Result[1], Result[2]);
 	}
@@ -916,11 +915,11 @@ public:
 
 	IC	void	transform(Fvector4& dest, const Fvector4& v)	const 	// preferred to use
 	{
-		__m128 RegV = set_ps(v.x, v.y, v.z, v.w);
-		__m128 RegResult = _mm_mul_ps(swizzle<0,0,0,0>(RegV), R[0]);
+		_MM_ALIGN16 __m128 RegV = set_ps(v.x, v.y, v.z, v.w);
+		_MM_ALIGN16 __m128 RegResult = _mm_mul_ps(swizzle<0,0,0,0>(RegV), R[0]);
 		RegResult = _mm_add_ps(RegResult, _mm_mul_ps(swizzle<1, 1, 1, 1>(RegV), R[1]));
 		RegResult = _mm_add_ps(RegResult, _mm_mul_ps(swizzle<2, 2, 2, 2>(RegV), R[2]));
-		float Result[4];
+		_MM_ALIGN16 float Result[4];
 		_mm_store_ps(Result, RegResult);
 		dest.set(Result[0], Result[1], Result[2], Result[4]);
 	}
@@ -991,50 +990,50 @@ public:
 
 	IC  float	get_w(Tvector const& xyz)
 	{
-		__m128 R1 = _mm_movelh_ps(R[0], R[1]);
-		__m128 R2 = _mm_movehl_ps(R[2], R[3]);
-		__m128 R3 = _mm_shuffle_ps(R1, R2, _MM_SHUFFLE(1, 2, 3, 0));
+		_MM_ALIGN16 __m128 R1 = _mm_movelh_ps(R[0], R[1]);
+		_MM_ALIGN16 __m128 R2 = _mm_movehl_ps(R[2], R[3]);
+		_MM_ALIGN16 __m128 R3 = _mm_shuffle_ps(R1, R2, _MM_SHUFFLE(1, 2, 3, 0));
 		R1 = set_ps(xyz.x, xyz.y, xyz.z, 1);
 		R2 = _mm_mul_ps(R1, R3);
-		float Result[4];
+		_MM_ALIGN16 float Result[4];
 		_mm_store_ps(Result,R2);
 		return Result[0] + Result[1] + Result[2] + Result[3];
 		/*pos.x*EDevice.mFullTransform._14 + pos.y*EDevice.mFullTransform._24 + pos.z*EDevice.mFullTransform._34 + EDevice.mFullTransform._44;*/
 	}
 private:
 	template<int x,int y,int z,int w>
-	static IC __m128 swizzle(__m128 in)
+	static IC  __m128 swizzle(__m128 in)
 	{
 		return _mm_shuffle_ps(in, in, _MM_SHUFFLE(w,z,y,x));
 	}
 	template<>
-	static IC __m128 swizzle<0,1,2,3>(__m128 in)
+	static IC  __m128 swizzle<0,1,2,3>(__m128 in)
 	{
 		return in;
 	}
 	template<>
-	static IC __m128 swizzle<2,2,3,3>(__m128 in)
+	static IC  __m128 swizzle<2,2,3,3>(__m128 in)
 	{
 		return _mm_unpackhi_ps(in,in);
 	}
 	template<>
-	static IC __m128 swizzle<0,0,1,1>(__m128 in)
+	static IC  __m128 swizzle<0,0,1,1>(__m128 in)
 	{
 		return _mm_unpacklo_ps(in, in);
 	}
 	template<>
-	static IC __m128 swizzle<2,3,2,3>(__m128 in)
+	static IC  __m128 swizzle<2,3,2,3>(__m128 in)
 	{
 		return _mm_movehl_ps(in, in);
 	}
 	template<>
-	static IC __m128 swizzle<0,1,0,1>(__m128 in)
+	static IC  __m128 swizzle<0,1,0,1>(__m128 in)
 	{
 		return _mm_movelh_ps(in, in);
 	}
-	static IC __m128 set_ps(float x, float y, float z, float w)
+	static IC  __m128 set_ps(float x, float y, float z, float w)
 	{
-		float Result[4] = { x,y,z,w };
+		_MM_ALIGN16 float Result[4] =  { x,y,z,w };
 		return _mm_load_ps(Result);
 	}
 };
@@ -1058,7 +1057,7 @@ IC BOOL _valid<float>(const _matrix<float>& m)
 
 	for (int i = 0; i < 4; i++)
 	{
-		float M[4];
+		_MM_ALIGN16 float M[4];
 		_mm_store_ps(M, m.R[i]);
 		Result = Result && _valid(M[0]) && _valid(M[1]) && _valid(M[2]) && _valid(M[3]);
 		if (!Result)return false;

@@ -50,13 +50,19 @@ void*	xrMemory::mem_alloc		(size_t size
 #	ifdef XRCORE_STATIC
 			true
 #	else // XRCORE_STATIC
-			true;// !!strstr(GetCommandLine(), "-pure_alloc")
+			strstr(GetCommandLine(), "-pure_alloc")
 #	endif // XRCORE_STATIC
 			;
 	}
 
-	if (g_use_pure_alloc) {
-		void							*result = malloc(size);
+	if (g_use_pure_alloc)
+	{
+		void* result =
+#ifdef USE_SSE
+			xr_aligned_offset_malloc(size,16,0);
+#else
+			malloc(size);
+#endif
 #ifdef USE_MEMORY_MONITOR
 		memory_monitor::monitor_alloc	(result,size,_name);
 #endif // USE_MEMORY_MONITOR
@@ -131,8 +137,14 @@ void	xrMemory::mem_free		(void* P)
 #endif // USE_MEMORY_MONITOR
 
 #ifdef PURE_ALLOC
-	if (g_use_pure_alloc) {
-		free					(P);
+	if (g_use_pure_alloc) 
+	{
+#ifdef USE_SSE
+		xr_aligned_free(P);
+#else
+		free(P);
+#endif
+	
 		return;
 	}
 #endif // PURE_ALLOC
@@ -172,8 +184,14 @@ void*	xrMemory::mem_realloc	(void* P, size_t size
 {
 	stat_calls++;
 #ifdef PURE_ALLOC
-	if (g_use_pure_alloc) {
-		void							*result = realloc(P,size);
+	if (g_use_pure_alloc) 
+	{
+#ifdef USE_SSE
+		void* result = xr_aligned_offset_realloc(P, size,16,0);
+#else
+		void* result = realloc(P, size);
+#endif
+	
 #	ifdef USE_MEMORY_MONITOR
 		memory_monitor::monitor_free	(P);
 		memory_monitor::monitor_alloc	(result,size,_name);
