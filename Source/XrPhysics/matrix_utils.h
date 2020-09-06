@@ -18,9 +18,9 @@ IC float  clamp_rotation( Fmatrix &m, float v )
 	Fquaternion q;
 	q.set(m);
 	float r = clamp_rotation( q, v );
-	Fvector c = m.get_c();
+	Fvector c = m.c;
 	m.rotation( q );
-	m.set_c(c);
+	m.c = c;
 	return r;
 }
 
@@ -34,12 +34,11 @@ IC void get_axis_angle( const Fmatrix &m, Fvector &ax, float &angl )
 IC bool clamp_change( Fmatrix& m, const Fmatrix &start, float ml, float ma, float tl, float ta )
 {
 	Fmatrix diff; diff.mul_43( Fmatrix( ).invert( start ), m );
-	Fvector c = diff.get_c();
-	float linear_ch	 = c.magnitude( );
+	float linear_ch	 = diff.c.magnitude( );
 	bool ret = linear_ch < tl;
 
-	if (linear_ch > ml)
-		diff.set_c(c.mul(ml / linear_ch));
+	if( linear_ch > ml )
+		diff.c.mul( ml/linear_ch );
 
 	if( clamp_rotation( diff, ma ) > ta )
 		ret = false;
@@ -52,7 +51,7 @@ IC bool clamp_change( Fmatrix& m, const Fmatrix &start, float ml, float ma, floa
 IC void get_diff_value( const Fmatrix & m0, const Fmatrix &m1, float &l, float &a )
 {
 	Fmatrix diff; diff.mul_43( Fmatrix( ).invert( m1 ), m0 );
-	l = diff.get_c().magnitude( );
+	l = diff.c.magnitude( );
 	Fvector ax; 
 	get_axis_angle( diff, ax, a );
 	a = _abs( a );
@@ -74,13 +73,9 @@ IC bool cmp_matrix( const Fmatrix &m0, const Fmatrix &m1, float tl, float ta )
 
 IC void angular_diff( Fvector &aw, const Fmatrix &diff, float dt )
 {
-	Fvector i, j, k;
-	i = diff.get_i();
-	j= diff.get_j();
-	k = diff.get_k();
-	aw.set( ( i.x-j.z )/2.f/dt,
-			(i.z-i.x )/2.f/dt,
-			( j.x-i.y )/2.f/dt
+	aw.set( ( diff._32-diff._23 )/2.f/dt,
+			( diff._13-diff._31 )/2.f/dt,
+			( diff._21-diff._12 )/2.f/dt
 		);
 }
 

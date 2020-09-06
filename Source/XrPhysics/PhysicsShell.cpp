@@ -306,7 +306,7 @@ void	phys_shell_verify_object_model( IPhysicsShellHolder& O )
 
 	VERIFY2( _valid( O.ObjectXFORM() ), make_string( "create physics shell: object matrix is not valid" ) /*+ make_string("\n object dump: \n") + dbg_object_full_dump_string( &O )*/ );
 
-	VERIFY2(valid_pos( O.ObjectXFORM().get_c()),  dbg_valide_pos_string( O.ObjectXFORM().get_c(), &O, "create physics shell" ) );
+	VERIFY2(valid_pos( O.ObjectXFORM().c ),  dbg_valide_pos_string( O.ObjectXFORM().c, &O, "create physics shell" ) );
 }
 
 bool __stdcall	can_create_phys_shell( string1024 &reason, IPhysicsShellHolder& O )
@@ -329,10 +329,10 @@ bool __stdcall	can_create_phys_shell( string1024 &reason, IPhysicsShellHolder& O
 		xr_strcpy( reason, make_string( "create physics shell: object matrix is not valid" ).c_str() );
 		return false;
 	}
-	if(!valid_pos( O.ObjectXFORM().get_c()))
+	if(!valid_pos( O.ObjectXFORM().c ))
 	{
 #ifdef	DEBUG
-		xr_strcpy( reason, dbg_valide_pos_string( O.ObjectXFORM().get_c(), &O, "create physics shell" ).c_str() );
+		xr_strcpy( reason, dbg_valide_pos_string( O.ObjectXFORM().c, &O, "create physics shell" ).c_str() );
 #else
 		xr_strcpy( reason, make_string( "create physics shell: object position is not valid" ).c_str() );
 #endif

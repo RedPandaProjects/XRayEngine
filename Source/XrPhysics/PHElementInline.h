@@ -3,7 +3,7 @@
 IC void CPHElement::InverceLocalForm(Fmatrix& m)
 {
 	m.identity();
-	m.set_c(m_mass_center);
+	m.c.set(m_mass_center);
 	m.invert();
 }
 
@@ -12,7 +12,7 @@ IC void CPHElement::MulB43InverceLocalForm(Fmatrix& m) const
 	Fvector ic;ic.set(m_mass_center);
 	ic.invert();
 	m.transform_dir(ic);
-	m.append_row(3,ic.x,ic.y,ic.z,0);
+	m.c.add(ic);
 }
 
 
@@ -38,6 +38,6 @@ IC		void		CPHElement::ActivatingPos(const Fmatrix &BoneTransform)
 	//VERIFY2(fsimilar(DET(B->mTransform),1.f,DET_CHECK_EPS),"Bones callback returns 0 matrix");
 
 	VERIFY_RMATRIX( BoneTransform );
-	VERIFY( valid_pos( BoneTransform.get_c(), phBoundaries ) );
+	VERIFY( valid_pos( BoneTransform.c, phBoundaries ) );
 	return;
 }

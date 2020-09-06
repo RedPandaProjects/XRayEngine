@@ -295,8 +295,6 @@ IC _matrix<T>& _matrix<T>::mk_xform	(const _quaternion<T> &Q, const Tvector &V)
 	_41 = V.x;					_42 = V.y;					_43 = V.z;					_44 = 1;
 	return *this;
 }
-
-#define TRACE_QZERO_TOLERANCE	0.1f
 #ifdef USE_SSE
 IC _matrix<float>& _matrix<float>::rotation(const _quaternion<float>& Q)
 {
@@ -324,166 +322,34 @@ IC _matrix<float>& _matrix<float>::mk_xform(const _quaternion<float>& Q, const T
 	R[3] = _mm_set_ps(V.x, V.y, V.z, 1);
 	return *this;
 }
-IC _quaternion<float>& _quaternion<float>::set(const _matrix<float>& m)
-{
-	float trace, s;
-	float M[4][4];
-	_mm_store_ps(M[0], m.R[0]);
-	_mm_store_ps(M[1], m.R[1]);
-	_mm_store_ps(M[2], m.R[2]);
-	_mm_store_ps(M[3], m.R[3]);
 
-	trace = M[0][0] + M[1][1] + M[2][2];
-	if (trace > 0.0f) {
-		s = _sqrt(trace + 1.0f);
-		w = s * 0.5f;
-		s = 0.5f / s;
-
-		x = (M[2][1] - M[1][2]) * s;
-		y = (M[0][2] - M[2][0]) * s;
-		z = (M[1][0] - M[0][1]) * s;
-	}
-	else {
-		int biggest;
-		enum { A, E, I };
-		if (M[0][0] > M[1][1]) {
-			if (M[2][2] > M[0][0])
-				biggest = I;
-			else
-				biggest = A;
-		}
-		else {
-			if (M[2][2] > M[0][0])
-				biggest = I;
-			else
-				biggest = E;
-		}
-
-		// in the unusual case the original trace fails to produce a good sqrt, try others...
-		switch (biggest) {
-		case A:
-			s = _sqrt(M[0][0] - (M[1][1] + M[2][2]) + 1.0f);
-			if (s > TRACE_QZERO_TOLERANCE) {
-				x = s * 0.5f;
-				s = 0.5f / s;
-				w = (M[2][1] - M[1][2]) * s;
-				y = (M[0][1] + M[1][0]) * s;
-				z = (M[0][2] + M[2][0]) * s;
-				break;
-			}
-			// I
-			s = _sqrt(M[2][2] - (M[0][0] + M[1][1]) + 1.0f);
-			if (s > TRACE_QZERO_TOLERANCE) {
-				z = s * 0.5f;
-				s = 0.5f / s;
-				w = (M[1][0] - M[0][1]) * s;
-				x = (M[2][0] + M[0][2]) * s;
-				y = (M[2][1] + M[1][2]) * s;
-				break;
-			}
-			// E
-			s = _sqrt(M[1][1] - (M[2][2] + M[0][0]) + 1.0f);
-			if (s > TRACE_QZERO_TOLERANCE) {
-				y = s * 0.5f;
-				s = 0.5f / s;
-				w = (M[0][2] - M[2][0]) * s;
-				z = (M[1][2] + M[2][1]) * s;
-				x = (M[1][0] + M[0][1]) * s;
-				break;
-			}
-			break;
-		case E:
-			s = _sqrt(M[1][1] - (M[2][2] + M[0][0]) + 1.0f);
-			if (s > TRACE_QZERO_TOLERANCE) {
-				y = s * 0.5f;
-				s = 0.5f / s;
-				w = (M[0][2] - M[2][0]) * s;
-				z = (M[1][2] + M[2][1]) * s;
-				x = (M[1][0] + M[0][1]) * s;
-				break;
-			}
-			// I
-			s = _sqrt(M[2][2] - (M[0][0] + M[1][1]) + 1.0f);
-			if (s > TRACE_QZERO_TOLERANCE) {
-				z = s * 0.5f;
-				s = 0.5f / s;
-				w = (M[1][0] - M[0][1]) * s;
-				x = (M[2][0] + M[0][2]) * s;
-				y = (M[2][1] + M[1][2]) * s;
-				break;
-			}
-			// A
-			s = _sqrt(M[0][0] - (M[1][1] + M[2][2]) + 1.0f);
-			if (s > TRACE_QZERO_TOLERANCE) {
-				x = s * 0.5f;
-				s = 0.5f / s;
-				w = (M[2][1] - M[1][2]) * s;
-				y = (M[0][1] + M[1][0]) * s;
-				z = (M[0][2] + M[2][0]) * s;
-				break;
-			}
-			break;
-		case I:
-			s = _sqrt(M[2][2] - (M[0][0] + M[1][1]) + 1.0f);
-			if (s > TRACE_QZERO_TOLERANCE) {
-				z = s * 0.5f;
-				s = 0.5f / s;
-				w = (M[1][0] - M[0][1]) * s;
-				x = (M[2][0] + M[0][2]) * s;
-				y = (M[2][1] + M[1][2]) * s;
-				break;
-			}
-			// A
-			s = _sqrt(M[0][0] - (M[1][1] + M[2][2]) + 1.0f);
-			if (s > TRACE_QZERO_TOLERANCE) {
-				x = s * 0.5f;
-				s = 0.5f / s;
-				w = (M[2][1] - M[1][2]) * s;
-				y = (M[0][1] + M[1][0]) * s;
-				z = (M[0][2] + M[2][0]) * s;
-				break;
-			}
-			// E
-			s = _sqrt(M[1][1] - (M[2][2] + M[0][0]) + 1.0f);
-			if (s > TRACE_QZERO_TOLERANCE) {
-				y = s * 0.5f;
-				s = 0.5f / s;
-				w = (M[0][2] - M[2][0]) * s;
-				z = (M[1][2] + M[2][1]) * s;
-				x = (M[1][0] + M[0][1]) * s;
-				break;
-			}
-			break;
-		}
-	}
-	return *this;
-}
 #endif
 
+#define TRACE_QZERO_TOLERANCE	0.1f
 template <class T>
 IC _quaternion<T>& _quaternion<T>::set(const _matrix<T>& M)
 {
 	float trace,s;
 
-	trace = M[0][0] + M[1][1] + M[2][2];
+	trace = M._11 + M._22 + M._33;
 	if (trace > 0.0f){
 		s = _sqrt(trace + 1.0f);
 		w = s * 0.5f;
 		s = 0.5f / s;
 
-		x = (M[2][1] - M[1][2]) * s;
-		y = (M[0][2] - M[2][0]) * s;
-		z = (M[1][0] - M[0][1]) * s;
+		x = (M._32 - M._23) * s;
+		y = (M._13 - M._31) * s;
+		z = (M._21 - M._12) * s;
 	}else{
 		int biggest;
 		enum {A,E,I};
-		if (M[0][0] > M[1][1]){
-			if (M[2][2] > M[0][0])
+		if (M._11 > M._22){
+			if (M._33 > M._11)
 				biggest = I;	
 			else
 				biggest = A;
 		}else{
-			if (M[2][2] > M[0][0])
+			if (M._33 > M._11)
 				biggest = I;
 			else
 				biggest = E;
@@ -492,95 +358,95 @@ IC _quaternion<T>& _quaternion<T>::set(const _matrix<T>& M)
 		// in the unusual case the original trace fails to produce a good sqrt, try others...
 		switch (biggest){
 		case A:
-			s = _sqrt( M[0][0] - (M[1][1] + M[2][2]) + 1.0f);
+			s = _sqrt( M._11 - (M._22 + M._33) + 1.0f);
 			if (s > TRACE_QZERO_TOLERANCE){
 				x = s * 0.5f;
 				s = 0.5f / s;
-				w = (M[2][1] - M[1][2]) * s;
-				y = (M[0][1] + M[1][0]) * s;
-				z = (M[0][2] + M[2][0]) * s;
+				w = (M._32 - M._23) * s;
+				y = (M._12 + M._21) * s;
+				z = (M._13 + M._31) * s;
 				break;
 			}
 			// I
-			s = _sqrt( M[2][2] - (M[0][0] + M[1][1]) + 1.0f);
+			s = _sqrt( M._33 - (M._11 + M._22) + 1.0f);
 			if (s > TRACE_QZERO_TOLERANCE){
 				z = s * 0.5f;
 				s = 0.5f / s;
-				w = (M[1][0] - M[0][1]) * s;
-				x = (M[2][0] + M[0][2]) * s;
-				y = (M[2][1] + M[1][2]) * s;
+				w = (M._21 - M._12) * s;
+				x = (M._31 + M._13) * s;
+				y = (M._32 + M._23) * s;
 				break;
 			}
 			// E
-			s = _sqrt( M[1][1] - (M[2][2] + M[0][0]) + 1.0f);
+			s = _sqrt( M._22 - (M._33 + M._11) + 1.0f);
 			if (s > TRACE_QZERO_TOLERANCE){
 				y = s * 0.5f;
 				s = 0.5f / s;
-				w = (M[0][2] - M[2][0]) * s;
-				z = (M[1][2] + M[2][1]) * s;
-				x = (M[1][0] + M[0][1]) * s;
+				w = (M._13 - M._31) * s;
+				z = (M._23 + M._32) * s;
+				x = (M._21 + M._12) * s;
 				break;
 			}
 			break;
 		case E:
-			s = _sqrt( M[1][1] - (M[2][2] + M[0][0]) + 1.0f);
+			s = _sqrt( M._22 - (M._33 + M._11) + 1.0f);
 			if (s > TRACE_QZERO_TOLERANCE){
 				y = s * 0.5f;
 				s = 0.5f / s;
-				w = (M[0][2] - M[2][0]) * s;
-				z = (M[1][2] + M[2][1]) * s;
-				x = (M[1][0] + M[0][1]) * s;
+				w = (M._13 - M._31) * s;
+				z = (M._23 + M._32) * s;
+				x = (M._21 + M._12) * s;
 				break;
 			}
 			// I
-			s = _sqrt( M[2][2] - (M[0][0] + M[1][1]) + 1.0f);
+			s = _sqrt( M._33 - (M._11 + M._22) + 1.0f);
 			if (s > TRACE_QZERO_TOLERANCE){
 				z = s * 0.5f;
 				s = 0.5f / s;
-				w = (M[1][0] - M[0][1]) * s;
-				x = (M[2][0] + M[0][2]) * s;
-				y = (M[2][1] + M[1][2]) * s;
+				w = (M._21 - M._12) * s;
+				x = (M._31 + M._13) * s;
+				y = (M._32 + M._23) * s;
 				break;
 			}
 			// A
-			s = _sqrt( M[0][0] - (M[1][1] + M[2][2]) + 1.0f);
+			s = _sqrt( M._11 - (M._22 + M._33) + 1.0f);
 			if (s > TRACE_QZERO_TOLERANCE){
 				x = s * 0.5f;
 				s = 0.5f / s;
-				w = (M[2][1] - M[1][2]) * s;
-				y = (M[0][1] + M[1][0]) * s;
-				z = (M[0][2] + M[2][0]) * s;
+				w = (M._32 - M._23) * s;
+				y = (M._12 + M._21) * s;
+				z = (M._13 + M._31) * s;
 				break;
 			}
 			break;
 		case I:
-			s = _sqrt( M[2][2] - (M[0][0] + M[1][1]) + 1.0f);
+			s = _sqrt( M._33 - (M._11 + M._22) + 1.0f);
 			if (s > TRACE_QZERO_TOLERANCE){
 				z = s * 0.5f;
 				s = 0.5f / s;
-				w = (M[1][0] - M[0][1]) * s;
-				x = (M[2][0] + M[0][2]) * s;
-				y = (M[2][1] + M[1][2]) * s;
+				w = (M._21 - M._12) * s;
+				x = (M._31 + M._13) * s;
+				y = (M._32 + M._23) * s;
 				break;
 			}
 			// A
-			s = _sqrt( M[0][0] - (M[1][1] + M[2][2]) + 1.0f);
+			s = _sqrt( M._11 - (M._22 + M._33) + 1.0f);
 			if (s > TRACE_QZERO_TOLERANCE){
 				x = s * 0.5f;
 				s = 0.5f / s;
-				w = (M[2][1] - M[1][2]) * s;
-				y = (M[0][1] + M[1][0]) * s;
-				z = (M[0][2] + M[2][0]) * s;
+				w = (M._32 - M._23) * s;
+				y = (M._12 + M._21) * s;
+				z = (M._13 + M._31) * s;
 				break;
 			}
 			// E
-			s = _sqrt( M[1][1] - (M[2][2] + M[0][0]) + 1.0f);
+			s = _sqrt( M._22 - (M._33 + M._11) + 1.0f);
 			if (s > TRACE_QZERO_TOLERANCE){
 				y = s * 0.5f;
 				s = 0.5f / s;
-				w = (M[0][2] - M[2][0]) * s;
-				z = (M[1][2] + M[2][1]) * s;
-				x = (M[1][0] + M[0][1]) * s;
+				w = (M._13 - M._31) * s;
+				z = (M._23 + M._32) * s;
+				x = (M._21 + M._12) * s;
 				break;
 			}
 			break;

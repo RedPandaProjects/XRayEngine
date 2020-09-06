@@ -119,6 +119,7 @@ public:
 		__m128 R4 = swizzle<2, 2, 1, 1>(R[1]);
 
 		__m128 R5 = _mm_sub_ps(_mm_mul_ps(R1, R2), _mm_mul_ps(R3, R4));
+
 		R5 = _mm_mul_ps(R[0], R5);
 		float Result[4];
 		_mm_store_ps(Result, R5);
@@ -256,14 +257,15 @@ public:
 	IC	SelfRef	invert(const Self& a)
 	{		
 		
-		__m128 R1 = swizzle<1, 0, 0, 0>(a.R[1]);
-		__m128 R2 = swizzle<2, 2, 1, 1>(a.R[2]);
+		__m128 R1 = swizzle<1, 0, 0, 0>(R[1]);
+		__m128 R2 = swizzle<2, 2, 1, 1>(R[2]);
 
-		__m128 R3 = swizzle<1, 0, 0, 0>(a.R[2]);
-		__m128 R4 = swizzle<2, 2, 1, 1>(a.R[1]);
+		__m128 R3 = swizzle<1, 0, 0, 0>(R[2]);
+		__m128 R4 = swizzle<2, 2, 1, 1>(R[1]);
 
 		__m128 R5 = _mm_sub_ps(_mm_mul_ps(R1, R2), _mm_mul_ps(R3, R4));
-		R5 = _mm_mul_ps(a.R[0], R5);
+
+		R5 = _mm_mul_ps(R[0], R5);
 #ifdef _DEBUG
 		{
 			float Result[4];
@@ -276,50 +278,49 @@ public:
 		R1 = _mm_add_ps(_mm_sub_ps(swizzle<0, 0, 0, 0>(R5), swizzle<1, 1, 1, 1>(R5)), swizzle<2, 2, 2, 2>(R5));
 		__m128 R7 = _mm_rcp_ps(R1);
 		/*
-		_11 = fDetInv * (a._22 * a._33 - a._23 * a._32);
-		_12 = -fDetInv * (a._12 * a._33 - a._13 * a._32);
-		_13 = fDetInv * (a._12 * a._23 - a._13 * a._22);
+		R2*R5-R3*R4
+		M[0][0] = fDetInv * (a.M[1][1] * a.M[2][2] - a.M[1][2] * a.M[2][1]);
+		M[0][1] = -fDetInv *(a.M[0][1] * a.M[2][2] - a.M[0][2] * a.M[2][1]);
+		M[0][2] = fDetInv * (a.M[0][1] * a.M[1][2] - a.M[0][2] * a.M[1][1]);
 		_14 = 0.0f;
 
-		_21 = -fDetInv * (a._21 * a._33 - a._23 * a._31);
-		_22 = fDetInv * (a._11 * a._33 - a._13 * a._31);
-		_23 = -fDetInv * (a._11 * a._23 - a._13 * a._21);
+		R1*R5-R3*R4
+		M[1][0] = -fDetInv * (a.M[1][0] * a.M[2][2] - a.M[1][2] * a.M[2][0]);
+		M[1][1] = fDetInv * (a.M[0][0] * a.M[2][2] - a.M[0][2] * a.M[2][0]);
+		M[1][2] = -fDetInv * (a.M[0][0] * a.M[1][2] - a.M[0][2] * a.M[1][0]);
 		_24 = 0.0f;
 
-		_31 = fDetInv * (a._21 * a._32 - a._22 * a._31);
-		_32 = -fDetInv * (a._11 * a._32 - a._12 * a._31);
-		_33 = fDetInv * (a._11 * a._22 - a._12 * a._21);
+		M[2][0] = fDetInv * (a.M[1][0] * a.M[2][1] - a.M[1][1] * a.M[2][0]);
+		M[2][1] = -fDetInv * (a.M[0][0] * a.M[2][1] - a.M[0][1] * a.M[2][0]);
+		M[2][2] = fDetInv * (a.M[0][0] * a.M[1][1] - a.M[0][1] * a.M[1][0]);
 		_34 = 0.0f;
 
-		_41 = -(a._41 * _11 + a._42 * _21 + a._43 * _31);
-		_42 = -(a._41 * _12 + a._42 * _22 + a._43 * _32);
-		_43 = -(a._41 * _13 + a._42 * _23 + a._43 * _33);
-		_44 = 1.0f;*/
-		/*
-		R1
 		[1][0] 
 		[0][0] 
 		[0][0]
-		R2
+
 		[1][1] 
 		[0][1] 
 		[0][1]
-		R3
+
 		[1][2] 
 		[0][2] 
 		[0][2]
-		R4
+
+
 		[2][0]
 		[2][0]
 		[1][0]
-		R5
+
 		[2][1]
 		[2][1]
 		[1][1]
-		R6
+
 		[2][2]
 		[2][2]
-		[1][2] 	
+		[1][2]
+
+
 		*/
 		/*
 		[0][0]->[1][0] 
@@ -345,6 +346,7 @@ public:
 		*/
 		R3 = _mm_movehl_ps(R[0], R[1]);
 		R3 = swizzle<0, 2, 2, 2>(R3);
+
 		/*
 		[1][0]->[2][0]
 		[1][1]->[2][0]
@@ -361,120 +363,67 @@ public:
 		[2][1]->[1][1]
 		*/
 		R5 = _mm_movelh_ps(R[1], R[2]);
-		R5 = swizzle<3, 3, 1, 1>(R5);
+		R5 = swizzle<3, 3, 1, 1>(R4);
 		/*
 		[2][2]->[2][2]
 		[2][3]->[2][2]
 		[1][2]->[1][2]
 		[1][3]->[1][2]
 		*/
-		__m128 R6 = _mm_movehl_ps(R[1], R[2]);
-		R6 = swizzle<0, 0, 2, 2>(R6);
-		/*
-		R2*R6-R3*R5
-		M[0][0] = fDetInv * (a.M[1][1] * a.M[2][2] - a.M[1][2] * a.M[2][1]);
-		M[0][1] = -fDetInv *(a.M[0][1] * a.M[2][2] - a.M[0][2] * a.M[2][1]);
-		M[0][2] = fDetInv * (a.M[0][1] * a.M[1][2] - a.M[0][2] * a.M[1][1]);
+		R6 = _mm_movehl_ps(R[1], R[2]);
+		R6 = swizzle<0, 0, 2, 2>(R5);
+
+		/*/
+		_11 = fDetInv * (a._22 * a._33 - a._23 * a._32);
+		_12 = -fDetInv * (a._12 * a._33 - a._13 * a._32);
+		_13 = fDetInv * (a._12 * a._23 - a._13 * a._22);
 		_14 = 0.0f;
 
-		R1*R6-R3*R4
-		M[1][0] = -fDetInv * (a.M[1][0] * a.M[2][2] - a.M[1][2] * a.M[2][0]);
-		M[1][1] =  fDetInv * (a.M[0][0] * a.M[2][2] - a.M[0][2] * a.M[2][0]);
-		M[1][2] = -fDetInv * (a.M[0][0] * a.M[1][2] - a.M[0][2] * a.M[1][0]);
+		_21 = -fDetInv * (a._21 * a._33 - a._23 * a._31);
+		_22 = fDetInv * (a._11 * a._33 - a._13 * a._31);
+		_23 = -fDetInv * (a._11 * a._23 - a._13 * a._21);
 		_24 = 0.0f;
-		R1*R5-R2*R4
-		M[2][0] = fDetInv * (a.M[1][0] * a.M[2][1] - a.M[1][1] * a.M[2][0]);
-		M[2][1] = -fDetInv * (a.M[0][0] * a.M[2][1] - a.M[0][1] * a.M[2][0]);
-		M[2][2] = fDetInv * (a.M[0][0] * a.M[1][1] - a.M[0][1] * a.M[1][0]);
+
+		_31 = fDetInv * (a._21 * a._32 - a._22 * a._31);
+		_32 = -fDetInv * (a._11 * a._32 - a._12 * a._31);
+		_33 = fDetInv * (a._11 * a._22 - a._12 * a._21);
 		_34 = 0.0f;
-		*/
-		R[0] = _mm_mul_ps(_mm_mul_ps(_mm_sub_ps(_mm_mul_ps(R2, R6), _mm_mul_ps(R3, R5)),R7), _mm_setr_ps(1, -1, 1, 0));
-		R[1] = _mm_mul_ps(_mm_mul_ps(_mm_sub_ps(_mm_mul_ps(R1, R6), _mm_mul_ps(R3, R4)), R7), _mm_setr_ps(-1, 1, -1, 0));
-		R[2] = _mm_mul_ps(_mm_mul_ps(_mm_sub_ps(_mm_mul_ps(R1, R5), _mm_mul_ps(R2, R4)), R7), _mm_setr_ps(1, -1, 1, 0));
-		R[3] = _mm_mul_ps(swizzle<0, 0, 0, 0>(a.R[3]), R[0]);
-		R[3] = _mm_add_ps(R[3], _mm_mul_ps(swizzle<1, 1, 1, 1>(a.R[3]), R[1]));
-		R[3] = _mm_add_ps(R[3], _mm_mul_ps(swizzle<2, 2, 2, 2>(a.R[3]), R[2]));
-		R[3] = _mm_mul_ps(R[3], _mm_setr_ps(-1, -1, -1, 0));
-		R[3] = _mm_add_ps(R[3], _mm_setr_ps(0, 0, 0, 1));
-		
+
+		_41 = -(a._41 * _11 + a._42 * _21 + a._43 * _31);
+		_42 = -(a._41 * _12 + a._42 * _22 + a._43 * _32);
+		_43 = -(a._41 * _13 + a._42 * _23 + a._43 * _33);
+		_44 = 1.0f;*/
 		return *this;
 	}
 
 	IC	bool	invert_b(const Self& a) 
-	{	
-		__m128 R1 = swizzle<1, 0, 0, 0>(a.R[1]);
-		__m128 R2 = swizzle<2, 2, 1, 1>(a.R[2]);
+	{		// important: this is 4x3 invert, not the 4x4 one
+		/*float fDetInv = (a._11 * (a._22 * a._33 - a._23 * a._32) -
+			a._12 * (a._21 * a._33 - a._23 * a._31) +
+			a._13 * (a._21 * a._32 - a._22 * a._31));
 
-		__m128 R3 = swizzle<1, 0, 0, 0>(a.R[2]);
-		__m128 R4 = swizzle<2, 2, 1, 1>(a.R[1]);
-
-		__m128 R5 = _mm_sub_ps(_mm_mul_ps(R1, R2), _mm_mul_ps(R3, R4));
-		R5 = _mm_mul_ps(a.R[0], R5);
-
-		R1 = _mm_add_ps(_mm_sub_ps(swizzle<0, 0, 0, 0>(R5), swizzle<1, 1, 1, 1>(R5)), swizzle<2, 2, 2, 2>(R5));
-
-		float fDetInv;
-		_mm_store_ps1(&fDetInv, R1);
 		if (_abs(fDetInv) <= flt_zero)	return	false;
+		fDetInv = 1.0f / fDetInv;
 
-		__m128 R7 = _mm_rcp_ps(R1);
-		/*
-		[0][0]->[1][0]
-		[0][1]->[0][0]
-		[1][0]->[0][0]
-		[1][1]->[0][0]
-		*/
-		R1 = _mm_movelh_ps(R[0], R[1]);
-		R1 = swizzle<2, 0, 0, 0>(R1);
-		/*
-		[0][0]->[1][1]
-		[0][1]->[0][1]
-		[1][0]->[0][1]
-		[1][1]->[0][1]
-		*/
-		R2 = _mm_movelh_ps(R[0], R[1]);
-		R2 = swizzle<3, 1, 1, 1>(R2);
-		/*
-		[1][2]->[1][2]
-		[1][3]->[0][2]
-		[0][2]->[0][2]
-		[0][3]->[0][2]
-		*/
-		R3 = _mm_movehl_ps(R[0], R[1]);
-		R3 = swizzle<0, 2, 2, 2>(R3);
-		/*
-		[1][0]->[2][0]
-		[1][1]->[2][0]
-		[2][0]->[1][0]
-		[2][1]->[1][0]
-		*/
-		R4 = _mm_movelh_ps(R[1], R[2]);
-		R4 = swizzle<2, 2, 0, 0>(R4);
+		_11 = fDetInv * (a._22 * a._33 - a._23 * a._32);
+		_12 = -fDetInv * (a._12 * a._33 - a._13 * a._32);
+		_13 = fDetInv * (a._12 * a._23 - a._13 * a._22);
+		_14 = 0.0f;
 
-		/*
-		[1][0]->[2][1]
-		[1][1]->[2][1]
-		[2][0]->[1][1]
-		[2][1]->[1][1]
-		*/
-		R5 = _mm_movelh_ps(R[1], R[2]);
-		R5 = swizzle<3, 3, 1, 1>(R5);
-		/*
-		[2][2]->[2][2]
-		[2][3]->[2][2]
-		[1][2]->[1][2]
-		[1][3]->[1][2]
-		*/
-		__m128 R6 = _mm_movehl_ps(R[1], R[2]);
-		R6 = swizzle<0, 0, 2, 2>(R6);
-		R[0] = _mm_mul_ps(_mm_mul_ps(_mm_sub_ps(_mm_mul_ps(R2, R6), _mm_mul_ps(R3, R5)), R7), _mm_setr_ps(1, -1, 1, 0));
-		R[1] = _mm_mul_ps(_mm_mul_ps(_mm_sub_ps(_mm_mul_ps(R1, R6), _mm_mul_ps(R3, R4)), R7), _mm_setr_ps(-1, 1, -1, 0));
-		R[2] = _mm_mul_ps(_mm_mul_ps(_mm_sub_ps(_mm_mul_ps(R1, R5), _mm_mul_ps(R2, R4)), R7), _mm_setr_ps(1, -1, 1, 0));
-		R[3] = _mm_mul_ps(swizzle<0, 0, 0, 0>(a.R[3]), R[0]);
-		R[3] = _mm_add_ps(R[3], _mm_mul_ps(swizzle<1, 1, 1, 1>(a.R[3]), R[1]));
-		R[3] = _mm_add_ps(R[3], _mm_mul_ps(swizzle<2, 2, 2, 2>(a.R[3]), R[2]));
-		R[3] = _mm_mul_ps(R[3], _mm_setr_ps(-1, -1, -1, 0));
-		R[3] = _mm_add_ps(R[3], _mm_setr_ps(0, 0, 0, 1));
+		_21 = -fDetInv * (a._21 * a._33 - a._23 * a._31);
+		_22 = fDetInv * (a._11 * a._33 - a._13 * a._31);
+		_23 = -fDetInv * (a._11 * a._23 - a._13 * a._21);
+		_24 = 0.0f;
+
+		_31 = fDetInv * (a._21 * a._32 - a._22 * a._31);
+		_32 = -fDetInv * (a._11 * a._32 - a._12 * a._31);
+		_33 = fDetInv * (a._11 * a._22 - a._12 * a._21);
+		_34 = 0.0f;
+
+		_41 = -(a._41 * _11 + a._42 * _21 + a._43 * _31);
+		_42 = -(a._41 * _12 + a._42 * _22 + a._43 * _32);
+		_43 = -(a._41 * _13 + a._42 * _23 + a._43 * _33);
+		_44 = 1.0f;*/
 		return true;
 	}
 
@@ -961,10 +910,7 @@ public:
 	//
 	IC	void	getHPB(float& h, float& p, float& b) const
 	{
-		Fvector i = get_i();
-		Fvector j = get_j();
-		Fvector k = get_k();
-		float cy = _sqrt(j.y * j.y + i.y * i.y);
+	/*	float cy = _sqrt(j.y * j.y + i.y * i.y);
 		if (cy > 16.0f * type_epsilon(float)) 
 		{
 			h = (float)-atan2(k.x, k.z);
@@ -976,7 +922,7 @@ public:
 			h = (float)-atan2(-i.z, i.x);
 			p = (float)-atan2(-k.y, cy);
 			b = 0;
-		}
+		}*/
 	}
 	IC	void	getHPB(Tvector& hpb) const { getHPB(hpb.x, hpb.y, hpb.z); }
 	IC	void	getXYZ(float& x, float& y, float& z) const { getHPB(y, x, z); }
@@ -987,7 +933,7 @@ private:
 	template<int x,int y,int z,int w>
 	static IC __m128 swizzle(__m128 in)
 	{
-		return _mm_shuffle_ps(in, in, _MM_SHUFFLE(w,z,y,x));
+		return _mm_shuffle_ps(in, in, _MM_SHUFFLE(x & 0x3, y & 0x3, z & 0x3, w & 0x3));
 	}
 	template<>
 	static IC __m128 swizzle<0,1,2,3>(__m128 in)
