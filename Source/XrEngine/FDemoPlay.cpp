@@ -237,8 +237,8 @@ BOOL CDemoPlay::ProcessCam(SCamEffectorInfo& info)
 		fLifeTime				-= Device.fTimeDelta;
 		if (m_MParam->bWrapped)	{ stat_Stop(); stat_Start(); }
 		mRotate.setXYZi			(R.x,R.y,R.z);
-		info.d.set				(mRotate.get_k());
-		info.n.set				(mRotate.get_j());
+		info.d.set				(mRotate.k);
+		info.n.set				(mRotate.j);
 	}
 	else
 	{
@@ -278,20 +278,18 @@ BOOL CDemoPlay::ProcessCam(SCamEffectorInfo& info)
 		m4 = (Fmatrix *) &seq[f4];
 		
 		for (int i=0; i<4; i++) {
-			v[0] = m1->got_row_as_vector3(i);
-			v[1] = m1->got_row_as_vector3(i);
-			v[2] = m2->got_row_as_vector3(i);
-			v[3] = m3->got_row_as_vector3(i);
-			Fvector ref;
-			spline1	( t, &(v[0]), (Fvector *) & ref);
-			Device.mView.set_row(i, ref);
+			v[0].x = m1->m[i][0]; v[0].y = m1->m[i][1];  v[0].z = m1->m[i][2];
+			v[1].x = m2->m[i][0]; v[1].y = m2->m[i][1];  v[1].z = m2->m[i][2];
+			v[2].x = m3->m[i][0]; v[2].y = m3->m[i][1];  v[2].z = m3->m[i][2];
+			v[3].x = m4->m[i][0]; v[3].y = m4->m[i][1];  v[3].z = m4->m[i][2];
+			spline1	( t, &(v[0]), (Fvector *) &(Device.mView.m[i][0]) );
 		}
 		
 		Fmatrix mInvCamera;
 		mInvCamera.invert(Device.mView);
-		info.n.set( mInvCamera.get_j() );
-		info.d.set( mInvCamera.get_k());
-		info.p.set( mInvCamera.get_c());
+		info.n.set( mInvCamera._21, mInvCamera._22, mInvCamera._23 );
+		info.d.set( mInvCamera._31, mInvCamera._32, mInvCamera._33 );
+		info.p.set( mInvCamera._41, mInvCamera._42, mInvCamera._43 );
 		
 		fLifeTime-=Device.fTimeDelta;
 	}

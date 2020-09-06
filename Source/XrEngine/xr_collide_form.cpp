@@ -13,7 +13,10 @@
 #include "bone.h"
 #ifdef	DEBUG
 IC float DET(const Fmatrix &a){
-	return a.get_det();
+	return
+		(( a._11 * ( a._22 * a._33 - a._23 * a._32 ) -
+		a._12 * ( a._21 * a._33 - a._23 * a._31 ) +
+		a._13 * ( a._21 * a._32 - a._22 * a._31 ) ));
 }
 #include "objectdump.h"
 #endif
@@ -38,13 +41,9 @@ void CCF_Skeleton::SElement::center(Fvector& center) const
 {
 	switch (type){
 	case SBoneShape::stBox:
-	{
-		Fvector c = b_IM.get_c();
-
-		center.set(-c.dotproduct(b_IM.get_i()),
-			-c.dotproduct(b_IM.get_j()),
-			-c.dotproduct(b_IM.get_k()));
-	}
+		center.set(	-b_IM.c.dotproduct(b_IM.i),
+					-b_IM.c.dotproduct(b_IM.j),
+					-b_IM.c.dotproduct(b_IM.k));
 	break;
 	case SBoneShape::stSphere: 
 		center.set(s_sphere.P);
@@ -160,7 +159,7 @@ void CCF_Skeleton::BuildState()
 				// check matrix validity
 				if (!b)	{
 					Msg						("! ERROR: invalid bone xform . Bone disabled.");
-					Msg						("! ERROR: bone_id=[%d], world_pos[%f,%f,%f]",I->elem_id,VPUSH(TW.get_c()));
+					Msg						("! ERROR: bone_id=[%d], world_pos[%f,%f,%f]",I->elem_id,VPUSH(TW.c));
 					Msg						("visual name %s",owner->cNameVisual().c_str());
 					Msg						("object name %s",owner->cName().c_str());
 #ifdef DEBUG

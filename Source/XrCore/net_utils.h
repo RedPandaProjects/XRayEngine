@@ -155,12 +155,12 @@ public:
 
 		INI_W		(w_stringZ(p.c_str()));
 	}
-	IC void w_matrix(Fmatrix& M)
+	IC void w_matrix			(Fmatrix& M)
 	{
-		w_vec3(M.got_row_as_vector3(0));
-		w_vec3(M.got_row_as_vector3(1));
-		w_vec3(M.got_row_as_vector3(2));
-		w_vec3(M.got_row_as_vector3(3));
+		w_vec3		(M.i);
+		w_vec3		(M.j);
+		w_vec3		(M.k);
+		w_vec3		(M.c);
 	}
 	
 	IC void w_clientID			(ClientID& C) {		w_u32(C.value());	}

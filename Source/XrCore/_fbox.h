@@ -61,9 +61,9 @@ public:
 		// The three edges transformed: you can efficiently transform an X-only vector3
 		// by just getting the "X" column of the matrix
 		Tvector vx,vy,vz;
-		vx.mul				(m.get_i(), B.max.x-B.min.x);	
-		vy.mul				(m.get_j(), B.max.y-B.min.y);
-		vz.mul				(m.get_k(), B.max.z-B.min.z);
+		vx.mul				(m.i, B.max.x-B.min.x);	
+		vy.mul				(m.j, B.max.y-B.min.y);	
+		vz.mul				(m.k, B.max.z-B.min.z);	
 		
 		// Transform the min point
 		m.transform_tiny	(min,B.min);

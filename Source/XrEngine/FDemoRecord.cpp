@@ -81,7 +81,7 @@ CDemoRecord::CDemoRecord(const char *name,float life_time) : CEffectorCam(cefDem
 		m_Camera.invert	(Device.mView);
 
 		// parse yaw
-		Fvector& dir	= m_Camera.get_k();
+		Fvector& dir	= m_Camera.k;
 		Fvector DYaw;	DYaw.set(dir.x,0.f,dir.z); DYaw.normalize_safe();
 		if (DYaw.x<0)	m_HPB.x = acosf(DYaw.z);
 		else			m_HPB.x = 2*PI-acosf(DYaw.z);
@@ -91,7 +91,7 @@ CDemoRecord::CDemoRecord(const char *name,float life_time) : CEffectorCam(cefDem
 		m_HPB.y			= asinf(dir.y);
 		m_HPB.z			= 0;
 
-		m_Position.set	(m_Camera.get_c());
+		m_Position.set	(m_Camera.c);
 
 		m_vVelocity.set	(0,0,0);
 		m_vAngularVelocity.set(0,0,0);
@@ -262,8 +262,8 @@ void CDemoRecord::MakeCubeMapFace(Fvector &D, Fvector &N)
 	break;
 	case 6:
 		Render->Screenshot	(IRender_interface::SM_FOR_CUBEMAP,itoa(m_Stage,buf,10));
-		N.set		(m_Camera.get_j());
-		D.set		(m_Camera.get_k());
+		N.set		(m_Camera.j);
+		D.set		(m_Camera.k);
 		psHUD_Flags.assign(s_hud_flag);
 		m_bMakeCubeMap = FALSE;
 	break;
@@ -280,9 +280,9 @@ BOOL CDemoRecord::ProcessCam(SCamEffectorInfo& info)
 	{
 		MakeScreenshotFace();
 		// update camera
-		info.n.set(m_Camera.get_j());
-		info.d.set(m_Camera.get_k());
-		info.p.set(m_Camera.get_c());
+		info.n.set(m_Camera.j);
+		info.d.set(m_Camera.k);
+		info.p.set(m_Camera.c);
 	}else if (m_bMakeLevelMap)
 	{
 		MakeLevelMapProcess();
@@ -290,7 +290,7 @@ BOOL CDemoRecord::ProcessCam(SCamEffectorInfo& info)
 	}else if (m_bMakeCubeMap)
 	{
 		MakeCubeMapFace	(info.d, info.n);
-		info.p.set		(m_Camera.get_c());
+		info.p.set		(m_Camera.c);
 		info.fAspect	= 1.f;
 	}else
 	{
@@ -357,17 +357,17 @@ BOOL CDemoRecord::ProcessCam(SCamEffectorInfo& info)
 		// move
 		Fvector vmove;
 
-		vmove.set				(m_Camera.get_k());
+		vmove.set				(m_Camera.k);
 		vmove.normalize_safe	();
 		vmove.mul				(m_vT.z);
 		m_Position.add			(vmove);
 
-		vmove.set				(m_Camera.get_i());
+		vmove.set				(m_Camera.i);
 		vmove.normalize_safe	();
 		vmove.mul				(m_vT.x);
 		m_Position.add			(vmove);
 
-		vmove.set				(m_Camera.get_j());
+		vmove.set				(m_Camera.j);
 		vmove.normalize_safe	();
 		vmove.mul				(m_vT.y);
 		m_Position.add			(vmove);
@@ -376,9 +376,9 @@ BOOL CDemoRecord::ProcessCam(SCamEffectorInfo& info)
 		m_Camera.translate_over	(m_Position);
 
 		// update camera
-		info.n.set(m_Camera.get_j());
-		info.d.set(m_Camera.get_k());
-		info.p.set(m_Camera.get_c());
+		info.n.set(m_Camera.j);
+		info.d.set(m_Camera.k);
+		info.p.set(m_Camera.c);
 
 		fLifeTime-=Device.fTimeDelta;
 

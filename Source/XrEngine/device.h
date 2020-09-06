@@ -152,10 +152,10 @@ public:
 	{
 		if (enabled&&!m_bNearer){
 			m_bNearer						= TRUE;
-			mProject.append_row(3, 0, 0, -EPS_L, 0);
+			mProject._43					-= EPS_L;
 		}else if (!enabled&&m_bNearer){
 			m_bNearer						= FALSE;
-			mProject.append_row(3, 0, 0, +EPS_L, 0);
+			mProject._43					+= EPS_L;
 		}
 		m_pRender->SetCacheXform(mView, mProject);
 		//R_ASSERT(0);

@@ -92,7 +92,7 @@ IC void linear_diff( Fvector &lv, const Fvector &mc1, const Fvector &mc0, float 
 IC void matrix_diff( Fvector &lv, Fvector &aw, const Fmatrix &diff, float dt )
 {
 	angular_diff( aw, diff, dt );
-	linear_diff( lv, diff.get_c(), dt );
+	linear_diff( lv, diff.c, dt );
 }
 
 IC void matrix_diff( Fvector &lv, Fvector &aw, const Fmatrix &m0, const Fmatrix &m1, float dt )

@@ -295,9 +295,9 @@ void CLensFlare::OnFrame(shared_str id)
 	matEffCamPos.identity();
 	// Calculate our position and direction
 
-	matEffCamPos.set_i(Device.vCameraRight);
-	matEffCamPos.set_j(Device.vCameraTop);
-	matEffCamPos.set_k(Device.vCameraDirection);
+	matEffCamPos.i.set(Device.vCameraRight);
+	matEffCamPos.j.set(Device.vCameraTop);
+	matEffCamPos.k.set(Device.vCameraDirection);
 	vecPos.set(Device.vCameraPosition);
 
 	vecDir.set(0.0f, 0.0f, 1.0f);

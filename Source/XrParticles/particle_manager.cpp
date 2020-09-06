@@ -160,7 +160,7 @@ void CParticleManager::Transform(int alist_id, const Fmatrix& full, const Fvecto
 	if(pa == NULL)		return; // ERROR
 	pa->lock();
 
-	Fmatrix mT;			mT.translate(full.get_c());
+	Fmatrix mT;			mT.translate(full.c);
 
 	// Step through all the actions in the action list.
 	for(PAVecIt it=pa->begin(); it!=pa->end(); it++){
