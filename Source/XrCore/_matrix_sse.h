@@ -233,7 +233,7 @@ public:
 		R[3] = _mm_add_ps(R[3], _mm_mul_ps(A.R[1], swizzle<1, 1, 1, 1>(B.R[3])));
 		R[3] = _mm_add_ps(R[3], _mm_mul_ps(A.R[2], swizzle<2, 2, 2, 2>(B.R[3])));
 		R[3] = _mm_add_ps(R[3], A.R[3]);
-		R[3] = _mm_mul_ps(R[3], RMask);
+		R[3] = _mm_mul_ps(A.R[3], RMask);
 		R[3] = _mm_add_ps(R[3], set_ps(0, 0, 0, 1));
 
 		return *this;
