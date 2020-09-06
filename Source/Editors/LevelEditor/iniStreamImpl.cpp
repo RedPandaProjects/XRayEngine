@@ -120,7 +120,7 @@ void SIniFileStream::r_string(LPSTR dest, u32 dest_size)
 
 void SIniFileStream::r_string(xr_string& name)
 {
-	name = ini->r_string(sect.c_str(), gen_name());
+	name = ini->r_string_wb(sect.c_str(), gen_name()).c_str();
 }
 
 void SIniFileStream::skip_stringZ()

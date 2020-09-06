@@ -273,8 +273,13 @@ void CSceneObject::OnChangeShader(PropValue* sender)
 {
     for (CSurface* i : m_Surfaces) { i->OnDeviceDestroy(); }
 }
+bool CSceneObject::AfterEditGameMtl(PropValue* sender,shared_str&str)
+{
+    return str != "materials\\occ";
+}
 void CSceneObject::FillProp(LPCSTR pref, PropItemVec& items)
 {
+    static shared_str occ_name = "materials\\occ";
 	inherited::FillProp	(pref,items);
     PropValue* V		= PHelper().CreateChoose	(items,PrepareKey(pref,"Reference"),		&m_ReferenceName, smObject); 
     V->OnChangeEvent.bind(this,&CSceneObject::ReferenceChange);
@@ -287,11 +292,15 @@ void CSceneObject::FillProp(LPCSTR pref, PropItemVec& items)
         {
             shared_str Pref2 = PrepareKey(Pref1.c_str(), (*s_it)->_Name()).c_str();
             {
-                PropValue* V;
-                V = PHelper().CreateChoose(items, PrepareKey(Pref2.c_str(), "Texture"), &(*s_it)->m_Texture, smTexture);		V->OnChangeEvent.bind(this, &CSceneObject::OnChangeShader);
-                V = PHelper().CreateChoose(items, PrepareKey(Pref2.c_str(), "Shader"), &(*s_it)->m_ShaderName, smEShader);		V->OnChangeEvent.bind(this, &CSceneObject::OnChangeShader);
-                V = PHelper().CreateChoose(items, PrepareKey(Pref2.c_str(), "Compile"), &(*s_it)->m_ShaderXRLCName, smCShader);
-                PHelper().CreateChoose(items, PrepareKey(Pref2.c_str(), "Game Mtl"), &(*s_it)->m_GameMtlName, smGameMaterial);
+                if ((*s_it)->m_GameMtlName != occ_name)
+                {
+                    PropValue* V;
+                    V = PHelper().CreateChoose(items, PrepareKey(Pref2.c_str(), "Texture"), &(*s_it)->m_Texture, smTexture);		V->OnChangeEvent.bind(this, &CSceneObject::OnChangeShader);
+                    V = PHelper().CreateChoose(items, PrepareKey(Pref2.c_str(), "Shader"), &(*s_it)->m_ShaderName, smEShader);		V->OnChangeEvent.bind(this, &CSceneObject::OnChangeShader);
+                    V = PHelper().CreateChoose(items, PrepareKey(Pref2.c_str(), "Compile"), &(*s_it)->m_ShaderXRLCName, smCShader);
+                    PHelper().CreateChoose(items, PrepareKey(Pref2.c_str(), "Game Mtl"), &(*s_it)->m_GameMtlName, smGameMaterial)->OnAfterEditEvent.bind(this, &CSceneObject::AfterEditGameMtl);
+                }
+               
             }
         }
     }

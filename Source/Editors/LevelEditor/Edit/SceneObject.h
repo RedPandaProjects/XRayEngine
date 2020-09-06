@@ -12,6 +12,7 @@ class CSceneObject : public CCustomObject
 	CEditableObject*m_pReference;
 	void 			ReferenceChange			(PropValue* sender);
 	void			OnChangeShader(PropValue* sender);
+	bool			AfterEditGameMtl(PropValue* sender, shared_str& str);
 public:
 
 	SurfaceVec m_Surfaces;

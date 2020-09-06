@@ -309,7 +309,7 @@ CCommandVar CommandClear(CCommandVar p1, CCommandVar p2)
         ExecCommand				(COMMAND_UPDATE_CAPTION);
         ExecCommand				(COMMAND_CHANGE_TARGET,OBJCLASS_SCENEOBJECT);
         ExecCommand				(COMMAND_CHANGE_ACTION,etaSelect,estDefault);
-	    ExecCommand				(COMMAND_UPDATE_PROPERTIES);
+	    ExecCommand				(COMMAND_UPDATE_PROPERTIES,1);
         Scene->UndoSave			();
         return 					TRUE;
     } else {

@@ -133,7 +133,7 @@ void CEditableObject::ClearGeometry ()
 
 int CEditableObject::GetFaceCount(bool bMatch2Sided, bool bIgnoreOCC)
 {
-    if (m_FaceCount)return m_FaceCount;
+    if (m_FaceCount!=-1)return m_FaceCount;
     m_FaceCount =0;
     for(EditMeshIt m = m_Meshes.begin();m!=m_Meshes.end();m++)
         m_FaceCount +=(*m)->GetFaceCount(bMatch2Sided, bIgnoreOCC);
@@ -150,7 +150,7 @@ int CEditableObject::GetSurfFaceCount(const char* surf_name){
 
 int CEditableObject::GetVertexCount()
 {
-    if (m_VertexCount)return m_VertexCount;
+    if (m_VertexCount != -1)return m_VertexCount;
     m_VertexCount =0;
     for(EditMeshIt m = m_Meshes.begin();m!=m_Meshes.end();m++)
         m_VertexCount +=(*m)->GetVertexCount();

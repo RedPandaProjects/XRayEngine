@@ -23,7 +23,7 @@ CSpaceRestrictorWrapper::CSpaceRestrictorWrapper	(CSE_ALifeSpaceRestrictor *obje
 	m_level_graph					= 0;
 	m_graph_engine					= 0;
 	m_xform.setXYZ					(object->o_Angle);
-	m_xform.c.set					(object->o_Position);
+	m_xform.set_c					(object->o_Position);
 }
 
 void CSpaceRestrictorWrapper::clear					()

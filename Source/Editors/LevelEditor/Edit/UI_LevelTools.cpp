@@ -292,6 +292,7 @@ void CLevelTool::ShowProperties(LPCSTR focus_to_item)
 
 void CLevelTool::RealUpdateProperties()
 {
+    m_Props->ClearProperties();
 	if (/*m_Props->Visible*/1)
     {
 		if (m_Props->IsModified()) Scene->UndoSave();
