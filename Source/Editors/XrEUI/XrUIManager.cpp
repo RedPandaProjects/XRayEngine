@@ -60,6 +60,7 @@ void XrUIManager::OnDrawUI()
 
 void XrUIManager::ApplyShortCut(DWORD Key)
 {
+    if ((ImGui::GetIO().WantTextInput))return;
 	bool IsFail = true;
 	if (Key >= 'A' && Key <= 'Z')
 	{
@@ -67,7 +68,7 @@ void XrUIManager::ApplyShortCut(DWORD Key)
 	}
 	else if (Key >= '0' && Key <= '9')
 	{
-		IsFail = true;
+		IsFail = false;
 	}
     else
     {
