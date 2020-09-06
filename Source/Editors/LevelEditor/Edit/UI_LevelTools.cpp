@@ -520,7 +520,7 @@ bool CLevelTool::GetSelectionPosition(Fmatrix& result)
         float csale 	 = des_radius/r_bb_ss;
         
         result.scale	(csale,csale,csale);
-        result.set_c(center);
+        result.c 		= center;
         return 			true;
     }else
 		return 			false;

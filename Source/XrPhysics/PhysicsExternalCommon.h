@@ -27,6 +27,7 @@ template <typename geom_type>
 void	t_get_box( const geom_type*	shell, const	Fmatrix& form,	Fvector&	sz, Fvector&	c )
 {
 	c.set(0,0,0);
+	VERIFY( sizeof( form.i ) + sizeof( form._14_ ) == 4* sizeof( float ) );
 	for(int i=0;3>i;++i)
 	{	
 		float lo,hi;

@@ -380,9 +380,7 @@ void CPHGeometryOwner::setStaticForm(const Fmatrix& form)
 	if(!b_builded) return;
 	Fmatrix f;
 	f.set(form);
-	Fvector c =f.get_c();
-	get_mc_vs_transform(c,form);
-	f.set_c(c);
+	get_mc_vs_transform(f.c,form);
 	GEOM_I i=m_geoms.begin(),e=m_geoms.end();
 	for(;i!=e;++i) (*i)->set_static_ref_form(f);
 }

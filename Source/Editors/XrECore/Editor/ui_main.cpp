@@ -373,7 +373,7 @@ void TUI::Redraw()
             m_Flags.set(flRedraw, TRUE);
             EDevice.fASPECT = ((float)RTSize.y) / ((float)RTSize.x);
             EDevice.mProject.build_projection(deg2rad(EDevice.fFOV), EDevice.fASPECT, EDevice.m_Camera.m_Znear, EDevice.m_Camera.m_Zfar);
-            EDevice.m_fNearer = EDevice.mProject.get_c().z;
+            EDevice.m_fNearer = EDevice.mProject._43;
             
 
             RCache.set_xform_project(EDevice.mProject);
@@ -584,7 +584,7 @@ bool TUI::OnCreate()
     RTSize.set(GetRenderWidth(), GetRenderHeight());
     EDevice.fASPECT = (float)RTSize.x / (float)RTSize.y;
     EDevice.mProject.build_projection(deg2rad(EDevice.fFOV), EDevice.fASPECT, EDevice.m_Camera.m_Znear, EDevice.m_Camera.m_Zfar);
-    EDevice.m_fNearer = EDevice.mProject.get_c().z;
+    EDevice.m_fNearer = EDevice.mProject._43;
 
 
     RCache.set_xform_project(EDevice.mProject);

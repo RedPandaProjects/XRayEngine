@@ -130,7 +130,7 @@ CPHCapture::CPHCapture	( CPHCharacter   *a_character, IPhysicsShellHolder	*a_tag
 	VERIFY( a_character );
 	m_capture_bone			=get_capture_bone( a_character );
 	VERIFY( m_capture_bone );
-	m_taget_element			=m_taget_object->ObjectPPhysicsShell()->NearestToPoint( m_capture_bone->mTransform.get_c(), cb );
+	m_taget_element			=m_taget_object->ObjectPPhysicsShell()->NearestToPoint( m_capture_bone->mTransform.c, cb );
 	if( ! m_taget_element )
 		return;
 	Init( );
@@ -203,7 +203,7 @@ void CPHCapture::Init( )
 
 	Fvector dir;
 	Fvector capture_bone_position;
-	capture_bone_position.set(m_capture_bone->mTransform.get_c());
+	capture_bone_position.set(m_capture_bone->mTransform.c);
 	b_character_feedback=true;
 	(m_character->PhysicsRefObject())->ObjectXFORM().transform_tiny(capture_bone_position);
 

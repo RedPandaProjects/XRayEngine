@@ -30,7 +30,7 @@ void CCustomObject::SnapMove(Fvector& pos, Fvector& rot, const Fmatrix& rotRP, c
                 Fvector vR,vD,vN;
                 vN.mknormal(verts[0],verts[1],verts[2]);
 
-                vD.set(rotRP.get_k());
+                vD.set(rotRP.k);
                 vR.crossproduct	(vN,vD);
                 vR.normalize();
                 vD.crossproduct	(vR,vN);
@@ -115,7 +115,7 @@ void CCustomObject::MoveTo(const Fvector& pos, const Fvector& up)
         Fmatrix 	M;
         M.setXYZ	(FRotation);
         Fvector ret_rot = FRotation;
-    	NormalAlign     (ret_rot, up, M.get_k());
+    	NormalAlign     (ret_rot, up, M.k);
         FRotation        = ret_rot;
     }
     SetPosition(v);
@@ -129,7 +129,7 @@ void CCustomObject::RotatePivot(const Fmatrix& prev_inv, const Fmatrix& current)
     Fvector 		xyz;
     On.getXYZ		(xyz);
     FRotation		= xyz;
-    SetPosition( On.get_c());
+    SetPosition( On.c);
 }
 
 void CCustomObject::RotateParent(Fvector& axis, float angle)

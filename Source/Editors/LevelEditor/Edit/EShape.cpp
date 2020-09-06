@@ -184,8 +184,8 @@ void CEditShape::Detach()
             case cfBox:{
                 Fmatrix B		= it->data.box;
                 B.mulA_43		(M);
-                shape->SetPosition(B.get_c());
-                B.set_c			(Fvector().set( 0,0,0));
+                shape->SetPosition(B.c);
+                B.c.set			(0,0,0);
                 shape->add_box	(B);
             }break;
             default: THROW;
@@ -315,25 +315,20 @@ bool CEditShape::LoadLTX(CInifile& ini, LPCSTR sect_name)
 
        	sprintf			(buff,"shape_radius_%d", i);
 		shapes[i].data.sphere.R = ini.r_float		(sect_name, buff);
-       }
-       else
+       }else
        {
-           R_ASSERT(shapes[i].type == CShapeData::cfBox);
+       	 R_ASSERT		(shapes[i].type==CShapeData::cfBox);
+         sprintf			(buff,"shape_matrix_i_%d", i);
+         shapes[i].data.box.i = ini.r_fvector3	(sect_name, buff);
 
-           Fvector i1, j, k, c;
-           sprintf(buff, "shape_matrix_i_%d", i);
-           i1 = ini.r_fvector3(sect_name, buff);
+         sprintf			(buff,"shape_matrix_j_%d", i);
+         shapes[i].data.box.j = ini.r_fvector3	(sect_name, buff);
 
-           sprintf(buff, "shape_matrix_j_%d", i);
-           j = ini.r_fvector3(sect_name, buff);
+         sprintf			(buff,"shape_matrix_k_%d", i);
+         shapes[i].data.box.k = ini.r_fvector3	(sect_name, buff);
 
-           sprintf(buff, "shape_matrix_k_%d", i);
-           k = ini.r_fvector3(sect_name, buff);
-
-           sprintf(buff, "shape_matrix_c_%d", i);
-           c = ini.r_fvector3(sect_name, buff);
-           shapes[i].data.box.set(i1, j, k, c);
-           
+         sprintf			(buff,"shape_matrix_c_%d", i);
+         shapes[i].data.box.c = ini.r_fvector3	(sect_name, buff);
        }
     }
 
@@ -367,13 +362,13 @@ void CEditShape::SaveLTX(CInifile& ini, LPCSTR sect_name)
        {
        		R_ASSERT		(shapes[i].type==CShapeData::cfBox);
             sprintf			(buff,"shape_matrix_i_%d", i);
-            ini.w_fvector3	(sect_name, buff, shapes[i].data.box.get_i());
+            ini.w_fvector3	(sect_name, buff, shapes[i].data.box.i);
             sprintf			(buff,"shape_matrix_j_%d", i);
-            ini.w_fvector3	(sect_name, buff, shapes[i].data.box.get_j());
+            ini.w_fvector3	(sect_name, buff, shapes[i].data.box.j);
             sprintf			(buff,"shape_matrix_k_%d", i);
-            ini.w_fvector3	(sect_name, buff, shapes[i].data.box.get_k());
+            ini.w_fvector3	(sect_name, buff, shapes[i].data.box.k);
             sprintf			(buff,"shape_matrix_c_%d", i);
-            ini.w_fvector3	(sect_name, buff, shapes[i].data.box.get_c());
+            ini.w_fvector3	(sect_name, buff, shapes[i].data.box.c);
        }
     }
 }

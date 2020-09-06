@@ -83,13 +83,9 @@ void CSkeletonX::_Render	(ref_geom& hGeom, u32 vCount, u32 iOffset, u32 pCount)
 			{
 				Fmatrix&	M				= Parent->LL_GetTransform_R(u16(mid));
 				u32			id				= mid*3;
-				Fvector4 r1 = M.get_row(0);
-				Fvector4 r2 = M.get_row(1);
-				Fvector4 r3 = M.get_row(2);
-				Fvector4 r4 = M.get_row(3);
-				RCache.set_ca				(&*array,id+0,r1.x,r2.x,r3.x,r4.x);
-				RCache.set_ca				(&*array,id+1,r1.y,r2.y,r3.y,r4.y);
-				RCache.set_ca				(&*array,id+2,r1.z,r2.z,r3.z,r4.z);
+				RCache.set_ca				(&*array,id+0,M._11,M._21,M._31,M._41);
+				RCache.set_ca				(&*array,id+1,M._12,M._22,M._32,M._42);
+				RCache.set_ca				(&*array,id+2,M._13,M._23,M._33,M._43);
 			}
 
 			// render

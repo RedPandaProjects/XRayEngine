@@ -212,7 +212,7 @@ void CParticleGroup::SItem::StartRelatedChild(CParticleEffect* emitter, LPCSTR e
     };
     Fvector 				p;
     M.transform_tiny		(p,m.pos);
-    M.set_c					(p);
+    M.c.set					(p);
     C->Play					();
     C->UpdateParent			(M,vel,FALSE);
     _children_related.push_back(C);
@@ -240,7 +240,7 @@ void CParticleGroup::SItem::StartFreeChild(CParticleEffect* emitter, LPCSTR nm, 
         };
         Fvector 				p;
         M.transform_tiny		(p,m.pos);
-        M.set_c					(p);
+        M.c.set					(p);
         C->Play					();
         C->UpdateParent			(M,vel,FALSE);
         _children_free.push_back(C);
@@ -483,7 +483,7 @@ void CParticleGroup::OnFrame(u32 u_dt)
 
 void CParticleGroup::UpdateParent(const Fmatrix& m, const Fvector& velocity, BOOL bXFORM)
 {
-	m_InitialPosition		= m.get_c();
+	m_InitialPosition		= m.c;
     for (SItemVecIt i_it=items.begin(); i_it!=items.end(); i_it++) 
     	i_it->UpdateParent(m,velocity,bXFORM);
 }

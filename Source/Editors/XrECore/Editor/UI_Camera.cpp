@@ -85,10 +85,10 @@ void CUI_Camera::BuildCamera()
     m_CamMat.translate_over(m_Position);
     UI->OutCameraPos();
     
-	EDevice.vCameraPosition.set	(m_CamMat.get_c());
-	EDevice.vCameraDirection.set	(m_CamMat.get_k());
-	EDevice.vCameraTop.set		(m_CamMat.get_j());
-    EDevice.vCameraRight.set		(m_CamMat.get_i());
+	EDevice.vCameraPosition.set	(m_CamMat.c);
+	EDevice.vCameraDirection.set	(m_CamMat.k);
+	EDevice.vCameraTop.set		(m_CamMat.j);
+    EDevice.vCameraRight.set		(m_CamMat.i);
 }
 
 void CUI_Camera::SetDepth(float _far, bool bForcedUpdate)
@@ -118,7 +118,7 @@ void CUI_Camera::Update(float dt)
     	BOOL bRightDn = m_Shift&ssRight;
 		if ((m_Style==csFreeFly)&&(bLeftDn||bRightDn)&&!(bLeftDn&&bRightDn)){
 			Fvector vmove;
-	        vmove.set( m_CamMat.get_k());
+	        vmove.set( m_CamMat.k );
 			vmove.mul( m_FlySpeed*dt );
     		if (bLeftDn) 		m_Position.add( vmove );
     		else if (bRightDn) 	m_Position.sub( vmove );
@@ -141,12 +141,12 @@ void CUI_Camera::Update(float dt)
 void CUI_Camera::Pan(float dx, float dz)
 {
     Fvector vmove;
-    vmove.set( m_CamMat.get_k());  vmove.y = 0;
+    vmove.set( m_CamMat.k );  vmove.y = 0;
     vmove.normalize_safe();
     vmove.mul( dz*-m_SM );
     m_Position.add( vmove );
 
-    vmove.set( m_CamMat.get_i());  vmove.y = 0;
+    vmove.set( m_CamMat.i );  vmove.y = 0;
     vmove.normalize_safe();
     vmove.mul( dx*m_SM );
     m_Position.add( vmove );
@@ -280,9 +280,9 @@ void CUI_Camera::MouseRayFromPoint( Fvector& start, Fvector& direction, const Iv
 	float r_pt = float(point2.x) * size_x / (float) halfwidth;
 	float u_pt = float(point2.y) * size_y / (float) halfheight;
 
-	direction.mul( m_CamMat.get_k(), m_Znear );
-	direction.mad( direction, m_CamMat.get_j(), u_pt );
-	direction.mad( direction, m_CamMat.get_i(), r_pt );
+	direction.mul( m_CamMat.k, m_Znear );
+	direction.mad( direction, m_CamMat.j, u_pt );
+	direction.mad( direction, m_CamMat.i, r_pt );
 	direction.normalize();
 }
 
@@ -291,7 +291,7 @@ void CUI_Camera::ZoomExtents(const Fbox& bb)
 	Fvector C,D;
     float R,H1,H2;
     bb.getsphere(C,R);
-	D.mul(m_CamMat.get_k(),-1);
+	D.mul(m_CamMat.k,-1);
     H1 = R/sinf(deg2rad(EDevice.fFOV)*0.5f);
     H2 = R/sinf(deg2rad(EDevice.fFOV)*0.5f/EDevice.fASPECT);
     m_Position.mad(C,D,_max(H1,H2));
@@ -316,12 +316,12 @@ void CUI_Camera::ArcBall(TShiftState Shift, float dx, float dy)
 	if (Shift|ssAlt){
 		if (Shift|ssLeft){
             Fvector vmove;
-            vmove.set( m_CamMat.get_k() );  vmove.y = 0;
+            vmove.set( m_CamMat.k );  vmove.y = 0;
             vmove.normalize_safe();
             vmove.mul( dy*-m_SM );
             m_Target.add( vmove );
 
-            vmove.set( m_CamMat.get_i());  vmove.y = 0;
+            vmove.set( m_CamMat.i );  vmove.y = 0;
             vmove.normalize_safe();
             vmove.mul( dx*m_SM );
             m_Target.add( vmove );

@@ -186,8 +186,8 @@ void ESceneWallmarkTool::OnRender(int priority, bool strictB2F)
         VERIFY(slot->shader);
 		if ((u32(priority)==slot->shader->E[0]->flags.iPriority)&&(strictB2F==!!(slot->shader->E[0]->flags.bStrictB2F))){
             // Projection and xform
-            Fvector _4				= EDevice.mProject.get_c();
-            EDevice.mProject.append_row(3, 0, 0, -0.01f, 0);
+            float _43				= EDevice.mProject._43;
+            EDevice.mProject._43 	-= 0.01f;
             RCache.set_xform_world	(Fidentity);
             RCache.set_xform_project(EDevice.mProject);
 
@@ -240,7 +240,7 @@ void ESceneWallmarkTool::OnRender(int priority, bool strictB2F)
                 RCache.Render		(D3DPT_TRIANGLELIST,w_offset,w_count/3);
             }
             // Projection
-            EDevice.mProject.set_c(_4);
+            EDevice.mProject._43		= _43;
             RCache.set_xform_project	(EDevice.mProject);
         }
         if ((1==priority)&&(false==strictB2F)){

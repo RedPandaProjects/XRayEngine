@@ -370,7 +370,7 @@ void CSE_SmartCover::fill_visuals()
 		visual_data					tmp;
 		tmp.visual					= visual;
 		tmp.matrix.rotation			(I->enter_direction, Fvector().set(0.f, 1.f, 0.f));
-		tmp.matrix.set_c(I->point_position);
+		tmp.matrix.c				= I->point_position;
 
 		m_visuals.push_back			(tmp);
 	}
@@ -583,7 +583,7 @@ void CSE_SmartCover::on_render	(CDUInterface* du, ISE_AbstractLEOwner* owner, bo
 
 		Fvector dir = H.fov_direction;
 		parent.transform_dir(dir);
-		Fvector up = parent.get_j();
+		Fvector up = parent.j;
 		draw_frustum(du, H.fov, H.range, 1.f, pos, dir, up, color_rgba(255,0,0,255));
 	}
 }

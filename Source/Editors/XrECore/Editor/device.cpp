@@ -129,15 +129,11 @@ void CEditorRenderDevice::InitTimer(){
 }
 //---------------------------------------------------------------------------
 void CEditorRenderDevice::RenderNearer(float n){
-	Fvector c = mProject.get_c();
-	c.z =m_fNearer-n;
-	mProject.set_c(c);
+    mProject._43=m_fNearer-n;
     RCache.set_xform_project(mProject);
 }
 void CEditorRenderDevice::ResetNearer(){
-	Fvector c = mProject.get_c();
-	c.z = m_fNearer;
-	mProject.set_c(c);
+    mProject._43=m_fNearer;
     RCache.set_xform_project(mProject);
 }
 //---------------------------------------------------------------------------

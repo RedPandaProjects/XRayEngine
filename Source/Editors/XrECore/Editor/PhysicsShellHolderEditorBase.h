@@ -46,7 +46,7 @@ private:
 public:
     virtual	Fmatrix&					_BCL	ObjectXFORM				()														{  return m_object_xform;}
 private:
-    virtual	Fvector&					_BCL	ObjectPosition			()														{  return m_object_xform.get_c();}
+    virtual	Fvector&					_BCL	ObjectPosition			()														{  return m_object_xform.c;}
 
 #ifdef	DEBUG
 	virtual	std::string					_BCL	dump							( EDumpType type )const  { VERIFY(false); return std::string("ActorEditor!");}

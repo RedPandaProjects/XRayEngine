@@ -316,8 +316,8 @@ TT.Start();
 	                	float dX= iiW*(dW/LOD_CALC_SAMPLES);
                         start.set		(X+dX,Y+dY,0);
                         M.transform_tiny(start);
-                        start.mad		(M.get_k(),-dR);
-                        PQ.prepare_rq	(start,M.get_k(),d2R,CDB::OPT_CULL);
+                        start.mad		(M.k,-dR);
+                        PQ.prepare_rq	(start,M.k,d2R,CDB::OPT_CULL);
                         OBJECT->RayQuery		(PQ);
                         if (PQ.r_count()){
                             PQ.r_sort();

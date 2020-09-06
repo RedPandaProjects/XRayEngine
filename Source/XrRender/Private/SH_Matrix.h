@@ -37,14 +37,9 @@ public:
 
 	IC void			tc_trans	(Fmatrix& T, float u, float v)
 	{
-		T = { 1,0,0,0,
-			0,1,0,0,
-			v,u,1,0,
-			0,0,0,1
-		};
-		/*T.identity	();
+		T.identity	();
 		T.m[2][0] = u;
-		T.m[2][1] = v;*/
+		T.m[2][1] = v;
 	}
 	void			Calculate	();
 

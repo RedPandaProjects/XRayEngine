@@ -119,7 +119,7 @@ void CEditableObject::RenderBones(const Fmatrix& parent)
 	        EDevice.SetShader(EDevice.m_WireShader);
 	        RCache.set_xform_world(parent);
             Fmatrix& M 		= (*b_it)->_LTransform();
-            Fvector p1		= M.get_c();
+            Fvector p1		= M.c;
             u32 c_joint		= (*b_it)->flags.is(CBone::flSelected)?color_bone_sel_color:color_bone_norm_color;
             if (EPrefs->object_flags.is(epoDrawJoints))
 	            DU_impl.DrawJoint	(p1,joint_size,c_joint);
@@ -144,7 +144,7 @@ void CEditableObject::RenderBones(const Fmatrix& parent)
 */
 	     	if ((*b_it)->Parent()){
 		        EDevice.SetShader(EDevice.m_SelectionShader);
-				Fvector& p2 = (*b_it)->Parent()->_LTransform().get_c();
+				Fvector& p2 = (*b_it)->Parent()->_LTransform().c;
         	    DU_impl.DrawLine	(p1,p2,color_bone_link_color);
 			}
 			if (EPrefs->object_flags.is(epoDrawBoneAxis)){

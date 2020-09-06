@@ -112,17 +112,17 @@ static void CalculateAnimBone(CBone* bone, CSMotion* motion, Fmatrix& parent)
     {
         if ( flags.is(st_BoneMotion::flWorldOrient)){
             M.setXYZi	(r.x,r.y,r.z);
-            M.set_c		(bone->_Offset());
+            M.c.set		(bone->_Offset());
             L.mul		(parent,M);
-            L.set_i		(M.get_i());
-            L.set_j		(M.get_j());
-            L.set_k		(M.get_k());
+            L.i.set		(M.i);
+            L.j.set		(M.j);
+            L.k.set		(M.k);
 
             Fmatrix		 LI; LI.invert(parent);
             M.mulA_43	(LI);
         }else{
             M.setXYZi	(r.x,r.y,r.z);
-            M.set_c		(bone->_Offset());
+            M.c.set		(bone->_Offset());
             L.mul		(parent,M);
         }
      }
@@ -150,7 +150,7 @@ static void CalculateRest(CBone* bone, Fmatrix& parent)
 {
     Fmatrix& R	= bone->_RTransform();
     R.setXYZi	(bone->_RestRotate());
-    R.set_c		(bone->_RestOffset());
+    R.c.set		(bone->_RestOffset());
     bone->_LRTransform() = R;
     R.mulA_43	(parent);
     bone->_RITransform().invert(bone->_RTransform());
@@ -170,8 +170,8 @@ void CEditableObject::CalculateAnimation(CSMotion* motion)
  	float bottom  = FLT_MAX;
     VERIFY(!m_Bones.empty());
  	for (BoneIt b_it=m_Bones.begin()+1; b_it!=m_Bones.end(); b_it++)
-    	if( !(*b_it)->IsRoot() && (*b_it)->_LTransform().get_c().y < bottom )
-        bottom =  (*b_it)->_LTransform().get_c().y;
+    	if( !(*b_it)->IsRoot() && (*b_it)->_LTransform().c.y < bottom )
+        bottom =  (*b_it)->_LTransform().c.y;
     return bottom;
  }
 
@@ -205,45 +205,36 @@ void CEditableObject::GetAnchorForRootObjectAnimation( Fmatrix &anchor )
 static void AlineYtoGlobalFrame(Fmatrix &in_out_m)
 {
 	Fmatrix &m =    in_out_m;
-    Fvector i, j, k;
-    i = m. get_i();
-    j = m.get_j();
-    k = m.get_k();
-    i.y = 0;
-    k.y = 0;
+    
+    m.i.y = 0;
+    m.k.y = 0;
 
-    j.x = 0;
-    j.y = 1;
-    j.z = 0;
+    m.j.x = 0;
+    m.j.y = 1;
+    m.j.z = 0;
 
-	float     smi = i.x  * i.x +  i.z  * i.z;
-    float     smk = k.x  * k.x +  k.z  * k.z;
+	float     smi = m.i.x  * m.i.x +  m.i.z  * m.i.z;
+    float     smk = m.k.x  * m.k.x +  m.k.z  * m.k.z;
     bool bi = smi > EPS_S;
     bool bk = smk > EPS_S;
     if( smk > smi && bk )
     {
-		k.mul( 1.f/_sqrt( smk ) );
-        i.crossproduct( j, k );
-        m.set_i(i);
-        m.set_j(j);
-        m.set_k(k);
+		m.k.mul( 1.f/_sqrt( smk ) );
+        m.i.crossproduct( m.j, m.k );
     } else if( bi )
     {
-    	i.mul( 1.f/_sqrt( smi ) );
-        k.crossproduct( i, j );
-        m.set_i(i);
-        m.set_j(j);
-        m.set_k(k);
+    	m.i.mul( 1.f/_sqrt( smi ) );
+        m.k.crossproduct( m.i, m.j );
     }else //if( !bi && !bk )
     {
     	//unreal indeed
-        m.identity();
+        m = Fidentity;
     }
 
 //    if		 ( bi && bk )
  //   {
- //		i.mul( 1.f/_sqrt( smi ) );
- //       k.mul( 1.f/_sqrt( smk ) );
+ //		m.i.mul( 1.f/_sqrt( smi ) );
+ //       m.k.mul( 1.f/_sqrt( smk ) );
  //   }
     
     if(!check_scale( in_out_m ))
@@ -260,8 +251,8 @@ void CEditableObject::CalculateRootObjectAnimation(const Fmatrix &anchor)
   	Fmatrix root_transform  = gl_anchor;//gl_anchor;
     AlineYtoGlobalFrame( root_transform );
 
-    Fvector c = gl_anchor.get_c();c.y = bottom;
-    root_transform.set_c(c);
+    root_transform.c =  gl_anchor.c;
+    root_transform.c.y=bottom;
     SetBoneTransform(   root_bone, root_transform, Fidentity );
     
  	SetBoneTransform(   anchor_bone, anchor_bone._LTransform(), root_transform );
@@ -555,14 +546,14 @@ void CEditableObject::GetBoneWorldTransform(u32 bone_idx, float t, CSMotion* mot
         if (flags.is(st_BoneMotion::flWorldOrient)){
             rot.setXYZi(R.x,R.y,R.z);
             mat.identity();
-            mat.set_c(T);
+            mat.c.set(T);
             mat.mulA_43(matrix);
-            mat.set_i(rot.get_i());
-            mat.set_j(rot.get_j());
-            mat.set_k(rot.get_k());
+            mat.i.set(rot.i);
+            mat.j.set(rot.j);
+            mat.k.set(rot.k);
         }else{
             mat.setXYZi(R.x,R.y,R.z);
-            mat.set_c(T);
+            mat.c.set(T);
             mat.mulA_43(matrix);
         }
         matrix.set(mat);

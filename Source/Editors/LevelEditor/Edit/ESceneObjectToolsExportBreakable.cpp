@@ -143,7 +143,7 @@ bool ESceneObjectTool::ExportBreakableObjects(SExportStreams* F)
                         MX.translate_over		(P->m_RefOffset);
                         Fvector DR				= {0,0,1};
                         MX.transform_dir		(DR);
-                        Tools->m_DebugDraw.AppendLine(P->m_RefOffset,Fvector().mad(P->m_RefOffset,MX.get_k(),1.f),0xFF0000FF,false,false);
+                        Tools->m_DebugDraw.AppendLine(P->m_RefOffset,Fvector().mad(P->m_RefOffset,MX.k,1.f),0xFF0000FF,false,false);
                     }
 
                     NET_Packet					Packet;

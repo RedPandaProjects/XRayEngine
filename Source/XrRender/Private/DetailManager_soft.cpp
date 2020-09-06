@@ -78,13 +78,10 @@ void CDetailManager::soft_Render	()
 
 					// Build matrix
 					Fmatrix& M = Instance.mRotY;
-					mXform = M;
-					mXform.mul_row(0, scale, scale, scale, 1);
-					mXform.mul_row(1, scale, scale, scale, 1);
-					mXform.mul_row(2, scale, scale, scale, 1);
-					mXform.mul_row(3, 1, 1, 1, 0);
-					mXform.append_row(3, 0, 0,0,1);
-				
+					mXform._11=M._11*scale;	mXform._12=M._12*scale;	mXform._13=M._13*scale;	mXform._14=M._14;
+					mXform._21=M._21*scale;	mXform._22=M._22*scale;	mXform._23=M._23*scale;	mXform._24=M._24;
+					mXform._31=M._31*scale;	mXform._32=M._32*scale;	mXform._33=M._33*scale;	mXform._34=M._34;
+					mXform._41=M._41;		mXform._42=M._42;		mXform._43=M._43;		mXform._44=1;
 
 					// Transfer vertices
 					{
