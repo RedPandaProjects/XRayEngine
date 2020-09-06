@@ -461,6 +461,7 @@ bool UIItemListForm::IsDrawFloder(Node* node)
 void UIItemListForm::IsItemClicked(Node* Node)
 {
 	ClearSelectedItems();
+	Node->Object->selected = true;
 	m_SelectedItems.push_back(Node->Object);
 	if (!OnItemFocusedEvent.empty())
 		OnItemFocusedEvent(Node->Object);

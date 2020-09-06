@@ -40,10 +40,21 @@ public:
 		}
 		for (Node& node : N->Nodes)
 		{
-			if (node.Name == path && node.IsObject())
+			if (FloderAsItem)
 			{
-				node.Selected = true;
-				return &node;
+				if (node.Name == path && node.Object)
+				{
+					node.Selected = true;
+					return &node;
+				}
+			}
+			else
+			{
+				if (node.Name == path && node.IsObject())
+				{
+					node.Selected = true;
+					return &node;
+				}
 			}
 		}
 		VERIFY(false);
