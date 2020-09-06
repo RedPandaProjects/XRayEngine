@@ -515,7 +515,7 @@ void GetBindAbsolutePosition(CBone* B, Fmatrix& dest)
     {
     	Fmatrix 	M;
         M.setXYZi	( B->_RestRotate() );
-        M.set_c		( B->_RestOffset() );
+        M.c.set		( B->_RestOffset() );
         M.mulA_43	(dest);
         dest.set	(M);
     }
@@ -600,7 +600,7 @@ void CActorTools::OnDrawUI()
 
                 Fmatrix R;
                 R.mul(matrix1.invert(), matrix2).getXYZi(rotate);
-                offset.set(R.get_c());
+                offset.set(R.c);
 
                 BEditable->SetRestParams(length, offset, rotate);
 

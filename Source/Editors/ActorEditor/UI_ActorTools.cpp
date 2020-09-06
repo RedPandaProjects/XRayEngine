@@ -193,7 +193,7 @@ void CActorTools::Render()
 
                         Fmatrix M = Fmatrix().mul(m_RenderObject.ObjectXFORM(), K->LL_GetTransform(bidx));
 
-                        Fvector p1 = M.get_c();
+                        Fvector p1 = M.c;
                         u32 c_joint = color_bone_norm_color;
                         DU_impl.DrawJoint(p1, joint_size, c_joint);
 
