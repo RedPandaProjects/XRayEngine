@@ -534,3 +534,8 @@ void CActorMain::OnDrawUI()
     UIBoneForm::Update();
 }
 
+Ivector2 CActorMain::GetRenderMousePosition() const
+{
+    return MainForm->GetRenderForm()->GetMousePos();
+}
+

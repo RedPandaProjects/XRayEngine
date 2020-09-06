@@ -890,9 +890,9 @@ void CActorTools::SelectListItem(LPCSTR pref, LPCSTR name, bool bVal, bool bLeav
 {
 	xr_string nm = (name&&name[0])?PrepareKey(pref,name).c_str():xr_string(pref).c_str();
 	m_ObjectItems->SelectItem(nm.c_str());
-	if (pref){
+	/*if (pref){
     	m_ObjectItems->SelectItem(pref);
-    }
+    }*/
 }
 //------------------------------------------------------------------------------
 

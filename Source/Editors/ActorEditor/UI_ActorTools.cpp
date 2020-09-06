@@ -519,16 +519,17 @@ bool  CActorTools::MouseStart(TShiftState Shift)
     inherited::MouseStart(Shift);
     switch (m_Action) {
     case etaSelect:
-        switch (m_EditMode)
+        switch (MainForm->GetLeftBarForm()->GetPickMode())
         {
-            case emBone:
+            case 2:
             {
                 CBone* B = m_pEditObject->PickBone(UI->m_CurrentRStart, UI->m_CurrentRDir, m_AVTransform);
                 bool bVal = B ? (Shift | ssAlt) ? false : ((Shift | ssCtrl) ? !B->Selected() : true) : false;
+                if(B)
                 SelectListItem(BONES_PREFIX, B ? MakeFullBoneName(B).c_str() : 0, bVal, (Shift | ssCtrl) || (Shift | ssAlt), true);
             }
             break;
-            case emSurface:
+            case 1:
             {
                 SRayPickInfo pinf;
                 float dis = UI->ZFar();

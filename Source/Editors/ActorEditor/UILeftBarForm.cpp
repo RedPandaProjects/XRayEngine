@@ -3,6 +3,7 @@
 UILeftBarForm::UILeftBarForm()
 {
 	m_RenderMode = Render_Editor;
+	m_PickMode = 0;
 }
 
 UILeftBarForm::~UILeftBarForm()
@@ -36,7 +37,10 @@ void UILeftBarForm::Draw()
 		}
 		ImGui::SameLine(0,10);
 		if (ImGui::Button("Clip Maker")) { UIBoneForm::Show(); }
+		static const char* PickModeList[] = { "None","Surface","Bone" };
+		ImGui::Combo("Pick mode", &m_PickMode, PickModeList, 3, -1);
 		ImGui::TreePop();
+		
 	}
 	ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 	if (ImGui::TreeNode("Object Items"))

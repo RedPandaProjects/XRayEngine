@@ -9,6 +9,8 @@ public:
 	IC UILeftBarForm* GetLeftBarForm() {return m_LeftBar;}
 	IC UITopBarForm* GetTopBarForm() { return m_TopBar; }
 	IC UIKeyForm* GetKeyForm() { return m_KeyForm; }
+
+	IC UIRenderForm* GetRenderForm() { return m_Render; }
 private:
 	UITopBarForm *m_TopBar;
 	UIRenderForm* m_Render;

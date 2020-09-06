@@ -55,6 +55,8 @@ public:
 	virtual	void	RegisterCommands		(); 
 protected:
     virtual void    OnDrawUI();
+
+    virtual Ivector2 GetRenderMousePosition()const;
 };    
 extern CActorMain*	AUI;
 
