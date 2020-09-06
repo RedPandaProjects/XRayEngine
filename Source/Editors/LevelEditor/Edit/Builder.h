@@ -79,7 +79,7 @@ public:
     void    BuildPortal   	(b_portal* b, CPortal* e);
     BOOL    BuildMesh       (const Fmatrix& parent, CEditableObject* object, CEditableMesh* mesh, int sector_num,
     						b_vertex* verts, int& vert_cnt, int& vert_it,
-                            b_face* faces, int& face_cnt, int& face_it, u32* smooth_groups, const Fmatrix& real_transform);
+                            b_face* faces, int& face_cnt, int& face_it, u32* smooth_groups, const Fmatrix& real_transform, CSceneObject* obj);
     BOOL    BuildObject     (CSceneObject* obj);
     BOOL    BuildMUObject   (CSceneObject* obj);
 

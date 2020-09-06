@@ -11,7 +11,10 @@ class CSceneObject : public CCustomObject
 	shared_str		m_ReferenceName;
 	CEditableObject*m_pReference;
 	void 			ReferenceChange			(PropValue* sender);
+	void			OnChangeShader(PropValue* sender);
 public:
+
+	SurfaceVec m_Surfaces;
 	enum{
 //    	flDynamic	= (1<<0),
 		flFORCE32	= u32(-1)

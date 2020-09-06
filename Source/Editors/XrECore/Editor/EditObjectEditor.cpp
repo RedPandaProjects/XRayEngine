@@ -88,7 +88,7 @@ bool CEditableObject::BoxPick(CCustomObject* obj, const Fbox& box, const Fmatrix
 extern float 	ssaLIMIT;
 extern float	g_fSCREEN;
 static const float ssaLim = 64.f*64.f/(640*480);
-void CEditableObject::Render(const Fmatrix& parent, int priority, bool strictB2F){
+void CEditableObject::Render(const Fmatrix& parent, int priority, bool strictB2F, SurfaceVec* surfaces){
     if (!(m_LoadState.is(LS_RBUFFERS)))
     	DefferedLoadRP();
 	Fvector v; 
@@ -121,7 +121,7 @@ void CEditableObject::Render(const Fmatrix& parent, int priority, bool strictB2F
         }else{
             if(psDeviceFlags.is(rsEdgedFaces)&&(1==priority)&&(false==strictB2F))
                 RenderEdge(parent);
-
+            size_t s_id = 0;
             for(SurfaceIt s_it=m_Surfaces.begin(); s_it!=m_Surfaces.end(); s_it++)
             {
             	int pr = (*s_it)->_Priority();
@@ -129,13 +129,23 @@ void CEditableObject::Render(const Fmatrix& parent, int priority, bool strictB2F
                 
                 if ((priority==pr)&&(strictB2F==strict))
                 {
-                    EDevice.SetShader((*s_it)->_Shader());
+                    if (surfaces)
+                    {
+                        EDevice.SetShader((*surfaces)[s_id]->_Shader());
+                       
+                    }
+                    else
+                    {
+
+                        EDevice.SetShader((*s_it)->_Shader());
+                    }
                     for (EditMeshIt _M=m_Meshes.begin(); _M!=m_Meshes.end(); _M++)
                         if (IsSkeleton())
                         	(*_M)->RenderSkeleton	(parent,*s_it);
                         else
                         	(*_M)->Render			(parent,*s_it);
                 }
+                s_id++;
             }
         }
     }

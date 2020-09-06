@@ -581,7 +581,8 @@ BOOL SceneBuilder::BuildMesh(	const Fmatrix& parent,
                                 int& face_cnt,
                                 int& face_it,
                                 u32* smgroups,
-                                const Fmatrix& real_transform)
+                                const Fmatrix& real_transform,
+                                CSceneObject* obj)
 {
 	BOOL bResult = TRUE;
     int point_offs;
@@ -618,7 +619,16 @@ BOOL SceneBuilder::BuildMesh(	const Fmatrix& parent,
     for (SurfFacesPairIt sp_it=mesh->m_SurfFaces.begin(); sp_it!=mesh->m_SurfFaces.end(); sp_it++)
     {
 		IntVec& face_lst = sp_it->second;
-        CSurface* surf 		= sp_it->first;
+        CSurface* surf = nullptr;
+        for (size_t i = 0; i < mesh->Parent()->SurfaceCount(); i++)
+        {
+            if (mesh->Parent()->Surfaces()[i] == sp_it->first)
+            {
+                surf = obj->m_Surfaces[i];
+                break;
+            }
+        }
+        VERIFY(surf);
         if(surf->m_GameMtlName=="materials\\occ")
 			continue;
                     	                       	
@@ -780,7 +790,7 @@ BOOL SceneBuilder::BuildObject(CSceneObject* obj)
     for(EditMeshIt M=O->FirstMesh();M!=O->LastMesh();M++){
 		CSector* S = PortalUtils.FindSector(obj,*M);
 	    int sect_num = S?S->m_sector_num:m_iDefaultSectorNum;
-    	if (!BuildMesh(T,O,*M,sect_num,l_verts,l_vert_cnt,l_vert_it,l_faces,l_face_cnt,l_face_it,l_smgroups,obj->_Transform()))
+    	if (!BuildMesh(T,O,*M,sect_num,l_verts,l_vert_cnt,l_vert_it,l_faces,l_face_cnt,l_face_it,l_smgroups,obj->_Transform(), obj))
         	return FALSE;
         // fill DI vertices
         for (u32 pt_id=0; pt_id<(*M)->GetVCount(); pt_id++)
@@ -875,7 +885,7 @@ BOOL SceneBuilder::BuildMUObject(CSceneObject* obj)
 		}
 
 	    for(EditMeshIt MESH=O->FirstMesh();MESH!=O->LastMesh();++MESH)
-	    	if (!BuildMesh(T, O, *MESH, sect_num, M.m_pVertices, M.m_iVertexCount, vert_it, M.m_pFaces, M.m_iFaceCount, face_it, M.m_smgroups, obj->_Transform()))
+	    	if (!BuildMesh(T, O, *MESH, sect_num, M.m_pVertices, M.m_iVertexCount, vert_it, M.m_pFaces, M.m_iFaceCount, face_it, M.m_smgroups, obj->_Transform(), obj))
             	return FALSE;
 
         M.m_iFaceCount			= face_it;

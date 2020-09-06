@@ -40,6 +40,7 @@ void CSceneObject::Construct(LPVOID data)
 
 CSceneObject::~CSceneObject()
 {
+    for (CSurface* i : m_Surfaces) { i->OnDeviceDestroy(); xr_delete(i); }
 	Lib.RemoveEditObject(m_pReference);
 }
 //----------------------------------------------------
@@ -110,7 +111,7 @@ void CSceneObject::Render(int priority, bool strictB2F)
 #ifdef _LEVEL_EDITOR    
     Scene->SelectLightsForObject(this);
 #endif
-	m_pReference->Render(_Transform(), priority, strictB2F);
+	m_pReference->Render(_Transform(), priority, strictB2F, &m_Surfaces);
     if (Selected()){
     	if (1==priority){
             if (false==strictB2F){
@@ -225,9 +226,22 @@ void CSceneObject::GetFullTransformToLocal( Fmatrix& m )
 
 CEditableObject* CSceneObject::UpdateReference()
 {
+    for (CSurface* i : m_Surfaces) { i->OnDeviceDestroy(); xr_delete(i); }
+    m_Surfaces.clear();
 	Lib.RemoveEditObject(m_pReference);
 	m_pReference		= (m_ReferenceName.size())?Lib.CreateEditObject(*m_ReferenceName):0;
     UpdateTransform		();
+    if (m_pReference)
+    {
+        for (size_t i = 0; i < m_pReference->SurfaceCount(); i++)
+        {
+            CSurface* surf = xr_new< CSurface>();
+            surf->CopyFrom(m_pReference->Surfaces()[i]);
+            m_Surfaces.push_back(surf);
+            if(surf->IsVoid())
+                surf->OnDeviceCreate();
+        }
+    } 
     return m_pReference;
 }
 
@@ -255,7 +269,10 @@ void CSceneObject::ReferenceChange(PropValue* sender)
     Scene->BeforeObjectChange(this);
 	UpdateReference	();
 }
-
+void CSceneObject::OnChangeShader(PropValue* sender)
+{
+    for (CSurface* i : m_Surfaces) { i->OnDeviceDestroy(); }
+}
 void CSceneObject::FillProp(LPCSTR pref, PropItemVec& items)
 {
 	inherited::FillProp	(pref,items);
@@ -263,6 +280,21 @@ void CSceneObject::FillProp(LPCSTR pref, PropItemVec& items)
     V->OnChangeEvent.bind(this,&CSceneObject::ReferenceChange);
     if (IsDynamic())
 	    inherited::AnimationFillProp(pref,items);
+    SurfaceVec& s_lst = m_Surfaces;
+    {
+        shared_str Pref1 = PrepareKey(pref, "Surfaces").c_str();
+        for (SurfaceIt s_it = s_lst.begin(); s_it != s_lst.end(); s_it++)
+        {
+            shared_str Pref2 = PrepareKey(Pref1.c_str(), (*s_it)->_Name()).c_str();
+            {
+                PropValue* V;
+                V = PHelper().CreateChoose(items, PrepareKey(Pref2.c_str(), "Texture"), &(*s_it)->m_Texture, smTexture);		V->OnChangeEvent.bind(this, &CSceneObject::OnChangeShader);
+                V = PHelper().CreateChoose(items, PrepareKey(Pref2.c_str(), "Shader"), &(*s_it)->m_ShaderName, smEShader);		V->OnChangeEvent.bind(this, &CSceneObject::OnChangeShader);
+                V = PHelper().CreateChoose(items, PrepareKey(Pref2.c_str(), "Compile"), &(*s_it)->m_ShaderXRLCName, smCShader);
+                PHelper().CreateChoose(items, PrepareKey(Pref2.c_str(), "Game Mtl"), &(*s_it)->m_GameMtlName, smGameMaterial);
+            }
+        }
+    }
 }
 
 bool CSceneObject::GetSummaryInfo(SSceneSummary* inf)

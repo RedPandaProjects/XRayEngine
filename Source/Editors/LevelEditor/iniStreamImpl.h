@@ -39,6 +39,7 @@ struct SIniFileStream :public IIniFileStream
 	virtual void		r_s64			(s64&);					
 
 	virtual void		r_string		(LPSTR dest, u32 dest_size)	;
+	virtual void		r_string(xr_string&name);
 	virtual void		skip_stringZ	();
 };
 

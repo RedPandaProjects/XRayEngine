@@ -81,7 +81,7 @@ public:
     }
 #ifdef _EDITOR
 					~CSurface		(){R_ASSERT(!m_Shader);xr_delete(m_ImageData);}
-	IC void			CopyFrom		(CSurface* surf){*this = *surf; m_Shader=0;}
+	IC void			CopyFrom		(CSurface* surf){*this = *surf; m_Shader=0; m_RTFlags.set(rtValidShader, FALSE);}
     IC int			_Priority		()	{return _Shader()?_Shader()->E[0]->flags.iPriority:1;}
     IC bool			_StrictB2F		()	{return _Shader()?_Shader()->E[0]->flags.bStrictB2F:false;}
 	IC ref_shader	_Shader			()	{if (!m_RTFlags.is(rtValidShader)) OnDeviceCreate(); return m_Shader;}
@@ -123,6 +123,11 @@ public:
     }
     void			CreateImageData	();
     void			RemoveImageData	();
+    IC bool IsVoid()const
+    {
+        return !m_RTFlags.is(rtValidShader);
+    }
+
 #endif
 };
 
@@ -164,7 +169,6 @@ public CPhysicsShellHolderEditorBase
 // general
 	xr_string		m_ClassScript;
 
-	SurfaceVec		m_Surfaces;
 	EditMeshVec		m_Meshes;
 
     ref_shader		m_LODShader;
@@ -177,6 +181,8 @@ public CPhysicsShellHolderEditorBase
     CPhysicsShell*	m_physics_shell;
     Fmatrix*		m_object_xform;
 public:
+
+    SurfaceVec		m_Surfaces;
     SAnimParams				m_SMParam;
     xr_vector<shared_str>	m_SMotionRefs;
     shared_str				m_LODs;
@@ -319,7 +325,7 @@ public:
     int 			GetSurfFaceCount		(LPCSTR surf_name);
 
     // render methods
-	void 			Render					(const Fmatrix& parent, int priority, bool strictB2F);
+	void 			Render					(const Fmatrix& parent, int priority, bool strictB2F,SurfaceVec * surfaces=nullptr);
 	void 			RenderSelection			(const Fmatrix& parent, CEditableMesh* m=0, CSurface* s=0, u32 c=0x40E64646);
  	void 			RenderEdge				(const Fmatrix& parent, CEditableMesh* m=0, CSurface* s=0, u32 c=0xFFC0C0C0);
 	void 			RenderBones				(const Fmatrix& parent);
