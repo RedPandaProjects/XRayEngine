@@ -305,10 +305,10 @@ IC _matrix<float>& _matrix<float>::rotation(const _quaternion<float>& Q)
 	float wx = Q.w * Q.x; float wy = Q.w * Q.y; float wz = Q.w * Q.z;
 
 
-	R[0] =set_ps(1 - 2 * (yy + zz), 2 * (xy - wz), 2 * (xz + wy), 0);
-	R[1] = set_ps(2 * (xy + wz), 1 - 2 * (xx + zz), 2 * (yz - wx), 0);
-	R[2] = set_ps(2 * (xz - wy), 2 * (yz + wx), 1 - 2 * (xx + yy), 0);
-	R[3] = set_ps(0, 0, 0, 1);
+	R[0] = _mm_set_ps(1 - 2 * (yy + zz), 2 * (xy - wz), 2 * (xz + wy), 0);
+	R[1] = _mm_set_ps(2 * (xy + wz), 1 - 2 * (xx + zz), 2 * (yz - wx), 0);
+	R[2] = _mm_set_ps(2 * (xz - wy), 2 * (yz + wx), 1 - 2 * (xx + yy), 0);
+	R[3] = _mm_set_ps(0, 0, 0, 1);
 	return *this;
 }
 
@@ -318,16 +318,16 @@ IC _matrix<float>& _matrix<float>::mk_xform(const _quaternion<float>& Q, const T
 	float xy = Q.x * Q.y; float xz = Q.x * Q.z; float yz = Q.y * Q.z;
 	float wx = Q.w * Q.x; float wy = Q.w * Q.y; float wz = Q.w * Q.z;
 
-	R[0] = set_ps(1 - 2 * (yy + zz), 2 * (xy - wz), 2 * (xz + wy), 0);
-	R[1] = set_ps(2 * (xy + wz), 1 - 2 * (xx + zz), 2 * (yz - wx), 0);
-	R[2] = set_ps(2 * (xz - wy), 2 * (yz + wx), 1 - 2 * (xx + yy), 0);
-	R[3] = set_ps(V.x, V.y, V.z, 1);
+	R[0] = _mm_set_ps(1 - 2 * (yy + zz), 2 * (xy - wz), 2 * (xz + wy), 0);
+	R[1] = _mm_set_ps(2 * (xy + wz), 1 - 2 * (xx + zz), 2 * (yz - wx), 0);
+	R[2] = _mm_set_ps(2 * (xz - wy), 2 * (yz + wx), 1 - 2 * (xx + yy), 0);
+	R[3] = _mm_set_ps(V.x, V.y, V.z, 1);
 	return *this;
 }
 IC _quaternion<float>& _quaternion<float>::set(const _matrix<float>& m)
 {
 	float trace, s;
-	_MM_ALIGN16 float M[4][4];
+	float M[4][4];
 	_mm_store_ps(M[0], m.R[0]);
 	_mm_store_ps(M[1], m.R[1]);
 	_mm_store_ps(M[2], m.R[2]);
@@ -465,25 +465,25 @@ IC _quaternion<T>& _quaternion<T>::set(const _matrix<T>& M)
 {
 	float trace,s;
 
-	trace = M.m[0][0] + M.m[1][1] + M.m[2][2];
+	trace = M[0][0] + M[1][1] + M[2][2];
 	if (trace > 0.0f){
 		s = _sqrt(trace + 1.0f);
 		w = s * 0.5f;
 		s = 0.5f / s;
 
-		x = (M.m[2][1] - M.m[1][2]) * s;
-		y = (M.m[0][2] - M.m[2][0]) * s;
-		z = (M.m[1][0] - M.m[0][1]) * s;
+		x = (M[2][1] - M[1][2]) * s;
+		y = (M[0][2] - M[2][0]) * s;
+		z = (M[1][0] - M[0][1]) * s;
 	}else{
 		int biggest;
 		enum {A,E,I};
-		if (M.m[0][0] > M.m[1][1]){
-			if (M.m[2][2] > M.m[0][0])
+		if (M[0][0] > M[1][1]){
+			if (M[2][2] > M[0][0])
 				biggest = I;	
 			else
 				biggest = A;
 		}else{
-			if (M.m[2][2] > M.m[0][0])
+			if (M[2][2] > M[0][0])
 				biggest = I;
 			else
 				biggest = E;
@@ -492,95 +492,95 @@ IC _quaternion<T>& _quaternion<T>::set(const _matrix<T>& M)
 		// in the unusual case the original trace fails to produce a good sqrt, try others...
 		switch (biggest){
 		case A:
-			s = _sqrt( M.m[0][0] - (M.m[1][1] + M.m[2][2]) + 1.0f);
+			s = _sqrt( M[0][0] - (M[1][1] + M[2][2]) + 1.0f);
 			if (s > TRACE_QZERO_TOLERANCE){
 				x = s * 0.5f;
 				s = 0.5f / s;
-				w = (M.m[2][1] - M.m[1][2]) * s;
-				y = (M.m[0][1] + M.m[1][0]) * s;
-				z = (M.m[0][2] + M.m[2][0]) * s;
+				w = (M[2][1] - M[1][2]) * s;
+				y = (M[0][1] + M[1][0]) * s;
+				z = (M[0][2] + M[2][0]) * s;
 				break;
 			}
 			// I
-			s = _sqrt( M.m[2][2] - (M.m[0][0] + M.m[1][1]) + 1.0f);
+			s = _sqrt( M[2][2] - (M[0][0] + M[1][1]) + 1.0f);
 			if (s > TRACE_QZERO_TOLERANCE){
 				z = s * 0.5f;
 				s = 0.5f / s;
-				w = (M.m[1][0] - M.m[0][1]) * s;
-				x = (M.m[2][0] + M.m[0][2]) * s;
-				y = (M.m[2][1] + M.m[1][2]) * s;
+				w = (M[1][0] - M[0][1]) * s;
+				x = (M[2][0] + M[0][2]) * s;
+				y = (M[2][1] + M[1][2]) * s;
 				break;
 			}
 			// E
-			s = _sqrt( M.m[1][1] - (M.m[2][2] + M.m[0][0]) + 1.0f);
+			s = _sqrt( M[1][1] - (M[2][2] + M[0][0]) + 1.0f);
 			if (s > TRACE_QZERO_TOLERANCE){
 				y = s * 0.5f;
 				s = 0.5f / s;
-				w = (M.m[0][2] - M.m[2][0]) * s;
-				z = (M.m[1][2] + M.m[2][1]) * s;
-				x = (M.m[1][0] + M.m[0][1]) * s;
+				w = (M[0][2] - M[2][0]) * s;
+				z = (M[1][2] + M[2][1]) * s;
+				x = (M[1][0] + M[0][1]) * s;
 				break;
 			}
 			break;
 		case E:
-			s = _sqrt( M.m[1][1] - (M.m[2][2] + M.m[0][0]) + 1.0f);
+			s = _sqrt( M[1][1] - (M[2][2] + M[0][0]) + 1.0f);
 			if (s > TRACE_QZERO_TOLERANCE){
 				y = s * 0.5f;
 				s = 0.5f / s;
-				w = (M.m[0][2] - M.m[2][0]) * s;
-				z = (M.m[1][2] + M.m[2][1]) * s;
-				x = (M.m[1][0] + M.m[0][1]) * s;
+				w = (M[0][2] - M[2][0]) * s;
+				z = (M[1][2] + M[2][1]) * s;
+				x = (M[1][0] + M[0][1]) * s;
 				break;
 			}
 			// I
-			s = _sqrt( M.m[2][2] - (M.m[0][0] + M.m[1][1]) + 1.0f);
+			s = _sqrt( M[2][2] - (M[0][0] + M[1][1]) + 1.0f);
 			if (s > TRACE_QZERO_TOLERANCE){
 				z = s * 0.5f;
 				s = 0.5f / s;
-				w = (M.m[1][0] - M.m[0][1]) * s;
-				x = (M.m[2][0] + M.m[0][2]) * s;
-				y = (M.m[2][1] + M.m[1][2]) * s;
+				w = (M[1][0] - M[0][1]) * s;
+				x = (M[2][0] + M[0][2]) * s;
+				y = (M[2][1] + M[1][2]) * s;
 				break;
 			}
 			// A
-			s = _sqrt( M.m[0][0] - (M.m[1][1] + M.m[2][2]) + 1.0f);
+			s = _sqrt( M[0][0] - (M[1][1] + M[2][2]) + 1.0f);
 			if (s > TRACE_QZERO_TOLERANCE){
 				x = s * 0.5f;
 				s = 0.5f / s;
-				w = (M.m[2][1] - M.m[1][2]) * s;
-				y = (M.m[0][1] + M.m[1][0]) * s;
-				z = (M.m[0][2] + M.m[2][0]) * s;
+				w = (M[2][1] - M[1][2]) * s;
+				y = (M[0][1] + M[1][0]) * s;
+				z = (M[0][2] + M[2][0]) * s;
 				break;
 			}
 			break;
 		case I:
-			s = _sqrt( M.m[2][2] - (M.m[0][0] + M.m[1][1]) + 1.0f);
+			s = _sqrt( M[2][2] - (M[0][0] + M[1][1]) + 1.0f);
 			if (s > TRACE_QZERO_TOLERANCE){
 				z = s * 0.5f;
 				s = 0.5f / s;
-				w = (M.m[1][0] - M.m[0][1]) * s;
-				x = (M.m[2][0] + M.m[0][2]) * s;
-				y = (M.m[2][1] + M.m[1][2]) * s;
+				w = (M[1][0] - M[0][1]) * s;
+				x = (M[2][0] + M[0][2]) * s;
+				y = (M[2][1] + M[1][2]) * s;
 				break;
 			}
 			// A
-			s = _sqrt( M.m[0][0] - (M.m[1][1] + M.m[2][2]) + 1.0f);
+			s = _sqrt( M[0][0] - (M[1][1] + M[2][2]) + 1.0f);
 			if (s > TRACE_QZERO_TOLERANCE){
 				x = s * 0.5f;
 				s = 0.5f / s;
-				w = (M.m[2][1] - M.m[1][2]) * s;
-				y = (M.m[0][1] + M.m[1][0]) * s;
-				z = (M.m[0][2] + M.m[2][0]) * s;
+				w = (M[2][1] - M[1][2]) * s;
+				y = (M[0][1] + M[1][0]) * s;
+				z = (M[0][2] + M[2][0]) * s;
 				break;
 			}
 			// E
-			s = _sqrt( M.m[1][1] - (M.m[2][2] + M.m[0][0]) + 1.0f);
+			s = _sqrt( M[1][1] - (M[2][2] + M[0][0]) + 1.0f);
 			if (s > TRACE_QZERO_TOLERANCE){
 				y = s * 0.5f;
 				s = 0.5f / s;
-				w = (M.m[0][2] - M.m[2][0]) * s;
-				z = (M.m[1][2] + M.m[2][1]) * s;
-				x = (M.m[1][0] + M.m[0][1]) * s;
+				w = (M[0][2] - M[2][0]) * s;
+				z = (M[1][2] + M[2][1]) * s;
+				x = (M[1][0] + M[0][1]) * s;
 				break;
 			}
 			break;
