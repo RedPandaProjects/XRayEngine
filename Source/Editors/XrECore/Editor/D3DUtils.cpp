@@ -1068,9 +1068,9 @@ void CDrawUtilities::DrawAxis(const Fmatrix& T)
 
 	pt.x  = _wh;
 	pt.y  = iFloor(UI->GetRenderHeight()-_wh);
-    Fvector c = M.get_c();
-    EDevice.m_Camera.MouseRayFromPoint(c, dir, pt);
-    M.set_c(c.mad(dir, _kl));
+
+    EDevice.m_Camera.MouseRayFromPoint(M.get_c(), dir, pt);
+    M.set_c(Fvector().mad(dir, _kl));
     m_axis_object->Render	(M, 2, false);
 }
 
