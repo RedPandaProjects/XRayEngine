@@ -2,7 +2,6 @@
 #define __XR_COLLIDE_FORM_H__
 
 #include "../xrcdb/xr_collide_defs.h"
-
 // refs
 class ENGINE_API	CObject;
 class ENGINE_API	CInifile;
@@ -109,7 +108,7 @@ class ENGINE_API	CCF_Skeleton : public ICollisionForm
 {
 public:
 	struct ENGINE_API SElement {
-		union{
+		union {
 			struct{
 				Fmatrix	b_IM;		// world 2 bone xform
 				Fvector	b_hsize;
@@ -124,10 +123,49 @@ public:
 		u16				type;
 		u16				elem_id;
 	public:
+		SElement(const SElement& Right)
+		{
+			type = Right.type;
+			elem_id = Right.elem_id;
+			switch (Right.type)
+			{
+			case 1:
+				b_IM.copy(Right.b_IM);
+				break;
+			case 2:
+				s_sphere = Right.s_sphere;
+				break;
+			case 3:
+				c_cylinder = Right.c_cylinder;
+				break;
+			default:
+				NODEFAULT;
+			}
+		}
 						SElement	()				:elem_id(u16(-1)),type(0)	{}
 						SElement	(u16 id, u16 t)	:elem_id(id),type(t)		{}
 		BOOL			valid		() const									{return (elem_id!=(u16(-1)))&&(type!=0);}
 		void			center		(Fvector& center) const;
+		inline SElement& operator=(const SElement& Right)
+		{
+			type = Right.type;
+			elem_id = Right.elem_id;
+			switch (Right.type)
+			{
+			case 1:
+				b_IM.copy(Right.b_IM);
+			break;
+			case 2:
+				s_sphere = Right.s_sphere;
+				break;
+			case 3:
+				c_cylinder = Right.c_cylinder;
+				break;
+			default:
+				NODEFAULT;
+			}
+			return *this;
+		}
 	};
 	DEFINE_VECTOR		(SElement,ElementVec,ElementVecIt);
 private:
@@ -168,6 +206,7 @@ class ENGINE_API	CCF_Shape	: public ICollisionForm
 public:
 	union shape_data
 	{
+		shape_data() { box.identity(); ibox.identity(); }
 		Fsphere		sphere;
 		struct{
 			Fmatrix	box;
@@ -178,6 +217,33 @@ public:
 	{
 		int			type;
 		shape_data	data;
+		shape_def() {}
+		shape_def(const shape_def& Right)
+		{
+			switch (Right.type)
+			{
+			case 1:
+				data.box.copy(Right.data.box);
+				data.ibox.copy(Right.data.ibox);
+			default:
+				data.sphere = Right.data.sphere;
+				break;
+			}
+			type = Right.type;
+		}
+		inline shape_def& operator=(const shape_def& Right)
+		{
+			switch (type)
+			{
+			case 1:
+				data.box.copy(Right.data.box);
+				data.ibox.copy(Right.data.ibox);
+			default:
+				data.sphere = Right.data.sphere;
+				break;
+			}
+			return*this;
+		}
 	};
 	xr_vector<shape_def>	shapes;
 public:

@@ -28,8 +28,6 @@ struct CShapeData
 			}
 			type = Right.type;
 		}
-		u8			type;
-		shape_data	data;
 		inline shape_def& operator=(const shape_def& Right)
 		{
 			switch (type)
@@ -42,6 +40,9 @@ struct CShapeData
 			}
 			return*this;
 		}
+		u8			type;
+		shape_data	data;
+		
 	};
     DEFINE_VECTOR					(shape_def,ShapeVec,ShapeIt);
 	ShapeVec						shapes;
