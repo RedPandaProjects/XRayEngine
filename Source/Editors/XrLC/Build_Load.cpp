@@ -358,15 +358,21 @@ void CBuild::Load	(const b_params& Params, const IReader& _in_FS)
 						R_ASSERT2(Surface_Detect(name, N), "Can't load surface");
 						R_ASSERT2(BT.pSurface.LoadFromFile(name), "Can't load surface");
 						BT.pSurface.ClearMipLevels();
+						
 						BT.THM.SetHasSurface(true);
 						BT.pSurface.Convert(BearTexturePixelFormat::R8G8B8A8);
+						for (bsize i = 0; i < BT.pSurface.GetSize().x * BT.pSurface.GetSize().y; i++)
+						{
+							u32 *color = ((u32*)*BT.pSurface)+i;
+							*color = color_rgba(color_get_B(*color), color_get_G(*color), color_get_R(*color), color_get_A(*color));
+						}
 						if ((BT.pSurface.GetSize().x != BT.dwWidth) || (BT.pSurface.GetSize().y != BT.dwHeight))
 						{
 							Msg		("! THM doesn't correspond to the texture: %dx%d -> %dx%d", BT.dwWidth, BT.dwHeight, BT.pSurface.GetSize().x, BT.pSurface.GetSize().y);
 							BT.dwWidth	= BT.THM.width = BT.pSurface.GetSize().x;
 							BT.dwHeight	= BT.THM.height = BT.pSurface.GetSize().y;
 						}
-						BT.Vflip	();
+						//BT.Vflip	();
 					} else {
 						// Free surface memory
 					}
