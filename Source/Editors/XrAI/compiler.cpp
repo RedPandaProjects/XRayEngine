@@ -97,4 +97,5 @@ void xrCompiler	(LPCSTR name, bool draft_mode, bool pure_covers, LPCSTR out_name
 	Phase("Saving nodes...");
 	xrSaveNodes	(name,out_name);
 	mem_Optimize();
+	xr_delete(g_textures);
 }

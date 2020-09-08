@@ -12,7 +12,7 @@ Shader_xrLC_LIB*				g_shaders_xrlc	;
 xr_vector<b_material>			g_materials		;
 xr_vector<b_shader>				g_shader_render	;
 xr_vector<b_shader>				g_shader_compile;
-xr_vector<b_BuildTexture>		g_textures		;
+xr_vector<b_BuildTexture>		*g_textures	=nullptr	;
 xr_vector<b_rc_face>			g_rc_faces		;
 
 typedef xr_vector<bool>			COVER_NODES;
@@ -71,7 +71,7 @@ IC float getLastRP_Scale(CDB::COLLIDER* DB, RayCache& C)
 			if (F.dwMaterial >= g_materials.size())
 				Msg					("[%d] -> [%d]",F.dwMaterial, g_materials.size());
 			b_material& M	= g_materials				[F.dwMaterial];
-			b_texture&	T	= g_textures				[M.surfidx];
+			b_texture&	T	= (*g_textures)				[M.surfidx];
 			Shader_xrLCVec&	LIB = 		g_shaders_xrlc->Library	();
 			if (M.shader_xrlc>=LIB.size()) return		0;		//. hack
 			Shader_xrLC& SH	= LIB						[M.shader_xrlc];

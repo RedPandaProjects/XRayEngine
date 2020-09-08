@@ -211,7 +211,7 @@ void xrLoad(LPCSTR name, bool draft_mode)
 					}
 
 					// save all the stuff we've created
-					g_textures.push_back	(BT);
+					g_textures->push_back	(BT);
 				}
 			}
 		}
