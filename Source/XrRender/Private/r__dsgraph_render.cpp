@@ -64,7 +64,7 @@ void __fastcall mapMatrix_Render	(mapMatrixItems& N)
 }
 
 // ALPHA
-void __fastcall sorted_L1		(mapSorted_Node *N)
+void  sorted_L1		(mapSorted_Node *N)
 {
 	VERIFY (N);
 	dxRender_Visual *V				= N->val.pVisual;
