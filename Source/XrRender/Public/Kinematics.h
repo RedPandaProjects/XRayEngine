@@ -64,8 +64,8 @@ virtual	const IBoneData&		_BCL	GetBoneData(u16 bone_id) const = 0;
 
 	virtual BOOL				_BCL	LL_GetBoneVisible(u16 bone_id) = 0;
 	virtual void						LL_SetBoneVisible(u16 bone_id, BOOL val, BOOL bRecursive) = 0;
-	virtual u64					_BCL	LL_GetBonesVisible() = 0;
-	virtual void						LL_SetBonesVisible(u64 mask) = 0;
+	virtual BonesVisible		_BCL	LL_GetBonesVisible() = 0;
+	virtual void						LL_SetBonesVisible(BonesVisible mask) = 0;
 
 	// Main functionality
 	virtual void						CalculateBones(BOOL bForceExact	= FALSE) = 0; // Recalculate skeleton

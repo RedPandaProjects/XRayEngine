@@ -316,6 +316,6 @@ public:
 
 
 extern XRCORE_API xrCore Core;
-
+#include "Bone.h"
 #endif
 

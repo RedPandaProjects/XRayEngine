@@ -131,7 +131,7 @@ public:
 	};
 	DEFINE_VECTOR		(SElement,ElementVec,ElementVecIt);
 private:
-	u64					vis_mask;
+	BonesVisible					vis_mask;
 	ElementVec			elements;
 
 	u32					dwFrame;		// The model itself

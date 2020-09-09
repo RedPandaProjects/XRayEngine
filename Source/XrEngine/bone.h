@@ -8,8 +8,8 @@ class CBone;
 #define	BI_NONE				(u16(-1))
 
 #define OGF_IKDATA_VERSION	0x0001
-#define MAX_BONE 223
 #define	MAX_BONE_PARAMS		4
+
 
 class ENGINE_API CBoneInstance;
 // callback
