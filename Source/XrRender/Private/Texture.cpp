@@ -11,6 +11,9 @@
 
 #ifndef _EDITOR
 #include "dxRenderDeviceRender.h"
+#else
+#include "..\..\BearBundle\BearGraphics\BearGraphics.hpp"
+#include "..\..\BearBundle\BearGraphics\BearRHI\BearTextureUtils.h"
 #endif
 
 // #include "std_classes.h"
@@ -284,7 +287,247 @@ IC u32 it_height_rev_base(u32 d, u32 s)	{	return	color_rgba	(
 	color_get_G(d),					// diff z
 	(color_get_R(s)+color_get_G(s)+color_get_B(s))/3	);	// height
 }
+#ifdef _EDITOR
+inline _D3DFORMAT Convert(BearTexturePixelFormat format, BearImage& image)
+{
+	switch (format)
+	{
+	case BearTexturePixelFormat::R8:
+		image.Convert(BearTexturePixelFormat::R8G8B8A8);
+		for (bsize i = 0; i < image.GetSize().x * image.GetSize().y; i++)
+		{
+			u32* color = ((u32*)*image) + i;
+			*color = color_rgba(color_get_B(*color), color_get_G(*color), color_get_R(*color), color_get_A(*color));
+		}
+		return _D3DFORMAT::D3DFMT_A8R8G8B8;
+		break;
+	case BearTexturePixelFormat::R8G8:
+		image.Convert(BearTexturePixelFormat::R8G8B8A8);
+		for (bsize i = 0; i < image.GetSize().x * image.GetSize().y; i++)
+		{
+			u32* color = ((u32*)*image) + i;
+			*color = color_rgba(color_get_B(*color), color_get_G(*color), color_get_R(*color), color_get_A(*color));
+		}
+		return _D3DFORMAT::D3DFMT_A8R8G8B8;
+		break;
+	case BearTexturePixelFormat::R8G8B8:
+		image.Convert(BearTexturePixelFormat::R8G8B8A8);
+		for (bsize i = 0; i < image.GetSize().x * image.GetSize().y; i++)
+		{
+			u32* color = ((u32*)*image) + i;
+			*color = color_rgba(color_get_B(*color), color_get_G(*color), color_get_R(*color), color_get_A(*color));
+		}
+		return _D3DFORMAT::D3DFMT_A8R8G8B8;
+		break;
+	case BearTexturePixelFormat::R8G8B8A8:
+		for (bsize i = 0; i < image.GetSize().x * image.GetSize().y; i++)
+		{
+			u32* color = ((u32*)*image) + i;
+			*color = color_rgba(color_get_B(*color), color_get_G(*color), color_get_R(*color), color_get_A(*color));
+		}
+		return _D3DFORMAT::D3DFMT_A8R8G8B8;
+		break;
+	case BearTexturePixelFormat::R32F:
+		return _D3DFORMAT::D3DFMT_R32F;
+		break;
+	case BearTexturePixelFormat::R32G32F:
+		return _D3DFORMAT::D3DFMT_G32R32F;
+		break;
+	case BearTexturePixelFormat::R32G32B32F:
+		image.Convert(BearTexturePixelFormat::R32G32B32A32F);
+		return _D3DFORMAT::D3DFMT_A32B32G32R32F;
+		break;
+	case BearTexturePixelFormat::R32G32B32A32F:
+		return _D3DFORMAT::D3DFMT_A32B32G32R32F;
+		break;
+	case BearTexturePixelFormat::BC1:
+		return _D3DFORMAT::D3DFMT_DXT1;
+		break;
+	case BearTexturePixelFormat::BC1a:
+		return _D3DFORMAT::D3DFMT_DXT1;
+		break;
+	case BearTexturePixelFormat::BC2:
+		return _D3DFORMAT::D3DFMT_DXT3;
+		break;
+	case BearTexturePixelFormat::BC3:
+		return _D3DFORMAT::D3DFMT_DXT5;
+		break;
+	case BearTexturePixelFormat::BC4:
+		image.Convert(BearTexturePixelFormat::R8G8B8A8);
+		for (bsize i = 0; i < image.GetSize().x * image.GetSize().y; i++)
+		{
+			u32* color = ((u32*)*image) + i;
+			*color = color_rgba(color_get_B(*color), color_get_G(*color), color_get_R(*color), color_get_A(*color));
+		}
+		return _D3DFORMAT::D3DFMT_A8R8G8B8;
+		break;
+	case BearTexturePixelFormat::BC5:
+		image.Convert(BearTexturePixelFormat::R8G8B8A8);
+		for (bsize i = 0; i < image.GetSize().x * image.GetSize().y; i++)
+		{
+			u32* color = ((u32*)*image) + i;
+			*color = color_rgba(color_get_B(*color), color_get_G(*color), color_get_R(*color), color_get_A(*color));
+		}
+		return _D3DFORMAT::D3DFMT_A8R8G8B8;
+		break;
+	case BearTexturePixelFormat::BC6:
+		image.Convert(BearTexturePixelFormat::R32G32B32A32F);
+		return _D3DFORMAT::D3DFMT_A32B32G32R32F;
+		break;
+	case BearTexturePixelFormat::BC7:
+		image.Convert(BearTexturePixelFormat::R8G8B8A8);
+		for (bsize i = 0; i < image.GetSize().x * image.GetSize().y; i++)
+		{
+			u32* color = ((u32*)*image) + i;
+			*color = color_rgba(color_get_B(*color), color_get_G(*color), color_get_R(*color), color_get_A(*color));
+		}
+		return _D3DFORMAT::D3DFMT_A8R8G8B8;
+		break;
+	default:
+		R_ASSERT(0);
+		break;
+	}
+	return _D3DFORMAT::D3DFMT_UNKNOWN;
+}
+ID3DBaseTexture* CRender::texture_load_software(LPCSTR fRName, u32& ret_msize)
+{	// validation
+	ID3DTexture2D*			Texture2D = NULL;
+	IDirect3DCubeTexture9*  TextureCUBE = NULL;
+	R_ASSERT(fRName);
+	R_ASSERT(fRName[0]);
+	string_path				fn;
+	// make file name
+	string_path				fname;
+	xr_strcpy(fname, fRName); //. andy if (strext(fname)) *strext(fname)=0;
+	fix_texture_name(fname);
+	IReader* S = NULL;
+	//if (FS.exist(fn,"$game_textures$",fname,	".dds")	&& strstr(fname,"_bump"))	goto _BUMP;
+	bool IsBump = false;
+	D3DFORMAT Format;
+	if (FS.exist(fn, "$game_textures$", fname, ".dds") && strstr(fname, "_bump"))
+	{
+		IsBump = true;
+	}
+	else
+	{
+		if (!FS.exist(fn, "$level$", fname, ".dds"))
+			if (!FS.exist(fn, "$game_saves$", fname, ".dds"))
+				if (!FS.exist(fn, "$game_textures$", fname, ".dds"))
+				{
+#ifdef _EDITOR
+					ELog.Msg(mtError, "Can't find texture '%s'", fname);
+					return 0;
+#endif
+				}
+	}
+	Load:
+	{
+		S = FS.r_open(fn);
+		BearImage Image;
+		if (!Image.LoadFromBuffer(BearMemoryStream(S->pointer(), S->length())))
+		{
+			Msg("! Can't get image info for texture '%s'", fn);
+			FS.r_close(S);
+			string_path			temp;
+			R_ASSERT(FS.exist(temp, "$game_textures$", "ed\\ed_not_existing_texture", ".dds"));
+			R_ASSERT(xr_strcmp(temp, fn));
+			xr_strcpy(fn, temp);
+			goto Load;
+		}
+		FS.r_close(S);
 
+		if (Image.IsCubeMap())
+		{
+			R_ASSERT(IsBump == false);
+			Format = Convert(Image.GetFormat(), Image);
+			R_CHK(HW.pDevice->CreateCubeTexture(Image.GetSize().x, Image.GetMips(), 0, Format, D3DPOOL_MANAGED, &TextureCUBE, 0));
+			{
+				bsize SizeImg = BearTextureUtils::GetSizeInMemory(Image.GetSize().x, Image.GetSize().y, Image.GetMips(), Image.GetFormat());
+				for (size_t a = 0; a < 6; a++)
+				{
+					D3DLOCKED_RECT Rect;
+					for (size_t i = 0; i < Image.GetMips(); i++)
+					{
+						R_CHK(TextureCUBE->LockRect((D3DCUBEMAP_FACES)a, i, &Rect, 0, 0));
+						u8* Source = reinterpret_cast<u8*>(*Image) + BearTextureUtils::GetSizeInMemory(Image.GetSize().x, Image.GetSize().y, i, Image.GetFormat()) + SizeImg * a;
+						u32 Width = BearTextureUtils::GetMip(Image.GetSize().x, i);
+						u32 Height = BearTextureUtils::GetMip(Image.GetSize().y, i);
+						Height = BearTextureUtils::GetCountBlock(Height, Image.GetFormat());
+						for (u32 y = 0; y < Height; y++)
+						{
+							u8* Dest = reinterpret_cast<u8*>(reinterpret_cast<char*>(Rect.pBits) + (Rect.Pitch * y));
+							bsize Size = BearTextureUtils::GetSizeWidth(Width, Image.GetFormat());
+							memcpy(Dest, Source, Size);
+
+							Source += Size;
+						}
+						R_CHK(TextureCUBE->UnlockRect((D3DCUBEMAP_FACES)a, i));
+					}
+				}
+
+				ret_msize = Image.GetSizeInMemory();
+				return TextureCUBE;
+			}
+		}
+		else
+		{
+			Format = Convert(Image.GetFormat(), Image);
+			HRESULT hr1 = HW.pDevice->CreateTexture(Image.GetSize().x, Image.GetSize().y, Image.GetMips(), 0, Format, D3DPOOL_MANAGED, &Texture2D, 0);
+			R_CHK(hr1);
+			{
+				D3DLOCKED_RECT Rect;
+				for (size_t i = 0; i < Image.GetMips(); i++)
+				{
+					R_CHK(Texture2D->LockRect(i, &Rect, 0, 0));
+					u8* Source = reinterpret_cast<u8*>(*Image) + BearTextureUtils::GetSizeInMemory(Image.GetSize().x, Image.GetSize().y, i, Image.GetFormat());
+					u32 Width = BearTextureUtils::GetMip(Image.GetSize().x, i);
+					u32 Height = BearTextureUtils::GetMip(Image.GetSize().y, i);
+					Height = BearTextureUtils::GetCountBlock(Height, Image.GetFormat());
+					for (u32 y = 0; y < Height; y++)
+					{
+						u8* Dest = reinterpret_cast<u8*>(reinterpret_cast<char*>(Rect.pBits) + (Rect.Pitch * y));
+						bsize Size = BearTextureUtils::GetSizeWidth(Width, Image.GetFormat());
+						memcpy(Dest, Source, Size);
+						Source += Size;
+					}
+					R_CHK(Texture2D->UnlockRect(i));
+				}
+
+
+				ret_msize = Image.GetSizeInMemory();
+			
+			}
+			if (IsBump)
+			{
+				ID3DTexture2D* T_normal_1 = 0;
+				R_CHK(D3DXCreateTexture(HW.pDevice, Image.GetSize().x, Image.GetSize().y, D3DX_DEFAULT, 0, D3DFMT_A8R8G8B8, D3DPOOL_SYSTEMMEM, &T_normal_1));
+				R_CHK(D3DXComputeNormalMap(T_normal_1, Texture2D, 0, D3DX_NORMALMAP_COMPUTE_OCCLUSION, D3DX_CHANNEL_LUMINANCE, _BUMPHEIGH));
+
+				// Transfer gloss-map
+				TW_Iterate_1OP(T_normal_1, Texture2D, it_gloss_rev_base);
+
+				// Compress
+				Format = D3DFMT_DXT5;
+				int img_loaded_lod = get_texture_load_lod(fn);
+				u32 w = Image.GetSize().x;
+				u32 h = Image.GetSize().y;
+				ID3DTexture2D* T_normal_1C = TW_LoadTextureFromTexture(T_normal_1, Format, img_loaded_lod,w ,h );
+				int mip_cnt = T_normal_1C->GetLevelCount();
+		// T_normal_1C	- normal.gloss,		reversed
+		// T_normal_2C	- 2*error.height,	non-reversed
+				_RELEASE(Texture2D);
+				_RELEASE(T_normal_1);
+				return				T_normal_1C;
+			}
+			else
+			{
+				return Texture2D;
+			}
+		}
+	}
+
+}
+#endif
 ID3DBaseTexture*	CRender::texture_load(LPCSTR fRName, u32& ret_msize)
 {
 	ID3DTexture2D*		pTexture2D		= NULL;
@@ -336,6 +579,9 @@ _DDS:
 		R_ASSERT				(S);
 		HRESULT const result	= D3DXGetImageInfoFromFileInMemory	(S->pointer(),S->length(),&IMG);
 		if ( FAILED(result) ) {
+#ifdef _EDITOR
+			return texture_load_software(fRName, ret_msize);
+#endif
 			Msg					("! Can't get image info for texture '%s'",fn);
 			FS.r_close			(S);
 			string_path			temp;
