@@ -23,8 +23,8 @@ void EngineModel::DeleteVisual		()
 
 void	   EngineModel::		OnRender			()
 {
-    //Tools->GetSelectionPosition(m_object_xform);
-	UpdateObjectXform(Fmatrix());
+    Fmatrix temp = Fmatrix();
+    UpdateObjectXform(temp);
 }
 
 /*
@@ -144,6 +144,7 @@ void _SynchronizeTextures()
 
 CActorTools::CActorTools()
 {
+    m_IsPhysics = false;
     m_ChooseSkeletonBones = false;
     m_Props = 0;
     m_pEditObject = 0;
@@ -176,11 +177,15 @@ void CActorTools::Render()
     m_PreviewObject.Render();
     if (m_pEditObject) 
     {
+        Fmatrix World = Fidentity;
+        {
+            m_pEditObject->UpdateObjectXform(World);
+        }
         m_RenderObject.OnRender();
         if (m_RenderObject.IsRenderable() && MainForm->GetLeftBarForm()->GetRenderMode() == UILeftBarForm::Render_Engine)
         {
             ::Render->model_RenderSingle(m_RenderObject.m_pVisual, m_RenderObject.ObjectXFORM(), m_RenderObject.m_fLOD);
-            RCache.set_xform_world(Fidentity);
+            RCache.set_xform_world(World);
             if (EPrefs->object_flags.is(epoDrawJoints))
             {
                 CKinematics* K = dynamic_cast<CKinematics*>(m_RenderObject.m_pVisual);
@@ -208,8 +213,8 @@ void CActorTools::Render()
         else
         {
             // update transform matrix
-            
-            m_pEditObject->RenderSkeletonSingle(m_AVTransform);
+            if (!IsPhysics())World = m_AVTransform;
+            m_pEditObject->RenderSkeletonSingle(World);
         }
     }
 
@@ -491,6 +496,7 @@ void CActorTools::OnDeviceDestroy()
 
 void CActorTools::Clear()
 {
+    PhysicsStopSimulate();
     inherited::Clear();
     m_CurrentMotion = "";
     m_CurrentSlot = 0;
@@ -1146,8 +1152,10 @@ bool CActorTools::BatchConvert(LPCSTR fn)
 
 void CActorTools::PhysicsSimulate()
 {
+    if (!m_pEditObject)return;
+    m_IsPhysics = true;
     CreatePhysicsWorld();
-    if (MainForm->GetLeftBarForm()->GetRenderMode() == UILeftBarForm::Render_Engine)
+    if (MainForm->GetLeftBarForm()->GetRenderMode() != UILeftBarForm::Render_Editor)
         m_RenderObject.CreatePhysicsShell(&m_AVTransform);
     else
         m_pEditObject->CreatePhysicsShell(&m_AVTransform);
@@ -1155,6 +1163,7 @@ void CActorTools::PhysicsSimulate()
 
 void CActorTools::PhysicsStopSimulate()
 {
+    m_IsPhysics = false;
     m_RenderObject.DeletePhysicsShell();
     m_pEditObject->DeletePhysicsShell();
     DestroyPhysicsWorld();

@@ -64,6 +64,15 @@ void UITopBarForm::Draw()
 		 if (ImGui::Button(""#T, ImVec2(20, 20))) {Click##Class##Name();}ImGui::SameLine();\
 		 ImGui::PopStyleColor(1);
 #include "UITopBarForm_ButtonList.h"
+		bool Simulate = ATools->IsPhysics();
+
+		if (ImGui::Checkbox("Simulate", &Simulate))
+		{
+			if(Simulate)
+				ATools->PhysicsSimulate();
+			else
+				ATools->PhysicsStopSimulate();
+		}
 	}
 	ImGui::End();
 	ImGui::PopStyleVar(5);

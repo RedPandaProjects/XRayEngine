@@ -21,6 +21,7 @@ void UILeftBarForm::Draw()
 		ImGui::Text("Render Style:"); ImGui::SameLine();
 		if (ImGui::RadioButton("Editor", m_RenderMode == Render_Editor))
 		{
+			ATools->PhysicsStopSimulate();
 			m_RenderMode = Render_Editor;
 			ExecCommand(COMMAND_UPDATE_PROPERTIES);
 			UI->RedrawScene();
@@ -28,6 +29,7 @@ void UILeftBarForm::Draw()
 		ImGui::SameLine();
 		if (ImGui::RadioButton("Engine", m_RenderMode == Render_Engine))
 		{
+			ATools->PhysicsStopSimulate();
 			m_RenderMode = Render_Engine;
 			if (!ATools->IsVisualPresent()) ExecCommand(COMMAND_MAKE_PREVIEW);
 			if (!ATools->IsVisualPresent()) SetRenderMode(false);

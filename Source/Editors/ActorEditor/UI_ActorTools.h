@@ -335,6 +335,9 @@ public:
     CCommandVar			CommandBatchConvert	(CCommandVar p1, CCommandVar p2);
 public:
     void OnDrawUI();
+    inline bool IsPhysics()const { return m_IsPhysics; }
+ private:
+        bool m_IsPhysics;
 };
 
 extern CActorTools*	ATools;
