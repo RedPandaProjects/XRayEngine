@@ -228,7 +228,7 @@ public:
 	virtual		void				preBuild_FromKinematics			(IKinematics* K,BONE_P_MAP* p_geting_map);
 	virtual		void	_BCL		ActivatingBonePoses				(IKinematics &K);
 	virtual		void                ZeroCallbacks					();
-	virtual		void				ResetCallbacks					(u16 id,Flags64 &mask);
+	virtual		void				ResetCallbacks					(u16 id, BonesVisible&mask);
 				void				PlaceBindToElForms				();
 	virtual		void				SetCallbacks					( );
 	virtual		void				EnabledCallbacks				(BOOL val);
@@ -278,12 +278,12 @@ private:
 				void				AddSplitter			  			(CPHShellSplitter::EType type,u16 element,u16 joint,u16 position)				;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				void				AddElementRecursive				(CPhysicsElement* root_e, u16 id,Fmatrix global_parent,u16 element_number,bool *vis_check)		;
-				void				PlaceBindToElFormsRecursive		(Fmatrix parent,u16 id,u16 element,Flags64 &mask);
+				void				PlaceBindToElFormsRecursive		(Fmatrix parent,u16 id,u16 element,BonesVisible &mask);
 				void				BonesBindCalculate				(u16 id_from=0);
 				void				BonesBindCalculateRecursive		(Fmatrix parent,u16 id);
 				void				ZeroCallbacksRecursive			(u16 id)																		;
 				void				SetCallbacksRecursive			(u16 id,u16 element)															;
-				void				ResetCallbacksRecursive			(u16 id,u16 element,Flags64 &mask)												;
+				void				ResetCallbacksRecursive			(u16 id,u16 element, BonesVisible&mask)												;
 				void				SetJointRootGeom				(CPhysicsElement* root_e,CPhysicsJoint* J)										;
 				void				ReanableObject					()																				;
 				void				ExplosionHit					(const Fvector& pos, const Fvector& dir, float val,const u16 id)				;

@@ -472,8 +472,8 @@ virtual	const IBoneData&_BCL	GetBoneData(u16 bone_id) const 															{ ret
 
 	virtual BOOL		_BCL	LL_GetBoneVisible(u16 bone_id) 															{ return TRUE; }
 	virtual void				LL_SetBoneVisible(u16 bone_id, BOOL val, BOOL bRecursive) 								{ VERIFY(false); }
-	virtual u64			_BCL	LL_GetBonesVisible() 																	{ return u64(-1); }
-	virtual void				LL_SetBonesVisible(u64 mask) 															{ VERIFY(false); }
+	virtual BonesVisible			_BCL	LL_GetBonesVisible() 																	{ return BonesVisible(-1); }
+	virtual void				LL_SetBonesVisible(BonesVisible mask) 															{ VERIFY(false); }
 
 	// Main functionality
 	virtual void				CalculateBones(BOOL bForceExact	= FALSE) 												{ } // Recalculate skeleton

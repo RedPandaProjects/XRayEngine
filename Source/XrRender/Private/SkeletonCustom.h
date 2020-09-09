@@ -277,11 +277,11 @@ private:
 	}
 	inline void visimask_set(u16 id, BOOL value)
 	{
-		bonesvisible.visimask[id / 64].set(id % 64, value);
+		bonesvisible.visimask[id / 64].set(u64(1) << (id % 64), value);
 	}
 	inline bool visimask_is(u16 id)
 	{
-		return bonesvisible.visimask[id / 64].is(u64(1) << id);
+		return bonesvisible.visimask[id / 64].is(u64(1) << (id%64));
 	}
 };
 IC CKinematics* PCKinematics		(dxRender_Visual* V)		{ return V?(CKinematics*)V->dcast_PKinematics():0; }

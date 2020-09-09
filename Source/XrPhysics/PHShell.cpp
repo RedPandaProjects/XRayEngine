@@ -722,9 +722,8 @@ void CPHShell::AddElementRecursive(CPhysicsElement* root_e, u16 id,Fmatrix globa
 	Fmatrix fm_position;
 	fm_position.set		(bone_data.get_bind_transform());
 	fm_position.mulA_43	(global_parent);
-	Flags64 mask;
-	mask.assign(m_pKinematics->LL_GetBonesVisible());
-	bool no_visible=!mask.is(1ui64<<(u64)id);
+	BonesVisible mask = m_pKinematics->LL_GetBonesVisible();
+	bool no_visible = !mask.is(id);
 	bool lvis_check=false;
 	if(no_visible)
 	{
@@ -940,12 +939,12 @@ void CPHShell::AddElementRecursive(CPhysicsElement* root_e, u16 id,Fmatrix globa
 	
 }
 
-void CPHShell::ResetCallbacks(u16 id,Flags64 &mask)
+void CPHShell::ResetCallbacks(u16 id,BonesVisible &mask)
 {
 	ResetCallbacksRecursive(id,u16(-1),mask);
 }
 
-void CPHShell::ResetCallbacksRecursive(u16 id,u16 element,Flags64 &mask)
+void CPHShell::ResetCallbacksRecursive(u16 id,u16 element, BonesVisible&mask)
 {
 
 	//if(elements.size()==element)	return;
@@ -1063,9 +1062,8 @@ void CPHShell::SetCallbacksRecursive(u16 id,u16 element)
 	CBoneInstance& B	= m_pKinematics->LL_GetBoneInstance(u16(id));
 	const IBoneData& bone_data= m_pKinematics->GetBoneData(u16(id));
 	const SJointIKData& joint_data=bone_data.get_IK_data();
-	Flags64 mask;
-	mask.assign(m_pKinematics->LL_GetBonesVisible());
-	if(mask.is(1ui64<<(u64)id))
+	BonesVisible mask = m_pKinematics->LL_GetBonesVisible();
+	if (mask.is(id))
 	{
 		if((no_physics_shape(bone_data.get_shape())||joint_data.type==jtRigid)	&& element!=u16(-1)){
 			B.set_callback(bctPhysics,0,cast_PhysicsElement(elements[element]));
@@ -1410,9 +1408,7 @@ void CPHShell::applyGravityAccel(const Fvector& accel)
 
 void CPHShell::PlaceBindToElForms()
 {
-	Flags64 mask;
-	mask.assign(m_pKinematics->LL_GetBonesVisible());
-	PlaceBindToElFormsRecursive(Fidentity,m_pKinematics->LL_GetBoneRoot(),0,mask);
+	PlaceBindToElFormsRecursive(Fidentity,m_pKinematics->LL_GetBoneRoot(),0, m_pKinematics->LL_GetBonesVisible());
 }
 void	CPHShell::		setTorque				(const Fvector& torque)
 {
@@ -1428,14 +1424,14 @@ void	CPHShell::		setForce				(const Fvector& force)
 	for( ;i!=e;++i)
 		(*i)->setForce(force);
 }
-void CPHShell::PlaceBindToElFormsRecursive(Fmatrix parent,u16 id,u16 element,Flags64 &mask)
+void CPHShell::PlaceBindToElFormsRecursive(Fmatrix parent,u16 id,u16 element,BonesVisible &mask)
 {
 	
 	
 	CBoneData& bone_data= m_pKinematics->LL_GetData(u16(id));
 	SJointIKData& joint_data=bone_data.IK_data;
 
-	if(mask.is(1ui64<<(u64)id))
+	if(mask.is(id))
 	{
 
 		if(no_physics_shape(bone_data.shape)||joint_data.type==jtRigid&& element!=u16(-1))

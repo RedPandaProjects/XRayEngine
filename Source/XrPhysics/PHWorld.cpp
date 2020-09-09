@@ -62,10 +62,13 @@ void	__stdcall	destroy_physics_world()
 CObjectSpace* __stdcall create_object_space()
 {
 	//CFileReader* fr =	xr_new<CFileReader>("D:/STALKER/resources/gamedata/levels/stohe_selo/level.cform");
-	CFileReader* fr =	xr_new<CFileReader>("ActorEditorLevel.cform");
+	string_path fn;
+	FS.update_path(fn, "$raw_data$", "ActorEditorLevel.cform");
+	CFileReader* fr =	xr_new<CFileReader>(fn);
 	CObjectSpace* os = xr_new<CObjectSpace>();
 	g_SpatialSpace				= xr_new<ISpatial_DB>	();
 	g_SpatialSpacePhysic		= xr_new<ISpatial_DB>	();
+	fr->seek(0);
 	os->Load( fr, 0 );
 	//xr_delete(fr);
 	return os;
