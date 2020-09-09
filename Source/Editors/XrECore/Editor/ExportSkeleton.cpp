@@ -545,7 +545,7 @@ IC void BuildGroups(CBone* B, U16Vec& tgt, u16 id, u16& last_id)
     for (BoneIt bone_it=B->children.begin(); bone_it!=B->children.end(); bone_it++)
     	BuildGroups	(*bone_it,tgt,id,last_id);
 }
-
+#define TO_STRING(x) #x
 bool CExportSkeleton::PrepareGeometry(u8 influence)
 {
     if( m_Source->MeshCount() == 0 ) return false;
@@ -555,8 +555,8 @@ bool CExportSkeleton::PrepareGeometry(u8 influence)
      	return false;
     }
 
-    if (m_Source->BoneCount()>64){
-    	ELog.Msg(mtError,"Object cannot handle more than 64 bones.");
+    if (m_Source->BoneCount()>MAX_BONE){
+        ELog.Msg(mtError,"Object cannot handle more than" TO_STRING( MAX_BONE) " bones.");
      	return false;
     }
 

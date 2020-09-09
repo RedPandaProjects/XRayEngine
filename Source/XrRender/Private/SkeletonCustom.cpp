@@ -211,7 +211,8 @@ void	CKinematics::Load(const char* N, IReader *data, u32 dwFlags)
 	int dwCount 	= data->r_u32();
 	// Msg				("!!! %d bones",dwCount);
 	// if (dwCount >= 64)	Msg			("!!! More than 64 bones is a crazy thing! (%d), %s",dwCount,N);
-	VERIFY3			(dwCount <= 64, "More than 64 bones is a crazy thing!",N);
+#define TO_STRING(a) #a
+	VERIFY3			(dwCount <= MAX_BONE,  "More than " TO_STRING(MAX_BONE) "  bones is a crazy thing!",N);
 	for (; dwCount; dwCount--)		{
 		string256	buf;
 
