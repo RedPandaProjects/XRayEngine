@@ -63,7 +63,7 @@ CObjectSpace* __stdcall create_object_space()
 {
 	//CFileReader* fr =	xr_new<CFileReader>("D:/STALKER/resources/gamedata/levels/stohe_selo/level.cform");
 	string_path fn;
-	FS.update_path(fn, "$raw_data$", "ActorEditorLevel.cform");
+	FS.update_path(fn,"$server_data_root$", "ActorEditorLevel.cform");
 	CFileReader* fr =	xr_new<CFileReader>(fn);
 	CObjectSpace* os = xr_new<CObjectSpace>();
 	g_SpatialSpace				= xr_new<ISpatial_DB>	();

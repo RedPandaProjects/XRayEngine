@@ -1163,10 +1163,13 @@ void CActorTools::PhysicsSimulate()
 
 void CActorTools::PhysicsStopSimulate()
 {
-    m_IsPhysics = false;
-    m_RenderObject.DeletePhysicsShell();
-    m_pEditObject->DeletePhysicsShell();
-    DestroyPhysicsWorld();
+    if (m_IsPhysics)
+    {
+        m_IsPhysics = false;
+        m_RenderObject.DeletePhysicsShell();
+        m_pEditObject->DeletePhysicsShell();
+        DestroyPhysicsWorld();
+    }
 }
 
 CObjectSpace* os = 0;
