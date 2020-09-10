@@ -162,6 +162,7 @@ struct ECORE_API STextureParams{
 		case tf4444:
 		case tf1555:
 		case tfRGBA:
+		case tfBC7:
 			return TRUE;
 		default:
 			return FALSE;
