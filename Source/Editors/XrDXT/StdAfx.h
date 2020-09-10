@@ -3,28 +3,15 @@
 //      are changed infrequently
 //
 // Third generation by Oles.
-
-#if !defined(AFX_STDAFX_H__A9DB83DB_A9FD_11D0_BFD1_444553540000__INCLUDED_)
-#define AFX_STDAFX_H__A9DB83DB_A9FD_11D0_BFD1_444553540000__INCLUDED_
-
 #pragma once
 
 #include "../../xrCore/xrCore.h"
+#include "../../BearBundle/BearGraphics/BearGraphics.hpp"
+#define ECORE_API
+#include "../../XrRender/Private/ETextureParams.h"
 #include <io.h>
 #include <fcntl.h>
 #include <sys\stat.h>
 
 #define ENGINE_API
 #define XR_EPROPS_API
-#define ECORE_API
-
-#ifndef MAKEFOURCC
-#define MAKEFOURCC(ch0, ch1, ch2, ch3)                              \
-	((DWORD)(BYTE)(ch0) | ((DWORD)(BYTE)(ch1) << 8) |   \
-	((DWORD)(BYTE)(ch2) << 16) | ((DWORD)(BYTE)(ch3) << 24 ))
-#endif //defined(MAKEFOURCC)
-
-
-#pragma warning( disable : 4995 )
-
-#endif

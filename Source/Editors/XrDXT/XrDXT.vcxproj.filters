@@ -27,9 +27,6 @@
     <ClCompile Include="DXT.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="ETextureParams.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="Image_DXTC.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -66,9 +63,6 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="dxtlib.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="ETextureParams.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Image_DXTC.h">
