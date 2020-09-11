@@ -1047,7 +1047,7 @@ void CPHShell::AddElementRecursive(CPhysicsElement* root_e, u16 id,Fmatrix globa
 	
 }
 
-void CPHShell::ResetCallbacks(u16 id,Flags64 &mask)
+void CPHShell::ResetCallbacks(u16 id, BonesVisible&mask)
 {
 	ResetCallbacksRecursive(id,u16(-1),mask);
 }

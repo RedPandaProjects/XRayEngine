@@ -207,7 +207,7 @@ void	CKinematics::Load(const char* N, IReader *data, u32 dwFlags)
 
 	R_ASSERT		(data->find_chunk(OGF_S_BONE_NAMES));
 
-    visimask_zero	();
+    bonesvisible.zero	();
 	int dwCount 	= data->r_u32();
 	// Msg				("!!! %d bones",dwCount);
 	// if (dwCount >= 64)	Msg			("!!! More than 64 bones is a crazy thing! (%d), %s",dwCount,N);
@@ -231,7 +231,7 @@ void	CKinematics::Load(const char* N, IReader *data, u32 dwFlags)
 		L_parents.push_back			(buf);
 
 		data->r						(&pBone->obb,sizeof(Fobb));
-        visimask_set				(ID,TRUE);
+        bonesvisible.set				(ID,TRUE);
 	}
 	std::sort	(bone_map_N->begin(),bone_map_N->end(),pred_sort_N);
 	std::sort	(bone_map_P->begin(),bone_map_P->end(),pred_sort_P);
@@ -411,7 +411,7 @@ void CKinematics::Depart		()
 	ClearWallmarks				();
 
 	// unmask all bones
-	visimask_zero();
+	bonesvisible.zero();
 	if(bones)
 	{
 		u32 count = bones->size();
@@ -419,7 +419,7 @@ void CKinematics::Depart		()
     	if (count > 64)
         	Msg("ahtung !!! %d", count);
 #endif // #ifdef DEBUG
-		for (u32 b=0; b<count; b++) visimask_set(b,TRUE);
+		for (u32 b=0; b<count; b++) bonesvisible.set(b,TRUE);
 	}
 	// visibility
 	children.insert				(children.end(),children_invisible.begin(),children_invisible.end());
@@ -447,8 +447,8 @@ void CKinematics::Release		()
 void CKinematics::LL_SetBoneVisible(u16 bone_id, BOOL val, BOOL bRecursive)
 {
 	VERIFY				(bone_id<LL_BoneCount());      
-    visimask_set		(bone_id,val);
-	if (!visimask_is(bone_id)){
+    bonesvisible.set		(bone_id,val);
+	if (!bonesvisible.is(bone_id)){
         bone_instances[bone_id].mTransform.scale(0.f,0.f,0.f);
 	}else{
 		CalculateBones_Invalidate	();
@@ -463,13 +463,13 @@ void CKinematics::LL_SetBoneVisible(u16 bone_id, BOOL val, BOOL bRecursive)
 
 void CKinematics::LL_SetBonesVisible(BonesVisible mask)
 {
-	visimask_assign			(0);	
+	bonesvisible.zero	();	
 	for (u32 b=0; b<bones->size(); b++)
 	{
 		u32 id_mask = b / 64;
-    	u64 bm				= u64(1)<<(b%64);
-    	if (mask.visimask[id_mask].flags&bm){
-        	visimask_set	(bm,TRUE);
+    	if (mask.is(b))
+		{
+			bonesvisible.set(b, TRUE);
         }else{
 	    	Fmatrix& A		= bone_instances[b].mTransform;
 	    	Fmatrix& B		= bone_instances[b].mRenderTransform;

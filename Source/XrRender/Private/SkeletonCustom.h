@@ -217,7 +217,7 @@ public:
 	u16						_BCL	LL_GetBoneRoot		()					{	return iRoot;													}
 	void							LL_SetBoneRoot		(u16 bone_id)		{	VERIFY(bone_id<LL_BoneCount());	iRoot=bone_id;					}
 
-    BOOL					_BCL	LL_GetBoneVisible	(u16 bone_id)		{	VERIFY(bone_id<LL_BoneCount()); return visimask_is(bone_id);	}
+    BOOL					_BCL	LL_GetBoneVisible	(u16 bone_id)		{	VERIFY(bone_id<LL_BoneCount()); return bonesvisible.is(bone_id);	}
 	void							LL_SetBoneVisible	(u16 bone_id, BOOL val, BOOL bRecursive);
 	BonesVisible						_BCL	LL_GetBonesVisible	()					{	return bonesvisible;	}
 	void							LL_SetBonesVisible	(BonesVisible mask);
@@ -267,22 +267,6 @@ public:
 	}
 private:
 	bool						m_is_original_lod;
-	inline void visimask_zero()
-	{
-		for (int i = 0; i < BONE_COUNT_VISMASK; i++)bonesvisible.visimask[i].zero();
-	}
-	inline void visimask_assign(u64 a)
-	{
-		for (int i = 0; i < BONE_COUNT_VISMASK; i++)bonesvisible.visimask[i].assign(a);
-	}
-	inline void visimask_set(u16 id, BOOL value)
-	{
-		bonesvisible.visimask[id / 64].set(u64(1) << (id % 64), value);
-	}
-	inline bool visimask_is(u16 id)
-	{
-		return bonesvisible.visimask[id / 64].is(u64(1) << (id%64));
-	}
 };
 IC CKinematics* PCKinematics		(dxRender_Visual* V)		{ return V?(CKinematics*)V->dcast_PKinematics():0; }
 //---------------------------------------------------------------------------
