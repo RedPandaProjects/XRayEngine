@@ -342,6 +342,7 @@
     <ClInclude Include="Coder.hpp" />
     <ClInclude Include="compression_ppmd_stream.h" />
     <ClInclude Include="compression_ppmd_stream_inline.h" />
+    <ClInclude Include="Config.h" />
     <ClInclude Include="cpuid.h" />
     <ClInclude Include="doug_lea_allocator.h" />
     <ClInclude Include="dump_string.h" />

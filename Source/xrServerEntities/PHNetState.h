@@ -40,7 +40,7 @@ DEFINE_VECTOR(SPHNetState,PHNETSTATE_VECTOR,PHNETSTATE_I);
 
 struct SPHBonesData 
 {
-	u64				  bones_mask;
+	BonesVisible				  bones_mask;
 	u16				  root_bone;
 	PHNETSTATE_VECTOR bones;
 	Fvector			  m_min;

@@ -2,6 +2,8 @@
 #define xrCoreH
 #pragma once
 
+#include "Config.h"
+
 #ifdef _DEBUG
 #define DEBUG
 #endif 

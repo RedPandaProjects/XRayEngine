@@ -559,6 +559,9 @@
     <ClInclude Include="Bone.h">
       <Filter>Kernel</Filter>
     </ClInclude>
+    <ClInclude Include="Config.h">
+      <Filter>Kernel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="FileSystem.h">

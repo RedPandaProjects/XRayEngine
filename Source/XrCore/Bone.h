@@ -1,6 +1,9 @@
 #pragma once
-
+#if BONE_ONLY_64
+#define MAX_BONE 64
+#else
 #define MAX_BONE 223
+#endif
 #define BONE_COUNT_VISMASK (MAX_BONE/64) +1
 
 struct BonesVisible
@@ -58,20 +61,12 @@ struct BonesVisible
 	}
 	inline bool is(int bone_id)
 	{
-#ifdef BONE_TEST_AS_64
-		VERIFY(bone_id < 64);
-#else
 		VERIFY(bone_id < MAX_BONE);
-#endif
 		return visimask[bone_id / 64].is(u64(1) << ((u64)(bone_id % 64)));
 	}
 	inline void set(int bone_id,bool value)
 	{
-#ifdef BONE_TEST_AS_64
-		VERIFY(bone_id < 64);
-#else
 		VERIFY(bone_id < MAX_BONE);
-#endif
 		visimask[bone_id / 64].set(u64(1) << ((u64)(bone_id % 64)), value);
 	}
 	Flags64 visimask[BONE_COUNT_VISMASK];

@@ -225,7 +225,8 @@ SPHBonesData::SPHBonesData()
 }
 void SPHBonesData::net_Save(NET_Packet &P)
 {
-	P.w_u64			(bones_mask);
+	for(int i=0;i<BONE_COUNT_VISMASK;i++)
+	P.w_u64			(bones_mask.visimask[i].flags);
 	P.w_u16			(root_bone);
 	
 	P.w_vec3		(get_min());
@@ -245,8 +246,8 @@ void SPHBonesData::net_Save(NET_Packet &P)
 void SPHBonesData::net_Load(NET_Packet &P)
 {
 	bones.clear					();
-
-	bones_mask					=P.r_u64();
+	for (int i = 0; i < BONE_COUNT_VISMASK; i++)
+		bones_mask.visimask[i].flags = P.r_u64();
 	root_bone					=P.r_u16();
 	Fvector						_mn, _mx;
 	P.r_vec3					(_mn);
