@@ -246,7 +246,7 @@ void UIDOShuffle::OnItemFocused(const char* name)
 	}
 	m_Thm = ImageLib.CreateThumbnail(name, EImageThumbnail::ETObject);
 	if (m_Thm)m_Thm->Update(m_Texture);
-	else {if(m_Texture) m_Texture->Release(); m_Texture = nullptr; }
+	if(m_Texture) m_Texture->Release(); m_Texture = nullptr; 
 	EDetail *dd= DM->FindDOByName(name);
 	VERIFY(dd);
 	PropItemVec items;

@@ -88,6 +88,13 @@ void EImageThumbnail::CreatePixels(u32* p, u32 w, u32 h)
 }
 void EImageThumbnail::Update(ImTextureID& Texture)
 {
+    if (m_Pixels.size() == 0)
+    {
+        if(Texture)
+        Texture->Release();
+        Texture == nullptr;
+        return;
+    }
     ID3DTexture2D* pTexture = nullptr;
     if (Texture != nullptr)
     {
