@@ -112,7 +112,7 @@ void EImageThumbnail::Update(ImTextureID& Texture)
         {
 
             unsigned char* dest = static_cast<unsigned char*>(rect.pBits)+(rect.Pitch*i);
-            memcpy(dest, Pixels()+(THUMB_WIDTH*i), sizeof(unsigned char) * THUMB_WIDTH  * 4);
+            memcpy(dest, Pixels()+(THUMB_WIDTH*(THUMB_HEIGHT-i-1)), sizeof(unsigned char) * THUMB_WIDTH  * 4);
         }
         R_CHK(pTexture->UnlockRect(0));
     }
