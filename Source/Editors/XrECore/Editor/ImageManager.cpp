@@ -67,18 +67,16 @@ bool Stbi_Load(LPCSTR full_name, U32Vec& data, u32& w, u32& h, u32& a)
             {
                 img.ClearMipLevels();
                 img.Convert(BearTexturePixelFormat::R8G8B8A8);
+                img.SwapRB();
                 w = img.GetSize().x;
                 h = img.GetSize().y;
                 data.resize(w * h);
+                a = true;
                 CopyMemory(data.data(), *img, w * h*4);
-                for (bsize i = 0; i < w * h; i++)
-                {
-                    data[i]= color_rgba(color_get_B(data[i]), color_get_G(data[i]), color_get_R(data[i]), color_get_A(data[i]));
-                }
-                for (bsize i = 0; i < h/2; i++)
+               /* for (bsize i = 0; i < h/2; i++)
                 {
                     bear_swap(data.data()+(i*w), data.data() + ((h - (i+1)) * w), w);
-                }
+                }*/
                 return true;
             }
         }
