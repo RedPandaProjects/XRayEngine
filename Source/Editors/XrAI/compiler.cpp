@@ -62,6 +62,7 @@ void	mem_Optimize	()
 
 void xrCompiler	(LPCSTR name, bool draft_mode, bool pure_covers, LPCSTR out_name)
 {
+	g_textures = xr_new< xr_vector<b_BuildTexture>>();
 	Phase		("Loading level...");
 	xrLoad		(name,draft_mode);
 	mem_Optimize();

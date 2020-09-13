@@ -198,6 +198,7 @@ void xrLoad(LPCSTR name, bool draft_mode)
 								R_ASSERT2(BT.pSurface.LoadFromFile(name), "Can't load surface");
 								BT.pSurface.ClearMipLevels();
 								BT.pSurface.Convert(BearTexturePixelFormat::R8G8B8A8);
+								BT.pSurface.SwapRB();
 								if ((BT.pSurface.GetSize().x != BT.dwWidth) || (BT.pSurface.GetSize().y != BT.dwHeight))
 								{
 									Msg("! THM doesn't correspond to the texture: %dx%d -> %dx%d", BT.dwWidth, BT.dwHeight, BT.pSurface.GetSize().x, BT.pSurface.GetSize().y);
@@ -343,7 +344,7 @@ void xrLoad(LPCSTR name, bool draft_mode)
 
 		F->close			();
 
-		if (!strstr(Core.Params,"-keep_temp_files"))
-			DeleteFile		(file_name);
+		/*if (!strstr(Core.Params,"-keep_temp_files"))
+			DeleteFile		(file_name);*/
 	}
 }
