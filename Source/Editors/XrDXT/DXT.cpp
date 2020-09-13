@@ -28,6 +28,7 @@ int DXTCompressImage	(LPCSTR out_name, u8* raw_data, u32 w, u32 h, u32 pitch, ST
 
 	Image.Create(w, h, 1, 1, BearTexturePixelFormat::R8G8B8A8);
 	bear_copy(*Image, raw_data, w * h * 4);
+	Image.SwapRB();
 	BearResizeFilter ResizeFilter = BearResizeFilter::Default;
 	switch (fmt->mip_filter)
 	{
