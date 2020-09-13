@@ -26,7 +26,7 @@ namespace Opcode {
 	class AABBNoLeafNode;
 };
 
-#pragma pack(push,8)
+#pragma pack(push,4)
 namespace CDB
 {
 	// Triangle
@@ -48,9 +48,10 @@ namespace CDB
 				u32		suppress_wm:1;		// 
 				u32		sector:16;			// 
 			};
+
+			void* pointer;
 		};
 
-		void* pointer;
 	public:
 		IC static size_t Size() { return 16; }
 		IC u32			IDvert	(u32 ID)		{ return verts[ID];	}
