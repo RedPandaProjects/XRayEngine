@@ -768,10 +768,12 @@ void CRenderTarget::accum_direct_volumetric	(u32 sub_phase, const u32 Offset, co
 		else				pszSMapName = r2_RT_smap_surf;
 		//s_smap
 
-		STextureList* _T = &*s_accum_direct_volumetric_cascade->E[0]->passes[0]->T;
+		STextureList* _T = nullptr;
 		
 		if( ps_r2_ls_flags_ext.is(R2FLAGEXT_SUN_OLD))
 			_T = &*s_accum_direct_volumetric->E[0]->passes[0]->T;
+		else 
+			_T = &*s_accum_direct_volumetric_cascade->E[0]->passes[0]->T;
 
 		STextureList::iterator	_it		= _T->begin	();
 		STextureList::iterator	_end	= _T->end	();

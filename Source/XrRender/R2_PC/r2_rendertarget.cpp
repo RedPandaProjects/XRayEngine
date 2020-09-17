@@ -11,7 +11,7 @@
 #include "blender_bloom_build.h"
 #include "blender_luminance.h"
 #include "blender_ssao.h"
-
+#include "../../XrAPI/xrGameManager.h"
 #include "../Private/dxRenderDeviceRender.h"
 
 void	CRenderTarget::u_setrt			(const ref_rt& _1, const ref_rt& _2, const ref_rt& _3, IDirect3DSurface9* zb)
@@ -267,11 +267,19 @@ CRenderTarget::CRenderTarget		()
 		rt_smap_ZB					= NULL;
 		s_accum_mask.create				(b_accum_mask,				"r2\\accum_mask");
 		s_accum_direct.create			(b_accum_direct,			"r2\\accum_direct");
-		s_accum_direct_cascade.create	(b_accum_direct_cascade,	"r2\\accum_direct_cascade");
-		if (RImplementation.o.advancedpp)
+		if (xrGameManager::GetGame() == EGame::COP)
 		{
-			s_accum_direct_volumetric.create("accum_volumetric_sun");
-			s_accum_direct_volumetric_cascade.create("accum_volumetric_sun_cascade");
+			s_accum_direct_cascade.create(b_accum_direct_cascade, "r2\\accum_direct_cascade");
+			if (RImplementation.o.advancedpp)
+			{
+				s_accum_direct_volumetric.create("accum_volumetric_sun");
+				s_accum_direct_volumetric_cascade.create("accum_volumetric_sun_cascade");
+			}
+		}
+		else 	if (xrGameManager::GetGame() == EGame::CS)
+		{
+			if (RImplementation.o.advancedpp)
+				s_accum_direct_volumetric.create("accum_volumetric_sun");
 		}
 	}
 	else
@@ -283,10 +291,19 @@ CRenderTarget::CRenderTarget		()
 		s_accum_mask.create				(b_accum_mask,				"r2\\accum_mask");
 		s_accum_direct.create			(b_accum_direct,			"r2\\accum_direct");
 		s_accum_direct_cascade.create	(b_accum_direct_cascade,	"r2\\accum_direct_cascade");
-		if (RImplementation.o.advancedpp)
+		if (xrGameManager::GetGame() == EGame::COP)
 		{
-			s_accum_direct_volumetric.create("accum_volumetric_sun");
-			s_accum_direct_volumetric_cascade.create("accum_volumetric_sun_cascade");
+			s_accum_direct_cascade.create(b_accum_direct_cascade, "r2\\accum_direct_cascade");
+			if (RImplementation.o.advancedpp)
+			{
+				s_accum_direct_volumetric.create("accum_volumetric_sun");
+				s_accum_direct_volumetric_cascade.create("accum_volumetric_sun_cascade");
+			}
+		}
+		else 	if (xrGameManager::GetGame() == EGame::CS)
+		{
+			if (RImplementation.o.advancedpp)
+				s_accum_direct_volumetric.create("accum_volumetric_sun");
 		}
 	}
 
