@@ -4,7 +4,10 @@
 
 #include "stdafx.h"
 #pragma hdrstop
-
+#if NET_TEXTURE_LOADER
+#include "..\..\BearBundle\BearGraphics\BearGraphics.hpp"
+#include "..\..\BearBundle\BearGraphics\BearRHI\BearTextureUtils.h"
+#endif
 #pragma warning(disable:4995)
 #include "directx\d3dx9.h"
 #pragma warning(default:4995)
@@ -297,6 +300,257 @@ IC u32 it_height_rev_base(u32 d, u32 s)	{	return	color_rgba	(
 	(color_get_R(s)+color_get_G(s)+color_get_B(s))/3	);	// height
 }
 */
+#if NET_TEXTURE_LOADER
+DXGI_FORMAT Convert(BearImage&Image)
+{
+	switch (Image.GetFormat())
+	{
+	case BearTexturePixelFormat::R8:
+		return DXGI_FORMAT::DXGI_FORMAT_A8_UNORM;
+		break;
+	case BearTexturePixelFormat::R8G8:
+		return DXGI_FORMAT::DXGI_FORMAT_R8G8_UNORM;
+		break;
+	case BearTexturePixelFormat::R8G8B8:
+		Image.Convert(BearTexturePixelFormat::R8G8B8A8);
+		return DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM;
+		break;
+	case BearTexturePixelFormat::R8G8B8A8:
+		return DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM;
+		break;
+	case BearTexturePixelFormat::R32F:
+		return DXGI_FORMAT::DXGI_FORMAT_R32_FLOAT;
+		break;
+	case BearTexturePixelFormat::R32G32F:
+		return DXGI_FORMAT::DXGI_FORMAT_R32G32_FLOAT;
+		break;
+	case BearTexturePixelFormat::R32G32B32F:
+		return DXGI_FORMAT::DXGI_FORMAT_R32G32B32_FLOAT;
+		break;
+	case BearTexturePixelFormat::R32G32B32A32F:
+		return DXGI_FORMAT::DXGI_FORMAT_R32G32B32A32_FLOAT;
+		break;
+	case BearTexturePixelFormat::BC1:
+		return DXGI_FORMAT::DXGI_FORMAT_BC1_UNORM;
+		break;
+	case BearTexturePixelFormat::BC1a:
+		return DXGI_FORMAT::DXGI_FORMAT_BC1_UNORM;
+		break;
+	case BearTexturePixelFormat::BC2:
+		return DXGI_FORMAT::DXGI_FORMAT_BC2_UNORM;
+		break;
+	case BearTexturePixelFormat::BC3:
+		return DXGI_FORMAT::DXGI_FORMAT_BC3_UNORM;
+		break;
+	case BearTexturePixelFormat::BC4:
+		return DXGI_FORMAT::DXGI_FORMAT_BC4_UNORM;
+		break;
+	case BearTexturePixelFormat::BC5:
+		return DXGI_FORMAT::DXGI_FORMAT_BC5_UNORM;
+		break;
+	case BearTexturePixelFormat::BC6:
+#ifndef USE_DX11
+		R_ASSERT(!"BC6 DX10 не поддерживает");
+#endif
+		return DXGI_FORMAT::DXGI_FORMAT_BC6H_SF16;
+		break;
+	case BearTexturePixelFormat::BC7:
+#ifndef USE_DX11
+		R_ASSERT(!"BC7 DX10 не поддерживает");
+#endif
+		return DXGI_FORMAT::DXGI_FORMAT_BC7_UNORM;
+		break;
+	default:
+		R_ASSERT(!"Неизвестный формат текстуры");
+		return DXGI_FORMAT::DXGI_FORMAT_UNKNOWN;
+		break;
+	}
+}
+ID3DBaseTexture* CRender::texture_load(LPCSTR fRName, u32& ret_msize, bool bStaging)
+{
+	static bool bAllowStaging = !strstr(Core.Params, "-no_staging");
+	bStaging &= bAllowStaging;
+	ID3DTexture2D* Texture2D = NULL;
+	ID3DTexture3D* Texture3D = NULL;
+	R_ASSERT(fRName);
+	R_ASSERT(fRName[0]);
+	string_path				fn;
+	// make file name
+	string_path				fname;
+	xr_strcpy(fname, fRName); //. andy if (strext(fname)) *strext(fname)=0;
+	fix_texture_name(fname);
+	IReader* S = NULL;
+	//if (FS.exist(fn,"$game_textures$",fname,	".dds")	&& strstr(fname,"_bump"))	goto _BUMP;
+	bool IsBump = false;
+	DXGI_FORMAT Format;
+	if (strstr(fname, "_bump"))
+	{
+		if (!FS.exist(fn, "$game_textures$", fname, ".dds"))
+		{
+			Msg("! Fallback to default bump map: %s", fname);
+			//////////////////
+			if (strstr(fname, "_bump#"))
+			{
+				R_ASSERT2(FS.exist(fn, "$game_textures$", "ed\\ed_dummy_bump#", ".dds"), "ed_dummy_bump#");
+			}
+			if (strstr(fname, "_bump"))
+			{
+				R_ASSERT2(FS.exist(fn, "$game_textures$", "ed\\ed_dummy_bump", ".dds"), "ed_dummy_bump");
+			}
+		}
+		IsBump = true;
+	}
+	else
+	{
+		if (!FS.exist(fn, "$level$", fname, ".dds"))
+			if (!FS.exist(fn, "$game_saves$", fname, ".dds"))
+				if (!FS.exist(fn, "$game_textures$", fname, ".dds"))
+				{
+					string_path			temp;
+					R_ASSERT(FS.exist(temp, "$game_textures$", "ed\\ed_not_existing_texture", ".dds"));
+					R_ASSERT(xr_strcmp(temp, fn));
+					xr_strcpy(fn, temp);
+				}
+	}
+Load:
+	{
+	
+		S = FS.r_open(fn);
+		R_ASSERT2(S, fn);
+		BearImage Image;
+		if (!Image.LoadFromBuffer(BearMemoryStream(S->pointer(), S->length())))
+		{
+			Msg("! Can't get image info for texture '%s'", fn);
+			FS.r_close(S);
+			string_path			temp;
+			R_ASSERT(FS.exist(temp, "$game_textures$", "ed\\ed_not_existing_texture", ".dds"));
+			R_ASSERT(xr_strcmp(temp, fn));
+			xr_strcpy(fn, temp);
+			goto Load;
+		}
+		/*if (strstr(fn, "d:\\gamedev\\engine\\xrayengine\\xrayengine\\gamedata\\textures\\ui\\ui_font_graff_22_1024.dds"))
+		{
+			Image.SaveToPng("test.png");
+		}*/
+		FS.r_close(S);
+
+		Format = Convert(Image);
+
+		ret_msize = Image.GetSizeInMemory();
+		if (Image.IsCubeMap())
+		{
+			R_ASSERT(IsBump == false);
+			R_ASSERT(Image.GetDepth()==6);
+			D3D_TEXTURE2D_DESC	Desc = {};
+			Desc.Width = Image.GetSize().x;
+			Desc.Height = Image.GetSize().y;
+			Desc.MipLevels = Image.GetMips();
+			Desc.ArraySize = 6;
+			Desc.Format = Format;
+			Desc.SampleDesc.Count = 1;
+			Desc.SampleDesc.Quality = 0;
+			Desc.Usage = D3D_USAGE_DEFAULT;
+			Desc.BindFlags = D3D_BIND_SHADER_RESOURCE;
+			Desc.CPUAccessFlags = 0;
+#ifdef USE_DX11
+			Desc.MiscFlags = D3D11_RESOURCE_MISC_TEXTURECUBE;
+#else
+			Desc.MiscFlags = D3D10_RESOURCE_MISC_TEXTURECUBE;
+#endif
+			xr_vector<D3D_SUBRESOURCE_DATA> SubResources;
+			u8* Pointer = (u8*)(*Image);
+			for (UINT i = 0; i < 6; i++)
+			{
+				for (UINT a = 0; a < Desc.MipLevels; a++)
+				{
+					bsize MipW = BearTextureUtils::GetMip(Desc.Width, a);
+					bsize MipH = BearTextureUtils::GetMip(Desc.Height, a);
+					D3D_SUBRESOURCE_DATA SubResource = { };
+					SubResource.pSysMem = Pointer;
+					SubResource.SysMemPitch = static_cast<UINT>(BearTextureUtils::GetSizeWidth(MipW, Image.GetFormat()));
+					SubResource.SysMemSlicePitch = static_cast<UINT>(BearTextureUtils::GetSizeDepth(MipW, MipH, Image.GetFormat()));
+					Pointer += SubResource.SysMemSlicePitch;
+					SubResources.push_back(SubResource);
+				}
+			}
+			R_CHK(HW.pDevice->CreateTexture2D(&Desc, SubResources.data(), &Texture2D));
+			return Texture2D;
+			
+		}
+		else if(Image.GetDepth()>1)
+		{
+			D3D_TEXTURE3D_DESC	Desc = {};
+			Desc.Width = Image.GetSize().x;
+			Desc.Height = Image.GetSize().y;
+			Desc.MipLevels = Image.GetMips();
+			Desc.Depth = Image.GetDepth();;
+			Desc.Format = Format;
+			Desc.Usage = D3D_USAGE_DEFAULT;
+			Desc.BindFlags = D3D_BIND_SHADER_RESOURCE;
+			Desc.CPUAccessFlags = 0;
+			Desc.MiscFlags = 0;
+			xr_vector<D3D_SUBRESOURCE_DATA> SubResources;
+			u8* Pointer = (u8*)(*Image);
+			for (UINT i = 0; i < Image.GetDepth(); i++)
+			{
+				for (UINT a = 0; a < Desc.MipLevels; a++)
+				{
+					bsize MipW = BearTextureUtils::GetMip(Desc.Width, a);
+					bsize MipH = BearTextureUtils::GetMip(Desc.Height, a);
+					D3D_SUBRESOURCE_DATA SubResource = { };
+					SubResource.pSysMem = Pointer;
+					SubResource.SysMemPitch = static_cast<UINT>(BearTextureUtils::GetSizeWidth(MipW, Image.GetFormat()));
+					SubResource.SysMemSlicePitch = static_cast<UINT>(BearTextureUtils::GetSizeDepth(MipW, MipH, Image.GetFormat()));
+					Pointer += SubResource.SysMemSlicePitch;
+					SubResources.push_back(SubResource);
+				}
+			}
+			R_CHK(HW.pDevice->CreateTexture3D(&Desc, SubResources.data(), &Texture3D));
+			return Texture3D;
+		}
+		else
+		{
+			D3D_TEXTURE2D_DESC	Desc = {};
+			Desc.Width = Image.GetSize().x;
+			Desc.Height = Image.GetSize().y;
+			Desc.MipLevels = Image.GetMips();
+			Desc.ArraySize = Image.GetDepth();;
+			Desc.Format = Format;
+			Desc.SampleDesc.Count = 1;
+			Desc.SampleDesc.Quality = 0;
+			Desc.Usage = D3D_USAGE_DEFAULT;
+			Desc.BindFlags = D3D_BIND_SHADER_RESOURCE;
+			Desc.CPUAccessFlags = 0;
+			Desc.MiscFlags = 0;
+			if (bStaging)
+			{
+				Desc.Usage = D3D_USAGE_STAGING;
+				Desc.BindFlags = 0;
+				Desc.CPUAccessFlags = D3D_CPU_ACCESS_WRITE;
+			}
+			xr_vector<D3D_SUBRESOURCE_DATA> SubResources;
+			u8* Pointer = (u8*)(*Image);
+			for (UINT i = 0; i < Image.GetDepth(); i++)
+			{
+				for (UINT a = 0; a < Desc.MipLevels; a++)
+				{
+					bsize MipW = BearTextureUtils::GetMip(Desc.Width, a);
+					bsize MipH = BearTextureUtils::GetMip(Desc.Height, a);
+					D3D_SUBRESOURCE_DATA SubResource = { };
+					SubResource.pSysMem = Pointer;
+					SubResource.SysMemPitch = static_cast<UINT>(BearTextureUtils::GetSizeWidth(MipW, Image.GetFormat()));
+					SubResource.SysMemSlicePitch = static_cast<UINT>(BearTextureUtils::GetSizeDepth(MipW, MipH, Image.GetFormat()));
+					Pointer += SubResource.SysMemSlicePitch;
+					SubResources.push_back(SubResource);
+				}
+			}
+			R_CHK(HW.pDevice->CreateTexture2D(&Desc, SubResources.data(), &Texture2D));
+			return Texture2D;
+
+		}
+	}
+}
+#else
 ID3DBaseTexture*	CRender::texture_load(LPCSTR fRName, u32& ret_msize, bool bStaging)
 {
 	//	Moved here just to avoid warning
@@ -537,3 +791,4 @@ _BUMP_from_base:
 
 	return 0;
 }
+#endif
