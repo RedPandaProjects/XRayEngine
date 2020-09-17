@@ -204,7 +204,7 @@ public:
 			flags &= (u64(1) << (LL_BoneCount() % 64)) - 1;
 			CountBone += btwCount1(flags);
 		}
-		return (u16)btwCount1(CountBone);
+		return (u16)CountBone;
 	}
 	ICF Fmatrix&			_BCL	LL_GetTransform		(u16 bone_id)		{	return LL_GetBoneInstance(bone_id).mTransform;					}
 	ICF const Fmatrix&		_BCL	LL_GetTransform		(u16 bone_id) const	{	return LL_GetBoneInstance(bone_id).mTransform;					}
