@@ -25,6 +25,7 @@ public:
 		return bd;
 	}
 
+	BonesVisible					bonesvisible;
 	IC void						Visibility_Invalidate() { Update_Visibility = TRUE; };
 	void						Visibility_Update();
 	virtual void				IBoneInstances_Create();
@@ -89,10 +90,20 @@ private:
 	}
 
 public:
-	virtual u16 LL_VisibleBoneCount()
+	u16 LL_VisibleBoneCount()
 	{
-		u64 F = visimask.flags & ((u64(1) << u64(LL_BoneCount())) - 1);
-		return (u16)btwCount1(F);
+		u32 Count = (LL_BoneCount() / 64) + 1;
+		u64 CountBone = 0;
+		for (u32 i = 0; i < Count - 1; i++)
+		{
+			CountBone += btwCount1(bonesvisible.visimask[i].flags);
+		}
+		{
+			u64 flags = bonesvisible.visimask[Count - 1].flags;
+			flags &= (u64(1) << (LL_BoneCount() % 64)) - 1;
+			CountBone += btwCount1(flags);
+		}
+		return (u16)CountBone;
 	}
 	const	CBoneInstance& LL_GetBoneInstance(u16 bone_id) const { VERIFY(bone_id < LL_BoneCount()); VERIFY(bone_instances); return bone_instances[bone_id]; }
 
@@ -117,14 +128,10 @@ public:
 		iRoot = bone_id;
 	}
 
-	virtual BOOL  LL_GetBoneVisible(u16 bone_id)
-	{
-		VERIFY(bone_id < LL_BoneCount());
-		return visimask.is(u64(1) << bone_id);
-	}
+	BOOL					_BCL	LL_GetBoneVisible(u16 bone_id) { VERIFY(bone_id < LL_BoneCount()); return bonesvisible.is(bone_id); }
 	virtual void LL_SetBoneVisible(u16 bone_id, BOOL val, BOOL bRecursive);
-	virtual u64  LL_GetBonesVisible() { return visimask.get(); }
-	virtual void LL_SetBonesVisible(u64 mask);
+	BonesVisible						_BCL	LL_GetBonesVisible() { return bonesvisible; }
+	void							LL_SetBonesVisible(BonesVisible mask);
 
 	virtual void				Release();
 	// Main functionality
@@ -176,7 +183,6 @@ protected:
 	u32 UCalc_Time;
 	s32 UCalc_Visibox;
 
-	Flags64 visimask;
 
 private:
 	bool m_is_original_lod;
