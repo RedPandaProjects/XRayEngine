@@ -235,7 +235,7 @@ struct SRP
 {
 	bool operator	() (CParticlesPlayer::SParticlesInfo& pi)
 	{
-		return ! pi.ps;
+	
 	}
 };
 void CParticlesPlayer::UpdateParticles()
@@ -275,7 +275,9 @@ void CParticlesPlayer::UpdateParticles()
 				m_bActiveBones  = true;
 		}
 
-		ParticlesInfoListIt RI=std::remove_if(b_info.particles.begin(),b_info.particles.end(),SRP());
+		ParticlesInfoListIt RI=std::remove_if(b_info.particles.begin(),b_info.particles.end(),
+			[](CParticlesPlayer::SParticlesInfo& pi) {	return !pi.ps; }
+		);
 		b_info.particles.erase(RI,b_info.particles.end());
 	}
 }
