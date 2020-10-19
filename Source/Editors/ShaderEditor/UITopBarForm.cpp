@@ -54,11 +54,15 @@ void UITopBarForm::Draw()
 			Click##Name();\
 		}ImGui::SameLine();
 #define ADD_BUTTON_IMAGE_T1(Class,Name)\
+ImGui::PushID(""#Class);\
 		 ImGui::PushStyleColor(ImGuiCol_Text, (ImVec4)ImColor::HSV(0,0,0));\
 		 if (ImGui::Button(""#Name, ImVec2(20, 20))) {Click##Class##Name();}ImGui::SameLine();\
-		 ImGui::PopStyleColor(1);
+		 ImGui::PopStyleColor(1);\
+ImGui::PopID();
 #define ADD_BUTTON_IMAGE_T2(Class,Name)\
-		 if (ImGui::Button(""#Name, ImVec2(20, 20))) { Click##Class##Name();}ImGui::SameLine();
+	ImGui::PushID(""#Class);\
+		 if (ImGui::Button(""#Name, ImVec2(20, 20))) { Click##Class##Name();}ImGui::SameLine();\
+		ImGui::PopID();
 #define ADD_BUTTON_IMAGE_T1_1(Class,Name,T)\
 		 ImGui::PushStyleColor(ImGuiCol_Text, (ImVec4)ImColor::HSV(0,0,0));\
 		 if (ImGui::Button(""#T, ImVec2(20, 20))) {Click##Class##Name();}ImGui::SameLine();\

@@ -223,8 +223,8 @@ bool CUI_Camera::Process(TShiftState Shift, int dx, int dy)
             break;
             case csFreeFly:
                 if ((m_Shift&ssLeft)||(m_Shift&ssRight)) Rotate (dx,dy);
-//                if (Shift|ssLeft)) Rotate (d.x,d.y);
-//                else if (Shift|ssRight)) Scale(d.y);
+//                if (Shift&ssLeft)) Rotate (d.x,d.y);
+//                else if (Shift&ssRight)) Scale(d.y);
             break;
             case cs3DArcBall:
             	ArcBall(m_Shift,dx,dy);
@@ -313,8 +313,8 @@ void CUI_Camera::ZoomExtents(const Fbox& bb)
 void CUI_Camera::ArcBall(TShiftState Shift, float dx, float dy)
 {
 	float dist = m_Position.distance_to(m_Target);
-	if (Shift|ssAlt){
-		if (Shift|ssLeft){
+	if (Shift&ssAlt){
+		if (Shift&ssLeft){
             Fvector vmove;
             vmove.set( m_CamMat.k );  vmove.y = 0;
             vmove.normalize_safe();
@@ -325,16 +325,16 @@ void CUI_Camera::ArcBall(TShiftState Shift, float dx, float dy)
             vmove.normalize_safe();
             vmove.mul( dx*m_SM );
             m_Target.add( vmove );
-        }else if(Shift|ssRight){
+        }else if(Shift&ssRight){
             Fvector vmove;
             vmove.set( 0.f, dy, 0.f );
             vmove.y *= -m_SM;
             m_Target.add( vmove );
         }
     }else{
-    	if (Shift|ssRight){
+    	if (Shift&ssRight){
         	dist -= dx*m_SM;
-	    }else if (Shift|ssLeft){
+	    }else if (Shift&ssLeft){
     	    m_HPB.x-=m_SR*dx;
         	m_HPB.y-=m_SR*dy*EDevice.fASPECT;
 	    }
