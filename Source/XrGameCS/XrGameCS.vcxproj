@@ -7760,6 +7760,9 @@
     <ProjectReference Include="..\External\Luabind\Luabind.vcxproj">
       <Project>{18c37994-f2f2-46c0-bd55-bc738e8b9d89}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\External\Ode\Ode.vcxproj">
+      <Project>{eb58439b-1f16-4e81-b0b3-1e1e95ad4901}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\XrAPI\XrAPI.vcxproj">
       <Project>{ff16ef0a-8a51-4c36-9213-4aa87cb4b317}</Project>
     </ProjectReference>
