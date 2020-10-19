@@ -527,7 +527,7 @@ void CEditableObject::RenameBone(CBone* bone, LPCSTR new_name)
         
     }
 
-	bone->SetName(new_name);
+	//bone->SetName(new_name);
     
     Modified();
 }

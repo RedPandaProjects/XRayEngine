@@ -27,30 +27,25 @@ ListItem* CListHelper::CreateItem	(ListItemsVec& items, LPCSTR key, int type, u3
 
 bool CListHelper::NameAfterEdit(ListItem* sender, LPCSTR value, shared_str& N)
 {
-  /*  if (0!=AnsiString(N.c_str()).Pos("\\"))	{ N=value; return false; }
-	N	= AnsiString(N.c_str()).LowerCase().c_str();
-    if (!N.size())	{ N=value; return false; }
-	int cnt=_GetItemCount(N.c_str(),'\\');
-    if (cnt>1)		{ N=value; return false; }
+    if (strstr(N.c_str(), "\\")) { N =value; return false; }
+    xr_strlwr(N);
+    if (!N.size()) { N =value; return false; }
+    int cnt = _GetItemCount(N.c_str(), '\\');
+    if (cnt > 1) { N =value; return false; }
 
-    VERIFY				(sender);
-	TElTreeItem* node  	= (TElTreeItem*)sender->Item(); VERIFY(node);
-
-    for (TElTreeItem* itm=node->GetFirstSibling(); itm; itm=itm->GetNextSibling()){
-        if ((itm!=node)&&(itm->Text==AnsiString(N.c_str()))){
-        	// елемент с таким именем уже существует
-	        N=value;
-            return false;
+        for (ListItem* item : sender->Parent->GetItems())
+        {
+            const char* name = strrchr(item->Key(), '\\');
+            if (!name)name = item->Key();
+            else name++;
+            if ((item != sender) && (N == name))
+            {
+                // елемент с таким именем уже существует
+                N =value; return false;
+            }
         }
-    }
-    // all right
-    node->Text = N.c_str();
-    AnsiString tmp;
-	_ReplaceItem(*sender->key,	_GetItemCount(*sender->key,'\\')-1,	N.c_str(),tmp,'\\'); sender->key=tmp.c_str();
-    // Имя объекта может быть составным из a\\b\\name
-	_ReplaceItem(value,			_GetItemCount(value,'\\')-1,		N.c_str(),tmp,'\\');	N=tmp.c_str();*/
-    not_implemented();
-    
+    string2048 tmp;
+    _ReplaceItem(value, _GetItemCount(value, '\\') - 1, N.c_str(), tmp, '\\');	N = tmp;
     return true;
 }
 //---------------------------------------------------------------------------

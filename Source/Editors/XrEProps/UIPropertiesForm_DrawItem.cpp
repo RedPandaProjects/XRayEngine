@@ -2,8 +2,8 @@
 //-----------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------
-#define TSTRING_COUNT 	3
-const LPSTR TEXTUREString[TSTRING_COUNT] = { "Custom...","$null","$base0" };
+#define TSTRING_COUNT 	10
+const LPSTR TEXTUREString[TSTRING_COUNT] = { "Custom...","$null","$base0", "$base1" ,"$base2" ,"$base3" ,"$base4","$base5" ,"$base6" ,"$base7" };
 template<typename T>
 inline bool DrawNumeric(PropItem* item, bool& change, bool read_only)
 {
@@ -359,8 +359,8 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 		CTextValue* T = dynamic_cast<CTextValue*>(node->GetFrontValue()); R_ASSERT(T);
 		xr_string edit_val = T->GetValue();
 		node->BeforeEdit<CTextValue, xr_string>(edit_val);
-		int index = 0; int cnt = 3;
-		LPCSTR List[TSTRING_COUNT+1] = { TEXTUREString[0],TEXTUREString[1],TEXTUREString[2],0 };
+		int index = 0; int cnt = TSTRING_COUNT ;
+		LPCSTR List[TSTRING_COUNT+1] = { TEXTUREString[0],TEXTUREString[1],TEXTUREString[2],TEXTUREString[3],TEXTUREString[4],TEXTUREString[5],TEXTUREString[6],TEXTUREString[7],TEXTUREString[8],TEXTUREString[9],0 };
 		if(edit_val == List[1])index = 1;
 		else if (edit_val == List[2])index = 2;
 		else if (!edit_val.empty()) { List[3] = edit_val.c_str(); index = 3; cnt = 4; }

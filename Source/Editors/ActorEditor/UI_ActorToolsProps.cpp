@@ -203,6 +203,7 @@ void CActorTools::OnMotionTypeChange(PropValue* sender)
 void CActorTools::OnMotionNameChange(PropValue* V)
 {
     OnMotionKeysModified();
+    UpdateProperties();
 }
 //------------------------------------------------------------------------------
 
@@ -612,18 +613,25 @@ void CActorTools::OnDrawUI()
 
     }
 }
-bool CActorTools::OnBoneNameAfterEdit	(PropValue* sender, shared_str& edit_val)
+bool CActorTools::OnBoneNameAfterEdit(PropValue* sender, shared_str& edit_val)
 {
-	R_ASSERT(m_pEditObject);
+    R_ASSERT(m_pEditObject);
     BoneVec 		sel_bones;
-    m_pEditObject->GetSelectedBones		(sel_bones);
-   	CBone* B 		= sel_bones.size()?sel_bones[0]:NULL;
-    R_ASSERT		(B);
-
-	m_pEditObject->RenameBone(B, edit_val.c_str());
-
-	m_Flags.set(flRefreshProps, TRUE);
+    m_pEditObject->GetSelectedBones(sel_bones);
+    CBone* B = sel_bones.size() ? sel_bones[0] : NULL;
+    R_ASSERT(B);
+    for (auto& bone : m_pEditObject->Bones())
+    {
+        if (bone->Name() == edit_val)
+            return false;
+    }
+    m_pEditObject->RenameBone(B, edit_val.c_str());
     return true;
+}
+
+void CActorTools::OnBoneNameChangeEvent(PropValue* sender)
+{
+    UpdateProperties();
 }
 
 void  CActorTools::OnBoneEditClick(ButtonValue* V, bool& bModif, bool& bSafe)
@@ -706,7 +714,7 @@ void CActorTools::FillBoneProperties(PropItemVec& items, LPCSTR pref, ListItem* 
     	PropValue* V;
         PHelper().CreateCaption		(items, PrepareKey(pref,"Bone\\Name"),						BONE->Name());
 
-		PHelper().CreateNameCB		(items, PrepareKey(pref,"Bone\\NameEditable"), 				&BONE->NameRef(), 0, 0, RTextValue::TOnAfterEditEvent(this,&CActorTools::OnBoneNameAfterEdit));
+        PHelper().CreateNameCB(items, PrepareKey(pref, "Bone\\NameEditable"), &BONE->NameRef(), 0,0, RTextValue::TOnAfterEditEvent(this, &CActorTools::OnBoneNameAfterEdit))->OnChangeEvent.bind(this, &CActorTools::OnBoneNameChangeEvent);
 
 //.		PHelper().CreateCaption		(items, PrepareKey(pref,"Bone\\Influence"),					shared_str().sprintf("%d vertices",0));
 		PHelper().CreateChoose		(items,	PrepareKey(pref,"Bone\\Game Material"),				&BONE->game_mtl, smGameMaterial);

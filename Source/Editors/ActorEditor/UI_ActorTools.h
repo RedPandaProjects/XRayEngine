@@ -276,6 +276,8 @@ public:
     void				MakePreview			();
 
 	bool   	OnBoneNameAfterEdit	(PropValue* sender, shared_str& edit_val);
+    void   	OnBoneNameChangeEvent(PropValue* sender);
+
     void  		OnBoneModified		(void);
     void  		OnObjectModified	(void);
     void  		OnMotionDefsModified(void); 
