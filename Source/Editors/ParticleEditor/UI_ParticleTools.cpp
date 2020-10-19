@@ -570,7 +570,7 @@ void CParticleTool::DrawReferenceList()
             xr_vector<PS::CPGDef::SEffect*>::const_iterator pe_it_e = m_EditPG->GetDefinition()->m_Effects.end();
             for (; pe_it != pe_it_e; ++pe_it)
             {
-                ImGui::Text((*pe_it)->m_EffectName.c_str());
+                ImGui::Text((*pe_it)->m_EffectName.c_str()? (*pe_it)->m_EffectName.c_str() :0);
             }
             if (m_EditPG->GetDefinition()->m_Flags.test(PS::CPGDef::SEffect::flOnPlayChild))
                 ImGui::Text((*pe_it)->m_OnPlayChildName.c_str());

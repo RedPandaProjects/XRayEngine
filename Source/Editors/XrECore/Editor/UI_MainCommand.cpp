@@ -306,6 +306,7 @@ CCommandVar 	CommandDestroy(CCommandVar p1, CCommandVar p2)
 }             
 CCommandVar 	CommandQuit(CCommandVar p1, CCommandVar p2)
 {
+    if (UI->IsModified())
     UI->Quit			();
     return				TRUE;
 }             
