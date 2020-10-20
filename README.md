@@ -3,14 +3,23 @@ XRayEngine [![Discord](https://img.shields.io/discord/530968529311367178?label=d
 It is open source version of the original XRay Engine 1.6, used in game S.T.A.L.K.E.R.:Call of Pripyat by GSC Game World.
 
 ### Supported Platform
-|Platform|Configurations|Status|
-|---|---|---|
-|Windows|Debug/Development/Release (x86)|[![Build status](https://ci.appveyor.com/api/projects/status/l7x79iufq7n0mcs0/branch/master?svg=true)](https://ci.appveyor.com/project/BearIvan/xrayengine/branch/master)|
+||Windows(x32/x64)|
+|---|---|
+|Engine(COP with Renders)|[![Build status](https://ci.appveyor.com/api/projects/status/l7x79iufq7n0mcs0/branch/master?svg=true)](https://ci.appveyor.com/project/BearIvan/xrayengine/branch/master)|
+|Editors|[![Build status](https://ci.appveyor.com/api/projects/status/rqhakafae4ljeo99?svg=true)](https://ci.appveyor.com/project/BearIvan/xrayengine-sdk)|
+|Clear Sky|[![Build status](https://ci.appveyor.com/api/projects/status/oxbuqwxa4shl3p8b?svg=true)](https://ci.appveyor.com/project/BearIvan/xrayengine-cs)|
 
-###  General Upgrade:
-* PORT Vanilla engine on visual studio 2019
-* ADD Render R5(experimental) on Directx 12 and Vulkan
-* ADD SDK port on visual studio
+###  Особенности:
+* Оригинальный движок Зова припяти с минимальными изменениями
+* Полный порт Editors на  visual studio и x64
+* Прототип рендера на DX12 и Vulkan
+* Робочий ЧН на ЗП
+
+### Features:
+* Original Call of Pripyat engine with minimal changes
+* Full port of Editors on visual studio and x64
+* Prototype render on DX12 and Vulkan
+* Working CS on COP Engine
 
 ### More details
 This repository contains XRay Engine 1.6 sources based on T-6638
