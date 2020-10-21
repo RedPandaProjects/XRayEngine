@@ -1,6 +1,7 @@
 #include "pch_script.h"
 #include "GameObject.h"
-#include "../fbasicvisual.h"
+#include "../XrRender/Public/Kinematics.h"
+#include "../XrEngine/xr_collide_form.h"
 #include "PhysicsShell.h"
 #include "ai_space.h"
 #include "CustomMonster.h" 
@@ -15,13 +16,13 @@
 #include "xrServer_Objects_ALife_Items.h"
 #include "game_cl_base.h"
 #include "object_factory.h"
-#include "../skeletoncustom.h"
+#include "../XrRender/Public/KinematicsAnimated.h"
 #include "ai_object_location_impl.h"
 #include "game_graph.h"
 #include "ai_debug.h"
-#include "../igame_level.h"
+#include "../XrEngine/igame_level.h"
 #include "level.h"
-#include "../../xrNetServer/net_utils.h"
+#include "../XrCore/net_utils.h"
 #include "script_callback_ex.h"
 #include "MathUtils.h"
 #include "game_cl_base_weapon_usage_statistic.h"
@@ -108,8 +109,8 @@ void CGameObject::net_Destroy	()
 	xr_delete				(m_ini_file);
 
 	m_script_clsid			= -1;
-	if (Visual() && smart_cast<CKinematics*>(Visual()))
-		smart_cast<CKinematics*>(Visual())->Callback	(0,0);
+	if (Visual() && smart_cast<IKinematics*>(Visual()))
+		smart_cast<IKinematics*>(Visual())->Callback	(0,0);
 
 	inherited::net_Destroy						();
 	setReady									(FALSE);
@@ -207,7 +208,7 @@ void CGameObject::OnEvent		(NET_Packet& P, u16 type)
 	}
 }
 
-void VisualCallback(CKinematics *tpKinematics);
+void VisualCallback(IKinematics *tpKinematics);
 
 BOOL CGameObject::net_Spawn		(CSE_Abstract*	DC)
 {
@@ -718,12 +719,12 @@ BOOL CGameObject::TestServerFlag(u32 Flag) const
 
 void CGameObject::add_visual_callback		(visual_callback *callback)
 {
-	VERIFY						(smart_cast<CKinematics*>(Visual()));
+	VERIFY						(smart_cast<IKinematics*>(Visual()));
 	CALLBACK_VECTOR_IT			I = std::find(visual_callbacks().begin(),visual_callbacks().end(),callback);
 	VERIFY						(I == visual_callbacks().end());
 
 	if (m_visual_callback.empty())	SetKinematicsCallback(true);
-//		smart_cast<CKinematics*>(Visual())->Callback(VisualCallback,this);
+//		smart_cast<IKinematics*>(Visual())->Callback(VisualCallback,this);
 	m_visual_callback.push_back	(callback);
 }
 
@@ -733,19 +734,19 @@ void CGameObject::remove_visual_callback	(visual_callback *callback)
 	VERIFY						(I != m_visual_callback.end());
 	m_visual_callback.erase		(I);
 	if (m_visual_callback.empty())	SetKinematicsCallback(false);
-//		smart_cast<CKinematics*>(Visual())->Callback(0,0);
+//		smart_cast<IKinematics*>(Visual())->Callback(0,0);
 }
 
 void CGameObject::SetKinematicsCallback		(bool set)
 {
 	if(!Visual())	return;
 	if (set)
-		smart_cast<CKinematics*>(Visual())->Callback(VisualCallback,this);
+		smart_cast<IKinematics*>(Visual())->Callback(VisualCallback,this);
 	else
-		smart_cast<CKinematics*>(Visual())->Callback(0,0);
+		smart_cast<IKinematics*>(Visual())->Callback(0,0);
 };
 
-void VisualCallback	(CKinematics *tpKinematics)
+void VisualCallback	(IKinematics *tpKinematics)
 {
 	CGameObject						*game_object = static_cast<CGameObject*>(static_cast<CObject*>(tpKinematics->Update_Callback_Param));
 	VERIFY							(game_object);
@@ -920,7 +921,7 @@ void	CGameObject::		create_anim_mov_ctrl( CBlend* b )
 		//destroy_anim_mov_ctrl( );
 	VERIFY( !animation_movement() );
 	VERIFY(Visual());
-	CKinematics *K = Visual( )->dcast_PKinematics( );
+	IKinematics *K = Visual( )->dcast_PKinematics( );
 	VERIFY( K );
 	m_anim_mov_ctrl = xr_new<animation_movement_controller>( &XFORM(), K, b ); 
 }

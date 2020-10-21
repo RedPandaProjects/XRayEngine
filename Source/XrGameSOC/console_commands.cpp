@@ -1263,11 +1263,11 @@ public:
 			return;
 		}
 
-		IRender_Visual			*visual = Render->model_Create(arguments);
-		CKinematics				*kinematics = smart_cast<CKinematics*>(visual);
+		IRenderVisual			*visual = Render->model_Create(arguments);
+		IKinematics				*kinematics = smart_cast<IKinematics*>(visual);
 		if (!kinematics) {
 			Render->model_Delete(visual);
-			Msg					("! Invalid visual type \"%s\" (not a CKinematics)",arguments);
+			Msg					("! Invalid visual type \"%s\" (not a IKinematics)",arguments);
 			return;
 		}
 

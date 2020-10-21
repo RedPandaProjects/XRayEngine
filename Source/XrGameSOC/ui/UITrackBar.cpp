@@ -5,7 +5,7 @@
 #include "UIFrameLineWnd.h"
 #include "UI3tButton.h"
 #include "UITextureMaster.h"
-#include "../../xr_input.h"
+#include "../Xr_input.h"
 
 #define DEF_CONTROL_HEIGHT		21
 #define FRAME_LINE_TEXTURE		"ui_slider_e"

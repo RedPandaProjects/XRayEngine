@@ -6,7 +6,7 @@
 #include "WeaponHUD.h"
 #include "Weapon.h"
 #include "../Motion.h"
-#include "../skeletonanimated.h"
+#include ".../XrRender/Public/KinematicsAnimated.h"
 #include "level.h"
 #include "MathUtils.h"
 weapon_hud_container* g_pWeaponHUDContainer=0;
@@ -24,7 +24,7 @@ BOOL weapon_hud_value::load(const shared_str& section, CHudItem* owner)
 
 	// Visual
 	LPCSTR visual_name			= pSettings->r_string(section, "visual");
-	m_animations				= smart_cast<CKinematicsAnimated*>(::Render->model_Create(visual_name));
+	m_animations				= smart_cast<IKinematicsAnimated*>(::Render->model_Create(visual_name));
 
 	// fire bone	
 	if(smart_cast<CWeapon*>(owner)){
@@ -52,12 +52,12 @@ BOOL weapon_hud_value::load(const shared_str& section, CHudItem* owner)
 
 weapon_hud_value::~weapon_hud_value()
 {
-	::Render->model_Delete		((IRender_Visual*&)m_animations);
+	::Render->model_Delete		((IRenderVisual*&)m_animations);
 }
 
 u32 shared_weapon_hud::motion_length(MotionID M)
 {
-	CKinematicsAnimated	*skeleton_animated = p_->m_animations;
+	IKinematicsAnimated	*skeleton_animated = p_->m_animations;
 	VERIFY				(skeleton_animated);
 	CMotionDef			*motion_def = skeleton_animated->LL_GetMotionDef(M);
 	VERIFY				(motion_def);
@@ -121,7 +121,7 @@ MotionID CWeaponHUD::animGet(LPCSTR name)
 void CWeaponHUD::animDisplay(MotionID M, BOOL bMixIn)
 {
 	if(m_bVisible){
-		CKinematicsAnimated* PKinematicsAnimated		= smart_cast<CKinematicsAnimated*>(Visual());
+		IKinematicsAnimated* PKinematicsAnimated		= smart_cast<IKinematicsAnimated*>(Visual());
 		VERIFY											(PKinematicsAnimated);
 		PKinematicsAnimated->PlayCycle					(M,bMixIn);
 		PKinematicsAnimated->CalculateBones_Invalidate	();
@@ -151,7 +151,7 @@ void CWeaponHUD::Update				()
 	if(m_bStopAtEndAnimIsRunning && Device.dwTimeGlobal > m_dwAnimEndTime)
 		StopCurrentAnim				();
 	if(m_bVisible)
-		smart_cast<CKinematicsAnimated*>(Visual())->UpdateTracks		();
+		smart_cast<IKinematicsAnimated*>(Visual())->UpdateTracks		();
 }
 
 void CWeaponHUD::StopCurrentAnim()

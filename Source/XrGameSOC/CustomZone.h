@@ -1,7 +1,7 @@
 #pragma once
 
 #include "space_restrictor.h"
-#include "../feel_touch.h"
+#include "../XrEngine/feel_touch.h"
 
 class CActor;
 class CLAItem;

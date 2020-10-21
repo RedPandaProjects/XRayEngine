@@ -1,14 +1,14 @@
 #include "stdafx.h"
 #ifdef DEBUG
 #include "ode_include.h"
-#include "../StatGraph.h"
+#include "../XrEngine/StatGraph.h"
 #include "PHDebug.h"
 #endif
 #include "alife_space.h"
 #include "hit.h"
 #include "PHDestroyable.h"
 #include "car.h"
-#include "../skeletoncustom.h"
+#include "../XrRender/Public/KinematicsAnimated.h"
 #include "PHWorld.h"
 extern CPHWorld*	ph_world;
 
@@ -23,7 +23,7 @@ void CCar::SExhaust::Init()
 {
 	VERIFY(!ph_world->Processing());
 	pelement=(bone_map.find(bone_id))->second.element;
-	CKinematics* K=smart_cast<CKinematics*>(pcar->Visual());
+	IKinematics* K=smart_cast<IKinematics*>(pcar->Visual());
 	CBoneData&	bone_data=K->LL_GetData(u16(bone_id));
 	transform.set(bone_data.bind_transform);
 	///transform.mulA(pcar->XFORM());

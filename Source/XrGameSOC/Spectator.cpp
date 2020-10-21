@@ -394,7 +394,7 @@ BOOL			CSpectator::net_Spawn				( CSE_Abstract*	DC )
 	return TRUE;
 };
 
-#include "../IGame_Persistent.h"
+#include "../XrEngine/IGame_Persistent.h"
 void			CSpectator::net_Destroy	()
 {
 	inherited::net_Destroy	();

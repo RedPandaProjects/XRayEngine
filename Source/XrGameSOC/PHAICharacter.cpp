@@ -10,7 +10,7 @@
 #include "phaicharacter.h"
 
 #ifdef DEBUG
-#	include "../StatGraph.h"
+#	include "../XrEngine/StatGraph.h"
 #	include "PHDebug.h"
 #	include "level.h"
 #	include "debug_renderer.h"

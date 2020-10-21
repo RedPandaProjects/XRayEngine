@@ -207,7 +207,7 @@ public:
 #ifdef DEBUG
 #	ifndef AI_COMPILER
 private:
-	ref_shader			sh_debug;
+	ui_shader			sh_debug;
 
 private:
 	int					m_current_level_id;

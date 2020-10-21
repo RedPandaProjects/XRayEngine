@@ -26,10 +26,10 @@ const LPCSTR ratingField			= "rating_names";
 const LPCSTR reputationgField		= "reputation_names";
 const LPCSTR goodwillField			= "goodwill_names";
 
-ref_shader	g_BuyMenuShader			= NULL;
-ref_shader	g_EquipmentIconsShader	= NULL;
-ref_shader	g_MPCharIconsShader		= NULL;
-ref_shader	g_tmpWMShader			= NULL;
+ui_shader	g_BuyMenuShader			= NULL;
+ui_shader	g_EquipmentIconsShader	= NULL;
+ui_shader	g_MPCharIconsShader		= NULL;
+ui_shader	g_tmpWMShader			= NULL;
 static CUIStatic*	GetUIStatic				();
 
 typedef				std::pair<CHARACTER_RANK_VALUE, shared_str>	CharInfoStringID;
@@ -154,7 +154,7 @@ bool InventoryUtilities::FreeRoom_inBelt	(TIItemContainer& item_list, PIItem _it
 	return true;
 }
 
-ref_shader& InventoryUtilities::GetBuyMenuShader()
+ui_shader& InventoryUtilities::GetBuyMenuShader()
 {	
 	if(!g_BuyMenuShader)
 	{
@@ -164,7 +164,7 @@ ref_shader& InventoryUtilities::GetBuyMenuShader()
 	return g_BuyMenuShader;
 }
 
-ref_shader& InventoryUtilities::GetEquipmentIconsShader()
+ui_shader& InventoryUtilities::GetEquipmentIconsShader()
 {	
 	if(!g_EquipmentIconsShader)
 	{
@@ -174,7 +174,7 @@ ref_shader& InventoryUtilities::GetEquipmentIconsShader()
 	return g_EquipmentIconsShader;
 }
 
-ref_shader&	InventoryUtilities::GetMPCharIconsShader()
+ui_shader&	InventoryUtilities::GetMPCharIconsShader()
 {
 	if(!g_MPCharIconsShader)
 	{

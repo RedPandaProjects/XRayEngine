@@ -10,7 +10,7 @@
 #include "physic_item.h"
 #include "physicsshell.h"
 #include "xrserver_objects.h"
-#include "../fbasicvisual.h"
+#include "#include "../XrRender/Public/Kinematics.h""
 #include "../SkeletonCustom.h"
 #define CHOOSE_MAX(x,inst_x,y,inst_y,z,inst_z)\
 	if(x>y)\
@@ -79,8 +79,8 @@ BOOL CPhysicItem::net_Spawn			(CSE_Abstract* DC)
 {
 	if (!inherited::net_Spawn(DC))
 		return				(FALSE);
-	smart_cast<CKinematics*>(Visual())->CalculateBones_Invalidate	();
-	smart_cast<CKinematics*>(Visual())->CalculateBones				();
+	smart_cast<IKinematics*>(Visual())->CalculateBones_Invalidate	();
+	smart_cast<IKinematics*>(Visual())->CalculateBones				();
 	CSE_Abstract			*abstract = (CSE_Abstract*)DC;
 	if (0xffff == abstract->ID_Parent)
 	{
@@ -119,7 +119,7 @@ void CPhysicItem::activate_physic_shell()
 	R_ASSERT					(object);
 	XFORM().set					(object->XFORM());
 	inherited::activate_physic_shell();
-	CKinematics* K=smart_cast<CKinematics*>(Visual());
+	IKinematics* K=smart_cast<IKinematics*>(Visual());
 	if(K)
 	{
 		K->CalculateBones_Invalidate();
@@ -131,7 +131,7 @@ void CPhysicItem::activate_physic_shell()
 void CPhysicItem::setup_physic_shell	()
 {
 	inherited::setup_physic_shell();
-	CKinematics* K=smart_cast<CKinematics*>(Visual());
+	IKinematics* K=smart_cast<IKinematics*>(Visual());
 	if(K)
 	{
 		K->CalculateBones_Invalidate();

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "BoneProtections.h"
-#include "../skeletonanimated.h"
+#include ".../XrRender/Public/KinematicsAnimated.h"
 
 float SBoneProtections::getBoneProtection	(s16 bone_id)
 {
@@ -29,7 +29,7 @@ BOOL SBoneProtections::getBonePassBullet(s16 bone_id)
 		return m_default.BonePassBullet;
 }
 
-void SBoneProtections::reload(const shared_str& bone_sect, CKinematics* kinematics)
+void SBoneProtections::reload(const shared_str& bone_sect, IKinematics* kinematics)
 {
 	VERIFY(kinematics);
 	m_bones_koeff.clear();

@@ -6,10 +6,10 @@
 
 #include "ParticlesObject.h"
 #include "../defines.h"
-#include "../fbasicvisual.h"
+#include "#include "../XrRender/Public/Kinematics.h""
 #include "../ParticleCustom.h"
-#include "../render.h"
-#include "../IGame_Persistent.h"
+#include "../XrEngine/render.h"
+#include "../XrEngine/IGame_Persistent.h"
 
 const Fvector zero_vel		= {0.f,0.f,0.f};
 

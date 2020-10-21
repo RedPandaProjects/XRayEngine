@@ -33,11 +33,11 @@ bool FreeRoom_inBelt	(TIItemContainer& item_list, PIItem item, int width, int he
 
 
 // get shader for BuyWeaponWnd
-ref_shader&	GetBuyMenuShader();
+ui_shader&	GetBuyMenuShader();
 //получить shader на иконки инвенторя
-ref_shader& GetEquipmentIconsShader();
+ui_shader& GetEquipmentIconsShader();
 // shader на иконки персонажей в мультиплеере
-ref_shader&	GetMPCharIconsShader();
+ui_shader&	GetMPCharIconsShader();
 //удаляем все шейдеры
 void DestroyShaders();
 void CreateShaders();

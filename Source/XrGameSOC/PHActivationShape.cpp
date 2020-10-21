@@ -10,7 +10,7 @@
 #include "GameMtlLib.h"
 #include "Level.h"
 #include "PHWorld.h"
-#include "../../xrODE/ode/src/util.h"
+#include "ode/util.h"
 
 #ifdef DEBUG
 #	include "PHDebug.h"
@@ -151,7 +151,7 @@ bool	CPHActivationShape::	Activate							(const Fvector need_size,u16 steps,floa
 		Fmatrix M;
 		PHDynamicData::DMXPStoFMX(dBodyGetRotation(m_body),dBodyGetPosition(m_body),M);
 		Fvector v;dGeomBoxGetLengths(m_geom,cast_fp(v));v.mul(0.5f);
-		DBG_DrawOBB(M,v,D3DCOLOR_XRGB(0,255,0));
+		DBG_DrawOBB(M,v,color_xrgb(0,255,0));
 	}
 #endif
 	VERIFY(m_geom&&m_body);
@@ -233,7 +233,7 @@ bool	CPHActivationShape::	Activate							(const Fvector need_size,u16 steps,floa
 		Fmatrix M;
 		PHDynamicData::DMXPStoFMX(dBodyGetRotation(m_body),dBodyGetPosition(m_body),M);
 		Fvector v;v.set(need_size);v.mul(0.5f);
-		DBG_DrawOBB(M,v,D3DCOLOR_XRGB(0,255,255));
+		DBG_DrawOBB(M,v,color_xrgb(0,255,255));
 		DBG_ClosedCashedDraw(30000);
 	}
 #endif

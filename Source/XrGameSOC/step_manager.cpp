@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "../skeletonanimated.h"
+#include ".../XrRender/Public/KinematicsAnimated.h"
 #include "step_manager_defs.h"
 #include "step_manager.h"
 #include "entity_alive.h"
@@ -38,7 +38,7 @@ void CStepManager::reload(LPCSTR section)
 	LPCSTR				anim_name, val;
 	string16			cur_elem;
 
-	CKinematicsAnimated	*skeleton_animated = smart_cast<CKinematicsAnimated*>(m_object->Visual());
+	IKinematicsAnimated	*skeleton_animated = smart_cast<IKinematicsAnimated*>(m_object->Visual());
 
 	for (u32 i=0; pSettings->r_line(anim_section,i,&anim_name,&val); ++i) {
 		_GetItem (val,0,cur_elem);
@@ -188,7 +188,7 @@ Fvector	CStepManager::get_foot_position(ELegType leg_type)
 {
 	R_ASSERT2(m_foot_bones[leg_type] != BI_NONE, "foot bone had not been set");
 
-	CKinematics *pK					= smart_cast<CKinematics*>(m_object->Visual());
+	IKinematics *pK					= smart_cast<IKinematics*>(m_object->Visual());
 	const Fmatrix& bone_transform = pK->LL_GetBoneInstance(m_foot_bones[leg_type]).mTransform;	
 
 	Fmatrix					global_transform;
@@ -202,7 +202,7 @@ void CStepManager::load_foot_bones	(CInifile::Sect &data)
 	for (CInifile::SectCIt I=data.Data.begin(); I!=data.Data.end(); ++I){
 		const CInifile::Item& item	= *I;
 
-		u16 index = smart_cast<CKinematics*>(m_object->Visual())->LL_BoneID(*item.second);
+		u16 index = smart_cast<IKinematics*>(m_object->Visual())->LL_BoneID(*item.second);
 		VERIFY3(index != BI_NONE, "foot bone not found", *item.second);
 
 		if (xr_strcmp(*item.first, "front_left") == 0) 			m_foot_bones[eFrontLeft]	= index;
@@ -214,7 +214,7 @@ void CStepManager::load_foot_bones	(CInifile::Sect &data)
 
 void CStepManager::reload_foot_bones()
 {
-	CInifile* ini = smart_cast<CKinematics*>(m_object->Visual())->LL_UserData();
+	CInifile* ini = smart_cast<IKinematics*>(m_object->Visual())->LL_UserData();
 	if(ini&&ini->section_exist("foot_bones")){
 		load_foot_bones(ini->r_section("foot_bones"));
 	}

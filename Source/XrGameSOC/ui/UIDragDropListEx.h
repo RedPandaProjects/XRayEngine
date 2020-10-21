@@ -118,7 +118,7 @@ class CUICellContainer :public CUIWindow
 
 private:
 	typedef CUIWindow inherited;
-	ref_shader					hShader;  //ownerDraw
+	ui_shader					hShader;  //ownerDraw
 	ref_geom					hGeom;	
 	UI_CELLS_VEC				m_cells_to_draw;
 protected:

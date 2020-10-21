@@ -14,7 +14,7 @@ private:
 	typedef collide::rq_results		rq_results;
 
 private:
-	ref_shader		hShader;
+	ui_shader		hShader;
 	ref_geom		hGeom;
 	float			fuzzyShowInfo;
 	rq_result		RQ;

@@ -2,7 +2,7 @@
 
 
 
-DEFINE_VECTOR(ref_shader, SHADER_VECTOR, SHADER_VECTOR_IT);
+DEFINE_VECTOR(ui_shader, SHADER_VECTOR, SHADER_VECTOR_IT);
 class CWalmarkManager
 {
 private:

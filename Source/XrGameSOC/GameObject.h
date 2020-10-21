@@ -6,12 +6,16 @@
 #define AFX_GAMEOBJECT_H__3DA72D03_C759_4688_AEBB_89FA812AA873__INCLUDED_
 #pragma once
 
-#include "../xr_object.h"
+#include "../XrEngine/xr_object.h"
 #include "xrServer_Space.h"
 #include "alife_space.h"
 #include "UsableScriptObject.h"
 #include "script_binder.h"
 #include "Hit.h"
+
+#ifndef DPNSEND_GUARANTEED
+#define DPNSEND_GUARANTEED						0x0008
+#endif
 
 class CPhysicsShell;
 class CSE_Abstract;
@@ -200,7 +204,7 @@ public:
 	}
 
 public:
-	typedef void __stdcall visual_callback(CKinematics *);
+	typedef void __stdcall visual_callback(IKinematics *);
 	typedef svector<visual_callback*,6>			CALLBACK_VECTOR;
 	typedef CALLBACK_VECTOR::iterator			CALLBACK_VECTOR_IT;
 

@@ -9,11 +9,11 @@
 #include "pch_script.h"
 #include "base_client_classes.h"
 #include "base_client_classes_wrappers.h"
-#include "../feel_sound.h"
-#include "../fbasicvisual.h"
-#include "../skeletonanimated.h"
+#include "../XrEngine/feel_vision.h"
+#include "#include "../XrRender/Public/Kinematics.h""
+#include ".../XrRender/Public/KinematicsAnimated.h"
 #include "ai/stalker/ai_stalker.h"
-#include "../../xrNetServer/net_utils.h"
+#include "../XrCore/net_utils.h"
 
 using namespace luabind;
 
@@ -150,27 +150,27 @@ void CObjectScript::script_register		(lua_State *L)
 	];
 }
 
-void IRender_VisualScript::script_register		(lua_State *L)
+void IRenderVisualScript::script_register		(lua_State *L)
 {
 	module(L)
 	[
-		class_<IRender_Visual>("IRender_Visual")
+		class_<IRenderVisual>("IRenderVisual")
 			.def(constructor<>())
-			.def("dcast_PKinematicsAnimated",&IRender_Visual::dcast_PKinematicsAnimated)
+			.def("dcast_PKinematicsAnimated",&IRenderVisual::dcast_PKinematicsAnimated)
 	];
 }
 
-void CKinematicsAnimated_PlayCycle(CKinematicsAnimated* sa, LPCSTR anim)
+void IKinematicsAnimated_PlayCycle(IKinematicsAnimated* sa, LPCSTR anim)
 {
 	sa->PlayCycle(anim);
 }
 
-void CKinematicsAnimatedScript::script_register		(lua_State *L)
+void IKinematicsAnimatedScript::script_register		(lua_State *L)
 {
 	module(L)
 	[
-		class_<CKinematicsAnimated>("CKinematicsAnimated")
-			.def("PlayCycle",		&CKinematicsAnimated_PlayCycle)
+		class_<IKinematicsAnimated>("IKinematicsAnimated")
+			.def("PlayCycle",		&IKinematicsAnimated_PlayCycle)
 	];
 }
 
@@ -184,11 +184,11 @@ void CBlendScript::script_register		(lua_State *L)
 }
 
 /*
-void CKinematicsScript::script_register		(lua_State *L)
+void IKinematicsScript::script_register		(lua_State *L)
 {
 	module(L)
 		[
-			class_<CKinematics, FHierrarhyVisual>("CKinematics")
+			class_<IKinematics, FHierrarhyVisual>("IKinematics")
 			//			.def(constructor<>())
 		];
 }
@@ -197,7 +197,7 @@ void FHierrarhyVisualScript::script_register		(lua_State *L)
 {
 	module(L)
 		[
-			class_<FHierrarhyVisual, IRender_Visual>("FHierrarhyVisual")
+			class_<FHierrarhyVisual, IRenderVisual>("FHierrarhyVisual")
 			//			.def(constructor<>())
 		];
 }

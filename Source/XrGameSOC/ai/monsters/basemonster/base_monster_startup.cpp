@@ -6,7 +6,7 @@
 #include "../../../CharacterPhysicsSupport.h"
 #include "../../../phmovementcontrol.h"
 #include "../ai_monster_squad_manager.h"
-#include "../../../../skeletonanimated.h"
+#include "../../../../XrRender/Public/KinematicsAnimated.h"
 #include "../../../detail_path_manager.h"
 #include "../../../level_graph.h"
 #include "../corpse_cover.h"
@@ -20,12 +20,12 @@
 #include "../monster_home.h"
 #include "../../../ai_object_location.h"
 #include "../../../level.h"
-#include "../../../xrserver_objects_alife_monsters.h"
+#include "../../Xrserver_objects_alife_monsters.h"
 #include "../../../alife_simulator.h"
 #include "../../../alife_object_registry.h"
-#include "../../../xrServer.h"
+#include "../../XrServer.h"
 #include "../../../inventory_item.h"
-#include "../../../xrServer_Objects_ALife.h"
+#include "../../XrServer_Objects_ALife.h"
 
 void CBaseMonster::Load(LPCSTR section)
 {
@@ -371,7 +371,7 @@ void CBaseMonster::fill_bones_body_parts	(LPCSTR body_part, CriticalWoundType wo
 {
 	LPCSTR					body_parts_section = pSettings->r_string(cNameSect(),body_part);
 
-	CKinematics				*kinematics	= smart_cast<CKinematics*>(Visual());
+	IKinematics				*kinematics	= smart_cast<IKinematics*>(Visual());
 	VERIFY					(kinematics);
 
 	CInifile::Sect			&body_part_section = pSettings->r_section(body_parts_section);

@@ -13,7 +13,7 @@
 #include "../igame_persistent.h"
 #include "artifact.h"
 #include "ai_object_location.h"
-#include "../skeletoncustom.h"
+#include "../XrRender/Public/KinematicsAnimated.h"
 #include "zone_effector.h"
 #include "breakableobject.h"
 
@@ -646,7 +646,7 @@ BOOL CCustomZone::feel_touch_contact(CObject* O)
 {
 	if (smart_cast<CCustomZone*>(O))				return FALSE;
 	if (smart_cast<CBreakableObject*>(O))			return FALSE;
-	if (0==smart_cast<CKinematics*>(O->Visual()))	return FALSE;
+	if (0==smart_cast<IKinematics*>(O->Visual()))	return FALSE;
 
 	if (O->ID() == ID())
 		return		(FALSE);

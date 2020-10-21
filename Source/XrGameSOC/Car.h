@@ -27,7 +27,7 @@ struct						dSurfaceParameters;
 // defs
 
 #ifdef DEBUG
-	#include "../StatGraph.h"
+	#include "../XrEngine/StatGraph.h"
 	#include "PHDebug.h"
 #endif
 

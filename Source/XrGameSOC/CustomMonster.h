@@ -6,10 +6,10 @@
 
 #include "entity_alive.h"
 #include "script_entity.h"
-#include "../feel_vision.h"
-#include "../feel_sound.h"
-#include "../feel_touch.h"
-#include "../skeletonanimated.h"
+#include "../XrEngine/feel_vision.h"
+#include "../XrEngine/Feel_Sound.h"
+#include "../XrEngine/feel_touch.h"
+#include "../XrRender/Public/KinematicsAnimated.h"
 #include "associative_vector.h"
 
 namespace MonsterSpace {
@@ -17,7 +17,7 @@ namespace MonsterSpace {
 };
 
 class CMotionDef;
-class CKinematicsAnimated;
+class IKinematicsAnimated;
 class CMemoryManager;
 class CItemManager;
 class CEnemyManager;
@@ -55,7 +55,7 @@ protected:
 		MotionID		ls;
 		MotionID		rs;
 
-		void			Create(CKinematicsAnimated* K, LPCSTR base);
+		void			Create(IKinematicsAnimated* K, LPCSTR base);
 	};
 
 private:

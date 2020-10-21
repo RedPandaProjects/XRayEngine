@@ -1,14 +1,14 @@
 #include "stdafx.h"
 #ifdef DEBUG
 #include "ode_include.h"
-#include "../StatGraph.h"
+#include "../XrEngine/StatGraph.h"
 #include "PHDebug.h"
 #endif
 #include "alife_space.h"
 #include "hit.h"
 #include "PHDestroyable.h"
 #include "car.h"
-#include "../skeletoncustom.h"
+#include "../XrRender/Public/KinematicsAnimated.h"
 #include "PHWorld.h"
 extern CPHWorld*	ph_world;
 CCar::SCarSound::SCarSound(CCar* car)
@@ -24,7 +24,7 @@ CCar::SCarSound::~SCarSound()
 }
 void CCar::SCarSound::Init()
 {
-	CInifile* ini=smart_cast<CKinematics*>(pcar->Visual())->LL_UserData();
+	CInifile* ini=smart_cast<IKinematics*>(pcar->Visual())->LL_UserData();
 	if (ini->section_exist("car_sound") && ini->line_exist("car_sound","snd_volume"))
 	{
 		volume  			= ini->r_float("car_sound","snd_volume");

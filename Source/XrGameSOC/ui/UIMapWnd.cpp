@@ -19,7 +19,7 @@
 #include "../HUDManager.h"
 
 #include <dinput.h>				//remove me !!!
-#include "../../xr_input.h"		//remove me !!!
+#include "../Xr_input.h"		//remove me !!!
 
 const	int			SCROLLBARS_SHIFT			= 5;
 const	int			VSCROLLBAR_STEP				= 20; // В пикселях

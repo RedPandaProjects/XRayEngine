@@ -6,8 +6,8 @@
 
 #define SND_RIC_COUNT 5
 
-#include "../Render.h"
-#include "../feel_touch.h"
+#include "../XrEngine/Render.h"
+#include "../XrEngine/feel_touch.h"
 #include "inventory_item.h"
 #include "ai_sounds.h"
 #include "script_export_space.h"

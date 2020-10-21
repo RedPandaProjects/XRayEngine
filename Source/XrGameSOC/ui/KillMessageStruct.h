@@ -14,7 +14,7 @@ struct PlayerInfo{
 
 struct IconInfo{
 	Frect		m_rect;
-	ref_shader	m_shader;
+	ui_shader	m_shader;
 };
 
 struct KillMessageStruct{

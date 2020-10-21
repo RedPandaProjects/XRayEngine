@@ -23,7 +23,7 @@
 #include "profiler.h"
 #include "client_spawn_manager.h"
 #include "memory_manager.h"
-#include "../IGame_Persistent.h"
+#include "../XrEngine/IGame_Persistent.h"
 
 #ifndef MASTER_GOLD
 #	include "clsid_game.h"

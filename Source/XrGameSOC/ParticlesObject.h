@@ -1,7 +1,7 @@
 #ifndef ParticlesObjectH
 #define ParticlesObjectH
 
-#include "../PS_instance.h"
+#include "../XrEngine/PS_instance.h"
 
 extern const Fvector zero_vel;
 

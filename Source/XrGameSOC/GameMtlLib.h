@@ -58,7 +58,7 @@
 #else
 	DEFINE_VECTOR(ref_sound,SoundVec,SoundIt);
 	DEFINE_VECTOR(shared_str,PSVec,PSIt);
-	DEFINE_VECTOR(ref_shader,ShaderVec,ShaderIt);
+	DEFINE_VECTOR(ui_shader,ShaderVec,ShaderIt);
 #endif
 
 struct ECORE_API SGameMtl

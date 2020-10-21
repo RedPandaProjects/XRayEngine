@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../SkeletonAnimated.h"
+#include "../../../XrRender/Public/KinematicsAnimated.h"
 
 class CAI_Trader;
 

@@ -1,6 +1,6 @@
 #pragma once
-#include "../effectorPP.h"
-#include "../cameramanager.h"
+#include "../XrEngine/effectorPP.h"
+#include "../XrEngine/cameramanager.h"
 
 //////////////////////////////////////////////////////////////////////////
 

@@ -16,6 +16,13 @@ enum EUIMirroring{
 	tmMirrorBoth
 };
 
+
+#include "FactoryPtr.h"
+#include "UIRender.h"
+#include "UIShader.h"
+typedef	FactoryPtr<IUIShader>	ui_shader;
+
+
 class CUICustomItem
 {
 protected:
@@ -54,12 +61,12 @@ public:
 	   Fvector2		GetHeadingPivot			()						{return iHeadingPivot;}
 	   
 
-	void			Render					(FVF::TL*& Pointer, const Fvector2& pos, u32 color, 
+	void			Render					( const Fvector2& pos, u32 color, 
 														float x1, float y1, 
 														float x2, float y2);
 	
-	void			Render					(FVF::TL*& Pointer, const Fvector2& pos, u32 color);
-	void			Render					(FVF::TL*& Pointer, const Fvector2& pos, u32 color, float angle);
+	void			Render					( const Fvector2& pos, u32 color);
+	void			Render					( const Fvector2& pos, u32 color, float angle);
 
 	IC void			SetAlign				(u32 align)					{uAlign=align;};
 	IC u32			GetAlign				()							{return uAlign;}

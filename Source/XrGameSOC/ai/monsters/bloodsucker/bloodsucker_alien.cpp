@@ -6,8 +6,8 @@
 #include "../../../inventory.h"
 #include "../../../HudItem.h"
 #include "../../../../CustomHUD.h"
-#include "../../../../effector.h"
-#include "../../../../effectorPP.h"
+#include "../../../../XrEngine/effector.h"
+#include "../../../../XrEngine/effectorPP.h"
 
 #define EFFECTOR_ID_GEN(type) (type( u32(u64(this) & u32(-1)) ))
 

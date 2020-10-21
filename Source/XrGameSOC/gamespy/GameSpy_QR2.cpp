@@ -4,7 +4,7 @@
 
 #include "GameSpy_QR2_callbacks.h"
 
-//#include "../../xrNetServer/NET_utils.h"
+//#include "../XrNetServer/NET_utils.h"
 
 CGameSpy_QR2::CGameSpy_QR2()
 {

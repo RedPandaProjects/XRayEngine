@@ -37,7 +37,7 @@ void CWalmarkManager::AddWallmark(const Fvector& dir, const Fvector& start_pos,
 		end_point.set(0,0,0);
 		end_point.mad(start_pos, dir, range);
 
-		ref_shader* pWallmarkShader = wallmarks_vector.empty()?NULL:
+		ui_shader* pWallmarkShader = wallmarks_vector.empty()?NULL:
 		&wallmarks_vector[::Random.randI(0,wallmarks_vector.size())];
 
 		if (pWallmarkShader)
@@ -114,14 +114,14 @@ void CWalmarkManager::StartWorkflow()
 	u32 _not_dist		= 0;
 /*
 	DBG_OpenCashedDraw		();
-	DBG_DrawAABB			(m_pos,Fvector().set(m_trace_dist,m_trace_dist,m_trace_dist),D3DCOLOR_XRGB(255,0,0));
-	DBG_DrawAABB			(m_pos,Fvector().set(0.05f,0.05f,0.05f),D3DCOLOR_XRGB(0,255,0));
+	DBG_DrawAABB			(m_pos,Fvector().set(m_trace_dist,m_trace_dist,m_trace_dist),color_xrgb(255,0,0));
+	DBG_DrawAABB			(m_pos,Fvector().set(0.05f,0.05f,0.05f),color_xrgb(0,255,0));
 	
 	CTimer T; T.Start();
 */
 	for (CDB::RESULT* Res=R_begin; Res!=R_end; ++Res)
 	{
-//.		DBG_DrawTri(Res, D3DCOLOR_XRGB(0,255,0) );
+//.		DBG_DrawTri(Res, color_xrgb(0,255,0) );
 
 		if(wm_count >= max_wallmarks_count) break;
 		
@@ -170,7 +170,7 @@ void CWalmarkManager::StartWorkflow()
 
 		if(dist <= m_trace_dist )
 		{
-			ref_shader wallmarkShader = m_wallmarks[::Random.randI( m_wallmarks.size())];
+			ui_shader wallmarkShader = m_wallmarks[::Random.randI( m_wallmarks.size())];
 			::Render->add_StaticWallmark(wallmarkShader, end_point, m_wallmark_size, _t, V_array);
 			++wm_count;
 		}else
@@ -209,7 +209,7 @@ void CWalmarkManager::Load (LPCSTR section)
 
 	int cnt		=_GetItemCount(wallmarks_name);
 	VERIFY		(cnt);
-	ref_shader	s;
+	ui_shader	s;
 	for (int k=0; k<cnt; ++k)
 	{
 		s.create ("effects\\wallmark",_GetItem(wallmarks_name,k,tmp));

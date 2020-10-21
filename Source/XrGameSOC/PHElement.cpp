@@ -7,9 +7,9 @@
 #include "MathUtils.h"
 #include "PhysicsShellHolder.h"
 #include "game_object_space.h"
-//#include "../skeletoncustom.h"
-#include "../skeletonanimated.h"
-#include <../../xrODE/ode/src/util.h>
+//#include "../XrRender/Public/KinematicsAnimated.h"
+#include ".../XrRender/Public/KinematicsAnimated.h"
+#include <odeutil.h>
 #ifdef DEBUG
 #include	"PHDebug.h"
 #endif
@@ -18,7 +18,7 @@
 #pragma warning(disable:4995)
 #pragma warning(disable:4267)
 
-#include "../../xrODE/ode/src/collision_kernel.h"
+#include "ode/collision_kernel.h"
 
 
 #pragma warning(default:4267)
@@ -218,7 +218,7 @@ void		CPHElement::Deactivate()
 	m_flags.set(flActivating,FALSE);
 	//bActive=false;
 	//bActivating=false;
-	CKinematics* K=m_shell->PKinematics();
+	IKinematics* K=m_shell->PKinematics();
 	if(K)
 	{
 		K->LL_GetBoneInstance(m_SelfID).reset_callback();
@@ -324,7 +324,7 @@ void CPHElement::Activate(const Fmatrix &transform,const Fvector& lin_vel,const 
 	if(disable) dBodyDisable(m_body);
 	m_flags.set(flActive,TRUE);
 	m_flags.set(flActivating,TRUE);
-	CKinematics* K=m_shell->PKinematics();
+	IKinematics* K=m_shell->PKinematics();
 	if(K)
 	{
 		K->LL_GetBoneInstance(m_SelfID).set_callback(bctPhysics,m_shell->GetBonesCallback(),static_cast<CPhysicsElement*>(this));
@@ -388,7 +388,7 @@ void CPHElement::PhDataUpdate(dReal step){
 #ifdef DEBUG
 	if(ph_dbg_draw_mask.test(phDbgDrawMassCenters))
 	{
-		DBG_DrawPoint(cast_fv(dBodyGetPosition(m_body)),0.03f,D3DCOLOR_XRGB(255,0,0));
+		DBG_DrawPoint(cast_fv(dBodyGetPosition(m_body)),0.03f,color_xrgb(255,0,0));
 	}
 #endif
 	
@@ -610,7 +610,7 @@ void	CPHElement::	applyImpulseTrace		(const Fvector& pos, const Fvector& dir, fl
 		}
 		else
 		{ 
-			CKinematics* K=m_shell->PKinematics();
+			IKinematics* K=m_shell->PKinematics();
 			if(K)
 			{
 				Fmatrix m;m.set(K->LL_GetTransform(m_SelfID));
@@ -635,9 +635,9 @@ void	CPHElement::	applyImpulseTrace		(const Fvector& pos, const Fvector& dir, fl
 		Fvector dbg_position;dbg_position.set(body_pos);
 		dMULTIPLY0_331 (cast_fp(dbg_position),dBodyGetRotation(m_body),cast_fp(body_pos));
 		dbg_position.add(cast_fv(dBodyGetPosition(m_body)));
-		DBG_DrawPoint(dbg_position,0.01f,D3DCOLOR_XRGB(255,255,255));
-		DBG_DrawLine(cast_fv(dBodyGetPosition(m_body)),dbg_position,D3DCOLOR_XRGB(255,255,255));
-		DBG_DrawLine(dbg_position,Fvector().add(dbg_position,Fvector().mul(dir,0.4f)),D3DCOLOR_XRGB(255,0,255));
+		DBG_DrawPoint(dbg_position,0.01f,color_xrgb(255,255,255));
+		DBG_DrawLine(cast_fv(dBodyGetPosition(m_body)),dbg_position,color_xrgb(255,255,255));
+		DBG_DrawLine(dbg_position,Fvector().add(dbg_position,Fvector().mul(dir,0.4f)),color_xrgb(255,0,255));
 		DBG_ClosedCashedDraw(10000);
 	}
 #endif	
@@ -810,7 +810,7 @@ void CPHElement::BoneGlPos(Fmatrix &m,CBoneInstance* B)
 void CPHElement::GetAnimBonePos(Fmatrix &bp)
 {
 	VERIFY(m_shell->PKinematics());
-	CKinematicsAnimated *ak = m_shell->PKinematics()->dcast_PKinematicsAnimated();
+	IKinematicsAnimated *ak = m_shell->PKinematics()->dcast_PKinematicsAnimated();
 	VERIFY(ak);
 	CBoneInstance *BI = &ak->LL_GetBoneInstance(m_SelfID);
 	if(!BI->Callback)//.

@@ -47,7 +47,7 @@ void CUIStaticItem::CreateShader(LPCSTR tex, LPCSTR sh)
 	uFlags &= !flValidRect;
 }
 
-void CUIStaticItem::SetShader(const ref_shader& sh)
+void CUIStaticItem::SetShader(const ui_shader& sh)
 {
 	hShader = sh;
 }

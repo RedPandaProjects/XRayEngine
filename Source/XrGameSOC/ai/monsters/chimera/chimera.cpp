@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "chimera.h"
 #include "chimera_state_manager.h"
-#include "../../../../skeletonanimated.h"
+#include "../../../../XrRender/Public/KinematicsAnimated.h"
 #include "../../../detail_path_manager.h"
 #include "../monster_velocity_space.h"
 #include "../../../level.h"

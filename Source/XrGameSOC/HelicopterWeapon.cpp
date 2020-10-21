@@ -2,7 +2,7 @@
 #include "helicopter.h"
 #include "ExplosiveRocket.h"
 #include "xrMessages.h"
-#include "../../xrNetServer/net_utils.h"
+#include "../XrCore/net_utils.h"
 #include "..\skeletoncustom.h"
 #include "Level.h"
 
@@ -236,7 +236,7 @@ void CHelicopter::UpdateWeapons		()
 
 void CHelicopter::UpdateMGunDir()
 {
-	CKinematics* K		= smart_cast<CKinematics*>(Visual());
+	IKinematics* K		= smart_cast<IKinematics*>(Visual());
 	m_fire_bone_xform	= K->LL_GetTransform(m_fire_bone);
 
 	m_fire_bone_xform.mulA_43	(XFORM());

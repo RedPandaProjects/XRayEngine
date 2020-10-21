@@ -12,7 +12,7 @@ class CTracer
 {
 	friend CBulletManager;
 protected:
-	ref_shader			sh_Tracer;
+	ui_shader			sh_Tracer;
 	ref_geom			sh_Geom;
 	xr_vector<u32>		m_aColors;			
 public:

@@ -57,7 +57,7 @@ void CUIProgressShape::Draw()
 	if(m_bText)
 		m_pTexture->DrawText		();
 
-	ref_shader sh					= m_pTexture->GetShader();
+	ui_shader sh					= m_pTexture->GetShader();
 	ref_geom	gm					= GetUIGeom();
 	RCache.set_Shader				(sh);
 	CTexture* T						= RCache.get_ActiveTexture(0);

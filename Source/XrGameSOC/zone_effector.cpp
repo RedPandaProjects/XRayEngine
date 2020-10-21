@@ -3,7 +3,7 @@
 #include "level.h"
 #include "clsid_game.h"
 #include "../xr_object.h"
-#include "../cameramanager.h"
+#include "../XrEngine/cameramanager.h"
 #include "actor.h"
 #include "actoreffector.h"
 #include "postprocessanimator.h"

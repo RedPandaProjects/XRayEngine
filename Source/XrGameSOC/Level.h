@@ -5,14 +5,14 @@
 #if !defined(AFX_LEVEL_H__38F63863_DB0C_494B_AFAB_C495876EC671__INCLUDED_)
 #define AFX_LEVEL_H__38F63863_DB0C_494B_AFAB_C495876EC671__INCLUDED_
 #pragma once
-
-#include "../igame_level.h"
-#include "../../xrNetServer/net_client.h"
+#include "../XrEngine/CustomHUD.h"
+#include "../XrEngine/igame_level.h"
+#include "../XrNetServer/net_client.h"
 #include "script_export_space.h"
-#include "../StatGraph.h"
+#include "../XrEngine/StatGraph.h"
 #include "xrMessages.h"
 #include "alife_space.h"
-#include "xrDebug.h"
+#include "../XrCore/xrDebug.h"
 #include "xrServer.h"
 #include "battleye_system.h"
 
@@ -45,7 +45,7 @@ class CFogOfWarMngr;
 class CBulletManager;
 class CMapManager;
 
-#include "../feel_touch.h"
+#include "../XrEngine/feel_touch.h"
 
 class GlobalFeelTouch : public Feel::Touch
 {
@@ -356,7 +356,7 @@ IC game_cl_GameState&	Game()		{ return *Level().game;					}
 	u32					GameID();
 
 
-IC CHUDManager&			HUD()		{ return *((CHUDManager*)Level().pHUD);	}
+IC CHUDManager&			HUD()		{ return *((CHUDManager*)g_hud);	}
 
 #ifdef DEBUG
 IC CLevelDebug&			DBG()		{return *((CLevelDebug*)Level().m_level_debug);}

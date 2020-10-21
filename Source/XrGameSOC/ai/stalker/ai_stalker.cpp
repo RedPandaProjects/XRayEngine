@@ -19,10 +19,10 @@
 #include "../../inventory.h"
 #include "../../artifact.h"
 #include "../../phmovementcontrol.h"
-#include "../../xrserver_objects_alife_monsters.h"
+#include "../Xrserver_objects_alife_monsters.h"
 #include "../../cover_evaluators.h"
-#include "../../xrserver.h"
-#include "../../xr_level_controller.h"
+#include "../Xrserver.h"
+#include "../Xr_level_controller.h"
 #include "../../hudmanager.h"
 #include "../../clsid_game.h"
 #include "../../../skeletoncustom.h"
@@ -385,7 +385,7 @@ BOOL CAI_Stalker::net_Spawn			(CSE_Abstract* DC)
 		sound().set_sound_mask(u32(eStalkerSoundMaskDie));
 
 	//загрузить иммунитеты из модельки сталкера
-	CKinematics* pKinematics = smart_cast<CKinematics*>(Visual()); VERIFY(pKinematics);
+	IKinematics* pKinematics = smart_cast<IKinematics*>(Visual()); VERIFY(pKinematics);
 	CInifile* ini = pKinematics->LL_UserData();
 	if(ini)
 	{
@@ -1063,7 +1063,7 @@ void CAI_Stalker::fill_bones_body_parts	(LPCSTR bone_id, const ECriticalWoundTyp
 	LPCSTR					body_part_section_id = pSettings->r_string(body_parts_section_id,bone_id);
 	VERIFY					(body_part_section_id);
 
-	CKinematics				*kinematics	= smart_cast<CKinematics*>(Visual());
+	IKinematics				*kinematics	= smart_cast<IKinematics*>(Visual());
 	VERIFY					(kinematics);
 
 	CInifile::Sect			&body_part_section = pSettings->r_section(body_part_section_id);

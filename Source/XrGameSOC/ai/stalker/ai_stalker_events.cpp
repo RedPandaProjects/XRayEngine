@@ -10,9 +10,9 @@
 #include "ai_stalker.h"
 #include "../../pda.h"
 #include "../../inventory.h"
-#include "../../xrmessages.h"
+#include "../Xrmessages.h"
 #include "../../shootingobject.h"
-#include "../../../../xrNetServer/net_utils.h"
+#include "../../../XrCore/net_utils.h"
 #include "../../level.h"
 #include "../../ai_monster_space.h"
 

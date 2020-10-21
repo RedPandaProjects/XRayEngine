@@ -10,7 +10,7 @@
 #include "visual_memory_manager.h"
 #include "ai/stalker/ai_stalker.h"
 #include "memory_space_impl.h"
-#include "../skeletoncustom.h"
+#include "../XrRender/Public/KinematicsAnimated.h"
 #include "clsid_game.h"
 #include "ai_object_location.h"
 #include "level_graph.h"
@@ -202,7 +202,7 @@ float CVisualMemoryManager::object_visible_distance(const CGameObject *game_obje
 
 	if (m_object) {
 		eye_matrix						= 
-			smart_cast<CKinematics*>(
+			smart_cast<IKinematics*>(
 				m_object->Visual()
 			)
 			->LL_GetTransform		(
@@ -482,7 +482,7 @@ float CVisualMemoryManager::feel_vision_mtl_transp(CObject* O, u32 element)
 {
 	float vis				= 1.f;
 	if (O){
-		CKinematics* V		= smart_cast<CKinematics*>(O->Visual());
+		IKinematics* V		= smart_cast<IKinematics*>(O->Visual());
 		if (0!=V){
 			CBoneData& B	= V->LL_GetData((u16)element);
 			vis				= GMLib.GetMaterialByIdx(B.game_mtl_idx)->fVisTransparencyFactor;

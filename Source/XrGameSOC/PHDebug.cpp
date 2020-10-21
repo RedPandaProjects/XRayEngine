@@ -2,7 +2,7 @@
 #ifdef DEBUG
 #include "physics.h"
 #include "MathUtils.h"
-#include "../StatGraph.h"
+#include "../XrEngine/StatGraph.h"
 #include "PHDebug.h"
 #include "PHObject.h"
 #include "ExtendedGeom.h"
@@ -132,11 +132,11 @@ void DBG_DrawLine ( const Fvector& p0, const Fvector& p1, u32 c )
 void DBG_DrawMatrix( const Fmatrix &m, float size, u8 a/* = 255*/ )
 {
 	Fvector to;to.add( m.c,Fvector( ).mul( m.i, size ) );
-	DBG_DrawPHAbstruct( xr_new<SPHDBGDrawLine>( m.c, to, D3DCOLOR_XRGB(a, 0, 0 ) ) );
+	DBG_DrawPHAbstruct( xr_new<SPHDBGDrawLine>( m.c, to, color_xrgb(a, 0, 0 ) ) );
 	to.add(m.c,Fvector( ).mul( m.j, size ) );
-	DBG_DrawPHAbstruct( xr_new<SPHDBGDrawLine>( m.c, to, D3DCOLOR_XRGB(0, a, 0 ) ) );
+	DBG_DrawPHAbstruct( xr_new<SPHDBGDrawLine>( m.c, to, color_xrgb(0, a, 0 ) ) );
 	to.add(m.c,Fvector( ).mul( m.k, size ) );
-	DBG_DrawPHAbstruct( xr_new<SPHDBGDrawLine>( m.c, to, D3DCOLOR_XRGB(0, 0, a ) ) );
+	DBG_DrawPHAbstruct( xr_new<SPHDBGDrawLine>( m.c, to, color_xrgb(0, 0, a ) ) );
 }
 
 template<int>
@@ -488,7 +488,7 @@ void PH_DBG_Render()
 		for(;e!=i;++i)
 		{
 			SPHObjDBGDraw& ds=*i;
-			Level().debug_renderer().draw_aabb(ds.AABB_center,ds.AABB.x,ds.AABB.y,ds.AABB.z,D3DCOLOR_XRGB(255,0,0));
+			Level().debug_renderer().draw_aabb(ds.AABB_center,ds.AABB.x,ds.AABB.y,ds.AABB.z,color_xrgb(255,0,0));
 		}
 	}
 
@@ -515,12 +515,12 @@ void PH_DBG_Render()
 		{
 			SPHContactDBGDraw &c=*i;
 			bool is_cyl=c.geomClass==dCylinderClassUser;
-			Level().debug_renderer().draw_aabb			(c.pos,.01f,.01f,.01f,D3DCOLOR_XRGB(255*is_cyl,0,255*!is_cyl));
+			Level().debug_renderer().draw_aabb			(c.pos,.01f,.01f,.01f,color_xrgb(255*is_cyl,0,255*!is_cyl));
 			Fvector dir;
 			dir.set(c.norm);
 			dir.mul(c.depth*100.f);
 			dir.add(c.pos);
-			Level().debug_renderer().draw_line(Fidentity,c.pos,dir,D3DCOLOR_XRGB(255*is_cyl,0,255*!is_cyl));
+			Level().debug_renderer().draw_line(Fidentity,c.pos,dir,color_xrgb(255*is_cyl,0,255*!is_cyl));
 		}
 	}
 //	HUD().Font().pFontStat->OutNext("---------------------");
@@ -626,8 +626,8 @@ void CFunctionGraph::Init(type_function fun,float x0,float x1,int l, int t, int 
 		m_stat_graph->AppendItem(val,color);
 
 	}
-	//m_stat_graph->AddMarker(CStatGraph::stVert, 0, D3DCOLOR_XRGB(255, 0, 0));
-	//m_stat_graph->AddMarker(CStatGraph::stHor, 0, D3DCOLOR_XRGB(255, 0, 0));
+	//m_stat_graph->AddMarker(CStatGraph::stVert, 0, color_xrgb(255, 0, 0));
+	//m_stat_graph->AddMarker(CStatGraph::stHor, 0, color_xrgb(255, 0, 0));
 }
 
 void CFunctionGraph::AddMarker(CStatGraph::EStyle Style, float pos, u32 Color)

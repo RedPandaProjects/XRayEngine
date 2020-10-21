@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../../../effectorPP.h"
+#include "../../../XrEngine/effectorPP.h"
 #include "../../CameraEffector.h"
-#include "../../../cameramanager.h"
+#include "../../../XrEngine/cameramanager.h"
 
 //////////////////////////////////////////////////////////////////////////
 // CMonsterEffector

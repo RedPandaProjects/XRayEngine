@@ -12,9 +12,9 @@
 #include "../../script_entity_action.h"
 #include "../../script_game_object.h"
 #include "../../inventory.h"
-#include "../../xrserver_objects_alife_monsters.h"
+#include "../Xrserver_objects_alife_monsters.h"
 #include "../../artifact.h"
-#include "../../xrserver.h"
+#include "../Xrserver.h"
 #include "../../relation_registry.h"
 #include "../../object_broker.h"
 #include "../../sound_player.h"
@@ -132,7 +132,7 @@ BOOL CAI_Trader::net_Spawn			(CSE_Abstract* DC)
 	set_money				( l_tpTrader->m_dwMoney, false );
 
 	// Установка callback на кости
-	CBoneInstance			*bone_head =	&smart_cast<CKinematics*>(Visual())->LL_GetBoneInstance(smart_cast<CKinematics*>(Visual())->LL_BoneID("bip01_head"));
+	CBoneInstance			*bone_head =	&smart_cast<IKinematics*>(Visual())->LL_GetBoneInstance(smart_cast<IKinematics*>(Visual())->LL_BoneID("bip01_head"));
 	bone_head->set_callback	(bctCustom,BoneCallback,this);
 
 	shedule.t_min			= 100;
@@ -241,7 +241,7 @@ void CAI_Trader::shedule_Update	(u32 dt)
 
 void CAI_Trader::g_WeaponBones	(int &L, int &R1, int &R2)
 {
-	CKinematics *V	= smart_cast<CKinematics*>(Visual());
+	IKinematics *V	= smart_cast<IKinematics*>(Visual());
 	R1				= V->LL_BoneID("bip01_r_hand");
 	R2				= V->LL_BoneID("bip01_r_finger2");
 	L				= V->LL_BoneID("bip01_l_finger1");

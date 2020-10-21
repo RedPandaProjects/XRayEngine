@@ -24,7 +24,7 @@
 #include "ui/UIVote.h"
 #include "ui/UIMessageBoxEx.h"
 #include "string_table.h"
-#include "../IGame_Persistent.h"
+#include "../XrEngine/IGame_Persistent.h"
 #include "MainMenu.h"
 
 
@@ -665,7 +665,7 @@ void game_cl_mp::OnSwitchPhase			(u32 old_phase, u32 new_phase)
 	}
 }
 
-ref_shader game_cl_mp::GetEquipmentIconsShader	()
+ui_shader game_cl_mp::GetEquipmentIconsShader	()
 {
 	if (m_EquipmentIconsShader) return m_EquipmentIconsShader;
 
@@ -673,7 +673,7 @@ ref_shader game_cl_mp::GetEquipmentIconsShader	()
 	return m_EquipmentIconsShader;
 }
 
-ref_shader game_cl_mp::GetKillEventIconsShader	()
+ui_shader game_cl_mp::GetKillEventIconsShader	()
 {
 	return GetEquipmentIconsShader();
 	/*
@@ -684,7 +684,7 @@ ref_shader game_cl_mp::GetKillEventIconsShader	()
 	*/
 }
 
-ref_shader game_cl_mp::GetRadiationIconsShader	()
+ui_shader game_cl_mp::GetRadiationIconsShader	()
 {
 	return GetEquipmentIconsShader();
 	/*
@@ -695,7 +695,7 @@ ref_shader game_cl_mp::GetRadiationIconsShader	()
 	*/
 }
 
-ref_shader game_cl_mp::GetBloodLossIconsShader	()
+ui_shader game_cl_mp::GetBloodLossIconsShader	()
 {
 	return GetEquipmentIconsShader();
 	/*
@@ -705,7 +705,7 @@ ref_shader game_cl_mp::GetBloodLossIconsShader	()
 	return m_BloodLossIconsShader;
 	*/
 }
-ref_shader		game_cl_mp::GetRankIconsShader()
+ui_shader		game_cl_mp::GetRankIconsShader()
 {
 	if (m_RankIconsShader) return m_RankIconsShader;
 

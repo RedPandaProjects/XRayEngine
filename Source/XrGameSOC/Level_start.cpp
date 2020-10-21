@@ -7,7 +7,7 @@
 #include "xrGameSpyServer.h"
 #include "../x_ray.h"
 #include "../device.h"
-#include "../IGame_Persistent.h"
+#include "../XrEngine/IGame_Persistent.h"
 #include "../xr_ioconsole.h"
 #include "MainMenu.h"
 
