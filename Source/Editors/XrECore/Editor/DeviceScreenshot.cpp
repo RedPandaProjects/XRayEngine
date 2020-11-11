@@ -47,7 +47,7 @@ bool CEditorRenderDevice::MakeScreenshot(U32Vec& pixels, u32 width, u32 height)
 
     u32* it 		= pixels.data();
     for (int h=height-1; h>=0; h--,it+=width){
-        LPDWORD dt 	= LPDWORD(u32(pPixel)+u32(D.Pitch*h));
+        LPDWORD dt 	= LPDWORD(size_t(pPixel)+ size_t(D.Pitch*h));
         CopyMemory	(it,dt,sizeof(u32)*width);
     }
 
