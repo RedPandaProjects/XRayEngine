@@ -12,12 +12,15 @@ class CSceneObject : public CCustomObject
 	CEditableObject*m_pReference;
 	void 			ReferenceChange			(PropValue* sender);
 	void			OnChangeShader(PropValue* sender);
+	void			OnChangeSurface(PropValue* sender);
 	bool			AfterEditGameMtl(PropValue* sender, shared_str& str);
+	void			OnClickClearSurface(ButtonValue*, bool&, bool&);
 public:
 
 	SurfaceVec m_Surfaces;
-	enum{
-//    	flDynamic	= (1<<0),
+	enum {
+		//    	flDynamic	= (1<<0),
+		flUseSurface= (1 << 0),
 		flFORCE32	= u32(-1)
     };
 private:
@@ -43,7 +46,7 @@ public:
     // constructor/destructor methods
 					CSceneObject			(LPVOID data, LPCSTR name);
 	virtual 		~CSceneObject			();
-
+	
 	virtual void 	Select					(BOOL flag);
 	void 			Construct				(LPVOID data);
 
@@ -109,6 +112,8 @@ public:
     void			Blink					(CSurface* surf=0);
 
     virtual bool	Validate				(bool bMsg);
+
+	void ClearSurface();
 };
 //----------------------------------------------------
 #endif /*_INCDEF_EditObject_H_*/

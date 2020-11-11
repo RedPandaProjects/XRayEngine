@@ -271,11 +271,21 @@ void CSceneObject::ReferenceChange(PropValue* sender)
 }
 void CSceneObject::OnChangeShader(PropValue* sender)
 {
+    OnChangeSurface(sender);
     for (CSurface* i : m_Surfaces) { i->OnDeviceDestroy(); }
+}
+void CSceneObject::OnChangeSurface(PropValue* sender)
+{
+    m_Flags.set(flUseSurface, 1);
 }
 bool CSceneObject::AfterEditGameMtl(PropValue* sender,shared_str&str)
 {
     return str != "materials\\occ";
+}
+void CSceneObject::OnClickClearSurface(ButtonValue*, bool&, bool&)
+{
+    Scene->UndoSave();
+    ClearSurface();
 }
 void CSceneObject::FillProp(LPCSTR pref, PropItemVec& items)
 {
@@ -297,12 +307,13 @@ void CSceneObject::FillProp(LPCSTR pref, PropItemVec& items)
                     PropValue* V;
                     V = PHelper().CreateChoose(items, PrepareKey(Pref2.c_str(), "Texture"), &(*s_it)->m_Texture, smTexture);		V->OnChangeEvent.bind(this, &CSceneObject::OnChangeShader);
                     V = PHelper().CreateChoose(items, PrepareKey(Pref2.c_str(), "Shader"), &(*s_it)->m_ShaderName, smEShader);		V->OnChangeEvent.bind(this, &CSceneObject::OnChangeShader);
-                    V = PHelper().CreateChoose(items, PrepareKey(Pref2.c_str(), "Compile"), &(*s_it)->m_ShaderXRLCName, smCShader);
-                    PHelper().CreateChoose(items, PrepareKey(Pref2.c_str(), "Game Mtl"), &(*s_it)->m_GameMtlName, smGameMaterial)->OnAfterEditEvent.bind(this, &CSceneObject::AfterEditGameMtl);
+                    V = PHelper().CreateChoose(items, PrepareKey(Pref2.c_str(), "Compile"), &(*s_it)->m_ShaderXRLCName, smCShader); V->OnChangeEvent.bind(this, &CSceneObject::OnChangeSurface);
+                    auto VA = PHelper().CreateChoose(items, PrepareKey(Pref2.c_str(), "Game Mtl"), &(*s_it)->m_GameMtlName, smGameMaterial); VA->OnChangeEvent.bind(this, &CSceneObject::OnChangeSurface); VA->OnAfterEditEvent.bind(this, &CSceneObject::AfterEditGameMtl);
                 }
                
             }
         }
+        PHelper().CreateButton(items, PrepareKey(Pref1.c_str(),"Action"), "Clear", ButtonValue::flFirstOnly)->OnBtnClickEvent.bind(this, &CSceneObject::OnClickClearSurface);
     }
 }
 
@@ -395,3 +406,22 @@ bool CSceneObject::Validate(bool bMsg)
 //----------------------------------------------------
 
 
+
+void CSceneObject::ClearSurface()
+{
+    for (CSurface* i : m_Surfaces) { i->OnDeviceDestroy(); xr_delete(i); }
+    m_Surfaces.clear_and_free();
+    if (m_pReference)
+    {
+        for (size_t i = 0; i < m_pReference->SurfaceCount(); i++)
+        {
+            CSurface* surf = xr_new< CSurface>();
+            surf->CopyFrom(m_pReference->Surfaces()[i]);
+            m_Surfaces.push_back(surf);
+            if (surf->IsVoid())
+                surf->OnDeviceCreate();
+        }
+    }
+    m_Flags.set(flUseSurface, 0);
+    Tools->UpdateProperties();
+}

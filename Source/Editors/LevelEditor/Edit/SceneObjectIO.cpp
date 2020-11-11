@@ -63,48 +63,51 @@ bool CSceneObject::LoadLTX(CInifile& ini, LPCSTR sect_name)
 //            ELog.Msg( mtError, "CSceneObject: '%s' different file version!", ref_name.c_str() );
 
       	m_Flags.assign(ini.r_u32(sect_name, "flags"));
-        SIniFileStream 			ini_stream;
-        ini_stream.ini = &ini;
-        ini_stream.sect = sect_name;
-        ini_stream.move_begin();
-        if (ini.line_exist(sect_name, ini_stream.gen_name()))
+        if (m_Flags.test(flUseSurface))
         {
+            SIniFileStream 			ini_stream;
+            ini_stream.ini = &ini;
+            ini_stream.sect = sect_name;
             ini_stream.move_begin();
-            u32 Size;
-            ini_stream.r_u32(Size);
-            for (u32 i = 0; i < Size; i++)
+            if (ini.line_exist(sect_name, ini_stream.gen_name()))
             {
-                xr_string Name;
-                ini_stream.r_string(Name);
-                CSurface* Surf = nullptr;
-                for (SurfaceIt sf_it = m_Surfaces.begin(); sf_it != m_Surfaces.end(); ++sf_it)
+                ini_stream.move_begin();
+                u32 Size;
+                ini_stream.r_u32(Size);
+                for (u32 i = 0; i < Size; i++)
                 {
-                    if ((*sf_it)->m_Name == Name.c_str())
+                    xr_string Name;
+                    ini_stream.r_string(Name);
+                    CSurface* Surf = nullptr;
+                    for (SurfaceIt sf_it = m_Surfaces.begin(); sf_it != m_Surfaces.end(); ++sf_it)
                     {
-                        Surf = *sf_it;
-                        break;
+                        if ((*sf_it)->m_Name == Name.c_str())
+                        {
+                            Surf = *sf_it;
+                            break;
+                        }
                     }
-                }
 
-                if (Surf)
-                {
-                    if (!Surf->IsVoid())
-                        Surf->OnDeviceDestroy();
-                }
-                {
-                    ini_stream.r_string(Name);
-                    if (Surf)Surf->SetShader(Name.c_str());
-                    ini_stream.r_string(Name);
-                    if (Surf)Surf->SetShaderXRLC(Name.c_str());
-                    ini_stream.r_string(Name);
-                    if (Surf)Surf->SetGameMtl(Name.c_str());
-                    ini_stream.r_string(Name);
-                    if (Surf)Surf->SetTexture(Name.c_str());
-                    ini_stream.r_string(Name);
-                    if (Surf)Surf->SetVMap(Name.c_str());
-                }
+                    if (Surf)
+                    {
+                        if (!Surf->IsVoid())
+                            Surf->OnDeviceDestroy();
+                    }
+                    {
+                        ini_stream.r_string(Name);
+                        if (Surf)Surf->SetShader(Name.c_str());
+                        ini_stream.r_string(Name);
+                        if (Surf)Surf->SetShaderXRLC(Name.c_str());
+                        ini_stream.r_string(Name);
+                        if (Surf)Surf->SetGameMtl(Name.c_str());
+                        ini_stream.r_string(Name);
+                        if (Surf)Surf->SetTexture(Name.c_str());
+                        ini_stream.r_string(Name);
+                        if (Surf)Surf->SetVMap(Name.c_str());
+                    }
 
-                if (Surf) Surf->OnDeviceCreate();
+                    if (Surf) Surf->OnDeviceCreate();
+                }
             }
         }
 
@@ -126,22 +129,26 @@ void CSceneObject::SaveLTX(CInifile& ini, LPCSTR sect_name)
     ini.w_string				(sect_name, "reference_name", m_ReferenceName.c_str());
 
 	ini.w_u32					(sect_name, "flags", m_Flags.get());
-    SIniFileStream 			ini_stream;
-    ini_stream.ini = &ini;
-    ini_stream.sect = sect_name;
-    ini_stream.move_begin();
-    ini_stream.w_u32(m_Surfaces.size());
-    for (SurfaceIt sf_it = m_Surfaces.begin(); sf_it != m_Surfaces.end(); ++sf_it)
+    if (m_Flags.test(flUseSurface))
     {
-        ini_stream.w_stringZ((*sf_it)->_Name());
-        ini_stream.w_stringZ((*sf_it)->_ShaderName());
-        ini_stream.w_stringZ((*sf_it)->_ShaderXRLCName());
-        ini_stream.w_stringZ((*sf_it)->_GameMtlName());
-        ini_stream.w_stringZ((*sf_it)->_Texture());
-        ini_stream.w_stringZ((*sf_it)->_VMap());
+        SIniFileStream 			ini_stream;
+        ini_stream.ini = &ini;
+        ini_stream.sect = sect_name;
+        ini_stream.move_begin();
+        ini_stream.w_u32(m_Surfaces.size());
+        for (SurfaceIt sf_it = m_Surfaces.begin(); sf_it != m_Surfaces.end(); ++sf_it)
+        {
+            ini_stream.w_stringZ((*sf_it)->_Name());
+            ini_stream.w_stringZ((*sf_it)->_ShaderName());
+            ini_stream.w_stringZ((*sf_it)->_ShaderXRLCName());
+            ini_stream.w_stringZ((*sf_it)->_GameMtlName());
+            ini_stream.w_stringZ((*sf_it)->_Texture());
+            ini_stream.w_stringZ((*sf_it)->_VMap());
+        }
     }
 
 }
+
 
 bool CSceneObject::LoadStream(IReader& F)
 {
@@ -213,37 +220,40 @@ bool CSceneObject::LoadStream(IReader& F)
         if (F.find_chunk(SCENEOBJ_CHUNK_FLAGS)){
         	m_Flags.assign(F.r_u32());
         }
-        if (F.find_chunk(SCENEOBJ_CHUNK_SURFACE))
+        if (m_Flags.test(flUseSurface))
         {
-           
-            u32 Size = F.r_u32();
-            for (u32 i = 0;i< Size;i++)
+            if (F.find_chunk(SCENEOBJ_CHUNK_SURFACE))
             {
-                xr_string Name;
-                F.r_stringZ(Name);
-                CSurface* Surf = nullptr;
-                for (SurfaceIt sf_it = m_Surfaces.begin(); sf_it != m_Surfaces.end(); ++sf_it)
+
+                u32 Size = F.r_u32();
+                for (u32 i = 0; i < Size; i++)
                 {
-                    if ((*sf_it)->m_Name == Name.c_str())
+                    xr_string Name;
+                    F.r_stringZ(Name);
+                    CSurface* Surf = nullptr;
+                    for (SurfaceIt sf_it = m_Surfaces.begin(); sf_it != m_Surfaces.end(); ++sf_it)
                     {
-                        Surf = *sf_it;
-                        break;
+                        if ((*sf_it)->m_Name == Name.c_str())
+                        {
+                            Surf = *sf_it;
+                            break;
+                        }
                     }
+                    if (Surf) Surf->OnDeviceDestroy();
+                    {
+                        F.r_stringZ(Name);
+                        if (Surf)Surf->SetShader(Name.c_str());
+                        F.r_stringZ(Name);
+                        if (Surf)Surf->SetShaderXRLC(Name.c_str());
+                        F.r_stringZ(Name);
+                        if (Surf)Surf->SetGameMtl(Name.c_str());
+                        F.r_stringZ(Name);
+                        if (Surf)Surf->SetTexture(Name.c_str());
+                        F.r_stringZ(Name);
+                        if (Surf)Surf->SetVMap(Name.c_str());
+                    }
+                    if (Surf) Surf->OnDeviceCreate();
                 }
-                if (Surf) Surf->OnDeviceDestroy();
-                {
-                    F.r_stringZ(Name);
-                    if(Surf)Surf->SetShader(Name.c_str());
-                    F.r_stringZ(Name);
-                    if (Surf)Surf->SetShaderXRLC(Name.c_str());
-                    F.r_stringZ(Name);
-                    if (Surf)Surf->SetGameMtl(Name.c_str());
-                    F.r_stringZ(Name);
-                    if (Surf)Surf->SetTexture(Name.c_str());
-                    F.r_stringZ(Name);
-                    if (Surf)Surf->SetVMap(Name.c_str());
-                }
-                if (Surf) Surf->OnDeviceCreate();
             }
         }
         if (!bRes) break;
@@ -269,18 +279,21 @@ void CSceneObject::SaveStream(IWriter& F)
 	F.w_u32			(m_Flags.flags);
     F.close_chunk	();
     
-    F.open_chunk(SCENEOBJ_CHUNK_FLAGS);
-    F.w_u32(m_Surfaces.size());
-    for (SurfaceIt sf_it = m_Surfaces.begin(); sf_it != m_Surfaces.end(); ++sf_it)
+    if (m_Flags.test(flUseSurface))
     {
-        F.w_stringZ((*sf_it)->_Name());
-        F.w_stringZ((*sf_it)->_ShaderName());
-        F.w_stringZ((*sf_it)->_ShaderXRLCName());
-        F.w_stringZ((*sf_it)->_GameMtlName());
-        F.w_stringZ((*sf_it)->_Texture());
-        F.w_stringZ((*sf_it)->_VMap());
+        F.open_chunk(SCENEOBJ_CHUNK_FLAGS);
+        F.w_u32(m_Surfaces.size());
+        for (SurfaceIt sf_it = m_Surfaces.begin(); sf_it != m_Surfaces.end(); ++sf_it)
+        {
+            F.w_stringZ((*sf_it)->_Name());
+            F.w_stringZ((*sf_it)->_ShaderName());
+            F.w_stringZ((*sf_it)->_ShaderXRLCName());
+            F.w_stringZ((*sf_it)->_GameMtlName());
+            F.w_stringZ((*sf_it)->_Texture());
+            F.w_stringZ((*sf_it)->_VMap());
+        }
+        F.close_chunk();
     }
-    F.close_chunk();
 }
 //----------------------------------------------------
 
