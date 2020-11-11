@@ -369,7 +369,7 @@ BearFactoryPointer<BearRHI::BearRHIShader> XRayResourcesManager::GetPixelShader(
 				Defines["MESH_SHADER_DEBUG"] = "1";
 			}
 			XRayShaderIncluder Includer(::Render->getShaderPath(), local_path);
-			if (!shader->LoadAsText(Text.c_str(),TEXT("Main"), Defines, out,&Includer))
+			if (!shader->LoadAsText(Text.c_str(),TEXT("Main"), Defines, out,&Includer,"",""))
 			{
 				Msg(TEXT("------------------------------------------------------------------------"));
 				Msg(*out);
@@ -447,7 +447,7 @@ BearFactoryPointer<BearRHI::BearRHIShader> XRayResourcesManager::GetVertexShader
 				Defines["MESH_SHADER_DEBUG"] = "1";
 			}
 			XRayShaderIncluder Includer(::Render->getShaderPath(), local_path);
-			if (!shader->LoadAsText(Text.c_str(), TEXT("Main"), Defines, out, &Includer))
+			if (!shader->LoadAsText(Text.c_str(), TEXT("Main"), Defines, out, &Includer, "", ""))
 			{
 				Msg(TEXT("------------------------------------------------------------------------"));
 				Msg(*out);
@@ -526,7 +526,7 @@ BearFactoryPointer<BearRHI::BearRHIShader> XRayResourcesManager::GetMeshShader(s
 
 			BearString out;
 			XRayShaderIncluder Includer(::Render->getShaderPath(), local_path);
-			if (!shader->LoadAsText(Text.c_str(), TEXT("Main"), Defines, out, &Includer))
+			if (!shader->LoadAsText(Text.c_str(), TEXT("Main"), Defines, out, &Includer, "", ""))
 			{
 				Msg(TEXT("------------------------------------------------------------------------"));
 				Msg(*out);
