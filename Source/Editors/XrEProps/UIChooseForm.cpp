@@ -160,18 +160,22 @@ void UIChooseForm::Draw()
     {
         if (!E.on_get_texture.empty())E.on_get_texture(m_SelectedItem->name.c_str(), m_Texture);
     }
-
+    ImGui::Columns(2);
     {
         {
-            if (ImGui::BeginChild("Left", ImVec2(200, 400)))
+            ImGui::Text("Find:");
+            ImGui::SameLine();
+            m_Filter.Draw("",-1);
+            if (ImGui::BeginChild("Left", ImVec2(0, 0),false,ImGuiWindowFlags_HorizontalScrollbar))
             {
                 DrawNode(&m_GeneralNode);
             }
+            
             ImGui::EndChild();
-            ImGui::SameLine();
         }
+        ImGui::NextColumn();
         {
-            ImGui::BeginChild("Right", ImVec2(200, 400), true);
+            ImGui::BeginChild("Right", ImVec2(0, -ImGui::GetFrameHeightWithSpacing()), false);
             {
                 if (NullTexture || m_Texture)
                 {
@@ -202,62 +206,61 @@ void UIChooseForm::Draw()
                 }
                 ImGui::Separator();
             }
-            if (!E.on_sel.empty()&&!m_Flags.is(cfMultiSelect))
+            if (!E.on_sel.empty() && !m_Flags.is(cfMultiSelect))
             {
-            if (m_SelectedItem)
-            {
-                if (ImGui::BeginChild("Props"))
+                if (m_SelectedItem)
                 {
-                    m_Props->Draw();
+                    if (ImGui::BeginChild("Props", ImVec2(0,0)))
+                    {
+                        m_Props->Draw();
+                    }
+                    ImGui::EndChild();
                 }
-                ImGui::EndChild();
-            }
             }
             else if (m_Flags.is(cfMultiSelect))
             {
-            if (ImGui::BeginChild("List", ImVec2(0, -ImGui::GetTextLineHeight() - 10), true, ImGuiWindowFlags_AlwaysHorizontalScrollbar| ImGuiWindowFlags_AlwaysVerticalScrollbar))
-            {
-                int i = 0;
-
-                int HereY = -iSelectedInList - 2;
-                if (HereY >= 0)iSelectedInList = HereY;
-                for (auto& item : m_SelectedItems)
+                if (ImGui::BeginChild("List", ImVec2(0,0), true, ImGuiWindowFlags_AlwaysHorizontalScrollbar | ImGuiWindowFlags_AlwaysVerticalScrollbar))
                 {
-                    if (HereY == i)
-                        ImGui::SetScrollHereY();
-                    if (ImGui::Selectable(item->name.c_str(), iSelectedInList == i))
+                    int i = 0;
+
+                    int HereY = -iSelectedInList - 2;
+                    if (HereY >= 0)iSelectedInList = HereY;
+                    for (auto& item : m_SelectedItems)
                     {
-                        iSelectedInList = i;
+                        if (HereY == i)
+                            ImGui::SetScrollHereY();
+                        if (ImGui::Selectable(item->name.c_str(), iSelectedInList == i))
+                        {
+                            iSelectedInList = i;
+                        }
+                        i++;
                     }
-                    i++;
                 }
+                ImGui::EndChild();
+                if (ImGui::Button("Up")) { if (iSelectedInList > 0) { std::swap(m_SelectedItems[iSelectedInList - 1], m_SelectedItems[iSelectedInList]); iSelectedInList = -(iSelectedInList - 1) - 2; } } ImGui::SameLine();
+                if (ImGui::Button("Down")) { if (m_SelectedItems.size() > 1 && iSelectedInList < m_SelectedItems.size() - 1) { std::swap(m_SelectedItems[iSelectedInList], m_SelectedItems[iSelectedInList + 1]); iSelectedInList = -(iSelectedInList + 1) - 2; } }  ImGui::SameLine();
+                if (ImGui::Button("Del")) { if (m_SelectedItems.size() && iSelectedInList >= 0) { m_SelectedItems.erase(m_SelectedItems.begin() + iSelectedInList); iSelectedInList = -1; } } ImGui::SameLine();
+                if (ImGui::Button("Clear List")) { m_SelectedItems.clear(); iSelectedInList = -1;/*  if (E.flags.test(SChooseEvents::flClearTexture) ){ if (m_Texture)m_Texture->Release(); m_Texture = 0; } */ImGui::SameLine(); }
             }
+           
             ImGui::EndChild();
-            if (ImGui::Button("Up")) { if (iSelectedInList > 0) { std::swap(m_SelectedItems[iSelectedInList - 1], m_SelectedItems[iSelectedInList]); iSelectedInList = -(iSelectedInList - 1) - 2; } } ImGui::SameLine();
-            if (ImGui::Button("Down")) { if (m_SelectedItems.size() > 1 && iSelectedInList < m_SelectedItems.size() - 1) { std::swap(m_SelectedItems[iSelectedInList], m_SelectedItems[iSelectedInList + 1]); iSelectedInList = -(iSelectedInList + 1) - 2; } }  ImGui::SameLine();
-            if (ImGui::Button("Del")) { if (m_SelectedItems.size() && iSelectedInList >= 0) { m_SelectedItems.erase(m_SelectedItems.begin() + iSelectedInList); iSelectedInList = -1; } } ImGui::SameLine();
-            if (ImGui::Button("Clear List")) { m_SelectedItems.clear(); iSelectedInList = -1;/*  if (E.flags.test(SChooseEvents::flClearTexture) ){ if (m_Texture)m_Texture->Release(); m_Texture = 0; } */ImGui::SameLine(); }
+            if (ImGui::Button("Ok", ImVec2(100, 0)))
+            {
+                m_Result = R_Ok;
+                bOpen = false;
             }
-            ImGui::EndChild();
-        }
-        {
-        ImGui::SetNextItemWidth(200 - ImGui::CalcTextSize("  Find").x);
-        m_Filter.Draw("Find");
-        ImGui::SameLine(210);
-        if (ImGui::Button("Ok", ImVec2(100, 0)))
-        {
-            m_Result = R_Ok;
-            bOpen = false;
-        }
-        ImGui::SameLine(0);
-        if (ImGui::Button("Cancel", ImVec2(100, 0)))
-        {
-            m_Result = R_Cancel;
-            bOpen = false;
-        }
+            ImGui::SameLine(0);
+            if (ImGui::Button("Cancel", ImVec2(100, 0)))
+            {
+
+                m_Result = R_Cancel;
+                bOpen = false;
+            }
         }
     }
-   
+  
+      
+    
     if (m_ClickItem)
     {
        
@@ -302,7 +305,8 @@ void UIChooseForm::Update()
     // ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings
     if (Form&& !Form->IsClosed())
     {
-        if (ImGui::BeginPopupModal("ChooseForm", nullptr, ImGuiWindowFlags_AlwaysAutoResize| ImGuiWindowFlags_NoResize,true))
+        ImGui::SetNextWindowSize(ImVec2(400, 500), ImGuiCond_::ImGuiCond_FirstUseEver);
+        if (ImGui::BeginPopupModal("ChooseForm", nullptr,0,true))
         {
             Form->Draw();
             ImGui::EndPopup();
