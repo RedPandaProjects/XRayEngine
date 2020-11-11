@@ -201,6 +201,7 @@ CCommandVar CommandLoad(CCommandVar p1, CCommandVar p2)
             ExecCommand				(COMMAND_CLEAR);
 
 			IReader* R = FS.r_open	(temp_fn.c_str());
+            if (!R)return false;
             char ch;
             R->r(&ch, sizeof(ch));
             bool is_ltx = (ch=='[');
