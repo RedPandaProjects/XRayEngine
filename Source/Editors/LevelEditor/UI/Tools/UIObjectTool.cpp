@@ -11,18 +11,29 @@ UIObjectTool::UIObjectTool()
     m_Current = nullptr;
     m_RandomAppend = false;
     m_Selection = false;
+    m_RealTexture = nullptr;
+    m_RemoveTexture = nullptr;
     m_ObjectList = xr_new<UIItemListForm>();
     m_ObjectList->SetOnItemFocusedEvent(TOnILItemFocused(this, &UIObjectTool::OnItemFocused));
+    m_TextureNull.create("ed\\ed_nodata");
+    m_TextureNull->Load();
+    m_Props = xr_new< UIPropertiesForm>();
     RefreshList();
 }
 
 UIObjectTool::~UIObjectTool()
 {
+    if (m_RemoveTexture)m_RemoveTexture->Release();
+    if (m_RealTexture)m_RealTexture->Release();
+    xr_delete(m_Props);
+    m_TextureNull.destroy();
     xr_delete(m_ObjectList);
 }
 
 void UIObjectTool::Draw()
 {
+    if (m_RemoveTexture)m_RemoveTexture->Release();
+    m_RemoveTexture = nullptr;
     static bool bbool = false;
     float a = 1;
     ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
@@ -70,6 +81,31 @@ void UIObjectTool::Draw()
         ImGui::TreePop();
     }
     ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
+    if (ImGui::TreeNode("Surface"))
+    {
+
+        ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
+        {
+            if (ImGui::Button("Clear Surface in select", ImVec2(-1, 0)))
+            {
+                Scene->UndoSave();
+                ClearSurface(true);
+            }
+            if (ImGui::Button("Clear Surface in level", ImVec2(-1, 0)))
+            {
+                if (ELog.DlgMsg(mtConfirmation, mbYes | mbNo, "Are you sure to reset surface in level?") == mrYes) 
+                {
+                    Scene->UndoSave();
+                    ClearSurface(false);
+                }
+              
+            }
+        }
+        ImGui::Separator();
+        ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
+        ImGui::TreePop();
+    }
+    ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
     if (ImGui::TreeNode("Current Object"))
     {
 
@@ -90,12 +126,27 @@ void UIObjectTool::Draw()
         ImGui::TreePop();
     }
     ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
+    if (ImGui::TreeNode("Preview"))
+    {
+        ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
+        ImGui::Image(m_RealTexture? m_RealTexture:( m_TextureNull->surface_get()), ImVec2(128, 128));
+        ImGui::SameLine();
+        ImGui::BeginChild("Props", ImVec2(0,128));
+        m_Props->Draw();
+        ImGui::EndChild();
+        ImGui::Separator();
+        ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
+        ImGui::TreePop();
+    }
+    ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
     if (ImGui::TreeNode("Object List"))
     {
         ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
+        ImGui::BeginChild("Object List");
         ImGui::Separator();
         m_ObjectList->Draw();
         ImGui::Separator();
+        ImGui::EndChild();
         ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::TreePop();
     }
@@ -113,6 +164,9 @@ void UIObjectTool::RefreshList()
             ListItem* I = LHelper().CreateItem(items, it->name.c_str(), 0, ListItem::flDrawThumbnail, 0);
         }
     }
+    if (m_RealTexture)m_RemoveTexture = m_RealTexture;
+    m_RealTexture = nullptr;
+    m_Props->ClearProperties();
     m_ObjectList->AssignItems(items);
 }
 
@@ -178,10 +232,21 @@ void UIObjectTool::OnDrawUI()
 }
 void UIObjectTool::OnItemFocused(ListItem* item)
 {
+    if (m_RealTexture)m_RemoveTexture = m_RealTexture;
+    m_RealTexture = nullptr;
+    m_Props->ClearProperties();
     m_Current = nullptr;
     if (item)
     {
         m_Current = item->Key();
+        auto * m_Thm = ImageLib.CreateThumbnail(m_Current, EImageThumbnail::ETObject);
+        if (m_Thm)
+        {
+            m_Thm->Update(m_RealTexture);
+            PropItemVec Info;
+            m_Thm->FillInfo(Info);
+            m_Props->AssignItems(Info);
+        }
     }
 }
 
@@ -231,6 +296,23 @@ void UIObjectTool::MultiSelByRefObject(bool clear_prev)
         for (LPU32It o_it = sellist.begin(); k < max_k; o_it++, k++) {
             CSceneObject* _O = (CSceneObject*)(*o_it);
             _O->Select(true);
+        }
+    }
+}
+
+void UIObjectTool::ClearSurface(bool selected)
+{
+    {
+        ObjectIt _F = Scene->FirstObj(OBJCLASS_SCENEOBJECT);
+        ObjectIt _E = Scene->LastObj(OBJCLASS_SCENEOBJECT);
+        for (; _F != _E; _F++) {
+            if ((*_F)->Visible()) {
+                CSceneObject* _O = (CSceneObject*)(*_F);
+                if ((_O->Selected() && _O->Visible())||!selected)
+                {
+                    _O->ClearSurface();
+                }
+            }
         }
     }
 }
