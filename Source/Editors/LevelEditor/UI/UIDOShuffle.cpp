@@ -27,7 +27,8 @@ UIDOShuffle::~UIDOShuffle()
 
 void UIDOShuffle::Draw()
 {
-	ImGui::BeginChild("Left", ImVec2(200, 500));
+	ImGui::Columns(2);
+	ImGui::BeginChild("Left");
 	{
 		VERIFY(m_TextureNull->surface_get());
 		if (m_RealTexture != m_Texture)
@@ -101,15 +102,15 @@ void UIDOShuffle::Draw()
 			}
 		}
 		{
-			ImGui::BeginChild("Props", ImVec2(200,-1), true);
+			ImGui::BeginChild("Props",  ImVec2(0, 0), false);
 			m_Props->Draw();
 			ImGui::EndChild();
 		}
 		
 	}
 	ImGui::EndChild();
-	ImGui::SameLine();
-	ImGui::BeginChild("Right", ImVec2(200, 500));
+	ImGui::NextColumn();
+	ImGui::BeginChild("Right");
 	{
 		if (ImGui::Button("X")) { ClearIndexForms(); }
 		ImGui::SameLine();
@@ -145,6 +146,7 @@ void UIDOShuffle::Draw()
 		ImGui::PopStyleVar(2);
 	}
 	ImGui::EndChild();
+	ImGui::Columns();
 	if (m_ChooseObject)
 	{
 		bool ok = false;
@@ -179,7 +181,8 @@ void UIDOShuffle::Update()
 {
 	if (Form && !Form->IsClosed())
 	{
-		if (ImGui::BeginPopupModal("Detail Object List", &Form->bOpen, ImGuiWindowFlags_NoResize, true))
+		ImGui::SetNextWindowSize(ImVec2(400, 500), ImGuiCond_::ImGuiCond_FirstUseEver);
+		if (ImGui::BeginPopupModal("Detail Object List", &Form->bOpen,0,true))
 		{
 			Form->Draw();
 			ImGui::EndPopup();
@@ -245,8 +248,9 @@ void UIDOShuffle::OnItemFocused(const char* name)
 		return;
 	}
 	m_Thm = ImageLib.CreateThumbnail(name, EImageThumbnail::ETObject);
+	if (m_Texture) m_Texture->Release(); m_Texture = nullptr;
 	if (m_Thm)m_Thm->Update(m_Texture);
-	if(m_Texture) m_Texture->Release(); m_Texture = nullptr; 
+	if (m_Thm)xr_delete(m_Thm);
 	EDetail *dd= DM->FindDOByName(name);
 	VERIFY(dd);
 	PropItemVec items;
