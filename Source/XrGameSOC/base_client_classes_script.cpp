@@ -11,7 +11,7 @@
 #include "base_client_classes_wrappers.h"
 #include "../XrEngine/feel_vision.h"
 #include "#include "../XrRender/Public/Kinematics.h""
-#include ".../XrRender/Public/KinematicsAnimated.h"
+#include "../XrRender/Public/KinematicsAnimated.h"
 #include "ai/stalker/ai_stalker.h"
 #include "../XrCore/net_utils.h"
 

@@ -11,7 +11,7 @@
 #include "associative_vector.h"
 
 #ifdef XRGAME_EXPORTS
-#	include "../xrLevel.h"
+#	include "../xrEngine/xrLevel.h"
 #else
 #	include "xrLevel.h"
 #endif

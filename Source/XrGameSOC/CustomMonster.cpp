@@ -16,7 +16,7 @@
 #include "group_hierarchy_holder.h"
 #include "customzone.h"
 #include "clsid_game.h"
-#include ".../XrRender/Public/KinematicsAnimated.h"
+#include "../XrRender/Public/KinematicsAnimated.h"
 #include "detail_path_manager.h"
 #include "memory_manager.h"
 #include "visual_memory_manager.h"

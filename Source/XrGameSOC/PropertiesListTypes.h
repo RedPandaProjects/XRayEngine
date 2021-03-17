@@ -405,12 +405,12 @@ public:
     ChooseItemVec*		m_Items;
 	typedef fastdelegate::FastDelegate1<ChooseValue*>	TOnChooseValueFill;
     TOnChooseValueFill	OnChooseFillEvent;
-    TOnDrawThumbnail	OnDrawThumbnailEvent;
+   // TOnDrawThumbnail	OnDrawThumbnailEvent;
     void*				m_FillParam;
 // utils
     void				AppendChooseItem	(LPCSTR name, LPCSTR hint){VERIFY(m_Items); m_Items->push_back(SChooseItem(name,hint));}
 public:
-						ChooseValue			(shared_str* val, u32 cid, LPCSTR path, void* param, u32 sub_item_count, u32 choose_flags):RTextValue(val),m_ChooseID(cid),m_StartPath(path),subitem(sub_item_count),m_Items(0),m_FillParam(param),OnChooseFillEvent(0),OnDrawThumbnailEvent(0),m_ChooseFlags(choose_flags){}
+						ChooseValue			(shared_str* val, u32 cid, LPCSTR path, void* param, u32 sub_item_count, u32 choose_flags):RTextValue(val),m_ChooseID(cid),m_StartPath(path),subitem(sub_item_count),m_Items(0),m_FillParam(param),OnChooseFillEvent(0)/*,OnDrawThumbnailEvent(0)*/,m_ChooseFlags(choose_flags){}
 };
 
 typedef CustomValue<BOOL>		BOOLValue;

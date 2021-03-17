@@ -6,7 +6,7 @@
 #include "WeaponHUD.h"
 #include "Weapon.h"
 #include "../Motion.h"
-#include ".../XrRender/Public/KinematicsAnimated.h"
+#include "../XrRender/Public/KinematicsAnimated.h"
 #include "level.h"
 #include "MathUtils.h"
 weapon_hud_container* g_pWeaponHUDContainer=0;

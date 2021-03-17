@@ -517,7 +517,7 @@ void	game_sv_mp::SetSkin					(CSE_Abstract* E, u16 Team, u16 ID)
 	//-------------------------------------------
 };
 
-#include "../CameraBase.h"
+#include "../XrEngine/CameraBase.h"
 
 bool	game_sv_mp::GetPosAngleFromActor				(ClientID id, Fvector& Pos, Fvector &Angle)
 {

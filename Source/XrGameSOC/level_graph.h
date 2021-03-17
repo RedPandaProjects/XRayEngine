@@ -9,7 +9,7 @@
 #pragma once
 
 #ifndef AI_COMPILER
-	#include "../xrLevel.h"
+	#include "xrLevel.h"
 #else
 	#include "xrLevel.h"
 #endif
@@ -17,6 +17,8 @@
 #include "alife_space.h"
 #include "level_graph_space.h"
 #include "game_graph_space.h"
+
+#include "DebugShader.h"
 
 namespace LevelGraph {
 	class	CHeader;
@@ -207,7 +209,7 @@ public:
 #ifdef DEBUG
 #	ifndef AI_COMPILER
 private:
-	ui_shader			sh_debug;
+	debug_shader			sh_debug;
 
 private:
 	int					m_current_level_id;

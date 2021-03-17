@@ -3,7 +3,7 @@
 #include "level.h"
 #include "script_game_object.h"
 #include "game_object_space.h"
-#include ".../XrRender/Public/KinematicsAnimated.h"
+#include "../XrRender/Public/KinematicsAnimated.h"
 #include "../LightAnimLibrary.h"
 #include "PhysicsShell.h"
 #include "clsid_game.h"

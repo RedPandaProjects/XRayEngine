@@ -13,7 +13,7 @@ class CUIVideoPlayerWnd :public CUIDialogWnd, public CUIWndCallback
 	CUIStatic*		m_surface;
 protected:
 	ref_sound		m_sound;
-	ref_texture		m_texture;
+	FactoryPtr<IUISequenceVideoItem>		m_texture;
 	shared_str		m_fn;
 	Flags8			m_flags;
 	enum			{eStoping=(1<<0),ePlaying=(1<<1),eLooped=(1<<2)};

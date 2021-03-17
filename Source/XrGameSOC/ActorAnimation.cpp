@@ -15,7 +15,7 @@
 #include "hit.h"
 #include "PHDestroyable.h"
 #include "Car.h"
-#include ".../XrRender/Public/KinematicsAnimated.h"
+#include "../XrRender/Public/KinematicsAnimated.h"
 #include "clsid_game.h"
 #include "ai_object_location.h"
 #include "game_cl_base.h"

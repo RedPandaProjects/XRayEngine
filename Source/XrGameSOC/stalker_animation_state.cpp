@@ -9,7 +9,7 @@
 #include "stdafx.h"
 #include "stalker_animation_state.h"
 #include "object_broker.h"
-#include ".../XrRender/Public/KinematicsAnimated.h"
+#include "../XrRender/Public/KinematicsAnimated.h"
 
 CStalkerAnimationState::CStalkerAnimationState	()
 {

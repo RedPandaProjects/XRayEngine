@@ -3,7 +3,7 @@
 #include "WeaponHUD.h"
 #include "PhysicsShell.h"
 #include "actor.h"
-#include "../CameraBase.h"
+#include "../XrEngine/CameraBase.h"
 #include "xrserver_objects_alife.h"
 #include "ActorEffector.h"
 #include "level.h"

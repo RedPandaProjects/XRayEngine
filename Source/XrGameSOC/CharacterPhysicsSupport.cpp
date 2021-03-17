@@ -6,7 +6,7 @@
 #include "PHMovementControl.h"
 #include "CustomMonster.h"
 #include "PhysicsShell.h"
-#include ".../XrRender/Public/KinematicsAnimated.h"
+#include "../XrRender/Public/KinematicsAnimated.h"
 #include "Actor.h"
 #include "CustomZone.h"
 #include "Extendedgeom.h"
