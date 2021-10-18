@@ -2,7 +2,7 @@
 
 
 #include "../../xrcdb/xrCDB.h"
-#include "../../xrEngine/xrLevel.h"
+#include "../../xrGame/xrLevel.h"
 #include "AIMapExport.h"
 #include "Shader_xrLC.h"
 #include "../../editors/LevelEditor/Engine/communicate.h"
