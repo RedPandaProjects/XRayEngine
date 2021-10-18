@@ -76,4 +76,8 @@ public:
 	virtual void			OnDisconnected		();
 	virtual void			OnConnected			();
 	virtual void			net_Relcase			(CObject *object);
+
+	virtual		void		RenderActiveItemUI() {}
+	virtual		bool		RenderActiveItemUIQuery() { return false; }
+	virtual		void		OnScreenResolutionChanged() {}
 };

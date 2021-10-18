@@ -1,11 +1,10 @@
 #include "stdafx.h"
-#include "../resourcemanager.h"
 #include "HUDmanager.h"
 #include "PHdynamicdata.h"
 #include "Physics.h"
 #include "level.h"
-#include "../x_ray.h"
-#include "../igame_persistent.h"
+#include "../XrEngine/x_ray.h"
+#include "../XrEngine/igame_persistent.h"
 #include "PhysicsGamePars.h"
 #include "ai_space.h"
 
@@ -54,21 +53,29 @@ bool	CLevel::net_start_client3				()
 {
 	if(connected_to_server){
 		LPCSTR					level_name = NULL;
+		LPCSTR					level_ver  = NULL;
+
 		if(psNET_direct_connect)
 		{
 			level_name	= ai().get_alife() ? *name() : Server->level_name( Server->GetConnectOptions() ).c_str();
 		}else
 			level_name	= ai().get_alife() ? *name() : net_SessionName	();
 
+		shared_str const& server_options = Server->GetConnectOptions();
+		level_name = name().c_str();//Server->level_name		(server_options).c_str();
+		level_ver = "1.0";
+
 		// Determine internal level-ID
-		int						level_id = pApp->Level_ID(level_name);
+		int						level_id = pApp->Level_ID(level_name, level_ver,true);
 		if (level_id<0)	{
 			Disconnect			();
 			pApp->LoadEnd		();
+
 			connected_to_server = FALSE;
-			m_name				= level_name;
-			m_connect_server_err = xrServer::ErrNoLevel;
-			return				false;
+			Msg("! Level (name:%s), (version:%s), not found",
+				level_name, level_ver);
+		
+			return false;
 		}
 		pApp->Level_Set			(level_id);
 		m_name					= level_name;
@@ -142,10 +149,10 @@ bool	CLevel::net_start_client5				()
 		// Textures
 		if	(!g_dedicated_server)
 		{
-			pHUD->Load							();
+			HUD().Load							();
 			g_pGamePersistent->LoadTitle				("st_loading_textures");
-			Device.Resources->DeferredLoad		(FALSE);
-			Device.Resources->DeferredUpload	();
+			Device.m_pRender->DeferredLoad		(FALSE);
+			Device.m_pRender->ResourcesDeferredUpload();
 			LL_CheckTextures					();
 		}
 	}
@@ -161,7 +168,7 @@ bool	CLevel::net_start_client6				()
 
 
 		g_pGamePersistent->LoadTitle		("st_client_synchronising");
-		Device.PreCache						(30);
+		Device.PreCache						(30,true,true);
 		net_start_result_total				= TRUE;
 	}else{
 		net_start_result_total				= FALSE;

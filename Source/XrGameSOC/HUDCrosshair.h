@@ -5,7 +5,7 @@
 #pragma once
 
 #define HUD_CURSOR_SECTION "hud_cursor"
-
+#include "UICustomItem.h"
 
 class CHUDCrosshair	
 {
@@ -18,8 +18,10 @@ private:
 	float			radius;
 	float			target_radius;
 	float			radius_speed_perc; 
-
-	ref_geom 		hGeomLine;
+#ifdef DEBUG
+	float			fb_radius;
+#endif
+	//ref_geom 		hGeomLine;
 	ui_shader		hShader;
 public:
 	u32				cross_color;
@@ -29,6 +31,10 @@ public:
 
 			void	OnRender		();
 			void	SetDispersion	(float disp);
+#ifdef DEBUG
+			void	SetFirstBulletDispertion(float fbdisp);
+			void	OnRenderFirstBulletDispertion();
+#endif
 
 			void	Load			();
 };

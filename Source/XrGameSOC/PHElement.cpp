@@ -8,8 +8,9 @@
 #include "PhysicsShellHolder.h"
 #include "game_object_space.h"
 //#include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrRender/Public/Kinematics.h"
 #include "../XrRender/Public/KinematicsAnimated.h"
-#include <odeutil.h>
+#include "ode/src/util.h"
 #ifdef DEBUG
 #include	"PHDebug.h"
 #endif
@@ -18,7 +19,7 @@
 #pragma warning(disable:4995)
 #pragma warning(disable:4267)
 
-#include "ode/collision_kernel.h"
+#include "ode/src/collision_kernel.h"
 
 
 #pragma warning(default:4267)
@@ -763,7 +764,7 @@ void CPHElement::StataticRootBonesCallBack(CBoneInstance* B)
 			m_shell->m_object_in_root.invert();
 			m_shell->SetNotActivating();
 		}
-		B->Callback_overwrite=TRUE;
+		B->set_callback_overwrite(1);
 		//VERIFY2(fsimilar(DET(B->mTransform),1.f,DET_CHECK_EPS),"Bones callback returns 0 matrix");
 		VERIFY_RMATRIX(B->mTransform);
 		VERIFY(valid_pos(B->mTransform.c,phBoundaries));
@@ -810,10 +811,10 @@ void CPHElement::BoneGlPos(Fmatrix &m,CBoneInstance* B)
 void CPHElement::GetAnimBonePos(Fmatrix &bp)
 {
 	VERIFY(m_shell->PKinematics());
-	IKinematicsAnimated *ak = m_shell->PKinematics()->dcast_PKinematicsAnimated();
+	IKinematics *ak = m_shell->PKinematics();
 	VERIFY(ak);
 	CBoneInstance *BI = &ak->LL_GetBoneInstance(m_SelfID);
-	if(!BI->Callback)//.
+	if(!BI->callback())//.
 	{
 		bp.set(BI->mTransform);
 		return;
@@ -902,7 +903,7 @@ void	CPHElement::SetBoneCallbackOverwrite				(bool v)
 {
 	VERIFY(m_shell);
 	VERIFY(m_shell->PKinematics());
-	m_shell->PKinematics()->LL_GetBoneInstance(m_SelfID).Callback_overwrite = v;
+	m_shell->PKinematics()->LL_GetBoneInstance(m_SelfID).set_callback_overwrite(v) ;
 }
 void CPHElement::BonesCallBack(CBoneInstance* B)
 {
@@ -922,7 +923,7 @@ void CPHElement::BonesCallBack(CBoneInstance* B)
 			m_shell->m_object_in_root.invert();
 			m_shell->SetNotActivating();
 		}
-		B->Callback_overwrite=TRUE;
+		B->set_callback_overwrite(TRUE);
 		//VERIFY2(fsimilar(DET(B->mTransform),1.f,DET_CHECK_EPS),"Bones callback returns 0 matrix");
 		VERIFY_RMATRIX(B->mTransform);
 		VERIFY(valid_pos(B->mTransform.c,phBoundaries));

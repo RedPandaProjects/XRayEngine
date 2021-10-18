@@ -4,6 +4,7 @@
 #include "gameobject.h"
 #include "physicsshellholder.h"
 #include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrRender/Public/Kinematics.h"
 
 void CPHShellSimpleCreator::CreatePhysicsShell()
 {

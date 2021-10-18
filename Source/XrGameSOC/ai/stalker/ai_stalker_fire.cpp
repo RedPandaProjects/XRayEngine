@@ -15,6 +15,8 @@
 #include "../../stalker_decision_space.h"
 #include "../../script_game_object.h"
 #include "../../customzone.h"
+#include "../../../XrRender/Public/RenderVisual.h"
+#include "../../../XrRender/Public/Kinematics.h"
 #include "../../../XrRender/Public/KinematicsAnimated.h"
 #include "../../agent_manager.h"
 #include "../../stalker_animation_manager.h"
@@ -245,9 +247,10 @@ void			CAI_Stalker::Hit					(SHit* pHDS)
 				clamp					(power_factor,0.f,1.f);
 
 				IKinematicsAnimated		*tpKinematics = smart_cast<IKinematicsAnimated*>(Visual());
+				IKinematics* tKinematics = smart_cast<IKinematics*>(Visual());
 	#ifdef DEBUG
-				tpKinematics->LL_GetBoneInstance	(pHDS->bone());
-				if (pHDS->bone() >= tpKinematics->LL_BoneCount()) {
+				tKinematics->LL_GetBoneInstance	(pHDS->bone());
+				if (pHDS->bone() >= tKinematics->LL_BoneCount()) {
 					Msg					("tpKinematics has no bone_id %d",pHDS->bone());
 					pHDS->_dump			();
 				}

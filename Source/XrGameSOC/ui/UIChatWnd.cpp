@@ -6,7 +6,7 @@
 #include "../game_cl_base.h"
 #include "../xr_level_controller.h"
 #include "../Level.h"
-#include "../Xr_object.h"
+#include "../XrEngine/Xr_object.h"
 
 CUIChatWnd::CUIChatWnd(CUIGameLog *pList)
 	:	pUILogList				(pList),

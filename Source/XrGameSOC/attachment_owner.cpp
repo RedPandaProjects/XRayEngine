@@ -10,6 +10,7 @@
 #include "attachment_owner.h"
 #include "attachable_item.h"
 #include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrRender/Public/Kinematics.h"
 #include "inventory_item.h"
 #include "physicsshellholder.h"
 
@@ -59,9 +60,9 @@ void CAttachmentOwner::renderable_Render		()
 		(*I)->renderable_Render();
 }
 
-void __stdcall AttachmentCallback(IKinematics *tpKinematics)
+void  AttachmentCallback(IKinematics *tpKinematics)
 {
-	CGameObject				*game_object = smart_cast<CGameObject*>(static_cast<CObject*>(tpKinematics->Update_Callback_Param));
+	CGameObject				*game_object = smart_cast<CGameObject*>(static_cast<CObject*>(tpKinematics->GetUpdateCallbackParam()));
 	VERIFY					(game_object);
 	
 	CAttachmentOwner		*attachment_owner = smart_cast<CAttachmentOwner*>(game_object);

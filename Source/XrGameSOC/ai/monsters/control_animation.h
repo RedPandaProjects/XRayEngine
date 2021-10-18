@@ -2,7 +2,7 @@
 
 #include "control_combase.h"
 #include "../../../XrRender/Public/KinematicsAnimated.h"
-
+#include "../../../XrRender/Public/RenderVisual.h"
 struct SAnimationPart {
 	MotionID		motion;
 	CBlend			*blend;

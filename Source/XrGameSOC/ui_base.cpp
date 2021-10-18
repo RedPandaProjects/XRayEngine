@@ -3,6 +3,7 @@
 #include "GamePersistent.h"
 #include "UICursor.h"
 #include "HUDManager.h"
+#include "../XrRender/Public/UIRender.h"
 
 CUICursor*	GetUICursor		()	{return UI()->GetUICursor();};
 ui_core*	UI				()	{return GamePersistent().m_pUI_core;};
@@ -57,7 +58,7 @@ sPoly2D* C2DFrustum::ClipPoly	(sPoly2D& S, sPoly2D& D) const
 		cls[src->size()] = cls[0]	;
 		src->push_back((*src)[0])	;
 		Fvector2 dir_pt,dir_uv;		float denum,t;
-		for (j=0; j<src->size()-1; j++)	{
+		for (u32 j=0; j<src->size()-1; j++)	{
 			if ((*src)[j].pt.similar((*src)[j+1].pt,EPS_S)) continue;
 			if (negative(cls[j]))	{
 				dest->push_back((*src)[j])	;
@@ -165,7 +166,7 @@ void ui_core::PushScissor(const Frect& r_tgt, bool overlapped)
 	r.x2 				= iFloor(result.x2+0.5f);
 	r.y1 				= iFloor(result.y1);
 	r.y2 				= iFloor(result.y2+0.5f);
-	RCache.set_Scissor	(&r);
+	UIRender->SetScissor(&r);
 }
 
 void ui_core::PopScissor()
@@ -175,7 +176,7 @@ void ui_core::PopScissor()
 	m_Scissors.pop		();
 	
 	if(m_Scissors.empty())
-		RCache.set_Scissor(NULL);
+		UIRender->SetScissor(NULL);
 	else{
 		const Frect& top= m_Scissors.top();
 		Irect tgt;
@@ -183,8 +184,7 @@ void ui_core::PopScissor()
 		tgt.lt.y 		= iFloor(ClientToScreenScaledY(top.lt.y));
 		tgt.rb.x 		= iFloor(ClientToScreenScaledX(top.rb.x));
 		tgt.rb.y 		= iFloor(ClientToScreenScaledY(top.rb.y));
-
-		RCache.set_Scissor(&tgt);
+		UIRender->SetScissor(&tgt);
 	}
 }
 

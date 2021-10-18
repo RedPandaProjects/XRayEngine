@@ -1,7 +1,7 @@
 #include "pch_script.h"
 #include "HangingLamp.h"
-#include "../LightAnimLibrary.h"
-#include "../xr_collide_form.h"
+#include "../XrEngine\LightAnimLibrary.h"
+#include "../XrEngine\xr_collide_form.h"
 #include "PhysicsShell.h"
 #include "Physics.h"
 #include "xrserver_objects_alife.h"
@@ -10,6 +10,8 @@
 #include "game_object_space.h"
 #include "script_callback_ex.h"
 #include "script_game_object.h"
+#include "../XrRender/Public/Kinematics.h"
+#include "../XrRender/Public/KinematicsAnimated.h"
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
@@ -49,7 +51,7 @@ void CHangingLamp::RespawnInit()
 void CHangingLamp::Center	(Fvector& C) const 
 { 
 	if (renderable.visual){
-		renderable.xform.transform_tiny(C,renderable.visual->vis.sphere.P);	
+		renderable.xform.transform_tiny(C,renderable.visual->getVisData().sphere.P);	
 	}else{
 		C.set	(XFORM().c);
 	}
@@ -57,7 +59,7 @@ void CHangingLamp::Center	(Fvector& C) const
 
 float CHangingLamp::Radius	() const 
 { 
-	return (renderable.visual)?renderable.visual->vis.sphere.R:EPS;
+	return (renderable.visual)?renderable.visual->getVisData().sphere.R:EPS;
 }
 
 void CHangingLamp::Load		(LPCSTR section)

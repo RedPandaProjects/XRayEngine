@@ -42,14 +42,16 @@
 #include "../../agent_corpse_manager.h"
 #include "../../agent_location_manager.h"
 #include "../../cover_point.h"
-#include "../../../camerabase.h"
+#include "../../../xrengine/camerabase.h"
 #include "../../clsid_game.h"
 #include "../../mt_config.h"
 #include "../../weaponmagazined.h"
 #include "../../object_handler_space.h"
 #include "../../debug_renderer.h"
 #include "../../CharacterPhysicsSupport.h"
-
+#include "../../../XrRender/Public/RenderVisual.h"
+#include "../../../XrRender/Public/Kinematics.h"
+#include "../../../XrRender/Public/KinematicsAnimated.h"
 CActor *g_debug_actor = 0;
 
 void try_change_current_entity()
@@ -856,8 +858,8 @@ void CAI_Stalker::OnRender			()
 			LevelGraph::CVertex			*v = ai().level_graph().vertex(level_vertex_id);
 			Fvector						direction;
 			float						best_value = -1.f;
-
-			for (u32 i=0, j = 0; i<36; ++i) {
+			u32 j = 0;
+			for (u32 i=0; i<36; ++i) {
 				float				value = ai().level_graph().cover_in_direction(float(10*i)/180.f*PI,v);
 				direction.setHP		(float(10*i)/180.f*PI,0);
 				direction.normalize	();
@@ -925,7 +927,7 @@ void CAI_Stalker::dbg_draw_vision	()
 	string64					out_text;
 	sprintf_s						(out_text,"%.2f",object ? object->m_value : 0.f);
 
-	HUD().Font().pFontMedium->SetColor	(D3DCOLOR_RGBA(255,0,0,95));
+	HUD().Font().pFontMedium->SetColor	(color_rgba(255,0,0,95));
 	HUD().Font().pFontMedium->OutSet	(x,y);
 	HUD().Font().pFontMedium->OutNext	(out_text);
 }

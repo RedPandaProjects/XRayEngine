@@ -10,6 +10,7 @@
 #include "car.h"
 #include "../XrCore/net_utils.h"
 #include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrRender/Public/Kinematics.h"
 #include "MathUtils.h"
 #include "game_object_space.h"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -364,7 +365,7 @@ void CCar::SDoor::ClosingToClosed()
 //	CBoneData& bone_data= pKinematics->LL_GetData(u16(bone_id));
 	CBoneInstance& bone_instance=pKinematics->LL_GetBoneInstance(u16(bone_id));
 	bone_instance.set_callback(bctPhysics,0,joint->PFirst_element());
-	bone_instance.Callback_overwrite=FALSE;
+	bone_instance.set_callback_overwrite(FALSE);
 	joint->PSecond_element()->Deactivate();
 	joint->Deactivate();
 

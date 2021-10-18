@@ -8,7 +8,7 @@
 #include "../../../level.h"
 #include "../../../actor.h"
 #include "../../../ActorEffector.h"
-#include "../../../../CameraBase.h"
+#include "../../../../XrEngine/CameraBase.h"
 #include "../../../CharacterPhysicsSupport.h"
 #include "../../../level_debug.h"
 

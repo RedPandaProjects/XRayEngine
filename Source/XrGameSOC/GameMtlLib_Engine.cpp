@@ -2,7 +2,7 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#include "GameMtlLib.h"
+#include "../XrEngine/gamemtllib.h"
 
 void DestroySounds(SoundVec& lst)
 {
@@ -12,8 +12,7 @@ void DestroySounds(SoundVec& lst)
 
 void DestroyMarks(ShaderVec& lst)
 {
-	for (ShaderIt it=lst.begin(); lst.end() != it; ++it)
-		it->destroy();
+
 }
 
 void DestroyPSs(PSVec& lst)
@@ -38,7 +37,7 @@ void CreateMarks(ShaderVec& lst, LPCSTR buf)
 	ui_shader	s;
 	for (int k=0; k<cnt; ++k)
 	{
-		s.create		("effects\\wallmark",_GetItem(buf,k,tmp));
+		s->create		("effects\\wallmark",_GetItem(buf,k,tmp));
 		lst.push_back	(s);
 	}
 }

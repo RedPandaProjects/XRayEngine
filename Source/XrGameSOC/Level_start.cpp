@@ -5,10 +5,10 @@
 #include "game_cl_base.h"
 #include "xrmessages.h"
 #include "xrGameSpyServer.h"
-#include "../x_ray.h"
-#include "../device.h"
+#include "../XrEngine/x_ray.h"
+#include "../XrEngine/device.h"
 #include "../XrEngine/IGame_Persistent.h"
-#include "../xr_ioconsole.h"
+#include "../XrEngine/xr_ioconsole.h"
 #include "MainMenu.h"
 
 BOOL CLevel::net_Start	( LPCSTR op_server, LPCSTR op_client )
@@ -116,7 +116,7 @@ bool CLevel::net_start1				()
 
 			m_name					= l_name;
 
-			int						id = pApp->Level_ID(l_name);
+			int						id = pApp->Level_ID(l_name,"1.0",true);
 
 			if (id<0) {
 				pApp->LoadEnd				();
@@ -237,19 +237,19 @@ bool xr_stdcall net_start_finalizer()
 		DEL_INSTANCE	(g_pGameLevel);
 		Console->Execute("main_menu on");
 
-		if (g_connect_server_err==xrServer::ErrBELoad)
+	/*	if (g_connect_server_err==xrServer::ErrBELoad)
 		{
 			MainMenu()->OnLoadError("BattlEye/BEServer.dll");
-		}else
+		}else*/
 		if(g_connect_server_err==xrServer::ErrConnect && !psNET_direct_connect && !g_dedicated_server) 
 		{
 			MainMenu()->SwitchToMultiplayerMenu();
-		}else
-		if(g_connect_server_err==xrServer::ErrNoLevel)
+		}
+	/*	if(g_connect_server_err==xrServer::ErrNoLevel)
 		{
 			MainMenu()->SwitchToMultiplayerMenu();
 			MainMenu()->OnLoadError(ln.c_str());
-		}
+		}*/
 	}
 	return true;
 }

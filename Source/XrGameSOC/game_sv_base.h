@@ -6,6 +6,10 @@
 #include "../XrCore/client_id.h"
 #include "game_sv_base_console_vars.h"
 
+#ifndef DPNSEND_GUARANTEED
+#define DPNSEND_GUARANTEED						0x0008
+#endif
+
 enum ERoundEnd_Result
 {
 	eRoundEnd_Finish		= u32(0),
@@ -99,16 +103,15 @@ public:
 									game_sv_GameState		();
 	virtual							~game_sv_GameState		();
 	// Main accessors
-	virtual		game_PlayerState*	get_eid					(u16 id);
-	virtual		void*				get_client				(u16 id); //if exist
-	virtual		game_PlayerState*	get_it					(u32 it);
-	virtual		game_PlayerState*	get_id					(ClientID id);
-	
-	virtual		LPCSTR				get_name_it				(u32 it);
-	virtual		LPCSTR				get_name_id				(ClientID id);								
-				LPCSTR				get_player_name_id		(ClientID id);								
-	virtual		u16					get_id_2_eid			(ClientID id);
-	virtual		ClientID			get_it_2_id				(u32 it);
+	virtual		game_PlayerState* get_eid(u16 id);
+	virtual		void* get_client(u16 id); //if exist
+	//virtual		game_PlayerState*	get_it					(u32 it);
+	virtual		game_PlayerState* get_id(ClientID id);
+
+	//virtual		LPCSTR				get_name_it				(u32 it);
+	virtual		LPCSTR				get_name_id(ClientID id);
+	LPCSTR				get_player_name_id(ClientID id);
+	virtual		u16					get_id_2_eid(ClientID id);
 	virtual		u32					get_players_count		();
 				CSE_Abstract*		get_entity_from_eid		(u16 id);
 				RPoint				getRP					(u16 team_idx, u32 rp_idx);
@@ -174,7 +177,7 @@ public:
 	virtual		void				on_death				(CSE_Abstract *e_dest, CSE_Abstract *e_src);
 
 	virtual		void				DumpOnlineStatistic		(){};
-
+	void CleanDelayedEventFor(u16 id_entity_victim);
 	DECLARE_SCRIPT_REGISTER_FUNCTION
 };
 

@@ -86,7 +86,7 @@ bool CUIChangeWeather::OnKeyboard(int dik, EUIMessages keyboard_action){
 	return false;
 }
 
-#include "../Xr_ioconsole.h"
+#include "../XrEngine/Xr_ioconsole.h"
 
 void CUIChangeWeather::OnBtn(int i){
 	game_cl_mp* game		= smart_cast<game_cl_mp*>(&Game());

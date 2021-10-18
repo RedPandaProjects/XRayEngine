@@ -284,6 +284,8 @@
     <ClInclude Include="EnnumerateVertices.h" />
     <ClInclude Include="envelope.h" />
     <ClInclude Include="Environment.h" />
+    <ClInclude Include="EnvironmentBase.h" />
+    <ClInclude Include="EnvironmentSOC.h" />
     <ClInclude Include="EventAPI.h" />
     <ClInclude Include="FDemoPlay.h" />
     <ClInclude Include="FDemoRecord.h" />
@@ -430,6 +432,9 @@
     <ClCompile Include="engine_impl.cpp" />
     <ClCompile Include="Envelope.cpp" />
     <ClCompile Include="Environment.cpp" />
+    <ClCompile Include="EnvironmentSOC.cpp" />
+    <ClCompile Include="EnvironmentSOC_misc.cpp" />
+    <ClCompile Include="EnvironmentSOC_render.cpp" />
     <ClCompile Include="Environment_misc.cpp" />
     <ClCompile Include="Environment_render.cpp" />
     <ClCompile Include="EventAPI.cpp" />

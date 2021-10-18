@@ -25,7 +25,7 @@ void CUITextureMaster::WriteLog(){
 }
 void CUITextureMaster::ParseShTexInfo(LPCSTR xml_file){
 	CUIXml xml;
-	xml.Init(CONFIG_PATH, UI_PATH, xml_file);
+	xml.Load(CONFIG_PATH, UI_PATH, xml_file);
 	shared_str file = xml.Read("file_name",0,""); 
 
 //	shared_textures_it	sht_it = m_shTex.find(texture);
@@ -164,5 +164,5 @@ void CUITextureMaster::GetTextureShader(LPCSTR texture_name, ui_shader& sh){
 
 	R_ASSERT3(it != m_textures.end(), "can't find texture", texture_name);
 
-	sh.create("hud\\default", *((*it).second.file));	
+	sh->create("hud\\default", *((*it).second.file));	
 }

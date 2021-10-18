@@ -95,8 +95,8 @@ TEMPLATE_SPECIALIZATION
 const typename ITEM_DATA* CSXML_IdToIndex::GetById (const shared_str& str_id, bool no_assert)
 {
 	T_INIT::InitXmlIdToIndex();
-		
-	for(T_VECTOR::iterator it = m_pItemDataVector->begin();
+	T_VECTOR::iterator it = m_pItemDataVector->begin();
+	for(;
 		m_pItemDataVector->end() != it; it++)
 	{
 		if( (*it).id == str_id)
@@ -158,8 +158,8 @@ typename void	CSXML_IdToIndex::InitInternal ()
 		xr_string				xml_file_full;
 		xml_file_full			= xml_file;
 		xml_file_full			+= ".xml";
-		bool xml_result			= uiXml->Init(CONFIG_PATH, GAME_PATH, xml_file_full.c_str());
-		R_ASSERT3				(xml_result, "error while parsing XML file", xml_file_full.c_str());
+		uiXml->Load(CONFIG_PATH, "gameplay", xml_file_full.c_str());
+		//R_ASSERT3				(xml_result, "error while parsing XML file", xml_file_full.c_str());
 
 		//общий список
 		int items_num			= uiXml->GetNodesNum(uiXml->GetRoot(), tag_name);

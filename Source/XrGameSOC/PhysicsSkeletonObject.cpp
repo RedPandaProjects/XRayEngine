@@ -4,7 +4,8 @@
 #include "phsynchronize.h"
 #include "xrserver_objects_alife.h"
 #include "../XrRender/Public/KinematicsAnimated.h"
-#include "../xr_collide_form.h"
+#include "../XrRender/Public/Kinematics.h"
+#include "../XrEngine/xr_collide_form.h"
 
 CPhysicsSkeletonObject::CPhysicsSkeletonObject()
 {

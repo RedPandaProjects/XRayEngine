@@ -3,8 +3,9 @@
 #include "PhysicsShell.h"
 #include "Physics.h"
 #include "xrserver_objects_alife.h"
+#include "../XrRender/Public/Kinematics.h"
 #include "../XrRender/Public/KinematicsAnimated.h"
-#include "../xr_collide_form.h"
+#include "../XrEngine/xr_collide_form.h"
 #include "game_object_space.h"
 
 #ifdef ANIMATED_PHYSICS_OBJECT_SUPPORT

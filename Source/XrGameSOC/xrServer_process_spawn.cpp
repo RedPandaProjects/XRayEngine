@@ -54,7 +54,7 @@ CSE_Abstract* xrServer::Process_spawn(NET_Packet& P, ClientID sender, BOOL bSpaw
 	}
 
 	// check if we can assign entity to some client
-	if (0==CL && !net_Players.empty())
+	if (0==CL && GetClientsCount())
 	{
 		CL	= SelectBestClientToMigrateTo	(E);
 	}

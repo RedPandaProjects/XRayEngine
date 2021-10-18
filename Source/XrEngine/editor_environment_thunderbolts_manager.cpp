@@ -216,7 +216,7 @@ void manager::save					()
 			TRUE
 		);
 
-	CEnvironment&					environment = g_pGamePersistent->Environment();
+	CEnvironment&					environment = *g_pGamePersistent->EnvironmentAsCOP();
 	
 	config->w_float					("environment","altitude",			rad2deg(environment.p_var_alt)	);
 	config->w_float					("environment","delta_longitude",	rad2deg(environment.p_var_long)	);

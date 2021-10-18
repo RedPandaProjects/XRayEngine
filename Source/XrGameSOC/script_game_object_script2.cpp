@@ -26,7 +26,9 @@
 #include "script_zone.h"
 #include "relation_registry.h"
 #include "danger_object.h"
-
+#include "game_object_space.h"
+#include "detail_path_manager_space.h"
+#include "patrol_path_manager_space.h"
 using namespace luabind;
 
 extern CScriptActionPlanner *script_action_planner(CScriptGameObject *obj);

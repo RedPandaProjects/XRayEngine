@@ -3,8 +3,8 @@
 #include "../../../level_graph.h"
 #include "../../../ai_space.h"
 #include "../../../alife_simulator.h"
-#include "../../XrServer_Object_Base.h"
-#include "../../Xrserver.h"
+#include "../../../XrServer_Object_Base.h"
+#include "../../../Xrserver.h"
 #include "../../../ai_object_location.h"
 #include "../../../level.h"
 #include "../control_movement_base.h"
@@ -16,7 +16,7 @@
 #include "psy_dog_aura.h"
 #include "psy_dog_state_manager.h"
 #include "../../../alife_object_registry.h"
-#include "../../XrServer_Objects_Alife_Monsters.h"
+#include "../../../XrServer_Objects_Alife_Monsters.h"
 
 CPsyDog::CPsyDog()
 {

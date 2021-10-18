@@ -6,6 +6,7 @@
 #include "../../../CharacterPhysicsSupport.h"
 #include "../../../phmovementcontrol.h"
 #include "../ai_monster_squad_manager.h"
+#include "../../../../XrRender/Public/Kinematics.h"
 #include "../../../../XrRender/Public/KinematicsAnimated.h"
 #include "../../../detail_path_manager.h"
 #include "../../../level_graph.h"
@@ -20,12 +21,12 @@
 #include "../monster_home.h"
 #include "../../../ai_object_location.h"
 #include "../../../level.h"
-#include "../../Xrserver_objects_alife_monsters.h"
+#include "../../../xrServer_Objects_ALife_Monsters.h"
 #include "../../../alife_simulator.h"
 #include "../../../alife_object_registry.h"
-#include "../../XrServer.h"
+#include "../../../XrServer.h"
 #include "../../../inventory_item.h"
-#include "../../XrServer_Objects_ALife.h"
+#include "../../../XrServer_Objects_ALife.h"
 
 void CBaseMonster::Load(LPCSTR section)
 {

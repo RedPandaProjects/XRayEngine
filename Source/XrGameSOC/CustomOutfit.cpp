@@ -8,6 +8,8 @@
 #include "game_cl_base.h"
 #include "Level.h"
 #include "BoneProtections.h"
+#include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrRender/Public/Kinematics.h"
 
 
 CCustomOutfit::CCustomOutfit()

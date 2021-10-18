@@ -261,7 +261,7 @@ bool manager::paste_current_time_frame	(char const* buffer, u32 const& buffer_si
 		if (m_manager.CurrentWeatherName._get() != (*i)->id()._get())
 			continue;
 
-		return						((*i)->paste_time_frame(m_manager.Current[0]->m_identifier, buffer, buffer_size));
+		return						((*i)->paste_time_frame(dynamic_cast<CEnvDescriptor*>(m_manager.Current[0])->m_identifier, buffer, buffer_size));
 	}
 
 	return							(false);
@@ -278,7 +278,7 @@ bool manager::paste_target_time_frame	(char const* buffer, u32 const& buffer_siz
 		if (m_manager.CurrentWeatherName._get() != (*i)->id()._get())
 			continue;
 
-		return						((*i)->paste_time_frame(m_manager.Current[1]->m_identifier, buffer, buffer_size));
+		return						((*i)->paste_time_frame(dynamic_cast<CEnvDescriptor*>( m_manager.Current[1])->m_identifier, buffer, buffer_size));
 	}
 
 	return							(false);
@@ -309,7 +309,7 @@ void manager::reload_current_time_frame	()
 		if (m_manager.CurrentWeatherName._get() != (*i)->id()._get())
 			continue;
 
-		(*i)->reload_time_frame			(m_manager.Current[0]->m_identifier);
+		(*i)->reload_time_frame			(dynamic_cast<CEnvDescriptor*>(m_manager.Current[0])->m_identifier);
 		return;
 	}
 }
@@ -325,7 +325,7 @@ void manager::reload_target_time_frame	()
 		if (m_manager.CurrentWeatherName._get() != (*i)->id()._get())
 			continue;
 
-		(*i)->reload_time_frame			(m_manager.Current[1]->m_identifier);
+		(*i)->reload_time_frame			(dynamic_cast<CEnvDescriptor*>(m_manager.Current[1])->m_identifier);
 		return;
 	}
 }

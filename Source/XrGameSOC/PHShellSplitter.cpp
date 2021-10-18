@@ -7,6 +7,7 @@
 #include "Geometry.h"
 #include "MathUtils.h"
 #include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrRender/Public/Kinematics.h"
 #include "PHCollideValidator.h"
 CPHShellSplitterHolder::CPHShellSplitterHolder(CPHShell* shell)
 {

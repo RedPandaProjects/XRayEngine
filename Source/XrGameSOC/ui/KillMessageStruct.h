@@ -6,7 +6,7 @@
 // Copyright 2005 GSC Game World
 
 #pragma once
-
+#include "UICustomItem.h"
 struct PlayerInfo{
     shared_str	m_name;
 	u32			m_color;

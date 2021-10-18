@@ -9,13 +9,15 @@
 #include "../control_animation_base.h"
 #include "../control_movement_base.h"
 #include "../ai_monster_effector.h"
-#include "../../../../CameraBase.h"
-#include "../../Xr_level_controller.h"
+#include "../../../../XrEngine/CameraBase.h"
+#include "../../../Xr_level_controller.h"
 #include "../../../detail_path_manager_space.h"
 #include "../../../detail_path_manager.h"
 #include "../../../CharacterPhysicsSupport.h"
 #include "../control_path_builder_base.h"
 
+#include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrRender/Public/Kinematics.h"
 
 CPseudoGigant::CPseudoGigant()
 {

@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#include "../XrRender/Public/Kinematics.h"
+#include "../XrRender/Public/KinematicsAnimated.h"
 #include "character_hit_animations.h"
 
 #include "entity_alive.h"
@@ -30,7 +32,7 @@ void character_hit_animation_controller::SetupHitMotions(IKinematicsAnimated &ca
 	hit_downl	   = ca.LL_MotionID("hit_downl");
 	hit_downr	   = ca.LL_MotionID("hit_downr");
 
-	base_bone	= ca.LL_BoneID("bip01_spine1");//bip01_spine1
+	base_bone = smart_cast<IKinematics*>(&ca)->LL_BoneID("bip01_spine1");//bip01_spine1
 	for( u16 i = 0; num_anims>i; ++i )
 		block_times[i] = 0;
 
@@ -68,9 +70,9 @@ IC void	play_cycle(IKinematicsAnimated* CA,const MotionID &m,u8 channel,u32 &tim
 void character_hit_animation_controller::PlayHitMotion(const Fvector &dir,const Fvector &bone_pos, u16 bi, CEntityAlive &ea)const
 {
 	IKinematicsAnimated* CA = smart_cast<IKinematicsAnimated*>(ea.Visual());
-	
+	IKinematics* C = smart_cast<IKinematics*>(ea.Visual());
 	//play_cycle(CA,all_shift_down,1,block_times[6],1) ;
-	if( !(CA->LL_BoneCount() > bi) )
+	if( !(C->LL_BoneCount() > bi) )
 		return;
 
 	Fvector dr = dir;
@@ -90,7 +92,7 @@ void character_hit_animation_controller::PlayHitMotion(const Fvector &dir,const 
 	m.transform_dir(dr);
 //
 	Fvector hit_point;
-	CA->LL_GetTransform(bi).transform_tiny(hit_point,bone_pos);
+	C->LL_GetTransform(bi).transform_tiny(hit_point,bone_pos);
 	ea.XFORM().transform_tiny(hit_point);
 	m.transform_tiny(hit_point);
 	Fvector torqu;		
@@ -103,7 +105,7 @@ void character_hit_animation_controller::PlayHitMotion(const Fvector &dir,const 
 	else
 		play_cycle(CA,hit_downl,2,block_times[6],1) ;
 
-	if(!IsEffected(bi,*CA))
+	if(!IsEffected(bi,*C))
 		return;
 	if(torqu.x<0)
 		play_cycle(CA,turn_right,1,block_times[4],rotational_ammount) ;

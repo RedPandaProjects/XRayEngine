@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include <functional>
 
 #include "UIMainIngameWnd.h"
 #include "UIMessagesWindow.h"
@@ -6,6 +7,8 @@
 
 
 #include <dinput.h>
+#include "../XrRender/Public/Kinematics.h"
+#include "../XrRender/Public/KinematicsAnimated.h"
 #include "../actor.h"
 #include "../HUDManager.h"
 #include "../PDA.h"
@@ -25,7 +28,7 @@
 
 #include "../date_time.h"
 #include "../xrServer_Objects_ALife_Monsters.h"
-#include "../../LightAnimLibrary.h"
+#include "../../XrEngine/LightAnimLibrary.h"
 
 #include "UIInventoryUtilities.h"
 
@@ -41,7 +44,7 @@
 
 #ifdef DEBUG
 #	include "../attachable_item.h"
-#	include "../Xr_input.h"
+#	include "../XrEngine/Xr_input.h"
 #endif
 
 #include "UIScrollView.h"
@@ -106,7 +109,7 @@ CUIMainIngameWnd::~CUIMainIngameWnd()
 void CUIMainIngameWnd::Init()
 {
 	CUIXml						uiXml;
-	uiXml.Init					(CONFIG_PATH, UI_PATH, MAININGAME_XML);
+	uiXml.Load					(CONFIG_PATH, UI_PATH, MAININGAME_XML);
 	
 	CUIXmlInit					xml_init;
 	CUIWindow::Init				(0,0, UI_BASE_WIDTH, UI_BASE_HEIGHT);
@@ -1163,8 +1166,6 @@ void CUIMainIngameWnd::reset_ui()
 /*
 #include "d3dx9core.h"
 #include "winuser.h"
-#pragma comment(lib,"d3dx9.lib")
-#pragma comment(lib,"d3d9.lib")
 ID3DXFont*     g_pTestFont = NULL;
 ID3DXSprite*        g_pTextSprite = NULL;   // Sprite for batching draw text calls
 */
@@ -1198,7 +1199,7 @@ void test_key	(int dik)
 		if(!pUIFrame)
 		{
 			CUIXml uiXML;
-			uiXML.Init(CONFIG_PATH, UI_PATH, "talk.xml");
+			uiXML.Load(CONFIG_PATH, UI_PATH, "talk.xml");
 
 			pUIFrame					= xr_new<CUIFrameWindow>();
 			CUIXmlInit::InitFrameWindow	(uiXML, "frame_window", 0, pUIFrame);
@@ -1293,7 +1294,7 @@ void test_draw	()
 
 void CUIMainIngameWnd::draw_adjust_mode()
 {
-	if (g_bHudAdjustMode&&m_pWeapon) //draw firePoint,ShellPoint etc
+	/*if (g_bHudAdjustMode && m_pWeapon) //draw firePoint,ShellPoint etc
 	{
 		CActor* pActor = smart_cast<CActor*>(Level().CurrentEntity());
 		if(!pActor)
@@ -1360,6 +1361,6 @@ void CUIMainIngameWnd::draw_adjust_mode()
 			RCache.dbg_DrawAABB(FP2,0.02f,0.02f,0.02f,color_xrgb(0,0,255));
 			RCache.dbg_DrawAABB(SP,0.02f,0.02f,0.02f,color_xrgb(0,255,0));
 		}
-	}
+	}*/
 }
 #endif

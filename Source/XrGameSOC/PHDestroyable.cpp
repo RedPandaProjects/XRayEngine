@@ -16,6 +16,7 @@
 #include "PHCollideValidator.h"
 #include "PHShell.h"
 #include "MathUtils.h"
+#include "../XrRender/Public/Kinematics.h"
 #ifdef DEBUG
 #include "PHWorld.h"
 #endif

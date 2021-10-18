@@ -9,6 +9,7 @@
 #include "level.h"
 #include "xr_level_controller.h"
 #include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrRender/Public/Kinematics.h"
 #include "ai_object_location.h"
 #include "ExtendedGeom.h"
 #include "MathUtils.h"
@@ -31,8 +32,7 @@ void create_force_progress()
 {
 	VERIFY							(!g_MissileForceShape);
 	CUIXml uiXml;
-	bool xml_result					= uiXml.Init(CONFIG_PATH, UI_PATH, "grenade.xml");
-	R_ASSERT3						(xml_result, "xml file not found", "grenade.xml");
+	uiXml.Load(CONFIG_PATH, UI_PATH, "grenade.xml");
 
 	CUIXmlInit xml_init;
 	g_MissileForceShape				= xr_new<CUIProgressShape>();

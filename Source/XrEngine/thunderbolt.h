@@ -21,7 +21,7 @@ class ENGINE_API CLAItem;
 #	define	INGAME_EDITOR_VIRTUAL
 #endif // #ifdef INGAME_EDITOR
 
-class CEnvironment;
+class IEnvironment;
 
 struct SThunderboltDesc
 {
@@ -120,7 +120,7 @@ public:
 	void						OnFrame				(shared_str id,float period, float duration);
 	void						Render				();
 
-	shared_str 					AppendDef			(CEnvironment& environment, CInifile* pIni, CInifile* thunderbolts, LPCSTR sect);
+	shared_str 					AppendDef			(IEnvironment& environment, CInifile* pIni, CInifile* thunderbolts, LPCSTR sect);
 };
 
 #endif //ThunderboltH

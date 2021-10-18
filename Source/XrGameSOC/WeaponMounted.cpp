@@ -14,13 +14,14 @@
 #include "level.h"
 #include "xr_level_controller.h"
 #include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrRender/Public/Kinematics.h"
 #include "game_object_space.h"
 
 //----------------------------------------------------------------------------------------
 
 void CWeaponMounted::BoneCallbackX(CBoneInstance *B)
 {
-	CWeaponMounted	*P = static_cast<CWeaponMounted*>(B->Callback_Param);
+	CWeaponMounted	*P = static_cast<CWeaponMounted*>(B->callback_param());
 
 	if (P->Owner()){
 		Fmatrix rX;		rX.rotateX		(P->camera->pitch+P->m_dAngle.y);
@@ -30,7 +31,7 @@ void CWeaponMounted::BoneCallbackX(CBoneInstance *B)
 
 void CWeaponMounted::BoneCallbackY(CBoneInstance *B)
 {
-	CWeaponMounted	*P = static_cast<CWeaponMounted*>(B->Callback_Param);
+	CWeaponMounted	*P = static_cast<CWeaponMounted*>(B->callback_param());
 
 	if (P->Owner()){
 		Fmatrix rY;		rY.rotateY		(P->camera->yaw+P->m_dAngle.x);
@@ -149,7 +150,7 @@ void	CWeaponMounted::UpdateCL()
 		if(OwnerActor() && OwnerActor()->IsMyCamera()) 
 		{
 			cam_Update(Device.fTimeDelta, g_fov);
-			OwnerActor()->Cameras().Update(Camera());
+			OwnerActor()->Cameras().UpdateFromCamera(Camera());
 			OwnerActor()->Cameras().ApplyDevice(VIEWPORT_NEAR);
 		}
 	}
@@ -231,7 +232,7 @@ void	CWeaponMounted::cam_Update			(float dt, float fov)
 		OwnerActor()->Orientation().pitch		= -Camera()->pitch;
 	}
 	Camera()->Update							(P,Da);
-	Level().Cameras().Update					(Camera());
+	Level().Cameras().UpdateFromCamera					(Camera());
 }
 
 bool	CWeaponMounted::Use					(const Fvector& pos,const Fvector& dir,const Fvector& foot_pos)

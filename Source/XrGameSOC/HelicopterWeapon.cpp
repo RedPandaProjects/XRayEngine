@@ -3,13 +3,15 @@
 #include "ExplosiveRocket.h"
 #include "xrMessages.h"
 #include "../XrCore/net_utils.h"
-#include "..\skeletoncustom.h"
+#include "..\XrEngine\bone.h"
 #include "Level.h"
+#include "../XrRender/Public/Kinematics.h"
+#include "../XrRender/Public/KinematicsAnimated.h"
 
 void  
 CHelicopter::BoneMGunCallbackX(CBoneInstance *B)
 {
-	CHelicopter	* P = static_cast<CHelicopter*>(B->Callback_Param);
+	CHelicopter	* P = static_cast<CHelicopter*>(B->callback_param());
 	Fmatrix rX;		rX.rotateX		(P->m_cur_rot.x);
 	B->mTransform.mulB_43			(rX);
 }
@@ -17,7 +19,7 @@ CHelicopter::BoneMGunCallbackX(CBoneInstance *B)
 void  
 CHelicopter::BoneMGunCallbackY(CBoneInstance *B)
 {
-	CHelicopter	* P = static_cast<CHelicopter*>(B->Callback_Param);
+	CHelicopter	* P = static_cast<CHelicopter*>(B->callback_param());
 	Fmatrix rY;		rY.rotateY		(P->m_cur_rot.y);
 	B->mTransform.mulB_43			(rY);
 }

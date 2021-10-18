@@ -6,7 +6,8 @@
 #include "hit.h"
 #include "phdestroyable.h"
 #include "xrmessages.h"
-#include "../SkeletonCustom.h"
+#include "../XrRender/Public/Kinematics.h"
+#include "../XrRender/Public/KinematicsAnimated.h"
 #include "PHWorld.h"
 CTeleWhirlwind ::CTeleWhirlwind () 
 {

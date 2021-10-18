@@ -7,7 +7,7 @@
 #include "LensFlareRender.h"
 
 class ENGINE_API CInifile;
-class ENGINE_API CEnvironment;
+class ENGINE_API IEnvironment;
 
 class ENGINE_API CLensFlareDescriptor
 {
@@ -119,7 +119,7 @@ public:
 	void 				OnDeviceCreate	();         
 	void 				OnDeviceDestroy	();
 
-    shared_str			AppendDef		(CEnvironment& environment, CInifile* pIni, LPCSTR sect);
+    shared_str			AppendDef		(IEnvironment& environment, CInifile* pIni, LPCSTR sect);
 
 	void				Invalidate		(){m_State=lfsNone;}
 };

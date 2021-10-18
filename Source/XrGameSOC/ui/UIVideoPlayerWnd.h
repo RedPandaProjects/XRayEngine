@@ -20,7 +20,7 @@ protected:
 private:
 	void			OnBtnPlayClicked		();
 	void			OnBtnPauseClicked		();
-	void __stdcall	OnTabChanged			(CUIWindow* pWnd, void* pData);
+	void  	OnTabChanged			(CUIWindow* pWnd, void* pData);
 public:
 	void			Init					(CUIXml* doc, LPCSTR start_from);
 	void			Init					(LPCSTR name);

@@ -12,9 +12,9 @@
 #include "../../script_entity_action.h"
 #include "../../script_game_object.h"
 #include "../../inventory.h"
-#include "../Xrserver_objects_alife_monsters.h"
+#include "Xrserver_objects_alife_monsters.h"
 #include "../../artifact.h"
-#include "../Xrserver.h"
+#include "Xrserver.h"
 #include "../../relation_registry.h"
 #include "../../object_broker.h"
 #include "../../sound_player.h"
@@ -23,6 +23,9 @@
 #include "../../game_object_space.h"
 #include "../../clsid_game.h"
 #include "trader_animation.h"
+#include "../../../XrRender/Public/RenderVisual.h"
+#include "../../../XrRender/Public/Kinematics.h"
+#include "../../../XrRender/Public/KinematicsAnimated.h"
 
 CAI_Trader::CAI_Trader()
 {
@@ -86,7 +89,7 @@ bool CAI_Trader::bfAssignSound(CScriptEntityAction *tpEntityAction)
 //////////////////////////////////////////////////////////////////////////
 void CAI_Trader::BoneCallback(CBoneInstance *B)
 {
-	CAI_Trader*	this_class = static_cast<CAI_Trader*>(B->Callback_Param);
+	CAI_Trader*	this_class = static_cast<CAI_Trader*>(B->callback_param());
 
 	this_class->LookAtActor(B);
 }

@@ -5,7 +5,7 @@
 #include "../../../actor.h"
 #include "../../../inventory.h"
 #include "../../../HudItem.h"
-#include "../../../../CustomHUD.h"
+#include "../../../../XrEngine/CustomHUD.h"
 #include "../../../../XrEngine/effector.h"
 #include "../../../../XrEngine/effectorPP.h"
 

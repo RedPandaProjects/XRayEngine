@@ -281,7 +281,7 @@ public:
 #ifdef DEBUG
 	IC CDebugRenderer				&debug_renderer				();
 #endif
-	void	__stdcall				script_gc					();			// GC-cycle
+	void					script_gc					();			// GC-cycle
 
 	IC CPHCommander					&ph_commander				();
 	IC CPHCommander					&ph_commander_scripts		();
@@ -306,7 +306,7 @@ public:
 	float				GetGameTimeFactor		();
 	void				SetGameTimeFactor		(const float fTimeFactor);
 	void				SetGameTimeFactor		(ALife::_TIME_ID GameTime, const float fTimeFactor);
-	void				SetEnvironmentGameTimeFactor		(ALife::_TIME_ID GameTime, const float fTimeFactor);
+	//void				SetEnvironmentGameTimeFactor		(ALife::_TIME_ID GameTime, const float fTimeFactor);
 //	void				SetGameTime				(ALife::_TIME_ID GameTime);
 
 	// gets current daytime [0..23]
@@ -344,8 +344,13 @@ public:
 public:
 			void			remove_objects				();
 	virtual void			OnSessionTerminate			(LPCSTR reason);
+	
+	virtual	shared_str			OpenDemoFile(LPCSTR demo_file_name) { return ""; }
+	virtual void				net_StartPlayDemo() {}
+	virtual void				SetEnvironmentGameTimeFactor(u64 const& GameTime, float const& fTimeFactor);
 
 	DECLARE_SCRIPT_REGISTER_FUNCTION
+
 };
 add_to_type_list(CLevel)
 #undef script_type_list

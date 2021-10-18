@@ -15,6 +15,7 @@
 #include "script_entity_action.h"
 #include "xr_level_controller.h"
 #include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrRender/Public/Kinematics.h"
 #include "level.h"
 #include "CarWeapon.h"
 

@@ -10,6 +10,7 @@
 #include "level.h"
 #include "xrmessages.h"
 #include "game_cl_base.h"
+#include "../XrRender/Public/Kinematics.h"
 #include "../XrRender/Public/KinematicsAnimated.h"
 #include "phworld.h"
 extern CPHWorld*	ph_world;

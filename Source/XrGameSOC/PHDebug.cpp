@@ -10,7 +10,6 @@
 #include "Hudmanager.h"
 
 #include "debug_renderer.h"
-
 Flags32		ph_dbg_draw_mask						;
 Flags32		ph_dbg_draw_mask1						;
 bool		draw_frame=0;
@@ -80,14 +79,15 @@ struct SPHDBGDrawTri :public SPHDBGDrawAbsract
 	}
 	virtual void render()
 	{
-		if(solid)
+		if (solid)
 		{
-			RCache.dbg_DrawTRI	(Fidentity, v[0], v[1], v[2], c );
-			RCache.dbg_DrawTRI	(Fidentity, v[2], v[1], v[0], c );
-		} else {
-			Level().debug_renderer().draw_line(Fidentity,v[0],v[1],c);
-			Level().debug_renderer().draw_line(Fidentity,v[1],v[2],c);
-			Level().debug_renderer().draw_line(Fidentity,v[2],v[0],c);
+			DRender->dbg_DrawTRI(Fidentity, v[0], v[1], v[2], c);
+			DRender->dbg_DrawTRI(Fidentity, v[2], v[1], v[0], c);
+		}
+		else {
+			Level().debug_renderer().draw_line(Fidentity, v[0], v[1], c);
+			Level().debug_renderer().draw_line(Fidentity, v[1], v[2], c);
+			Level().debug_renderer().draw_line(Fidentity, v[2], v[0], c);
 		}
 	}
 };
@@ -470,7 +470,7 @@ void PH_DBG_Clear()
 
 void PH_DBG_Render()
 {
-	if(ph_dbg_draw_mask.test(phDbgDrawZDisable))CHK_DX(HW.pDevice->SetRenderState(D3DRS_ZENABLE,0));
+	if(ph_dbg_draw_mask.test(phDbgDrawZDisable))DRender->ZEnable(false);
 	HUD().Font().pFontStat->OutSet	(550,250);
 
 	if(ph_dbg_draw_mask.test(phDbgDrawEnabledAABBS))
@@ -526,7 +526,7 @@ void PH_DBG_Render()
 //	HUD().Font().pFontStat->OutNext("---------------------");
 #endif
 
-	if(ph_dbg_draw_mask.test(phDbgDrawZDisable))CHK_DX(HW.pDevice->SetRenderState(D3DRS_ZENABLE,1));
+	if(ph_dbg_draw_mask.test(phDbgDrawZDisable))DRender->ZEnable(true);
 }
 
 void DBG_DrawStatBeforeFrameStep()

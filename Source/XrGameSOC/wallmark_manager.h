@@ -1,5 +1,5 @@
 #pragma once
-
+#include "UICustomItem.h"
 
 
 DEFINE_VECTOR(ui_shader, SHADER_VECTOR, SHADER_VECTOR_IT);
@@ -20,6 +20,6 @@ public:
 //		void	PlaceWallmarks		( const Fvector& start_pos, float trace_dist, float wallmark_size,SHADER_VECTOR& wallmarks_vector,CObject* ignore_obj)								;
 		void	PlaceWallmarks		( const Fvector& start_pos);
 		
-		void	__stdcall StartWorkflow	();
+		void	 StartWorkflow	();
 //		void	PlaceWallmarks		(const Fvector& start_pos,CObject* ignore_obj)																										;
 };

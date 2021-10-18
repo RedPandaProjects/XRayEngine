@@ -4,6 +4,7 @@
 #include "xrMessages.h"
 #include "ph_shell_interface.h"
 #include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrRender/Public/Kinematics.h"
 #include "script_callback_ex.h"
 #include "Level.h"
 #include "PHCommander.h"
@@ -290,14 +291,16 @@ void CPhysicsShellHolder::PHSaveState(NET_Packet &P)
 	//if(pPhysicsShell&&pPhysicsShell->isActive())			lflags.set(CSE_PHSkeleton::flActive,pPhysicsShell->isEnabled());
 
 //	P.w_u8 (lflags.get());
-	if(K)
+	if (K)
 	{
-		P.w_u64(K->LL_GetBonesVisible());
+		for (int i = 0; i < BONE_COUNT_VISMASK; i++)
+			P.w_u64(K->LL_GetBonesVisible().visimask[i].flags);
 		P.w_u16(K->LL_GetBoneRoot());
 	}
 	else
 	{
-		P.w_u64(u64(-1));
+		for (int i = 0; i < BONE_COUNT_VISMASK; i++)
+			P.w_u64(u64(-1));
 		P.w_u16(0);
 	}
 	/////////////////////////////
@@ -345,9 +348,12 @@ CPhysicsShellHolder::PHLoadState(IReader &P)
 //	Flags8 lflags;
 	IKinematics* K=smart_cast<IKinematics*>(Visual());
 //	P.r_u8 (lflags.flags);
-	if(K)
+	if (K)
 	{
-		K->LL_SetBonesVisible(P.r_u64());
+		BonesVisible visible;
+		for (int i = 0; i < BONE_COUNT_VISMASK; i++)
+			visible.visimask[i].flags = P.r_u64();
+		K->LL_SetBonesVisible(visible);
 		K->LL_SetBoneRoot(P.r_u16());
 	}
 

@@ -13,7 +13,7 @@
 #include "patrol_path_storage.h"
 #include "xrServer.h"
 #include "client_spawn_manager.h"
-#include "../igame_persistent.h"
+#include "../XrEngine/igame_persistent.h"
 #include "game_cl_base.h"
 #include "ui/UIDialogWnd.h"
 #include "date_time.h"
@@ -159,7 +159,7 @@ float cover_in_direction(u32 level_vertex_id, const Fvector &direction)
 
 float rain_factor()
 {
-	return			(g_pGamePersistent->Environment().CurrentEnv.rain_density);
+	return			(g_pGamePersistent->Environment().CurrentEnv->rain_density);
 }
 
 u32	vertex_in_direction(u32 level_vertex_id, Fvector direction, float max_distance)
@@ -338,14 +338,14 @@ CPHWorld* physics_world()
 {
 	return	ph_world;
 }
-CEnvironment *environment()
+IEnvironment *environment()
 {
 	return		(g_pGamePersistent->pEnvironment);
 }
 
-CEnvDescriptor *current_environment(CEnvironment *self)
+IEnvDescriptorMixer *current_environment(IEnvironment *self)
 {
-	return		(&self->CurrentEnv);
+	return		(self->CurrentEnv);
 }
 extern bool g_bDisableAllInput;
 void disable_input()
@@ -371,15 +371,14 @@ void iterate_sounds					(LPCSTR prefix, u32 max_count, const CScriptCallbackEx<v
 {
 	for (int j=0, N = _GetItemCount(prefix); j<N; ++j) {
 		string_path					fn, s;
-		LPSTR						S = (LPSTR)&s;
-		_GetItem					(prefix,j,S);
-		if (FS.exist(fn,"$game_sounds$",S,".ogg"))
+		_GetItem					(prefix,j,s);
+		if (FS.exist(fn,"$game_sounds$",s,".ogg"))
 			callback				(prefix);
 
 		for (u32 i=0; i<max_count; ++i)
 		{
 			string_path					name;
-			sprintf_s					(name,"%s%d",S,i);
+			sprintf_s					(name,"%s%d",s,i);
 			if (FS.exist(fn,"$game_sounds$",name,".ogg"))
 				callback			(name);
 		}
@@ -526,11 +525,11 @@ void g_change_community_goodwill(LPCSTR _community, int _entity_id, int val)
 #pragma optimize("s",on)
 void CLevel::script_register(lua_State *L)
 {
-	class_<CEnvDescriptor>("CEnvDescriptor")
-		.def_readonly("fog_density",			&CEnvDescriptor::fog_density)
-		.def_readonly("far_plane",				&CEnvDescriptor::far_plane),
+	class_<IEnvDescriptorMixer>("CEnvDescriptor")
+		.def_readonly("fog_density",			&IEnvDescriptorMixer::fog_density)
+		.def_readonly("far_plane",				&IEnvDescriptorMixer::far_plane),
 
-	class_<CEnvironment>("CEnvironment")
+	class_<IEnvironment>("CEnvironment")
 		.def("current",							current_environment);
 
 	module(L,"level")

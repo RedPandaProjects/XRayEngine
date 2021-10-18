@@ -1,5 +1,5 @@
 #pragma once
-#include "GameMtlLib.h"
+#include "../XrEngine/GameMtlLib.h"
 
 class CPhysicsShellHolder;
 

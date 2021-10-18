@@ -700,7 +700,7 @@ void CGameObject::OnRender()
 	if (bDebug && Visual())
 	{
 		Fvector bc,bd; 
-		Visual()->vis.box.get_CD	(bc,bd);
+		Visual()->getVisData().box.get_CD	(bc,bd);
 		Fmatrix	M = XFORM();		M.c.add (bc);
 		Level().debug_renderer().draw_obb			(M,bd,color_rgba(0,0,255,255));
 	}	
@@ -748,7 +748,7 @@ void CGameObject::SetKinematicsCallback		(bool set)
 
 void VisualCallback	(IKinematics *tpKinematics)
 {
-	CGameObject						*game_object = static_cast<CGameObject*>(static_cast<CObject*>(tpKinematics->Update_Callback_Param));
+	CGameObject						*game_object = static_cast<CGameObject*>(static_cast<CObject*>(tpKinematics->GetUpdateCallbackParam()));
 	VERIFY							(game_object);
 	
 	CGameObject::CALLBACK_VECTOR_IT	I = game_object->visual_callbacks().begin();

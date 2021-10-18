@@ -31,7 +31,7 @@ public:
 	virtual void		shedule_Update		(u32 dt);
 	virtual void		renderable_Render	();
 	void				PerformAllTheWork	(u32 dt);
-	void	__stdcall	PerformAllTheWork_mt();
+	void				PerformAllTheWork_mt();
 
 	Fvector&			Position			();
 	void				SetXFORM			(const Fmatrix& m);
@@ -39,7 +39,7 @@ public:
 	void				UpdateParent		(const Fmatrix& m, const Fvector& vel);
 
 	void				play_at_pos			(const Fvector& pos, BOOL xform=FALSE);
-	virtual void		Play				(bool bHudMode);
+	virtual void		Play				(bool bHudMode=false);
 	void				Stop				(BOOL bDefferedStop=TRUE);
 	virtual BOOL		Locked				()				{ return mt_dt; }
 	

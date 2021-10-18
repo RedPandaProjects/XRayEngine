@@ -49,12 +49,12 @@ protected:
 	CUICellContainer*		m_container;
 	CUIScrollBar*			m_vScrollBar;
 
-	void	__stdcall		OnScrollV				(CUIWindow* w, void* pData);
-	void	__stdcall		OnItemStartDragging		(CUIWindow* w, void* pData);
-	void	__stdcall		OnItemDrop				(CUIWindow* w, void* pData);
-	void	__stdcall		OnItemSelected			(CUIWindow* w, void* pData);
-	void	__stdcall		OnItemRButtonClick		(CUIWindow* w, void* pData);
-	void	__stdcall		OnItemDBClick			(CUIWindow* w, void* pData);
+	void			OnScrollV				(CUIWindow* w, void* pData);
+	void			OnItemStartDragging		(CUIWindow* w, void* pData);
+	void			OnItemDrop				(CUIWindow* w, void* pData);
+	void			OnItemSelected			(CUIWindow* w, void* pData);
+	void			OnItemRButtonClick		(CUIWindow* w, void* pData);
+	void			OnItemDBClick			(CUIWindow* w, void* pData);
 	
 public:
 	static CUIDragItem*		m_drag_item;
@@ -119,7 +119,6 @@ class CUICellContainer :public CUIWindow
 private:
 	typedef CUIWindow inherited;
 	ui_shader					hShader;  //ownerDraw
-	ref_geom					hGeom;	
 	UI_CELLS_VEC				m_cells_to_draw;
 protected:
 	CUIDragDropListEx*			m_pParentDragDropList;

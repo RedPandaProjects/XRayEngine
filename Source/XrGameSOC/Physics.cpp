@@ -3,7 +3,7 @@
 #include "Physics.h"
 #include "tri-colliderknoopc/dTriList.h"
 #include "PHContactBodyEffector.h"
-#include "gamemtllib.h"
+#include "../XrEngine/gamemtllib.h"
 #include "gameobject.h"
 #include "PhysicsShellHolder.h"
 #include "PHCollideValidator.h"
@@ -13,8 +13,8 @@
 ///////////////////////////////////////////////////////////////
 #pragma warning(disable:4995)
 #pragma warning(disable:4267)
-#include "ode/collision_kernel.h"
-#include "ode/joint.h"
+#include "ode/src/collision_kernel.h"
+#include "ode/src/joint.h"
 #include "ode/objects.h"
 #pragma warning(default:4267)
 #pragma warning(default:4995)

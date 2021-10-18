@@ -4,6 +4,7 @@
 #include "control_manager.h"
 #include "../../PHMovementControl.h"
 #include "../../../XrRender/Public/KinematicsAnimated.h"
+#include "../../../XrRender/Public/Kinematics.h"
 #include "../../detail_path_manager.h"
 #include "../../level.h"
 #include "control_animation_base.h"

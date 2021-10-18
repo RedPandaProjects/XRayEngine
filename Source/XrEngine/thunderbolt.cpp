@@ -92,12 +92,13 @@ SThunderboltCollection::SThunderboltCollection	()
 
 void SThunderboltCollection::load				(CInifile* pIni, CInifile* thunderbolts, LPCSTR sect)
 {
+#pragma FIXME("Panda: я это сломал!")
 	section			= sect;
 	int tb_count	= pIni->line_count(sect);
 	for (int tb_idx=0; tb_idx<tb_count; tb_idx++){
 		LPCSTR		N, V;
-		if (pIni->r_line(sect,tb_idx,&N,&V))
-			palette.push_back	(g_pGamePersistent->Environment().thunderbolt_description(*thunderbolts, N));
+		/*if (pIni->r_line(sect,tb_idx,&N,&V))
+			palette.push_back	(g_pGamePersistent->Environment().thunderbolt_description(*thunderbolts, N));*/
 	}
 }
 SThunderboltCollection::~SThunderboltCollection	()
@@ -145,12 +146,13 @@ CEffect_Thunderbolt::~CEffect_Thunderbolt()
 	//hGeom_gradient.destroy		();
 }
 
-shared_str CEffect_Thunderbolt::AppendDef(CEnvironment& environment, CInifile* pIni, CInifile* thunderbolts, LPCSTR sect)
+shared_str CEffect_Thunderbolt::AppendDef(IEnvironment& environment, CInifile* pIni, CInifile* thunderbolts, LPCSTR sect)
 {
+#pragma FIXME("Panda: я это сломал!")
 	if (!sect||(0==sect[0])) return "";
 	for (CollectionVecIt it=collection.begin(); it!=collection.end(); it++)
 		if ((*it)->section==sect)	return (*it)->section;
-	collection.push_back		(environment.thunderbolt_collection(pIni, thunderbolts, sect));
+	//collection.push_back		(environment.thunderbolt_collection(pIni, thunderbolts, sect));
 	return collection.back()->section;
 }
 
@@ -178,7 +180,8 @@ BOOL CEffect_Thunderbolt::RayPick(const Fvector& s, const Fvector& d, float& dis
 
 void CEffect_Thunderbolt::Bolt(shared_str id, float period, float lt)
 {
-	VERIFY					(id.size());
+#pragma FIXME("Panda: я это сломал!")
+/*	VERIFY					(id.size());
 	state 		            = stWorking;
 	life_time	            = lt+Random.randF(-lt*0.5f,lt*0.5f);
     current_time            = 0.f;
@@ -221,11 +224,12 @@ void CEffect_Thunderbolt::Bolt(shared_str id, float period, float lt)
     }
 
 
-	current_direction.invert			();	// for env-sun
+	current_direction.invert			();	// for env-sun*/
 }
 
 void CEffect_Thunderbolt::OnFrame(shared_str id, float period, float duration)
 {
+#pragma FIXME("Panda: я это сломал!")
 	BOOL enabled			= !!(id.size());
 	if (bEnabled!=enabled){
     	bEnabled			= enabled;
@@ -248,7 +252,7 @@ void CEffect_Thunderbolt::OnFrame(shared_str id, float period, float duration)
         lightning_phase	= 1.5f*(current_time/life_time);
         clamp			(lightning_phase,0.f,1.f);
 
-		CEnvironment&	environment = g_pGamePersistent->Environment();
+		/*CEnvironment&	environment = g_pGamePersistent->Environment();
 		
 		Fvector&		sky_color = environment.CurrentEnv->sky_color;
         sky_color.mad	( fClr, environment.p_sky_color );
@@ -264,7 +268,7 @@ void CEffect_Thunderbolt::OnFrame(shared_str id, float period, float duration)
 			g_pGamePersistent->Environment().CurrentEnv->sun_dir = current_direction;
 			VERIFY2(g_pGamePersistent->Environment().CurrentEnv->sun_dir.y<0,"Invalid sun direction settings while CEffect_Thunderbolt");
 
-		} 
+		} */
     }
 }
 

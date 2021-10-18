@@ -5,9 +5,9 @@
 #pragma hdrstop
 
 #include "ParticlesObject.h"
-#include "../defines.h"
-#include "#include "../XrRender/Public/Kinematics.h""
-#include "../ParticleCustom.h"
+#include "../XrEngine/defines.h"
+#include "../XrRender/Public/Kinematics.h"
+#include "../XrRender/Public/ParticleCustom.h"
 #include "../XrEngine/render.h"
 #include "../XrEngine/IGame_Persistent.h"
 
@@ -83,11 +83,11 @@ void CParticlesObject::UpdateSpatial()
 	if(g_dedicated_server)		return;
 
 	// spatial	(+ workaround occasional bug inside particle-system)
-	if (_valid(renderable.visual->vis.sphere))
+	if (_valid(renderable.visual->getVisData().sphere))
 	{
 		Fvector	P;	float	R;
-		renderable.xform.transform_tiny	(P,renderable.visual->vis.sphere.P);
-		R								= renderable.visual->vis.sphere.R;
+		renderable.xform.transform_tiny	(P,renderable.visual->getVisData().sphere.P);
+		R								= renderable.visual->getVisData().sphere.R;
 		if (0==spatial.type)	{
 			// First 'valid' update - register
 			spatial.type			= STYPE_RENDERABLE;
@@ -114,7 +114,7 @@ const shared_str CParticlesObject::Name()
 }
 
 //----------------------------------------------------
-void CParticlesObject::Play		()
+void CParticlesObject::Play		(bool)
 {
 	if(g_dedicated_server)		return;
 
@@ -223,7 +223,7 @@ Fvector& CParticlesObject::Position		()
 		static Fvector _pos = Fvector().set(0,0,0);
 		return _pos;
 	}
-	return renderable.visual->vis.sphere.P;
+	return renderable.visual->getVisData().sphere.P;
 }
 
 float CParticlesObject::shedule_Scale		()	

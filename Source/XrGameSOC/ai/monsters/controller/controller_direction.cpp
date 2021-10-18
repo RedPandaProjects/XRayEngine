@@ -3,6 +3,8 @@
 #include "controller.h"
 #include "../../../game_object_space.h"
 
+#include "../XrRender/Public/Kinematics.h"
+
 const float	_pmt_head_bone_limit	= PI_DIV_6;
 const float	_pmt_torso_bone_limit	= PI_DIV_3;
 const float	_pmt_rotation_speed		= PI_MUL_3;
@@ -21,7 +23,7 @@ void CControllerDirection::reinit()
 
 void CControllerDirection::bone_callback(CBoneInstance *B)
 {
-	CControllerDirection *this_class = static_cast<CControllerDirection*> (B->Callback_Param);
+	CControllerDirection *this_class = static_cast<CControllerDirection*> (B->callback_param());
 	this_class->m_bones.Update(B, time());
 }
 

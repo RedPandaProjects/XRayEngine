@@ -1,12 +1,14 @@
 #include "stdafx.h"
 #include "boar.h"
 #include "boar_state_manager.h"
-#include "../../../../skeletoncustom.h"
+#include "../../../../XrEngine/bone.h"
 #include "../monster_velocity_space.h"
 #include "../../../game_object_space.h"
 #include "../control_animation_base.h"
 #include "../control_movement_base.h"
 
+#include "../../../../XrRender/Public/Kinematics.h"
+#include "../../../../XrRender/Public/KinematicsAnimated.h"
 
 CAI_Boar::CAI_Boar()
 {
@@ -116,7 +118,7 @@ void CAI_Boar::reinit()
 
 void  CAI_Boar::BoneCallback(CBoneInstance *B)
 {
-	CAI_Boar	*P = static_cast<CAI_Boar*>(B->Callback_Param);
+	CAI_Boar	*P = static_cast<CAI_Boar*>(B->callback_param());
 
 	if (!P->look_at_enemy) return;
 	

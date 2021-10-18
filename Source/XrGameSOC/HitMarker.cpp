@@ -2,7 +2,7 @@
 #include "stdafx.h"
 #include "HitMarker.h"
 #include "../XrEngine/render.h"
-#include "../LightAnimLibrary.h"
+#include "../XrEngine/LightAnimLibrary.h"
 #include "UIStaticItem.h"
 
 static Fvector2			as_PC[5];
@@ -18,7 +18,7 @@ CHitMarker::CHitMarker()
 
 void CHitMarker::InitShader	(LPCSTR tex_name)
 {
-	hShader2.create	("hud\\default", tex_name);
+	hShader2->create	("hud\\default", tex_name);
 }
 
 //--------------------------------------------------------------------

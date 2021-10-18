@@ -40,6 +40,15 @@ extern void dump_list_xmls							();
 extern void CreateUIGeom							();
 extern void DestroyUIGeom							();
 
+void CreateUIGeom()
+{
+	UIRender->CreateUIGeom();
+}
+
+void DestroyUIGeom()
+{
+	UIRender->DestroyUIGeom();
+}
 #include "../XrEngine/IGame_Persistent.h"
 void init_game_globals()
 {

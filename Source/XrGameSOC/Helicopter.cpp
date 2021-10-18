@@ -5,11 +5,12 @@
 #include "level.h"
 #include "ai_sounds.h"
 #include "clsid_game.h"
+#include "../XrRender/Public/Kinematics.h"
 #include "../XrRender/Public/KinematicsAnimated.h"
 #include "script_callback_ex.h"
 #include "game_object_space.h"
 #include "script_game_object.h"
-#include "../LightAnimLibrary.h"
+#include "../XrEngine/LightAnimLibrary.h"
 #include "HudManager.h"
 #include "physicscommon.h"
 //50fps fixed
@@ -212,7 +213,7 @@ BOOL CHelicopter::net_Spawn(CSE_Abstract*	DC)
 	IKinematicsAnimated	*A	= smart_cast<IKinematicsAnimated*>(Visual());
 	if (A) {
 		A->PlayCycle		(*heli->startup_animation);
-		A->CalculateBones	();
+		A->OnCalculateBones	();
 	}
 
 	m_engineSound.create			(*heli->engine_sound,st_Effect,sg_SourceType);

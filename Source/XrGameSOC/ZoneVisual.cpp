@@ -3,7 +3,7 @@
 #include "../XrRender/Public/KinematicsAnimated.h"
 #include "ZoneVisual.h"
 #include "xrServer_Objects_ALife_Monsters.h"
-#include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrRender/Public/Kinematics.h"
 CVisualZone::CVisualZone						()
 {
 }

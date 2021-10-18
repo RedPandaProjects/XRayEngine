@@ -17,7 +17,7 @@ const float TRACER_SIZE = 0.13f;
 #define TRACERS_COLOR_TABLE "tracers_color_table"
 CTracer::CTracer()
 {
-	sh_Tracer.create("effects\\bullet_tracer","fx\\fx_tracer");
+	sh_Tracer->create("effects\\bullet_tracer","fx\\fx_tracer");
 	m_aColors.clear();
 	for (u8 i=0; i<255; i++)
 	{

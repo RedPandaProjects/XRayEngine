@@ -7,7 +7,7 @@
 #pragma once
 
 class CBulletManager;
-
+#include "UICustomItem.h"
 class CTracer
 {
 	friend CBulletManager;
@@ -19,6 +19,7 @@ protected:
 	float				m_circle_size_k;
 public:
 	CTracer();
+	~CTracer();
 	void				Render(const Fvector& pos,
 		const Fvector& center,
 		const Fvector& dir,

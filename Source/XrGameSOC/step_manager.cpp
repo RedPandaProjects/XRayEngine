@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "../XrRender/Public/Kinematics.h"
 #include "../XrRender/Public/KinematicsAnimated.h"
 #include "step_manager_defs.h"
 #include "step_manager.h"

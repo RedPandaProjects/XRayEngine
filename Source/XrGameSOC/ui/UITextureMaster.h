@@ -8,7 +8,7 @@
 // copyright 2005 GSC Game World
 
 #pragma once
-
+#include "UICustomItem.h"
 class IUISimpleTextureControl;
 
 struct TEX_INFO{

@@ -1,9 +1,9 @@
 #include "pch_script.h"
-#include "../xr_ioconsole.h"
-#include "../xr_ioc_cmd.h"
-#include "../customhud.h"
-#include "../fdemorecord.h"
-#include "../fdemoplay.h"
+#include "../XrEngine/xr_ioconsole.h"
+#include "../XrEngine/xr_ioc_cmd.h"
+#include "../XrEngine/customhud.h"
+#include "../XrEngine/fdemorecord.h"
+#include "../XrEngine/fdemoplay.h"
 #include "xrMessages.h"
 #include "xrserver.h"
 #include "level.h"
@@ -37,13 +37,12 @@
 #include "MainMenu.h"
 #include "saved_game_wrapper.h"
 #include "level_graph.h"
-#include "../resourcemanager.h"
 #include "doug_lea_memory_allocator.h"
 #include "cameralook.h"
 
 #include "GameSpy/GameSpy_Full.h"
 #include "GameSpy/GameSpy_Patching.h"
-
+#include "../XrRender/Public/Kinematics.h"
 #ifdef DEBUG
 #	include "PHDebug.h"
 #	include "ui/UIDebugFonts.h" 
@@ -141,7 +140,7 @@ public:
 		int		_eco_smem		= (int)g_pSharedMemoryContainer->stat_economy	();
 		u32		m_base=0,c_base=0,m_lmaps=0,c_lmaps=0;
 		
-		if (Device.Resources)	Device.Resources->_GetMemoryUsage	(m_base,c_base,m_lmaps,c_lmaps);
+		//if (Device.Resources)	Device.Resources->_GetMemoryUsage	(m_base,c_base,m_lmaps,c_lmaps);
 		
 		log_vminfo	();
 		
@@ -641,7 +640,7 @@ public:
 			// rescan pathes
 			FS_Path* P = FS.get_path("$game_scripts$");
 			P->m_Flags.set	(FS_Path::flNeedRescan,TRUE);
-			FS.rescan_pathes();
+			//FS.rescan_pathes();
 			// run script
 			if (ai().script_engine().script_process(ScriptEngine::eScriptProcessorLevel))
 				ai().script_engine().script_process(ScriptEngine::eScriptProcessorLevel)->add_script(S,false,true);

@@ -4,6 +4,7 @@
 #include "level.h"
 #include "xrmessages.h"
 #include "../XrEngine/bone.h"
+#include "../XrEngine/xr_collide_form.h"
 #include "clsid_game.h"
 #include "game_base_space.h"
 #include "Hit.h"

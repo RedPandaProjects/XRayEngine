@@ -5,6 +5,7 @@
 #include "..\xrServerEntities\gametype_chooser.h"
 #ifndef _EDITOR
 #include "Environment.h"
+#include "EnvironmentSOC.h"
 #include "IGame_ObjectPool.h"
 #endif
 
@@ -29,7 +30,11 @@ public:
 			string256	m_game_type;
 			string256	m_alife;
 			string256	m_new_or_load;
-			EGameIDs	m_e_game_type;
+			union
+			{
+				EGameIDs	m_e_game_type;
+				u32			m_e_game_type_for_soc;
+			};
 		};
 		string256		m_params[4];
 						params		()	{	reset();	}
@@ -63,8 +68,10 @@ public:
 	virtual void					Disconnect			();
 #ifndef _EDITOR
 	IGame_ObjectPool				ObjectPool;
-	CEnvironment*					pEnvironment;
-	CEnvironment&					Environment()	{return *pEnvironment;};
+	IEnvironment*					pEnvironment;
+	inline IEnvironment&			Environment()		{return *pEnvironment;};
+	inline CEnvironment*			EnvironmentAsCOP()	{return static_cast<CEnvironment*>(pEnvironment); };
+	inline CEnvironmentSOC*			EnvironmentAsSOC()	{return static_cast<CEnvironmentSOC*>(pEnvironment); };
 #endif
 	IMainMenu*						m_pMainMenu;	
 

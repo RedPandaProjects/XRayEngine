@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "WeaponStatMgun.h"
 #include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrRender/Public/Kinematics.h"
 #include "PhysicsShell.h"
 #include "weaponAmmo.h"
 #include "object_broker.h"
@@ -14,14 +15,14 @@
 
 void 	CWeaponStatMgun::BoneCallbackX		(CBoneInstance *B)
 {
-	CWeaponStatMgun	*P = static_cast<CWeaponStatMgun*>(B->Callback_Param);
+	CWeaponStatMgun	*P = static_cast<CWeaponStatMgun*>(B->callback_param());
 	Fmatrix rX;		rX.rotateX		(P->m_cur_x_rot);
 	B->mTransform.mulB_43(rX);
 }
 
 void 	CWeaponStatMgun::BoneCallbackY		(CBoneInstance *B)
 {
-	CWeaponStatMgun	*P = static_cast<CWeaponStatMgun*>(B->Callback_Param);
+	CWeaponStatMgun	*P = static_cast<CWeaponStatMgun*>(B->callback_param());
 	Fmatrix rY;		rY.rotateY		(P->m_cur_y_rot);
 	B->mTransform.mulB_43(rY);
 }
@@ -154,7 +155,7 @@ void CWeaponStatMgun::UpdateCL()
 	if(OwnerActor() && OwnerActor()->IsMyCamera()) 
 	{
 		cam_Update(Device.fTimeDelta, g_fov);
-		OwnerActor()->Cameras().Update(Camera());
+		OwnerActor()->Cameras().UpdateFromCamera(Camera());
 		OwnerActor()->Cameras().ApplyDevice(VIEWPORT_NEAR);
 	}
 
@@ -239,7 +240,7 @@ void CWeaponStatMgun::cam_Update			(float dt, float fov)
 	
 
 	Camera()->Update						(P,Da);
-	Level().Cameras().Update				(Camera());
+	Level().Cameras().UpdateFromCamera				(Camera());
 
 }
 

@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #pragma hdrstop
-
 #include "xr_efflensflare.h"
 
 #include "igame_persistent.h"
@@ -245,7 +244,9 @@ static Fvector2 RayDeltas[CLensFlare::MAX_RAYS] =
 };
 void CLensFlare::OnFrame(shared_str id)
 {
-	if (dwFrame==Device.dwFrame)return;
+#pragma FIXME("Panda: я это сломал!")
+	return;
+/*	if (dwFrame==Device.dwFrame)return;
 #ifndef _EDITOR
 	if (!g_pGameLevel)			return;
 #endif
@@ -260,7 +261,7 @@ void CLensFlare::OnFrame(shared_str id)
     Fvector& c		= g_pGamePersistent->Environment().CurrentEnv->sun_color;
 	LightColor.set	(c.x,c.y,c.z,1.f); 
 
-	CLensFlareDescriptor* desc = id.size() ? g_pGamePersistent->Environment().add_flare(m_Palette, id) : 0;
+	//CLensFlareDescriptor* desc = id.size() ? g_pGamePersistent->Environment().add_flare(m_Palette, id) : 0;
 
 //	LFState			previous_state = m_State;
     switch(m_State){
@@ -394,47 +395,6 @@ void CLensFlare::OnFrame(shared_str id)
 	//blend_lerp(fBlend,TP.vis,BLEND_DEC_SPEED,Device.fTimeDelta);
 	blend_lerp(fBlend,fVisResult,BLEND_DEC_SPEED,Device.fTimeDelta);
 
-	/*
-	CObject*	o_main		= g_pGameLevel->CurrentViewEntity();
-	STranspParam TP			(&m_ray_cache,Device.vCameraPosition,vSunDir,1000.f,EPS_L);
-	collide::ray_defs RD	(TP.P,TP.D,TP.f,CDB::OPT_CULL,collide::rqtBoth);
-	if (m_ray_cache.result&&m_ray_cache.similar(TP.P,TP.D,TP.f)){
-		// similar with previous query == 0
-		TP.vis				= 0.f;
-	}else{
-		float _u,_v,_range;
-		if (CDB::TestRayTri(TP.P,TP.D,m_ray_cache.verts,_u,_v,_range,false)&&(_range>0 && _range<TP.f)){
-			TP.vis			= 0.f;
-		}else{
-			// cache outdated. real query.
-			r_dest.r_clear	();
-			if (g_pGameLevel->ObjectSpace.RayQuery	(r_dest,RD,material_callback,&TP,NULL,o_main))
-				m_ray_cache.result = FALSE			;
-		}
-	}
-
-	blend_lerp(fBlend,TP.vis,BLEND_DEC_SPEED,Device.fTimeDelta);
-	*/
-/*
-	CObject*	o_main		= g_pGameLevel->CurrentViewEntity();
-	STranspParam TP			(this,Device.vCameraPosition,vSunDir,1000.f,EPS_L);
-	collide::ray_defs RD	(TP.P,TP.D,TP.f,CDB::OPT_CULL,collide::rqtBoth);
-	if (m_ray_cache.result&&m_ray_cache.similar(TP.P,TP.D,TP.f)){
-		// similar with previous query == 0
-		TP.vis				= 0.f;
-	}else{
-		float _u,_v,_range;
-		if (CDB::TestRayTri(TP.P,TP.D,m_ray_cache.verts,_u,_v,_range,false)&&(_range>0 && _range<TP.f)){
-			TP.vis			= 0.f;
-		}else{
-			// cache outdated. real query.
-			r_dest.r_clear	();
-			if (g_pGameLevel->ObjectSpace.RayQuery	(r_dest,RD,material_callback,&TP,NULL,o_main))
-				m_ray_cache.result = FALSE			;
-		}
-	}
-	blend_lerp(fBlend,TP.vis,BLEND_DEC_SPEED,Device.fTimeDelta);
-*/
 #endif
 	clamp( fBlend, 0.0f, 1.0f );
 
@@ -456,7 +416,7 @@ void CLensFlare::OnFrame(shared_str id)
 			fGradientValue	= kx * ky *  op * fBlend;
 		}else
 			fGradientValue	= 0;
-	}
+	}*/
 }
 
 void CLensFlare::Render(BOOL bSun, BOOL bFlares, BOOL bGradient)
@@ -554,13 +514,13 @@ void CLensFlare::Render(BOOL bSun, BOOL bFlares, BOOL bGradient)
 	*/
 }
 
-shared_str CLensFlare::AppendDef(CEnvironment& environment, CInifile* pIni, LPCSTR sect)
+shared_str CLensFlare::AppendDef(IEnvironment& environment, CInifile* pIni, LPCSTR sect)
 {
 	if (!sect||(0==sect[0])) return "";
     for (LensFlareDescIt it=m_Palette.begin(); it!=m_Palette.end(); it++)
     	if (0==xr_strcmp(*(*it)->section,sect)) return sect;
-
-	environment.add_flare(m_Palette, sect); 
+#pragma FIXME("Panda: я это сломал!")
+	//environment.add_flare(m_Palette, sect); 
     return sect;
 }
 

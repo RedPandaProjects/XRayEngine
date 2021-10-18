@@ -7,7 +7,7 @@
 #include "game_level_cross_table.h"
 #include "level_graph.h"
 #include "client_spawn_manager.h"
-#include "../xr_object.h"
+#include "../XrEngine/xr_object.h"
 #include "../XrEngine/IGame_Persistent.h"
 
 void CLevel::cl_Process_Spawn(NET_Packet& P)

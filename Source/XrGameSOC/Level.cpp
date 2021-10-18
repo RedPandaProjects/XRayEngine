@@ -1,8 +1,8 @@
 #include "pch_script.h"
-#include "../fdemorecord.h"
-#include "../fdemoplay.h"
-#include "../environment.h"
-#include "../igame_persistent.h"
+#include "../XrEngine/fdemorecord.h"
+#include "../XrEngine/fdemoplay.h"
+#include "../XrEngine/environment.h"
+#include "../XrEngine/igame_persistent.h"
 #include "ParticlesObject.h"
 #include "Level.h"
 #include "xrServer.h"
@@ -34,14 +34,14 @@
 #include "mt_config.h"
 #include "phcommander.h"
 #include "map_manager.h"
-#include "../CameraManager.h"
+#include "../XrEngine/CameraManager.h"
 #include "level_sounds.h"
 #include "car.h"
 #include "trade_parameters.h"
 #include "game_cl_base_weapon_usage_statistic.h"
 #include "clsid_game.h"
 #include "MainMenu.h"
-#include "..\XR_IOConsole.h"
+#include "../XrEngine/XR_IOConsole.h"
 
 #ifdef DEBUG
 #	include "level_debug.h"
@@ -49,7 +49,7 @@
 #	include "debug_renderer.h"
 #	include "physicobject.h"
 #endif
-
+#include <functional>
 ENGINE_API bool g_dedicated_server;
 
 extern BOOL	g_bDebugDumpPhysicsStep;
@@ -490,34 +490,33 @@ void CLevel::OnFrame	()
 		CGameFont* F = HUD().Font().pFontDI;
 		if (!psNET_direct_connect) 
 		{
-			if ( IsServer() )
+			if (IsServer())
 			{
 				const IServerStatistic* S = Server->GetStatistic();
-				F->SetHeightI	(0.015f);
-				F->OutSetI	(0.0f,0.5f);
-				F->SetColor	(color_xrgb(0,255,0));
-				F->OutNext	("IN:  %4d/%4d (%2.1f%%)",	S->bytes_in_real,	S->bytes_in,	100.f*float(S->bytes_in_real)/float(S->bytes_in));
-				F->OutNext	("OUT: %4d/%4d (%2.1f%%)",	S->bytes_out_real,	S->bytes_out,	100.f*float(S->bytes_out_real)/float(S->bytes_out));
-				F->OutNext	("client_2_sever ping: %d",	net_Statistic.getPing());
-				F->OutNext	("SPS/Sended : %4d/%4d", S->dwBytesPerSec, S->dwBytesSended);
-				F->OutNext	("sv_urate/cl_urate : %4d/%4d", psNET_ServerUpdate, psNET_ClientUpdate);
+				F->SetHeightI(0.015f);
+				F->OutSetI(0.0f, 0.5f);
+				F->SetColor(color_xrgb(0, 255, 0));
+				F->OutNext("IN:  %4d/%4d (%2.1f%%)", S->bytes_in_real, S->bytes_in, 100.f * float(S->bytes_in_real) / float(S->bytes_in));
+				F->OutNext("OUT: %4d/%4d (%2.1f%%)", S->bytes_out_real, S->bytes_out, 100.f * float(S->bytes_out_real) / float(S->bytes_out));
+				F->OutNext("client_2_sever ping: %d", net_Statistic.getPing());
+				F->OutNext("SPS/Sended : %4d/%4d", S->dwBytesPerSec, S->dwBytesSended);
+				F->OutNext("sv_urate/cl_urate : %4d/%4d", psNET_ServerUpdate, psNET_ClientUpdate);
 
-				F->SetColor	(color_xrgb(255,255,255));
-				for (u32 I=0; I<Server->client_Count(); ++I)	
-				{
-					IClient*	C = Server->client_Get(I);
+				F->SetColor(color_xrgb(255, 255, 255));
+
+				Server->ForEachClientDo([&](IClient* C) {
 					Server->UpdateClientStatistic(C);
-					F->OutNext("P(%d), BPS(%2.1fK), MRR(%2d), MSR(%2d), Retried(%2d), Blocked(%2d)",
+					F->OutNext("0x%08x: P(%d), BPS(%2.1fK), MRR(%2d), MSR(%2d), Retried(%2d), Blocked(%2d)",
 						//Server->game->get_option_s(*C->Name,"name",*C->Name),
-						//					C->Name,
+						C->ID.value(),
 						C->stats.getPing(),
 						float(C->stats.getBPS()),// /1024,
-						C->stats.getMPS_Receive	(),
-						C->stats.getMPS_Send	(),
+						C->stats.getMPS_Receive(),
+						C->stats.getMPS_Send(),
 						C->stats.getRetriedCount(),
 						C->stats.dwTimesBlocked
-						);
-				}
+					);
+					});
 			}
 			if (IsClient())
 			{
@@ -530,7 +529,7 @@ void CLevel::OnFrame	()
 				F->OutNext	("sv_urate/cl_urate : %4d/%4d", psNET_ServerUpdate, psNET_ClientUpdate);
 
 				F->SetColor	(color_xrgb(255,255,255));
-				F->OutNext("P(%d), BPS(%2.1fK), MRR(%2d), MSR(%2d), Retried(%2d), Blocked(%2d), Sended(%2d), SPS(%2d)",
+				F->OutNext("P(%d), BPS(%2.1fK), MRR(%2d), MSR(%2d), Retried(%2d), Blocked(%2d)",
 					//Server->game->get_option_s(C->Name,"name",C->Name),
 					//					C->Name,
 					net_Statistic.getPing(),
@@ -538,9 +537,7 @@ void CLevel::OnFrame	()
 					net_Statistic.getMPS_Receive	(),
 					net_Statistic.getMPS_Send	(),
 					net_Statistic.getRetriedCount(),
-					net_Statistic.dwTimesBlocked,
-					net_Statistic.dwBytesSended,
-					net_Statistic.dwBytesPerSec
+					net_Statistic.dwTimesBlocked
 					);
 			}
 		}
@@ -984,7 +981,7 @@ void CLevel::SetGameTimeFactor(ALife::_TIME_ID GameTime, const float fTimeFactor
 	game->SetGameTimeFactor(GameTime, fTimeFactor);
 //	Server->game->SetGameTimeFactor(fTimeFactor);
 }
-void CLevel::SetEnvironmentGameTimeFactor(ALife::_TIME_ID GameTime, const float fTimeFactor)
+void CLevel::SetEnvironmentGameTimeFactor(u64 const& GameTime, float const& fTimeFactor)
 {
 	game->SetEnvironmentGameTimeFactor(GameTime, fTimeFactor);
 //	Server->game->SetGameTimeFactor(fTimeFactor);
@@ -1003,7 +1000,7 @@ bool CLevel::IsServer ()
 		return IsServerDemo();
 	};	
 	if (!Server) return false;
-	return (Server->client_Count() != 0);
+	return true;
 
 }
 
@@ -1014,8 +1011,11 @@ bool CLevel::IsClient ()
 	{
 		return IsClientDemo();
 	};	
-	if (!Server) return true;
-	return (Server->client_Count() == 0);
+	if (Server)
+		return false;
+
+	//return (Server->GetClientsCount() == 0);
+	return true;
 }
 
 void CLevel::OnSessionTerminate		(LPCSTR reason)

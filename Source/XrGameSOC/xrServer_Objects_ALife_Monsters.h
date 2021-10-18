@@ -47,7 +47,7 @@ SERVER_ENTITY_DECLARE_BEGIN0(CSE_ALifeTraderAbstract)
 	xr_string						m_character_name;
 		
 #ifdef XRGAME_EXPORTS
-	//для работы с relation system
+	//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ relation system
 	u16								object_id				() const;
 	CHARACTER_COMMUNITY_INDEX		Community				() const;
 	LPCSTR							CommunityName			() const;
@@ -60,7 +60,7 @@ SERVER_ENTITY_DECLARE_BEGIN0(CSE_ALifeTraderAbstract)
 	shared_str						m_sCharacterProfile;
 	shared_str			m_SpecificCharacter;
 
-	//буферный вектор проверенных персонажей
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	xr_vector<shared_str> m_CheckedCharacters;
 	xr_vector<shared_str> m_DefaultCharacters;
 
@@ -74,7 +74,7 @@ public:
 	virtual CSE_Abstract			*cast_abstract				() {return 0;};
 	virtual CSE_ALifeTraderAbstract	*cast_trader_abstract		() {return this;};
 	// end of the virtual inheritance dependant code
-			void __stdcall			OnChangeProfile				(PropValue* sender);
+			void 			OnChangeProfile				(PropValue* sender);
 
 #ifdef XRGAME_EXPORTS
 	virtual	void					add_online					(const bool &update_registries);
@@ -160,7 +160,7 @@ add_to_type_list(CSE_ALifeAnomalousZone)
 SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeTorridZone,CSE_ALifeCustomZone,CSE_Motion)
 									CSE_ALifeTorridZone		(LPCSTR caSection);
 	virtual							~CSE_ALifeTorridZone	();
-	virtual CSE_Motion*	__stdcall	motion					();
+	virtual CSE_Motion*		motion					();
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeTorridZone)
 #define script_type_list save_type_list(CSE_ALifeTorridZone)
@@ -169,7 +169,7 @@ SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeZoneVisual,CSE_ALifeAnomalousZone,CSE_Visu
 shared_str attack_animation;
 CSE_ALifeZoneVisual	(LPCSTR caSection);
 virtual							~CSE_ALifeZoneVisual	();
-virtual CSE_Visual* __stdcall	visual					();
+virtual CSE_Visual* 	visual					();
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeZoneVisual)
 #define script_type_list save_type_list(CSE_ALifeZoneVisual)
@@ -317,7 +317,7 @@ SERVER_ENTITY_DECLARE_BEGIN3(CSE_ALifeCreatureActor,CSE_ALifeCreatureAbstract,CS
 	SPHNetState						m_AliveState;
 //	PH_STATES						m_DeadStates;
 
-	// статический массив - 6 float(вектора пределов квантизации) + m_u16NumItems*(7 u8) (позиция и поворот кости)
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ - 6 float(пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ) + m_u16NumItems*(7 u8) (пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ)
 	u8								m_BoneDataSize;
 	char							m_DeadBodyData[1024];
 	///////////////////////////////////////////

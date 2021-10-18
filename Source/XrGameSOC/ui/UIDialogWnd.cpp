@@ -7,7 +7,7 @@
 #include "uidialogwnd.h"
 #include "../hudmanager.h"
 #include "../xr_level_controller.h"
-#include "../Xr_ioconsole.h"
+#include "../XrEngine/Xr_ioconsole.h"
 #include "../level.h"
 #include "../GameObject.h"
 

@@ -3,6 +3,7 @@
 #include "zombie_state_manager.h"
 #include "../../../profiler.h"
 #include "../../../../XrRender/Public/KinematicsAnimated.h"
+#include "../../../../XrRender/Public/Kinematics.h"
 #include "../../../entitycondition.h"
 #include "../monster_velocity_space.h"
 
@@ -101,7 +102,7 @@ void CZombie::reload(LPCSTR section)
 
 void CZombie::BoneCallback(CBoneInstance *B)
 {
-	CZombie*	this_class = static_cast<CZombie*>(B->Callback_Param);
+	CZombie*	this_class = static_cast<CZombie*>(B->callback_param());
 
 	START_PROFILE("Zombie/Bones Update");
 	this_class->Bones.Update(B, Device.dwTimeGlobal);

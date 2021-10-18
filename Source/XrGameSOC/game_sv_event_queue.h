@@ -18,9 +18,11 @@ class  GameEventQueue
 public:
 	GameEventQueue();
 	~GameEventQueue();
-
+	typedef fastdelegate::FastDelegate1<GameEvent*, bool> event_predicate;
 	GameEvent*			Create	();
 	GameEvent*			Create	(NET_Packet& P, u16 type, u32 time, ClientID clientID);
 	GameEvent*			Retreive();
 	void				Release	();
+
+	u32					EraseEvents(event_predicate to_del);
 };

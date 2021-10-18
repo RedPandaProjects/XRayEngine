@@ -31,8 +31,9 @@ void CEnvModifier::load	(IReader* fs, u32 version)
 	}
 }
 
-float	CEnvModifier::sum	(CEnvModifier& M, Fvector3& view)
+float	CEnvModifier::sum	(IEnvModifier& M_, Fvector3& view)
 {
+	CEnvModifier& M = *static_cast<CEnvModifier*>(&M_);
 	float	_dist_sq	=	view.distance_to_sqr(M.position);
 	if (_dist_sq>=(M.radius*M.radius))	
 		return			0;
@@ -384,8 +385,12 @@ void CEnvDescriptorMixer::clear	()
 }
 
 
-void CEnvDescriptorMixer::lerp	(CEnvironment* , CEnvDescriptor& A, CEnvDescriptor& B, float f, CEnvModifier& Mdf, float modifier_power)
+void CEnvDescriptorMixer::lerp	(IEnvironment* , IEnvDescriptor& A_, IEnvDescriptor& B_, float f, IEnvModifier& Mdf_, float modifier_power)
 {
+	CEnvDescriptor& A = *static_cast<CEnvDescriptor*>(&A);
+	CEnvDescriptor& B = *static_cast<CEnvDescriptor*>(&B);
+
+	CEnvModifier& Mdf = *static_cast<CEnvModifier*>(&Mdf_);
 	float	modif_power		=	1.f/(modifier_power+1);	// the environment itself
 	float	fi				=	1-f;
 
@@ -480,14 +485,15 @@ void CEnvDescriptorMixer::lerp	(CEnvironment* , CEnvDescriptor& A, CEnvDescripto
 //-----------------------------------------------------------------------------
 // Environment IO
 //-----------------------------------------------------------------------------
-CEnvAmbient* CEnvironment::AppendEnvAmb		(const shared_str& sect)
+IEnvAmbient* CEnvironment::AppendEnvAmb		(const shared_str& sect)
 {
 	for (EnvAmbVecIt it=Ambients.begin(); it!=Ambients.end(); it++)
 		if ((*it)->name().equal(sect))
 			return						(*it);
+	auto Ambient = xr_new<CEnvAmbient>();
 
-	Ambients.push_back		(xr_new<CEnvAmbient>());
-	Ambients.back()->load	(
+	Ambients.push_back		(Ambient);
+	Ambient->load	(
 		*m_ambients_config,
 		*m_sound_channels_config,
 		*m_effects_config,
@@ -512,11 +518,12 @@ void	CEnvironment::mods_load			()
 			if(id==0 && sz==sizeof(u32))
 			{
 				ver				= fs->r_u32();
-			}else
+			}
+			else
 			{
-				CEnvModifier		E;
-				E.load				(fs, ver);
-				Modifiers.push_back	(E);
+				IEnvModifier* E = xr_new<CEnvModifier>();
+				E->load(fs, ver);
+				Modifiers.push_back(E);
 			}
 			id					++;
 		}
@@ -549,7 +556,7 @@ void    CEnvironment::load_level_specific_ambients ()
 
 	for ( EnvAmbVecIt I=Ambients.begin(), E=Ambients.end(); I!=E; ++I )
 	{
-		CEnvAmbient* ambient = *I;
+		CEnvAmbient* ambient = static_cast<CEnvAmbient*>(*I);
 
 		shared_str section_name = ambient->name();
 

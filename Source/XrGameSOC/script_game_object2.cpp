@@ -16,6 +16,7 @@
 #include "object_handler.h"
 #include "script_hit.h"
 #include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrRender/Public/Kinematics.h"
 #include "pda.h"
 #include "InfoPortion.h"
 #include "memory_manager.h"

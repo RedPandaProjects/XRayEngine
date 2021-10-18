@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "../xr_ioconsole.h"
+#include "../XrEngine/xr_ioconsole.h"
 #include "customzone.h"
 #include "hit.h"
 #include "PHDestroyable.h"
@@ -7,16 +7,17 @@
 #include "hudmanager.h"
 #include "ParticlesObject.h"
 #include "xrserver_objects_alife_monsters.h"
-#include "../LightAnimLibrary.h"
+#include "../XrEngine/LightAnimLibrary.h"
 #include "level.h"
 #include "game_cl_base.h"
-#include "../igame_persistent.h"
+#include "../XrEngine/igame_persistent.h"
 #include "artifact.h"
 #include "ai_object_location.h"
 #include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrRender/Public/Kinematics.h"
 #include "zone_effector.h"
 #include "breakableobject.h"
-
+#include "../XrEngine/xr_collide_form.h"
 //////////////////////////////////////////////////////////////////////////
 #define PREFETCHED_ARTEFACTS_NUM 1	//количество предварительно проспавненых артефактов
 #define WIND_RADIUS (4*Radius())	//расстояние до актера, когда появляется ветер 
@@ -301,7 +302,7 @@ void CCustomZone::Load(LPCSTR section)
 
 		R_ASSERT3(!fis_zero(total_probability), "The probability of artefact spawn is zero!",*cName());
 		//нормализировать вероятности
-		for(i=0; i<m_ArtefactSpawn.size(); ++i)
+		for(u32 i=0; i<m_ArtefactSpawn.size(); ++i)
 		{
 			m_ArtefactSpawn[i].probability = m_ArtefactSpawn[i].probability/total_probability;
 		}

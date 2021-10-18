@@ -4,7 +4,6 @@ class CUIWindow;
 class CUIStatic;
 class CUISequenceItem;
 class CUIXml;
-
 class CUISequencer :public pureFrame, public pureRender,	public IInputReceiver
 {
 protected:
@@ -121,7 +120,6 @@ class CUISequenceVideoItem: public CUISequenceItem
 {
 	typedef CUISequenceItem	inherited;
 	ref_sound				m_sound[2];
-	CTexture*				m_texture;
 	enum {	
 		etiPlaying			= (1<<(eti_last+0)),
 		etiNeedStart		= (1<<(eti_last+1)),
@@ -132,6 +130,8 @@ class CUISequenceVideoItem: public CUISequenceItem
 	CUIStatic*				m_wnd;
 	u32						m_time_start;
 	u32						m_sync_time;
+
+	FactoryPtr<IUISequenceVideoItem> m_texture;
 public:
 							CUISequenceVideoItem(CUISequencer* owner);
 	virtual					~CUISequenceVideoItem();

@@ -26,10 +26,10 @@ const LPCSTR ratingField			= "rating_names";
 const LPCSTR reputationgField		= "reputation_names";
 const LPCSTR goodwillField			= "goodwill_names";
 
-ui_shader	g_BuyMenuShader			= NULL;
-ui_shader	g_EquipmentIconsShader	= NULL;
-ui_shader	g_MPCharIconsShader		= NULL;
-ui_shader	g_tmpWMShader			= NULL;
+ui_shader* g_BuyMenuShader			= nullptr;
+ui_shader* g_EquipmentIconsShader	= nullptr;
+ui_shader* g_MPCharIconsShader		= nullptr;
+ui_shader* g_tmpWMShader			= nullptr;
 static CUIStatic*	GetUIStatic				();
 
 typedef				std::pair<CHARACTER_RANK_VALUE, shared_str>	CharInfoStringID;
@@ -41,15 +41,16 @@ CharInfoStrings		*charInfoGoodwillStrings	= NULL;
 
 void InventoryUtilities::CreateShaders()
 {
-	g_tmpWMShader.create("effects\\wallmark",  "wm\\wm_grenade");
+	g_tmpWMShader = xr_new<ui_shader>();
+	(*g_tmpWMShader)->create("effects\\wallmark",  "wm\\wm_grenade");
 }
 
 void InventoryUtilities::DestroyShaders()
 {
-	g_BuyMenuShader.destroy			();
-	g_EquipmentIconsShader.destroy	();
-	g_MPCharIconsShader.destroy		();
-	g_tmpWMShader.destroy			();
+	xr_delete(g_BuyMenuShader);
+	xr_delete(g_EquipmentIconsShader);
+	xr_delete(g_MPCharIconsShader);
+	xr_delete(g_tmpWMShader);
 }
 
 bool InventoryUtilities::GreaterRoomInRuck(PIItem item1, PIItem item2)
@@ -158,30 +159,33 @@ ui_shader& InventoryUtilities::GetBuyMenuShader()
 {	
 	if(!g_BuyMenuShader)
 	{
-		g_BuyMenuShader.create("hud\\default", BUY_MENU_TEXTURE);
+		g_BuyMenuShader = xr_new<ui_shader>();
+		(*g_BuyMenuShader)->create("hud\\default", BUY_MENU_TEXTURE);
 	}
 
-	return g_BuyMenuShader;
+	return *g_BuyMenuShader;
 }
 
 ui_shader& InventoryUtilities::GetEquipmentIconsShader()
 {	
 	if(!g_EquipmentIconsShader)
 	{
-		g_EquipmentIconsShader.create("hud\\default", EQUIPMENT_ICONS);
+		g_EquipmentIconsShader = xr_new<ui_shader>();
+		(*g_EquipmentIconsShader)->create("hud\\default", EQUIPMENT_ICONS);
 	}
 
-	return g_EquipmentIconsShader;
+	return *g_EquipmentIconsShader;
 }
 
 ui_shader&	InventoryUtilities::GetMPCharIconsShader()
 {
 	if(!g_MPCharIconsShader)
 	{
-		g_MPCharIconsShader.create("hud\\default",  MP_CHAR_ICONS);
+		g_MPCharIconsShader = xr_new<ui_shader>();
+		(*g_MPCharIconsShader)->create("hud\\default",  MP_CHAR_ICONS);
 	}
 
-	return g_MPCharIconsShader;
+	return *g_MPCharIconsShader;
 }
 
 

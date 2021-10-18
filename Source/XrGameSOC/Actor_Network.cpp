@@ -16,6 +16,8 @@
 #include "game_cl_base.h"
 #include "infoportion.h"
 #include "alife_registry_wrappers.h"
+#include "../XrRender/Public/RenderVisual.h"
+#include "../XrRender/Public/Kinematics.h"
 #include "../XrRender/Public/KinematicsAnimated.h"
 #include "client_spawn_manager.h"
 #include "hit.h"
@@ -41,7 +43,7 @@
 #include "characterphysicssupport.h"
 #include "game_cl_base_weapon_usage_statistic.h"
 #include "clsid_game.h"
-
+#include "../xrengine/xr_collide_form.h"
 #ifdef DEBUG
 #	include "debug_renderer.h"
 #endif
@@ -1367,10 +1369,10 @@ void dbg_draw_piramid (Fvector pos, Fvector dir, float size, float xdir, u32 col
 	
 	if (!Double)
 	{
-		RCache.dbg_DrawTRI(t, p0, p1, p4, color);
-		RCache.dbg_DrawTRI(t, p1, p2, p4, color);
-		RCache.dbg_DrawTRI(t, p2, p3, p4, color);
-		RCache.dbg_DrawTRI(t, p3, p0, p4, color);
+		DRender->dbg_DrawTRI(t, p0, p1, p4, color);
+		DRender->dbg_DrawTRI(t, p1, p2, p4, color);
+		DRender->dbg_DrawTRI(t, p2, p3, p4, color);
+		DRender->dbg_DrawTRI(t, p3, p0, p4, color);
 	}
 	else
 	{
@@ -1393,7 +1395,7 @@ void dbg_draw_piramid (Fvector pos, Fvector dir, float size, float xdir, u32 col
 
 void	CActor::OnRender_Network()
 {
-	RCache.OnFrameEnd();
+	DRender->OnFrameEnd();
 
 	//-----------------------------------------------------------------------------------------------------
 	float size = 0.2f;
@@ -1511,7 +1513,7 @@ void	CActor::OnRender_Network()
 		};
 
 		//drawing speed vectors
-		for (i=0; i<2; i++)
+		for (u32 i=0; i<2; i++)
 		{
 			c = float(i);
 			for (u32 k=0; k<3; k++)

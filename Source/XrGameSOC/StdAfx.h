@@ -3,7 +3,7 @@
 #pragma warning(disable:4995)
 #include "../XrEngine/stdafx.h"
 #pragma warning(default:4995)
-#pragma warning( 4 : 4018 )
+#pragma warning( 4 : 4018 ) 
 #pragma warning( 4 : 4244 )
 #pragma warning(disable:4505)
 

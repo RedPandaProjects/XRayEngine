@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include <dinput.h>
-#include "../xr_ioconsole.h"
+#include "../XrEngine/xr_ioconsole.h"
 #include "../XrEngine/xr_input.h"
-#include "../xr_ioc_cmd.h"
+#include "../XrEngine/xr_ioc_cmd.h"
 #include "xr_level_controller.h"
 #include "string_table.h"
 

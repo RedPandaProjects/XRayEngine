@@ -6,7 +6,9 @@
 #include "physicsshellholder.h"
 
 #include "ik_anim_state.h"
-#include "../ennumerateVertices.h"
+#include	"../XrRender/Public/KinematicsAnimated.h"
+#include	"../XrRender/Public/Kinematics.h"
+#include "../XrEngine/EnnumerateVertices.h"
 #ifdef DEBUG
 #include "PHDebug.h"
 #endif
@@ -19,7 +21,7 @@ void CIKLimbsController::Create( CGameObject* O )
 {
 	m_legs_blend	 = 0;
 	
-	IKinematicsAnimated* K=smart_cast<IKinematicsAnimated*>(O->Visual());
+	IKinematics* K=smart_cast<IKinematics*>(O->Visual());
 	m_object = O;
 	VERIFY( K );
 	{
@@ -41,7 +43,7 @@ void CIKLimbsController::Create( CGameObject* O )
 		u16 bones[4]={K->LL_BoneID("bip01_r_thigh"),K->LL_BoneID("bip01_r_calf"),K->LL_BoneID("bip01_r_foot"),K->LL_BoneID("bip01_r_toe0")};
 		LimbSetup(bones);
 	}
-	O->add_visual_callback(IKVisualCallback);
+	O->add_visual_callback(&CIKLimbsController::IKVisualCallback);
 }
 
 struct envc :
@@ -90,7 +92,7 @@ void get_toe(IKinematics *skeleton, Fvector & toe, const u16 bones[4])
 void	CIKLimbsController::LimbSetup(  const u16 bones[4] )
 {
 	_bone_chains.push_back( CIKLimb( ) );
-	IKinematicsAnimated *skeleton_animated = m_object->Visual( )->dcast_PKinematicsAnimated( );
+	IKinematics *skeleton_animated = m_object->Visual( )->dcast_PKinematics( );
 	VERIFY( skeleton_animated );
 	Fvector toe;
 	get_toe( skeleton_animated, toe, bones );
@@ -101,7 +103,7 @@ void	CIKLimbsController::LimbSetup(  const u16 bones[4] )
 
 void	CIKLimbsController::LimbCalculate( SCalculateData &cd )
 {
-	cd.do_collide	= m_legs_blend && !cd.m_K->LL_GetMotionDef( m_legs_blend->motionID )->marks.empty() ;//m_legs_blend->;
+	cd.do_collide	= m_legs_blend && !cd.m_K->dcast_PKinematicsAnimated()->LL_GetMotionDef( m_legs_blend->motionID )->marks.empty() ;//m_legs_blend->;
 	cd.m_limb.Calculate(cd);
 }
 
@@ -114,14 +116,14 @@ void	CIKLimbsController::LimbUpdate( CIKLimb &L, u16 i )
 
 IC void	update_blend (CBlend* &b)
 {
-	if(b && CBlend::eFREE_SLOT == b->blend)
+	if(b && CBlend::eFREE_SLOT == b->blend_state())
 		b = 0;
 }
 void CIKLimbsController::Calculate( )
 {
 	
 	update_blend( m_legs_blend );
-	IKinematicsAnimated *skeleton_animated = m_object->Visual()->dcast_PKinematicsAnimated( );
+	IKinematics *skeleton_animated = m_object->Visual()->dcast_PKinematics( );
 	const Fmatrix &obj = m_object->XFORM( );
 	VERIFY( skeleton_animated );
 
@@ -158,21 +160,21 @@ void CIKLimbsController::Destroy(CGameObject* O)
 	VERIFY(ik==this);
 #endif
 
-	O->remove_visual_callback(IKVisualCallback);
+	O->remove_visual_callback(&CIKLimbsController::IKVisualCallback);
 	xr_vector<CIKLimb>::iterator	i = _bone_chains.begin(), e = _bone_chains.end();
 	for(;e!=i;++i)
 		i->Destroy();
 	_bone_chains.clear();
 }
 
-void _stdcall CIKLimbsController:: IKVisualCallback( IKinematics* K )
+void  CIKLimbsController:: IKVisualCallback( IKinematics* K )
 {
 #ifdef DEBUG
 	if( ph_dbg_draw_mask1.test( phDbgIKOff ) )
 		return;
 #endif
 	
-	CGameObject* O=( ( CGameObject* )K->Update_Callback_Param );
+	CGameObject* O=( ( CGameObject* )K->GetUpdateCallbackParam() );
 	CPhysicsShellHolder*	Sh = smart_cast<CPhysicsShellHolder*>( O );
 	VERIFY( Sh );
 	CIKLimbsController* ik = Sh->character_ik_controller( );

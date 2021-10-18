@@ -46,11 +46,11 @@ void CStringTable::Load	(LPCSTR xml_file)
 	string_path					xml_file_full;
 	strconcat					(sizeof(xml_file_full),xml_file_full, xml_file, ".xml");
 	string_path					_s;
-	strconcat					(sizeof(_s),_s, STRING_TABLE_PATH, "\\", *(pData->m_sLanguage) );
+	strconcat					(sizeof(_s),_s, "text\\",  *(pData->m_sLanguage) );
 
-	bool xml_result				= uiXml.Init(CONFIG_PATH, _s, xml_file_full);
-	if(!xml_result)
-		Debug.fatal(DEBUG_INFO,"string table xml file not found %s, for language %s", xml_file_full, *(pData->m_sLanguage));
+	/*bool xml_result				*/ uiXml.Load(CONFIG_PATH, _s, xml_file_full);
+/*	if(!xml_result)
+		Debug.fatal(DEBUG_INFO,"string table xml file not found %s, for language %s", xml_file_full, *(pData->m_sLanguage));*/
 
 	//общий список всех записей таблицы в файле
 	int string_num = uiXml.GetNodesNum		(uiXml.GetRoot(), "string");

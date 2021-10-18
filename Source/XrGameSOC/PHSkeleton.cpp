@@ -8,6 +8,7 @@
 #include "PHSynchronize.h"
 #include "MathUtils.h"
 #include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrRender/Public/Kinematics.h"
 #include "PHObject.h"
 #include "PHCollideValidator.h"
 #include "ai_object_location.h"
@@ -166,12 +167,14 @@ void CPHSkeleton::SaveNetState(NET_Packet& P)
 	P.w_u8 (m_flags.get());
 	if(K)
 	{
-		P.w_u64(K->LL_GetBonesVisible());
+		for (int i = 0; i < BONE_COUNT_VISMASK; i++)
+			P.w_u64(K->LL_GetBonesVisible().visimask[i].flags);
 		P.w_u16(K->LL_GetBoneRoot());
 	}
 	else
 	{
-		P.w_u64(u64(-1));
+		for (int i = 0; i < BONE_COUNT_VISMASK; i++)
+			P.w_u64(u64(-1));
 		P.w_u16(0);
 	}
 	/////////////////////////////
@@ -313,23 +316,23 @@ void CPHSkeleton::UnsplitSingle(CPHSkeleton* SO)
 	IKinematics *newKinematics=smart_cast<IKinematics*>(O->Visual());
 	IKinematics *pKinematics  =smart_cast<IKinematics*>(obj->Visual());
 
-	Flags64 mask0,mask1;
+	BonesVisible mask0,mask1;
 	u16 split_bone=m_unsplited_shels.front().second;
-	mask1.assign(pKinematics->LL_GetBonesVisible());//source bones mask
+	mask1 = pKinematics->LL_GetBonesVisible();
 	pKinematics->LL_SetBoneVisible(split_bone,FALSE,TRUE);
 
 	pKinematics->CalculateBones_Invalidate	();
 	pKinematics->CalculateBones				();
 
-	mask0.assign(pKinematics->LL_GetBonesVisible());//first part mask
-	VERIFY2(mask0.flags,"mask0 -Zero");
+	mask0 = pKinematics->LL_GetBonesVisible();
+	VERIFY2(mask0.test(),"mask0 -Zero");
 	mask0.invert();
-	mask1.and(mask0.flags);//second part mask
+	mask1.and(mask0);//second part mask
 
 
 	newKinematics->LL_SetBoneRoot		(split_bone);
-	VERIFY2(mask1.flags,"mask1 -Zero");
-	newKinematics->LL_SetBonesVisible	(mask1.flags);
+	VERIFY2(mask0.test(),"mask1 -Zero");
+	newKinematics->LL_SetBonesVisible	(mask1);
 
 	newKinematics->CalculateBones_Invalidate	();
 	newKinematics->CalculateBones				();
@@ -381,8 +384,7 @@ void CPHSkeleton::RecursiveBonesCheck(u16 id)
 	IKinematics* K		= smart_cast<IKinematics*>(obj->Visual());
 	CBoneData& BD		= K->LL_GetData(u16(id));
 	//////////////////////////////////////////
-	Flags64 mask;
-	mask.assign(K->LL_GetBonesVisible());
+	BonesVisible mask = K->LL_GetBonesVisible();
 	///////////////////////////////////////////
 	if(
 		mask.is(1ui64<<(u64)id)&& 

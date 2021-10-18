@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "PHGeometryOwner.h"
 #include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrRender/Public/Kinematics.h"
 
 CPHGeometryOwner::CPHGeometryOwner()
 {

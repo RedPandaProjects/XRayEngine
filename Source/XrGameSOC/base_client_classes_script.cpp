@@ -10,7 +10,8 @@
 #include "base_client_classes.h"
 #include "base_client_classes_wrappers.h"
 #include "../XrEngine/feel_vision.h"
-#include "#include "../XrRender/Public/Kinematics.h""
+#include "../XrRender/Public/RenderVisual.h"
+#include "../XrRender/Public/Kinematics.h"
 #include "../XrRender/Public/KinematicsAnimated.h"
 #include "ai/stalker/ai_stalker.h"
 #include "../XrCore/net_utils.h"
@@ -155,7 +156,7 @@ void IRenderVisualScript::script_register		(lua_State *L)
 	module(L)
 	[
 		class_<IRenderVisual>("IRenderVisual")
-			.def(constructor<>())
+			/*.def(constructor<>())*/
 			.def("dcast_PKinematicsAnimated",&IRenderVisual::dcast_PKinematicsAnimated)
 	];
 }

@@ -83,14 +83,10 @@ struct Bonus_Struct
 		BonusName = "";
 		MoneyStr = "";
 		Money = 0;
-		IconShader = NULL;
 		IconRects.clear();
 	}
 	~Bonus_Struct()
 	{
-		if (IconShader)
-			IconShader.destroy();
-		IconShader = NULL;
 		IconRects.clear();
 	}
 

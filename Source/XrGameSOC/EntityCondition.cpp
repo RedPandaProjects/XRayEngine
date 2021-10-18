@@ -7,7 +7,9 @@
 #include "level.h"
 #include "game_cl_base.h"
 #include "entity_alive.h"
-#include "..\SkeletonCustom.h"
+#include "..\XrEngine\bone.h"
+#include "../XrRender/Public/Kinematics.h"
+#include "../XrRender/Public/KinematicsAnimated.h"
 #include "object_broker.h"
 
 #define MAX_HEALTH 1.0f

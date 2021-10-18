@@ -1,9 +1,10 @@
 #include "stdafx.h"
 #include "bloodsucker.h"
 #include "bloodsucker_state_manager.h"
-#include "../../../../skeletoncustom.h"
+#include "../../../../XrEngine/bone.h"
 #include "../../../actor.h"
 #include "../../../ActorEffector.h"
+#include "../../../../XrRender/Public/Kinematics.h"
 #include "../../../../XrRender/Public/KinematicsAnimated.h"
 #include "../../../level.h"
 #include "../../../material_manager.h"
@@ -19,8 +20,8 @@
 #include "../control_rotation_jump.h"
 
 #include "../../../sound_player.h"
-#include "../../../../camerabase.h"
-#include "../../Xr_level_controller.h"
+#include "../../../../XrEngine/camerabase.h"
+#include "../../../Xr_level_controller.h"
 #include "../../../ActorCondition.h"
 
 #include "../../../PHDestroyable.h"
@@ -212,7 +213,7 @@ void CAI_Bloodsucker::LoadVampirePPEffector(LPCSTR section)
 
 void  CAI_Bloodsucker::BoneCallback(CBoneInstance *B)
 {
-	CAI_Bloodsucker*	this_class = static_cast<CAI_Bloodsucker*> (B->Callback_Param);
+	CAI_Bloodsucker*	this_class = static_cast<CAI_Bloodsucker*> (B->callback_param());
 
 	this_class->Bones.Update(B, Device.dwTimeGlobal);
 }

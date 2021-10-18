@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "IKLimb.h"
-#include "../../SkeletonCustom.h"
+#include "../../XrEngine/bone.h"
 #include "../ode_include.h"
 #include "../MathUtils.h"
 #include "../GameObject.h"
@@ -8,6 +8,8 @@
 #include "../game_object_space.h"
 #include "../ik_anim_state.h"
 
+#include	"../XrRender/Public/KinematicsAnimated.h"
+#include	"../XrRender/Public/Kinematics.h"
 #ifdef DEBUG
 #include "../PHDebug.h"
 #endif
@@ -595,8 +597,9 @@ void CIKLimb::ApplyContext( SCalculateData &cd )
 	SetNewGoal(cld,cd);
 }
 
-void	CIKLimb::	AnimGoal			( Fmatrix &gl, IKinematicsAnimated	&K )
+void	CIKLimb::	AnimGoal			( Fmatrix &gl, IKinematics	&K )
 {
+
 	K.Bone_GetAnimPos( gl, m_bones[2], 1<<0, false );
 }
 
@@ -611,9 +614,10 @@ void	CIKLimb::Update( CGameObject *O, const	CBlend *b, u16 interval )
 	if(!m_collide)
 				return;
 	Fmatrix foot;
-	IKinematicsAnimated *K = O->Visual( )->dcast_PKinematicsAnimated( );
+	IKinematics *K = O->Visual( )->dcast_PKinematics( );
+	IKinematicsAnimated* Ka = O->Visual()->dcast_PKinematicsAnimated();
 	AnimGoal( foot,  *K );
-	anim_state.update( K, b, interval );
+	anim_state.update( Ka, b, interval );
 	Collide( collide_data, O, foot, anim_state.step() );
 }
 
@@ -645,8 +649,7 @@ void CIKLimb::Collide( SIKCollideData &cld, CGameObject *O, const Fmatrix &foot,
 			tri_plane( *tri, cld.m_plane );
 			cld.m_collide.add( pos, Fvector( ).mul( pick_v, R.range ) );
 			cld.clamp_down = R.range > pick_dist + EPS_L;
-		} else {
-			
+		}  /*else {
 			IRenderVisual* V =R.O->Visual();
 			if( V )
 			{
@@ -654,7 +657,7 @@ void CIKLimb::Collide( SIKCollideData &cld, CGameObject *O, const Fmatrix &foot,
 				if( K )
 				{
 					float dist = l_pick_dist;
-					if( K->PickBone(R.O->XFORM(), cld.m_plane.n, dist,  pos, pick_v,(u16) R.element))
+				/*	if( K->PickBone(R.O->XFORM(), cld.m_plane.n, dist,  pos, pick_v,(u16) R.element))
 					{
 						cld.collided = true;
 						Fvector point; point.add( pos, Fvector( ).mul( pick_v, dist ) );
@@ -664,7 +667,7 @@ void CIKLimb::Collide( SIKCollideData &cld, CGameObject *O, const Fmatrix &foot,
 				}
 			}	
 			
-		}
+		}*/
 	}
 
 #ifdef DEBUG
@@ -737,25 +740,25 @@ void CIKLimb::CalculateBones(SCalculateData &cd)
 	K->LL_GetBoneInstance(m_bones[0]).set_callback(bctCustom,BonesCallback0,&cd);
 	K->LL_GetBoneInstance(m_bones[1]).set_callback(bctCustom,BonesCallback1,&cd);
 	K->LL_GetBoneInstance(m_bones[2]).set_callback(bctCustom,BonesCallback2,&cd);
-	K->LL_GetBoneInstance(m_bones[0]).Callback_overwrite=TRUE;
-	K->LL_GetBoneInstance(m_bones[1]).Callback_overwrite=TRUE;
-	K->LL_GetBoneInstance(m_bones[2]).Callback_overwrite=TRUE;
+	K->LL_GetBoneInstance(m_bones[0]).set_callback_overwrite(true);
+	K->LL_GetBoneInstance(m_bones[1]).set_callback_overwrite(true);
+	K->LL_GetBoneInstance(m_bones[2]).set_callback_overwrite(true);
 	CBoneData &BD=K->LL_GetData(m_bones[0]);
 	K->Bone_Calculate(&BD,&K->LL_GetTransform(BD.GetParentID()));
 
 	K->LL_GetBoneInstance(m_bones[0]).set_callback(bctCustom,NULL,NULL);
 	K->LL_GetBoneInstance(m_bones[1]).set_callback(bctCustom,NULL,NULL);
 	K->LL_GetBoneInstance(m_bones[2]).set_callback(bctCustom,NULL,NULL);
-	K->LL_GetBoneInstance(m_bones[0]).Callback_overwrite=FALSE;
-	K->LL_GetBoneInstance(m_bones[1]).Callback_overwrite=FALSE;
-	K->LL_GetBoneInstance(m_bones[2]).Callback_overwrite=FALSE;
+	K->LL_GetBoneInstance(m_bones[0]).set_callback_overwrite(false);
+	K->LL_GetBoneInstance(m_bones[1]).set_callback_overwrite(false);
+	K->LL_GetBoneInstance(m_bones[2]).set_callback_overwrite(false);
 }
 
 void	DBG_DrawRotationLimitsY(const Fmatrix &start,float ang, float l, float h )
 {
 #ifdef DEBUG
 	DBG_DrawRotationY( start, ang - EPS, ang + EPS, 0.15f, color_xrgb( 0, 255, 0 ), false, 1 );
-	DBG_DrawRotationY( start, l, h, 0.15f, D3DCOLOR_ARGB( 50, 0, 250, 0 ), true );
+	DBG_DrawRotationY( start, l, h, 0.15f, color_argb( 50, 0, 250, 0 ), true );
 #endif // DEBUG
 }
 
@@ -763,7 +766,7 @@ void	DBG_DrawRotationLimitsZ(const Fmatrix &start,float ang, float l, float h )
 {
 #ifdef DEBUG
 	DBG_DrawRotationZ( start, ang - EPS, ang + EPS, 0.15f, color_xrgb( 0, 0, 255 ), false, 1 );
-	DBG_DrawRotationZ( start, l, h, 0.15f, D3DCOLOR_ARGB( 50, 0, 0, 250 ), true );
+	DBG_DrawRotationZ( start, l, h, 0.15f, color_argb( 50, 0, 0, 250 ), true );
 #endif // DEBUG
 }
 
@@ -771,7 +774,7 @@ void	DBG_DrawRotationLimitsX(const Fmatrix &start,float ang, float l, float h )
 {
 #ifdef DEBUG
 	DBG_DrawRotationX( start, ang + EPS, ang - EPS, 0.15f, color_xrgb( 255, 0, 0 ), false, 1 );
-	DBG_DrawRotationX( start, l, h, 0.15f, D3DCOLOR_ARGB( 50, 255, 0, 0 ), true );
+	DBG_DrawRotationX( start, l, h, 0.15f, color_argb( 50, 255, 0, 0 ), true );
 #endif // DEBUG
 }
 
@@ -803,7 +806,7 @@ IC void CIKLimb:: get_start( Fmatrix &start, SCalculateData &D, u16 bone )
 
 void 	CIKLimb::BonesCallback0				(CBoneInstance* B)
 {
-	SCalculateData* D	=(SCalculateData*)B->Callback_Param;
+	SCalculateData* D	=(SCalculateData*)B->callback_param();
 	VERIFY( D );
 
 	float	const	*x	=D->m_angles;
@@ -828,7 +831,7 @@ void 	CIKLimb::BonesCallback0				(CBoneInstance* B)
 }
 void 	CIKLimb::BonesCallback1				(CBoneInstance* B)
 {
-	SCalculateData	*D	=(SCalculateData*)B->Callback_Param;
+	SCalculateData	*D	=(SCalculateData*)B->callback_param();
 
 	float	const	*x	=D->m_angles;
 	Fmatrix 		bm;
@@ -840,7 +843,7 @@ void 	CIKLimb::BonesCallback1				(CBoneInstance* B)
 }
 void 	CIKLimb::BonesCallback2				(CBoneInstance* B)
 {
-	SCalculateData	*D		=(SCalculateData*)B->Callback_Param;
+	SCalculateData	*D		=(SCalculateData*)B->callback_param();
 	
 	float	const	*x		=D->m_angles;
 	Fmatrix 		bm;

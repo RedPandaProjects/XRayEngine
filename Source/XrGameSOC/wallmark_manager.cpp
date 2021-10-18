@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "wallmark_manager.h"
 #include "Level.h"
-#include "GameMtlLib.h"
+#include "../XrEngine/gamemtllib.h"
 #include "CalculateTriangle.h"
 #include "profiler.h"
 #ifdef DEBUG
@@ -212,7 +212,7 @@ void CWalmarkManager::Load (LPCSTR section)
 	ui_shader	s;
 	for (int k=0; k<cnt; ++k)
 	{
-		s.create ("effects\\wallmark",_GetItem(wallmarks_name,k,tmp));
+		s->create ("effects\\wallmark",_GetItem(wallmarks_name,k,tmp));
 		m_wallmarks.push_back	(s);
 	}
 }

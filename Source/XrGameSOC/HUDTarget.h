@@ -1,7 +1,7 @@
 #pragma once
 
 #include "HUDCrosshair.h"
-#include "../xr_collide_defs.h"
+#include "../XrCDB/xr_collide_defs.h"
 
 class CHUDManager;
 
@@ -15,7 +15,6 @@ private:
 
 private:
 	ui_shader		hShader;
-	ref_geom		hGeom;
 	float			fuzzyShowInfo;
 	rq_result		RQ;
 	rq_results		RQR;

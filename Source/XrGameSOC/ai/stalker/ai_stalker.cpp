@@ -19,13 +19,14 @@
 #include "../../inventory.h"
 #include "../../artifact.h"
 #include "../../phmovementcontrol.h"
-#include "../Xrserver_objects_alife_monsters.h"
+#include "../../Xrserver_objects_alife_monsters.h"
 #include "../../cover_evaluators.h"
-#include "../Xrserver.h"
-#include "../Xr_level_controller.h"
+#include "../../Xrserver.h"
+#include "../../Xr_level_controller.h"
 #include "../../hudmanager.h"
 #include "../../clsid_game.h"
-#include "../../../skeletoncustom.h"
+#include "Kinematics.h"
+#include "../../../xrEngine/bone.h"
 #include "../../character_info.h"
 #include "../../actor.h"
 #include "../../relation_registry.h"
@@ -457,12 +458,11 @@ void CAI_Stalker::net_Destroy()
 	inherited::net_Destroy				();
 	CInventoryOwner::net_Destroy		();
 	m_pPhysics_support->in_NetDestroy	();
-
-	Device.remove_from_seq_parallel	(
+	Device.remove_from_seq_parallel(
 		fastdelegate::FastDelegate0<>(
 			this,
 			&CAI_Stalker::update_object_handler
-		)
+			)
 	);
 
 #ifdef DEBUG
@@ -1020,7 +1020,7 @@ void CAI_Stalker::UpdateCamera			()
 			temp						= weapon_shot_effector_direction(temp);
 	}
 
-	g_pGameLevel->Cameras().Update		(eye_matrix.c,temp,eye_matrix.j,new_fov,.75f,new_range);
+	g_pGameLevel->Cameras().Update		(eye_matrix.c,temp,eye_matrix.j,new_fov,.75f,new_range,0);
 }
 
 bool CAI_Stalker::can_attach			(const CInventoryItem *inventory_item) const

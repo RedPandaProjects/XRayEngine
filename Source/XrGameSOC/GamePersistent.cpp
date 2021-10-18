@@ -1,8 +1,10 @@
 #include "pch_script.h"
 #include "gamepersistent.h"
-#include "../fmesh.h"
-#include "../xr_ioconsole.h"
-#include "gamemtllib.h"
+#include "../XrEngine/fmesh.h"
+#include "../XrEngine/xr_ioconsole.h"
+#include "../XrEngine/gamemtllib.h"
+#include "../XrRender/Public/RenderVisual.h"
+#include "../XrRender/Public/Kinematics.h"
 #include "../XrRender/Public/KinematicsAnimated.h"
 #include "profiler.h"
 #include "MainMenu.h"
@@ -16,7 +18,8 @@
 #include "stalker_animation_data_storage.h"
 #include "stalker_velocity_holder.h"
 
-#include "../CameraManager.h"
+#include "../XrEngine/CameraManager.h"
+#include "../XrEngine/EnvironmentSOC.h"
 #include "actor.h"
 
 #ifndef MASTER_GOLD
@@ -39,7 +42,7 @@
 
 CGamePersistent::CGamePersistent(void)
 {
-	m_game_params.m_e_game_type	= GAME_ANY;
+	m_game_params.m_e_game_type_for_soc	= GAME_ANY;
 	ambient_sound_next_time		= 0;
 	ambient_effect_next_time	= 0;
 	ambient_effect_stop_time	= 0;
@@ -94,7 +97,7 @@ CGamePersistent::~CGamePersistent(void)
 void CGamePersistent::RegisterModel(IRenderVisual* V)
 {
 	// Check types
-	switch (V->Type){
+	switch (V->getType()){
 	case MT_SKELETON_ANIM:
 	case MT_SKELETON_RIGID:{
 		u16 def_idx		= GMLib.GetMaterialIdx("default_object");
@@ -160,7 +163,7 @@ void CGamePersistent::Disconnect()
 	__super::Disconnect			();
 	// stop all played emitters
 	::Sound->stop_emitters		();
-	m_game_params.m_e_game_type	= GAME_ANY;
+	m_game_params.m_e_game_type_for_soc	= GAME_ANY;
 }
 
 #include "xr_level_controller.h"
@@ -177,19 +180,19 @@ void CGamePersistent::UpdateGameType			()
 {
 	__super::UpdateGameType		();
 	//  [7/11/2005]
-	if (!xr_strcmp(m_game_params.m_game_type, "single")) m_game_params.m_e_game_type = GAME_SINGLE;
+	if (!xr_strcmp(m_game_params.m_game_type, "single")) m_game_params.m_e_game_type_for_soc = GAME_SINGLE;
 	else
-		if (!xr_strcmp(m_game_params.m_game_type, "deathmatch")) m_game_params.m_e_game_type = GAME_DEATHMATCH;
+		if (!xr_strcmp(m_game_params.m_game_type, "deathmatch")) m_game_params.m_e_game_type_for_soc = GAME_DEATHMATCH;
 		else
-			if (!xr_strcmp(m_game_params.m_game_type, "teamdeathmatch")) m_game_params.m_e_game_type = GAME_TEAMDEATHMATCH;
+			if (!xr_strcmp(m_game_params.m_game_type, "teamdeathmatch")) m_game_params.m_e_game_type_for_soc = GAME_TEAMDEATHMATCH;
 			else
-				if (!xr_strcmp(m_game_params.m_game_type, "artefacthunt")) m_game_params.m_e_game_type = GAME_ARTEFACTHUNT;
-				else m_game_params.m_e_game_type = GAME_ANY;
+				if (!xr_strcmp(m_game_params.m_game_type, "artefacthunt")) m_game_params.m_e_game_type_for_soc = GAME_ARTEFACTHUNT;
+				else m_game_params.m_e_game_type_for_soc = GAME_ANY;
 	//  [7/11/2005]
 
-	if(	m_game_params.m_e_game_type == GAME_DEATHMATCH ||
-		m_game_params.m_e_game_type == GAME_TEAMDEATHMATCH ||
-		m_game_params.m_e_game_type == GAME_ARTEFACTHUNT
+	if(	m_game_params.m_e_game_type_for_soc == GAME_DEATHMATCH ||
+		m_game_params.m_e_game_type_for_soc == GAME_TEAMDEATHMATCH ||
+		m_game_params.m_e_game_type_for_soc == GAME_ARTEFACTHUNT
 		)
 	g_current_keygroup = _mp;
 	else
@@ -210,51 +213,51 @@ void CGamePersistent::WeathersUpdate()
 {
 	if (g_pGameLevel && !g_dedicated_server)
 	{
-		CActor* actor				= smart_cast<CActor*>(Level().CurrentViewEntity());
-		BOOL bIndoor				= TRUE;
-		if (actor) bIndoor			= actor->renderable_ROS()->get_luminocity_hemi()<0.05f;
+		CActor* actor = smart_cast<CActor*>(Level().CurrentViewEntity());
+		BOOL bIndoor = TRUE;
+		if (actor) bIndoor = actor->renderable_ROS()->get_luminocity_hemi() < 0.05f;
 
-		int data_set				= (Random.randF()<(1.f-Environment().CurrentEnv.weight))?0:1; 
-		CEnvDescriptor* _env		= Environment().Current[data_set]; VERIFY(_env);
-		CEnvAmbient* env_amb		= _env->env_ambient;
-		if (env_amb){
+		int data_set = (Random.randF() < (1.f - EnvironmentAsSOC()->CurrentEnv->weight)) ? 0 : 1;
+		IEnvDescriptor* _env = EnvironmentAsSOC()->Current[data_set]; VERIFY(_env);
+		CEnvSOCAmbient* env_amb = static_cast<CEnvSOCAmbient*>(_env->env_ambient);
+		if (env_amb) {
 			// start sound
-			if (Device.dwTimeGlobal > ambient_sound_next_time){
-				ref_sound* snd			= env_amb->get_rnd_sound();
-				ambient_sound_next_time	= Device.dwTimeGlobal + env_amb->get_rnd_sound_time();
-				if (snd){
+			if (Device.dwTimeGlobal > ambient_sound_next_time) {
+				ref_sound* snd = env_amb->get_rnd_sound();
+				ambient_sound_next_time = Device.dwTimeGlobal + env_amb->get_rnd_sound_time();
+				if (snd) {
 					Fvector	pos;
-					float	angle		= ::Random.randF(PI_MUL_2);
-					pos.x				= _cos(angle);
-					pos.y				= 0;
-					pos.z				= _sin(angle);
-					pos.normalize		().mul(env_amb->get_rnd_sound_dist()).add(Device.vCameraPosition);
-					pos.y				+= 10.f;
-					snd->play_at_pos	(0,pos);
+					float	angle = ::Random.randF(PI_MUL_2);
+					pos.x = cosf(angle);
+					pos.y = 0;
+					pos.z = sinf(angle);
+					pos.normalize().mul(env_amb->get_rnd_sound_dist()).add(Device.vCameraPosition);
+					pos.y += 10.f;
+					snd->play_at_pos(0, pos);
 				}
 			}
 
 			// start effect
-			if ((FALSE==bIndoor) && (0==ambient_particles) && Device.dwTimeGlobal>ambient_effect_next_time){
-				CEnvAmbient::SEffect* eff			= env_amb->get_rnd_effect(); 
-				if (eff){
-					Environment().wind_gust_factor	= eff->wind_gust_factor;
-					ambient_effect_next_time		= Device.dwTimeGlobal + env_amb->get_rnd_effect_time();
-					ambient_effect_stop_time		= Device.dwTimeGlobal + eff->life_time;
-					ambient_particles				= CParticlesObject::Create(eff->particles.c_str(),FALSE,false);
-					Fvector pos; pos.add			(Device.vCameraPosition,eff->offset); 
-					ambient_particles->play_at_pos	(pos);
-					if (eff->sound._handle())		eff->sound.play_at_pos(0,pos);
+			if ((FALSE == bIndoor) && (0 == ambient_particles) && Device.dwTimeGlobal > ambient_effect_next_time) {
+				CEnvSOCAmbient::SEffect* eff = env_amb->get_rnd_effect();
+				if (eff) {
+					EnvironmentAsSOC()->wind_gust_factor = eff->wind_gust_factor;
+					ambient_effect_next_time = Device.dwTimeGlobal + env_amb->get_rnd_effect_time();
+					ambient_effect_stop_time = Device.dwTimeGlobal + eff->life_time;
+					ambient_particles = CParticlesObject::Create(eff->particles.c_str(), FALSE, false);
+					Fvector pos; pos.add(Device.vCameraPosition, eff->offset);
+					ambient_particles->play_at_pos(pos);
+					if (eff->sound._handle())		eff->sound.play_at_pos(0, pos);
 				}
 			}
 		}
 		// stop if time exceed or indoor
-		if (bIndoor || Device.dwTimeGlobal>=ambient_effect_stop_time){
+		if (bIndoor || Device.dwTimeGlobal >= ambient_effect_stop_time) {
 			if (ambient_particles)					ambient_particles->Stop();
-			Environment().wind_gust_factor			= 0.f;
+			EnvironmentAsSOC()->wind_gust_factor = 0.f;
 		}
 		// if particles not playing - destroy
-		if (ambient_particles&&!ambient_particles->IsPlaying())
+		if (ambient_particles && !ambient_particles->IsPlaying())
 			CParticlesObject::Destroy(ambient_particles);
 	}
 }
@@ -361,7 +364,7 @@ void CGamePersistent::OnFrame	()
 					else
 						C = Actor()->Holder()->Camera();
 
-				Actor()->Cameras().Update		(C);
+				Actor()->Cameras().UpdateFromCamera		(C);
 				Actor()->Cameras().ApplyDevice	(VIEWPORT_NEAR);
 				}
 			}
@@ -513,12 +516,12 @@ void CGamePersistent::OnRenderPPUI_PP()
 	MainMenu()->OnRenderPPUI_PP();
 }
 #include "string_table.h"
-#include "../x_ray.h"
+#include "../XrEngine/x_ray.h"
 void CGamePersistent::LoadTitle(LPCSTR str)
 {
 	string512			buff;
 	sprintf_s				(buff, "%s...", CStringTable().translate(str).c_str());
-	pApp->LoadTitleInt	(buff);
+	pApp->LoadTitleInt	(buff,"","");
 }
 
 bool CGamePersistent::CanBePaused()

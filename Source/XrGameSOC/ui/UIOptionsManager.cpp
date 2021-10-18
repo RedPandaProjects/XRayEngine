@@ -5,7 +5,7 @@
 #include "StdAfx.h"
 #include "UIOptionsManager.h"
 #include "UIOptionsItem.h"
-#include "../Xr_ioconsole.h"
+#include "../XrEngine/Xr_ioconsole.h"
 
 CUIOptionsManager::CUIOptionsManager(){
 	m_b_vid_restart = false;

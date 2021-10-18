@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "../effectorpp.h"
+#include "../XrEngine/effectorpp.h"
 #include "script_export_space.h"
 #include "../XrEngine/cameramanager.h"
 

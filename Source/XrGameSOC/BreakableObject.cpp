@@ -6,9 +6,10 @@
 #include "PHStaticGeomShell.h"
 #include "PhysicsShell.h"
 #include "Physics.h"
-#include "../xr_collide_form.h"
+#include "../XrEngine/xr_collide_form.h"
 #include "../XrCore/net_utils.h"
 #include "clsid_game.h"
+#include "../XrRender/Public/Kinematics.h"
 #include "../XrRender/Public/KinematicsAnimated.h"
 
 //////////////////////////////////////////////////////////////////////
@@ -167,7 +168,7 @@ void CBreakableObject::CreateBroken()
 	m_Shell->addEquelInertiaToEls(m);
 	m_Shell->SmoothElementsInertia(0.3f);
 	Fobb b;
-	Visual()->vis.box.getradius(b.m_halfsize);
+	Visual()->getVisData().box.getradius(b.m_halfsize);
 	m_Shell->SetMaxAABBRadius(_max(_max(b.m_halfsize.x,b.m_halfsize.y),b.m_halfsize.z)*2.f);//+2.f
 
 }

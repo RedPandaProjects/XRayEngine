@@ -3,7 +3,7 @@
 #include "UIScrollBar.h"
 #include "../ui_base.h"
 #include "../UICursor.h"
-#include "../Xr_input.h"	
+#include "../XrEngine/Xr_input.h"	
 
 CUIScrollView::CUIScrollView()
 {

@@ -2,7 +2,7 @@
 #include "alife_space.h"
 #include "hit.h"
 #include "ode_include.h"
-#include "..\bone.h"
+#include "..\XrEngine\bone.h"
 #include "../XrCore/net_utils.h"
 #include "xrMessages.h"
 #include "Level.h"

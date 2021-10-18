@@ -5,7 +5,7 @@
 
 #include "../ui_base.h"
 #include <boost/noncopyable.hpp>
-
+#include "..\UICustomItem.h"
 typedef CGameFont::EAligment ETextAlignment;
 
 class IUIFontControl{

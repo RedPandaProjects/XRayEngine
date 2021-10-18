@@ -6,7 +6,7 @@ class CUICursor;
 class CUIMessageBoxEx;
 class CGameSpy_HTTP;
 class CGameSpy_Full;
-#include "../IInputReceiver.h"
+#include "../XrEngine/IInputReceiver.h"
 #include "../XrEngine/IGame_Persistent.h"
 #include "UIDialogHolder.h"
 #include "ui/UIWndCallback.h"
@@ -156,6 +156,7 @@ public:
 	LPCSTR			GetGSVer						();
 		bool		ValidateCDKey					();
 		bool		IsCDKeyIsValid();
+		virtual bool CanSkipSceneRendering() { return false; }
 };
 
 extern CMainMenu*	MainMenu();

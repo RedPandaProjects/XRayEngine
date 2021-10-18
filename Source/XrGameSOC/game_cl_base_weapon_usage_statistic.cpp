@@ -8,6 +8,8 @@
 #include "xrServer.h"
 #include "hudmanager.h"
 #include "game_cl_base_weapon_usage_statistic.h"
+#include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrRender/Public/Kinematics.h"
 //#include "GameFont.h"
 
 BulletData::BulletData(shared_str FName, shared_str WName, SBullet* pBullet) 

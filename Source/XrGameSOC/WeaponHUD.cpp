@@ -5,8 +5,9 @@
 #include "stdafx.h"
 #include "WeaponHUD.h"
 #include "Weapon.h"
-#include "../Motion.h"
+#include "../XrEngine/Motion.h"
 #include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrRender/Public/Kinematics.h"
 #include "level.h"
 #include "MathUtils.h"
 weapon_hud_container* g_pWeaponHUDContainer=0;
@@ -25,12 +26,12 @@ BOOL weapon_hud_value::load(const shared_str& section, CHudItem* owner)
 	// Visual
 	LPCSTR visual_name			= pSettings->r_string(section, "visual");
 	m_animations				= smart_cast<IKinematicsAnimated*>(::Render->model_Create(visual_name));
-
+	IKinematics* pK = smart_cast<IKinematics*>(m_animations);
 	// fire bone	
 	if(smart_cast<CWeapon*>(owner)){
 		LPCSTR fire_bone		= pSettings->r_string					(section,"fire_bone");
-		m_fire_bone				= m_animations->LL_BoneID	(fire_bone);
-		if (m_fire_bone>=m_animations->LL_BoneCount())	
+		m_fire_bone				= pK->LL_BoneID	(fire_bone);
+		if (m_fire_bone>= pK->LL_BoneCount())
 			Debug.fatal	(DEBUG_INFO,"There is no '%s' bone for weapon '%s'.",fire_bone, *section);
 		m_fp_offset				= pSettings->r_fvector3					(section,"fire_point");
 		if(pSettings->line_exist(section,"fire_point2")) 
@@ -122,9 +123,11 @@ void CWeaponHUD::animDisplay(MotionID M, BOOL bMixIn)
 {
 	if(m_bVisible){
 		IKinematicsAnimated* PKinematicsAnimated		= smart_cast<IKinematicsAnimated*>(Visual());
+
+		IKinematics* pK = smart_cast<IKinematics*>(PKinematicsAnimated);
 		VERIFY											(PKinematicsAnimated);
 		PKinematicsAnimated->PlayCycle					(M,bMixIn);
-		PKinematicsAnimated->CalculateBones_Invalidate	();
+		pK->CalculateBones_Invalidate	();
 	}
 }
 void CWeaponHUD::animPlay			(MotionID M,	BOOL bMixIn, CHudItem* W, u32 state)

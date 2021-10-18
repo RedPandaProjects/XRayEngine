@@ -1,8 +1,11 @@
 #pragma once
 
-#include "../../../../skeletoncustom.h"
+#include "../../../../XrEngine/bone.h"
 #include "../../../actor.h"
-#include "../../../../CameraBase.h"
+#include "../../../../XREngine/CameraBase.h"
+
+#include "../../../../XrRender/Public/Kinematics.h"
+#include "../../../../XrRender/Public/KinematicsAnimated.h"
 
 #define TEMPLATE_SPECIALIZATION template <\
 	typename _Object\

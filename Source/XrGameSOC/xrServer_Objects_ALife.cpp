@@ -23,8 +23,7 @@
 #	include "defines.h"
 	LPCSTR GAME_CONFIG = "game.ltx";
 #else
-#	include "..\bone.h"
-#	include "..\render.h"
+#	include "..\XrEngine\bone.h"
 #endif
 
 bool SortStringsByAlphabetPred (const shared_str& s1, const shared_str& s2)

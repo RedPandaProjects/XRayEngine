@@ -10,7 +10,7 @@
 #include "../level.h"
 #include "../game_cl_base.h"
 #include "../game_cl_teamdeathmatch.h"
-#include "../Xr_ioconsole.h"
+#include "../XrEngine/Xr_ioconsole.h"
 
 CUIKickPlayer::CUIKickPlayer()
 {

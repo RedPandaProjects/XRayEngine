@@ -4,6 +4,8 @@
 #include "../../../level.h"
 #include "../../../material_manager.h"
 #include "../../../level_debug.h"
+#include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrRender/Public/Kinematics.h"
 
 
 CPolterSpecialAbility::CPolterSpecialAbility(CPoltergeist *polter)

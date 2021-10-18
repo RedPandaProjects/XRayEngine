@@ -411,7 +411,7 @@ IC bool RAYvsCYLINDER(const Fcylinder& c_cylinder, const Fvector &S, const Fvect
 	}
 }
 
-
+/*
 void capped_cylinder_ray_collision_test()
 {
 	Fcylinder c;
@@ -478,4 +478,4 @@ void capped_cylinder_ray_collision_test()
 	}
 		Msg("current intersect time %f ms",t.GetElapsed_sec()*1000.f);
 
-}
+}*/

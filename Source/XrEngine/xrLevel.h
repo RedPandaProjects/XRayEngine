@@ -1,5 +1,4 @@
-#ifndef xrLevelH
-#define xrLevelH
+
 
 #pragma once
 
@@ -88,9 +87,8 @@ struct	hdrNODES
 	xrGUID	guid;
 };
 #pragma pack(pop)
+/*
 
-#pragma pack(push,1)
-#pragma pack(1)
 #ifndef _EDITOR
 class NodePosition {
 	u8	data[5];
@@ -204,7 +202,9 @@ public:
 	friend class	CRenumbererConverter;
 };
 #endif
-
+*/
+#pragma pack(push,1)
+#pragma pack(1)
 #ifdef AI_COMPILER
 struct NodeCompressed6 {
 public:
@@ -308,6 +308,4 @@ const u32 XRCL_CURRENT_VERSION		=	18; //17;	// input
 const u32 XRCL_PRODUCTION_VERSION	=	14;	// output 
 const u32 CFORM_CURRENT_VERSION		=	4;
 const u32 MAX_NODE_BIT_COUNT		=	23;
-const u32 XRAI_CURRENT_VERSION		=	10;
-
-#endif // xrLevelH
+//const u32 XRAI_CURRENT_VERSION		=	10;

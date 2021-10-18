@@ -13,6 +13,9 @@
 #include "stalker_movement_manager.h"
 #include "game_object_space.h"
 #include "effectorshot.h"
+#include "../XrRender/Public/RenderVisual.h"
+#include "../XrRender/Public/Kinematics.h"
+#include "../XrRender/Public/KinematicsAnimated.h"
 
 #define TEMPLATE_SPECIALIZATION\
 	template <\
@@ -42,7 +45,7 @@ typedef detail	<  50, 100,   0,   0>	head;
 TEMPLATE_SPECIALIZATION
 void _detail::callback		(CBoneInstance *B)
 {
-	CAI_Stalker*			A = static_cast<CAI_Stalker*>(B->Callback_Param);
+	CAI_Stalker*			A = static_cast<CAI_Stalker*>(B->callback_param());
 	VERIFY					(_valid(B->mTransform));
 	Fvector c				= B->mTransform.c;
 	Fmatrix					spin;
@@ -86,7 +89,7 @@ void _detail::callback		(CBoneInstance *B)
 
 void CStalkerAnimationManager::assign_bone_callbacks	()
 {
-	IKinematics						*kinematics = smart_cast<IKinematicsAnimated*>(m_visual);
+	IKinematics						*kinematics = m_visual->dcast_PKinematics();
 	VERIFY							(kinematics);
 
 	LPCSTR							section = *object().cNameSect();

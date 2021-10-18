@@ -6,6 +6,7 @@
 #include "PHMovementControl.h"
 #include "CustomMonster.h"
 #include "PhysicsShell.h"
+#include "../XrRender/Public/Kinematics.h"
 #include "../XrRender/Public/KinematicsAnimated.h"
 #include "Actor.h"
 #include "CustomZone.h"
@@ -24,7 +25,7 @@
 #	include "PHDebug.h"
 #endif // DEBUG
 
-#include "../device.h"
+#include "../xrengine/device.h"
 
 #ifdef PRIQUEL
 #	define USE_SMART_HITS
@@ -186,6 +187,7 @@ void CCharacterPhysicsSupport::in_NetSpawn(CSE_Abstract* e)
 
 	CPHDestroyable::Init();//this zerows colbacks !!;
 	IKinematicsAnimated*ka= smart_cast<IKinematicsAnimated*>(m_EntityAlife.Visual());
+	IKinematics* k = smart_cast<IKinematics*>(m_EntityAlife.Visual());
 	if(!m_EntityAlife.g_Alive())
 	{
 		
@@ -201,8 +203,8 @@ void CCharacterPhysicsSupport::in_NetSpawn(CSE_Abstract* e)
 									  ///этот хак нужен, потому что некоторым монстрам 
 									  ///анимация после спона, может быть вообще не назначена
 	}
-	ka->CalculateBones_Invalidate();
-	ka->CalculateBones();
+	k->CalculateBones_Invalidate();
+	k->CalculateBones();
 	
 	CPHSkeleton::Spawn(e);
 	movement()->EnableCharacter();
@@ -632,7 +634,7 @@ void CCharacterPhysicsSupport::ActivateShell			( CObject* who )
 		anim_mov_blend->playing = false;
 		*/
 		m_EntityAlife.destroy_anim_mov_ctrl( );
-		BR.Callback_overwrite = TRUE;
+		BR.set_callback_overwrite( TRUE);
 	}
 	//
 
@@ -652,7 +654,7 @@ void CCharacterPhysicsSupport::ActivateShell			( CObject* who )
 				K->LL_GetBoneInstance( I ).reset_callback( );
 
 	if( anim_mov_ctrl )	//we do not whant to move by long animation in root 
-			BR.Callback_overwrite = TRUE;
+			BR.set_callback_overwrite( TRUE);
 
 	K->CalculateBones_Invalidate();
 	K->CalculateBones	();
@@ -680,7 +682,7 @@ void CCharacterPhysicsSupport::ActivateShell			( CObject* who )
 	//
 
 	if(anim_mov_ctrl) //we do not whant to move by long animation in root 
-			BR.Callback_overwrite = TRUE;
+			BR.set_callback_overwrite( TRUE);
 
 	//set shell params
 	if(!smart_cast<CCustomZone*>(who))
@@ -724,7 +726,7 @@ void CCharacterPhysicsSupport::ActivateShell			( CObject* who )
 	m_pPhysicsShell->set_CallbackData((void*)this);
 //
 
-	if(anim_mov_ctrl && anim_mov_blend && anim_mov_blend->blend != CBlend::eFREE_SLOT &&  anim_mov_blend->timeCurrent + Device.fTimeDelta*anim_mov_blend->speed < anim_mov_blend->timeTotal-SAMPLE_SPF-EPS)//.
+	if(anim_mov_ctrl && anim_mov_blend && anim_mov_blend->blend_state() != CBlend::eFREE_SLOT &&  anim_mov_blend->timeCurrent + Device.fTimeDelta*anim_mov_blend->speed < anim_mov_blend->timeTotal-SAMPLE_SPF-EPS)//.
 	{
 		const Fmatrix sv_xform = mXFORM;
 		mXFORM.set( start_xform );
