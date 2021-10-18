@@ -144,7 +144,7 @@ void dxEnvDescriptorMixerRender::lerp(IEnvDescriptorRender *inA, IEnvDescriptorR
 	clouds_r_textures.push_back	(mk_pair(1,pB->clouds_texture));
 }
 
-void dxEnvDescriptorRender::OnDeviceCreate(CEnvDescriptor &owner)
+void dxEnvDescriptorRender::OnDeviceCreate(IEnvDescriptor &owner)
 {
 	if (owner.sky_texture_name.size())	
 		sky_texture.create		(owner.sky_texture_name.c_str());
@@ -169,7 +169,7 @@ dxEnvironmentRender::dxEnvironmentRender()
 	tsky1	= DEV->_CreateTexture("$user$sky1");
 }
 
-void dxEnvironmentRender::OnFrame(CEnvironment &env)
+void dxEnvironmentRender::OnFrame(IEnvironment &env)
 {
 	dxEnvDescriptorMixerRender &mixRen = *(dxEnvDescriptorMixerRender*)&*env.CurrentEnv->m_pDescriptorMixer;
 
@@ -224,7 +224,7 @@ void dxEnvironmentRender::OnUnload()
 	tonemap	= 0;
 }
 
-void dxEnvironmentRender::RenderSky(CEnvironment &env)
+void dxEnvironmentRender::RenderSky(IEnvironment &env)
 {
 	// clouds_sh.create		("clouds","null");
 	//. this is the bug-fix for the case when the sky is broken
@@ -288,7 +288,7 @@ void dxEnvironmentRender::RenderSky(CEnvironment &env)
 #endif
 }
 
-void dxEnvironmentRender::RenderClouds(CEnvironment &env)
+void dxEnvironmentRender::RenderClouds(IEnvironment &env)
 {
 	::Render->rmFar				();
 
@@ -308,7 +308,7 @@ void dxEnvironmentRender::RenderClouds(CEnvironment &env)
 	u32		C1					= color_rgba(iFloor(env.CurrentEnv->clouds_color.x*255.f),iFloor(env.CurrentEnv->clouds_color.y*255.f),iFloor(env.CurrentEnv->clouds_color.z*255.f),iFloor(env.CurrentEnv->clouds_color.w*255.f));
 
 	// Fill index buffer
-	u16*	pib					= RCache.Index.Lock	(env.CloudsIndices.size(),i_offset);
+	/*u16* pib = RCache.Index.Lock(env.CloudsIndices.size(), i_offset);
 	CopyMemory					(pib,&env.CloudsIndices.front(),env.CloudsIndices.size()*sizeof(u16));
 	RCache.Index.Unlock			(env.CloudsIndices.size());
 
@@ -325,7 +325,7 @@ void dxEnvironmentRender::RenderClouds(CEnvironment &env)
 	dxEnvDescriptorMixerRender	&mixRen = *(dxEnvDescriptorMixerRender*)&*env.CurrentEnv->m_pDescriptorMixer;
 	RCache.set_Textures			(&mixRen.clouds_r_textures);
 	RCache.Render				(D3DPT_TRIANGLELIST,v_offset,0,env.CloudsVerts.size(),i_offset,env.CloudsIndices.size()/3);
-
+	*/
 	::Render->rmNormal			();
 }
 

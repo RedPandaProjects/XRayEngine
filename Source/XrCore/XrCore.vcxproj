@@ -448,6 +448,9 @@
       <Project>{ff16ef0a-8a51-4c36-9213-4aa87cb4b317}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="..\XRayEngine.natvis" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

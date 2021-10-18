@@ -152,8 +152,9 @@ shared_str CEffect_Thunderbolt::AppendDef(IEnvironment& environment, CInifile* p
 	if (!sect||(0==sect[0])) return "";
 	for (CollectionVecIt it=collection.begin(); it!=collection.end(); it++)
 		if ((*it)->section==sect)	return (*it)->section;
+    return "";
 	//collection.push_back		(environment.thunderbolt_collection(pIni, thunderbolts, sect));
-	return collection.back()->section;
+	//return collection.back()->section;
 }
 
 BOOL CEffect_Thunderbolt::RayPick(const Fvector& s, const Fvector& d, float& dist)

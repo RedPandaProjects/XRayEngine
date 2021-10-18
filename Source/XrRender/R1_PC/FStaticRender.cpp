@@ -69,7 +69,7 @@ void					CRender::create()
 	else										o.distortion = FALSE;
 	if (strstr(Core.Params, "-nodistort"))		o.distortion = FALSE;
 
-	if (xrGameManager::GetGame() == EGame::CS)
+	if (xrGameManager::GetGame() != EGame::COP)
 	{
 		o.distortion = FALSE;
 	}
@@ -80,7 +80,7 @@ void					CRender::create()
 	if ( v_dev >= v_need )						o.color_mapping = TRUE;
 	else										o.color_mapping = FALSE;
 	if (strstr(Core.Params,"-nocolormap"))		o.color_mapping = FALSE;
-	if (xrGameManager::GetGame() == EGame::CS)
+	if (xrGameManager::GetGame() != EGame::COP)
 	{
 		o.color_mapping = FALSE;
 	}

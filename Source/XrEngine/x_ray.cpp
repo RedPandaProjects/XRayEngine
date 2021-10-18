@@ -314,7 +314,16 @@ void destroyEngine	()
 
 void execUserScript				( )
 {
-	Console->Execute			("default_controls");
+	if (xrGameManager::GetGame() == EGame::SHOC)
+	{
+		string_path fname;
+		FS.update_path(fname, "$game_config$", "default_controls.ltx");
+		Console->ExecuteScript(fname);
+	}
+	else
+	{
+		Console->Execute("default_controls");
+	}
 	Console->ExecuteScript		(Console->ConfigFile);
 }
 
@@ -797,7 +806,15 @@ int APIENTRY WinMain_impl(HINSTANCE hInstance,
 	compute_build_id			();
 
 
-	if (strstr(lpCmdLine, "-cs") )
+	if (strstr(lpCmdLine, "-soc") )
+	{
+		GCurrentGame = EGamePath::SHOC_10006;
+	}
+	else if (strstr(lpCmdLine, "-soc_14")|| strstr(lpCmdLine, "-soc_10004"))
+	{
+		GCurrentGame = EGamePath::SHOC_10004;
+	}
+	else if (strstr(lpCmdLine, "-cs"))
 	{
 		GCurrentGame = EGamePath::CS_1510;
 	}

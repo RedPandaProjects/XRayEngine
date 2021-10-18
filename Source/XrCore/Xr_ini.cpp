@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #pragma hdrstop
 
+#include "..\XrAPI\xrGameManager.h"
 #include "fs_internal.h"
 
 XRCORE_API CInifile  * pSettings		= NULL;
@@ -25,9 +26,34 @@ bool item_pred(const CInifile::Item& x, LPCSTR val)
 
 //------------------------------------------------------------------------------
 //Тело функций Inifile
-//------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+XRCORE_API BOOL _parseSOC(LPSTR dest, LPCSTR src)
+{
+	if (src) {
+		BOOL bInsideSTR = false;
+		while (*src) {
+			if (isspace((u8)*src)) {
+				if (bInsideSTR) { *dest++ = *src++; continue; }
+				while (*src && isspace(*src)) src++;
+				continue;
+			}
+			else if (*src == '"') {
+				bInsideSTR = !bInsideSTR;
+			}
+			*dest++ = *src++;
+		}
+	}
+	*dest = 0;
+	return 0;
+} 
 XRCORE_API BOOL _parse(LPSTR dest, LPCSTR src)
 {
+	switch (xrGameManager::GetGame())
+	{
+	case EGame::SHOC:
+		return _parseSOC(dest,src);
+		
+	}
 	BOOL bInsideSTR = false;
 	if (src) 
 	{

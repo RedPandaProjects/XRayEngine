@@ -164,6 +164,9 @@ void CEngineAPI::Initialize(void)
 		case EGame::CS:
 			g_name = "XrGameCS.dll";
 			break;
+		case EGame::SHOC:
+			g_name = "XrGameSOC.dll";
+			break;
 		}
 
 		Log				("Loading DLL:",g_name);

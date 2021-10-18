@@ -27,6 +27,7 @@ const u32 BIG_FILE_READER_WINDOW_SIZE	= 1024*1024;
 
 #define FSLTX	"fsgame.ltx"
 #define FSLTX_CS	"fsgame_cs.ltx"
+#define FSLTX_SOC	"fsgame_soc.ltx"
 struct _open_file
 {
 	union {
@@ -698,6 +699,9 @@ IReader* CLocatorAPI::setup_fs_ltx(LPCSTR fs_name)
 		{
 		case EGame::CS:
 			xr_strcat(fs_file_name, FSLTX_CS);
+			break;
+		case EGame::SHOC:
+			xr_strcat(fs_file_name, FSLTX_SOC);
 			break;
 		default:
 			xr_strcat(fs_file_name, FSLTX);

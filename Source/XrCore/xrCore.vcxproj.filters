@@ -568,4 +568,7 @@
       <Filter>FS</Filter>
     </CustomBuild>
   </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="..\XRayEngine.natvis" />
+  </ItemGroup>
 </Project>

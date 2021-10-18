@@ -37,7 +37,7 @@ class dxEnvDescriptorRender : public IEnvDescriptorRender
 {
 	friend class dxEnvDescriptorMixerRender;
 public:
-	virtual void OnDeviceCreate(CEnvDescriptor &owner);
+	virtual void OnDeviceCreate(IEnvDescriptor&owner);
 	virtual void OnDeviceDestroy();
 
 	virtual void Copy(IEnvDescriptorRender &_in);
@@ -68,11 +68,11 @@ public:
 	dxEnvironmentRender();
 	virtual void Copy(IEnvironmentRender &_in);
 
-	virtual void OnFrame(CEnvironment &env);
+	virtual void OnFrame(IEnvironment&env);
 	virtual void OnLoad();
 	virtual void OnUnload();
-	virtual void RenderSky(CEnvironment &env);
-	virtual void RenderClouds(CEnvironment &env);
+	virtual void RenderSky(IEnvironment &env);
+	virtual void RenderClouds(IEnvironment&env);
 	virtual void OnDeviceCreate();
 	virtual void OnDeviceDestroy();
 	virtual particles_systems::library_interface const& particles_systems_library	();

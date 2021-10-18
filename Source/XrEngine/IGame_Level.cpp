@@ -14,6 +14,8 @@
 
 #include "securom_api.h"
 
+#include "..\XrAPI\xrGameManager.h"
+
 ENGINE_API	IGame_Level*	g_pGameLevel	= NULL;
 extern	BOOL g_bLoaded;
 
@@ -124,8 +126,11 @@ BOOL IGame_Level::Load			(u32 dwNum)
 	// Objects
 	g_pGamePersistent->Environment().mods_load	();
 	R_ASSERT					(Load_GameSpecific_Before());
-	Objects.Load				();
-//. ANDY	R_ASSERT					(Load_GameSpecific_After ());
+	Objects.Load();
+	if (xrGameManager::GetGame() == EGame::SHOC)
+	{
+		R_ASSERT(Load_GameSpecific_After());
+	}
 
 	// Done
 	FS.r_close					( LL_Stream );
