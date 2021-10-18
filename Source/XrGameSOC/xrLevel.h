@@ -1,7 +1,6 @@
 #pragma once
 #include "..\XrEngine\xrLevel.h"
 #pragma pack(push,1)
-#pragma pack(1)
 #ifndef _EDITOR
 class NodePosition {
 	u8	data[5];
@@ -122,3 +121,5 @@ const u32 XRAI_CURRENT_VERSION = 9;
 #else // PRIQUEL
 const u32 XRAI_CURRENT_VERSION = 8;
 #endif // PRIQUEL
+
+#pragma pack(pop)

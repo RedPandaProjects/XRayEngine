@@ -24,9 +24,9 @@ CUIStaticItem::~CUIStaticItem()
 void CUIStaticItem::CreateShader(LPCSTR tex, LPCSTR sh)
 {
 	hShader->create(sh,tex);
-
 #ifdef DEBUG
 	dbg_tex_name = tex;
+	dbg_sh_name = sh;
 #endif
 	uFlags &= !flValidRect;
 }
@@ -34,6 +34,10 @@ void CUIStaticItem::CreateShader(LPCSTR tex, LPCSTR sh)
 void CUIStaticItem::SetShader(const ui_shader& sh)
 {
 	hShader = sh;
+	if (!hShader->inited())
+	{
+		DebugBreak();
+	}
 }
 
 void CUIStaticItem::Init(LPCSTR tex, LPCSTR sh, float left, float top, u32 align)

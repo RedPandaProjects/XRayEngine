@@ -130,18 +130,34 @@ void CScriptStorage::reinit	()
 	luaopen_debug			(lua());
 //	luaopen_io				(lua());
 #endif
+	struct luajit {
+		static void open_lib(lua_State* L, pcstr module_name, lua_CFunction function)
+		{
+			lua_pushcfunction(L, function);
+			lua_pushstring(L, module_name);
+			lua_call(L, 1, 0);
+		}
+	};
+	luajit::open_lib(lua(), "", luaopen_base);
+	luajit::open_lib(lua(), LUA_LOADLIBNAME, luaopen_package);
+	luajit::open_lib(lua(), LUA_TABLIBNAME, luaopen_table);
+	luajit::open_lib(lua(), LUA_IOLIBNAME, luaopen_io);
+	luajit::open_lib(lua(), LUA_OSLIBNAME, luaopen_os);
+	luajit::open_lib(lua(), LUA_MATHLIBNAME, luaopen_math);
+	luajit::open_lib(lua(), LUA_STRLIBNAME, luaopen_string);
 
-#ifdef USE_JIT
-	if (strstr(Core.Params,"-nojit")) {
-//		luaopen_jit			(lua());
-//		luaopen_coco		(lua());
-//		luaJIT_setmode		(lua(),2,LUAJIT_MODE_DEBUG);
+#ifdef DEBUG
+	luajit::open_lib(lua(), LUA_DBLIBNAME, luaopen_debug);
+#endif // #ifdef DEBUG
+
+	if (!strstr(Core.Params, "-nojit")) {
+		luajit::open_lib(lua(), LUA_JITLIBNAME, luaopen_jit);
+#ifndef DEBUG
+		put_function(lua(), opt_lua_binary, sizeof(opt_lua_binary), "jit.opt");
+		put_function(lua(), opt_inline_lua_binary, sizeof(opt_lua_binary), "jit.opt_inline");
+		dojitopt(lua(), "2");
+#endif // #ifndef DEBUG
 	}
-	else {
-		luaopen_jit			(lua());
-		luaopen_coco		(lua());
-	}
-#endif
 
 	if (strstr(Core.Params,"-_g"))
 		file_header			= file_header_new;
@@ -583,3 +599,37 @@ void CScriptStorage::flush_log()
 	m_output.save_to	(log_file_name);
 }
 #endif // DEBUG
+
+static LPVOID __cdecl luabind_allocator(
+	luabind::memory_allocation_function_parameter const,
+	void const* const pointer,
+	size_t const size
+)
+{
+	if (!size) {
+		LPVOID	non_const_pointer = const_cast<LPVOID>(pointer);
+		xr_free(non_const_pointer);
+		return	(0);
+	}
+
+	if (!pointer) {
+#ifdef DEBUG
+		return	(Memory.mem_alloc(size, "luabind"));
+#else // #ifdef DEBUG
+		return	(Memory.mem_alloc(size));
+#endif // #ifdef DEBUG
+	}
+
+	LPVOID		non_const_pointer = const_cast<LPVOID>(pointer);
+#ifdef DEBUG
+	return		(Memory.mem_realloc(non_const_pointer, size, "luabind"));
+#else // #ifdef DEBUG
+	return		(Memory.mem_realloc(non_const_pointer, size));
+#endif // #ifdef DEBUG
+}
+
+void setup_luabind_allocator()
+{
+	luabind::allocator = &luabind_allocator;
+	luabind::allocator_parameter = 0;
+}

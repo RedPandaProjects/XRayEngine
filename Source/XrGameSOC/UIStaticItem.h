@@ -22,6 +22,7 @@ public:
 
 #ifdef DEBUG
 	shared_str	dbg_tex_name;
+	shared_str	dbg_sh_name;
 #endif
 					CUIStaticItem	();
 	virtual			~CUIStaticItem	();
