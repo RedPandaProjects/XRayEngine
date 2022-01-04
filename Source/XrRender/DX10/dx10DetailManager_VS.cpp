@@ -116,7 +116,7 @@ void CDetailManager::hw_Render_dump(const Fvector4 &consts, const Fvector4 &wave
 
 	vis_list& list	=	m_visibles	[var_id];
 
-	CEnvDescriptor&	desc	= *g_pGamePersistent->Environment().CurrentEnv;
+	IEnvDescriptor&	desc	= *g_pGamePersistent->Environment().CurrentEnv;
 	Fvector					c_sun,c_ambient,c_hemi;
 	c_sun.set				(desc.sun_color.x,	desc.sun_color.y,	desc.sun_color.z);	c_sun.mul(.5f);
 	c_ambient.set			(desc.ambient.x,	desc.ambient.y,		desc.ambient.z);

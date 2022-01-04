@@ -308,7 +308,7 @@ void dxEnvironmentRender::RenderClouds(IEnvironment &env)
 	u32		C1					= color_rgba(iFloor(env.CurrentEnv->clouds_color.x*255.f),iFloor(env.CurrentEnv->clouds_color.y*255.f),iFloor(env.CurrentEnv->clouds_color.z*255.f),iFloor(env.CurrentEnv->clouds_color.w*255.f));
 
 	// Fill index buffer
-	/*u16* pib = RCache.Index.Lock(env.CloudsIndices.size(), i_offset);
+	u16* pib = RCache.Index.Lock(env.CloudsIndices.size(), i_offset);
 	CopyMemory					(pib,&env.CloudsIndices.front(),env.CloudsIndices.size()*sizeof(u16));
 	RCache.Index.Unlock			(env.CloudsIndices.size());
 
@@ -325,7 +325,6 @@ void dxEnvironmentRender::RenderClouds(IEnvironment &env)
 	dxEnvDescriptorMixerRender	&mixRen = *(dxEnvDescriptorMixerRender*)&*env.CurrentEnv->m_pDescriptorMixer;
 	RCache.set_Textures			(&mixRen.clouds_r_textures);
 	RCache.Render				(D3DPT_TRIANGLELIST,v_offset,0,env.CloudsVerts.size(),i_offset,env.CloudsIndices.size()/3);
-	*/
 	::Render->rmNormal			();
 }
 

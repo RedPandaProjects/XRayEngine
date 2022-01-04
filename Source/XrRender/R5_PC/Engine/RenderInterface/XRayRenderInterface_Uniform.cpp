@@ -96,7 +96,7 @@ void XRayRenderInterface::UniformsUpdate()
 {
 	Fmatrix MWV, MVPW;
 	{
-		CEnvDescriptor& desc = *g_pGamePersistent->Environment().CurrentEnv;
+		IEnvDescriptor& desc = *g_pGamePersistent->Environment().CurrentEnv;
 		XRayGlobalUniform* Data = (XRayGlobalUniform*)GUniformAllocator->GlobalUniform->Lock();
 		Data->AmbientColor.set(desc.ambient.x, desc.ambient.y, desc.ambient.z);
 		Data->HemiColor.set(desc.hemi_color.x, desc.hemi_color.y, desc.hemi_color.z, desc.hemi_color.w);
@@ -131,7 +131,7 @@ void XRayRenderInterface::UniformsUpdate()
 			Data->FogParam.set(-n * r, n, f, r);
 		}
 		{
-			CEnvDescriptor& desc = *g_pGamePersistent->Environment().CurrentEnv;
+			IEnvDescriptor& desc = *g_pGamePersistent->Environment().CurrentEnv;
 			Data->FogColor.set(desc.fog_color.x, desc.fog_color.y, desc.fog_color.z, desc.fog_density);
 		}
 		{

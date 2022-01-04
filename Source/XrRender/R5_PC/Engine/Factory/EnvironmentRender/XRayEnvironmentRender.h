@@ -22,7 +22,7 @@ public:
 	XRayEnvDescriptorRender();
 	virtual void Copy(IEnvDescriptorRender& _in);
 
-	virtual void OnDeviceCreate(CEnvDescriptor& owner);
+	virtual void OnDeviceCreate(IEnvDescriptor& owner);
 	virtual void OnDeviceDestroy();
 	XRayTexture* sky_texture;
 	XRayTexture* sky_texture_env;
@@ -36,11 +36,11 @@ public:
 	XRayEnvironmentRender();
 	virtual ~XRayEnvironmentRender();
 	virtual void	Copy(IEnvironmentRender& _in) ;
-	virtual void	OnFrame(CEnvironment& env) ;
+	virtual void	OnFrame(IEnvironment& env) ;
 	virtual void	OnLoad() ;
 	virtual void	OnUnload() ;
-	virtual void	RenderSky(CEnvironment& env) ;
-	virtual void	RenderClouds(CEnvironment& env) ;
+	virtual void	RenderSky(IEnvironment& env) ;
+	virtual void	RenderClouds(IEnvironment& env) ;
 	virtual void	OnDeviceCreate() ;
 	virtual void	OnDeviceDestroy() ;
 	virtual particles_systems::library_interface const& particles_systems_library();

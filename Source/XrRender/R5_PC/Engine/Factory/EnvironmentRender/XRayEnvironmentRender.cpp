@@ -87,7 +87,7 @@ void XRayEnvDescriptorRender::Copy(IEnvDescriptorRender& _in)
 	if (clouds_texture)clouds_texture->Counter++;
 }
 
-void XRayEnvDescriptorRender::OnDeviceCreate(CEnvDescriptor& owner)
+void XRayEnvDescriptorRender::OnDeviceCreate(IEnvDescriptor& owner)
 {
 	if (owner.sky_texture_name.size())
 		sky_texture = GResourcesManager->GetTexture(owner.sky_texture_name.c_str());
@@ -122,7 +122,7 @@ void XRayEnvironmentRender::Copy(IEnvironmentRender & _in)
 	R_ASSERT(0);
 }
 
-void XRayEnvironmentRender::OnFrame(CEnvironment& env)
+void XRayEnvironmentRender::OnFrame(IEnvironment& env)
 {
 }
 
@@ -151,7 +151,7 @@ struct v_skybox {
 };
 #pragma pack(pop)
 
-void XRayEnvironmentRender::RenderSky(CEnvironment& env)
+void XRayEnvironmentRender::RenderSky(IEnvironment& env)
 {
 	if (m_Sky_VertexBuffer.empty())OnDeviceCreate();
 
@@ -240,7 +240,7 @@ struct v_clouds {
 };
 #pragma pack(pop)
 
-void XRayEnvironmentRender::RenderClouds(CEnvironment& env)
+void XRayEnvironmentRender::RenderClouds(IEnvironment& env)
 {
 	BearContextEventLock Event(*HW->Context.get(), "RenderClouds", BearColor::Green);
 	XRayEnvDescriptorMixerRender& mixRen = *(XRayEnvDescriptorMixerRender*)&*env.CurrentEnv->m_pDescriptorMixer;

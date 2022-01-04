@@ -739,7 +739,7 @@ void CRenderTarget::accum_direct_volumetric	(u32 sub_phase, const u32 Offset, co
 		return;
 
 	{
-		CEnvDescriptor&	E = *g_pGamePersistent->Environment().CurrentEnv;
+		CEnvDescriptor&	E = *static_cast<CEnvDescriptorMixer*>(g_pGamePersistent->Environment().CurrentEnv);
 		float fValue = E.m_fSunShaftsIntensity;
 		//	TODO: add multiplication by sun color here
 		if (fValue<0.0001) return;

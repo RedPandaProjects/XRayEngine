@@ -104,7 +104,7 @@ CScriptGameObject *get_object_by_id(u16 id)
 
 LPCSTR get_weather	()
 {
-	return			(*g_pGamePersistent->Environment().GetWeather());
+	return			(*g_pGamePersistent->EnvironmentAsCOP()->GetWeather());
 }
 
 void set_weather	(LPCSTR weather_name, bool forced)
@@ -112,7 +112,7 @@ void set_weather	(LPCSTR weather_name, bool forced)
 #ifdef INGAME_EDITOR
 	if (!Device.editor())
 #endif // #ifdef INGAME_EDITOR
-		g_pGamePersistent->Environment().SetWeather(weather_name,forced);
+		g_pGamePersistent->EnvironmentAsCOP()->SetWeather(weather_name,forced);
 }
 
 bool set_weather_fx	(LPCSTR weather_name)
@@ -120,7 +120,7 @@ bool set_weather_fx	(LPCSTR weather_name)
 #ifdef INGAME_EDITOR
 	if (!Device.editor())
 #endif // #ifdef INGAME_EDITOR
-		return		(g_pGamePersistent->Environment().SetWeatherFX(weather_name));
+		return		(g_pGamePersistent->EnvironmentAsCOP()->SetWeatherFX(weather_name));
 	
 #ifdef INGAME_EDITOR
 	return			(false);
@@ -132,7 +132,7 @@ bool start_weather_fx_from_time	(LPCSTR weather_name, float time)
 #ifdef INGAME_EDITOR
 	if (!Device.editor())
 #endif // #ifdef INGAME_EDITOR
-		return		(g_pGamePersistent->Environment().StartWeatherFXFromTime(weather_name, time));
+		return		(g_pGamePersistent->EnvironmentAsCOP()->StartWeatherFXFromTime(weather_name, time));
 	
 #ifdef INGAME_EDITOR
 	return			(false);
@@ -141,17 +141,17 @@ bool start_weather_fx_from_time	(LPCSTR weather_name, float time)
 
 bool is_wfx_playing	()
 {
-	return			(g_pGamePersistent->Environment().IsWFXPlaying());
+	return			(g_pGamePersistent->EnvironmentAsCOP()->IsWFXPlaying());
 }
 
 float get_wfx_time	()
 {
-	return			(g_pGamePersistent->Environment().wfx_time);
+	return			(g_pGamePersistent->EnvironmentAsCOP()->wfx_time);
 }
 
 void stop_weather_fx()
 {
-	g_pGamePersistent->Environment().StopWFX();
+	g_pGamePersistent->EnvironmentAsCOP()->StopWFX();
 }
 
 void set_time_factor(float time_factor)
@@ -212,7 +212,7 @@ void change_game_time(u32 days, u32 hours, u32 mins)
 		u32 value		= days*86400+hours*3600+mins*60;
 		float fValue	= static_cast<float> (value);
 		value			*= 1000;//msec		
-		g_pGamePersistent->Environment().ChangeGameTime(fValue);
+		g_pGamePersistent->EnvironmentAsCOP()->ChangeGameTime(fValue);
 		tpGame->alife().time_manager().change_game_time(value);
 	}
 }
@@ -233,7 +233,7 @@ float low_cover_in_direction(u32 level_vertex_id, const Fvector &direction)
 
 float rain_factor()
 {
-	return			(g_pGamePersistent->Environment().CurrentEnv->rain_density);
+	return			(g_pGamePersistent->EnvironmentAsCOP()->CurrentEnv->rain_density);
 }
 
 u32	vertex_in_direction(u32 level_vertex_id, Fvector direction, float max_distance)
@@ -435,12 +435,12 @@ cphysics_world_scripted* physics_world_scripted()
 {
 	return	get_script_wrapper<cphysics_world_scripted>(*physics_world());
 }
-CEnvironment *environment()
+IEnvironment *environment()
 {
 	return		(g_pGamePersistent->pEnvironment);
 }
 
-CEnvDescriptor *current_environment(CEnvironment *self)
+IEnvDescriptor *current_environment(IEnvironment *self)
 {
 	return		(self->CurrentEnv);
 }
@@ -709,11 +709,11 @@ bool has_active_tutotial()
 #pragma optimize("s",on)
 void CLevel::script_register(lua_State *L)
 {
-	class_<CEnvDescriptor>("CEnvDescriptor")
-		.def_readonly("fog_density",			&CEnvDescriptor::fog_density)
-		.def_readonly("far_plane",				&CEnvDescriptor::far_plane),
+	class_<IEnvDescriptor>("CEnvDescriptor")
+		.def_readonly("fog_density",			&IEnvDescriptor::fog_density)
+		.def_readonly("far_plane",				&IEnvDescriptor::far_plane),
 
-	class_<CEnvironment>("CEnvironment")
+	class_<IEnvironment>("CEnvironment")
 		.def("current",							current_environment);
 
 	module(L,"level")

@@ -287,7 +287,7 @@ void CBuild::Load	(const b_params& Params, const IReader& _in_FS)
 		clMsg	("*lighting*: STATIC: %d lights",L_static().rgb.size());
 		R_ASSERT(L_static().hemi.size());
 		R_ASSERT(L_static().sun.size());
-		R_ASSERT(L_static().rgb.size());
+		//R_ASSERT(L_static().rgb.size());
 
 		// Dynamic
 		transfer("d-lights",	L_dynamic,			fs,		EB_Light_dynamic);

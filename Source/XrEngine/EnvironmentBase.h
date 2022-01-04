@@ -129,7 +129,7 @@ public:
 	{
 		return x->exec_time_loaded < y->exec_time_loaded;
 	}
-protected:
+public:
 	// clouds
 	FvectorVec				CloudsVerts;
 	U16Vec					CloudsIndices;

@@ -727,9 +727,9 @@ void CLevel::OnFrame	()
 #endif
 	}
 #ifdef DEBUG
-	g_pGamePersistent->Environment().m_paused		= m_bEnvPaused;
+	g_pGamePersistent->EnvironmentAsCOP()->m_paused		= m_bEnvPaused;
 #endif
-	g_pGamePersistent->Environment().SetGameTime	(GetEnvironmentGameDayTimeSec(),game->GetEnvironmentGameTimeFactor());
+	g_pGamePersistent->EnvironmentAsCOP()->SetGameTime	(GetEnvironmentGameDayTimeSec(),game->GetEnvironmentGameTimeFactor());
 
 	//Device.Statistic->cripting.Begin	();
 	if (!g_dedicated_server)

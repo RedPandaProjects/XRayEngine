@@ -51,7 +51,7 @@ game_sv_mp::game_sv_mp() :inherited()
 	m_strWeaponsData		= xr_new<CItemMgr>();
 	m_bVotingActive = false;	
 	//------------------------------------------------------
-//	g_pGamePersistent->Environment().SetWeather("mp_weather");
+//	g_pGamePersistent->EnvironmentAsCOP()->SetWeather("mp_weather");
 	m_aRanks.clear();	
 	//------------------------------------------------------	
 	round_end_reason = eRoundEnd_Force; //unknown
