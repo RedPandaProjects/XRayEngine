@@ -266,17 +266,17 @@ void CGamePersistent::WeathersUpdate()
 		BOOL bIndoor				= TRUE;
 		if (actor) bIndoor			= actor->renderable_ROS()->get_luminocity_hemi()<0.05f;
 
-		int data_set				= (Random.randF()<(1.f-Environment().CurrentEnv->weight))?0:1; 
+		int data_set				= (Random.randF()<(1.f-EnvironmentAsCOP()->CurrentEnv->weight))?0:1; 
 		
-		CEnvDescriptor* const current_env	= Environment().Current[0]; 
+		IEnvDescriptor* const current_env	= EnvironmentAsCOP()->Current[0]; 
 		VERIFY						(current_env);
 
-		CEnvDescriptor* const _env	= Environment().Current[data_set]; 
+		IEnvDescriptor* const _env	= EnvironmentAsCOP()->Current[data_set];
 		VERIFY						(_env);
 
-		CEnvAmbient* env_amb		= _env->env_ambient;
+		IEnvAmbient* env_amb		= _env->env_ambient;
 		if (env_amb) {
-			CEnvAmbient::SSndChannelVec& vec	= current_env->env_ambient->get_snd_channels();
+			CEnvAmbient::SSndChannelVec& vec	= static_cast<CEnvAmbient*>(current_env->env_ambient)->get_snd_channels();
 			CEnvAmbient::SSndChannelVecIt I		= vec.begin();
 			CEnvAmbient::SSndChannelVecIt E		= vec.end();
 			
@@ -333,7 +333,7 @@ void CGamePersistent::WeathersUpdate()
 			if ((FALSE==bIndoor) && (0==ambient_particles) && Device.dwTimeGlobal>ambient_effect_next_time){
 				CEnvAmbient::SEffect* eff			= env_amb->get_rnd_effect(); 
 				if (eff){
-					Environment().wind_gust_factor	= eff->wind_gust_factor;
+					EnvironmentAsCOP()->wind_gust_factor	= eff->wind_gust_factor;
 					ambient_effect_next_time		= Device.dwTimeGlobal + env_amb->get_rnd_effect_time();
 					ambient_effect_stop_time		= Device.dwTimeGlobal + eff->life_time;
 					ambient_effect_wind_start		= Device.fTimeGlobal;
@@ -348,18 +348,18 @@ void CGamePersistent::WeathersUpdate()
 					if (eff->sound._handle())		eff->sound.play_at_pos(0,pos);
 
 
-					Environment().wind_blast_strength_start_value=Environment().wind_strength_factor;
-					Environment().wind_blast_strength_stop_value=eff->wind_blast_strength;
+					EnvironmentAsCOP()->wind_blast_strength_start_value=EnvironmentAsCOP()->wind_strength_factor;
+					EnvironmentAsCOP()->wind_blast_strength_stop_value=eff->wind_blast_strength;
 
-					if (Environment().wind_blast_strength_start_value==0.f)
+					if (EnvironmentAsCOP()->wind_blast_strength_start_value==0.f)
 					{
-						Environment().wind_blast_start_time.set(0.f,eff->wind_blast_direction.x,eff->wind_blast_direction.y,eff->wind_blast_direction.z);
+						EnvironmentAsCOP()->wind_blast_start_time.set(0.f,eff->wind_blast_direction.x,eff->wind_blast_direction.y,eff->wind_blast_direction.z);
 					}
 					else
 					{
-						Environment().wind_blast_start_time.set(0.f,Environment().wind_blast_direction.x,Environment().wind_blast_direction.y,Environment().wind_blast_direction.z);
+						EnvironmentAsCOP()->wind_blast_start_time.set(0.f,EnvironmentAsCOP()->wind_blast_direction.x,EnvironmentAsCOP()->wind_blast_direction.y,EnvironmentAsCOP()->wind_blast_direction.z);
 					}
-					Environment().wind_blast_stop_time.set(0.f,eff->wind_blast_direction.x,eff->wind_blast_direction.y,eff->wind_blast_direction.z);
+					EnvironmentAsCOP()->wind_blast_stop_time.set(0.f,eff->wind_blast_direction.x,eff->wind_blast_direction.y,eff->wind_blast_direction.z);
 				}
 			}
 		}
@@ -376,24 +376,24 @@ void CGamePersistent::WeathersUpdate()
 			{
 				t=0.f;
 			}
-			Environment().wind_blast_current.slerp(Environment().wind_blast_start_time,Environment().wind_blast_stop_time,t);
+			EnvironmentAsCOP()->wind_blast_current.slerp(EnvironmentAsCOP()->wind_blast_start_time,EnvironmentAsCOP()->wind_blast_stop_time,t);
 
-			Environment().wind_blast_direction.set(Environment().wind_blast_current.x,Environment().wind_blast_current.y,Environment().wind_blast_current.z);
-			Environment().wind_strength_factor=Environment().wind_blast_strength_start_value+t*(Environment().wind_blast_strength_stop_value-Environment().wind_blast_strength_start_value);
+			EnvironmentAsCOP()->wind_blast_direction.set(EnvironmentAsCOP()->wind_blast_current.x,EnvironmentAsCOP()->wind_blast_current.y,EnvironmentAsCOP()->wind_blast_current.z);
+			EnvironmentAsCOP()->wind_strength_factor=EnvironmentAsCOP()->wind_blast_strength_start_value+t*(EnvironmentAsCOP()->wind_blast_strength_stop_value-EnvironmentAsCOP()->wind_blast_strength_start_value);
 		}
 
 		// stop if time exceed or indoor
 		if (bIndoor || Device.dwTimeGlobal>=ambient_effect_stop_time){
 			if (ambient_particles)					ambient_particles->Stop();
 			
-			Environment().wind_gust_factor		= 0.f;
+			EnvironmentAsCOP()->wind_gust_factor		= 0.f;
 			
 		}
 
 		if (Device.fTimeGlobal>=ambient_effect_wind_end && ambient_effect_wind_on)
 		{
-			Environment().wind_blast_strength_start_value=Environment().wind_strength_factor;
-			Environment().wind_blast_strength_stop_value	=0.f;
+			EnvironmentAsCOP()->wind_blast_strength_start_value=EnvironmentAsCOP()->wind_strength_factor;
+			EnvironmentAsCOP()->wind_blast_strength_stop_value	=0.f;
 
 			ambient_effect_wind_on=false;
 		}
@@ -411,11 +411,11 @@ void CGamePersistent::WeathersUpdate()
 			{
 				t=0.f;
 			}
-			Environment().wind_strength_factor=Environment().wind_blast_strength_start_value+t*(Environment().wind_blast_strength_stop_value-Environment().wind_blast_strength_start_value);
+			EnvironmentAsCOP()->wind_strength_factor=EnvironmentAsCOP()->wind_blast_strength_start_value+t*(EnvironmentAsCOP()->wind_blast_strength_stop_value-EnvironmentAsCOP()->wind_blast_strength_start_value);
 		}
 		if (Device.fTimeGlobal>ambient_effect_wind_out_time && ambient_effect_wind_out_time!=0.f )
 		{			
-			Environment().wind_strength_factor=0.0;
+			EnvironmentAsCOP()->wind_strength_factor=0.0;
 		}
 
 		// if particles not playing - destroy
