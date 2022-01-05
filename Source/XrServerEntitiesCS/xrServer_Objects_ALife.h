@@ -311,7 +311,7 @@ public:
 	float							m_exit_min_enemy_distance;
 	BOOL							m_is_combat_cover;
 
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS;
 private:
 	typedef xr_vector<visual_data>	visuals_collection;
 
@@ -319,7 +319,7 @@ private:
 
 private:
 	mutable visuals_collection		m_visuals;
-#endif // #ifdef XRSE_FACTORY_EXPORTS
+#endif // #ifdef XRSEFACTORY_EXPORTS;
 
 
 public:
@@ -331,11 +331,11 @@ public:
 	virtual bool					can_switch_online		() const;
 	virtual bool					can_switch_offline		() const;
 	virtual bool					interactive				() const;
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS;
 	virtual void 			on_render				(CDUInterface* du, ISE_AbstractLEOwner* owner, bool bSelected, const Fmatrix& parent,int priority, bool strictB2F);
 	virtual	visual_data*	visual_collection		() const { return &*m_visuals.begin(); }
 	virtual	u32				visual_collection_size	() const { return m_visuals.size(); }
-#endif // #ifdef XRSE_FACTORY_EXPORTS
+#endif // #ifdef XRSEFACTORY_EXPORTS;
 
 private:
 			void					check_enterable_loopholes(shared_str const &description);

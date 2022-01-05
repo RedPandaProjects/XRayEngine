@@ -27,7 +27,7 @@
 #	endif // #ifndef USE_LUA_STUDIO
 #endif
 
-#ifndef XRSE_FACTORY_EXPORTS
+#ifndef XRSEFACTORY_EXPORTS;
 #	ifdef DEBUG
 #		include "ai_debug.h"
 		extern Flags32 psAI_Flags;
@@ -379,7 +379,7 @@ void CScriptEngine::process_file_if_exists	(LPCSTR file_name, bool warn_if_not_e
 		FS.update_path		(S,"$game_scripts$",strconcat(sizeof(S1),S1,file_name,".script"));
 		if (!warn_if_not_exist && !FS.exist(S)) {
 #ifdef DEBUG
-#	ifndef XRSE_FACTORY_EXPORTS
+#	ifndef XRSEFACTORY_EXPORTS;
 			if (psAI_Flags.test(aiNilObjectAccess))
 #	endif
 			{

@@ -13,7 +13,7 @@
 #ifdef XRGAME_EXPORTS
 #	include "xrlevel.h"
 #else
-#	include "../xrlevel.h"
+#	include "../XrGame/xrLevel.h"
 #endif
 
 namespace GameGraph {
