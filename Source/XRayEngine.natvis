@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+  <Type Name="CLASS_ID">
+    <DisplayString>{(const char*)(this)}</DisplayString>
+  </Type>
+  <Type Name="TArray&lt;*&gt;">
+    
+    <DisplayString Condition="ArrayNum == 0">nullptr</DisplayString>
+    <DisplayString>{{ size={ArrayNum} }}</DisplayString>
+    <Expand>
+      <Item Name="[size]" ExcludeView="simple">ArrayNum</Item>
+      <IndexListItems>
+        <Size>ArrayNum</Size>
+        <ValueNode>(($T1*)((void*)AllocatorInstance.Data))[$i]</ValueNode>
+       </IndexListItems>
+    </Expand>
+  </Type>
+</AutoVisualizer>
