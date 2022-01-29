@@ -39,6 +39,7 @@ void load_prop_helper			()
 
 CScriptPropertiesListHelper *properties_helper()
 {
+	PHelper
 	if (!g_property_list_helper)
 	{
 		static	bool			first_time = true;

@@ -32,37 +32,22 @@ extern CSE_Abstract *F_entity_Create	(LPCSTR section);
 extern CScriptPropertiesListHelper	*g_property_list_helper;
 extern HMODULE						prop_helper_module;
 
+//typedef void DUMMY_STUFF (const void*,const u32&,void*);
+//XRCORE_API DUMMY_STUFF	*g_temporary_stuff;
+void setup_luabind_allocator();
 extern "C" {
-	FACTORY_API	ISE_Abstract* __stdcall create_entity	(LPCSTR section)
+	FACTORY_API	ISE_Abstract* __cdecl create_entity	(LPCSTR section)
 	{
 		return					(F_entity_Create(section));
 	}
 
-	FACTORY_API	void		__stdcall destroy_entity	(ISE_Abstract *&abstract)
+	FACTORY_API	void		__cdecl destroy_entity	(ISE_Abstract *&abstract)
 	{
 		CSE_Abstract			*object = smart_cast<CSE_Abstract*>(abstract);
 		F_entity_Destroy		(object);
 		abstract				= 0;
 	}
-};
-
-//typedef void DUMMY_STUFF (const void*,const u32&,void*);
-//XRCORE_API DUMMY_STUFF	*g_temporary_stuff;
-void setup_luabind_allocator();
-namespace XrSE_Factory
-{
-	FACTORY_API	ISE_Abstract* create_entity(LPCSTR section)
-	{
-		return					(F_entity_Create(section));
-	}
-
-	FACTORY_API	void		 destroy_entity(ISE_Abstract*& abstract)
-	{
-		CSE_Abstract* object = smart_cast<CSE_Abstract*>(abstract);
-		F_entity_Destroy(object);
-		abstract = 0;
-	}
-	FACTORY_API	void			initialize()
+	FACTORY_API	void		__cdecl	initialize()
 	{
 		string_path					SYSTEM_LTX;
 		FS.update_path(SYSTEM_LTX, "$game_config$", "system.ltx");
@@ -73,7 +58,7 @@ namespace XrSE_Factory
 		CCharacterInfo::InitInternal();
 		CSpecificCharacter::InitInternal();
 	}
-	FACTORY_API	void			destroy()
+	FACTORY_API	void		__cdecl	destroy()
 	{
 		CCharacterInfo::DeleteSharedData();
 		CCharacterInfo::DeleteIdToIndexData();
@@ -88,7 +73,8 @@ namespace XrSE_Factory
 		xr_delete(g_ai_space);
 		xr_delete(g_object_factory);
 	}
-}
+};
+
 
 void _destroy_item_data_vector_cont(T_VECTOR* vec)
 {

@@ -238,58 +238,61 @@ static void put_function	(lua_State* state, u8 const* buffer, u32 const buffer_s
 void CScriptStorage::reinit	()
 {
 	if (m_virtual_machine)
-		lua_close			(m_virtual_machine);
+		lua_close(m_virtual_machine);
 
-#ifdef _WIN64
-	m_virtual_machine = luaL_newstate();
-#else 
 #ifndef USE_DL_ALLOCATOR
-	m_virtual_machine		= lua_newstate(lua_alloc_xr, NULL);
+	m_virtual_machine = lua_newstate(lua_alloc_xr, NULL);
 #else // USE_DL_ALLOCATOR
-	m_virtual_machine		= lua_newstate(lua_alloc_dl, NULL);
+	m_virtual_machine = lua_newstate(lua_alloc_dl, NULL);
 #endif // USE_DL_ALLOCATOR
-#endif
 
 	if (!m_virtual_machine) {
-		Msg					("! ERROR : Cannot initialize script virtual machine!");
+		Msg("! ERROR : Cannot initialize script virtual machine!");
 		return;
-	}
-
+}
 	// initialize lua standard library functions 
-	struct luajit {
-		static void open_lib	(lua_State *L, pcstr module_name, lua_CFunction function)
-		{
-			lua_pushcfunction	(L, function);
-			lua_pushstring		(L, module_name);
-			lua_call			(L, 1, 0);
-		}
-	}; // struct lua;
-
-	luajit::open_lib	(lua(),	"",					luaopen_base);
-	luajit::open_lib	(lua(),	LUA_LOADLIBNAME,	luaopen_package);
-	luajit::open_lib	(lua(),	LUA_TABLIBNAME,		luaopen_table);
-	luajit::open_lib	(lua(),	LUA_IOLIBNAME,		luaopen_io);
-	luajit::open_lib	(lua(),	LUA_OSLIBNAME,		luaopen_os);
-	luajit::open_lib	(lua(),	LUA_MATHLIBNAME,	luaopen_math);
-	luajit::open_lib	(lua(),	LUA_STRLIBNAME,		luaopen_string);
+	luaopen_base(lua());
+	luaopen_table(lua());
+	luaopen_string(lua());
+	luaopen_math(lua());
 
 #ifdef DEBUG
-	luajit::open_lib	(lua(),	LUA_DBLIBNAME,		luaopen_debug);
+	luaopen_debug(lua());
+	//	luaopen_io				(lua());
+#endif
+	struct luajit {
+		static void open_lib(lua_State* L, pcstr module_name, lua_CFunction function)
+		{
+			lua_pushcfunction(L, function);
+			lua_pushstring(L, module_name);
+			lua_call(L, 1, 0);
+		}
+	};
+	luajit::open_lib(lua(), "", luaopen_base);
+	luajit::open_lib(lua(), LUA_LOADLIBNAME, luaopen_package);
+	luajit::open_lib(lua(), LUA_TABLIBNAME, luaopen_table);
+	luajit::open_lib(lua(), LUA_IOLIBNAME, luaopen_io);
+	luajit::open_lib(lua(), LUA_OSLIBNAME, luaopen_os);
+	luajit::open_lib(lua(), LUA_MATHLIBNAME, luaopen_math);
+	luajit::open_lib(lua(), LUA_STRLIBNAME, luaopen_string);
+
+#ifdef DEBUG
+	luajit::open_lib(lua(), LUA_DBLIBNAME, luaopen_debug);
 #endif // #ifdef DEBUG
 
-	if (!strstr(Core.Params,"-nojit")) {
-		luajit::open_lib(lua(),	LUA_JITLIBNAME,		luaopen_jit);
+	if (!strstr(Core.Params, "-nojit")) {
+		luajit::open_lib(lua(), LUA_JITLIBNAME, luaopen_jit);
 #ifndef DEBUG
-		put_function	(lua(), opt_lua_binary, sizeof(opt_lua_binary), "jit.opt");
-		put_function	(lua(), opt_inline_lua_binary, sizeof(opt_lua_binary), "jit.opt_inline");
-		dojitopt		(lua(), "2");
+		put_function(lua(), opt_lua_binary, sizeof(opt_lua_binary), "jit.opt");
+		put_function(lua(), opt_inline_lua_binary, sizeof(opt_lua_binary), "jit.opt_inline");
+		dojitopt(lua(), "2");
 #endif // #ifndef DEBUG
 	}
 
-	if (strstr(Core.Params,"-_g"))
-		file_header			= file_header_new;
+	if (strstr(Core.Params, "-_g"))
+		file_header = file_header_new;
 	else
-		file_header			= file_header_old;
+		file_header = file_header_old;
 }
 
 int CScriptStorage::vscript_log		(ScriptStorage::ELuaMessageType tLuaMessageType, LPCSTR caFormat, va_list marker)

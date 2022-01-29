@@ -38,20 +38,19 @@ extern CScriptPropertiesListHelper	*g_property_list_helper;
 #endif // #ifdef NDEBUG
 
 void setup_luabind_allocator();
-namespace XrSE_Factory
-{
-	FACTORY_API	ISE_Abstract* create_entity(LPCSTR section)
+extern "C" {
+	FACTORY_API	ISE_Abstract* __cdecl create_entity(LPCSTR section)
 	{
 		return					(F_entity_Create(section));
 	}
 
-	FACTORY_API	void		 destroy_entity(ISE_Abstract*& abstract)
+	FACTORY_API	void		__cdecl destroy_entity(ISE_Abstract*& abstract)
 	{
 		CSE_Abstract* object = smart_cast<CSE_Abstract*>(abstract);
 		F_entity_Destroy(object);
 		abstract = 0;
 	}
-	FACTORY_API	void			initialize()
+	FACTORY_API	void __cdecl initialize()
 	{
 		string_path					SYSTEM_LTX;
 		FS.update_path(SYSTEM_LTX, "$game_config$", "system.ltx");
@@ -62,7 +61,7 @@ namespace XrSE_Factory
 		CCharacterInfo::InitInternal();
 		CSpecificCharacter::InitInternal();
 	}
-	FACTORY_API	void			destroy()
+	FACTORY_API	void __cdecl destroy()
 	{
 		CCharacterInfo::DeleteSharedData();
 		CCharacterInfo::DeleteIdToIndexData();

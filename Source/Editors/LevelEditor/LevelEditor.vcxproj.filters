@@ -421,6 +421,7 @@
     <ClCompile Include="UI\UIObjectList.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="XrSEFactoryManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Edit\SceneSummaryInfo.h">
@@ -679,5 +680,6 @@
     <ClInclude Include="UI\UIObjectList.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="XrSEFactoryManager.h" />
   </ItemGroup>
 </Project>

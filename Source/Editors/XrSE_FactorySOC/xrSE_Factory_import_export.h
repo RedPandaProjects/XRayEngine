@@ -7,9 +7,5 @@
 #	define FACTORY_API __declspec(dllimport)
 #endif
 
-extern "C" {
-	FACTORY_API ISE_Abstract*  create_entity	(LPCSTR section);
-	FACTORY_API void		   destroy_entity	(ISE_Abstract *&);
-};
 
 #endif

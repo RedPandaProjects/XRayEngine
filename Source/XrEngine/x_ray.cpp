@@ -32,7 +32,6 @@
 #include "..\XrAPI\xrGameManager.h"
 //---------------------------------------------------------------------
 ENGINE_API CInifile* pGameIni		= NULL;
-XRAPI_API extern EGamePath GCurrentGame;
 BOOL	g_bIntroFinished			= FALSE;
 extern	void	Intro				( void* fn );
 extern	void	Intro_DSHOW			( void* fn );
@@ -806,22 +805,7 @@ int APIENTRY WinMain_impl(HINSTANCE hInstance,
 	compute_build_id			();
 
 
-	if (strstr(lpCmdLine, "-soc") )
-	{
-		GCurrentGame = EGamePath::SHOC_10006;
-	}
-	else if (strstr(lpCmdLine, "-soc_14")|| strstr(lpCmdLine, "-soc_10004"))
-	{
-		GCurrentGame = EGamePath::SHOC_10004;
-	}
-	else if (strstr(lpCmdLine, "-cs"))
-	{
-		GCurrentGame = EGamePath::CS_1510;
-	}
-	else
-	{
-		GCurrentGame = EGamePath::COP_1602;
-	}
+
 	Core._initialize			("xray",NULL, TRUE, fsgame[0] ? fsgame : NULL);
 
 	InitSettings				();

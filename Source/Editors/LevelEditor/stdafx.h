@@ -23,3 +23,4 @@
 #include "../XrECore/Editor/EditMesh.h"
 #include "../XrECore/Editor/D3DUtils.h"
 #include "scene.h"
+#include "XrSEFactoryManager.h"

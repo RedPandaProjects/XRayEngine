@@ -170,6 +170,7 @@
     <ClCompile Include="UI\UIObjectList.cpp" />
     <ClCompile Include="UI\UIPropertiesModal.cpp" />
     <ClCompile Include="UI\UITopBarForm.cpp" />
+    <ClCompile Include="XrSEFactoryManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\XrRender\Private\DetailManager.h" />
@@ -260,8 +261,12 @@
     <ClInclude Include="UI\UIPropertiesModal.h" />
     <ClInclude Include="UI\UITopBarForm.h" />
     <ClInclude Include="UI\UITopBarForm_ButtonList.h" />
+    <ClInclude Include="XrSEFactoryManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\XrAPI\XrAPI.vcxproj">
+      <Project>{ff16ef0a-8a51-4c36-9213-4aa87cb4b317}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\XrCDB\XrCDB.vcxproj">
       <Project>{7e263157-2fc0-42d7-a676-dd6049bb60f5}</Project>
     </ProjectReference>
@@ -288,9 +293,6 @@
     </ProjectReference>
     <ProjectReference Include="..\XrEUI\XrEUI.vcxproj">
       <Project>{7e28883c-db86-4ee8-813a-991ba20c68c9}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\XrSE_Factory\XrSE_Factory.vcxproj">
-      <Project>{e5d980c8-02df-45d1-9f15-4d87ae100661}</Project>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">

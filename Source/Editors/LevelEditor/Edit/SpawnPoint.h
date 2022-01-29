@@ -15,7 +15,6 @@
 class CSE_Visual;
 class CSE_Motion;
 class CObjectAnimator;
-class ISE_Abstract;
 
 class CLE_Visual :private pureDrawUI
 {

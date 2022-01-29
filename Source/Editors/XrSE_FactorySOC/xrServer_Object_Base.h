@@ -114,6 +114,10 @@ public:
 	virtual void			FillProp		(LPCSTR pref, PropItemVec &items);
 	virtual LPCSTR			name			() const;
 	virtual LPCSTR			name_replace	() const;
+
+	virtual	void			set_additional_info(void* info) {};
+	virtual	visual_data* visual_collection() const { return 0; }
+	virtual	u32				visual_collection_size() const { return 0; }
 	virtual void			set_name		(LPCSTR s)
 	{
 		s_name		= s;
