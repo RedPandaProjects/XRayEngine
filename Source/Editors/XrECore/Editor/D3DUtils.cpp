@@ -571,17 +571,11 @@ void CDrawUtilities::DrawLineSphere(const Fvector& p, float radius, u32 c, BOOL 
 }
 
 //----------------------------------------------------
-#if 1
-IC float 				_x2real			(float x)
-{ return (x+1)*EDevice->m_RenderWidth*0.5;	}
-IC float 				_y2real			(float y)
-{ return (y+1)* EDevice->m_RenderHeight * 0.5;}
-#else
+
 IC float 				_x2real			(float x)
 { return (x+1)*EDevice->dwWidth*0.5f;	}
 IC float 				_y2real			(float y)
 { return (y+1)*EDevice->dwHeight*0.5f;}
-#endif
 
 void CDrawUtilities::dbgDrawPlacement(const Fvector& p, int sz, u32 clr, LPCSTR caption, u32 clr_font)
 {

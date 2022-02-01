@@ -123,10 +123,10 @@ public:
 
     void			Quit			()	{	m_Flags.set(flNeedQuit,TRUE); }
     
-    u32 			&GetRenderWidth	()	{   return EDevice->m_RenderWidth; }
-    u32&GetRenderHeight	()	{   return EDevice->m_RenderHeight; }
-    int 			GetRealWidth	()	{   return EDevice->dwWidth; }
-    int 			GetRealHeight	()  {   return EDevice->dwHeight; }
+    u32 			&GetRenderWidth	()	{   return EDevice->dwWidth; }
+    u32&GetRenderHeight	()	{   return EDevice->dwHeight; }
+    int 			GetRealWidth	()	{   return EDevice->dwRealWidth; }
+    int 			GetRealHeight	()  {   return EDevice->dwRealHeight; }
 
     IC float 		ZFar			()	{	return EDevice->m_Camera.m_Zfar; }
     IC TShiftState	GetShiftState 	()	{	return m_ShiftState; }

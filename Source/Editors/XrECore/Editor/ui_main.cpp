@@ -388,8 +388,9 @@ void TUI::Redraw()
             EDevice->m_fNearer = EDevice->mProject._43;
             EDevice->fWidth_2 = GetRenderWidth() / 2.f;
             EDevice->fHeight_2 = GetRenderHeight() / 2.f;
-
-
+            
+            Device->seqDeviceReset.Process(rp_DeviceReset);
+            Device->seqResolutionChanged.Process(rp_ScreenResolutionChanged);
             RCache.set_xform_project(EDevice->mProject);
             RCache.set_xform_world(Fidentity);
         }

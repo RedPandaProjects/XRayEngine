@@ -1,7 +1,7 @@
 ﻿//// TestApp.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
 ////
 //
-#include "..\BearBundle\BearGraphics\BearGraphics.hpp"
+#include "..\XrEngine\stdafx.h"
 ///*
 //inline void LoadShader(BearFactoryPointer<BearRHI::BearRHIShader>&Shader,const char*Entry,const bchar*name)
 //{
@@ -319,169 +319,197 @@
 //		Context->Unlock(Viewport);
 //		Context->Flush(Viewport, true);
 //	}
+//}*//*
+//BearString GetFileName(const bchar* Name)
+//{
+//	BearString FileName = BearFileManager::GetPathFile(Name);
+//	FileName.append(BEAR_PATH);
+//	FileName.append(BearFileManager::GetFileName(Name));
+//	return FileName;
+//}
+//void Make(BearString& Name)
+//{
+//	if (BearString::FindWithEnd(*Name, TEXT("_ao.png") )&&BearString::CompareWithoutCase(BearString::FindWithEnd(*Name, TEXT("_ao.png")), TEXT("_ao.png")) == 0)return;
+//	if (BearString::FindWithEnd(*Name, TEXT("_h.png"))&&BearString::CompareWithoutCase(BearString::FindWithEnd(*Name, TEXT("_h.png")), TEXT("_h.png")) == 0)return;
+//	if (BearString::FindWithEnd(*Name, TEXT("_m.png")) && BearString::CompareWithoutCase(BearString::FindWithEnd(*Name, TEXT("_m.png")), TEXT("_m.png")) == 0)return;
+//	if (BearString::FindWithEnd(*Name, TEXT("_n.png")) && BearString::CompareWithoutCase(BearString::FindWithEnd(*Name, TEXT("_n.png")), TEXT("_n.png")) == 0)return;
+//	if (BearString::FindWithEnd(*Name, TEXT("_r.png")) && BearString::CompareWithoutCase(BearString::FindWithEnd(*Name, TEXT("_r.png")), TEXT("_r.png")) == 0)return;
+//	BearString FileName = GetFileName(*Name);
+//
+//	BearString FileNameAO;
+//	FileNameAO.append(FileName).append(TEXT("_ao.png"));
+//	BearString FileNameH;
+//	FileNameH.append(FileName).append(TEXT("_h.png"));
+//	BearString FileNameM;
+//	FileNameM.append(FileName).append(TEXT("_m.png"));
+//	BearString FileNameN;
+//	FileNameN.append(FileName).append(TEXT("_n.png"));
+//	BearString FileNameR;
+//	FileNameR.append(FileName).append(TEXT("_r.png"));
+//
+//	if (!BearFileManager::FileExists(*FileNameAO))
+//		return;
+//	if (!BearFileManager::FileExists(*FileNameH))
+//		return;
+//	if (!BearFileManager::FileExists(*FileNameM))
+//		return;
+//	if (!BearFileManager::FileExists(*FileNameN))
+//		return;
+//	if (!BearFileManager::FileExists(*FileNameR))
+//		return;
+//
+//	BEAR_PRINTF("Make %s\n\r", *Name);
+//	BearImage Base;BEAR_ASSERT(Base.LoadFromFile(*Name));
+//	BearImage BaseN; BEAR_ASSERT(BaseN.LoadFromFile(*FileNameN));
+//	BearImage BaseH; BEAR_ASSERT(BaseH.LoadFromFile(*FileNameH));
+//	BearImage BaseAO; BEAR_ASSERT(BaseAO.LoadFromFile(*FileNameAO));
+//	BearImage BaseR; BEAR_ASSERT(BaseR.LoadFromFile(*FileNameR));
+//	BearImage BaseM; BEAR_ASSERT(BaseM.LoadFromFile(*FileNameM));
+//
+//
+//	FileName.append(".dds");
+//	if (!BearFileManager::FileExists(*FileName))
+//	{
+//		BEAR_PRINTF("Save %s\n\r", *FileName);
+//		Base.GenerateMipmap();
+//		Base.Convert(BearTexturePixelFormat::BC3);
+//		Base.SaveToDds(*FileName);
+//	}
+//	BearImage BaseAORM;
+//	BaseAORM.Create(Base.GetSize().x, Base.GetSize().y, 1, 1);
+//	BearImage BaseNormalHeight;
+//	BaseNormalHeight.Create(Base.GetSize().x, Base.GetSize().y, 1, 1);
+//	for (bsize x = 0; x < Base.GetSize().x; x++)
+//	{
+//		for (bsize y  = 0; y < Base.GetSize().y; y++)
+//		{
+//			{
+//				BearColor Pixel;
+//				Pixel.SetAsUint8(BaseAO.GetPixel(x, y).R8U, BaseR.GetPixel(x, y).R8U, BaseM.GetPixel(x, y).R8U);
+//				BaseAORM.SetPixel(Pixel, x, y);
+//			}
+//			{
+//				BearColor Pixel;
+//				Pixel.SetAsUint8(BaseN.GetPixel(x, y).R8U, BaseN.GetPixel(x, y).G8U, BaseN.GetPixel(x, y).B8U, BaseH.GetPixel(x, y).R8U);
+//				BaseNormalHeight.SetPixel(Pixel, x, y);
+//			}
+//		}
+//	}
+//	FileName = GetFileName(*Name);
+//	FileName.append("_AORM.dds");
+//	if (!BearFileManager::FileExists(*FileName))
+//	{
+//		BEAR_PRINTF("Save %s\n\r", *FileName);
+//		BaseAORM.GenerateMipmap();
+//		BaseAORM.Convert(BearTexturePixelFormat::BC3);
+//
+//		BaseAORM.SaveToDds(*FileName);
+//	}
+//
+//
+//	FileName = GetFileName(*Name);
+//	FileName.append("_NH.dds");
+//	if (!BearFileManager::FileExists(*FileName))
+//	{
+//		BaseNormalHeight.GenerateMipmap();
+//		BaseNormalHeight.Convert(BearTexturePixelFormat::BC3);
+//		BEAR_PRINTF("Save %s\n\r", *FileName);
+//		BaseNormalHeight.SaveToDds(*FileName);
+//	}
+//
+//}
+//int main()
+//{
+//	BearCore::Initialize();
+//	{
+//		BearStringPath WorkPath;
+//		BearFileManager::GetWorkPath(WorkPath);
+//		BearStringPath File1="";
+//		BearStringPath File2 = "";
+//		BearStringPath File3 = "";
+//		BearStringPath File4 = "";
+//		BearStringPath File5 = "";
+//		BearStringPath File6 = "";
+//		BearFileManager::PathCombine(File1, WorkPath, "1.png");
+//		BearFileManager::PathCombine(File2, WorkPath, "2.png");
+//		BearFileManager::PathCombine(File3, WorkPath, "3.png");
+//		BearFileManager::PathCombine(File4, WorkPath, "4.png");
+//		BearFileManager::PathCombine(File5, WorkPath, "5.png");
+//		BearFileManager::PathCombine(File6, WorkPath, "6.png");
+//
+//		BearImage CubeMap;
+//		CubeMap.Create(512, 512, 1, 1, BearTexturePixelFormat::R8G8B8A8, true);
+//		CubeMap.LoadFromFile(0, File1);
+//		CubeMap.LoadFromFile(1, File2);
+//		CubeMap.LoadFromFile(2, File3);
+//		CubeMap.LoadFromFile(3, File4);
+//		CubeMap.LoadFromFile(4, File5);
+//		CubeMap.LoadFromFile(5, File6);
+//		CubeMap.GenerateMipmap();
+//		CubeMap.Convert(BearTexturePixelFormat::BC3);
+//		CubeMap.SaveToDds("Cube.dds");
+//		/*	BearVector<BearString> Files;
+//		BearStringPath WorkPath;
+//		BearFileManager::GetWorkPath(WorkPath);
+//
+//		BearFileManager::FindFiles(Files, WorkPath, TEXT("*.png"));
+//		for (BearString& Name : Files)
+//		{
+//			Make(Name);
+//		}*/
+//
+//	}
+//	/*if (BearString::Exist(GetCommandLine(), "-vulkan"))
+//	{
+//		BEAR_ASSERT(BearRenderInterface::Initialize(TEXT("BearRenderVK11")));
+//	}
+//	else
+//	{
+//		if (!BearRenderInterface::Initialize(TEXT("BearRenderDX12_1")))
+//			if (!BearRenderInterface::Initialize(TEXT("BearRenderDX12")))
+//				if (!BearRenderInterface::Initialize(TEXT("BearRenderDX11")))
+//					BEAR_ASSERT(false);
+//	}
+//	{
+//		if (BearRenderInterface::RTXSupport())
+//		{
+//			TestRTX();
+//		}
+//		else
+//		{
+//			TestGraphics();
+//		}
+//		
+//		//
+//	}
+//	BearRenderInterface::Destroy();*/
+//	BearCore::Destroy();
 //}*/
-BearString GetFileName(const bchar* Name)
+class  XrDeviceTest : public XrDeviceInterface
 {
-	BearString FileName = BearFileManager::GetPathFile(Name);
-	FileName.append(BEAR_PATH);
-	FileName.append(BearFileManager::GetFileName(Name));
-	return FileName;
-}
-void Make(BearString& Name)
+public:
+    XrDeviceTest() {}
+    virtual ~XrDeviceTest() {}
+    virtual			bool				Paused()const { return false; }
+    virtual void Reset(bool precache = false) {}
+    virtual void	Pause(BOOL bOn, BOOL bTimer, BOOL bSound, LPCSTR reason) {}
+    virtual void PreCache(u32 amount, bool b_draw_loadscreen, bool b_wait_user_input) {}
+    virtual void Clear() {}
+    virtual bool Begin() { return false; }
+    virtual void End() {}
+    virtual		CStatsPhysics* _BCL		StatPhysics() { return nullptr; }
+    virtual				void	_BCL		AddSeqFrame(pureFrame* f, bool mt) {}
+    virtual				void	_BCL		RemoveSeqFrame(pureFrame* f) {}
+};
+class  tt : public testtest
 {
-	if (BearString::FindWithEnd(*Name, TEXT("_ao.png") )&&BearString::CompareWithoutCase(BearString::FindWithEnd(*Name, TEXT("_ao.png")), TEXT("_ao.png")) == 0)return;
-	if (BearString::FindWithEnd(*Name, TEXT("_h.png"))&&BearString::CompareWithoutCase(BearString::FindWithEnd(*Name, TEXT("_h.png")), TEXT("_h.png")) == 0)return;
-	if (BearString::FindWithEnd(*Name, TEXT("_m.png")) && BearString::CompareWithoutCase(BearString::FindWithEnd(*Name, TEXT("_m.png")), TEXT("_m.png")) == 0)return;
-	if (BearString::FindWithEnd(*Name, TEXT("_n.png")) && BearString::CompareWithoutCase(BearString::FindWithEnd(*Name, TEXT("_n.png")), TEXT("_n.png")) == 0)return;
-	if (BearString::FindWithEnd(*Name, TEXT("_r.png")) && BearString::CompareWithoutCase(BearString::FindWithEnd(*Name, TEXT("_r.png")), TEXT("_r.png")) == 0)return;
-	BearString FileName = GetFileName(*Name);
-
-	BearString FileNameAO;
-	FileNameAO.append(FileName).append(TEXT("_ao.png"));
-	BearString FileNameH;
-	FileNameH.append(FileName).append(TEXT("_h.png"));
-	BearString FileNameM;
-	FileNameM.append(FileName).append(TEXT("_m.png"));
-	BearString FileNameN;
-	FileNameN.append(FileName).append(TEXT("_n.png"));
-	BearString FileNameR;
-	FileNameR.append(FileName).append(TEXT("_r.png"));
-
-	if (!BearFileManager::FileExists(*FileNameAO))
-		return;
-	if (!BearFileManager::FileExists(*FileNameH))
-		return;
-	if (!BearFileManager::FileExists(*FileNameM))
-		return;
-	if (!BearFileManager::FileExists(*FileNameN))
-		return;
-	if (!BearFileManager::FileExists(*FileNameR))
-		return;
-
-	BEAR_PRINTF("Make %s\n\r", *Name);
-	BearImage Base;BEAR_ASSERT(Base.LoadFromFile(*Name));
-	BearImage BaseN; BEAR_ASSERT(BaseN.LoadFromFile(*FileNameN));
-	BearImage BaseH; BEAR_ASSERT(BaseH.LoadFromFile(*FileNameH));
-	BearImage BaseAO; BEAR_ASSERT(BaseAO.LoadFromFile(*FileNameAO));
-	BearImage BaseR; BEAR_ASSERT(BaseR.LoadFromFile(*FileNameR));
-	BearImage BaseM; BEAR_ASSERT(BaseM.LoadFromFile(*FileNameM));
-
-
-	FileName.append(".dds");
-	if (!BearFileManager::FileExists(*FileName))
-	{
-		BEAR_PRINTF("Save %s\n\r", *FileName);
-		Base.GenerateMipmap();
-		Base.Convert(BearTexturePixelFormat::BC3);
-		Base.SaveToDds(*FileName);
-	}
-	BearImage BaseAORM;
-	BaseAORM.Create(Base.GetSize().x, Base.GetSize().y, 1, 1);
-	BearImage BaseNormalHeight;
-	BaseNormalHeight.Create(Base.GetSize().x, Base.GetSize().y, 1, 1);
-	for (bsize x = 0; x < Base.GetSize().x; x++)
-	{
-		for (bsize y  = 0; y < Base.GetSize().y; y++)
-		{
-			{
-				BearColor Pixel;
-				Pixel.SetAsUint8(BaseAO.GetPixel(x, y).R8U, BaseR.GetPixel(x, y).R8U, BaseM.GetPixel(x, y).R8U);
-				BaseAORM.SetPixel(Pixel, x, y);
-			}
-			{
-				BearColor Pixel;
-				Pixel.SetAsUint8(BaseN.GetPixel(x, y).R8U, BaseN.GetPixel(x, y).G8U, BaseN.GetPixel(x, y).B8U, BaseH.GetPixel(x, y).R8U);
-				BaseNormalHeight.SetPixel(Pixel, x, y);
-			}
-		}
-	}
-	FileName = GetFileName(*Name);
-	FileName.append("_AORM.dds");
-	if (!BearFileManager::FileExists(*FileName))
-	{
-		BEAR_PRINTF("Save %s\n\r", *FileName);
-		BaseAORM.GenerateMipmap();
-		BaseAORM.Convert(BearTexturePixelFormat::BC3);
-
-		BaseAORM.SaveToDds(*FileName);
-	}
-
-
-	FileName = GetFileName(*Name);
-	FileName.append("_NH.dds");
-	if (!BearFileManager::FileExists(*FileName))
-	{
-		BaseNormalHeight.GenerateMipmap();
-		BaseNormalHeight.Convert(BearTexturePixelFormat::BC3);
-		BEAR_PRINTF("Save %s\n\r", *FileName);
-		BaseNormalHeight.SaveToDds(*FileName);
-	}
-
-}
+public:
+    tt() {}
+    virtual ~tt() {}
+};
 int main()
 {
-	BearCore::Initialize();
-	{
-		BearStringPath WorkPath;
-		BearFileManager::GetWorkPath(WorkPath);
-		BearStringPath File1="";
-		BearStringPath File2 = "";
-		BearStringPath File3 = "";
-		BearStringPath File4 = "";
-		BearStringPath File5 = "";
-		BearStringPath File6 = "";
-		BearFileManager::PathCombine(File1, WorkPath, "1.png");
-		BearFileManager::PathCombine(File2, WorkPath, "2.png");
-		BearFileManager::PathCombine(File3, WorkPath, "3.png");
-		BearFileManager::PathCombine(File4, WorkPath, "4.png");
-		BearFileManager::PathCombine(File5, WorkPath, "5.png");
-		BearFileManager::PathCombine(File6, WorkPath, "6.png");
+    Core._initialize("LevelEditor", 0, 1, 0, true);
+   tt a;
 
-		BearImage CubeMap;
-		CubeMap.Create(512, 512, 1, 1, BearTexturePixelFormat::R8G8B8A8, true);
-		CubeMap.LoadFromFile(0, File1);
-		CubeMap.LoadFromFile(1, File2);
-		CubeMap.LoadFromFile(2, File3);
-		CubeMap.LoadFromFile(3, File4);
-		CubeMap.LoadFromFile(4, File5);
-		CubeMap.LoadFromFile(5, File6);
-		CubeMap.GenerateMipmap();
-		CubeMap.Convert(BearTexturePixelFormat::BC3);
-		CubeMap.SaveToDds("Cube.dds");
-		/*	BearVector<BearString> Files;
-		BearStringPath WorkPath;
-		BearFileManager::GetWorkPath(WorkPath);
-
-		BearFileManager::FindFiles(Files, WorkPath, TEXT("*.png"));
-		for (BearString& Name : Files)
-		{
-			Make(Name);
-		}*/
-
-	}
-	/*if (BearString::Exist(GetCommandLine(), "-vulkan"))
-	{
-		BEAR_ASSERT(BearRenderInterface::Initialize(TEXT("BearRenderVK11")));
-	}
-	else
-	{
-		if (!BearRenderInterface::Initialize(TEXT("BearRenderDX12_1")))
-			if (!BearRenderInterface::Initialize(TEXT("BearRenderDX12")))
-				if (!BearRenderInterface::Initialize(TEXT("BearRenderDX11")))
-					BEAR_ASSERT(false);
-	}
-	{
-		if (BearRenderInterface::RTXSupport())
-		{
-			TestRTX();
-		}
-		else
-		{
-			TestGraphics();
-		}
-		
-		//
-	}
-	BearRenderInterface::Destroy();*/
-	BearCore::Destroy();
 }

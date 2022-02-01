@@ -73,6 +73,9 @@ ImGui::PopID();
 		 if (ImGui::Button(""#T, ImVec2(20, 20))) {Click##Class##Name();}ImGui::SameLine();\
 		 ImGui::PopStyleColor(1);
 #include "UITopBarForm_ButtonList.h"
+
+		if (ImGui::Button("Play", ImVec2(0, 20))) { ClickLevelPlay(); }ImGui::SameLine();
+		if (ImGui::Button("Simulate", ImVec2(0, 20))) { ClickLevelSimulate(); }ImGui::SameLine();
 	}
 	ImGui::End();
 	ImGui::PopStyleVar(5);
@@ -221,7 +224,10 @@ void  UITopBarForm::ClickLevelPlay()
 {
 	Scene->Play();
 }
-
+void  UITopBarForm::ClickLevelSimulate()
+{
+	Scene->Play();
+}
 
 void  UITopBarForm::ClickCsLocal(){ ExecCommand(COMMAND_SET_SETTINGS, etfCSParent, m_bCsLocal); }
 void  UITopBarForm::ClickNuScale() { ExecCommand(COMMAND_SET_SETTINGS, etfNUScale, m_bNuScale); }

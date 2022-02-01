@@ -36,8 +36,8 @@ public:
 	virtual void					set_cm_interpolate(float	f) {}
 	virtual void					set_cm_textures(const shared_str& tex0, const shared_str& tex1) {}
 	virtual ~CRenderTarget() {};
-	virtual u32			get_width			()				{ return EDevice->m_RenderWidth;	}
-	virtual u32			get_height			()				{ return EDevice->m_RenderHeight;	}
+	virtual u32			get_width			()				{ return EDevice->dwWidth;	}
+	virtual u32			get_height			()				{ return EDevice->dwHeight;	}
 };
 
 
@@ -46,7 +46,7 @@ class	ECORE_API CRender : public IRender_interface
 {
 	CRenderTarget* Target;
 	Fmatrix					current_matrix;
-
+	BOOL val_bInvisible;
 public:
 	// options
 	s32						m_skinning;

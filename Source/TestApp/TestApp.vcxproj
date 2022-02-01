@@ -124,6 +124,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>xrEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -213,6 +214,15 @@
     </ProjectReference>
     <ProjectReference Include="..\BearBundle\BearRender\BearVulkan\Platform\Desktop\BearRenderVK10.vcxproj">
       <Project>{fd9a3517-044c-4a74-b351-e8a9b319040b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\XrAPI\XrAPI.vcxproj">
+      <Project>{ff16ef0a-8a51-4c36-9213-4aa87cb4b317}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\XrCore\XrCore.vcxproj">
+      <Project>{da642d7c-4fff-43dc-98f8-3f96caf1e4ba}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\XrEngine\XrEngine.vcxproj">
+      <Project>{2820680f-79fe-4477-a14c-007f273a5fa8}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

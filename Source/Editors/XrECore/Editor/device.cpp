@@ -32,7 +32,7 @@ CEditorRenderDevice::CEditorRenderDevice()
     m_ScreenQuality = 1.f;
 	dwMaximized = 0;
     dwWidth 		= dwHeight 	= 256;
-    m_RenderWidth 	= m_RenderHeight 		= 256;
+	dwRealWidth = dwRealHeight = 256;
 	mProject.identity();
     mFullTransform.identity();
     mView.identity	();
@@ -281,11 +281,11 @@ void CEditorRenderDevice::_Destroy(BOOL	bKeepTextures)
 //---------------------------------------------------------------------------
 void  CEditorRenderDevice::Resize(int w, int h, bool maximized)
 {
-	if (dwWidth == w && dwHeight == h&& dwMaximized == maximized)return;
+	if (dwRealWidth == w && dwRealHeight == h&& dwMaximized == maximized)return;
     m_RenderArea	= w*h;
 
-	dwWidth = w;
-	dwHeight = h;
+	dwRealWidth = w;
+	dwRealHeight = h;
 	dwMaximized = maximized;
 
     Reset			(false);
@@ -298,13 +298,13 @@ void CEditorRenderDevice::Reset  	(bool )
     Resources->reset_begin	();
 	UI->ResetBegin();
     Memory.mem_compact		();
-    HW.DevPP.BackBufferWidth= dwWidth;
-    HW.DevPP.BackBufferHeight= dwHeight;
+    HW.DevPP.BackBufferWidth= dwRealWidth;
+    HW.DevPP.BackBufferHeight= dwRealHeight;
     HW.Reset				(m_hWnd);
-    dwWidth					= HW.DevPP.BackBufferWidth;
-    dwHeight				= HW.DevPP.BackBufferHeight;
-//		fWidth_2			= float(dwWidth/2);
-//		fHeight_2			= float(dwHeight/2);
+    dwRealWidth					= HW.DevPP.BackBufferWidth;
+    dwRealHeight				= HW.DevPP.BackBufferHeight;
+//		fWidth_2			= float(dwRealWidth/2);
+//		fHeight_2			= float(dwRealHeight/2);
     Resources->reset_end	();
 	UI->ResetEnd();
     _SetupStates			();

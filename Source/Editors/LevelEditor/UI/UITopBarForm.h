@@ -7,6 +7,9 @@ public:
 	virtual void Draw();
 	void RefreshBar();
 private:
+	void ClickLevelPlay();
+	void ClickLevelSimulate();
+
 #define ADD_BUTTON_IMAGE_T1(Class,Name)void Click##Class##Name();
 #define ADD_BUTTON_IMAGE_T2(Class,Name)void Click##Class##Name();
 #define ADD_BUTTON_IMAGE_S(Name) void Click##Name(); ref_texture m_t##Name;u32 m_time##Name;

@@ -44,7 +44,7 @@ public:
 public:
 	float RadiusRender;
    // u32 					dwWidth, dwHeight;
-	u32 					m_RenderWidth, m_RenderHeight;
+	u32 					dwRealWidth, dwRealHeight;
     float					m_RenderArea;
     float 					m_ScreenQuality;
 
@@ -124,9 +124,9 @@ public:
     IC float				GetRenderArea	(){return m_RenderArea;}
 	// Sprite rendering
 	IC float 				_x2real			(float x)
-    { return (x+1)*m_RenderWidth*0.5f;	}
+    { return (x+1)*dwWidth*0.5f;	}
 	IC float 				_y2real			(float y)
-    { return (y+1) * m_RenderHeight * 0.5f;}
+    { return (y+1) * dwHeight * 0.5f;}
 
 	// draw
 	void			   		SetShader		(ref_shader sh){m_CurrentShader = sh;}

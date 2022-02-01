@@ -21,6 +21,7 @@ IRenderFactory*	RenderFactory = NULL;
 //---------------------------------------------------------------------------
 CRender::CRender	()
 {
+	val_bInvisible = FALSE;
 	::Render = &RImplementation;
 	m_skinning					= 0;
 }
@@ -70,7 +71,7 @@ BOOL CRender::occ_visible(vis_data& P)
 void CRender::Calculate()
 {
 	// Transfer to global space to avoid deep pointer access
-	g_fSCREEN						=	float(EDevice->m_RenderWidth*EDevice->m_RenderHeight);
+	g_fSCREEN						=	float(EDevice->dwWidth*EDevice->dwHeight);
 	r_ssaDISCARD					=	(ssaDISCARD*ssaDISCARD)/g_fSCREEN;
 //	r_ssaLOD_A						=	(ssaLOD_A*ssaLOD_A)/g_fSCREEN;
 //	r_ssaLOD_B						=	(ssaLOD_B*ssaLOD_B)/g_fSCREEN;
@@ -112,7 +113,9 @@ void CRender::Calculate()
 		{
 			IRenderable* renderable = pSpatial->dcast_Renderable();
 			if (!renderable)
-				continue;  // unknown, but renderable object (r1_glow???)
+				continue; 
+			if (!(pSpatial->spatial.type & STYPE_RENDERABLE)) 	continue;
+
 			set_Object(renderable);
 			renderable->renderable_Render();
 			set_Object(nullptr);
@@ -174,7 +177,7 @@ void 	CRender::set_Transform	(Fmatrix* M)
 	current_matrix.set(*M);
 }
 
-void			CRender::add_Visual   		(IRenderVisual* visual)			{ Models->RenderSingle	(dynamic_cast<dxRender_Visual*>(visual),current_matrix,1.f);}
+void			CRender::add_Visual   		(IRenderVisual* visual)			{ if (val_bInvisible)		return; Models->RenderSingle	(dynamic_cast<dxRender_Visual*>(visual),current_matrix,1.f);}
 IRenderVisual*	CRender::model_Create		(LPCSTR name, IReader* data)		{ return Models->Create(name,data);		}
 IRenderVisual*	CRender::model_CreateChild	(LPCSTR name, IReader* data)		{ return Models->CreateChild(name,data);}
 void 			CRender::model_Delete(IRenderVisual*& V, BOOL bDiscard) { auto v = dynamic_cast<dxRender_Visual*>(V); Models->Delete(v, bDiscard); if (v == nullptr)V = nullptr; }
@@ -294,6 +297,7 @@ BOOL CRender::get_HUD()
 
 void CRender::set_Invisible(BOOL V)
 {
+	val_bInvisible = V;
 }
 
 
@@ -360,8 +364,35 @@ public:
 };
  IRender_ObjectSpecific* CRender::ros_create(IRenderable* parent) { return xr_new< RenderObjectSpecific>(); }
  void CRender::ros_destroy(IRender_ObjectSpecific*& a) { xr_delete(a); }
- IRender_Light* CRender::light_create() { return nullptr; }
- void CRender::light_destroy(IRender_Light * p_) {}
+ class RLight : public IRender_Light
+ {
+ public:
+ public:
+	 virtual void set_type(LT type) {}
+	 virtual void set_active(bool) {}
+	 virtual bool get_active() { return false; }
+	 virtual void set_shadow(bool) {}
+	 virtual void set_volumetric(bool) {}
+	 virtual void set_volumetric_quality(float) {}
+	 virtual void set_volumetric_intensity(float) {}
+	 virtual void set_volumetric_distance(float) {}
+	 virtual void set_indirect(bool) {};
+	 virtual void set_position(const Fvector& P) {}
+	 virtual void set_rotation(const Fvector& D, const Fvector& R) {}
+	 virtual void set_cone(float angle) {}
+	 virtual void set_range(float R) {}
+	 virtual void set_virtual_size(float R) {}
+	 virtual void set_texture(LPCSTR name) {}
+	 virtual void set_color(const Fcolor& C) {}
+	 virtual void set_color(float r, float g, float b) {}
+	 virtual void set_hud_mode(bool b) {}
+	 virtual bool get_hud_mode() {
+		 return false;
+	 }
+	 virtual ~RLight() {}
+ };
+ IRender_Light* CRender::light_create() { return xr_new< RLight>(); }
+ void CRender::light_destroy(IRender_Light* p_) {  }
  IRender_Glow* CRender::glow_create() { return nullptr; }
  void CRender::glow_destroy(IRender_Glow* p_) {}
  void CRender::model_Logging(BOOL bEnable) {}

@@ -314,8 +314,8 @@ void CCustomPreferences::Save(CInifile* I)
     }
     I->w_string("editor_prefs", "weather", sWeather.c_str());
     I->w_bool("render", "maximized", EDevice->dwMaximized);
-    I->w_u32("render", "w", EDevice->dwWidth);
-    I->w_u32("render", "h", EDevice->dwHeight);
+    I->w_u32("render", "w", EDevice->dwRealWidth);
+    I->w_u32("render", "h", EDevice->dwRealHeight);
     I->w_bool("windows", "log", bAllowLogCommands);
     I->w_float("render", "render_radius", EDevice->RadiusRender);
 
