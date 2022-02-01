@@ -90,6 +90,22 @@ void CALifeSpawnRegistry::load				(LPCSTR spawn_name)
 	load						(*m_file);
 }
 
+void CALifeSpawnRegistry::load_from_editor()
+{
+	Msg("* Loading spawn registry...");
+	ai().patrol_path_storage_from_editor();
+
+	VERIFY(!m_game_graph);
+	m_game_graph = xr_new<CGameGraph>();
+	ai().game_graph(m_game_graph);
+	
+	build_story_spawns();
+
+	build_root_spawns();
+
+	Msg("* %d spawn points are successfully loaded", m_spawns.vertex_count());
+}
+
 struct dummy {
     int count;
     lua_State* state;

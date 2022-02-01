@@ -603,10 +603,12 @@ void EScene::FillProp(LPCSTR pref, PropItemVec& items, ObjClassID cls_id)
 void EScene::Play()
 {
     if (IsSimulate())return;
+    BuildAIMap();
+    BuildSpawn();
     Console->Execute("main_menu off");
     g_hud = (CCustomHUD*)NEW_INSTANCE(CLSID_HUDMANAGER);
     g_pGameLevel = (IGame_Level*)NEW_INSTANCE(CLSID_EDITOR_LEVEL);
-    g_pGameLevel->net_Start("all/single/new", "localhost");
+    g_pGameLevel->net_Start("all/single/alife/new", "localhost");
     g_pGameLevel->IR_Capture();
     GetTool(OBJCLASS_SPAWNPOINT)->m_EditFlags.set(ESceneToolBase::flVisible, false);
 }
@@ -633,14 +635,20 @@ void EScene::LoadCFrom(CObjectSpace* Space, CDB::build_callback cb)
 
 void EScene::LoadSpawn(xr_vector<NET_Packet>& Ps)
 {
-    bool bHasHOM = false;
-    ObjectList& lst = ListObj(OBJCLASS_SPAWNPOINT);
-    for (ObjectIt it = lst.begin(); it != lst.end(); it++) 
-    {
-        (*it)->ExportSpawn(Ps);
-    }
+    m_Spawn.swap(Ps);
 }
 
+
+void EScene::BuildSpawn()
+{
+    m_Spawn.clear_not_free();
+    bool bHasHOM = false;
+    ObjectList& lst = ListObj(OBJCLASS_SPAWNPOINT);
+    for (ObjectIt it = lst.begin(); it != lst.end(); it++)
+    {
+        (*it)->ExportSpawn(m_Spawn);
+    }
+}
 void EScene::RegisterSubstObjectName(const xr_string& _from, const xr_string& _to)
 {
     xr_string _tmp;

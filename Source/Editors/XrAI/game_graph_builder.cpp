@@ -638,7 +638,6 @@ void CGameGraphBuilder::save_graph			(const float &start, const float &amount)
 	header.m_edge_count			= (GameGraph::_GRAPH_ID)graph().edge_count();
 	header.m_death_point_count	= 0;
 	header.m_guid				= m_graph_guid;
-
 	// levels
 	CGameGraph::SLevel			level;
 	level.m_offset.set			(0,0,0);

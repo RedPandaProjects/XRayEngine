@@ -228,6 +228,30 @@ bool CALifeUpdateManager::change_level	(NET_Packet &net_packet)
 }
 
 #include "../xrEngine/igame_persistent.h"
+void CALifeUpdateManager::new_game_for_editor()
+{
+	Msg("* Creating new game...");
+	unload();
+	reload(m_section);
+	spawns().load_from_editor();
+	graph().load_from_editor();
+	server().PerformIDgen(0x0000);
+	time_manager().init(m_section);
+	VERIFY(can_register_objects());
+
+	can_register_objects(false);
+	spawn_new_objects();
+	can_register_objects(true);
+
+	CALifeObjectRegistry::OBJECT_REGISTRY::iterator	I = objects().objects().begin();
+	CALifeObjectRegistry::OBJECT_REGISTRY::iterator	E = objects().objects().end();
+	for (; I != E; ++I)
+		(*I).second->on_register();
+
+	Msg("* New game is successfully created!");
+
+}
+
 void CALifeUpdateManager::new_game			(LPCSTR save_name)
 {
 //	g_pGamePersistent->LoadTitle		("st_creating_new_game");
@@ -310,6 +334,15 @@ bool CALifeUpdateManager::load_game		(LPCSTR game_name, bool no_assert)
 	strconcat					(sizeof(S1),S1,game_name,temp);
 	*m_server_command_line		= S1;
 	return						(true);
+}
+
+void CALifeUpdateManager::load_from_editor()
+{
+	xr_strcpy(g_last_saved_game, "editor");
+	new_game_for_editor();
+
+	if (g_pGameLevel)
+		Level().OnAlifeSimulatorLoaded();
 }
 
 void CALifeUpdateManager::set_switch_online		(ALife::_OBJECT_ID id, bool value)

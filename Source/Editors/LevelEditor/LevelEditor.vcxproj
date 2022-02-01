@@ -130,6 +130,7 @@
     <ClCompile Include="Edit\SceneSummaryInfo.cpp" />
     <ClCompile Include="Edit\SceneUndo.cpp" />
     <ClCompile Include="Edit\SceneUtil.cpp" />
+    <ClCompile Include="Edit\scene_aimap.cpp" />
     <ClCompile Include="Edit\Scene_Tools.cpp" />
     <ClCompile Include="Edit\sector.cpp" />
     <ClCompile Include="Edit\SoundManager_LE.cpp" />

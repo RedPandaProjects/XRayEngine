@@ -8,4 +8,7 @@ public:
 	virtual ~XrEditorSceneInterface();
 	virtual void LoadSpawn(xr_vector<NET_Packet>& Ps) = 0;
 	virtual	void LoadCFrom(CObjectSpace*Space, CDB::build_callback)=0;
+	virtual struct NodeCompressed*	GetAINodes()=0;
+	virtual struct hdrNODES*		GetAIHeader()=0;
+
 };

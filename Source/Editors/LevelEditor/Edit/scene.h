@@ -340,7 +340,11 @@ public:
 	bool IsSimulate();
 	void Stop();
 	virtual	void LoadCFrom(CObjectSpace* Space, CDB::build_callback cb);
-	virtual void LoadSpawn(xr_vector<NET_Packet>& Ps);
+	virtual void LoadSpawn(xr_vector<NET_Packet>&Ps);
+	virtual struct NodeCompressed* GetAINodes();
+	virtual struct hdrNODES* GetAIHeader();
+	void BuildSpawn();
+	void BuildAIMap();
 protected:
     typedef std::pair<xr_string,xr_string>  TSubstPair;
     typedef xr_vector<TSubstPair>           TSubstPairs;
@@ -352,7 +356,10 @@ protected:
 public:
     void            RegisterSubstObjectName  (const xr_string& from, const xr_string& to );
     bool            GetSubstObjectName       (const xr_string& from, xr_string& to) const;
-
+private:
+	xr_vector< NodeCompressed> m_AIMapNodes;
+	hdrNODES m_AIMapHeader;
+	xr_vector<NET_Packet> m_Spawn;
 };
 
 //----------------------------------------------------

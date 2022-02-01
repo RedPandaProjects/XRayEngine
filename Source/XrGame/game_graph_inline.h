@@ -1,3 +1,4 @@
+#include "..\xrServerEntities\game_graph_space.h"
 ////////////////////////////////////////////////////////////////////////////
 //	Module 		: game_graph_inline.h
 //	Created 	: 18.02.2003
@@ -24,9 +25,22 @@ IC CGameGraph::CGameGraph									(LPCSTR file_name, u32 current_version)
 	m_current_level_cross_table		= 0;
 }
 #endif // AI_COMPILER
-
+IC CGameGraph::CGameGraph()
+{
+	{
+		static CVertex null_point = { {0,0,0}, {0,0,0},0,0,255,0,0,0 };
+		m_nodes = (CVertex*)&null_point;
+	}
+	m_nodes = nullptr;
+	m_header.load_from_editor();
+	m_current_level_some_vertex_id = _GRAPH_ID(-1);
+	m_enabled.assign(header().vertex_count(), true);
+	m_cross_tables = nullptr;
+	m_current_level_cross_table = 0;
+}
 IC CGameGraph::CGameGraph											(const IReader &_stream)
 {
+	VERIFY(!Device->IsEditorMode());
 	IReader							&stream = const_cast<IReader&>(_stream);
 	m_header.load					(&stream);
 	R_ASSERT2						(header().version() == XRAI_CURRENT_VERSION,"Graph version mismatch!");
@@ -41,6 +55,7 @@ IC CGameGraph::CGameGraph											(const IReader &_stream)
 
 IC CGameGraph::~CGameGraph											()
 {
+	if (Device->IsEditorMode())return;
 	xr_delete					(m_current_level_cross_table);
 #ifdef AI_COMPILER
 	FS.r_close					(m_reader);
@@ -318,6 +333,14 @@ IC	void GameGraph::CHeader::save									(IWriter *writer)
 	LEVEL_MAP::iterator			E = m_levels.end();
 	for ( ; I != E; ++I)
 		(*I).second.save		(writer);
+}
+
+IC void GameGraph::CHeader::load_from_editor()
+{
+	m_version = 0;
+	m_vertex_count = 1;
+	m_edge_count = 0;
+	m_death_point_count = 0;
 }
 
 IC	void CGameGraph::set_current_level								(u32 const level_id)

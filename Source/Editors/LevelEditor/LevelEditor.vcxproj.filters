@@ -425,6 +425,9 @@
     <ClCompile Include="Engine\XRayEditor.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Edit\scene_aimap.cpp">
+      <Filter>Edit</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Edit\SceneSummaryInfo.h">

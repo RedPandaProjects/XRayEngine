@@ -92,6 +92,9 @@ namespace GameGraph {
 	class
 #endif
 		CVertex {
+#if DEV_MODE
+	public:
+#endif
 		Fvector						tLocalPoint;
 		Fvector						tGlobalPoint;
 		u32							tLevelID:8;
@@ -140,6 +143,7 @@ namespace GameGraph {
 		IC	const SLevel			*level				(LPCSTR level_name, bool) const;
 		IC	void					load				(IReader *reader);
 		IC	void					save				(IWriter *reader);
+		IC	void					load_from_editor	();
 		friend class CGameGraph;
 	};
 #pragma pack(pop)

@@ -34,6 +34,9 @@ BOOL CLevelEditor::net_Start(LPCSTR op_server, LPCSTR op_client)
 	m_caClientOptions = op_client;
 	auto& p = g_pGamePersistent->m_game_params;
 	xr_strcpy(p.m_game_type ,"single");
+	xr_strcpy(p.m_alife, "alife");
+	xr_strcpy(p.m_new_or_load, "editor");
+	xr_strcpy(p.m_game_or_spawn, "editor");
 	p.m_e_game_type = eGameIDSingle;
 	
 	GameDescriptionData game_descr;

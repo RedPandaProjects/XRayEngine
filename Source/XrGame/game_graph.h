@@ -51,6 +51,7 @@ public:
 #endif // AI_COMPILER
 
 public:
+	IC								CGameGraph				();
 	IC								CGameGraph				(const IReader &stream);
 	IC		void					save					(IWriter &stream);
 	IC	const CGameLevelCrossTable	&cross_table			() const;
