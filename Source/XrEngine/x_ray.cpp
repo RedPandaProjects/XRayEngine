@@ -30,6 +30,8 @@
 
 #include "securom_api.h"
 #include "..\XrAPI\xrGameManager.h"
+#include "GameMtlLib.h"
+#include "device.h"
 //---------------------------------------------------------------------
 ENGINE_API CInifile* pGameIni		= NULL;
 BOOL	g_bIntroFinished			= FALSE;
@@ -158,10 +160,10 @@ struct _SoundProcessor	: public pureFrame
 {
 	virtual void	_BCL	OnFrame	( )
 	{
-		//Msg							("------------- sound: %d [%3.2f,%3.2f,%3.2f]",u32(Device.dwFrame),VPUSH(Device.vCameraPosition));
-		Device.Statistic->Sound.Begin();
-		::Sound->update				(Device.vCameraPosition,Device.vCameraDirection,Device.vCameraTop);
-		Device.Statistic->Sound.End	();
+		//Msg							("------------- sound: %d [%3.2f,%3.2f,%3.2f]",u32(EngineDevice->dwFrame),VPUSH(EngineDevice->vCameraPosition));
+		EngineDevice->Statistic->Sound.Begin();
+		::Sound->update				(EngineDevice->vCameraPosition,EngineDevice->vCameraDirection,EngineDevice->vCameraTop);
+		EngineDevice->Statistic->Sound.End	();
 	}
 }	SoundProcessor;
 
@@ -183,9 +185,12 @@ ENGINE_API	string_path		g_sLaunchWorkingFolder;
 // startup point
 void InitEngine		()
 {
+	EngineDevice = xr_new<CRenderDevice>();
+	GameMaterialLibrary = xr_new<CGameMtlLibrary>();
+	Device = EngineDevice;
 	Engine.Initialize			( );
 	while (!g_bIntroFinished)	Sleep	(100);
-	Device.Initialize			( );
+	EngineDevice->Initialize			( );
 	CheckCopyProtection			( );
 }
 
@@ -307,8 +312,11 @@ void destroyConsole	()
 
 void destroyEngine	()
 {
-	Device.Destroy				( );
+
+	EngineDevice->Destroy				( );
 	Engine.Destroy				( );
+	xr_delete(EngineDevice);
+	xr_delete(GameMaterialLibrary);
 }
 
 void execUserScript				( )
@@ -330,8 +338,8 @@ void slowdownthread	( void* )
 {
 //	Sleep		(30*1000);
 	for (;;)	{
-		if (Device.Statistic->fFPS<30) Sleep(1);
-		if (Device.mt_bMustExit)	return;
+		if (EngineDevice->Statistic->fFPS<30) Sleep(1);
+		if (EngineDevice->mt_bMustExit)	return;
 		if (0==pSettings)			return;
 		if (0==Console)				return;
 		if (0==pInput)				return;
@@ -369,8 +377,8 @@ void Startup()
 
 	// Initialize APP
 //#ifndef DEDICATED_SERVER
-	ShowWindow( Device.m_hWnd , SW_SHOWNORMAL );
-	Device.Create				( );
+	ShowWindow( EngineDevice->m_hWnd , SW_SHOWNORMAL );
+	EngineDevice->Create				( );
 //#endif
 	LALib.OnCreate				( );
 	pApp						= xr_new<CApplication>	();
@@ -385,7 +393,7 @@ void Startup()
 	// Main cycle
 	CheckCopyProtection			( );
 Memory.mem_usage();
-	Device.Run					( );
+	EngineDevice->Run					( );
 
 	// Destroy APP
 	xr_delete					( g_SpatialSpacePhysic	);
@@ -692,7 +700,7 @@ ENGINE_API	bool g_dedicated_server	= false;
 	BOOL IsPCAccessAllowed(); 
 #endif // DEDICATED_SERVER
 
-int APIENTRY WinMain_impl(HINSTANCE hInstance,
+	ENGINE_API int APIENTRY WinMain_impl(HINSTANCE hInstance,
                      HINSTANCE hPrevInstance,
                      char *    lpCmdLine,
                      int       nCmdShow)
@@ -926,33 +934,6 @@ int stack_overflow_exception_filter	(int exception_code)
 
 #include <boost/crc.hpp>
 
-int APIENTRY WinMain(HINSTANCE hInstance,
-	HINSTANCE hPrevInstance,
-	char* lpCmdLine,
-	int       nCmdShow)
-{
-	//FILE* file				= 0;
-	//fopen_s					( &file, "z:\\development\\call_of_prypiat\\resources\\gamedata\\shaders\\r3\\objects\\r4\\accum_sun_near_msaa_minmax.ps\\2048__1___________4_11141_", "rb" );
-	//u32 const file_size		= 29544;
-	//char* buffer			= (char*)malloc(file_size);
-	//fread					( buffer, file_size, 1, file );
-	//fclose					( file );
-
-	//u32 const& crc			= *(u32*)buffer;
-
-	//boost::crc_32_type		processor;
-	//processor.process_block	( buffer + 4, buffer + file_size );
-	//u32 const new_crc		= processor.checksum( );
-	//VERIFY					( new_crc == crc );
-
-	//free					(buffer);
-
-	WinMain_impl(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
-
-
-
-	return					(0);
-}
 
 LPCSTR _GetFontTexName (LPCSTR section)
 {
@@ -961,13 +942,13 @@ LPCSTR _GetFontTexName (LPCSTR section)
 	int idx			= def_idx;
 
 #if 0
-	u32 w = Device.dwWidth;
+	u32 w = EngineDevice->dwWidth;
 
 	if(w<=800)		idx = 0;
 	else if(w<=1280)idx = 1;
 	else 			idx = 2;
 #else
-	u32 h = Device.dwHeight;
+	u32 h = EngineDevice->dwHeight;
 
 	if(h<=600)		idx = 0;
 	else if(h<1024)	idx = 1;
@@ -1019,16 +1000,17 @@ CApplication::CApplication()
 
 	// levels
 	Level_Current				= u32(-1);
+	if (Device->IsEditorMode())return;
 	Level_Scan					( );
 
 	// Font
 	pFontSystem					= NULL;
 
 	// Register us
-	Device.seqFrame.Add			(this, REG_PRIORITY_HIGH+1000);
+	EngineDevice->seqFrame.Add			(this, REG_PRIORITY_HIGH+1000);
 	
-	if (psDeviceFlags.test(mtSound))	Device.seqFrameMT.Add		(&SoundProcessor);
-	else								Device.seqFrame.Add			(&SoundProcessor);
+	if (psDeviceFlags.test(mtSound))	EngineDevice->seqFrameMT.Add		(&SoundProcessor);
+	else								EngineDevice->seqFrame.Add			(&SoundProcessor);
 
 	Console->Show				( );
 
@@ -1046,9 +1028,9 @@ CApplication::~CApplication()
 	// font
 	xr_delete					( pFontSystem		);
 
-	Device.seqFrameMT.Remove	(&SoundProcessor);
-	Device.seqFrame.Remove		(&SoundProcessor);
-	Device.seqFrame.Remove		(this);
+	EngineDevice->seqFrameMT.Remove	(&SoundProcessor);
+	EngineDevice->seqFrame.Remove		(&SoundProcessor);
+	EngineDevice->seqFrame.Remove		(this);
 
 
 	// events
@@ -1060,8 +1042,6 @@ CApplication::~CApplication()
 	Engine.Event.Handler_Detach	(eStartMPDemo,this);
 	
 }
-
-extern CRenderDevice Device;
 
 void CApplication::OnEvent(EVENT E, u64 P1, u64 P2)
 {
@@ -1104,7 +1084,7 @@ void CApplication::OnEvent(EVENT E, u64 P1, u64 P2)
 			Console->Hide();
 //!			this line is commented by Dima
 //!			because I don't see any reason to reset device here
-//!			Device.Reset					(false);
+//!			EngineDevice->Reset					(false);
 			//-----------------------------------------------------------
 			g_pGamePersistent->PreStart		(op_server);
 			//-----------------------------------------------------------
@@ -1154,7 +1134,7 @@ void CApplication::OnEvent(EVENT E, u64 P1, u64 P2)
 
 		Console->Execute("main_menu off");
 		Console->Hide();
-		Device.Reset					(false);
+		EngineDevice->Reset					(false);
 
 		g_pGameLevel					= (IGame_Level*)NEW_INSTANCE(CLSID_GAME_LEVEL);
 		shared_str server_options		= g_pGameLevel->OpenDemoFile(demo_file);
@@ -1219,17 +1199,17 @@ void CApplication::destroy_loading_shaders()
 PROTECT_API void CApplication::LoadDraw		()
 {
 	if(g_appLoaded)				return;
-	Device.dwFrame				+= 1;
+	EngineDevice->dwFrame				+= 1;
 
 
-	if(!Device.Begin () )		return;
+	if(!EngineDevice->Begin () )		return;
 
 	if	(g_dedicated_server)
 		Console->OnRender			();
 	else
 		load_draw_internal			();
 
-	Device.End					();
+	EngineDevice->End					();
 	CheckCopyProtection			();
 }
 
@@ -1594,14 +1574,14 @@ void CApplication::load_draw_internal()
 	m_pRender->load_draw_internal(*this);
 	/*
 	if(!sh_progress){
-		CHK_DX			(HW.pDevice->Clear(0,0,D3DCLEAR_TARGET,D3DCOLOR_ARGB(0,0,0,0),1,0));
+		CHK_DX			(HW.pEngineDevice->Clear(0,0,D3DCLEAR_TARGET,D3DCOLOR_ARGB(0,0,0,0),1,0));
 		return;
 	}
 		// Draw logo
 		u32	Offset;
 		u32	C						= 0xffffffff;
-		u32	_w						= Device.dwWidth;
-		u32	_h						= Device.dwHeight;
+		u32	_w						= EngineDevice->dwWidth;
+		u32	_h						= EngineDevice->dwHeight;
 		FVF::TL* pv					= NULL;
 
 //progress

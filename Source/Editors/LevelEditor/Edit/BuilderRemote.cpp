@@ -519,7 +519,7 @@ BOOL  GetStaticCformData( const Fmatrix& parent,   CEditableMesh* mesh, CEditabl
         if(surf->m_GameMtlName=="materials\\occ")
 			continue;
 
-        u16 game_material_idx = GMLib.GetMaterialIdx(surf->m_GameMtlName.c_str());
+        u16 game_material_idx = GameMaterialLibrary-> GetMaterialIdx(surf->m_GameMtlName.c_str());
 
         for (IntIt f_it=face_lst.begin(); f_it!=face_lst.end(); ++f_it)
         {
@@ -644,7 +644,7 @@ BOOL SceneBuilder::BuildMesh(	const Fmatrix& parent,
         	bResult 		= FALSE;
             break;
         }
-        SGameMtl* M = GMLib.GetMaterialByID(gm_id);
+        SGameMtl* M =  GameMaterialLibrary->GetMaterialByID(gm_id);
         if (0==M)
         {
         	ELog.DlgMsg		(mtError,"Surface: '%s' contains undefined game material.",surf->_Name());
@@ -1178,7 +1178,7 @@ int SceneBuilder::BuildShader(const char * s)
     strcpy(sh.name,s);
     int sh_id = FindInShaders(&sh);
     if (sh_id<0){
-        if (!EDevice.Resources->_FindBlender(sh.name)){
+        if (!EDevice->Resources->_FindBlender(sh.name)){
         	ELog.DlgMsg(mtError,"Can't find engine shader: %s",sh.name);
             return -1;
         }
@@ -1204,7 +1204,7 @@ int SceneBuilder::BuildShaderXRLC(const char * s){
     strcpy(sh.name,s);
     int sh_id = FindInShadersXRLC(&sh);
     if (sh_id<0){
-        if (!EDevice.ShaderXRLC.Get(sh.name)){
+        if (!EDevice->ShaderXRLC.Get(sh.name)){
         	ELog.DlgMsg(mtError,"Can't find compiler shader: %s",sh.name);
             return -1;
         }
@@ -1270,7 +1270,7 @@ int SceneBuilder::BuildMaterial(LPCSTR esh_name, LPCSTR csh_name, LPCSTR tx_name
 	VERIFY			(tx_cnt==1);
     
     if (allow_draft&&(Scene->m_LevelOp.m_BuildParams.m_quality==ebqDraft)){
-        Shader_xrLC* c_sh	= EDevice.ShaderXRLC.Get(csh_name);
+        Shader_xrLC* c_sh	= EDevice->ShaderXRLC.Get(csh_name);
         if (c_sh->flags.bRendering){
             mtl.shader      = (u16)BuildShader		("def_shaders\\def_vertex");
             mtl.shader_xrlc	= (u16)BuildShaderXRLC	("def_shaders\\def_vertex");

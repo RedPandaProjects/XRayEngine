@@ -3,7 +3,7 @@
 
 #include "../../xrEngine/psystem.h"
 
-#ifndef _EDITOR
+#ifndef REDITOR
 #include "../../XrServerEntities/smart_cast.h"
 #endif
 
@@ -32,7 +32,7 @@ void CPGDef::SetName(LPCSTR name)
     m_Name			= name;
 }
 
-#ifdef _EDITOR
+#ifdef REDITOR
 void CPGDef::Clone	(CPGDef* source)
 {
 	m_Name			= "<invalid_name>";
@@ -245,7 +245,7 @@ void CParticleGroup::SItem::StartFreeChild(CParticleEffect* emitter, LPCSTR nm, 
         C->UpdateParent			(M,vel,FALSE);
         _children_free.push_back(C);
     }else{
-#ifdef _EDITOR        
+#ifdef REDITOR        
         Msg			("!Can't use looped effect '%s' as 'On Birth' child for group.",nm);
 #else
         Debug.fatal	(DEBUG_INFO,"Can't use looped effect '%s' as 'On Birth' child for group.",nm);
@@ -326,7 +326,7 @@ void OnGroupParticleDead(void* owner, u32 param, PAPI::Particle& m, u32 idx)
     	PG->items[param].StartFreeChild			(PE,*eff->m_OnDeadChildName,m);
 }
 //------------------------------------------------------------------------------
-struct zero_vis_pred : public std::unary_function<dxRender_Visual*, bool>
+struct zero_vis_pred 
 {
 	bool operator()(const dxRender_Visual* x){ return x==0; }
 };

@@ -182,7 +182,7 @@ private:
 	CTexture*						textures_cs	[mtMaxComputeShaderTextures];	// 4 vs
 #	endif
 #endif	//	USE_DX10
-#ifdef _EDITOR
+#ifdef REDITOR
 	CMatrix*						matrices	[8	];	// matrices are supported only for FFP
 #endif
 

@@ -2,8 +2,23 @@
 // file: stdafx.h
 //----------------------------------------------------
 #pragma once
+// DirectX headers
+#include <d3d9.h>
+#include "directx\d3dx9.h"
+#include "..\..\XrRender\Private\xrD3dDefs.h"
 
+#include <dinput.h>
+//#include <dsound.h>
 
+#include "..\XrEngine\stdafx.h"
+#include "..\XrEngine\XrDeviceInterface.h"
+#include "..\XrEProps\stdafx.h"
+#include "..\..\xrCDB\xrCDB.h"
+#include "..\..\xrSound\Sound.h"
+#include "..\..\XrEngine\psystem.h"
+
+#include "..\..\XrEngine\fmesh.h"
+#include "..\..\XrEngine\_d3d_extensions.h"
 #define smart_cast dynamic_cast
 
 #ifndef O_SEQUENTIAL
@@ -15,62 +30,35 @@
 #define         R_R1    1
 #define         R_R2    2
 #define         RENDER  R_R1
+#define			REDITOR 1
 
-// Std C++ headers
-
-// iseful macros
-// MSC names for functions
 #ifdef	XRECORE_EXPORTS
-    #define ECORE_API		__declspec(dllexport)
-    #define ENGINE_API		__declspec(dllexport)
+#define ECORE_API		__declspec(dllexport)
 #else
-    #define ECORE_API		__declspec(dllimport)
-    #define ENGINE_API		__declspec(dllimport)
+#define ECORE_API		__declspec(dllimport)
 #endif
 
-#define DLL_API			__declspec(dllimport)
 #define PropertyGP(a,b)	__declspec( property( get=a, put=b ) )
 #define THROW			FATAL("THROW");
 #define THROW2(a)		FATAL(a);
-#define NO_XRC_STATS
-
 #define clMsg 			Msg
 
-// core
-#include "..\..\XrCore\xrCore.h"
-#define time_t __time32_t
-#include "..\XrEProps\stdafx.h"
-#ifdef _EDITOR
-	class PropValue;
-	class PropItem;
-	DEFINE_VECTOR(PropItem*,PropItemVec,PropItemIt);
+class PropValue;
+class PropItem;
+DEFINE_VECTOR(PropItem*, PropItemVec, PropItemIt);
 
-	class ListItem;
-	DEFINE_VECTOR(ListItem*,ListItemsVec,ListItemsIt);
-#endif
-
-#include "..\..\xrCDB\xrCDB.h"
-#include "..\..\xrSound\Sound.h"
-#include "..\..\XrEngine\psystem.h"
-
-// DirectX headers
-#include <d3d9.h>
-#include "directx\d3dx9.h"
-#include "..\..\XrRender\Private\xrD3dDefs.h"
-
-#include <dinput.h>
-//#include <dsound.h>
+class ListItem;
+DEFINE_VECTOR(ListItem*, ListItemsVec, ListItemsIt);
 
 // some user components
-#include "..\..\XrEngine\fmesh.h"
-#include "..\..\XrEngine\_d3d_extensions.h"
+
 
 DEFINE_VECTOR		(xr_string,AStringVec,AStringIt);
 DEFINE_VECTOR		(xr_string*,LPAStringVec,LPAStringIt);
 
 #include "..\..\xrServerEntities\xrEProps.h"
 #include "..\..\xrCore\Log.h"
-#include "editor\engine.h"
+#include "editor\ELog.h"
 #include "..\..\XrEngine\defines.h"
 
 #include "../../xrphysics/xrphysics.h"
@@ -87,17 +75,15 @@ struct astr_pred
     {	return x<y;	}
 };
 
-#ifdef _EDITOR
-	#include "editor\device.h"
-	#include "..\..\XrEngine\properties.h"
-	#include "editor\render.h"
-	DEFINE_VECTOR(FVF::L,FLvertexVec,FLvertexIt);
-	DEFINE_VECTOR(FVF::TL,FTLvertexVec,FTLvertexIt);
-	DEFINE_VECTOR(FVF::LIT,FLITvertexVec,FLITvertexIt);
-	DEFINE_VECTOR(shared_str,RStrVec,RStrVecIt);
+#include "editor\device.h"
+#include "..\..\XrEngine\properties.h"
+#include "editor\render.h"
+DEFINE_VECTOR(FVF::L,FLvertexVec,FLvertexIt);
+DEFINE_VECTOR(FVF::TL,FTLvertexVec,FTLvertexIt);
+DEFINE_VECTOR(FVF::LIT,FLITvertexVec,FLITvertexIt);
+DEFINE_VECTOR(shared_str,RStrVec,RStrVecIt);
 
-	#include "Editor/EditorPreferences.h"
-#endif
+#include "Editor/EditorPreferences.h"
 
 #ifdef _LEVEL_EDITOR                
 	#include "net_utils.h"

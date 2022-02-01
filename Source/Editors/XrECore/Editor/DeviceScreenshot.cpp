@@ -29,9 +29,9 @@ bool CEditorRenderDevice::MakeScreenshot(U32Vec& pixels, u32 width, u32 height)
 	CHK_DX(HW.pDevice->SetDepthStencilSurface(pZB));
 
 	UI->PrepareRedraw	();
-    EDevice.Begin		();
+    EDevice->Begin		();
     Tools->Render		();
-    EDevice.End			();
+    EDevice->End			();
 
 	// Create temp-surface
 	IDirect3DSurface9*	pFB;

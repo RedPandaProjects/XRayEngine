@@ -60,7 +60,7 @@ void CGraviArtefact::UpdateCLChild()
 			{
 				dir.y = 1.f; 
 				m_pPhysicsShell->applyImpulse(dir, 
-											  30.f * Device.fTimeDelta * 
+											  30.f * Device->fTimeDelta * 
 											  m_pPhysicsShell->getMass());
 			}
 		}

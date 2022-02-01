@@ -9,7 +9,7 @@
 #include "directx\d3dx9.h"
 #pragma warning(default:4995)
 
-#ifndef _EDITOR
+#ifndef REDITOR
 #include "dxRenderDeviceRender.h"
 #else
 #include "..\..\BearBundle\BearGraphics\BearGraphics.hpp"
@@ -31,7 +31,7 @@ void fix_texture_name(LPSTR fn)
 }
 
   ENGINE_API int g_current_renderer;
-  #ifndef _EDITOR
+  #ifndef REDITOR
   ENGINE_API bool is_enough_address_space_available();
   #else
   bool is_enough_address_space_available(){return true;}
@@ -287,7 +287,7 @@ IC u32 it_height_rev_base(u32 d, u32 s)	{	return	color_rgba	(
 	color_get_G(d),					// diff z
 	(color_get_R(s)+color_get_G(s)+color_get_B(s))/3	);	// height
 }
-#ifdef _EDITOR
+#ifdef REDITOR
 inline _D3DFORMAT Convert(BearTexturePixelFormat format, BearImage& image)
 {
 	switch (format)
@@ -414,7 +414,7 @@ ID3DBaseTexture* CRender::texture_load_software(LPCSTR fRName, u32& ret_msize)
 			if (!FS.exist(fn, "$game_saves$", fname, ".dds"))
 				if (!FS.exist(fn, "$game_textures$", fname, ".dds"))
 				{
-#ifdef _EDITOR
+#ifdef REDITOR
 					ELog.Msg(mtError, "Can't find texture '%s'", fname);
 					return 0;
 #endif
@@ -554,7 +554,7 @@ ID3DBaseTexture*	CRender::texture_load(LPCSTR fRName, u32& ret_msize)
 	if (FS.exist(fn,"$game_textures$",	fname,	".dds"))							goto _DDS;
 
 
-#ifdef _EDITOR
+#ifdef REDITOR
 	ELog.Msg(mtError,"Can't find texture '%s'",fname);
 	return 0;
 #else
@@ -579,7 +579,7 @@ _DDS:
 		R_ASSERT				(S);
 		HRESULT const result	= D3DXGetImageInfoFromFileInMemory	(S->pointer(),S->length(),&IMG);
 		if ( FAILED(result) ) {
-#ifdef _EDITOR
+#ifdef REDITOR
 			return texture_load_software(fRName, ret_msize);
 #endif
 			Msg					("! Can't get image info for texture '%s'",fn);
@@ -742,7 +742,7 @@ _BUMP_from_base:
 	{
 		Msg			("! auto-generated bump map: %s",fname);
 //////////////////
-#ifndef _EDITOR
+#ifndef REDITOR
 		if (strstr(fname,"_bump#"))
 		{
 			R_ASSERT2	(FS.exist(fn,"$game_textures$",	"ed\\ed_dummy_bump#",	".dds"), "ed_dummy_bump#");

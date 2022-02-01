@@ -51,12 +51,12 @@ void	CROS_impl::add		(light* source)
 {
 	// Search
 	for (xr_vector<Item>::iterator I=track.begin(); I!=track.end(); I++)	
-		if (source == I->source)	{ I->frame_touched = Device.dwFrame; return; }
+		if (source == I->source)	{ I->frame_touched = Device->dwFrame; return; }
 
 	// Register _new_
 	track.push_back		(Item());
 	Item&	L			= track.back();
-	L.frame_touched		= Device.dwFrame;
+	L.frame_touched		= Device->dwFrame;
 	L.source			= source;
 	L.cache.verts[0].set(0,0,0);
 	L.cache.verts[1].set(0,0,0);
@@ -176,12 +176,12 @@ inline void CROS_impl::accum_hemi(float* hemi_cube, Fvector3& dir, float scale)
 void	CROS_impl::update	(IRenderable* O)
 {
 	// clip & verify
-	if					(dwFrame==Device.dwFrame)			return;
-	dwFrame				= Device.dwFrame;
+	if					(dwFrame==Device->dwFrame)			return;
+	dwFrame				= Device->dwFrame;
 	if					(0==O)								return;
 	if					(0==O->renderable.visual)			return;
 	VERIFY				(dynamic_cast<CROS_impl*>			(O->renderable_ROS()));
-	//float	dt			=	Device.fTimeDelta;
+	//float	dt			=	Device->fTimeDelta;
 
 	CObject*	_object	= dynamic_cast<CObject*>	(O);
 
@@ -337,10 +337,10 @@ extern float ps_r2_lt_smooth;
 // hemi & sun: update and smooth
 void	CROS_impl::update_smooth	(IRenderable* O)
 {
-	if (dwFrameSmooth == Device.dwFrame)
+	if (dwFrameSmooth == Device->dwFrame)
 		return;
 
-	dwFrameSmooth			=	Device.dwFrame;
+	dwFrameSmooth			=	Device->dwFrame;
 
 #if RENDER==R_R1
 	if (O && (0==result_count)) 
@@ -349,7 +349,7 @@ void	CROS_impl::update_smooth	(IRenderable* O)
 	smart_update(O);
 #endif	//	RENDER!=R_R1
 
-	float	l_f				=	Device.fTimeDelta*ps_r2_lt_smooth;
+	float	l_f				=	Device->fTimeDelta*ps_r2_lt_smooth;
 	clamp	(l_f,0.f,1.f)	;
 	float	l_i				=	1.f-l_f							;
 	hemi_smooth				=	hemi_value*l_f + hemi_smooth*l_i;
@@ -420,7 +420,7 @@ void CROS_impl::calc_sky_hemi_value(Fvector& position, CObject* _object)
 void CROS_impl::prepare_lights(Fvector& position, IRenderable* O)
 {
 	CObject*	_object	= dynamic_cast<CObject*>	(O);
-	float	dt			=	Device.fTimeDelta;
+	float	dt			=	Device->fTimeDelta;
 
 	vis_data &vis = O->renderable.visual->getVisData();
 	float	radius;		radius	= vis.sphere.R;
@@ -457,7 +457,7 @@ void CROS_impl::prepare_lights(Fvector& position, IRenderable* O)
 		{
 			// remove untouched lights
 			xr_vector<CROS_impl::Item>::iterator I	= track.begin()+id;
-			if (I->frame_touched!=Device.dwFrame)	{ track.erase(I) ; id--	; continue ; }
+			if (I->frame_touched!=Device->dwFrame)	{ track.erase(I) ; id--	; continue ; }
 
 			// Trace visibility
 			Fvector				P,D;

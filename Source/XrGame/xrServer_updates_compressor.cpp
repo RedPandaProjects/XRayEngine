@@ -21,7 +21,7 @@ last_updates_cache::last_updates_cache()
 u16 last_updates_cache::add_update			(u16 const entity_id, NET_Packet const & update)
 {
 	last_update_t* tmp_entity = search_entity(entity_id);
-	u32 current_time = Device.dwTimeGlobal;
+	u32 current_time = Device->dwTimeGlobal;
 	if (!tmp_entity)
 	{
 		tmp_entity = search_most_expired(current_time, update.B.count);
@@ -198,7 +198,7 @@ void server_updates_compressor::flush_accumulative_buffer()
 	if ((g_sv_traffic_optimization_level & eto_ppmd_compression) ||
 		(g_sv_traffic_optimization_level & eto_lzo_compression))
 	{
-		Device.Statistic->netServerCompressor.Begin();
+		Device->Statistic->netServerCompressor.Begin();
 		R_ASSERT(m_trained_stream);
 		if (g_sv_traffic_optimization_level & eto_ppmd_compression)
 		{
@@ -221,7 +221,7 @@ void server_updates_compressor::flush_accumulative_buffer()
 				m_lzo_dictionary.data, m_lzo_dictionary.size
 			);
 		}
-		Device.Statistic->netServerCompressor.End();
+		Device->Statistic->netServerCompressor.End();
 		//(sizeof(u16)*2 + 1) ::= w_begin(2) + compress_type(1) + zero_end(2)
 		if (dst_packet->w_tell() + m_compress_buf.B.count + (sizeof(u16)*2 + 1) < sizeof(dst_packet->B.data))
 		{

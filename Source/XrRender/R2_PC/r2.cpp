@@ -60,10 +60,10 @@ static class cl_parallax		: public R_constant_setup		{	virtual void setup	(R_con
 
 static class cl_pos_decompress_params		: public R_constant_setup		{	virtual void setup	(R_constant* C)
 {
-	float VertTan =  -1.0f * tanf( deg2rad(Device.fFOV/2.0f ) );
-	float HorzTan =  - VertTan / Device.fASPECT;
+	float VertTan =  -1.0f * tanf( deg2rad(Device->fFOV/2.0f ) );
+	float HorzTan =  - VertTan / Device->fASPECT;
 
-	RCache.set_c	( C, HorzTan, VertTan, ( 2.0f * HorzTan )/(float)Device.dwWidth, ( 2.0f * VertTan ) /(float)Device.dwHeight );
+	RCache.set_c	( C, HorzTan, VertTan, ( 2.0f * HorzTan )/(float)Device->dwWidth, ( 2.0f * VertTan ) /(float)Device->dwHeight );
 
 }}	binder_pos_decompress_params;
 
@@ -93,7 +93,7 @@ extern ENGINE_API BOOL r2_advanced_pp;	//	advanced post process and effects
 // Just two static storage
 void					CRender::create					()
 {
-	Device.seqFrame.Add	(this,REG_PRIORITY_HIGH+0x12345678);
+	Device->seqFrame.Add	(this,REG_PRIORITY_HIGH+0x12345678);
 
 	m_skinning			= -1;
 
@@ -299,7 +299,7 @@ void					CRender::destroy				()
 	xr_delete					(Models);
 	xr_delete					(Target);
 	PSLibrary.OnDestroy			();
-	Device.seqFrame.Remove		(this);
+	Device->seqFrame.Remove		(this);
 	r_dsgraph_destroy			();
 }
 
@@ -350,7 +350,7 @@ void CRender::OnFrame()
 {
 	Models->DeleteQueue			();
 	if (ps_r2_ls_flags.test(R2FLAG_EXP_MT_CALC))	{
-		Device.seqParallel.insert	(Device.seqParallel.begin(),
+		Device->seqParallel.insert	(Device->seqParallel.begin(),
 			fastdelegate::FastDelegate0<>(&HOM,&CHOM::MT_RENDER));
 	}
 }*/
@@ -359,11 +359,11 @@ void CRender::OnFrame()
 	Models->DeleteQueue			();
 	if (ps_r2_ls_flags.test(R2FLAG_EXP_MT_CALC))	{
 		// MT-details (@front)
-		Device.seqParallel.insert	(Device.seqParallel.begin(),
+		Device->seqParallel.insert	(Device->seqParallel.begin(),
 			fastdelegate::FastDelegate0<>(Details,&CDetailManager::MT_CALC));
 
 		// MT-HOM (@front)
-		Device.seqParallel.insert	(Device.seqParallel.begin(),
+		Device->seqParallel.insert	(Device->seqParallel.begin(),
 			fastdelegate::FastDelegate0<>(&HOM,&CHOM::MT_RENDER));
 	}
 }

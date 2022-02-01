@@ -228,7 +228,7 @@ int			ps_r3_dyn_wet_surf_sm_res	= 256;				// 256
 //- Mad Max
 float		ps_r2_gloss_factor			= 4.0f;
 //- Mad Max
-#ifndef _EDITOR
+#ifndef REDITOR
 #include	"../../xrEngine/xr_ioconsole.h"
 #include	"../../xrEngine/xr_ioc_cmd.h"
 

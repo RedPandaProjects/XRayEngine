@@ -622,7 +622,7 @@ void game_sv_CaptureTheArtefact::OnRoundStart()
 
 			ps->clear				();
 			ps->pItemList.clear		();
-			ps->DeathTime			= Device.dwTimeGlobal - 1001;
+			ps->DeathTime			= Device->dwTimeGlobal - 1001;
 
 			m_owner->SetPlayersDefItems		(ps);
 			m_owner->Money_SetStart			(ps);

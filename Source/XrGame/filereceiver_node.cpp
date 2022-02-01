@@ -45,7 +45,7 @@ bool filereceiver_node::receive_packet(NET_Packet & packet)
 	u32 size_to_write = packet.B.count - packet.r_tell();
 	void* pointer = static_cast<void*>(packet.B.data + packet.r_tell());
 	m_writer->w(pointer, size_to_write);
-	m_last_read_time = Device.dwTimeGlobal;
+	m_last_read_time = Device->dwTimeGlobal;
 	return (m_writer->tell() == m_data_size_to_receive);
 }
 

@@ -627,6 +627,18 @@
     <ClInclude Include="EnvironmentBase.h">
       <Filter>Game API\Environment</Filter>
     </ClInclude>
+    <ClInclude Include="XrDeviceInterface.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="XrGameMaterialLibraryInterface.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="XrGameEditorInterface.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="XrEditorSceneInterface.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="defines.cpp">
@@ -756,9 +768,6 @@
       <Filter>Game API\Demo</Filter>
     </ClCompile>
     <ClCompile Include="GameMtlLib.cpp">
-      <Filter>Game API\GameMaterials</Filter>
-    </ClCompile>
-    <ClCompile Include="GameMtlLib_Engine.cpp">
       <Filter>Game API\GameMaterials</Filter>
     </ClCompile>
     <ClCompile Include="ObjectDump.cpp">
@@ -979,6 +988,21 @@
     </ClCompile>
     <ClCompile Include="EnvironmentSOC.cpp">
       <Filter>Game API\Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="XrDeviceInterface.cpp">
+      <Filter>Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="XrGameMaterialLibraryInterface.cpp">
+      <Filter>Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="BoneEditor.cpp">
+      <Filter>Game API\Animator</Filter>
+    </ClCompile>
+    <ClCompile Include="XrGameEditorInterface.cpp">
+      <Filter>Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="XrEditorSceneInterface.cpp">
+      <Filter>Interfaces</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

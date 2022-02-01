@@ -97,7 +97,7 @@ void CLight::Render(int priority, bool strictB2F)
 {
 	inherited::Render(priority,strictB2F);
     if ((1==priority)&&(false==strictB2F)){
-        EDevice.SetShader		(EDevice.m_WireShader);
+        EDevice->SetShader		(EDevice->m_WireShader);
         RCache.set_xform_world	(Fidentity);
     	u32 clr = Selected()?SEL_COLOR:(m_Flags.is(ELight::flAffectDynamic)?NORM_DYN_COLOR:NORM_COLOR);
     	switch (m_Type){
@@ -131,14 +131,14 @@ void CLight::Render(int priority, bool strictB2F)
         if (lt->m_Flags.is(ESceneLightTool::flShowControlName))
         {
             Fvector 		D;
-            D.sub			(EDevice.vCameraPosition,GetPosition());
+            D.sub			(EDevice->vCameraPosition,GetPosition());
             float dist 		= D.normalize_magn();
         	if (!Scene->RayPickObject(dist,GetPosition(),D,OBJCLASS_SCENEOBJECT,0,0))
 	        	DU_impl.OutText (GetPosition(),xr_string().sprintf(" %s",GetLControlName()).c_str(),0xffffffff,0xff000000);
         }
     }else if ((1==priority)&&(true==strictB2F))
     {
-        EDevice.SetShader		(EDevice.m_SelectionShader);
+        EDevice->SetShader		(EDevice->m_SelectionShader);
         RCache.set_xform_world	(Fidentity);
     	switch (m_Type)
         {

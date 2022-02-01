@@ -38,7 +38,7 @@ public:
 	void						LoadArchive		(archive& A, LPCSTR entrypoint=NULL);
 
 private:
-	struct	file_pred: public 	std::binary_function<ILocatorAPIFile&, ILocatorAPIFile&, bool> 
+	struct	file_pred
 	{	
 		IC bool operator()	(const ILocatorAPIFile& x, const ILocatorAPIFile& y) const
 		{	return xr_strcmp(x.name,y.name)<0;	}

@@ -105,6 +105,8 @@ CScriptStorage::~CScriptStorage		()
 		lua_close			(m_virtual_machine);
 }
 
+
+
 void CScriptStorage::reinit	()
 {
 	if (m_virtual_machine)

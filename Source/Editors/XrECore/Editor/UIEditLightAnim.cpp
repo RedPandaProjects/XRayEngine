@@ -307,7 +307,7 @@ void UIEditLightAnim::RenderItem()
     u32 Color;
     {
         int 	frame;
-        Color = m_CurrentItem->CalculateBGR(EDevice.fTimeGlobal, frame);
+        Color = m_CurrentItem->CalculateBGR(EDevice->fTimeGlobal, frame);
         if(!m_RenderAlpha)
             Color = subst_alpha(Color, 0xFF);
     }

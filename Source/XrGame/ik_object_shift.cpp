@@ -17,7 +17,7 @@ void object_shift::	dbg_draw			( const Fmatrix	&current_pos, const extrapolation
 	predicted_pos.transform_tiny( p1, start );
 	const	u16 nb_points	= 200;
 
-	float time_global = Device.fTimeGlobal;
+	float time_global = Device->fTimeGlobal;
 	if( time_global > taget_time )
 				time_global = taget_time;
 
@@ -54,7 +54,7 @@ void object_shift::	dbg_draw			( const Fmatrix	&current_pos, const extrapolation
 static const float global_max_shift = 1.0f;
 float	object_shift::shift	( ) const
 {
-	float time_global = Device.fTimeGlobal;
+	float time_global = Device->fTimeGlobal;
 	if( time_global > taget_time )
 				time_global = taget_time;
 	return shift( time_global );
@@ -133,7 +133,7 @@ void	object_shift::set_taget		( float taget_, float time )
 	//	return;
 	taget = taget_;
 	
-	float time_global = Device.fTimeGlobal;
+	float time_global = Device->fTimeGlobal;
 	
 
 
@@ -144,7 +144,7 @@ void	object_shift::set_taget		( float taget_, float time )
 	}
 
 	if( time < EPS_S)
-		time = Device.fTimeDelta;
+		time = Device->fTimeDelta;
 
 	current			= shift();
 	

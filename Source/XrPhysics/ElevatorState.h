@@ -4,7 +4,7 @@
 #include "ielevatorstate.h"
 class CPHCharacter;
 struct dContact;
-struct SGameMtl;
+class SGameMtl;
 class IClimableObject;
 
 class CElevatorState :

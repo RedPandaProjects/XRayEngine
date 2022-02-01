@@ -32,8 +32,8 @@ CTracer::CTracer()
 
 IC void FillSprite_Circle      (const Fvector& pos, const float width, const float length, u32 color)
 {
-	const Fvector& T        = Device.vCameraTop;
-	const Fvector& R        = Device.vCameraRight;
+	const Fvector& T        = Device->vCameraTop;
+	const Fvector& R        = Device->vCameraRight;
 	Fvector Vr, Vt;
 	Vr.x            = R.x*width;
 	Vr.y            = R.y*width;
@@ -72,7 +72,7 @@ IC void FillSprite_Line	(const Fvector& pos, const Fvector& dir, const float wid
 {
     const Fvector& T	= dir;
     Fvector				R;      
-	R.crossproduct		(T,Device.vCameraDirection).normalize_safe();
+	R.crossproduct		(T,Device->vCameraDirection).normalize_safe();
 	
     Fvector			Vr, Vt;
     Vr.x            = R.x*width;
@@ -127,7 +127,7 @@ void  CTracer::Render	(const Fvector& pos,
 		if(bActor)
 		{
 			float k_speed		= speed/1000.0f;
-//			float f_distance	= Device.vCameraPosition.distance_to(pos);
+//			float f_distance	= Device->vCameraPosition.distance_to(pos);
 
 			FillSprite_Circle	(pos,	k_speed*width*m_circle_size_k,	k_speed*width*m_circle_size_k, m_aColors[colorID]);
 		}

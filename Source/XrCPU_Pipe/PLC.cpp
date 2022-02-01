@@ -38,7 +38,7 @@ __inline float PLC_energy_x86(Fvector& P, Fvector& N, light* L, float E)
 }
 
 
-void  PLC_calc3_x86(int& c0, int& c1, int& c2, CRenderDevice& Device, Fvector* P, Fvector& N, light* L, float energy, Fvector& O)
+void  PLC_calc3_x86(int& c0, int& c1, int& c2, XrDeviceInterface& Device, Fvector* P, Fvector& N, light* L, float energy, Fvector& O)
 {
 	float	E		= PLC_energy_x86(P[0],N,L,energy);
 	float	C1		= clampr(Device.vCameraPosition.distance_to_sqr(P[0])/S_distance2,	0.f,1.f);

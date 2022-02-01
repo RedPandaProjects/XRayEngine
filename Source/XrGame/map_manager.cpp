@@ -232,7 +232,7 @@ void CMapManager::Update()
 
 	for(u32 idx=0; it!=it_e;++it,++idx)
 	{
-		bool bForce		= Device.dwFrame%3 == idx%3;
+		bool bForce		= Device->dwFrame%3 == idx%3;
 		(*it).actual	= (*it).location->Update();
 
 		if((*it).actual && bForce)

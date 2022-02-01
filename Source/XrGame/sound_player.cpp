@@ -145,7 +145,7 @@ void CSoundPlayer::update_playing_sounds()
 		if ((*I).m_sound->_feedback())
 			(*I).m_sound->_feedback()->set_position(compute_sound_point(*I));
 		else
-			if (!(*I).started() && (Device.dwTimeGlobal >= (*I).m_start_time))
+			if (!(*I).started() && (Device->dwTimeGlobal >= (*I).m_start_time))
 				(*I).play_at_pos		(m_object,compute_sound_point(*I));
 	}
 }
@@ -158,7 +158,7 @@ bool CSoundPlayer::need_bone_data	() const
 		if ((*I).m_sound->_feedback())
 			return					(true);
 		else
-			if (!(*I).started() && (Device.dwTimeGlobal >= (*I).m_start_time))
+			if (!(*I).started() && (Device->dwTimeGlobal >= (*I).m_start_time))
 				return				(true);
 	}
 	return							(false);
@@ -219,7 +219,7 @@ void CSoundPlayer::play				(u32 internal_type, u32 max_start_time, u32 min_start
 	if (max_start_time)
 		random_time				= (max_start_time > min_start_time) ? random(max_start_time - min_start_time) + min_start_time : max_start_time;
 
-	sound_single.m_start_time	= Device.dwTimeGlobal + random_time;
+	sound_single.m_start_time	= Device->dwTimeGlobal + random_time;
 	
 	random_time					= 0;
 	if (max_stop_time)
@@ -228,7 +228,7 @@ void CSoundPlayer::play				(u32 internal_type, u32 max_start_time, u32 min_start
 	sound_single.m_stop_time	= sound_single.m_start_time + iFloor(sound_single.m_sound->get_length_sec()*1000.0f) + random_time;
 	m_playing_sounds.push_back	(sound_single);
 	
-	if (Device.dwTimeGlobal >= m_playing_sounds.back().m_start_time)
+	if (Device->dwTimeGlobal >= m_playing_sounds.back().m_start_time)
 		m_playing_sounds.back().play_at_pos(m_object,compute_sound_point(m_playing_sounds.back()));
 }
 

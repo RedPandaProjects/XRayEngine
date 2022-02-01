@@ -109,7 +109,7 @@ _value_type CStalkerPropertyEvaluatorEnemies::evaluate	()
 	if (m_dont_wait && *m_dont_wait)
 		return			(false);
 
-	if (Device.dwTimeGlobal < m_object->memory().enemy().last_enemy_time() + m_time_to_wait)
+	if (Device->dwTimeGlobal < m_object->memory().enemy().last_enemy_time() + m_time_to_wait)
 		return			(true);
 
 	return				(false);
@@ -446,7 +446,7 @@ _value_type CStalkerPropertyEvaluatorShouldThrowGrenade::evaluate	()
 		return					(false);
 
 	// do not throw grenades too often
-	if (object().last_throw_time() + object().throw_time_interval() >= Device.dwTimeGlobal)
+	if (object().last_throw_time() + object().throw_time_interval() >= Device->dwTimeGlobal)
 		return					(false);
 
 	// throw grenades only in case when we have them

@@ -25,7 +25,7 @@ public:
 
 	BENCH_SEC_SCRAMBLEVTBL1
 
-	virtual BOOL		ProcessCam		(SCamEffectorInfo& info)			{fLifeTime-=Device.fTimeDelta; return Valid();};;
+	virtual BOOL		ProcessCam		(SCamEffectorInfo& info)			{fLifeTime-=Device->fTimeDelta; return Valid();};;
 		
 	virtual	void		ProcessIfInvalid(SCamEffectorInfo& info)			{};
 	virtual BOOL		AllowProcessingIfInvalid()							{return FALSE;}

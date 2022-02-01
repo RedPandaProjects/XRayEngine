@@ -6,21 +6,20 @@
 #include "ImageManager.h"
 #include "ui_main.h"
 #include "render.h"
-#include "GameMtlLib.h"
+#include "../Engine/XrGameMaterialLibraryEditors.h"
 #include "ResourceManager.h"
-#pragma package(smart_init)
+#include "UI_ToolsCustom.h"
 
-CEditorRenderDevice 		EDevice;
+CEditorRenderDevice 	*	EDevice;
 
 extern int	rsDVB_Size;
 extern int	rsDIB_Size;
 
-ENGINE_API BOOL g_bRendering = FALSE; 
 CStatsPhysics* _BCL			CEditorRenderDevice::StatPhysics() { return Statistic; }
 void	   _BCL			CEditorRenderDevice::AddSeqFrame(pureFrame* f, bool mt) { seqFrame.Add(f, REG_PRIORITY_LOW); }
 void	   _BCL			CEditorRenderDevice::RemoveSeqFrame(pureFrame* f) { seqFrame.Remove(f); }
 
-
+ENGINE_API BOOL g_bRendering;
 //---------------------------------------------------------------------------
 CEditorRenderDevice::CEditorRenderDevice()
 {
@@ -58,15 +57,21 @@ CEditorRenderDevice::CEditorRenderDevice()
 	fASPECT 		= 1.f;
 	fFOV 			= 60.f;
     dwPrecacheFrame = 0;
+	GameMaterialLibraryEditors = xr_new<XrGameMaterialLibraryEditors>();
+	GameMaterialLibrary = GameMaterialLibraryEditors;
 }
 
 CEditorRenderDevice::~CEditorRenderDevice(){
 	VERIFY(!b_is_Ready);
+	xr_delete(GameMaterialLibrary);
+	GameMaterialLibraryEditors = nullptr;
 }
 
 //extern void Surface_Init();
 #include "../../../xrAPI/xrAPI.h"
 #include "../../../xrRender/Private/dxRenderFactory.h"
+#include "../../../xrRender/Private/dxUIRender.h"
+#include "../../../xrRender/Private/dxDebugRender.h"
 void CEditorRenderDevice::Initialize()
 {
 //	m_Camera.Reset();
@@ -74,8 +79,11 @@ void CEditorRenderDevice::Initialize()
     m_DefaultMat.set(1,1,1);
 //	Surface_Init();
 
+	RenderFactory = &RenderFactoryImpl;
+	UIRender = &UIRenderImpl;
+	DRender = &DebugRenderImpl;
 	// game materials
-    GMLib.Load	();
+	//GameMaterialLibraryEditors->Load	();
 
 	// compiler shader
     string_path fn;
@@ -86,14 +94,15 @@ void CEditorRenderDevice::Initialize()
     	ELog.DlgMsg(mtInformation,"Can't find file '%s'",fn);
     }
 
+
 	CreateWindow();
 
-	RenderFactory	= &RenderFactoryImpl;
 
 	// Startup shaders
 	Create				();
 
-    ::Render->Initialize();
+    ::RImplementation.Initialize();
+	UIRenderImpl.CreateUIGeom();
 
 	Resize(EPrefs->start_w, EPrefs->start_h, EPrefs->start_maximized);
 	HW.updateWindowProps(m_hWnd);
@@ -104,15 +113,15 @@ void CEditorRenderDevice::Initialize()
 
 void CEditorRenderDevice::ShutDown()
 {
-    ::Render->ShutDown	();
+	UIRenderImpl.DestroyUIGeom();
+	::RImplementation.ShutDown	();
 
 	ShaderXRLC.Unload	();
-	GMLib.Unload		();
+	//GameMaterialLibraryEditors->Unload		();
 
 	// destroy context
 	Destroy				();
 	xr_delete			(pSystemFont);
-
 	// destroy shaders
 //	PSLib.xrShutDown	();
 }
@@ -140,7 +149,9 @@ void CEditorRenderDevice::ResetNearer(){
 bool CEditorRenderDevice::Create()
 {
 	if (b_is_Ready)	return false;
-    Statistic			= xr_new<CEStats>();
+
+    EStatistic			= xr_new<CEStats>();
+	Statistic = EStatistic;
 	ELog.Msg(mtInformation,"Starting RENDER device...");
 
 
@@ -169,7 +180,7 @@ bool CEditorRenderDevice::Create()
 
     // if build options - load textures immediately
     if (strstr(Core.Params,"-build")||strstr(Core.Params,"-ebuild"))
-        EDevice.Resources->DeferredLoad(FALSE);
+        EDevice->Resources->DeferredLoad(FALSE);
 
     _Create				(F);
 	FS.r_close			(F);
@@ -182,7 +193,6 @@ bool CEditorRenderDevice::Create()
 //---------------------------------------------------------------------------
 void CEditorRenderDevice::Destroy(){
 	if (!b_is_Ready) return;
-
 	ELog.Msg( mtInformation, "Destroying Direct3D...");
 
 	HW.Validate			();
@@ -206,20 +216,20 @@ void CEditorRenderDevice::_SetupStates()
 		float fBias = -1.f;
 		CHK_DX(HW.pDevice->SetSamplerState( i, D3DSAMP_MIPMAPLODBIAS, *((LPDWORD) (&fBias))));
 	}
-	EDevice.SetRS(D3DRS_DITHERENABLE,	TRUE				);
-    EDevice.SetRS(D3DRS_COLORVERTEX,		TRUE				);
-    EDevice.SetRS(D3DRS_STENCILENABLE,	FALSE				);
-    EDevice.SetRS(D3DRS_ZENABLE,			TRUE				);
-    EDevice.SetRS(D3DRS_SHADEMODE,		D3DSHADE_GOURAUD	);
-	EDevice.SetRS(D3DRS_CULLMODE,		D3DCULL_CCW			);
-	EDevice.SetRS(D3DRS_ALPHAFUNC,		D3DCMP_GREATER		);
-	EDevice.SetRS(D3DRS_LOCALVIEWER,		TRUE				);
-    EDevice.SetRS(D3DRS_NORMALIZENORMALS,TRUE				);
+	EDevice->SetRS(D3DRS_DITHERENABLE,	TRUE				);
+    EDevice->SetRS(D3DRS_COLORVERTEX,		TRUE				);
+    EDevice->SetRS(D3DRS_STENCILENABLE,	FALSE				);
+    EDevice->SetRS(D3DRS_ZENABLE,			TRUE				);
+    EDevice->SetRS(D3DRS_SHADEMODE,		D3DSHADE_GOURAUD	);
+	EDevice->SetRS(D3DRS_CULLMODE,		D3DCULL_CCW			);
+	EDevice->SetRS(D3DRS_ALPHAFUNC,		D3DCMP_GREATER		);
+	EDevice->SetRS(D3DRS_LOCALVIEWER,		TRUE				);
+    EDevice->SetRS(D3DRS_NORMALIZENORMALS,TRUE				);
 
-	EDevice.SetRS(D3DRS_DIFFUSEMATERIALSOURCE, D3DMCS_MATERIAL);
-	EDevice.SetRS(D3DRS_SPECULARMATERIALSOURCE,D3DMCS_MATERIAL);
-	EDevice.SetRS(D3DRS_AMBIENTMATERIALSOURCE, D3DMCS_MATERIAL);
-	EDevice.SetRS(D3DRS_EMISSIVEMATERIALSOURCE,D3DMCS_COLOR1	);
+	EDevice->SetRS(D3DRS_DIFFUSEMATERIALSOURCE, D3DMCS_MATERIAL);
+	EDevice->SetRS(D3DRS_SPECULARMATERIALSOURCE,D3DMCS_MATERIAL);
+	EDevice->SetRS(D3DRS_AMBIENTMATERIALSOURCE, D3DMCS_MATERIAL);
+	EDevice->SetRS(D3DRS_EMISSIVEMATERIALSOURCE,D3DMCS_COLOR1	);
 
     ResetMaterial();
 }
@@ -233,7 +243,7 @@ void CEditorRenderDevice::_Create(IReader* F)
     
     RCache.OnDeviceCreate		();
 	Resources->OnDeviceCreate	(F);
-    ::Render->OnDeviceCreate	();
+	::RImplementation.OnDeviceCreate	();
 
     m_WireShader.create			("editor\\wire");
     m_SelectionShader.create	("editor\\selection");
@@ -260,12 +270,12 @@ void CEditorRenderDevice::_Destroy(BOOL	bKeepTextures)
 
 //.	seqDevDestroy.Process		(rp_DeviceDestroy);
 
-	::Render->Models->OnDeviceDestroy	();
+	::RImplementation.Models->OnDeviceDestroy	();
 
 	Resources->OnDeviceDestroy	(bKeepTextures);
 
 	RCache.OnDeviceDestroy		();
-    ::Render->OnDeviceDestroy	();
+	::RImplementation.OnDeviceDestroy	();
 }
 
 //---------------------------------------------------------------------------
@@ -278,11 +288,11 @@ void  CEditorRenderDevice::Resize(int w, int h, bool maximized)
 	dwHeight = h;
 	dwMaximized = maximized;
 
-    Reset			();
+    Reset			(false);
     UI->RedrawScene	();
 }
 
-void CEditorRenderDevice::Reset  	()
+void CEditorRenderDevice::Reset  	(bool )
 {
     u32 tm_start			= TimerAsync();
     Resources->reset_begin	();
@@ -302,7 +312,7 @@ void CEditorRenderDevice::Reset  	()
     Msg						("*** RESET [%d ms]",tm_end-tm_start);
 }
 
-BOOL CEditorRenderDevice::Begin	()
+bool CEditorRenderDevice::Begin	()
 {
 	VERIFY(b_is_Ready);
 	mFullTransform_saved = mFullTransform;
@@ -322,7 +332,7 @@ BOOL CEditorRenderDevice::Begin	()
 		// Check if the device is ready to be reset
 		if		(D3DERR_DEVICENOTRESET==_hr)
 		{
-			Reset	();
+			Reset	(false);
 		}
 	}
 
@@ -354,8 +364,10 @@ void CEditorRenderDevice::End()
 void CEditorRenderDevice::UpdateView()
 {
 // set camera matrix
-	m_Camera.GetView(mView);
-
+	if (!Tools->UpdateCamera())
+	{
+		m_Camera.GetView(mView);
+	}
     RCache.set_xform_view(mView);
     mFullTransform.mul(mProject,mView);
 
@@ -377,7 +389,10 @@ void CEditorRenderDevice::FrameMove()
     dwTimeDelta		= iFloor(fTimeDelta*1000.f+0.5f);
     dwTimeContinual	= dwTimeGlobal;
 
-    m_Camera.Update(fTimeDelta);
+	if (!Tools->UpdateCamera())
+	{
+		m_Camera.Update(fTimeDelta);
+	}
 
     // process objects
 	seqFrame.Process(rp_Frame);
@@ -414,9 +429,6 @@ void CEditorRenderDevice::ReloadTextures()
 
 void CEditorRenderDevice::UnloadTextures()
 {
-#ifndef _EDITOR
-    Resources->DeferredUnload();
-#endif    
 }
 
 void CEditorRenderDevice::Reset(IReader* F, BOOL bKeepTextures)
@@ -458,11 +470,11 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		u16 fActive = LOWORD(wParam);
 		BOOL fMinimized = (BOOL)HIWORD(wParam);
 		BOOL bActive = ((fActive != WA_INACTIVE) && (!fMinimized)) ? TRUE : FALSE;
-		if (bActive != EDevice.b_is_Active)
+		if (bActive != EDevice->b_is_Active)
 		{
-			EDevice.b_is_Active = bActive;
+			EDevice->b_is_Active = bActive;
 
-			if (EDevice.b_is_Active)
+			if (EDevice->b_is_Active)
 			{
 				if (UI)UI->OnAppActivate();
 			}

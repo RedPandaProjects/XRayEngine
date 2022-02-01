@@ -65,7 +65,7 @@ void		IBlender::CreatePalette(xr_vector<IBlender*> &palette)
 	std::sort		(palette.begin(),palette.end(),p_sort);
 }
 
-#ifndef _EDITOR
+#ifndef REDITOR
 // Engine
 #include "../../../xrEngine/render.h"
 IBlender*	IBlender::Create	(CLASS_ID cls)

@@ -10,7 +10,7 @@ class CEditableObject;
 class CEditableMesh;
 class CCustomObject;
 
-#ifdef _EDITOR
+#if 1
 	class SPickQuery{
     	Flags32				m_Flags;
     public:

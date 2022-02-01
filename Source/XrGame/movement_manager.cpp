@@ -196,7 +196,7 @@ void CMovementManager::update_path				()
 				break;
 			}
 			case ePathTypePatrolPath : {
-//				Msg				("[%6d][%s] actuality is false",Device.dwFrame,*object().cName());
+//				Msg				("[%6d][%s] actuality is false",Device->dwFrame,*object().cName());
 				m_path_state	= ePathStateSelectPatrolPoint;
 				break;
 			}
@@ -333,7 +333,7 @@ void CMovementManager::verify_detail_path		()
 
 void CMovementManager::on_restrictions_change	()
 {
-//	Msg								("[%6d][%s][on_restrictions_change]",Device.dwTimeGlobal,*object().cName());
+//	Msg								("[%6d][%s][on_restrictions_change]",Device->dwTimeGlobal,*object().cName());
 	m_path_actuality				= false;
 	level_path_builder().remove		();
 	detail_path_builder().remove	();
@@ -391,7 +391,7 @@ void CMovementManager::build_level_path	()
 //	timer.Start							();
 	level_path_builder().process_impl	();
 //	static int i=0;
-//	Msg									("[%6d][%6d][%4d][%f] build_level_path",Device.dwTimeGlobal,Device.dwFrame,++i,timer.GetElapsed_sec()*1000.f);
+//	Msg									("[%6d][%6d][%4d][%f] build_level_path",Device->dwTimeGlobal,Device->dwFrame,++i,timer.GetElapsed_sec()*1000.f);
 }
 
 Fvector CMovementManager::predict_position	(const float &time_delta, const Fvector &start_position, u32 &current_travel_point, const float &velocity) const

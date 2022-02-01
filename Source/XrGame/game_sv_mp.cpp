@@ -80,12 +80,12 @@ void	game_sv_mp::Update	()
 		if (!pCorpseObj)
 		{
 			m_CorpseList.erase(m_CorpseList.begin() + i);
-			Msg("corpse [%d] not found [%d]",CorpseID, Device.dwFrame);
+			Msg("corpse [%d] not found [%d]",CorpseID, Device->dwFrame);
 			continue;
 		}
 		if (!pCorpseObj->children.empty())
 		{
-			Msg("corpse [%d] childern not empty [%d]",CorpseID, Device.dwFrame);
+			Msg("corpse [%d] childern not empty [%d]",CorpseID, Device->dwFrame);
 			i++;
 			continue;
 		}
@@ -95,7 +95,7 @@ void	game_sv_mp::Update	()
 		u_EventGen			(P,GE_DESTROY,CorpseID);
 		Level().Send(P,net_flags(TRUE,TRUE));
 		m_CorpseList.erase(m_CorpseList.begin() + i);
-		Msg("corpse [%d] send destroy [%d]",CorpseID, Device.dwFrame);
+		Msg("corpse [%d] send destroy [%d]",CorpseID, Device->dwFrame);
 	}
 
 	if (IsVotingEnabled() && IsVotingActive()) UpdateVote();
@@ -104,7 +104,7 @@ void	game_sv_mp::Update	()
 
 	if(g_sv_mp_iDumpStatsPeriod)
 	{
-		int curr_minutes = iFloor(Device.fTimeGlobal/60.0f);
+		int curr_minutes = iFloor(Device->fTimeGlobal/60.0f);
 		if(g_sv_mp_iDumpStats_last+g_sv_mp_iDumpStatsPeriod <= curr_minutes )
 		{
 			if(Phase()==GAME_PHASE_INPROGRESS)
@@ -578,7 +578,7 @@ void	game_sv_mp::SpawnPlayer(ClientID id, LPCSTR N)
 		{
 			OnPlayerEnteredGame(id);
 		};
-		ps_who->RespawnTime = Device.dwTimeGlobal;
+		ps_who->RespawnTime = Device->dwTimeGlobal;
 
 		Game().m_WeaponUsageStatistic->OnPlayerSpawned(ps_who);
 	}
@@ -1416,12 +1416,12 @@ void game_sv_mp::OnPlayerKilled(NET_Packet P)
 		Msg("! ERROR:  killed entity is null ! (entitty [%d][%s]), killer id [%d][%s], Frame [%d]",
 			KilledID, entity ? entity->cName().c_str() : "unknown",
 			KillerID, ps_killer ? ps_killer->getName() : "unknown",
-			Device.dwFrame);
+			Device->dwFrame);
 #endif // #ifndef MASTER_GOLD
 		return;
 	}
 #ifdef MP_LOGGING
-	Msg("--- Player [%d] killed player [%d], Frame [%d]", KillerID, KilledID, Device.dwFrame);
+	Msg("--- Player [%d] killed player [%d], Frame [%d]", KillerID, KilledID, Device->dwFrame);
 #endif
 	
 
@@ -1820,7 +1820,7 @@ void game_sv_mp::DestroyGameItem(CSE_Abstract* entity)
 
 	NET_Packet P;
 	P.w_begin(M_EVENT);
-	P.w_u32(Device.dwTimeGlobal - 2*NET_Latency);
+	P.w_u32(Device->dwTimeGlobal - 2*NET_Latency);
 	P.w_u16(GE_DESTROY);
 	P.w_u16(entity->ID);
 	Level().Send(P, net_flags(TRUE,TRUE));
@@ -1971,7 +1971,7 @@ void game_sv_mp::WritePlayerStats(CInifile& ini, LPCSTR sect, xrClientData* pCl)
 void game_sv_mp::WriteGameState(CInifile& ini, LPCSTR sect, bool bRoundResult)
 {
 	if(!bRoundResult)
-		ini.w_u32						(sect, "online_time_sec", Device.dwTimeGlobal/1000);
+		ini.w_u32						(sect, "online_time_sec", Device->dwTimeGlobal/1000);
 }
 
 
@@ -2014,7 +2014,7 @@ void game_sv_mp::DumpRoundStatisticsAsync()
 
 	m_async_stats.async_responses.clear();
 	m_server->ForEachClientDo(m_async_stats);
-	m_async_stats_request_time = Device.dwTimeGlobal;
+	m_async_stats_request_time = Device->dwTimeGlobal;
 	AskAllToUpdateStatistics();
 }
 
@@ -2027,7 +2027,7 @@ bool game_sv_mp::CheckStatisticsReady()
 		return true;
 
 	if (m_async_stats.all_ready() || 
-		(m_async_stats_request_time + g_sv_dwMaxClientPing) < Device.dwTimeGlobal)
+		(m_async_stats_request_time + g_sv_dwMaxClientPing) < Device->dwTimeGlobal)
 	{
 		DumpRoundStatistics();
 		FinishToDumpStatistics();

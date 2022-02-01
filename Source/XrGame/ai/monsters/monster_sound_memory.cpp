@@ -143,14 +143,14 @@ void CMonsterSoundMemory::UpdateHearing()
 			Sounds.begin(),
 			Sounds.end(),
 			pred_remove_nonactual_sounds(
-				Device.dwTimeGlobal - time_memory
+				Device->dwTimeGlobal - time_memory
 			)
 		),
 		Sounds.end()
 	);
 
 	// пересчитать value
-	for (xr_vector<SoundElem>::iterator I = Sounds.begin(); I != Sounds.end(); ++I) I->CalcValue(Device.dwTimeGlobal, monster->Position());
+	for (xr_vector<SoundElem>::iterator I = Sounds.begin(); I != Sounds.end(); ++I) I->CalcValue(Device->dwTimeGlobal, monster->Position());
 
 	// update help sound
 	if (m_time_help_sound + time_help_sound_remember < time()) m_time_help_sound = 0;

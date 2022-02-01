@@ -1,5 +1,3 @@
-#ifndef xr_device
-#define xr_device
 #pragma once
 
 // Note:
@@ -9,110 +7,20 @@
 //class	ENGINE_API	CResourceManager;
 //class	ENGINE_API	CGammaControl;
 
-#include "pure.h"
-//#include "hw.h"
-#include "../xrcore/ftimer.h"
-#include "stats.h"
 //#include "shader.h"
 //#include "R_Backend.h"
 
-#define VIEWPORT_NEAR  0.2f
 
-#define DEVICE_RESET_PRECACHE_FRAME_COUNT 10
 
-#include "FactoryPtr.h"
-#include "RenderDeviceRender.h"
 
-#ifdef INGAME_EDITOR
-#	include "../XrWeatherEditor/Public/interfaces.hpp"
-#endif // #ifdef INGAME_EDITOR
+#include "XrDeviceInterface.h"
+
 
 class engine_impl;
 
-#pragma pack(push,4)
 
-class IRenderDevice
-{
-public:
-	virtual		CStatsPhysics*	_BCL		StatPhysics		()							= 0;								
-	virtual				void	_BCL		AddSeqFrame		( pureFrame* f, bool mt )	= 0;
-	virtual				void	_BCL		RemoveSeqFrame	( pureFrame* f )			= 0;
-};
-
-class ENGINE_API CRenderDeviceData
-{
-
-public:
-
-	bool									dwMaximized;
-	u32										dwWidth;
-	u32										dwHeight;
-	u32										dwPrecacheFrame;
-	BOOL									b_is_Ready;
-	BOOL									b_is_Active;
-public:
-
-		// Engine flow-control
-	u32										dwFrame;
-
-	float									fTimeDelta;
-	float									fTimeGlobal;
-	u32										dwTimeDelta;
-	u32										dwTimeGlobal;
-	u32										dwTimeContinual;
-
-	Fvector									vCameraPosition;
-	Fvector									vCameraDirection;
-	Fvector									vCameraTop;
-	Fvector									vCameraRight;
-
-	Fmatrix									mView;
-	Fmatrix									mProject;
-	Fmatrix									mFullTransform;
-
-	// Copies of corresponding members. Used for synchronization.
-	Fvector									vCameraPosition_saved;
-
-	Fmatrix									mView_saved;
-	Fmatrix									mProject_saved;
-	Fmatrix									mFullTransform_saved;
-
-	float									fFOV;
-	float									fASPECT;
-protected:
-
-	u32										Timer_MM_Delta;
-	CTimer_paused							Timer;
-	CTimer_paused							TimerGlobal;
-public:
-
-// Registrators
-	CRegistrator	<pureRender			>			seqRender;
-	CRegistrator	<pureAppActivate	>			seqAppActivate;
-	CRegistrator	<pureAppDeactivate	>			seqAppDeactivate;
-	CRegistrator	<pureAppStart		>			seqAppStart;
-	CRegistrator	<pureAppEnd			>			seqAppEnd;
-	CRegistrator	<pureFrame			>			seqFrame;
-	CRegistrator	<pureScreenResolutionChanged>	seqResolutionChanged;
-#ifdef _EDITOR
-	CRegistrator	<pureDrawUI			>			seqDrawUI;
-#endif
-
-	HWND									m_hWnd;
-//	CStats*									Statistic;
-
-};
-
-class	ENGINE_API CRenderDeviceBase :
-	public IRenderDevice,
-	public CRenderDeviceData
-{
-public:
-};
-
-#pragma pack(pop)
 // refs
-class ENGINE_API CRenderDevice: public CRenderDeviceBase
+class ENGINE_API CRenderDevice: public XrDeviceInterface
 {
 private:
     // Main objects used for creating and rendering the 3D scene
@@ -123,7 +31,6 @@ private:
 	//u32										Timer_MM_Delta;
 	//CTimer_paused							Timer;
 	//CTimer_paused							TimerGlobal;
-	CTimer									TimerMM;
 
 	void									_Create		(LPCSTR shName);
 	void									_Destroy	(BOOL	bKeepTextures);
@@ -137,7 +44,6 @@ public:
 	u32										dwPrecacheTotal;
 
 //	u32										dwWidth, dwHeight;
-	float									fWidth_2, fHeight_2;
 //	BOOL									b_is_Ready;
 //	BOOL									b_is_Active;
 	void									OnWM_Activate(WPARAM wParam, LPARAM lParam);
@@ -145,25 +51,10 @@ public:
 	//ref_shader								m_WireShader;
 	//ref_shader								m_SelectionShader;
 
-	IRenderDeviceRender						*m_pRender;
 
-	BOOL									m_bNearer;
-	void									SetNearer	(BOOL enabled)
-	{
-		if (enabled&&!m_bNearer){
-			m_bNearer						= TRUE;
-			mProject._43					-= EPS_L;
-		}else if (!enabled&&m_bNearer){
-			m_bNearer						= FALSE;
-			mProject._43					+= EPS_L;
-		}
-		m_pRender->SetCacheXform(mView, mProject);
-		//R_ASSERT(0);
-		//	TODO: re-implement set projection
-		//RCache.set_xform_project			(mProject);
-	}
+	
 
-	void									DumpResourcesMemoryUsage() { m_pRender->ResourcesDumpMemoryUsage();}
+
 public:
 	// Registrators
 	//CRegistrator	<pureRender			>			seqRender;
@@ -172,17 +63,7 @@ public:
 //	CRegistrator	<pureAppStart		>			seqAppStart;
 //	CRegistrator	<pureAppEnd			>			seqAppEnd;
 	//CRegistrator	<pureFrame			>			seqFrame;
-	CRegistrator	<pureFrame			>			seqFrameMT;
-	CRegistrator	<pureDeviceReset	>			seqDeviceReset;
-	xr_vector		<fastdelegate::FastDelegate0<> >	seqParallel;
 
-	// Dependent classes
-	//CResourceManager*						Resources;
-#ifdef _EDITOR
-	CEStats* Statistic;
-#else
-	CStats*									Statistic;
-#endif
 	// Engine flow-control
 	//float									fTimeDelta;
 	//float									fTimeGlobal;
@@ -200,14 +81,11 @@ public:
 	//Fmatrix									mProject;
 	//Fmatrix									mFullTransform;
 
-	Fmatrix									mInvFullTransform;
 
 	//float									fFOV;
 	//float									fASPECT;
 	
-	CRenderDevice			()
-		:
-		m_pRender(0)
+	CRenderDevice			():dwPrecacheTotal(0)
 #ifdef INGAME_EDITOR
 		,m_editor_module(0),
 		m_editor_initialize(0),
@@ -216,25 +94,24 @@ public:
 		m_engine(0)
 #endif // #ifdef INGAME_EDITOR
 #ifdef PROFILE_CRITICAL_SECTIONS
-		,mt_csEnter(MUTEX_PROFILE_ID(CRenderDevice::mt_csEnter))
-		,mt_csLeave(MUTEX_PROFILE_ID(CRenderDevice::mt_csLeave))
+		mt_csEnter(MUTEX_PROFILE_ID(CRenderDevice::mt_csEnter)),
+		mt_csLeave(MUTEX_PROFILE_ID(CRenderDevice::mt_csLeave)),
 #endif // #ifdef PROFILE_CRITICAL_SECTIONS
 	{
 	    m_hWnd              = NULL;
 		b_is_Active			= FALSE;
 		b_is_Ready			= FALSE;
 		Timer.Start			();
-		m_bNearer			= FALSE;
 	};
 
-	void	Pause							(BOOL bOn, BOOL bTimer, BOOL bSound, LPCSTR reason);
-	BOOL	Paused							();
+	virtual void	Pause							(BOOL bOn, BOOL bTimer, BOOL bSound, LPCSTR reason) override;
+	virtual bool	Paused							()const override;
 
 	// Scene control
-	void PreCache							(u32 amount, bool b_draw_loadscreen, bool b_wait_user_input);
-	BOOL Begin								();
-	void Clear								();
-	void End								();
+	virtual void PreCache							(u32 amount, bool b_draw_loadscreen, bool b_wait_user_input)override;
+	virtual bool Begin								()override;
+	virtual void Clear								()override;
+	virtual void End								()override;
 	void FrameMove							();
 	
 	void overdrawBegin						();
@@ -242,9 +119,7 @@ public:
 
 	// Mode control
 	void DumpFlags							();
-	IC	 CTimer_paused* GetTimerGlobal		()	{ return &TimerGlobal;								}
-	u32	 TimerAsync							()	{ return TimerGlobal.GetElapsed_ms();				}
-	u32	 TimerAsync_MMT						()	{ return TimerMM.GetElapsed_ms() +	Timer_MM_Delta; }
+	
 
 	// Creation & Destroying
 	void ConnectToRender();
@@ -257,33 +132,7 @@ public:
 	void ShutDown							(void);
 
 public:
-	void time_factor						(const float &time_factor)
-	{
-		Timer.time_factor		(time_factor);
-		TimerGlobal.time_factor	(time_factor);
-	}
-	
-	IC	const float &time_factor			() const
-	{
-		VERIFY					(Timer.time_factor() == TimerGlobal.time_factor());
-		return					(Timer.time_factor());
-	}
 
-	// Multi-threading
-	xrCriticalSection	mt_csEnter;
-	xrCriticalSection	mt_csLeave;
-	volatile BOOL		mt_bMustExit;
-
-	ICF		void			remove_from_seq_parallel	(const fastdelegate::FastDelegate0<> &delegate)
-	{
-		xr_vector<fastdelegate::FastDelegate0<> >::iterator I = std::find(
-			seqParallel.begin(),
-			seqParallel.end(),
-			delegate
-		);
-		if (I != seqParallel.end())
-			seqParallel.erase	(I);
-	}
 
 public:
 			void xr_stdcall		on_idle				();
@@ -291,29 +140,15 @@ public:
 
 private:
 			void					message_loop		();
-virtual		void			_BCL	AddSeqFrame			( pureFrame* f, bool mt )
-#ifdef _EDITOR
-= 0;
-#else
-;
-#endif
-virtual		void			_BCL	RemoveSeqFrame		( pureFrame* f )
-#ifdef _EDITOR
-= 0;
-#else
-;
-#endif
-virtual		CStatsPhysics* _BCL	StatPhysics()
-#ifdef _EDITOR
-= 0;
-#else
-{
-	return  Statistic;
-}
-#endif
+			virtual		void			_BCL	AddSeqFrame(pureFrame* f, bool mt);
+			virtual		void			_BCL	RemoveSeqFrame(pureFrame* f);
+			virtual		CStatsPhysics* _BCL	StatPhysics()
+			{
+				return  Statistic;
+			}
 #ifdef INGAME_EDITOR
 public:
-	IC		XrWeatherEditor::ide			*editor				() const { return m_editor; }
+	virtual 		XrWeatherEditor::ide			*WeatherEditor				() const { return m_editor; }
 
 private:
 			void				initialize_editor	();
@@ -331,21 +166,12 @@ private:
 	engine_impl					*m_engine;
 #endif // #ifdef INGAME_EDITOR
 };
-#ifndef _EDITOR
-extern		ENGINE_API		CRenderDevice		Device;
-#endif
-#ifndef	_EDITOR
-#define	RDEVICE	Device
-#else
-#define RDEVICE	EDevice
-#endif
 
 
 extern		ENGINE_API		bool				g_bBenchmark;
 
 typedef fastdelegate::FastDelegate0<bool>		LOADING_EVENT;
 extern	ENGINE_API xr_list<LOADING_EVENT>		g_loading_events;
-#ifndef	_EDITOR
 class ENGINE_API CLoadScreenRenderer :public pureRender
 {
 public:
@@ -358,5 +184,6 @@ public:
 	bool			b_need_user_input;
 };
 extern ENGINE_API CLoadScreenRenderer load_screen_renderer;
-#endif
+#ifdef  ENGINE_BUILD
+extern CRenderDevice* EngineDevice ;
 #endif

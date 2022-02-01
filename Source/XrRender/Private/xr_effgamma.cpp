@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "xr_effgamma.h"
-//#include "device.h"
+//#include "Device->h"
 
 #if defined(USE_DX10) || defined(USE_DX11)
 

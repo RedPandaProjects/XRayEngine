@@ -4,8 +4,8 @@
 #include "../../xrEngine/CustomHUD.h"
 inline  bool			pred_sp_sort(ISpatial* _1, ISpatial* _2)
 {
-	float	d1 = _1->spatial.sphere.P.distance_to_sqr(Device.vCameraPosition);
-	float	d2 = _2->spatial.sphere.P.distance_to_sqr(Device.vCameraPosition);
+	float	d1 = _1->spatial.sphere.P.distance_to_sqr(Device->vCameraPosition);
+	float	d2 = _2->spatial.sphere.P.distance_to_sqr(Device->vCameraPosition);
 	return	d1 < d2;
 }
 
@@ -18,29 +18,29 @@ inline float sqr(float a) { return a * a; }
 
 void XRayRenderInterface::Calculate()
 {
-	//ScopeStatTimer scopeTimer(Device.Statistic->TEST3);
-	float	fov_factor = sqr(90.f / Device.fFOV);
+	//ScopeStatTimer scopeTimer(Device->Statistic->TEST3);
+	float	fov_factor = sqr(90.f / Device->fFOV);
 	float  g_fSCREEN = float(GRenderTarget->get_width() * GRenderTarget->get_height()) * fov_factor * (EPS_S + XRayRenderConsole::ps_r_LOD);
 	r_ssaDISCARD = sqr(XRayRenderConsole::ps_r_ssaDISCARD) / g_fSCREEN;
 	r_ssaLOD_A = sqr(XRayRenderConsole::ps_r_ssaLOD_A / 3) / g_fSCREEN;
 	r_ssaLOD_B = sqr(XRayRenderConsole::ps_r_ssaLOD_B / 3) / g_fSCREEN;
 	r_ssaGLOD_start = _sqr(XRayRenderConsole::ps_r_GLOD_ssa_start / 3) / g_fSCREEN;
 	r_ssaGLOD_end = _sqr(XRayRenderConsole::ps_r_GLOD_ssa_end / 3) / g_fSCREEN;
-	ViewBase.CreateFromMatrix(Device.mFullTransform, FRUSTUM_P_LRTB | FRUSTUM_P_FAR);
+	ViewBase.CreateFromMatrix(Device->mFullTransform, FRUSTUM_P_LRTB | FRUSTUM_P_FAR);
 	View = 0;
 
 	Rdsgraph_Genderal.Phase = XRayRdsgraphStructure::PHASE_NORMAL;
 
 	// Detect camera-sector
-	if (!vLastCameraPos.similar(Device.vCameraPosition, EPS_S))
+	if (!vLastCameraPos.similar(Device->vCameraPosition, EPS_S))
 	{
-		CSector* pSector = (CSector*)detectSector(Device.vCameraPosition);
+		CSector* pSector = (CSector*)detectSector(Device->vCameraPosition);
 		if (pSector && (pSector != pLastSector))
 			g_pGamePersistent->OnSectorChanged(TranslateSector(pSector));
 
 		if (0 == pSector) pSector = pLastSector;
 		pLastSector = pSector;
-		vLastCameraPos.set(Device.vCameraPosition);
+		vLastCameraPos.set(Device->vCameraPosition);
 	}
 
 	// Check if camera is too near to some portal - if so force DualRender
@@ -48,7 +48,7 @@ void XRayRenderInterface::Calculate()
 	{
 		Fvector box_radius;		box_radius.set(EPS_L * 2, EPS_L * 2, EPS_L * 2);
 		Sectors_xrc.box_options(CDB::OPT_FULL_TEST);
-		Sectors_xrc.box_query(rmPortals, Device.vCameraPosition, box_radius);
+		Sectors_xrc.box_query(rmPortals, Device->vCameraPosition, box_radius);
 		for (int K = 0; K < Sectors_xrc.r_count(); K++)
 		{
 			CPortal* pPortal = (CPortal*)m_Portals[rmPortals->get_tris()[Sectors_xrc.r_begin()[K].id].dummy];
@@ -64,8 +64,8 @@ void XRayRenderInterface::Calculate()
 		(
 			pLastSector,
 			ViewBase,
-			Device.vCameraPosition,
-			Device.mFullTransform,
+			Device->vCameraPosition,
+			Device->mFullTransform,
 			CPortalTraverser::VQ_HOM + CPortalTraverser::VQ_SSA + CPortalTraverser::VQ_FADE
 		);
 

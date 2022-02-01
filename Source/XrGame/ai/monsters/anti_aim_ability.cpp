@@ -143,9 +143,9 @@ void   anti_aim_ability::activate ()
 	m_man->path_stop					(this);
 	m_man->move_stop					(this);
 
-	m_last_activated_tick			=	Device.dwTimeGlobal;
+	m_last_activated_tick			=	Device->dwTimeGlobal;
 	
-	m_animation_hit_tick			=	Device.dwTimeGlobal + 
+	m_animation_hit_tick			=	Device->dwTimeGlobal + 
 					(TTime)(m_object->anim().get_animation_hit_time(eAnimAntiAimAbility, 0)*1000);
 
 	MotionID	motion;
@@ -159,7 +159,7 @@ void   anti_aim_ability::activate ()
 	ctrl_data->global.set_motion		(motion);
 	ctrl_data->global.actual		=	false;
 
-	m_animation_end_tick			=	Device.dwTimeGlobal + (TTime)(anim_length*1000);
+	m_animation_end_tick			=	Device->dwTimeGlobal + (TTime)(anim_length*1000);
 
 	m_object->set_force_anti_aim		(false);
 }
@@ -184,7 +184,7 @@ void   anti_aim_ability::start_camera_effector ()
 	LPCSTR fn = pSettings->r_string		(effector_name,"cam_eff_name");
 	cam_eff->Start						(fn);
 
-	m_camera_effector_end_tick		=	Device.dwTimeGlobal + (TTime)(cam_eff->GetAnimatorLength()*1000);
+	m_camera_effector_end_tick		=	Device->dwTimeGlobal + (TTime)(cam_eff->GetAnimatorLength()*1000);
 	m_camera_effector_end_tick		=	_max(m_camera_effector_end_tick, m_animation_end_tick);
 
 	Actor()->Cameras().AddCamEffector	(cam_eff);
@@ -227,7 +227,7 @@ void   anti_aim_ability::deactivate ()
 	}
 
 	m_effector_id					=	0;
-	m_last_detection_tick			=	Device.dwTimeGlobal;
+	m_last_detection_tick			=	Device->dwTimeGlobal;
 	m_last_angle					=	M_PI;
 	m_detection_level				=	0.f;
 }
@@ -301,7 +301,7 @@ void   anti_aim_ability::update_schedule ()
 		text_tree.add_line				("state", "activated");
 #endif // #ifdef DEBUG_STATE
 
-		if ( Device.dwTimeGlobal < m_animation_hit_tick )
+		if ( Device->dwTimeGlobal < m_animation_hit_tick )
 		{
 			return;
 		}
@@ -309,14 +309,14 @@ void   anti_aim_ability::update_schedule ()
 		{
 			start_camera_effector		();
 		}		
-		if ( Device.dwTimeGlobal < m_camera_effector_end_tick )
+		if ( Device->dwTimeGlobal < m_camera_effector_end_tick )
 		{
 			return;
 		}
 		do_deactivate					();
 	}
 
-	if ( Device.dwTimeGlobal < m_last_activated_tick + (TTime)(m_timeout*1000) )
+	if ( Device->dwTimeGlobal < m_last_activated_tick + (TTime)(m_timeout*1000) )
 	{
 #ifdef DEBUG_STATE
 		text_tree.add_line				("state", "colddown");
@@ -330,11 +330,11 @@ void   anti_aim_ability::update_schedule ()
 
 	if ( m_last_detection_tick == 0 )
 	{
-		m_last_detection_tick		=	Device.dwTimeGlobal;
+		m_last_detection_tick		=	Device->dwTimeGlobal;
 	}
 
-	float const detect_delta		=	(Device.dwTimeGlobal-m_last_detection_tick) / 1000.f;
-	m_last_detection_tick			=	Device.dwTimeGlobal;
+	float const detect_delta		=	(Device->dwTimeGlobal-m_last_detection_tick) / 1000.f;
+	m_last_detection_tick			=	Device->dwTimeGlobal;
 
 	float const angle				=	calculate_angle();
 	float const average_angle		=	_min(m_max_angle, (angle + m_last_angle) / 2);

@@ -49,7 +49,7 @@ manager::~manager			()
 	delete_data				(m_ambients);
 	delete_data				(m_ambients_ids);
 
-	if (!Device.editor())
+	if (!Device->WeatherEditor())
 		return;
 
 	::ide().destroy			(m_property_holder);

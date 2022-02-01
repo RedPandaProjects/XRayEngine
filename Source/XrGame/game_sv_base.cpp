@@ -620,7 +620,7 @@ void game_sv_GameState::GenerateGameMessage (NET_Packet &P)
 void game_sv_GameState::u_EventGen(NET_Packet& P, u16 type, u16 dest)
 {
 	P.w_begin	(M_EVENT);
-	P.w_u32		(Level().timeServer());//Device.TimerAsync());
+	P.w_u32		(Level().timeServer());//Device->TimerAsync());
 	P.w_u16		(type);
 	P.w_u16		(dest);
 }
@@ -796,7 +796,7 @@ void game_sv_GameState::OnEvent (NET_Packet &tNetPacket, u16 type, u32 time, Cli
 			);
 			CL->ps					= createPlayerState(&tNetPacket);
 			CL->ps->m_online_time	= Level().timeServer();
-			CL->ps->DeathTime		= Device.dwTimeGlobal;
+			CL->ps->DeathTime		= Device->dwTimeGlobal;
 			
 			if (psNET_direct_connect) //IsGameTypeSingle())
 				break;

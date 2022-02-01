@@ -6,7 +6,7 @@
 #pragma hdrstop
 
 #include "ELog.h"
-#ifdef _EDITOR
+#if 1
 	#include "UILogForm.h"
 	#include "ui_main.h"
 	void  ELogCallback(LPCSTR txt)
@@ -140,7 +140,7 @@ int CLog::DlgMsg (TMsgDlgType mt, int btn, LPCSTR _Format, ...)
 	vsprintf( buf, _Format, l );
 
 	int res=0;
-#ifdef _EDITOR 
+#if 1 
     ExecCommand(COMMAND_RENDER_FOCUS);
 
     res=MessageDlg(buf, mt, btn);
@@ -191,7 +191,7 @@ int CLog::DlgMsg (TMsgDlgType mt, LPCSTR _Format, ...)
 	vsprintf( buf, _Format, l );
 
     int res=0;
-#ifdef _EDITOR
+#if 1
     ExecCommand(COMMAND_RENDER_FOCUS);
 
     if (mtConfirmation==mt)	res=MessageDlg(buf, mt,  mbYes | mbNo | mbCancel);
@@ -235,7 +235,7 @@ void CLog::Msg(TMsgDlgType mt, LPCSTR _Format, ...)
 	va_start( l, _Format );
 	vsprintf( buf, _Format, l );
 
-#ifdef _EDITOR
+#if 1
     UILogForm::AddMessage(mt,xr_string(buf));
 #endif
 #ifdef _MAX_EXPORT

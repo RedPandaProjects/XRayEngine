@@ -18,7 +18,7 @@ void CEditableMesh::Transform(const Fmatrix& parent)
     // RecomputeBBox
 	RecomputeBBox	();
     // update normals & cform
-#ifdef _EDITOR
+#if 1
 	UnloadRenderBuffers	();
 	UnloadCForm		();
 #endif
@@ -227,7 +227,7 @@ bool CEditableMesh::OptimizeFace(st_Face& face){
 void CEditableMesh::OptimizeMesh(BOOL NoOpt)
 {
 	if (!NoOpt){
-#ifdef _EDITOR
+#if 1
     	UnloadRenderBuffers	();
 		UnloadCForm     	();
 #endif

@@ -17,6 +17,7 @@ public:
 	virtual void KillHW();
 
 private:
+#ifndef REDITOR
 	ref_shader				hLevelLogo;
 	ref_shader				hLevelLogo_Add;
 	ref_geom				ll_hGeom;
@@ -24,6 +25,7 @@ private:
 
 	ref_shader				sh_progress;
 	void					draw_face		(ref_shader& sh, Frect& coords, Frect& tex_coords, const Fvector2& tex_size);
+#endif
 };
 
 #endif	//	ApplicationRender_included

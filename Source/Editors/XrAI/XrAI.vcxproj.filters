@@ -394,6 +394,7 @@
     <ClCompile Include="guid_generator.cpp">
       <Filter>ALife\guid_generator</Filter>
     </ClCompile>
+    <ClCompile Include="XrSEFactoryManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AIMapExport.h">
@@ -918,6 +919,7 @@
     <ClInclude Include="guid_generator.h">
       <Filter>ALife\guid_generator</Filter>
     </ClInclude>
+    <ClInclude Include="XrSEFactoryManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc">

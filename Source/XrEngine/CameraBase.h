@@ -7,7 +7,7 @@
 #pragma once
 
 #include "CameraDefs.h"
-#include "device.h"
+#include "Device.h"
 // refs
 class CObject;
 
@@ -27,7 +27,7 @@ public:
 	};
 	Flags32			m_Flags;
 
-	ECameraStyle	style;
+	EUIToolsCameraStyle	style;
 	Fvector2		lim_yaw,lim_pitch,lim_roll;
 	Fvector			rot_speed;
 
@@ -68,7 +68,7 @@ public:
 
 
 template<typename T>
-IC void tviewport_size( CRenderDeviceBase& D, float _viewport_near, const T &cam_info, float& h_w, float& h_h)
+IC void tviewport_size( XrDeviceInterface& D, float _viewport_near, const T &cam_info, float& h_w, float& h_h)
 {
 	h_h = _viewport_near*tan(deg2rad(cam_info.Fov())/2.f);
 	VERIFY2( _valid(h_h), make_string("invalide viewporrt params fov: %f ", cam_info.Fov()) );
@@ -80,7 +80,7 @@ IC void tviewport_size( CRenderDeviceBase& D, float _viewport_near, const T &cam
 template<typename T>
 IC void viewport_size(  float _viewport_near, const T &cam_info, float& h_w, float& h_h)
 {
-	tviewport_size<T>( Device, _viewport_near, cam_info, h_w, h_h );
+	tviewport_size<T>( *Device, _viewport_near, cam_info, h_w, h_h );
 }
 
 #endif // !defined(AFX_CAMERABASE_H__B11F8AE1_1213_11D4_B4E3_4854E82A090D__INCLUDED_)

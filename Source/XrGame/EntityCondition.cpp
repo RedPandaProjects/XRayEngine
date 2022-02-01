@@ -295,13 +295,13 @@ void CEntityCondition::UpdateCondition()
 
 	UpdateEntityMorale			();
 
-	if(Device.fTimeGlobal>m_fInvulnerableTime)
+	if(Device->fTimeGlobal>m_fInvulnerableTime)
 	{
 		float curr_health			= GetHealth();
 		if(curr_health>m_fKillHitTreshold && curr_health+m_fDeltaHealth<0)
 		{
 			SetHealth(m_fLastChanceHealth);
-			m_fInvulnerableTime = Device.fTimeGlobal + m_fInvulnerableTimeDelta;
+			m_fInvulnerableTime = Device->fTimeGlobal + m_fInvulnerableTimeDelta;
 		}
 		else
 			SetHealth				( curr_health + m_fDeltaHealth );

@@ -178,7 +178,7 @@ void   monster_aura::play_detector_sound()
 			m_detect_snd_time = 0.0f;
 		} 
 		else
-			m_detect_snd_time += Device.fTimeDelta;
+			m_detect_snd_time += Device->fTimeDelta;
 	}
 }
 

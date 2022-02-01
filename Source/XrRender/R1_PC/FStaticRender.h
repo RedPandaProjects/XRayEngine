@@ -81,7 +81,7 @@ public:
 	cl_light_XFORM												r1_dlight_binder_xform	;
 	shared_str													c_ldynamic_props		;
 	bool														m_bMakeAsyncSS;
-	bool														m_bFirstFrameAfterReset;	// Determines weather the frame is the first after resetting device.
+	bool														m_bFirstFrameAfterReset;	// Determines weather the frame is the first after resetting Device->
 
 private:
 	// Loading / Unloading
@@ -185,6 +185,12 @@ public:
 	virtual IRenderVisual*			model_Duplicate			(IRenderVisual*	V);
 	virtual void					model_Delete			(IRenderVisual* &	V, BOOL bDiscard);
 	virtual void 					model_Delete			(IRender_DetailModel* & F);
+	inline void CRender::light_destroy(IRender_Light* p_)
+	{
+	}
+	inline void CRender::glow_destroy(IRender_Glow* p_)
+	{
+	}
 	virtual void					model_Logging			(BOOL bEnable)				{ Models->Logging(bEnable);	}
 	virtual void					models_Prefetch			();
 	virtual void					models_Clear			(BOOL b_complete);

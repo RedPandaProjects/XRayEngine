@@ -147,12 +147,12 @@ BOOL CBulletManager::test_callback(const collide::ray_defs& rd, CObject* object,
 //	result.range;	// range from start to element 
 //	result.element;	// if (O) "num tri" else "num bone"
 //	params;			// user defined abstract data
-//	Device.Statistic.TEST0.End();
+//	Device->Statistic.TEST0.End();
 //return TRUE-продолжить трассировку / FALSE-закончить трассировку
 
 void CBulletManager::FireShotmark (SBullet* bullet, const Fvector& vDir, const Fvector &vEnd, collide::rq_result& R, u16 target_material, const Fvector& vNormal, bool ShowMark)
 {
-	SGameMtlPair* mtl_pair	= GMLib.GetMaterialPair(bullet->bullet_material_idx, target_material);
+	SGameMtlPair* mtl_pair	= GameMaterialLibrary->GetMaterialPair(bullet->bullet_material_idx, target_material);
 	Fvector particle_dir	= vNormal;
 
 	if (R.O)
@@ -206,7 +206,7 @@ void CBulletManager::FireShotmark (SBullet* bullet, const Fvector& vDir, const F
 	LPCSTR ps_name = ( !mtl_pair || mtl_pair->CollideParticles.empty() ) ? NULL : 
 		*mtl_pair->CollideParticles[ ::Random.randI(0,mtl_pair->CollideParticles.size()) ];
 
-	SGameMtl*	tgt_mtl = GMLib.GetMaterialByIdx(target_material);
+	SGameMtl*	tgt_mtl = GameMaterialLibrary->GetMaterialByIdx(target_material);
 	BOOL bStatic = !tgt_mtl->Flags.test(SGameMtl::flDynamic);
 
 	if( (ps_name && ShowMark) || (bullet->flags.explosive && bStatic) )
@@ -391,7 +391,7 @@ bool CBulletManager::ObjectHit( SBullet_Hit* hit_res, SBullet* bullet, const Fve
 //				Log("WARNING: Material in material found while bullet tracing. Incorrect behaviour of shooting is possible.");
 			}
 			bullet->density_mode = true;
-			SGameMtl* mtl = GMLib.GetMaterialByIdx(target_material);
+			SGameMtl* mtl = GameMaterialLibrary->GetMaterialByIdx(target_material);
 			bullet->density = mtl->fDensityFactor;
 			bullet->begin_density.mad( bullet->bullet_pos, bullet->dir,R.range );
 		}
@@ -413,7 +413,7 @@ bool CBulletManager::ObjectHit( SBullet_Hit* hit_res, SBullet* bullet, const Fve
 	//(Если = 0, то пуля либо рикошетит(если контакт идёт по касательной), либо застряёт в текущем 
 	//объекте, если больше 0, то пуля прошивает объект)
 
-	SGameMtl* mtl = GMLib.GetMaterialByIdx( target_material );
+	SGameMtl* mtl = GameMaterialLibrary->GetMaterialByIdx( target_material );
 	float mtl_ap = mtl->fShootFactor;
 	float shoot_factor = 0.0f; //default >> пуля НЕ пробила материал!
 	float ap = bullet->armor_piercing;

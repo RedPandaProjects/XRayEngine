@@ -71,11 +71,11 @@ BOOL ESceneAIMapTool::CreateNode(Fvector& vAt, SAINode& N, bool bIC)
         if (R->e_obj&&R->e_mesh)
         {
             CSurface* surf		= R->e_mesh->GetSurfaceByFaceID(R->tag);
-//.			SGameMtl* mtl 		= GMLib.GetMaterialByID(surf->_GameMtl());
+//.			SGameMtl* mtl 		=  GameMaterialLibrary->GetMaterialByID(surf->_GameMtl());
 //.			if (mtl->Flags.is(SGameMtl::flPassable))continue;
 
 
-            Shader_xrLC* c_sh	= EDevice.ShaderXRLC.Get(surf->_ShaderXRLCName());
+            Shader_xrLC* c_sh	= EDevice->ShaderXRLC.Get(surf->_ShaderXRLCName());
             if (!c_sh->flags.bCollision) 			continue;
         }
   /*
@@ -644,10 +644,10 @@ bool ESceneAIMapTool::GenerateMap(bool bFromSelectedOnly)
                     {
                         CSurface* surf		= sp_it->first;
                         // test passable
-    //.			        SGameMtl* mtl 		= GMLib.GetMaterialByID(surf->_GameMtl());
+    //.			        SGameMtl* mtl 		=  GameMaterialLibrary->GetMaterialByID(surf->_GameMtl());
     //.					if (mtl->Flags.is(SGameMtl::flPassable))continue;
 
-                        Shader_xrLC* c_sh	= EDevice.ShaderXRLC.Get(surf->_ShaderXRLCName());
+                        Shader_xrLC* c_sh	= EDevice->ShaderXRLC.Get(surf->_ShaderXRLCName());
                         if (!c_sh->flags.bCollision) 			continue;
                         // collect tris
                         const IntVec& face_lst 	= sp_it->second;

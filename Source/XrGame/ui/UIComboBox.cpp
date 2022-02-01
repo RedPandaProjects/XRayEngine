@@ -248,8 +248,8 @@ void CUIComboBox::Update()
 		
 		if(m_list_frame.IsShown())
 		{
-			Device.seqRender.Remove		(this);
-			Device.seqRender.Add		(this, 3);
+			Device->seqRender.Remove		(this);
+			Device->seqRender.Add		(this, 3);
 		}
 	}
 
@@ -320,7 +320,7 @@ void CUIComboBox::OnRender()
 		if(m_list_frame.IsShown())
 		{
 			m_list_frame.Draw			();
-			Device.seqRender.Remove		(this);
+			Device->seqRender.Remove		(this);
 		}
 	}
 }

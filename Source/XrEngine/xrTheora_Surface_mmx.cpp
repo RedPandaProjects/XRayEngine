@@ -4,8 +4,7 @@
 
 #pragma warning( disable : 4731 )
 
-#pragma pack( push )
-#pragma pack( 1 )
+#pragma pack( push,1 )
 
 typedef tv_sshort tv_sshort_tables[ 256 ][ 4 ];
 

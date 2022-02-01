@@ -89,7 +89,7 @@ void CHelicopter::UpdateHeliParticles	()
 		if (m_lanim)
 		{
 			int frame;
-			u32 clr					= m_lanim->CalculateBGR(Device.fTimeGlobal,frame); // òş÷ò¨ğ•ğõª ò ¯ş¨üğªõ BGR
+			u32 clr					= m_lanim->CalculateBGR(Device->fTimeGlobal,frame); // òş÷ò¨ğ•ğõª ò ¯ş¨üğªõ BGR
 			Fcolor					fclr;
 			fclr.set				((float)color_get_B(clr),(float)color_get_G(clr),(float)color_get_R(clr),1.f);
 			fclr.mul_rgb			(m_light_brightness/255.f);
@@ -309,8 +309,8 @@ void CHelicopter::DieHelicopter()
 	Fvector prev_pos				= PositionStack.front().vPosition;
 	lin_vel.sub						(XFORM().c,prev_pos);
 
-	if(Device.dwTimeGlobal != PositionStack.front().dwTime)
-		lin_vel.div((Device.dwTimeGlobal-PositionStack.front().dwTime)/1000.0f);
+	if(Device->dwTimeGlobal != PositionStack.front().dwTime)
+		lin_vel.div((Device->dwTimeGlobal-PositionStack.front().dwTime)/1000.0f);
 	
 	lin_vel.mul						(m_death_lin_vel_k);
 	PPhysicsShell()->set_LinearVel	(lin_vel);

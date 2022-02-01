@@ -22,11 +22,11 @@ DEFINE_VECTOR			(PropItem*,PropItemVec,PropItemIt);
 struct GameTypeChooser
 {
     Flags16	m_GameType;
-#ifndef XRGAME_EXPORTS
+#if DEV_MODE
 		void	FillProp		(LPCSTR pref, PropItemVec& items);
 #endif // #ifndef XRGAME_EXPORTS
 
-#ifdef _EDITOR
+#if DEV_MODE
 	bool 	LoadStream		(IReader&F);
 	bool 	LoadLTX			(CInifile& ini, LPCSTR sect_name, bool bOldFormat);
 	void 	SaveStream		(IWriter&);

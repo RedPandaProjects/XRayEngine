@@ -288,7 +288,6 @@ struct best_rand
 	best_rand(CRandom& A) { gen=A; }
 	int operator()(int n) {return gen.randI(n);}
 };
-
 bool EDetailManager::UpdateSlotObjects(int x, int z){
     srand(time(NULL));
 

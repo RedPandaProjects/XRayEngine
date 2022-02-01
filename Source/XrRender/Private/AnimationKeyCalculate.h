@@ -144,7 +144,7 @@ IC void Dequantize(CKey& K,const CBlend& BD,const CMotion& M)
 		Log("blend", B->blend);
 
 		Log("dwFrame", B->dwFrame);
-		Log("Device.dwFrame", Device.dwFrame);
+		Log("Device->dwFrame", Device->dwFrame);
 		Log("Blend-------end");
 
 		Log("Bone",LL_BoneName_dbg(SelfID));

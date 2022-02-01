@@ -38,14 +38,14 @@ EDetailManager::EDetailManager():ESceneToolBase(OBJCLASS_DO)
     ZeroMemory			(&dtH,sizeof(dtH));
     m_Selected.clear	();
     InitRender			();
-//.	EDevice.seqDevCreate.Add	(this,REG_PRIORITY_LOW);
-//.	EDevice.seqDevDestroy.Add(this,REG_PRIORITY_NORMAL);
+//.	EDevice->seqDevCreate.Add	(this,REG_PRIORITY_LOW);
+//.	EDevice->seqDevDestroy.Add(this,REG_PRIORITY_NORMAL);
     m_Flags.assign		(flObjectsDraw);
 }
 
 EDetailManager::~EDetailManager(){
-//.	EDevice.seqDevCreate.Remove(this);
-//.	EDevice.seqDevDestroy.Remove(this);
+//.	EDevice->seqDevCreate.Remove(this);
+//.	EDevice->seqDevDestroy.Remove(this);
 	Clear	();
     Unload	();
 }
@@ -109,7 +109,7 @@ void EDetailManager::OnRender(int priority, bool strictB2F)
         	if (false==strictB2F){
             	if (m_Flags.is(flSlotBoxesDraw)){
                     RCache.set_xform_world(Fidentity);
-                    EDevice.SetShader	(EDevice.m_WireShader);
+                    EDevice->SetShader	(EDevice->m_WireShader);
 
                     Fvector			c;
                     Fbox			bbox;
@@ -123,7 +123,7 @@ void EDetailManager::OnRender(int priority, bool strictB2F)
                             DetailSlot* slot = dtSlots+z*dtH.size_x+x;
                             c.x			= fromSlotX(x);
                             c.y			= slot->r_ybase()+slot->r_yheight()*0.5f; //(slot->y_max+slot->y_min)*0.5f;
-                            float dist = EDevice.m_Camera.GetPosition().distance_to_sqr(c);
+                            float dist = EDevice->m_Camera.GetPosition().distance_to_sqr(c);
                          	if ((dist<dist_lim)&&::Render->ViewBase.testSphere_dirty(c,DETAIL_SLOT_SIZE_2)){
 								bbox.min.set(c.x-DETAIL_SLOT_SIZE_2, slot->r_ybase(), 					c.z-DETAIL_SLOT_SIZE_2);
                             	bbox.max.set(c.x+DETAIL_SLOT_SIZE_2, slot->r_ybase()+slot->r_yheight(),	c.z+DETAIL_SLOT_SIZE_2);

@@ -6,7 +6,7 @@
 
 CStatGraph::CStatGraph()
 {
-	Device.seqRender.Add		(this,REG_PRIORITY_LOW-1000);
+	Device->seqRender.Add		(this,REG_PRIORITY_LOW-1000);
 	OnDeviceCreate();
 	mn					= 0;
 	mx					= 1;
@@ -23,7 +23,7 @@ CStatGraph::CStatGraph()
 
 CStatGraph::~CStatGraph()
 {
-	Device.seqRender.Remove		(this);
+	Device->seqRender.Remove		(this);
 	OnDeviceDestroy();
 	m_Markers.clear();
 }

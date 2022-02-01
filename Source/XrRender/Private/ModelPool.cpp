@@ -3,7 +3,7 @@
 
 #include "ModelPool.h"
 
-#ifndef _EDITOR
+#ifndef REDITOR
 	#include "../../xrEngine/IGame_Persistent.h"
     #include "../../xrEngine/fmesh.h"
     #include "fhierrarhyvisual.h"
@@ -60,7 +60,7 @@ dxRender_Visual*	CModelPool::Instance_Create(u32 type)
 	case MT_PARTICLE_GROUP:
 		V	= xr_new<PS::CParticleGroup>	();
 		break;
-#ifndef _EDITOR
+#ifndef REDITOR
 	case MT_LOD:
 		V	= xr_new<FLOD>					();
 		break;
@@ -110,7 +110,7 @@ dxRender_Visual*	CModelPool::Instance_Load		(const char* N, BOOL allow_register)
 	if (!FS.exist(N))	{
 		if (!FS.exist(fn, "$level$", name))
 			if (!FS.exist(fn, "$game_meshes$", name)){
-#ifdef _EDITOR
+#ifdef REDITOR
 				Msg("!Can't find model file '%s'.",name);
                 return 0;
 #else            
@@ -224,7 +224,7 @@ dxRender_Visual* CModelPool::Instance_Find(LPCSTR N)
 
 dxRender_Visual* CModelPool::Create(const char* name, IReader* data)
 {
-#ifdef _EDITOR
+#ifdef REDITOR
 	if (!name||!name[0])	return 0;
 #endif
 	string_path low_name;	VERIFY	(xr_strlen(name)<sizeof(low_name));
@@ -251,7 +251,7 @@ dxRender_Visual* CModelPool::Create(const char* name, IReader* data)
 			if (data)		Base = Instance_Load(low_name,data,TRUE);
             else			Base = Instance_Load(low_name,TRUE);
 			bAllowChildrenDuplicate	= TRUE;
-#ifdef _EDITOR
+#ifdef REDITOR
 			if (!Base)		return 0;
 #endif
 		}
@@ -508,7 +508,7 @@ void CModelPool::memory_stats		( u32& vb_mem_video, u32& vb_mem_system, u32& ib_
 	}
 } 
 
-#ifdef _EDITOR
+#ifdef REDITOR
 IC bool	_IsBoxVisible(dxRender_Visual* visual, const Fmatrix& transform)
 {
     Fbox 		bb; 
@@ -539,7 +539,7 @@ void 	CModelPool::Render(dxRender_Visual* m_pVisual, const Fmatrix& mTransform, 
             CKinematics* pV		= dynamic_cast<CKinematics*>(m_pVisual); VERIFY(pV);
             if (fis_zero(m_fLOD,EPS)&&pV->m_lod){
 		        if (_IsValidShader(pV->m_lod,priority,strictB2F)){
-	                RCache.set_Shader		(pV->m_lod->shader?pV->m_lod->shader:EDevice.m_WireShader);
+	                RCache.set_Shader		(pV->m_lod->shader?pV->m_lod->shader:EDevice->m_WireShader);
     	            RCache.set_xform_world	(mTransform);
         	        pV->m_lod->Render		(1.f);
                 }
@@ -563,7 +563,7 @@ void 	CModelPool::Render(dxRender_Visual* m_pVisual, const Fmatrix& mTransform, 
             E = pV->children.end		();
             for (; I!=E; I++){
 		        if (_IsValidShader(*I,priority,strictB2F)){
-	                RCache.set_Shader		((*I)->shader?(*I)->shader:EDevice.m_WireShader);
+	                RCache.set_Shader		((*I)->shader?(*I)->shader:EDevice->m_WireShader);
     	            RCache.set_xform_world	(mTransform);
         	        (*I)->Render		 	(m_fLOD);
                 }
@@ -587,7 +587,7 @@ void 	CModelPool::Render(dxRender_Visual* m_pVisual, const Fmatrix& mTransform, 
 //		if (_IsBoxVisible(m_pVisual,mTransform))
         {
             if (_IsValidShader(m_pVisual,priority,strictB2F)){
-                RCache.set_Shader			(m_pVisual->shader?m_pVisual->shader:EDevice.m_WireShader);
+                RCache.set_Shader			(m_pVisual->shader?m_pVisual->shader:EDevice->m_WireShader);
                 RCache.set_xform_world		(mTransform);
                 m_pVisual->Render		 	(m_fLOD);
             }
@@ -596,7 +596,7 @@ void 	CModelPool::Render(dxRender_Visual* m_pVisual, const Fmatrix& mTransform, 
     default:
         if (_IsBoxVisible(m_pVisual,mTransform)){
             if (_IsValidShader(m_pVisual,priority,strictB2F)){
-                RCache.set_Shader			(m_pVisual->shader?m_pVisual->shader:EDevice.m_WireShader);
+                RCache.set_Shader			(m_pVisual->shader?m_pVisual->shader:EDevice->m_WireShader);
                 RCache.set_xform_world		(mTransform);
                 m_pVisual->Render		 	(m_fLOD);
             }

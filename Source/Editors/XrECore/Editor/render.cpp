@@ -4,6 +4,9 @@
 #include "render.h"
 #include "ResourceManager.h"
 #include "../../../xrAPI/xrAPI.h"
+#include "../../xrEngine/irenderable.h"
+#include "../../xrEngine/xr_object.h"
+#include "../../xrEngine/CustomHUD.h"
 //---------------------------------------------------------------------------
 float ssaDISCARD		= 4.f;
 float ssaDONTSORT		= 32.f;
@@ -12,14 +15,13 @@ ECORE_API float r_ssaDISCARD;
 ECORE_API float	g_fSCREEN;
 
 CRender   			RImplementation;
-ECORE_API CRender* 	Render 		= &RImplementation;
 
 //---------------------
 IRenderFactory*	RenderFactory = NULL;
 //---------------------------------------------------------------------------
-
 CRender::CRender	()
 {
+	::Render = &RImplementation;
 	m_skinning					= 0;
 }
 
@@ -68,20 +70,60 @@ BOOL CRender::occ_visible(vis_data& P)
 void CRender::Calculate()
 {
 	// Transfer to global space to avoid deep pointer access
-	g_fSCREEN						=	float(EDevice.m_RenderWidth*EDevice.m_RenderHeight);
+	g_fSCREEN						=	float(EDevice->m_RenderWidth*EDevice->m_RenderHeight);
 	r_ssaDISCARD					=	(ssaDISCARD*ssaDISCARD)/g_fSCREEN;
 //	r_ssaLOD_A						=	(ssaLOD_A*ssaLOD_A)/g_fSCREEN;
 //	r_ssaLOD_B						=	(ssaLOD_B*ssaLOD_B)/g_fSCREEN;
+	lstRenderables.clear_not_free();
+	ViewBase.CreateFromMatrix		(EDevice->mFullTransform,FRUSTUM_P_LRTB|FRUSTUM_P_FAR);
+	{
+		g_SpatialSpace->q_frustum
+		(
+			lstRenderables,
+			ISpatial_DB::O_ORDERED,
+			STYPE_RENDERABLE + STYPE_LIGHTSOURCE,
+			ViewBase
+		);
 
-	ViewBase.CreateFromMatrix		(EDevice.mFullTransform,FRUSTUM_P_LRTB|FRUSTUM_P_FAR);
+		// Exact sorting order (front-to-back)
+	
+
+		// Determine visibility for dynamic part of scene
+		set_Object(0);
+		if (g_hud)
+		{
+			g_hud->Render_First();	// R1 shadows
+			g_hud->Render_Last();
+		}
+		u32 uID_LTRACK = 0xffffffff;
+		/*if (phase == PHASE_NORMAL)*/
+	/*	{
+			uLastLTRACK++;
+			if (lstRenderables.size())		uID_LTRACK = uLastLTRACK % lstRenderables.size();
+
+			// update light-vis for current entity / actor
+			CObject* O = g_pGameLevel->CurrentViewEntity();
+			if (O) {
+				CROS_impl* R = (CROS_impl*)O->ROS();
+				if (R)		R->update(O);
+			}
+		}*/
+		for (ISpatial* pSpatial : lstRenderables)
+		{
+			IRenderable* renderable = pSpatial->dcast_Renderable();
+			if (!renderable)
+				continue;  // unknown, but renderable object (r1_glow???)
+			set_Object(renderable);
+			renderable->renderable_Render();
+			set_Object(nullptr);
+		}
+	}
 }
 
 #include "igame_persistent.h"
-#ifndef _EDITOR
-#include "environment.h"
-#endif
 void CRender::Render()
 {
+	
 }
 
 IRender_DetailModel*	CRender::model_CreateDM(IReader* F)
@@ -241,3 +283,92 @@ void					CRender::reset_end				()
 	Target			=	xr_new<CRenderTarget>			();
 }
 
+void CRender::set_HUD(BOOL V)
+{
+}
+
+BOOL CRender::get_HUD()
+{
+	return 0;
+}
+
+void CRender::set_Invisible(BOOL V)
+{
+}
+
+
+DWORD CRender::get_dx_level()
+{
+	return 90;
+}
+
+void CRender::create()
+{
+
+}
+void CRender::destroy()
+{
+
+}
+
+void CRender::level_Load(IReader*)
+{
+
+}
+void CRender::level_Unload()
+{
+
+}
+
+// IDirect3DBaseTexture9*	texture_load			(LPCSTR	fname, u32& msize)					= 0;
+
+
+
+//	 ref_shader				getShader				(int id)									= 0;
+IRender_Sector* CRender::getSector(int id)
+{
+	return nullptr;
+ }
+IRenderVisual* CRender::getVisual(int id)
+{
+	return nullptr;
+}
+IRender_Sector* CRender::detectSector(const Fvector& P)
+{
+	return nullptr;
+}
+
+void CRender::flush() {}
+void CRender::set_Object(IRenderable* O) {}
+void CRender::add_Occluder(Fbox2& bb_screenspace) {}
+void CRender::add_Geometry(IRenderVisual* V) {}
+class RenderObjectSpecific :public IRender_ObjectSpecific
+{
+public:
+	RenderObjectSpecific() {}
+	virtual ~RenderObjectSpecific() {}
+
+	virtual	void						force_mode(u32 mode)
+	{}
+	virtual float						get_luminocity() { return 1; }
+	virtual float						get_luminocity_hemi() { return 1; }
+	virtual float* get_luminocity_hemi_cube() {
+		static float test[8] = {};
+		return test;
+	}
+
+};
+ IRender_ObjectSpecific* CRender::ros_create(IRenderable* parent) { return xr_new< RenderObjectSpecific>(); }
+ void CRender::ros_destroy(IRender_ObjectSpecific*& a) { xr_delete(a); }
+ IRender_Light* CRender::light_create() { return nullptr; }
+ void CRender::light_destroy(IRender_Light * p_) {}
+ IRender_Glow* CRender::glow_create() { return nullptr; }
+ void CRender::glow_destroy(IRender_Glow* p_) {}
+ void CRender::model_Logging(BOOL bEnable) {}
+void CRender::models_Prefetch() {}
+void CRender::models_Clear(BOOL b_complete) {}
+void CRender::Screenshot(ScreenshotMode mode , LPCSTR name ) {}
+void CRender::Screenshot(ScreenshotMode mode, CMemoryWriter& memory_writer) {}
+void CRender::ScreenshotAsyncBegin() {}
+void CRender::ScreenshotAsyncEnd(CMemoryWriter& memory_writer) {}
+u32 CRender::memory_usage() { return 0; }

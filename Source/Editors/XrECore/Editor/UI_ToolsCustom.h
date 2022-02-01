@@ -224,6 +224,7 @@ public:
 	Fmatrix				m_axis_xform;
     
     virtual bool		GetSelectionPosition	(Fmatrix& result) =0;
+    virtual bool UpdateCamera() { return false; }
 };
 extern ECORE_API CToolCustom*	Tools;
 

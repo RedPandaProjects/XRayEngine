@@ -194,7 +194,7 @@ ICF static BOOL grenade_hit_callback(collide::rq_result& result, LPVOID params)
 		CDB::TRI* T		= Level().ObjectSpace.GetStaticTris()+result.element;
 		mtl_idx			= T->material;
 	}	
-	SGameMtl* mtl		= GMLib.GetMaterialByIdx(mtl_idx);
+	SGameMtl* mtl		= GameMaterialLibrary->GetMaterialByIdx(mtl_idx);
 	float shoot_factor = 1.f - mtl->fShootFactor;
 	ep.shoot_factor		*=shoot_factor;
 #ifdef DEBUG
@@ -329,7 +329,7 @@ void CExplosive::Explode()
 		DBG_DrawPoint(pos,0.3f,color_xrgb(255,0,0));
 	}
 #endif
-//	Msg("---------CExplosive Explode [%d] frame[%d]",cast_game_object()->ID(), Device.dwFrame);
+//	Msg("---------CExplosive Explode [%d] frame[%d]",cast_game_object()->ID(), Device->dwFrame);
 	OnBeforeExplosion();
 	//играем звук взрыва
 	Sound->play_at_pos(sndExplode, 0, pos, false);
@@ -379,7 +379,7 @@ void CExplosive::Explode()
 		cartridge.param_s.kImpulse			= 1.f;
 		cartridge.param_s.kAP				= 1.f;
 		cartridge.param_s.fWallmarkSize		= fWallmarkSize;
-		cartridge.bullet_material_idx		= GMLib.GetMaterialIdx(WEAPON_MATERIAL_NAME);
+		cartridge.bullet_material_idx		= GameMaterialLibrary->GetMaterialIdx(WEAPON_MATERIAL_NAME);
 		cartridge.m_flags.set				(CCartridge::cfTracer,FALSE);
 
 		Level().BulletManager().AddBullet(	pos, frag_dir, m_fFragmentSpeed,
@@ -484,12 +484,12 @@ void CExplosive::UpdateCL()
 		StopLight();
 		
 
-//		Msg("---------CExplosive OnAfterExplosion [%d] frame[%d]",cast_game_object()->ID(), Device.dwFrame);
+//		Msg("---------CExplosive OnAfterExplosion [%d] frame[%d]",cast_game_object()->ID(), Device->dwFrame);
 
 	} 
 	else
 	{		
-		m_fExplodeDuration -= Device.fTimeDelta;
+		m_fExplodeDuration -= Device->fTimeDelta;
 		if (!m_bHideInExplosion && !m_bAlreadyHidden)
 		{
 			if (m_fExplodeHideDurationMax <= (m_fExplodeDurationMax - m_fExplodeDuration))
@@ -536,7 +536,7 @@ void CExplosive::OnBeforeExplosion()
 	if (m_bHideInExplosion) 
 	{
 		HideExplosive();
-		//	Msg("---------CExplosive OnBeforeExplosion setVisible(false) [%d] frame[%d]",cast_game_object()->ID(), Device.dwFrame);
+		//	Msg("---------CExplosive OnBeforeExplosion setVisible(false) [%d] frame[%d]",cast_game_object()->ID(), Device->dwFrame);
 	}
 }
 void CExplosive::HideExplosive()

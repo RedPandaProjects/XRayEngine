@@ -49,7 +49,7 @@ channel::~channel			()
 	xr_delete			(m_collection);
 	delete_data			(m_sounds);
 
-	if (!Device.editor())
+	if (!Device->WeatherEditor())
 		return;
 
 	::ide().destroy		(m_property_holder);

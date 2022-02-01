@@ -19,7 +19,7 @@
 #include "ImageManager.h"
 #include "SoundManager.h"
 #include "ResourceManager.h"
-#include "igame_persistent.h"
+#include "engine\XrGamePersistentEditors.h"
 
 
 ECommandVec 		ECommands;
@@ -199,7 +199,7 @@ void	TUI::ClearCommands ()
 //------------------------------------------------------------------------------
 CCommandVar	TUI::CommandRenderFocus(CCommandVar p1, CCommandVar p2)
 {
-    SetFocus(EDevice.m_hWnd);
+    SetFocus(EDevice->m_hWnd);
     return 1;
 }
 CCommandVar	TUI::CommandBreakLastOperation(CCommandVar p1, CCommandVar p2)
@@ -236,8 +236,22 @@ CCommandVar 	TUI::CommandRenderResize(CCommandVar p1, CCommandVar p2)
 //------------------------------------------------------------------------------
 CCommandVar CommandInitialize(CCommandVar p1, CCommandVar p2)
 {
+
+    EDevice = xr_new< CEditorRenderDevice>();
+    Device = EDevice;
 	CCommandVar res		= TRUE;
-    Engine.Initialize	();
+    {
+        string_path              fn;
+        strconcat(sizeof(fn), fn, UI->EditorName(), ".log");
+        FS.update_path(fn, _local_root_, fn);
+        string_path 			si_name;
+        FS.update_path(si_name, "$game_config$", "system.ltx");
+        pSettings = xr_new<CInifile>(si_name, TRUE);// FALSE,TRUE,TRUE);
+        string_path					fname;
+        FS.update_path(fname, "$game_config$", "game.ltx");
+        pGameIni = xr_new<CInifile>(fname, TRUE);
+        CHECK_OR_EXIT(0 != pGameIni->section_count(), make_string("Cannot find file %s.\nReinstalling application may fix this problem.", fname));
+    }
     // make interface
     //----------------
     if(EPrefs)EPrefs->OnCreate		();
@@ -249,14 +263,14 @@ CCommandVar CommandInitialize(CCommandVar p1, CCommandVar p2)
         Lib.OnCreate	();
         BOOL bWeather = psDeviceFlags.is(rsEnvironment);
         psDeviceFlags.set(rsEnvironment, FALSE);
-        g_pGamePersistent= xr_new<IGame_Persistent>();
+        g_pGamePersistent= xr_new<XrGamePersistentEditors>();
         if (Tools)
         {
             if (Tools->OnCreate())
             {
                 if(EPrefs)
                     EPrefs->Load();
-                EDevice.seqAppStart.Process(rp_AppStart);
+                EDevice->seqAppStart.Process(rp_AppStart);
                 ExecCommand(COMMAND_RESTORE_UI_BAR);
                 ExecCommand(COMMAND_REFRESH_UI_BAR);
                 ExecCommand(COMMAND_CLEAR);
@@ -286,7 +300,7 @@ CCommandVar 	CommandDestroy(CCommandVar p1, CCommandVar p2)
     ExecCommand			(COMMAND_SAVE_UI_BAR);
     EPrefs->OnDestroy	();
     ExecCommand			(COMMAND_CLEAR);
-    EDevice.seqAppEnd.Process(rp_AppEnd);
+    EDevice->seqAppEnd.Process(rp_AppEnd);
     xr_delete			(g_pGamePersistent);
     LALib.OnDestroy		();
     Tools->OnDestroy	();
@@ -295,13 +309,20 @@ CCommandVar 	CommandDestroy(CCommandVar p1, CCommandVar p2)
     DU_impl.DestroyObjects();
     Lib.OnDestroy		();
     UI->OnDestroy		();
-    Engine.Destroy		();
+    {
+        xr_delete(pSettings);
+    }
+    {
+        xr_delete(pGameIni);
+    }
     ELog.Close();
     for (auto& item : ECommands)
     {
         xr_delete(item);
     }
     ECommands.clear();
+    xr_delete(EDevice);
+    Device = nullptr;
     return				TRUE;
 }             
 CCommandVar 	CommandQuit(CCommandVar p1, CCommandVar p2)
@@ -394,7 +415,7 @@ CCommandVar 	CommandRefreshTextures(CCommandVar p1, CCommandVar p2)
 }
 CCommandVar 	CommandReloadTextures(CCommandVar p1, CCommandVar p2)
 {
-    EDevice.ReloadTextures();
+    EDevice->ReloadTextures();
     UI->RedrawScene		();
     return				TRUE;
 }
@@ -406,7 +427,7 @@ CCommandVar 	CommandChangeSnap(CCommandVar p1, CCommandVar p2)
 }
 CCommandVar 	CommandUnloadTextures(CCommandVar p1, CCommandVar p2)
 {
-    EDevice.UnloadTextures();
+    EDevice->UnloadTextures();
     return				TRUE;
 }
 CCommandVar 	CommandEvictObjects(CCommandVar p1, CCommandVar p2)
@@ -416,7 +437,7 @@ CCommandVar 	CommandEvictObjects(CCommandVar p1, CCommandVar p2)
 }
 CCommandVar 	CommandEvictTextures(CCommandVar p1, CCommandVar p2)
 {
-    EDevice.Resources->Evict();
+    EDevice->Resources->Evict();
     return				TRUE;
 }
 CCommandVar 	CommandCheckModified(CCommandVar p1, CCommandVar p2)
@@ -455,8 +476,8 @@ CCommandVar 	CommandZoomExtents(CCommandVar p1, CCommandVar p2)
 }
 CCommandVar 	CommandToggleRenderWire(CCommandVar p1, CCommandVar p2)
 {
-    if (EDevice.dwFillMode!=D3DFILL_WIREFRAME)	EDevice.dwFillMode 	= D3DFILL_WIREFRAME;
-    else 										EDevice.dwFillMode 	= D3DFILL_SOLID;
+    if (EDevice->dwFillMode!=D3DFILL_WIREFRAME)	EDevice->dwFillMode 	= D3DFILL_WIREFRAME;
+    else 										EDevice->dwFillMode 	= D3DFILL_SOLID;
     UI->RedrawScene		();
     return				TRUE;
 }
@@ -516,9 +537,9 @@ CCommandVar 	CommandMuteSound(CCommandVar p1, CCommandVar p2)
 CCommandVar CommandMoveCameraTo(CCommandVar p1, CCommandVar p2)
 {
     not_implemented();
-    Fvector pos					= EDevice.m_Camera.GetPosition();
+    Fvector pos					= EDevice->m_Camera.GetPosition();
     /*if (NumericVectorRun		("Move to",&pos,3))
-        EDevice.m_Camera.Set		(EDevice.m_Camera.GetHPB(),pos);*/
+        EDevice->m_Camera.Set		(EDevice->m_Camera.GetHPB(),pos);*/
     return 						TRUE;
 }
 
@@ -639,7 +660,7 @@ CCommandVar 	CommandAssignMacro(CCommandVar p1, CCommandVar p2)
 	    ECommands[COMMAND_RUN_MACRO]->sub_commands[p1]->p0 = fn;
 	    return 			TRUE;
     }else{
-    	if (EFS.GetOpenName(EDevice.m_hWnd, _import_,fn,false,NULL,2))
+    	if (EFS.GetOpenName(EDevice->m_hWnd, _import_,fn,false,NULL,2))
         	return 		ExecCommand	(COMMAND_ASSIGN_MACRO,p1,fn);
     }
     return FALSE;

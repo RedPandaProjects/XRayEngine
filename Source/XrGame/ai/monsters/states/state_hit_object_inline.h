@@ -26,7 +26,7 @@ void CStateMonsterHitObjectAbstract::execute()
 	object->set_action				(ACT_STAND_IDLE);
 	object->anim().SetSpecParams	(ASP_CHECK_CORPSE);
 			
-	if (!m_hitted && (time_state_started + TIME_POINTBREAK < Device.dwTimeGlobal)) {
+	if (!m_hitted && (time_state_started + TIME_POINTBREAK < Device->dwTimeGlobal)) {
 		m_hitted		= true;
 		
 		Fvector			dir;
@@ -83,7 +83,7 @@ bool CStateMonsterHitObjectAbstract::check_start_conditions()
 TEMPLATE_SPECIALIZATION
 bool CStateMonsterHitObjectAbstract::check_completion()
 {
-	if (time_state_started + TIME_OUT_STATE < Device.dwTimeGlobal) return true;
+	if (time_state_started + TIME_OUT_STATE < Device->dwTimeGlobal) return true;
 	return false;
 }
 

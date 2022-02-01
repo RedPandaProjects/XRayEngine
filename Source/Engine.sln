@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29926.136
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XrCore", "XrCore\XrCore.vcxproj", "{DA642D7C-4FFF-43DC-98F8-3F96CAF1E4BA}"
 EndProject
@@ -140,6 +140,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ParticleEditor", "Editors\ParticleEditor\ParticleEditor.vcxproj", "{19DC7E82-12AF-4110-93CA-E7C30500A3F5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LevelEditor", "Editors\LevelEditor\LevelEditor.vcxproj", "{7E13BFCC-55B0-4715-8BBB-84A143CCE84B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A95CE1FF-9F86-4F4D-B5C4-6D505BF7A56C} = {A95CE1FF-9F86-4F4D-B5C4-6D505BF7A56C}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XrSE_Factory", "Editors\XrSE_Factory\XrSE_Factory.vcxproj", "{E5D980C8-02DF-45D1-9F15-4D87AE100661}"
 EndProject
@@ -169,6 +172,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XrSE_FactoryCS", "Editors\XrSE_FactoryCS\XrSE_FactoryCS.vcxproj", "{323EB07B-872D-42BD-AFD7-18BD573D8468}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XrSE_FactorySOC", "Editors\XrSE_FactorySOC\XrSE_FactorySOC.vcxproj", "{002A905F-B07D-4131-B745-C37D639629FD}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Xr3DA", "Xr3DA\Xr3DA.vcxproj", "{0C8CC653-0503-4FB1-8D8A-2C3BFC2C28EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -903,6 +908,18 @@ Global
 		{002A905F-B07D-4131-B745-C37D639629FD}.Release|x64.Build.0 = Release|x64
 		{002A905F-B07D-4131-B745-C37D639629FD}.Release|x86.ActiveCfg = Release|Win32
 		{002A905F-B07D-4131-B745-C37D639629FD}.Release|x86.Build.0 = Release|Win32
+		{0C8CC653-0503-4FB1-8D8A-2C3BFC2C28EF}.Debug|x64.ActiveCfg = Debug|x64
+		{0C8CC653-0503-4FB1-8D8A-2C3BFC2C28EF}.Debug|x64.Build.0 = Debug|x64
+		{0C8CC653-0503-4FB1-8D8A-2C3BFC2C28EF}.Debug|x86.ActiveCfg = Debug|Win32
+		{0C8CC653-0503-4FB1-8D8A-2C3BFC2C28EF}.Debug|x86.Build.0 = Debug|Win32
+		{0C8CC653-0503-4FB1-8D8A-2C3BFC2C28EF}.Development|x64.ActiveCfg = Development|x64
+		{0C8CC653-0503-4FB1-8D8A-2C3BFC2C28EF}.Development|x64.Build.0 = Development|x64
+		{0C8CC653-0503-4FB1-8D8A-2C3BFC2C28EF}.Development|x86.ActiveCfg = Development|Win32
+		{0C8CC653-0503-4FB1-8D8A-2C3BFC2C28EF}.Development|x86.Build.0 = Development|Win32
+		{0C8CC653-0503-4FB1-8D8A-2C3BFC2C28EF}.Release|x64.ActiveCfg = Release|x64
+		{0C8CC653-0503-4FB1-8D8A-2C3BFC2C28EF}.Release|x64.Build.0 = Release|x64
+		{0C8CC653-0503-4FB1-8D8A-2C3BFC2C28EF}.Release|x86.ActiveCfg = Release|Win32
+		{0C8CC653-0503-4FB1-8D8A-2C3BFC2C28EF}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

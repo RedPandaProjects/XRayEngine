@@ -18,7 +18,7 @@ class dx10ConstantBuffer;
 class ECORE_API CResourceManager
 {
 private:
-	struct str_pred : public std::binary_function<char*, char*, bool>	{
+	struct str_pred 	{
 		IC bool operator()(LPCSTR x, LPCSTR y) const
 		{	return xr_strcmp(x,y)<0;	}
 	};
@@ -110,7 +110,7 @@ public:
 	void							ED_UpdateBlender	(LPCSTR Name, IBlender*		data);
 	void							ED_UpdateMatrix		(LPCSTR Name, CMatrix*		data);
 	void							ED_UpdateConstant	(LPCSTR Name, CConstant*	data);
-#ifdef _EDITOR
+#ifdef REDITOR
 	void							ED_UpdateTextures	(AStringVec* names);
 #endif
 

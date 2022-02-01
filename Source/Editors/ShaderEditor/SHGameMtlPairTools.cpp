@@ -25,7 +25,7 @@ void CSHGameMtlPairTools::OnFrame()
 }
 void CSHGameMtlPairTools::OnDrawUI()
 {
-    if (m_MtlPair)m_MtlPair->OnDrawUI();
+    if (m_MtlPair)static_cast<SGameMtlPairEditor*>(m_MtlPair)->OnDrawUI();
 }
 //---------------------------------------------------------------------------
 
@@ -60,13 +60,13 @@ void CSHGameMtlPairTools::Reload()
 void CSHGameMtlPairTools::FillItemList()
 {
 	ListItemsVec items;
-    for (GameMtlIt m0_it=GMLib.FirstMaterial(); m0_it!=GMLib.LastMaterial(); m0_it++){
+    for (GameMtlIt m0_it=GameMaterialLibrary->FirstMaterial(); m0_it!=GameMaterialLibrary->LastMaterial(); m0_it++){
         SGameMtl* M0 		= *m0_it;
-	    for (GameMtlIt m1_it=GMLib.FirstMaterial(); m1_it!=GMLib.LastMaterial(); m1_it++){
+	    for (GameMtlIt m1_it=GameMaterialLibrary->FirstMaterial(); m1_it!=GameMaterialLibrary->LastMaterial(); m1_it++){
             SGameMtl* M1 	= *m1_it;
-            GameMtlPairIt p_it = GMLib.GetMaterialPairIt(M0->GetID(),M1->GetID());
-            if (p_it!=GMLib.LastMaterialPair())
-                LHelper().CreateItem(items,GMLib.MtlPairToName(M0->GetID(),M1->GetID()),0);
+            GameMtlPairIt p_it = GameMaterialLibraryEditors->GetMaterialPairIt(M0->GetID(),M1->GetID());
+            if (p_it!=GameMaterialLibrary->LastMaterialPair())
+                LHelper().CreateItem(items, GameMaterialLibraryEditors->MtlPairToName(M0->GetID(),M1->GetID()),0);
         }
     }
 	Ext.m_Items->AssignItems(items);
@@ -78,8 +78,8 @@ void CSHGameMtlPairTools::Load()
 {
     m_bLockUpdate		= TRUE;
 
-    GMLib.Unload		();
-    GMLib.Load			();
+    GameMaterialLibrary->Unload		();
+    GameMaterialLibrary->Load			();
     ResetCurrentItem	();
 
     m_bLockUpdate		= FALSE;
@@ -94,7 +94,7 @@ bool CSHGameMtlPairTools::Save()
     string_path 		fn;
     FS.update_path		(fn,_game_data_,GAMEMTL_FILENAME);
     EFS.MarkFile		(fn,false);
-    bool bRes			= GMLib.Save();
+    bool bRes			= GameMaterialLibrary->Save();
     m_bLockUpdate		= FALSE;
     if (bRes)			m_bModified	= FALSE;
     return bRes;
@@ -110,7 +110,7 @@ void CSHGameMtlPairTools::RealUpdateList()
 void CSHGameMtlPairTools::RealUpdateProperties()
 {
 	PropItemVec items;
-    if (m_MtlPair)	m_MtlPair->FillProp(items);
+    if (m_MtlPair)	static_cast<SGameMtlPairEditor*>(m_MtlPair)->FillProp(items);
     Ext.m_ItemProps->AssignItems		(items);
 }
 //---------------------------------------------------------------------------
@@ -138,7 +138,7 @@ void CSHGameMtlPairTools::OnDeactivate()
 void CSHGameMtlPairTools::SetCurrentItem(LPCSTR name, bool bView)
 {
     if (m_bLockUpdate) return;
-	SGameMtlPair* S=GMLib.GetMaterialPair(name);
+	SGameMtlPair* S=GameMaterialLibraryEditors->GetMaterialPair(name);
     // set material
 	if (m_MtlPair!=S){
         m_MtlPair = S;

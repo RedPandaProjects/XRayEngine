@@ -163,7 +163,7 @@ void CHWCaps::Update()
 
 	// *******1********** Compatibility : vertex shader
 	if (0==raster_major)		geometry_major=0;		// Disable VS if no PS
-#ifdef _EDITOR
+#ifdef REDITOR
 	geometry_major		= 0;
 #endif
 

@@ -166,9 +166,9 @@ static void full_memory_stats	( )
 	u32		m_base=0,c_base=0,m_lmaps=0,c_lmaps=0;
 
 
-	//if (Device.Resources)	Device.Resources->_GetMemoryUsage	(m_base,c_base,m_lmaps,c_lmaps);
+	//if (Device->Resources)	Device->Resources->_GetMemoryUsage	(m_base,c_base,m_lmaps,c_lmaps);
 	//	Resource check moved to m_pRender
-	if (Device.m_pRender) Device.m_pRender->ResourcesGetMemoryUsage(m_base,c_base,m_lmaps,c_lmaps);
+	if (Device->m_pRender) Device->m_pRender->ResourcesGetMemoryUsage(m_base,c_base,m_lmaps,c_lmaps);
 
 	log_vminfo	();
 
@@ -634,8 +634,8 @@ public:
 /*     moved to level_network_messages.cpp
 		CSavedGameWrapper			wrapper(args);
 		if (wrapper.level_id() == ai().level_graph().level_id()) {
-			if (Device.Paused())
-				Device.Pause		(FALSE, TRUE, TRUE, "CCC_ALifeLoadFrom");
+			if (Device->Paused())
+				Device->Pause		(FALSE, TRUE, TRUE, "CCC_ALifeLoadFrom");
 
 			Level().remove_objects	();
 
@@ -652,8 +652,8 @@ public:
 
 		Console->Execute			("stat_memory");
 
-		if (Device.Paused())
-			Device.Pause			(FALSE, TRUE, TRUE, "CCC_ALifeLoadFrom");
+		if (Device->Paused())
+			Device->Pause			(FALSE, TRUE, TRUE, "CCC_ALifeLoadFrom");
 
 		NET_Packet					net_packet;
 		net_packet.w_begin			(M_LOAD_GAME);
@@ -1324,11 +1324,11 @@ public:
 	{
 		float				time_factor = (float)atof(args);
 		clamp				(time_factor,EPS,1000.f);
-		Device.time_factor	(time_factor);
+		Device->time_factor	(time_factor);
 	}
 	virtual void	Status			(TStatus &S)
 	{
-		xr_sprintf	(S,sizeof(S),"%f",Device.time_factor());
+		xr_sprintf	(S,sizeof(S),"%f",Device->time_factor());
 	}
 
 	virtual void	Info	(TInfo& I)
@@ -1339,7 +1339,7 @@ public:
 	virtual void	fill_tips(vecTips& tips, u32 mode)
 	{
 		TStatus  str;
-		xr_sprintf( str, sizeof(str), "%3.3f  (current)  [0.001 - 1000.0]", Device.time_factor() );
+		xr_sprintf( str, sizeof(str), "%3.3f  (current)  [0.001 - 1000.0]", Device->time_factor() );
 		tips.push_back( str );
 		IConsole_Command::fill_tips( tips, mode );
 	}

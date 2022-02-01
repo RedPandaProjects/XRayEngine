@@ -187,13 +187,13 @@ extern ECORE_API float r_ssaDISCARD;
 
 void CDetailManager::UpdateVisibleM()
 {
-	Fvector		EYE				= RDEVICE.vCameraPosition_saved;
+	Fvector		EYE				= Device->vCameraPosition_saved;
 
 	CFrustum	View;
-	View.CreateFromMatrix		(RDEVICE.mFullTransform_saved, FRUSTUM_P_LRTB + FRUSTUM_P_FAR);
+	View.CreateFromMatrix		(Device->mFullTransform_saved, FRUSTUM_P_LRTB + FRUSTUM_P_FAR);
 	
  	CFrustum	View_old;
- 	Fmatrix		Viewm_old = RDEVICE.mFullTransform;
+ 	Fmatrix		Viewm_old = Device->mFullTransform;
  	View_old.CreateFromMatrix		(Viewm_old, FRUSTUM_P_LRTB + FRUSTUM_P_FAR);
 	
 	float fade_limit			= dm_fade;	fade_limit=fade_limit*fade_limit;
@@ -203,7 +203,7 @@ void CDetailManager::UpdateVisibleM()
 
 	// Initialize 'vis' and 'cache'
 	// Collect objects for rendering
-	RDEVICE.Statistic->RenderDUMP_DT_VIS.Begin	();
+	Device->Statistic->RenderDUMP_DT_VIS.Begin	();
 	for (int _mz=0; _mz<dm_cache1_line; _mz++){
 		for (int _mx=0; _mx<dm_cache1_line; _mx++){
 			CacheSlot1& MS		= cache_level1[_mz][_mx];
@@ -243,14 +243,14 @@ void CDetailManager::UpdateVisibleM()
 						continue;	// invisible-view frustum
 					}
 				}
-#ifndef _EDITOR
+#ifndef REDITOR
 				if (!RImplementation.HOM.visible(S.vis))
 				{
 					continue;	// invisible-occlusion
 				}
 #endif
 				// Add to visibility structures
-				if (RDEVICE.dwFrame>S.frame){
+				if (Device->dwFrame>S.frame){
 					// Calc fade factor	(per slot)
 					float	dist_sq		= EYE.distance_to_sqr	(S.vis.sphere.P);
 					if		(dist_sq>fade_limit)				continue;
@@ -258,7 +258,7 @@ void CDetailManager::UpdateVisibleM()
 					float	alpha_i		= 1.f - alpha;
 					float	dist_sq_rcp	= 1.f / dist_sq;
 
-					S.frame			= RDEVICE.dwFrame+Random.randI(15,30);
+					S.frame			= Device->dwFrame+Random.randI(15,30);
 					for (int sp_id=0; sp_id<dm_obj_in_slot; sp_id++){
 						SlotPart&			sp	= S.G		[sp_id];
 						if (sp.id==DetailSlot::ID_Empty)	continue;
@@ -307,7 +307,7 @@ void CDetailManager::UpdateVisibleM()
 			}
 		}
 	}
-	RDEVICE.Statistic->RenderDUMP_DT_VIS.End	();
+	Device->Statistic->RenderDUMP_DT_VIS.End	();
 }
 
 void CDetailManager::Render	()
@@ -320,7 +320,7 @@ void CDetailManager::Render	()
 	// MT
 	MT_SYNC					();
 
-	RDEVICE.Statistic->RenderDUMP_DT_Render.Begin	();
+	Device->Statistic->RenderDUMP_DT_Render.Begin	();
 
 #ifndef _EDITOR
 	float factor			= g_pGamePersistent->Environment().wind_strength_factor;
@@ -334,33 +334,33 @@ void CDetailManager::Render	()
 	if (UseVS())			hw_Render	();
 	else					soft_Render	();
 	RCache.set_CullMode		(CULL_CCW);
-	RDEVICE.Statistic->RenderDUMP_DT_Render.End	();
-	m_frame_rendered		= RDEVICE.dwFrame;
+	Device->Statistic->RenderDUMP_DT_Render.End	();
+	m_frame_rendered		= Device->dwFrame;
 }
 
 void 	CDetailManager::MT_CALC		()
 {
-#ifndef _EDITOR
+#ifndef REDITOR
 	if (0==RImplementation.Details)		return;	// possibly deleted
 	if (0==dtFS)						return;
 	if (!psDeviceFlags.is(rsDetails))	return;
 #endif    
 
 	MT.Enter					();
-	if (m_frame_calc!=RDEVICE.dwFrame)	
-		if ((m_frame_rendered+1)==RDEVICE.dwFrame) //already rendered
+	if (m_frame_calc!=Device->dwFrame)	
+		if ((m_frame_rendered+1)==Device->dwFrame) //already rendered
 		{
-			Fvector		EYE				= RDEVICE.vCameraPosition_saved;
+			Fvector		EYE				= Device->vCameraPosition_saved;
 
 			int s_x	= iFloor			(EYE.x/dm_slot_size+.5f);
 			int s_z	= iFloor			(EYE.z/dm_slot_size+.5f);
 
-			RDEVICE.Statistic->RenderDUMP_DT_Cache.Begin	();
+			Device->Statistic->RenderDUMP_DT_Cache.Begin	();
 			cache_Update				(s_x,s_z,EYE,dm_max_decompress);
-			RDEVICE.Statistic->RenderDUMP_DT_Cache.End	();
+			Device->Statistic->RenderDUMP_DT_Cache.End	();
 
 			UpdateVisibleM				();
-			m_frame_calc				= RDEVICE.dwFrame;
+			m_frame_calc				= Device->dwFrame;
 		}
 	MT.Leave					        ();
 }

@@ -90,7 +90,7 @@ void SAINode::SaveLTX(CInifile& ini, LPCSTR sect_name, ESceneAIMapTool* tools)
 	R_ASSERT2		(0, "dont use it !!!");
 	u32 			id;
     u16 			pl;
-	NodePosition 	np;
+	SNodePositionOld 	np;
 
     id 				= n1?(u32)n1->idx:InvalidNode;
     ini.w_u32		(sect_name,"n1", id);
@@ -123,7 +123,7 @@ void SAINode::LoadStream(IReader& F, ESceneAIMapTool* tools)
 {
 	u32 			id;
     u16 			pl;
-	NodePosition 	np;
+	SNodePositionOld 	np;
     F.r				(&id,3); 			n1 = (SAINode*)tools->UnpackLink(id);
     F.r				(&id,3); 			n2 = (SAINode*)tools->UnpackLink(id);
     F.r				(&id,3); 			n3 = (SAINode*)tools->UnpackLink(id);
@@ -138,7 +138,7 @@ void SAINode::SaveStream(IWriter& F, ESceneAIMapTool* tools)
 {
 	u32 			id;
     u16 			pl;
-	NodePosition 	np;
+	SNodePositionOld 	np;
 
     id = n1?(u32)n1->idx:InvalidNode; F.w(&id,3);
     id = n2?(u32)n2->idx:InvalidNode; F.w(&id,3);
@@ -457,7 +457,7 @@ int ESceneAIMapTool::AddNode(const Fvector& pos, bool bIgnoreConstraints, bool b
     }
 }
 
-struct invalid_node_pred : public std::unary_function<SAINode*, bool>
+struct invalid_node_pred 
 {
 	int link;
 	invalid_node_pred(int _link):link(_link){;}
@@ -486,7 +486,7 @@ void ESceneAIMapTool::SelectObjects(bool flag)
     UpdateHLSelected	();
     UI->RedrawScene		();
 }
-struct delete_sel_node_pred : public std::unary_function<SAINode*, bool>
+struct delete_sel_node_pred 
 {
 	bool operator()(SAINode*& x)
     {

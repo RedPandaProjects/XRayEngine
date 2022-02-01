@@ -47,7 +47,7 @@ void ESceneLightTool::SelectLightsForObject(CCustomObject* obj)
         Fbox bb; 	obj->GetBox(bb);
         Fvector C; 	float R; bb.getsphere(C,R);
         float d 	= C.distance_to(l->GetPosition()) - l->m_Range - R;
-        EDevice.LightEnable(i,(d<0));
+        EDevice->LightEnable(i,(d<0));
     }
 }
 
@@ -67,7 +67,7 @@ void ESceneLightTool::AppendFrameLight(CLight* src)
     L.attenuation2		= src->m_Attenuation2;
     L.phi				= src->m_Cone;
     L.falloff			= 1.f;
-    EDevice.SetLight		(frame_light.size(),L);
+    EDevice->SetLight		(frame_light.size(),L);
     frame_light.push_back(src);
 }
 
@@ -98,19 +98,19 @@ void ESceneLightTool::BeforeRender()
             L.ambient.set	(0.f,0.f,0.f,0.f);
             L.specular.set	(C.x,C.y,C.z,1.f);
             L.type			= D3DLIGHT_DIRECTIONAL;
-            EDevice.SetLight	(frame_light.size(),L);
-            EDevice.LightEnable(frame_light.size(),TRUE);
+            EDevice->SetLight	(frame_light.size(),L);
+            EDevice->LightEnable(frame_light.size(),TRUE);
         }
 		// ambient
 //        if (psDeviceFlags.is(rsEnvironment)){
 //	        Fvector& V		= g_pGamePersistent->Environment().CurrentEnv->ambient;
 //            Fcolor C;		C.set(V.x,V.y,V.z,1.f);
-//            EDevice.SetRS	(D3DRS_AMBIENT,C.get());
+//            EDevice->SetRS	(D3DRS_AMBIENT,C.get());
 //        }else				
-        	EDevice.SetRS(D3DRS_AMBIENT,0x00000000);
+        	EDevice->SetRS(D3DRS_AMBIENT,0x00000000);
         
-        EDevice.Statistic->dwTotalLight 	= l_cnt;
-        EDevice.Statistic->dwLightInScene = frame_light.size();
+        EDevice->EStatistic->dwTotalLight 	= l_cnt;
+        EDevice->EStatistic->dwLightInScene = frame_light.size();
     }
 }
 //------------------------------------------------------------------------------
@@ -118,9 +118,9 @@ void ESceneLightTool::BeforeRender()
 void ESceneLightTool::AfterRender()
 {
     if (m_Flags.is(flShowSun))
-        EDevice.LightEnable(frame_light.size(),FALSE); // sun - last light!
+        EDevice->LightEnable(frame_light.size(),FALSE); // sun - last light!
     for (u32 i=0; i<frame_light.size(); i++)
-		EDevice.LightEnable(i,FALSE);
+		EDevice->LightEnable(i,FALSE);
     frame_light.clear();
 }
 //------------------------------------------------------------------------------
@@ -131,13 +131,13 @@ void  ESceneLightTool::OnRender(int priority, bool strictB2F)
 	inherited::OnRender(priority, strictB2F);
     if (m_Flags.is(flShowSun)){
         if ((true==strictB2F)&&(1==priority)){
-            EDevice.SetShader		(EDevice.m_WireShader);
+            EDevice->SetShader		(EDevice->m_WireShader);
             RCache.set_xform_world	(Fidentity);
             Fvector dir;
             dir.setHP(m_SunShadowDir.y,m_SunShadowDir.x);
             Fvector p;
             float fd				= UI->ZFar()*0.95f;
-            p.mad					(EDevice.vCameraPosition,dir,-fd);
+            p.mad					(EDevice->vCameraPosition,dir,-fd);
             DU_impl.DrawPointLight		( p ,VIS_RADIUS*fd, 0x00FFE020);
             DU_impl.DrawLineSphere		( p, VIS_RADIUS*fd*0.3f, 0x00FF3000, false );
         }

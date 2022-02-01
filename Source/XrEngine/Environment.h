@@ -140,10 +140,6 @@ class ENGINE_API	CEnvironment :public IEnvironment
 	friend class dxEnvironmentRender;
 	friend class XRayEnvironmentRender;
 private:
-	// clouds
-	FvectorVec				CloudsVerts;
-	U16Vec					CloudsIndices;
-private:
 	float					NormalizeTime(float tm);
 	float					TimeDiff(float prev, float cur);
 	float					TimeWeight(float val, float min_t, float max_t);

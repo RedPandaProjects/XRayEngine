@@ -17,10 +17,10 @@
 #include "MgcCont3DBox.h"         
 #include "MgcCont3DMinBox.h"         
 
-#ifdef _EDITOR
+#if 1
 #include "ui_main.h"
 #include "ui_toolscustom.h"
-
+#include "..\Engine\XrGameMaterialLibraryEditors.h"
 #endif
 //#include "../../../xrRender/Private/SkeletonAnimated.h"
 
@@ -565,7 +565,7 @@ bool CExportSkeleton::PrepareGeometry(u8 influence)
 
     R_ASSERT(m_Source->IsDynamic()&&m_Source->IsSkeleton());
 
-#ifdef _EDITOR
+#if 1
     SPBItem* pb = UI->ProgressStart(5+m_Source->MeshCount()*2+m_Source->SurfaceCount(),"..Prepare skeleton geometry");
     pb->Inc		();
 #endif
@@ -590,7 +590,7 @@ bool CExportSkeleton::PrepareGeometry(u8 influence)
     
     bool bRes			= true;
 
-#ifdef _EDITOR
+#if 1
 	UI->SetStatus		("..Split meshes");
 #endif
 
@@ -605,7 +605,7 @@ bool CExportSkeleton::PrepareGeometry(u8 influence)
         MESH->GenerateVNormals							(0);
         MESH->GenerateFNormals							();
         MESH->GenerateSVertices							(influence);
-#ifdef _EDITOR
+#if 1
         pb->Inc											();
 #endif
 		// fill faces
@@ -712,11 +712,11 @@ bool CExportSkeleton::PrepareGeometry(u8 influence)
         MESH->UnloadSVertices();
         MESH->UnloadVNormals();
         MESH->UnloadFNormals();
-#ifdef _EDITOR
+#if 1
         pb->Inc		();
 #endif
 	}
-#ifdef _EDITOR
+#if 1
     UI->SetStatus	("..Calculate TB");
 #endif
         Msg				("Split statistic:");
@@ -744,18 +744,18 @@ bool CExportSkeleton::PrepareGeometry(u8 influence)
         {
             split_it->CalculateTB();
             
-#ifdef _EDITOR
+#if 1
             pb->Inc		();
 #endif
         }
 
-#ifdef _EDITOR
+#if 1
         pb->Inc			();
 #endif
         // compute bounding
         ComputeBounding	();
 
-#ifdef _EDITOR
+#if 1
     UI->ProgressEnd(pb);
 #endif
     // restore active motion       6
@@ -786,7 +786,7 @@ bool CExportSkeleton::ExportGeometry(IWriter& F, u8 infl)
 {
 	if (!PrepareGeometry(infl)) return false;
 
-#ifdef _EDITOR
+#if 1
     SPBItem* pb = UI->ProgressStart(3+m_Splits.size(),"..Export skeleton geometry");
     pb->Inc		("Make Progressive...");
 #endif
@@ -808,7 +808,7 @@ bool CExportSkeleton::ExportGeometry(IWriter& F, u8 infl)
 		    bone_points		[sv_it->bones[0].id].push_back						(sv_it->offs);
             bones			[sv_it->bones[0].id]->_RITransform().transform_tiny(bone_points[sv_it->bones[0].id].back());
         }
-#ifdef _EDITOR
+#if 1
         pb->Inc		();
 #endif
 	}
@@ -841,7 +841,7 @@ bool CExportSkeleton::ExportGeometry(IWriter& F, u8 infl)
     }
     F.close_chunk();
 
-#ifdef _EDITOR
+#if 1
     pb->Inc		("Compute bone bounding volume...");
 #endif
 
@@ -874,7 +874,7 @@ bool CExportSkeleton::ExportGeometry(IWriter& F, u8 infl)
         F.close_chunk	();
     }
 
-#ifdef _EDITOR
+#if 1
     pb->Inc		();
 #endif
     if (m_Source->GetLODs() && xr_strlen(m_Source->GetLODs())>0 && bRes)
@@ -907,7 +907,7 @@ bool CExportSkeleton::ExportGeometry(IWriter& F, u8 infl)
         F.close_chunk	();
     }
 
-#ifdef _EDITOR
+#if 1
     UI->ProgressEnd(pb);
 #endif
     return bRes;
@@ -941,7 +941,7 @@ bool CExportSkeleton::ExportMotionKeys(IWriter& F)
      	return !!m_Source->m_SMotionRefs.size();
     }
 
-#ifdef _EDITOR
+#if 1
 	SPBItem* pb = UI->ProgressStart(1+m_Source->SMotionCount(),"..Export skeleton motions keys");
     pb->Inc		();
 #endif
@@ -1148,12 +1148,12 @@ bool CExportSkeleton::ExportMotionKeys(IWriter& F)
         xr_free						(items);
 
         F.close_chunk				();
-#ifdef _EDITOR
+#if 1
     	pb->Inc						();
 #endif
     }
     F.close_chunk					();
-#ifdef _EDITOR
+#if 1
 	UI->ProgressEnd					(pb);
 #endif
     // restore active motion
@@ -1170,7 +1170,7 @@ bool CExportSkeleton::ExportMotionDefs(IWriter& F)
 
     bool bRes=true;
 
-#ifdef _EDITOR
+#if 1
 	SPBItem* pb = UI->ProgressStart(3,"..Export skeleton motions defs");
     pb->Inc		();
 #endif
@@ -1183,7 +1183,7 @@ bool CExportSkeleton::ExportMotionDefs(IWriter& F)
         	F.w_stringZ	(m_Source->m_SMotionRefs[i].c_str());
 
 	    F.close_chunk	();
-#ifdef _EDITOR
+#if 1
 	    pb->Inc		();
 #endif
     }else{
@@ -1225,7 +1225,7 @@ bool CExportSkeleton::ExportMotionDefs(IWriter& F)
             for (int i=0; i<m_Source->BoneCount(); i++) 
 				F.w_u32(i);
         }
-#ifdef _EDITOR
+#if 1
 	    pb->Inc		();
 #endif
         // motion defs
@@ -1256,7 +1256,7 @@ bool CExportSkeleton::ExportMotionDefs(IWriter& F)
                 F.w_float	(motion->fAccrue);
                 F.w_float	(motion->fFalloff);
 
-#ifdef _EDITOR
+#if 1
     			u32 sz		= motion->marks.size();
 				F.w_u32		(sz);
                 for(u32 i=0; i<sz; ++i)
@@ -1268,13 +1268,13 @@ bool CExportSkeleton::ExportMotionDefs(IWriter& F)
 #endif
             }
         }
-#ifdef _EDITOR
+#if 1
 	    pb->Inc		();
 #endif
 		F.close_chunk();
     }
     
-#ifdef _EDITOR
+#if 1
 	UI->ProgressEnd(pb);
 #endif
     return bRes;
@@ -1298,7 +1298,7 @@ bool CExportSkeleton::Export(IWriter& F, u8 infl)
 
 
 
-#if defined _EDITOR || defined _MAYA_EXPORT
+#if 1
 
 bool CBone::ExportOGF(IWriter& F)
 {
@@ -1307,8 +1307,8 @@ bool CBone::ExportOGF(IWriter& F)
         ELog.Msg(mtError,"Bone '%s' has invalid shape.",*Name());
     	return false;
     }
-#ifdef _EDITOR
-	SGameMtl* M			= GMLib.GetMaterial(game_mtl.c_str());
+#if 1
+	SGameMtl* M			= GameMaterialLibraryEditors->GetMaterial(game_mtl.c_str());
     if (!M){
         ELog.Msg(mtError,"Bone '%s' has invalid game material.",*Name());
     	return false;

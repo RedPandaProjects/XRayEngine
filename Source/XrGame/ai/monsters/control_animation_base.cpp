@@ -249,7 +249,7 @@ void CControlAnimationBase::select_animation(bool anim_end)
 	//	xr_sprintf		(st, "%s%d", *anim_it->second.target_name, index);
 	m_cur_anim.name				= st; 
 	m_cur_anim.index			= u8(index);
-	m_cur_anim.time_started		= Device.dwTimeGlobal;
+	m_cur_anim.time_started		= Device->dwTimeGlobal;
 	m_cur_anim.speed._set_current	(1.f);
 	m_cur_anim.speed._set_target	(-1.f);
 }

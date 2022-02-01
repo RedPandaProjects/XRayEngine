@@ -3,7 +3,7 @@
 #pragma once
 struct dContactGeom;
 struct dContact;
-struct SGameMtl;
+class SGameMtl;
 namespace	CDB{	class TRI;	}
 class		CBoneInstance;
 

@@ -147,9 +147,9 @@ void CUIKickPlayer::Update()
 {
 	CUIDialogWnd::Update();
 
-	if (m_prev_upd_time > Device.dwTimeContinual - 1000) return;
+	if (m_prev_upd_time > Device->dwTimeContinual - 1000) return;
 
-	m_prev_upd_time						= Device.dwTimeContinual;
+	m_prev_upd_time						= Device->dwTimeContinual;
 
 	const game_cl_GameState::PLAYERS_MAP& items = Game().players;
 

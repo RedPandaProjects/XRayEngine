@@ -31,7 +31,7 @@ void CAI_Rat::init_state_under_fire()
 
 void CAI_Rat::init_free_recoil()
 {
-	m_dwLostRecoilTime	= Device.dwTimeGlobal;
+	m_dwLostRecoilTime	= Device->dwTimeGlobal;
 	m_tRecoilPosition	= m_tLastSound.tSavedPosition;
 	if (!switch_if_enemy()&&!switch_if_time())
 	{

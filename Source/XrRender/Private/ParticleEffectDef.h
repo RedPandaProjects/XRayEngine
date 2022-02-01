@@ -109,7 +109,7 @@ namespace PS
 		void 				Save2				(CInifile& ini);
 		BOOL 				Load2				(CInifile& ini);
 
-#ifdef _EDITOR         
+#ifdef REDITOR         
 // change Copy&Equal if variables changed
 	public:
 	    DEFINE_VECTOR		(EParticleAction*,EPAVec,EPAVecIt);

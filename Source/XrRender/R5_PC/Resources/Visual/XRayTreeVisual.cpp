@@ -19,14 +19,14 @@ struct	FTreeVisual_setup
 
 	void		calculate()
 	{
-		dwFrame = Device.dwFrame;
+		dwFrame = Device->dwFrame;
 
 		// Calc wind-vector3, scale
-		float tm_rot = PI_MUL_2 * Device.fTimeGlobal / XRayRenderConsole::ps_r_Tree_w_rot;
+		float tm_rot = PI_MUL_2 * Device->fTimeGlobal / XRayRenderConsole::ps_r_Tree_w_rot;
 		wind.set(_sin(tm_rot), 0, _cos(tm_rot), 0);	wind.normalize();	wind.mul(XRayRenderConsole::ps_r_Tree_w_amp);	// dir1*amplitude
 		scale = 1.f / float(FTreeVisual_quant);
 		// setup constants
-		wave.set(XRayRenderConsole::ps_r_Tree_Wave.x, XRayRenderConsole::ps_r_Tree_Wave.y, XRayRenderConsole::ps_r_Tree_Wave.z, Device.fTimeGlobal * XRayRenderConsole::ps_r_Tree_w_speed);			// wave
+		wave.set(XRayRenderConsole::ps_r_Tree_Wave.x, XRayRenderConsole::ps_r_Tree_Wave.y, XRayRenderConsole::ps_r_Tree_Wave.z, Device->fTimeGlobal * XRayRenderConsole::ps_r_Tree_w_speed);			// wave
 		wave.div(PI_MUL_2);
 		wave.normalize();
 	}
@@ -40,7 +40,7 @@ void XRayTreeVisual::UpdateUniform(XRayUniformAllocator::EUniformType Type, void
 		SUniformBuffer* Buffer = (SUniformBuffer*)ptr;
 		{
 			static FTreeVisual_setup	tvs;
-			if (tvs.dwFrame != Device.dwFrame)	tvs.calculate();
+			if (tvs.dwFrame != Device->dwFrame)	tvs.calculate();
 			// setup constants
 
 			Fmatrix xform_v;

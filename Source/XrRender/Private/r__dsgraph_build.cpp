@@ -23,12 +23,12 @@ float		r_ssaHZBvsTEX;
 ICF	float	CalcSSA				(float& distSQ, Fvector& C, dxRender_Visual* V)
 {
 	float R	= V->vis.sphere.R + 0;
-	distSQ	= Device.vCameraPosition.distance_to_sqr(C)+EPS;
+	distSQ	= Device->vCameraPosition.distance_to_sqr(C)+EPS;
 	return	R/distSQ;
 }
 ICF	float	CalcSSA				(float& distSQ, Fvector& C, float R)
 {
-	distSQ	= Device.vCameraPosition.distance_to_sqr(C)+EPS;
+	distSQ	= Device->vCameraPosition.distance_to_sqr(C)+EPS;
 	return	R/distSQ;
 }
 
@@ -40,8 +40,8 @@ void R_dsgraph_structure::r_dsgraph_insert_dynamic	(dxRender_Visual *pVisual, Fv
 	pVisual->vis.marker		=	RI.marker			;
 
 #if RENDER==R_R1
-	if (RI.o.vis_intersect &&	(pVisual->vis.accept_frame!=Device.dwFrame))	return;
-	pVisual->vis.accept_frame	=	Device.dwFrame	;
+	if (RI.o.vis_intersect &&	(pVisual->vis.accept_frame!=Device->dwFrame))	return;
+	pVisual->vis.accept_frame	=	Device->dwFrame	;
 #endif
 
 	float distSQ			;
@@ -234,8 +234,8 @@ void R_dsgraph_structure::r_dsgraph_insert_static	(dxRender_Visual *pVisual)
 	pVisual->vis.marker			=	RI.marker			;
 
 #if RENDER==R_R1
-	if (RI.o.vis_intersect &&	(pVisual->vis.accept_frame!=Device.dwFrame))	return;
-	pVisual->vis.accept_frame	=	Device.dwFrame		;
+	if (RI.o.vis_intersect &&	(pVisual->vis.accept_frame!=Device->dwFrame))	return;
+	pVisual->vis.accept_frame	=	Device->dwFrame		;
 #endif
 
 	float distSQ;

@@ -35,7 +35,7 @@ sun::sun					(manager const& manager, shared_str const &id) :
 
 sun::~sun					()
 {
-	if (!Device.editor())
+	if (!Device->WeatherEditor())
 		return;
 
 	::ide().destroy			(m_property_holder);

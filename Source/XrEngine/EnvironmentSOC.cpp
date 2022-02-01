@@ -272,7 +272,7 @@ void CEnvironmentSOC::SelectEnvs(float gt)
 void CEnvironmentSOC::OnFrame()
 {
 #ifdef _EDITOR
-	SetGameTime				(fGameTime+Device.fTimeDelta*fTimeFactor,fTimeFactor);
+	SetGameTime				(fGameTime+Device->fTimeDelta*fTimeFactor,fTimeFactor);
     if (fsimilar(ed_to_time,DAY_LENGTH)&&fsimilar(ed_from_time,0.f)){
 	    if (fGameTime>DAY_LENGTH)	fGameTime-=DAY_LENGTH;
     }else{
@@ -307,7 +307,7 @@ void CEnvironmentSOC::OnFrame()
 	EM.ambient.set			( 0,0,0 );
 	EM.sky_color.set		( 0,0,0 );
 	EM.hemi_color.set		( 0,0,0 );
-	Fvector	view			= Device.vCameraPosition;
+	Fvector	view			= Device->vCameraPosition;
 	float	mpower			= 0;
 	for (auto mit=Modifiers.begin(); mit!=Modifiers.end(); mit++)
 		mpower				+= EM.sum(**mit,view);
@@ -327,7 +327,7 @@ void CEnvironmentSOC::OnFrame()
 	VERIFY2						(CurrentEnv->sun_dir.y<0,"Invalid sun direction settings in lerp");
 
 	PerlinNoise1D->SetFrequency(wind_gust_factor * MAX_NOISE_FREQ);
-	wind_strength_factor = clampr(PerlinNoise1D->GetContinious(Device.fTimeGlobal) + 0.5f, 0.f, 1.f);
+	wind_strength_factor = clampr(PerlinNoise1D->GetContinious(Device->fTimeGlobal) + 0.5f, 0.f, 1.f);
 	shared_str l_id = (current_weight < 0.5f) ? Current[0]->lens_flare_id : Current[1]->lens_flare_id;
 	eff_LensFlare->OnFrame(l_id);
 	shared_str t_id = (current_weight < 0.5f) ? Current[0]->tb_id : Current[1]->tb_id;

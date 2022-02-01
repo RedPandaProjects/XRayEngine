@@ -12,6 +12,7 @@ class CScenePhyscs
  	CScenePhyscs			() : m_object_space(0), b_update_level_collision(false)	{}
 	~CScenePhyscs			() ;
  public:
+     void	GenerateCFrom(CObjectSpace*To, CDB::build_callback cb);
     void	CreateWorld			();
     void 	DestroyWorld		();
     void	CreateShellsSelected();

@@ -44,7 +44,7 @@ IPHWorld * __stdcall physics_world()
 	return ph_world;
 }
 
-void	__stdcall create_physics_world( bool mt, CObjectSpace *os, CObjectList *lo, CRenderDeviceBase *dv ) //IPHWorldUpdateCallbck &commander, 
+void	__stdcall create_physics_world( bool mt, CObjectSpace *os, CObjectList *lo, XrDeviceInterface *dv ) //IPHWorldUpdateCallbck &commander, 
 {
 		ph_world							= xr_new<CPHWorld>(); //&commander
 		VERIFY( os );
@@ -80,10 +80,6 @@ CObjectSpace*	__stdcall	mesh_create_object_space(Fvector* verts, CDB::TRI* tris,
 	g_SpatialSpacePhysic		= xr_new<ISpatial_DB>	();
 	os->Create( verts, tris, H, build_callback );
 	return os;
-}
-void			__stdcall	set_mtl_lib(CGameMtlLibrary * l)
-{
-	PGMLib = l;
 }
 void __stdcall destroy_object_space(CObjectSpace* &os)
 {
@@ -175,7 +171,7 @@ void CPHWorld::SetStep(float s)
 		ph_world->m_frame_time				=	frame_time;
 	}
 }
-void CPHWorld::Create( bool mt, CObjectSpace * os, CObjectList *lo, CRenderDeviceBase *dv )
+void CPHWorld::Create( bool mt, CObjectSpace * os, CObjectList *lo, XrDeviceInterface *dv )
 {
 	LoadParams				();
 	dWorldID phWorld=0;

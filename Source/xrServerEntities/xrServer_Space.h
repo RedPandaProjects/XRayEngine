@@ -11,7 +11,7 @@
 
 #include "script_export_space.h"
 
-#ifndef XRGAME_EXPORTS
+#if DEV_MODE
 #	define SERVER_ENTITY_EDITOR_METHODS					virtual void FillProps(LPCSTR pref, PropItemVec& values);
 #else // #ifdef XRGAME_EXPORTS
 #	define SERVER_ENTITY_EDITOR_METHODS

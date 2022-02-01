@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Interface">
+      <UniqueIdentifier>{0a1f450f-0780-4dda-b6d4-d1eb87003049}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\Core">
+      <UniqueIdentifier>{33ddb475-9a9c-4c1f-ad60-9cd8f9946016}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\Debug">
+      <UniqueIdentifier>{7a752229-e40d-4fe9-938d-d1a7a8d7a737}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\Environment">
+      <UniqueIdentifier>{4797c65d-121b-4ace-b2a9-4167964f823f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\Thunderbolt">
+      <UniqueIdentifier>{9e170490-94dd-4ba2-8bbe-5b472c04ff30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\UI">
+      <UniqueIdentifier>{04c6c19e-e035-4a4a-8e96-5a5622d1eb19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\WallMark">
+      <UniqueIdentifier>{d51f9c90-9fa5-4b81-9b65-72414aa736ae}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Interface\Core\XRayRenderDeviceRender.cpp">
+      <Filter>Interface\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\Core\XRayApplicationRender.cpp">
+      <Filter>Interface\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\Debug\XRayStatGraphRender.cpp">
+      <Filter>Interface\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\Debug\XRayStatsRender.cpp">
+      <Filter>Interface\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\Debug\XRayObjectSpaceRender.cpp">
+      <Filter>Interface\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\Environment\XRayFlareRender.cpp">
+      <Filter>Interface\Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\Environment\XRayLensFlareRender.cpp">
+      <Filter>Interface\Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\Environment\XRayRainRender.cpp">
+      <Filter>Interface\Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\Environment\XRayEnvironmentRender.cpp">
+      <Filter>Interface\Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\Thunderbolt\XRayThunderboltRender.cpp">
+      <Filter>Interface\Thunderbolt</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\Thunderbolt\XRayThunderboltDescRender.cpp">
+      <Filter>Interface\Thunderbolt</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\UI\XRayUIRender.cpp">
+      <Filter>Interface\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\UI\XRayUISequenceVideoItem.cpp">
+      <Filter>Interface\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\UI\XRayConsoleRender.cpp">
+      <Filter>Interface\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\UI\XRayFontRender.cpp">
+      <Filter>Interface\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\WallMark\XRayWallMarkArray.cpp">
+      <Filter>Interface\WallMark</Filter>
+    </ClCompile>
+    <ClCompile Include="PCH.cpp" />
+    <ClCompile Include="XRayRender.cpp" />
+    <ClCompile Include="Interface\XRayDUInterface.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\XRayRenderFactory.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\XRayDebugRender.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\XRayRenderInterface.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Interface\Core\XRayRenderDeviceRender.h">
+      <Filter>Interface\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\Core\XRayApplicationRender.h">
+      <Filter>Interface\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\Debug\XRayObjectSpaceRender.h">
+      <Filter>Interface\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\Debug\XRayStatGraphRender.h">
+      <Filter>Interface\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\Debug\XRayStatsRender.h">
+      <Filter>Interface\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\Environment\XRayFlareRender.h">
+      <Filter>Interface\Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\Environment\XRayLensFlareRender.h">
+      <Filter>Interface\Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\Environment\XRayRainRender.h">
+      <Filter>Interface\Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\Environment\XRayEnvironmentRender.h">
+      <Filter>Interface\Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\Thunderbolt\XRayThunderboltDescRender.h">
+      <Filter>Interface\Thunderbolt</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\Thunderbolt\XRayThunderboltRender.h">
+      <Filter>Interface\Thunderbolt</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\UI\XRayUIRender.h">
+      <Filter>Interface\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\UI\XRayUISequenceVideoItem.h">
+      <Filter>Interface\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\UI\XRayConsoleRender.h">
+      <Filter>Interface\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\UI\XRayFontRender.h">
+      <Filter>Interface\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\WallMark\XRayWallMarkArray.h">
+      <Filter>Interface\WallMark</Filter>
+    </ClInclude>
+    <ClInclude Include="PCH.h" />
+    <ClInclude Include="Interface\XRayDebugRender.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\XRayDUInterface.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\XRayRenderFactory.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\XRayRenderInterface.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

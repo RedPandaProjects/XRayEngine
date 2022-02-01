@@ -3,7 +3,7 @@
 
 #pragma warning(disable:4995)
 #include "directx\d3dx9.h"
-#ifndef _EDITOR
+#ifndef REDITOR
 #include "../../xrEngine/render.h"
 #endif
 #pragma warning(default:4995)
@@ -80,7 +80,7 @@ SPass*		CResourceManager::_CreatePass			(const SPass& proto)
 	P->vs						=	proto.vs;
 	P->constants				=	proto.constants;
 	P->T						=	proto.T;
-#ifdef _EDITOR
+#ifdef REDITOR
 	P->M						=	proto.M;
 #endif
 	P->C						=	proto.C;
@@ -133,7 +133,7 @@ void		CResourceManager::_DeleteDecl		(const SDeclaration* dcl)
 }
 
 //--------------------------------------------------------------------------------------------------------------
-#ifndef _EDITOR
+#ifndef REDITOR
 SVS*	CResourceManager::_CreateVS		(LPCSTR _name)
 {
 	string_path			name;
@@ -211,7 +211,7 @@ void	CResourceManager::_DeleteVS			(const SVS* vs)
 	Msg	("! ERROR: Failed to find compiled vertex-shader '%s'",*vs->cName);
 }
 
-#ifndef _EDITOR
+#ifndef REDITOR
 //--------------------------------------------------------------------------------------------------------------
 SPS*	CResourceManager::_CreatePS			(LPCSTR name)
 {
@@ -311,7 +311,7 @@ CRT*	CResourceManager::_CreateRT		(LPCSTR Name, u32 w, u32 h,	D3DFORMAT f, u32 S
 		CRT *RT					=	xr_new<CRT>();
 		RT->dwFlags				|=	xr_resource_flagged::RF_REGISTERED;
 		m_rtargets.insert		(mk_pair(RT->set_name(Name),RT));
-		if (RDEVICE.b_is_Ready)	RT->create	(Name,w,h,f);
+		if (Device->b_is_Ready)	RT->create	(Name,w,h,f);
 		return					RT;
 	}
 }
@@ -343,7 +343,7 @@ CRTC*	CResourceManager::_CreateRTC		(LPCSTR Name, u32 size,	D3DFORMAT f)
 		CRTC *RT				=	xr_new<CRTC>();
 		RT->dwFlags				|=	xr_resource_flagged::RF_REGISTERED;
 		m_rtargets_c.insert		(mk_pair(RT->set_name(Name),RT));
-		if (RDEVICE.b_is_Ready)	RT->create	(Name,size,f);
+		if (Device->b_is_Ready)	RT->create	(Name,size,f);
 		return					RT;
 	}
 }
@@ -439,7 +439,7 @@ CTexture* CResourceManager::_CreateTexture	(LPCSTR _Name)
 		T->dwFlags			|=	xr_resource_flagged::RF_REGISTERED;
 		m_textures.insert	(mk_pair(T->set_name(Name),T));
 		T->Preload			();
-		if (RDEVICE.b_is_Ready && !bDeferredLoad) T->Load();
+		if (Device->b_is_Ready && !bDeferredLoad) T->Load();
 		return		T;
 	}
 }
@@ -612,7 +612,7 @@ void			CResourceManager::_DeleteConstantList(const SConstantList* L )
 	Msg	("! ERROR: Failed to find compiled list of r1-constant-defs");
 }
 
-#ifdef _EDITOR
+#ifdef REDITOR
 //--------------------------------------------------------------------------------------------------------------
 class	includer				: public ID3DXInclude
 {
@@ -700,7 +700,7 @@ SVS*	CResourceManager::_CreateVS		(LPCSTR _name)
 
 		// vertex
 		R_ASSERT2					(fs,cname);
-		_hr = ::Render->shader_compile(name,LPCSTR(fs->pointer()),fs->length(), NULL, &Includer, c_entry, c_target, D3DXSHADER_DEBUG | D3DXSHADER_PACKMATRIX_ROWMAJOR /*| D3DXSHADER_PREFER_FLOW_CONTROL*/, &pShaderBuf, &pErrorBuf, NULL);
+		_hr = ::RImplementation.shader_compile(name,LPCSTR(fs->pointer()),fs->length(), NULL, &Includer, c_entry, c_target, D3DXSHADER_DEBUG | D3DXSHADER_PACKMATRIX_ROWMAJOR /*| D3DXSHADER_PREFER_FLOW_CONTROL*/, &pShaderBuf, &pErrorBuf, NULL);
 //		_hr = D3DXCompileShader		(LPCSTR(fs->pointer()),fs->length(), NULL, &Includer, "main", target, D3DXSHADER_DEBUG | D3DXSHADER_PACKMATRIX_ROWMAJOR, &pShaderBuf, &pErrorBuf, NULL);
 		FS.r_close					(fs);
 
@@ -806,7 +806,7 @@ SPS*	CResourceManager::_CreatePS			(LPCSTR name)
 		LPD3DXBUFFER				pErrorBuf	= NULL;
 		LPD3DXSHADER_CONSTANTTABLE	pConstants	= NULL;
 		HRESULT						_hr			= S_OK;
-		_hr = ::Render->shader_compile	(name,data,size, NULL, &Includer, c_entry, c_target, D3DXSHADER_DEBUG | D3DXSHADER_PACKMATRIX_ROWMAJOR, &pShaderBuf, &pErrorBuf, NULL);
+		_hr = ::RImplementation.shader_compile	(name,data,size, NULL, &Includer, c_entry, c_target, D3DXSHADER_DEBUG | D3DXSHADER_PACKMATRIX_ROWMAJOR, &pShaderBuf, &pErrorBuf, NULL);
 		//_hr = D3DXCompileShader		(text,text_size, NULL, &Includer, c_entry, c_target, D3DXSHADER_DEBUG | D3DXSHADER_PACKMATRIX_ROWMAJOR, &pShaderBuf, &pErrorBuf, NULL);
 		xr_free						(data);
 

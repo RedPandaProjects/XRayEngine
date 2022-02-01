@@ -46,7 +46,7 @@ void Fvisual::Load		(const char* N, IReader *data, u32 dwFlags)
 	BOOL				loaded_v=false;
 
 	if (data->find_chunk(OGF_GCONTAINER)) {
-#ifndef _EDITOR
+#ifndef REDITOR
 		// verts
 		u32 ID				= data->r_u32					();
 		vBase				= data->r_u32					();
@@ -119,7 +119,7 @@ void Fvisual::Load		(const char* N, IReader *data, u32 dwFlags)
 	if (!loaded_v && (dwFlags&VLOAD_NOVERTICES)==0) {
 		if (data->find_chunk(OGF_VCONTAINER)) {
 			R_ASSERT2			(0,"pls notify andy about this.");
-#ifndef _EDITOR
+#ifndef REDITOR
 			u32 ID				= data->r_u32				();
 			vBase				= data->r_u32				();
 			vCount				= data->r_u32				();
@@ -160,7 +160,7 @@ void Fvisual::Load		(const char* N, IReader *data, u32 dwFlags)
 		dwPrimitives = 0;
 		if (data->find_chunk(OGF_ICONTAINER)) {
 			R_ASSERT2			(0,"pls notify andy about this.");
-#ifndef _EDITOR
+#ifndef REDITOR
 			u32 ID				= data->r_u32			();
 			iBase				= data->r_u32			();
 			iCount				= data->r_u32			();

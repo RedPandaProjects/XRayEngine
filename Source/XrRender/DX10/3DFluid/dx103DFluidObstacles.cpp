@@ -289,7 +289,7 @@ void dx103DFluidObstacles::RenderPhysicsElement( const IPhysicsElement &Element,
 	fVelocityScale /= 30.0f * 2.0f;
 
 	
-	//fVelocityScale *= Device.fTimeDelta;
+	//fVelocityScale *= Device->fTimeDelta;
 
 	//	Emphasize velocity influence on the fog
 	//fVelocityScale *= 10;
@@ -372,7 +372,7 @@ void dx103DFluidObstacles::RenderDynamicOOBB( const IPhysicsElement &Element, co
 
 	fVelocityScale = 1/timestep;
 
-	fVelocityScale *= Device.fTimeDelta;
+	fVelocityScale *= Device->fTimeDelta;
 
 	AngularVelocity.mul( fVelocityScale );
 	TranslationVelocity.mul( fVelocityScale );

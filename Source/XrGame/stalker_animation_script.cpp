@@ -26,7 +26,7 @@ void CStalkerAnimationManager::script_play_callback(CBlend *blend)
 #if 0
 	Msg							(
 		"%6d Script callback [%s]",
-		Device.dwTimeGlobal,
+		Device->dwTimeGlobal,
 		animations.empty()
 		?
 		"unknown"

@@ -40,7 +40,7 @@ void moving_objects::register_object		(moving_object *moving_object)
 #endif // DEBUG
 
 	VERIFY					(m_tree);
-	m_tree->insert			(moving_object);
+	if(m_tree)m_tree->insert			(moving_object);
 }
 
 void moving_objects::unregister_object		(moving_object *moving_object)
@@ -55,6 +55,7 @@ void moving_objects::unregister_object		(moving_object *moving_object)
 #endif // DEBUG
 
 	VERIFY					(m_tree);
+	if(m_tree)
 	m_tree->remove			(moving_object);
 }
 

@@ -196,7 +196,7 @@ void imotion_position::state_start( )
 		flags.set(fl_not_played,TRUE);
 		return;
 	}
-	move( float( Device.dwTimeDelta )/1000, *KA );
+	move( float( Device->dwTimeDelta )/1000, *KA );
 	if(flags.test(fl_switch_dm_toragdoll))
 			switch_to_free	( );
 	//K->CalculateBones_Invalidate();

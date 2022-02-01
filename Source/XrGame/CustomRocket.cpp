@@ -82,7 +82,7 @@ BOOL CCustomRocket::net_Spawn(CSE_Abstract* DC)
 
 void CCustomRocket::net_Destroy() 
 {
-//	Msg("---------net_Destroy [%d] frame[%d]",ID(), Device.dwFrame);
+//	Msg("---------net_Destroy [%d] frame[%d]",ID(), Device->dwFrame);
 	CPHUpdateObject::Deactivate();
 	inherited::net_Destroy();
 	
@@ -104,7 +104,7 @@ void CCustomRocket::SetLaunchParams (const Fmatrix& xform,
 //		Msg("set p start v:	%f,%f,%f	\n",m_vLaunchVelocity.x,m_vLaunchVelocity.y,m_vLaunchVelocity.z);
 //	}
 	m_vLaunchAngularVelocity	= angular_vel;
-	m_time_to_explode			= Device.fTimeGlobal + pSettings->r_float(cNameSect(), "force_explode_time")/1000.0f;
+	m_time_to_explode			= Device->fTimeGlobal + pSettings->r_float(cNameSect(), "force_explode_time")/1000.0f;
 #ifdef	DEBUG
 	gbg_rocket_speed1=0;
 	gbg_rocket_speed2=0;
@@ -201,18 +201,18 @@ void CCustomRocket::ObjectContactCallback(bool& do_colide,bool bo1,dContact& c ,
 		vUp.invert(*(Fvector*)&c.geom.normal);
 
 		//if(dGeomGetClass(c.geom.g1)==dTriListClass)
-		//	material=GMLib.GetMaterialByIdx((u16)c.surface.mode);
+		//	material=GameMaterialLibrary->GetMaterialByIdx((u16)c.surface.mode);
 		//else
-		//	material=GMLib.GetMaterialByIdx(l_pUD2->material);
+		//	material=GameMaterialLibrary->GetMaterialByIdx(l_pUD2->material);
 		material=material_1;
 
 	}else{
 		vUp.set(*(Fvector*)&c.geom.normal);	
 
 		//if(dGeomGetClass(c.geom.g2)==dTriListClass)
-		//	material=GMLib.GetMaterialByIdx((u16)c.surface.mode);
+		//	material=GameMaterialLibrary->GetMaterialByIdx((u16)c.surface.mode);
 		//else
-		//	material=GMLib.GetMaterialByIdx(l_pUD1->material);
+		//	material=GameMaterialLibrary->GetMaterialByIdx(l_pUD1->material);
 		material=material_2;
 
 	}
@@ -363,13 +363,13 @@ void CCustomRocket::OnH_B_Chield		()
 {
 	VERIFY(m_eState == eInactive);
 	inherited::OnH_B_Chield		();
-//	Msg("! CCustomRocket::OnH_B_Chield called, id[%d] frame[%d]",ID(),Device.dwFrame);
+//	Msg("! CCustomRocket::OnH_B_Chield called, id[%d] frame[%d]",ID(),Device->dwFrame);
 }
 void CCustomRocket::OnH_A_Chield		()
 {
 	VERIFY(m_eState == eInactive);
 	inherited::OnH_A_Chield		();
-//	Msg("! CCustomRocket::OnH_A_Chield called, id[%d] frame[%d]",ID(),Device.dwFrame);
+//	Msg("! CCustomRocket::OnH_A_Chield called, id[%d] frame[%d]",ID(),Device->dwFrame);
 }
 
 
@@ -390,7 +390,7 @@ void CCustomRocket::OnH_A_Independent()
 	setVisible					(true);
 	StartFlying					();
 	StartEngine					();
-//	Msg("! CCustomRocket::OnH_A_Independent called, id[%d] frame[%d]",ID(),Device.dwFrame);
+//	Msg("! CCustomRocket::OnH_A_Independent called, id[%d] frame[%d]",ID(),Device->dwFrame);
 
 }
 
@@ -416,7 +416,7 @@ void CCustomRocket::UpdateCL()
 	}
 	if(m_eState==eEngine || m_eState==eFlying )
 	{
-		if(m_time_to_explode<Device.fTimeGlobal)
+		if(m_time_to_explode<Device->fTimeGlobal)
 		{
 			Contact(Position(), Direction());
 //			Msg("--contact");
@@ -460,7 +460,7 @@ void CCustomRocket::StopEngine				()
 void CCustomRocket::UpdateEnginePh			()
 {
 	if (Level().In_NetCorrectionPrediction()) return;
-	float force = m_fEngineImpulse*fixed_step;// * Device.fTimeDelta;
+	float force = m_fEngineImpulse*fixed_step;// * Device->fTimeDelta;
 	float k_back=1.f;
 	Fvector l_pos, l_dir; 
 	l_pos.set(0, 0,-2.f);
@@ -475,7 +475,7 @@ void CCustomRocket::UpdateEnginePh			()
 	l_dir.invert();
 	m_pPhysicsShell->applyImpulseTrace(l_pos, l_dir, force);
 	l_dir.set(0, 1.f, 0);
-	force = m_fEngineImpulseUp*fixed_step;// * Device.fTimeDelta;
+	force = m_fEngineImpulseUp*fixed_step;// * Device->fTimeDelta;
 	m_pPhysicsShell->applyImpulse(l_dir, force);
 
 
@@ -491,7 +491,7 @@ void CCustomRocket::UpdateEngine				()
 		Msg("! CCustomRocket::UpdateEngine called, but m_pPhysicsShell is NULL");
 
 	if( !getVisible() ){
-		Msg("! CCustomRocket::UpdateEngine called, but false==getVisible() id[%d] frame[%d]",ID(),Device.dwFrame);
+		Msg("! CCustomRocket::UpdateEngine called, but false==getVisible() id[%d] frame[%d]",ID(),Device->dwFrame);
 	}
 
 	if (m_dwEngineTime <= 0) 
@@ -501,7 +501,7 @@ void CCustomRocket::UpdateEngine				()
 		return;
 	}
 
-	m_dwEngineTime -= Device.dwTimeDelta;
+	m_dwEngineTime -= Device->dwTimeDelta;
 }
 
 

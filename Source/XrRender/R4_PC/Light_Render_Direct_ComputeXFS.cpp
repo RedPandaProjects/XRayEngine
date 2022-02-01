@@ -28,7 +28,7 @@ void CLight_Compute_XFORM_and_VIS::compute_xf_spot	(light* L)
 
 	// Compute approximate screen area (treating it as an point light) - R*R/dist_sq
 	// Note: we clamp screen space area to ONE, although it is not correct at all
-	float	dist				= Device.vCameraPosition.distance_to(L->spatial.sphere.P)-L->spatial.sphere.R;
+	float	dist				= Device->vCameraPosition.distance_to(L->spatial.sphere.P)-L->spatial.sphere.R;
 			if (dist<0)	dist	= 0;
 	float	ssa					= clampr	(L->range*L->range / (1.f+dist*dist),0.f,1.f);
 
@@ -38,7 +38,7 @@ void CLight_Compute_XFORM_and_VIS::compute_xf_spot	(light* L)
 	float	intensity			= (intensity0+intensity1)/2.f;		// intensity1 tends to underestimate...
 
 	// compute how much duelling frusta occurs	[-1..1]-> 1 + [-0.5 .. +0.5]
-	float	duel_dot			= 1.f -	0.5f*Device.vCameraDirection.dotproduct(L_dir);
+	float	duel_dot			= 1.f -	0.5f*Device->vCameraDirection.dotproduct(L_dir);
 
 	// compute how large the light is - give more texels to larger lights, assume 8m as being optimal radius
 	float	sizefactor			= L->range/8.f;				// 4m = .5, 8m=1.f, 16m=2.f, 32m=4.f

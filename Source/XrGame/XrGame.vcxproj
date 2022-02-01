@@ -131,7 +131,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PreprocessorDefinitions>XRGAME_EXPORTS;dSINGLE;WIN32;_DEBUG;XRGAME_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>XRGAME_EXPORTS;dSINGLE;WIN32;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>.;..\xrServerEntities\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
@@ -1866,8 +1866,10 @@
     <ClInclude Include="wrapper_abstract.h" />
     <ClInclude Include="wrapper_abstract_inline.h" />
     <ClInclude Include="xrClientsPool.h" />
+    <ClInclude Include="XrGameEditor.h" />
     <ClInclude Include="xrGameSpyServer.h" />
     <ClInclude Include="xrGameSpyServer_callbacks.h" />
+    <ClInclude Include="XrLevelEditor.h" />
     <ClInclude Include="xrServer.h" />
     <ClInclude Include="xrServerMapSync.h" />
     <ClInclude Include="xrServer_info.h" />
@@ -8961,6 +8963,7 @@
     <ClCompile Include="Wound.cpp" />
     <ClCompile Include="xrClientsPool.cpp" />
     <ClCompile Include="xrGame.cpp" />
+    <ClCompile Include="XrGameEditor.cpp" />
     <ClCompile Include="xrGameSpyServer.cpp" />
     <ClCompile Include="xrGameSpyServer_callbacks.cpp" />
     <ClCompile Include="xrGameSpy_GameSpyFuncs.cpp" />
@@ -8982,6 +8985,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|x64'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
+    <ClCompile Include="XrLevelEditor.cpp" />
     <ClCompile Include="xrServer.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
@@ -9035,6 +9039,9 @@
     <ClCompile Include="ZudaArtifact.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Editors\XrEProps\XrEProps.vcxproj">
+      <Project>{6d47afc7-0557-4bbf-8902-b248f3621419}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\External\Crypto\Crypto.vcxproj">
       <Project>{376f4128-2bf6-47a3-a76d-4585a5a36be0}</Project>
     </ProjectReference>

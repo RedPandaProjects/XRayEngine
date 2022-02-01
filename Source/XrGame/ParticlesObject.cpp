@@ -77,7 +77,7 @@ void CParticlesObject::Init	(LPCSTR p_name, IRender_Sector* S, BOOL bAutoRemove)
 	shedule.t_max			= 50;
 	shedule_register		();
 
-	dwLastTime				= Device.dwTimeGlobal;
+	dwLastTime				= Device->dwTimeGlobal;
 	mt_dt					= 0;
 }
 
@@ -143,7 +143,7 @@ void CParticlesObject::Play		(bool bHudMode)
 		V->SetHudMode			(bHudMode);
 
 	V->Play						();
-	dwLastTime					= Device.dwTimeGlobal-33ul;
+	dwLastTime					= Device->dwTimeGlobal-33ul;
 	mt_dt						= 0;
 	PerformAllTheWork			(0);
 	m_bStopping					= false;
@@ -159,7 +159,7 @@ void CParticlesObject::play_at_pos(const Fvector& pos, BOOL xform)
 	Fmatrix m; m.translate		(pos); 
 	V->UpdateParent				(m,zero_vel,xform);
 	V->Play						();
-	dwLastTime					= Device.dwTimeGlobal-33ul;
+	dwLastTime					= Device->dwTimeGlobal-33ul;
 	mt_dt						= 0;
 	PerformAllTheWork			(0);
 	m_bStopping					= false;
@@ -186,18 +186,18 @@ void CParticlesObject::shedule_Update	(u32 _dt)
 
 	// Update
 	if (m_bDead)					return;
-	u32 dt							= Device.dwTimeGlobal - dwLastTime;
+	u32 dt							= Device->dwTimeGlobal - dwLastTime;
 	if (dt)							{
 		if (0){//.psDeviceFlags.test(mtParticles))	{    //. AlexMX comment this line// NO UNCOMMENT - DON'T WORK PROPERLY
 			mt_dt					= dt;
 			fastdelegate::FastDelegate0<>		delegate	(this,&CParticlesObject::PerformAllTheWork_mt);
-			Device.seqParallel.push_back		(delegate);
+			Device->seqParallel.push_back		(delegate);
 		} else {
 			mt_dt					= 0;
 			IParticleCustom* V		= smart_cast<IParticleCustom*>(renderable.visual); VERIFY(V);
 			V->OnFrame				(dt);
 		}
-		dwLastTime					= Device.dwTimeGlobal;
+		dwLastTime					= Device->dwTimeGlobal;
 	}
 	UpdateSpatial					();
 }
@@ -210,11 +210,11 @@ void CParticlesObject::PerformAllTheWork(u32 _dt)
 	if(g_dedicated_server)		return;
 
 	// Update
-	u32 dt							= Device.dwTimeGlobal - dwLastTime;
+	u32 dt							= Device->dwTimeGlobal - dwLastTime;
 	if (dt)							{
 		IParticleCustom* V		= smart_cast<IParticleCustom*>(renderable.visual); VERIFY(V);
 		V->OnFrame				(dt);
-		dwLastTime				= Device.dwTimeGlobal;
+		dwLastTime				= Device->dwTimeGlobal;
 	}
 	UpdateSpatial					();
 }
@@ -282,7 +282,7 @@ float CParticlesObject::shedule_Scale		()
 #endif
 	if(g_dedicated_server)		return 5.0f;
 
-	return Device.vCameraPosition.distance_to(Position())/200.f; 
+	return Device->vCameraPosition.distance_to(Position())/200.f; 
 }
 
 void CParticlesObject::renderable_Render	()
@@ -291,11 +291,11 @@ void CParticlesObject::renderable_Render	()
 	if (!renderable.visual)return;
 #endif
 	VERIFY					(renderable.visual);
-	u32 dt					= Device.dwTimeGlobal - dwLastTime;
+	u32 dt					= Device->dwTimeGlobal - dwLastTime;
 	if (dt){
 		IParticleCustom* V	= smart_cast<IParticleCustom*>(renderable.visual); VERIFY(V);
 		V->OnFrame			(dt);
-		dwLastTime			= Device.dwTimeGlobal;
+		dwLastTime			= Device->dwTimeGlobal;
 	}
 
 	::Render->set_Transform	(&renderable.xform);

@@ -28,23 +28,23 @@ void xrServer::Process_event_ownership(NET_Packet& P, ClientID sender, u32 time,
 #endif // MP_LOGGING
 	
 	if ( !e_parent ) {
-		Msg( "! ERROR on ownership: parent not found. parent_id = [%d], entity_id = [%d], frame = [%d].", id_parent, id_entity, Device.dwFrame );
+		Msg( "! ERROR on ownership: parent not found. parent_id = [%d], entity_id = [%d], frame = [%d].", id_parent, id_entity, Device->dwFrame );
 		return;
 	}
 	if ( !e_entity ) {
-//		Msg( "! ERROR on ownership: entity not found. parent_id = [%d], entity_id = [%d], frame = [%d].", id_parent, id_entity, Device.dwFrame );
+//		Msg( "! ERROR on ownership: entity not found. parent_id = [%d], entity_id = [%d], frame = [%d].", id_parent, id_entity, Device->dwFrame );
 		return;
 	}
 	
 	if (!is_object_valid_on_svclient(id_parent))
 	{
-		Msg( "! ERROR on ownership: parent object is not valid on sv client. parent_id = [%d], entity_id = [%d], frame = [%d]", id_parent, id_entity, Device.dwFrame );
+		Msg( "! ERROR on ownership: parent object is not valid on sv client. parent_id = [%d], entity_id = [%d], frame = [%d]", id_parent, id_entity, Device->dwFrame );
 		return;
 	}
 
 	if (!is_object_valid_on_svclient(id_entity))
 	{
-		Msg( "! ERROR on ownership: entity object is not valid on sv client. parent_id = [%d], entity_id = [%d], frame = [%d]", id_parent, id_entity, Device.dwFrame );
+		Msg( "! ERROR on ownership: entity object is not valid on sv client. parent_id = [%d], entity_id = [%d], frame = [%d]", id_parent, id_entity, Device->dwFrame );
 		return;
 	}
 

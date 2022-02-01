@@ -12,16 +12,12 @@
 #include "face_smoth_flags.h"
 #include "itterate_adjacents.h"
 #include "itterate_adjacents_dynamic.h"
-#ifdef _EDITOR
 #	include "UI_ToolsCustom.h"
-#endif
 #include "..\XrETools\ETools.h"
 
 CEditableMesh::~CEditableMesh(){
 	Clear();
-#ifdef _EDITOR
     R_ASSERT2(0==m_RenderBuffers,"Render buffer still referenced.");
-#endif
 }
 
 void CEditableMesh::Construct()
@@ -29,9 +25,7 @@ void CEditableMesh::Construct()
 	m_Box.set		(0,0,0,0,0,0);
 	m_Flags.assign	(flVisible);
     m_Name			= "";
-#ifdef _EDITOR
-    m_CFModel		= 0;         
-#endif
+    m_CFModel		= 0;     
 	m_Vertices		= 0;
     m_SmoothGroups	= 0;
     m_Adjs			= 0;
@@ -40,9 +34,7 @@ void CEditableMesh::Construct()
     m_VertexNormals	= 0;
     m_SVertices		= 0;
     m_SVertInfl		= 0;
-#ifdef _EDITOR
     m_RenderBuffers	= 0;
-#endif
 	m_FNormalsRefs	= 0;
 	m_VNormalsRefs	= 0;
 	m_AdjsRefs		= 0;
@@ -51,9 +43,7 @@ void CEditableMesh::Construct()
 
 void CEditableMesh::Clear()           
 {
-#ifdef _EDITOR
 	UnloadRenderBuffers	();
-#endif
     UnloadAdjacency		();
     UnloadCForm			();
     UnloadFNormals		();
@@ -76,9 +66,7 @@ void CEditableMesh::Clear()
 
 void CEditableMesh::UnloadCForm     ()
 {
-#ifdef _EDITOR
 	ETOOLS::destroy_model			(m_CFModel);
-#endif
 }
 
 void CEditableMesh::UnloadFNormals  (bool force)
@@ -163,14 +151,12 @@ void CEditableMesh::GenerateVNormals(const Fmatrix* parent_xform)
 				{
 //.                	Msg		("!Invalid smooth group found (Maya type). Object: '%s'. Vertex: [%3.2f, %3.2f, %3.2f]",m_Parent->GetName(),VPUSH(m_Vertices[m_Faces[f_i].pv[k].pindex]));
 
-#ifdef _EDITOR
 					if(parent_xform)
                     {
 					Fvector p0;
                   	parent_xform->transform_tiny(p0, m_Vertices[m_Faces[f_i].pv[k].pindex]);
                     Tools->m_DebugDraw.AppendPoint(p0, 0xffff0000, true, true, "invalid vNORMAL");
                     }
-#endif
 
                     N.set	(m_FaceNormals[a_lst.front()]);
                 }
@@ -224,7 +210,7 @@ void CEditableMesh::GenerateVNormals(const Fmatrix* parent_xform)
                     }else
 					{
 //.                    	Msg		("!Invalid smooth group found (MAX type). Object: '%s'. Vertex: [%3.2f, %3.2f, %3.2f]",m_Parent->GetName(),VPUSH(m_Vertices[m_Faces[f_i].pv[k].pindex]));
-#ifdef _EDITOR
+#ifdef 0
 						Fvector p0;
                         p0 = m_Vertices[m_Faces[f_i].pv[k].pindex];
                         Tools->m_DebugDraw.AppendPoint(p0, 0xffff0000, true, true, "invalid vNORMAL");
@@ -269,7 +255,7 @@ void CEditableMesh::GenerateVNormals(const Fmatrix* parent_xform)
 					{
 //.                    	Msg		("!Invalid smooth group found (Maya type). Object: '%s'. Vertex: [%3.2f, %3.2f, %3.2f]",m_Parent->GetName(),VPUSH(m_Vertices[m_Faces[f_i].pv[k].pindex]));
 
-#ifdef _EDITOR
+#ifdef 0
 						if(parent_xform)
                         {
 						Fvector p0;

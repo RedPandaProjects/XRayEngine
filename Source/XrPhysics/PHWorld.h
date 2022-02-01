@@ -58,7 +58,7 @@ class CPHWorld	:	public	pureFrame,
 	IPHWorldUpdateCallbck		*m_update_callback											;
 	CObjectSpace				*m_object_space												;
 	CObjectList					*m_level_objects											;
-	CRenderDeviceBase			*m_device;													;
+	XrDeviceInterface			*m_device;													;
 public:
 	xr_vector<ISpatial*>		r_spatial;
 public:
@@ -84,7 +84,7 @@ public:
 
 //IC	dSpaceID					GetSpace						()			{return Space;}	;
 IC	bool						Exist							()			{return b_exist ;}
-	void						Create							(bool mt, CObjectSpace * os, CObjectList *lo, CRenderDeviceBase* dv );
+	void						Create							(bool mt, CObjectSpace * os, CObjectList *lo, XrDeviceInterface* dv );
 	void						SetGravity						(float	g)					;
 IC  float						Gravity							()							{return m_gravity;}
 	void						AddObject						(CPHObject* object)			;
@@ -124,7 +124,7 @@ ContactCallbackFun				*default_character_contact_shotmark()						{ return m_defa
 	void						NetRelcase						(CPhysicsShell* s)			;
 	CObjectSpace				&ObjectSpace					()							{ VERIFY( m_object_space ); return *m_object_space; }
 	CObjectList					&LevelObjects					()							{ VERIFY( m_level_objects ); return *m_level_objects; }
-	CRenderDeviceBase			&Device							()							{ VERIFY( m_device ); return *m_device;	}
+	XrDeviceInterface			&Device							()							{ VERIFY( m_device ); return *m_device;	}
 	
 //	void						AddCall							(CPHCondition*c,CPHAction*a);
 #ifdef DEBUG

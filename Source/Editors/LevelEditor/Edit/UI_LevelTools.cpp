@@ -12,7 +12,8 @@
 #include "Builder.h"
 
 #include "lephysics.h"
-
+#include "..\XrEngine\CameraManager.h"
+#include "..\XrEngine\IGame_Level.h"
 #define DETACH_FRAME(a) 	if (a){ a=0; }
 #define ATTACH_FRAME(a,b)	if (a){b=a;}
 
@@ -254,7 +255,7 @@ bool CLevelTool::Pick(TShiftState Shift)
     if( Scene->locked() && (esEditLibrary==UI->GetEState())){
         UI->m_CurrentCp = MainForm->GetRenderForm()->GetMousePos();
         UI->m_StartCp = UI->m_CurrentCp;
-        EDevice.m_Camera.MouseRayFromPoint(UI->m_CurrentRStart, UI->m_CurrentRDir, UI->m_CurrentCp );
+        EDevice->m_Camera.MouseRayFromPoint(UI->m_CurrentRStart, UI->m_CurrentRDir, UI->m_CurrentCp );
         SRayPickInfo pinf;
         //TfrmEditLibrary::RayPick(UI->m_CurrentRStart,UI->m_CurrentRDir,&pinf);
         return true;
@@ -266,6 +267,16 @@ bool CLevelTool::Pick(TShiftState Shift)
 void CLevelTool::RefreshProperties()
 {
 	//m_Props->RefreshForm();
+}
+
+bool CLevelTool::UpdateCamera()
+{
+    if (Scene->IsSimulate())
+    {
+        g_pGameLevel->Cameras().ApplyDevice(VIEWPORT_NEAR);
+        return true;
+    }
+    return false;
 }
 
 void CLevelTool::ShowProperties(LPCSTR focus_to_item)
@@ -378,7 +389,7 @@ LPCSTR CLevelTool::GetInfo()
 
 void  CLevelTool::OnFrame()
 {
-	Scene->OnFrame		(EDevice.fTimeDelta);
+	Scene->OnFrame		(EDevice->fTimeDelta);
     EEditorState est 	= UI->GetEState();
     if ((est==esEditScene)||(est==esEditLibrary)||(est==esEditLightAnim)){
         if (true/*!UI->IsMouseCaptured()*/)
@@ -422,7 +433,7 @@ void  CLevelTool::Render()
     case esEditLibrary: 	/*TfrmEditLibrary::OnRender();*/ 	break;
     case esEditLightAnim:
     case esEditScene:
-    	Scene->Render(EDevice.m_Camera.GetTransform()); 
+    	Scene->Render(EDevice->m_Camera.GetTransform()); 
 //.	    if (psDeviceFlags.is(rsEnvironment)) g_pGamePersistent->Environment().RenderLast	();
     break;
     case esBuildLevel:  	Builder.OnRender();				break;
@@ -508,7 +519,7 @@ bool CLevelTool::GetSelectionPosition(Fmatrix& result)
         {
         	Fvector pt;
         	BB.getpoint(k,pt);
-			EDevice.mFullTransform.transform(pt_ss_3d, pt);
+			EDevice->mFullTransform.transform(pt_ss_3d, pt);
             
             pt_ss.x = _min(pt_ss.x, pt_ss_3d.y);
             pt_ss.y = _max(pt_ss.y, pt_ss_3d.y);

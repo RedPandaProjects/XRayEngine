@@ -7,7 +7,7 @@
 
 void	CResourceManager::OnDeviceDestroy(BOOL )
 {
-	if (RDEVICE.b_is_Ready)				return;
+	if (Device->b_is_Ready)				return;
 	m_textures_description.UnLoad		();
 
 	// Matrices
@@ -43,18 +43,18 @@ void	CResourceManager::OnDeviceDestroy(BOOL )
 	m_td.clear		();
 
 	// scripting
-#ifndef _EDITOR
+#ifndef REDITOR
 	LS_Unload				();
 #endif
 }
 
 void	CResourceManager::OnDeviceCreate	(IReader* F)
 {
-	if (!RDEVICE.b_is_Ready) return;
+	if (!Device->b_is_Ready) return;
 
 	string256	name;
 
-#ifndef _EDITOR
+#ifndef REDITOR
 	// scripting
 	LS_Load					();
 #endif
@@ -119,7 +119,7 @@ void	CResourceManager::OnDeviceCreate	(IReader* F)
 
 void	CResourceManager::OnDeviceCreate	(LPCSTR shName)
 {
-#ifdef _EDITOR
+#ifdef REDITOR
 	if (!FS.exist(shName)) return;
 #endif
 

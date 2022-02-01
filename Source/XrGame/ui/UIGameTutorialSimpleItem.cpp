@@ -32,7 +32,7 @@ bool CUISequenceSimpleItem::IsPlaying()
 	if(m_time_start<0.0f)
 		return true;
 
-	return (m_time_start+m_time_length)>(Device.dwTimeContinual/1000.0f);
+	return (m_time_start+m_time_length)>(Device->dwTimeContinual/1000.0f);
 }
 
 CUIWindow* find_child_window(CUIWindow* parent, const shared_str& _name)
@@ -166,7 +166,7 @@ void CUISequenceSimpleItem::OnRender()
 		m_time_start = -1.0f;
 	else
 	if(m_time_start < 0.0f)
-		m_time_start				= float(Device.dwTimeContinual)/1000.0f;
+		m_time_start				= float(Device->dwTimeContinual)/1000.0f;
 }
 
 float CUISequenceSimpleItem::current_factor()
@@ -174,15 +174,15 @@ float CUISequenceSimpleItem::current_factor()
 	if(m_time_start < 0.0f || fis_zero(m_time_length))
 		return 0.0f;
 	else
-		return ((Device.dwTimeContinual/1000.0f)-m_time_start) / m_time_length;
+		return ((Device->dwTimeContinual/1000.0f)-m_time_start) / m_time_length;
 }
 
 void CUISequenceSimpleItem::Update()
 {
 	inherited::Update();
-	float _start					= (m_time_start<0.0f)? (float(Device.dwTimeContinual)/1000.0f) : m_time_start;
+	float _start					= (m_time_start<0.0f)? (float(Device->dwTimeContinual)/1000.0f) : m_time_start;
 
-	float gt						= float(Device.dwTimeContinual)/1000.0f;
+	float gt						= float(Device->dwTimeContinual)/1000.0f;
 	SubItemVecIt _I					= m_subitems.begin();
 	SubItemVecIt _E					= m_subitems.end();
 	for(;_I!=_E;++_I)
@@ -222,19 +222,19 @@ void CUISequenceSimpleItem::Start()
 {
 	m_time_start					= -3.0f;
 	inherited::Start				();
-	m_flags.set						(etiStoredPauseState, Device.Paused());
+	m_flags.set						(etiStoredPauseState, Device->Paused());
 	
 	if(m_flags.test(etiNeedPauseOn) && !m_flags.test(etiStoredPauseState))
 	{
-		Device.Pause			(TRUE, TRUE, FALSE, "simpleitem_start");
+		Device->Pause			(TRUE, TRUE, FALSE, "simpleitem_start");
 		bShowPauseString		= FALSE;
 	}
 
 	if(m_flags.test(etiNeedPauseOff) && m_flags.test(etiStoredPauseState))
-		Device.Pause			(FALSE, TRUE, FALSE, "simpleitem_start");
+		Device->Pause			(FALSE, TRUE, FALSE, "simpleitem_start");
 
 	if(m_flags.test(etiNeedPauseSound))
-		Device.Pause			(TRUE, FALSE, TRUE, "simpleitem_start");
+		Device->Pause			(TRUE, FALSE, TRUE, "simpleitem_start");
 
 	if(m_desired_cursor_pos.x && m_desired_cursor_pos.y)
 		GetUICursor().SetUICursorPosition(m_desired_cursor_pos);
@@ -278,13 +278,13 @@ bool CUISequenceSimpleItem::Stop			(bool bForce)
 	m_sound.stop				();
 
 	if(m_flags.test(etiNeedPauseOn) && !m_flags.test(etiStoredPauseState))
-		Device.Pause			(FALSE, TRUE, FALSE, "simpleitem_stop");
+		Device->Pause			(FALSE, TRUE, FALSE, "simpleitem_stop");
 
 	if(m_flags.test(etiNeedPauseOff) && m_flags.test(etiStoredPauseState))
-		Device.Pause			(TRUE, TRUE, FALSE, "simpleitem_stop");
+		Device->Pause			(TRUE, TRUE, FALSE, "simpleitem_stop");
 
 	if(m_flags.test(etiNeedPauseSound))
-		Device.Pause			(FALSE, FALSE, TRUE, "simpleitem_stop");
+		Device->Pause			(FALSE, FALSE, TRUE, "simpleitem_stop");
 
 	if ( g_pGameLevel )
 	{

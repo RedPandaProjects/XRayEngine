@@ -28,7 +28,7 @@ void CRenderTarget::enable_dbt_bounds		(light* L)
 	for (u32 i=0; i<8; i++)		{
 		Fvector		pt;
 		BB.getpoint	(i,pt);
-		Device.mFullTransform.transform	(pt);
+		Device->mFullTransform.transform	(pt);
 		bbp.modify	(pt);
 	}
 	u_DBT_enable	(bbp.min.z,bbp.max.z);
@@ -56,12 +56,12 @@ void	CRenderTarget::u_DBT_disable	()
 
 BOOL CRenderTarget::enable_scissor		(light* L)		// true if intersects near plane
 {
-	// Msg	("%d: %x type(%d), pos(%f,%f,%f)",Device.dwFrame,u32(L),u32(L->flags.type),VPUSH(L->position));
+	// Msg	("%d: %x type(%d), pos(%f,%f,%f)",Device->dwFrame,u32(L),u32(L->flags.type),VPUSH(L->position));
 
 	// Near plane intersection
 	BOOL	near_intersect				= FALSE;
 	{
-		Fmatrix& M						= Device.mFullTransform;
+		Fmatrix& M						= Device->mFullTransform;
 		Fvector4 plane;
 		plane.x							= -(M._14 + M._13);
 		plane.y							= -(M._24 + M._23);
@@ -90,11 +90,11 @@ BOOL CRenderTarget::enable_scissor		(light* L)		// true if intersects near plane
 	CSector*	S	= (CSector*)L->spatial.sector;
 	_scissor	bb	= S->r_scissor_merged;
 	Irect		R;
-	R.x1		= clampr	(iFloor	(bb.min.x*Device.dwWidth),	int(0),int(Device.dwWidth));
-	R.x2		= clampr	(iCeil	(bb.max.x*Device.dwWidth),	int(0),int(Device.dwWidth));
-	R.y1		= clampr	(iFloor	(bb.min.y*Device.dwHeight),	int(0),int(Device.dwHeight));
-	R.y2		= clampr	(iCeil	(bb.max.y*Device.dwHeight),	int(0),int(Device.dwHeight));
-	if	( (Device.dwWidth==u32(R.right - R.left)) && (Device.dwHeight==u32(R.bottom-R.top)) )
+	R.x1		= clampr	(iFloor	(bb.min.x*Device->dwWidth),	int(0),int(Device->dwWidth));
+	R.x2		= clampr	(iCeil	(bb.max.x*Device->dwWidth),	int(0),int(Device->dwWidth));
+	R.y1		= clampr	(iFloor	(bb.min.y*Device->dwHeight),	int(0),int(Device->dwHeight));
+	R.y2		= clampr	(iCeil	(bb.max.y*Device->dwHeight),	int(0),int(Device->dwHeight));
+	if	( (Device->dwWidth==u32(R.right - R.left)) && (Device->dwHeight==u32(R.bottom-R.top)) )
 	{
 		// full-screen -> do nothing
 	} else {
@@ -117,7 +117,7 @@ BOOL CRenderTarget::enable_scissor		(light* L)		// true if intersects near plane
 
 		// 3. convert it into world space
 		Fvector3	s_points			[4];
-		Fmatrix&	iVP					= Device.mInvFullTransform;
+		Fmatrix&	iVP					= Device->mInvFullTransform;
 		iVP.transform	(s_points[0],s_points_pp[0]);
 		iVP.transform	(s_points[1],s_points_pp[1]);
 		iVP.transform	(s_points[2],s_points_pp[2]);

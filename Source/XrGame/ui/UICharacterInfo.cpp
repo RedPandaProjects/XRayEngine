@@ -301,7 +301,7 @@ void CUICharacterInfo::Update()
 {
 	inherited::Update();
 
-	if ( hasOwner() && ( m_bForceUpdate ||(Device.dwFrame%50 == 0) )  )
+	if ( hasOwner() && ( m_bForceUpdate ||(Device->dwFrame%50 == 0) )  )
 	{
 		m_bForceUpdate = false;
 

@@ -3,10 +3,10 @@
 
 #include "Bone.h"
 #include "Motion.h"
-#ifdef _EDITOR
+#if 1
 #	include "../../../xrServerEntities/PropertiesListTypes.h"
 //	#include "PropertiesListHelper.h"
-#	include "GameMtlLib.h"
+#	include "..\Engine\XrGameMaterialLibraryEditors.h"
 #	include "pick_defs.h"
 #endif
 #	include "..\..\..\xrRender\Public\kinematics.h"
@@ -27,7 +27,7 @@ struct	SXRShaderData;
 struct  ogf_desc;
 class	CCustomObject;
 
-#ifndef _EDITOR
+#if 0
 	class PropValue;
 	#define ref_shader LPVOID
 #endif
@@ -79,7 +79,7 @@ public:
     {
     	return (0!=xr_strlen(m_Texture))&&(0!=xr_strlen(m_ShaderName));
     }
-#ifdef _EDITOR
+#if 1
 					~CSurface		(){R_ASSERT(!m_Shader);xr_delete(m_ImageData);}
 	IC void			CopyFrom		(CSurface* surf){*this = *surf; m_Shader=0; m_RTFlags.set(rtValidShader, FALSE);}
     IC int			_Priority		()	{return _Shader()?_Shader()->E[0]->flags.iPriority:1;}
@@ -98,7 +98,7 @@ public:
 	{
 		R_ASSERT2(name&&name[0],"Empty shader name."); 
 		m_ShaderName=name; 
-#ifdef _EDITOR 
+#if 1
 		OnDeviceDestroy(); 
 #endif
 	}
@@ -107,8 +107,8 @@ public:
     IC void			SetFVF			(u32 fvf){m_dwFVF=fvf;}
     IC void			SetTexture		(LPCSTR name){string512 buf; xr_strcpy(buf, sizeof(buf), name); if(strext(buf)) *strext(buf)=0; m_Texture=buf;}
     IC void			SetVMap			(LPCSTR name){m_VMap=name;}
-#ifdef _EDITOR
-    IC u32			_GameMtl		()const	{return GMLib.GetMaterialID	(*m_GameMtlName);}
+#if 1
+    IC u32			_GameMtl		()const	{return GameMaterialLibrary->GetMaterialID	(*m_GameMtlName);}
     IC void			OnDeviceCreate	()
     { 
         R_ASSERT(!m_RTFlags.is(rtValidShader));
@@ -157,14 +157,14 @@ public CPhysicsShellHolderEditorBase
 	friend class TfrmEditLibrary;
 	friend class MeshExpUtility;
 
-#ifdef _EDITOR
+#if 1
 	ref_geom 		vs_SkeletonGeom;
 #endif
 // desc
 	shared_str 		m_CreateName;
-    time_t			m_CreateTime;
+    __time32_t			m_CreateTime;
 	shared_str 		m_ModifName;
-    time_t			m_ModifTime;
+    __time32_t			m_ModifTime;
     
 // general
 	xr_string		m_ClassScript;
@@ -341,7 +341,7 @@ public:
 
     // pick methods
 	bool 			RayPick					(float& dist, const Fvector& S, const Fvector& D, const Fmatrix& inv_parent, SRayPickInfo* pinf=0);
-#ifdef _EDITOR
+#if 1
     void			AddBone					(CBone* parent_bone);
     void			DeleteBone				(CBone* bone);
     void			RenameBone				(CBone* bone, LPCSTR new_name);
@@ -377,7 +377,7 @@ public:
 	bool 			Save					(LPCSTR fname);
   	bool 			Load					(IReader&);
 	void 			Save					(IWriter&);
-#ifdef _EDITOR
+#if 1
 	void 			FillMotionList			(LPCSTR pref, ListItemsVec& items, int modeID);
 	void 			FillBoneList			(LPCSTR pref, ListItemsVec& items, int modeID);
     void			FillSurfaceList			(LPCSTR pref, ListItemsVec& items, int modeID);

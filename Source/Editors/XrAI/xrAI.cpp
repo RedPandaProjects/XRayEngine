@@ -163,7 +163,7 @@ void Startup(LPSTR     lpCmdLine)
 
 #include "quadtree.h"
 #include "..\XrSE_Factory\xrSE_Factory_import_export.h"
-
+#include "XrSEFactoryManager.h"
 void buffer_vector_test		();
 
 int APIENTRY WinMain(HINSTANCE hInstance,
@@ -173,14 +173,14 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 {
 	Debug._initialize		(false);
 	Core._initialize		("xrai",0);
-	XrSE_Factory::initialize();
+	g_SEFactoryManager = xr_new<XrSEFactoryManager>();
 	buffer_vector_test		();
 
 
 
 	Startup					(lpCmdLine);
 
-	XrSE_Factory::destroy();
+	xr_delete(g_SEFactoryManager);
 	Core._destroy			();
 
 	return					(0);

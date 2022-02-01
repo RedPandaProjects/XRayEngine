@@ -5,9 +5,9 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#ifndef _EDITOR
+#ifndef REDITOR
 #	include "../../xrEngine/render.h"
-#endif // #ifndef _EDITOR
+#endif // #ifndef REDITOR
 
 #include "fbasicvisual.h"
 #include "../../xrEngine/fmesh.h"
@@ -69,7 +69,7 @@ void dxRender_Visual::Load		(const char* N, IReader *data, u32 )
 	}
 
     // desc
-#ifdef _EDITOR
+#ifdef REDITOR
     if (data->find_chunk(OGF_S_DESC)) 
 	    desc.Load		(*data);
 #endif
@@ -81,7 +81,7 @@ void	dxRender_Visual::Copy(dxRender_Visual *pFrom)
 	PCOPY(Type);
 	PCOPY(shader);
 	PCOPY(vis);
-#ifdef _EDITOR
+#ifdef REDITOR
 	PCOPY(desc);
 #endif
 #ifdef DEBUG

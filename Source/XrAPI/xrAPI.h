@@ -9,8 +9,9 @@
 #endif
 
 
+class XrDeviceInterface;
+extern XRAPI_API XrDeviceInterface* Device;
 
-#ifndef _EDITOR
 class IRender_interface;
 extern XRAPI_API IRender_interface*	Render;
 
@@ -26,24 +27,22 @@ extern XRAPI_API xr_token*	vid_mode_token;
 class IUIRender;
 extern XRAPI_API IUIRender*	UIRender;
 
+extern XRAPI_API	bool g_dedicated_server;
+class IGame_Persistent;
+extern XRAPI_API	IGame_Persistent* g_pGamePersistent;
 
-#ifndef	_EDITOR
-class CGameMtlLibrary;
-extern XRAPI_API CGameMtlLibrary *			PGMLib;
-#endif
+class XrGameMaterialLibraryInterface;
+extern XRAPI_API XrGameMaterialLibraryInterface* GameMaterialLibrary;
 
+class XrGameEditorInterface;
+extern XRAPI_API XrGameEditorInterface* GameEditor;
+class XrEditorSceneInterface;
+extern XRAPI_API XrEditorSceneInterface* EditorScene;
 #ifdef DEBUG
 	class IDebugRender;
 	extern XRAPI_API IDebugRender*	DRender;
 #endif // DEBUG
 
-#else
-	class	CRender;
-    extern ENGINE_API CRender*	Render;
-
-   class IRenderFactory;
-    extern ENGINE_API IRenderFactory*	RenderFactory;
-#endif
 /*
 // This class is exported from the xrAPI.dll
 class XRAPI_API CxrAPI {

@@ -44,9 +44,9 @@ IBlender* CResourceManager::_GetBlender		(LPCSTR Name)
 {
 	R_ASSERT(Name && Name[0]);
 
-	LPSTR N = LPSTR(Name);
-	map_Blender::iterator I = m_blenders.find	(N);
-#ifdef _EDITOR
+	if (strcmp(Name, "hud\\font") == 0) Name = "font";
+	map_Blender::iterator I = m_blenders.find	(Name);
+#ifdef REDITOR
 	if (I==m_blenders.end())	return 0;
 #else
 //	TODO: DX10: When all shaders are ready switch to common path
@@ -159,7 +159,7 @@ Shader*	CResourceManager::_cpp_Create	(IBlender* B, LPCSTR s_shader, LPCSTR s_te
 	C.BT				= B;
 	C.bEditor			= FALSE;
 	C.bDetail			= FALSE;
-#ifdef _EDITOR
+#ifdef REDITOR
 	if (!C.BT)			{ ELog.Msg(mtError,"Can't find shader '%s'",s_shader); return 0; }
 	C.bEditor			= TRUE;
 #endif
@@ -239,7 +239,7 @@ Shader*	CResourceManager::_cpp_Create	(IBlender* B, LPCSTR s_shader, LPCSTR s_te
 Shader*	CResourceManager::_cpp_Create	(LPCSTR s_shader, LPCSTR s_textures, LPCSTR s_constants, LPCSTR s_matrices)
 {
 //#ifndef DEDICATED_SERVER
-#ifndef _EDITOR
+#ifndef REDITOR
 	if (!g_dedicated_server)
 #endif    
 	{
@@ -253,7 +253,7 @@ Shader*	CResourceManager::_cpp_Create	(LPCSTR s_shader, LPCSTR s_textures, LPCST
 #endif	//	USE_DX10
 //#else
 	}
-#ifndef _EDITOR
+#ifndef REDITOR
 	else
 #endif    
 	{
@@ -265,14 +265,14 @@ Shader*	CResourceManager::_cpp_Create	(LPCSTR s_shader, LPCSTR s_textures, LPCST
 Shader*		CResourceManager::Create	(IBlender*	B,		LPCSTR s_shader,	LPCSTR s_textures,	LPCSTR s_constants, LPCSTR s_matrices)
 {
 //#ifndef DEDICATED_SERVER
-#ifndef _EDITOR
+#ifndef REDITOR
 	if (!g_dedicated_server)
 #endif
 	{
 		return	_cpp_Create	(B,s_shader,s_textures,s_constants,s_matrices);
 //#else
 	}
-#ifndef _EDITOR
+#ifndef REDITOR
 	else
 #endif
 	{
@@ -284,7 +284,7 @@ Shader*		CResourceManager::Create	(IBlender*	B,		LPCSTR s_shader,	LPCSTR s_textu
 Shader*		CResourceManager::Create	(LPCSTR s_shader,	LPCSTR s_textures,	LPCSTR s_constants,	LPCSTR s_matrices)
 {
 //#ifndef DEDICATED_SERVER
-#ifndef _EDITOR
+#ifndef REDITOR
 	if (!g_dedicated_server)
 #endif
 	{
@@ -309,7 +309,7 @@ Shader*		CResourceManager::Create	(LPCSTR s_shader,	LPCSTR s_textures,	LPCSTR s_
 			}
 		}
 #else	//	USE_DX10
-#ifndef _EDITOR
+#ifndef REDITOR
 		if	(_lua_HasShader(s_shader))		
 			return	_lua_Create	(s_shader,s_textures);
 		else								
@@ -318,7 +318,7 @@ Shader*		CResourceManager::Create	(LPCSTR s_shader,	LPCSTR s_textures,	LPCSTR s_
 #endif	//	USE_DX10
 	}
 //#else
-#ifndef _EDITOR
+#ifndef REDITOR
 	else
 #endif
 	{
@@ -336,7 +336,7 @@ void CResourceManager::Delete(const Shader* S)
 
 void CResourceManager::DeferredUpload()
 {
-	if (!RDEVICE.b_is_Ready) return;
+	if (!Device->b_is_Ready) return;
 	for (map_TextureIt t=m_textures.begin(); t!=m_textures.end(); t++)
 	{
 		t->second->Load();
@@ -345,12 +345,12 @@ void CResourceManager::DeferredUpload()
 /*
 void	CResourceManager::DeferredUnload	()
 {
-	if (!RDEVICE.b_is_Ready)				return;
+	if (!Device->b_is_Ready)				return;
 	for (map_TextureIt t=m_textures.begin(); t!=m_textures.end(); t++)
 		t->second->Unload();
 }
 */
-#ifdef _EDITOR
+#ifdef REDITOR
 void	CResourceManager::ED_UpdateTextures(AStringVec* names)
 {
 	// 1. Unload

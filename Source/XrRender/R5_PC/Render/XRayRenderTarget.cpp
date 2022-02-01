@@ -7,7 +7,7 @@ XRayRenderTarget::XRayRenderTarget()
 
 	{
 		RTVBloom = GResourcesManager->GetTexture(RT_BLOOM);
-		RTVBloom->Texture = BearRenderInterface::CreateTexture2D(RDEVICE.dwWidth, RDEVICE.dwHeight, BearRenderTargetFormat::R32G32B32A32F);
+		RTVBloom->Texture = BearRenderInterface::CreateTexture2D(Device->dwWidth, Device->dwHeight, BearRenderTargetFormat::R32G32B32A32F);
 
 		RTVBloom1 = GResourcesManager->GetTexture(RT_BLOOM_1);
 		RTVBloom1->Texture = BearRenderInterface::CreateTexture2D(RT_BLOOM_SIZE_X, RT_BLOOM_SIZE_Y, BearRenderTargetFormat::R32G32B32A32F);
@@ -21,18 +21,18 @@ XRayRenderTarget::XRayRenderTarget()
 
 
 	RTVCompute = GResourcesManager->GetTexture(RT_COMPUTE);
-	RTVCompute->Texture = BearRenderInterface::CreateTexture2D(RDEVICE.dwWidth, RDEVICE.dwHeight, BearRenderTargetFormat::R32G32B32A32F);
+	RTVCompute->Texture = BearRenderInterface::CreateTexture2D(Device->dwWidth, Device->dwHeight, BearRenderTargetFormat::R32G32B32A32F);
 
 	RTVBasicColor = GResourcesManager->GetTexture(RT_BASIC);
-	RTVBasicColor->Texture = BearRenderInterface::CreateTexture2D(RDEVICE.dwWidth, RDEVICE.dwHeight, BearRenderTargetFormat::R32G32B32A32F);
+	RTVBasicColor->Texture = BearRenderInterface::CreateTexture2D(Device->dwWidth, Device->dwHeight, BearRenderTargetFormat::R32G32B32A32F);
 	DSVBasic = GResourcesManager->GetTexture(DS_BASIC);
-	DSVBasic->Texture = BearRenderInterface::CreateTexture2D(RDEVICE.dwWidth, RDEVICE.dwHeight, BearDepthStencilFormat::Depth32FStencil8);
+	DSVBasic->Texture = BearRenderInterface::CreateTexture2D(Device->dwWidth, Device->dwHeight, BearDepthStencilFormat::Depth32FStencil8);
 
 	RTVGeneric1 = GResourcesManager->GetTexture(RT_GENERIC1);
-	RTVGeneric1->Texture = BearRenderInterface::CreateTexture2D(RDEVICE.dwWidth, RDEVICE.dwHeight, BearRenderTargetFormat::R32G32B32A32F);
+	RTVGeneric1->Texture = BearRenderInterface::CreateTexture2D(Device->dwWidth, Device->dwHeight, BearRenderTargetFormat::R32G32B32A32F);
 
 	RTVGeneric2 = GResourcesManager->GetTexture(RT_GENERIC2);
-	RTVGeneric2->Texture = BearRenderInterface::CreateTexture2D(RDEVICE.dwWidth, RDEVICE.dwHeight, BearRenderTargetFormat::R32G32B32A32F);
+	RTVGeneric2->Texture = BearRenderInterface::CreateTexture2D(Device->dwWidth, Device->dwHeight, BearRenderTargetFormat::R32G32B32A32F);
 
 	{
 
@@ -122,11 +122,11 @@ XRayRenderTarget::XRayRenderTarget()
 		{
 			FVF::TL* p = (FVF::TL*) m_ScreenSquare_VertexBuffer->Lock();
 			p->set(0, 0, 0xFFFFFFFF, 0, 0); p++;
-			p->set(int(RDEVICE.dwWidth), 0, 0xFFFFFFFF, 1, 0); p++;
-			p->set(0, int(RDEVICE.dwHeight), 0xFFFFFFFF, 0, 1); p++;
-			p->set(int(RDEVICE.dwWidth), 0, 0xFFFFFFFF, 1, 0); p++;
-			p->set(int(RDEVICE.dwWidth), int(RDEVICE.dwHeight), 0xFFFFFFFF, 1, 1); p++;
-			p->set(0, int(RDEVICE.dwHeight), 0xFFFFFFFF, 0, 1); p++;
+			p->set(int(Device->dwWidth), 0, 0xFFFFFFFF, 1, 0); p++;
+			p->set(0, int(Device->dwHeight), 0xFFFFFFFF, 0, 1); p++;
+			p->set(int(Device->dwWidth), 0, 0xFFFFFFFF, 1, 0); p++;
+			p->set(int(Device->dwWidth), int(Device->dwHeight), 0xFFFFFFFF, 1, 1); p++;
+			p->set(0, int(Device->dwHeight), 0xFFFFFFFF, 0, 1); p++;
 			m_ScreenSquare_VertexBuffer->Unlock();
 		}
 	}
@@ -195,12 +195,12 @@ void XRayRenderTarget::set_color_add(const Fvector & f)
 
 u32 XRayRenderTarget::get_width()
 {
-	return RDEVICE.dwWidth;
+	return Device->dwWidth;
 }
 
 u32 XRayRenderTarget::get_height()
 {
-	return RDEVICE.dwHeight;
+	return Device->dwHeight;
 }
 
 void XRayRenderTarget::set_cm_imfluence(float f)
@@ -352,7 +352,7 @@ void XRayRenderTarget::RenderLOD()
 		// calculate direction and shift
 		XRayFLOD* lodV = item->lod;
 		Fvector Ldir, shift;
-		Ldir.sub(lodV->Vis.sphere.P, Device.vCameraPosition).normalize();
+		Ldir.sub(lodV->Vis.sphere.P, Device->vCameraPosition).normalize();
 		shift.mul(Ldir, -.5f * lodV->Vis.sphere.R);
 
 		// gen geometry

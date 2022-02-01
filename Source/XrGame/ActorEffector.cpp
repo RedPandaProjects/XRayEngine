@@ -181,7 +181,7 @@ BOOL CAnimatorCamEffector::ProcessCam(SCamEffectorInfo& info)
 		return FALSE;
 
 	const Fmatrix& m			= m_objectAnimator->XFORM();
-	m_objectAnimator->Update	(Device.fTimeDelta);
+	m_objectAnimator->Update	(Device->fTimeDelta);
 
 	if(!m_bAbsolutePositioning){
 		Fmatrix Mdef;
@@ -190,7 +190,7 @@ BOOL CAnimatorCamEffector::ProcessCam(SCamEffectorInfo& info)
 		Mdef.k						= info.d;
 		Mdef.i.crossproduct			(info.n, info.d);
 		Mdef.c						= info.p;
-//		Msg("fr[%d] %2.3f,%2.3f,%2.3f", Device.dwFrame,m.c.x,m.c.y,m.c.z);
+//		Msg("fr[%d] %2.3f,%2.3f,%2.3f", Device->dwFrame,m.c.x,m.c.y,m.c.z);
 		Fmatrix mr;
 		mr.mul						(Mdef,m);
 		info.d						= mr.k;
@@ -212,7 +212,7 @@ BOOL CAnimatorCamLerpEffector::ProcessCam(SCamEffectorInfo& info)
 	if(!inherited::inherited::ProcessCam(info))	return FALSE;
 
 	const Fmatrix& m			= m_objectAnimator->XFORM();
-	m_objectAnimator->Update	(Device.fTimeDelta);
+	m_objectAnimator->Update	(Device->fTimeDelta);
 
 	Fmatrix Mdef;
 	Mdef.identity				();
@@ -305,7 +305,7 @@ BOOL SndShockEffector::InWork()
 
 float SndShockEffector::GetFactor()
 {
-	float f				= (m_end_time-Device.fTimeGlobal)/m_life_time;
+	float f				= (m_end_time-Device->fTimeGlobal)/m_life_time;
 	
 	float ff =	f*m_life_time/8.0f;
 	return clampr(ff, 0.0f, 1.0f);
@@ -327,14 +327,14 @@ void SndShockEffector::Start(CActor* A, float snd_length, float power)
 	static float		xxx = 6.0f/1.50f; //6sec on max power(1.5)
 
 	m_life_time			= power*xxx;
-	m_end_time			= Device.fTimeGlobal + m_life_time;
+	m_end_time			= Device->fTimeGlobal + m_life_time;
 
 	AddEffector			(A, effHit,"snd_shock_effector", this);
 }
 
 void SndShockEffector::Update()
 {
-	m_cur_length		+= Device.dwTimeDelta;
+	m_cur_length		+= Device->dwTimeDelta;
 	float x				= float(m_cur_length)/m_snd_length;
 	float y				= 2.f*x-1;
 	if (y>0.f){
@@ -384,15 +384,15 @@ BOOL CControllerPsyHitCamEffector::ProcessCam(SCamEffectorInfo& info)
 
 	//////////////////////////////////////////////////////////////////////////
 
-	if (angle_lerp(m_dangle_current.x, m_dangle_target.x, ANGLE_SPEED, Device.fTimeDelta)) {
+	if (angle_lerp(m_dangle_current.x, m_dangle_target.x, ANGLE_SPEED, Device->fTimeDelta)) {
 		m_dangle_target.x = angle_normalize(Random.randFs(DELTA_ANGLE_X));
 	}
 
-	if (angle_lerp(m_dangle_current.y, m_dangle_target.y, ANGLE_SPEED, Device.fTimeDelta)) {
+	if (angle_lerp(m_dangle_current.y, m_dangle_target.y, ANGLE_SPEED, Device->fTimeDelta)) {
 		m_dangle_target.y = angle_normalize(Random.randFs(DELTA_ANGLE_Y));
 	}
 
-	if (angle_lerp(m_dangle_current.z, m_dangle_target.z, ANGLE_SPEED, Device.fTimeDelta)) {
+	if (angle_lerp(m_dangle_current.z, m_dangle_target.z, ANGLE_SPEED, Device->fTimeDelta)) {
 		m_dangle_target.z = angle_normalize(Random.randFs(DELTA_ANGLE_Z));
 	}
 	
@@ -407,7 +407,7 @@ BOOL CControllerPsyHitCamEffector::ProcessCam(SCamEffectorInfo& info)
 	info.fFov = m_base_fov + (m_dest_fov-m_base_fov)*perc_past;
 	//info.fFov = _base_fov - _max_fov_add*perc_past;
 
-	m_time_current	+= Device.fTimeDelta;
+	m_time_current	+= Device->fTimeDelta;
 	
 	//////////////////////////////////////////////////////////////////////////
 

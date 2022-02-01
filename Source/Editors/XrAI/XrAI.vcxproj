@@ -305,6 +305,7 @@
     <ClCompile Include="verify_level_graph.cpp" />
     <ClCompile Include="xrAI.cpp" />
     <ClCompile Include="xrCrossTable.cpp" />
+    <ClCompile Include="XrSEFactoryManager.cpp" />
     <ClCompile Include="xrThread.cpp" />
     <ClCompile Include="xr_graph_merge.cpp" />
     <ClCompile Include="_buildnodes_view.cpp">
@@ -487,6 +488,7 @@
     <ClInclude Include="vertex_path_inline.h" />
     <ClInclude Include="xrAI.h" />
     <ClInclude Include="xrCrossTable.h" />
+    <ClInclude Include="XrSEFactoryManager.h" />
     <ClInclude Include="xrShaderTypes.h" />
     <ClInclude Include="xrThread.h" />
     <ClInclude Include="xr_graph_merge.h" />
@@ -507,9 +509,6 @@
     </ProjectReference>
     <ProjectReference Include="..\FreeMagic\FreeMagic.vcxproj">
       <Project>{dcc5b76d-be13-4d1f-be14-75d0fa678340}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\XrSE_Factory\XrSE_Factory.vcxproj">
-      <Project>{e5d980c8-02df-45d1-9f15-4d87ae100661}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -25,7 +25,7 @@ thunderbolt_id::thunderbolt_id			(manager const& manager, shared_str const& id) 
 
 thunderbolt_id::~thunderbolt_id			()
 {
-	if (!Device.editor())
+	if (!Device->WeatherEditor())
 		return;
 
 	::ide().destroy					(m_property_holder);

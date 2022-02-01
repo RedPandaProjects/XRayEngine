@@ -29,7 +29,7 @@ void stalker_flair::reset_game()
 
 void stalker_flair::OnArtefactSpawned		()
 {
-	m_art_spawn_time	= Device.dwTimeGlobal;
+	m_art_spawn_time	= Device->dwTimeGlobal;
 	m_art_take_time		= 0;
 }
 
@@ -37,7 +37,7 @@ void stalker_flair::OnPlayerTakeArtefact	(game_PlayerState const * ps)
 {
 	if (ps == m_owner->get_local_player())
 	{
-		m_art_take_time	= Device.dwTimeGlobal;
+		m_art_take_time	= Device->dwTimeGlobal;
 	}
 }
 

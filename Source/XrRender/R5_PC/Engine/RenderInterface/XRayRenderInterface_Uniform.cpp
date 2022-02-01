@@ -103,14 +103,14 @@ void XRayRenderInterface::UniformsUpdate()
 		Data->SunColor.set(desc.sun_color.x, desc.sun_color.y, desc.sun_color.z, 1.0f);
 		{
 			Fvector D;
-			Device.mView.transform_dir(D, desc.sun_dir);
+			Device->mView.transform_dir(D, desc.sun_dir);
 			D.normalize();
 			Data->SunDirE.set(D.x, D.y, D.z, 0);
 		}
 		Data->SunDirW.set(desc.sun_dir.x, desc.sun_dir.y, desc.sun_dir.z, 0.0f);
 		{
 			Fvector4 plane;
-			Fmatrix& M = Device.mFullTransform;
+			Fmatrix& M = Device->mFullTransform;
 			plane.x = -(M._14 + M._13);
 			plane.y = -(M._24 + M._23);
 			plane.z = -(M._34 + M._33);
@@ -135,17 +135,17 @@ void XRayRenderInterface::UniformsUpdate()
 			Data->FogColor.set(desc.fog_color.x, desc.fog_color.y, desc.fog_color.z, desc.fog_density);
 		}
 		{
-			float VertTan = -1.0f * tanf(deg2rad(Device.fFOV / 2.0f));
-			float HorzTan = -VertTan / Device.fASPECT;
+			float VertTan = -1.0f * tanf(deg2rad(Device->fFOV / 2.0f));
+			float HorzTan = -VertTan / Device->fASPECT;
 
-			Data->PosDecompressParams.set(HorzTan, VertTan, (2.0f * HorzTan) / (float)Device.dwWidth, (2.0f * VertTan) / (float)Device.dwHeight);
+			Data->PosDecompressParams.set(HorzTan, VertTan, (2.0f * HorzTan) / (float)Device->dwWidth, (2.0f * VertTan) / (float)Device->dwHeight);
 		}
 		{
-			Data->EyePosition.set(RDEVICE.vCameraPosition.x, RDEVICE.vCameraPosition.y, RDEVICE.vCameraPosition.z, 1.f);
+			Data->EyePosition.set(Device->vCameraPosition.x, Device->vCameraPosition.y, Device->vCameraPosition.z, 1.f);
 		}
 		{
 			float s = XRayRenderConsole::ps_r_bloom_threshold;								
-			GRenderTarget->BloomFactor = .9f * GRenderTarget->BloomFactor + .1f *XRayRenderConsole::ps_r_bloom_speed * Device.fTimeDelta;
+			GRenderTarget->BloomFactor = .9f * GRenderTarget->BloomFactor + .1f *XRayRenderConsole::ps_r_bloom_speed * Device->fTimeDelta;
 			Data->BloomParams.set( s, s, s, GRenderTarget->BloomFactor);
 			
 		}
@@ -153,7 +153,7 @@ void XRayRenderInterface::UniformsUpdate()
 			Data->DetailTextureRange = 1.f / XRayRenderConsole::ps_r_detail_texture_range;
 		}
 		{
-			float t = RDEVICE.fTimeGlobal;
+			float t = Device->fTimeGlobal;
 			Data->Timer.set( t, t * 10.0f, t / 10.0f, _sin(t));
 		}
 		{
@@ -179,7 +179,7 @@ void XRayRenderInterface::UniformsUpdate()
 				w1.add(t1);
 			};
 			Fvector4	w0, w1;
-			float		kernel = XRayRenderConsole::ps_r_bloom_kernel_g * float(Device.dwHeight) / float(Device.dwWidth);
+			float		kernel = XRayRenderConsole::ps_r_bloom_kernel_g * float(Device->dwHeight) / float(Device->dwWidth);
 			CalcGauss_wave(w0, w1, kernel, kernel / 3.f, XRayRenderConsole::ps_r_bloom_kernel_scale);
 			Data->BloomW0 = w0;
 			Data->BloomW1 = w1;
@@ -217,7 +217,7 @@ void XRayRenderInterface::UniformsUpdate()
 
 				Fmatrix mSky;
 				mSky.rotateY(g_pGamePersistent->Environment().CurrentEnv->sky_rotation);
-				mSky.translate_over(Device.vCameraPosition);
+				mSky.translate_over(Device->vCameraPosition);
 				SetWorld(mSky);
 
 				ContatMatrix* matrix = (ContatMatrix*)ptr;
@@ -241,7 +241,7 @@ void XRayRenderInterface::UniformsUpdate()
 
 				mXFORM.rotateY(g_pGamePersistent->Environment().CurrentEnv->wind_direction); // wind_direction
 				mXFORM.mulB_43(mScale);
-				mXFORM.translate_over(Device.vCameraPosition);
+				mXFORM.translate_over(Device->vCameraPosition);
 				SetWorld(mXFORM);
 
 				ContatMatrix* matrix = (ContatMatrix*)ptr;
@@ -262,20 +262,20 @@ void XRayRenderInterface::UniformsUpdate()
 		}
 		{
 			extern ENGINE_API float		psHUD_FOV;
-			Fmatrix Pold = Device.mProject;
-			Fmatrix FTold = Device.mFullTransform;
-			Device.mProject.build_projection(
-				deg2rad(psHUD_FOV * Device.fFOV /* *Device.fASPECT*/),
-				Device.fASPECT, VIEWPORT_NEAR,
+			Fmatrix Pold = Device->mProject;
+			Fmatrix FTold = Device->mFullTransform;
+			Device->mProject.build_projection(
+				deg2rad(psHUD_FOV * Device->fFOV /* *Device->fASPECT*/),
+				Device->fASPECT, VIEWPORT_NEAR,
 				g_pGamePersistent->Environment().CurrentEnv->far_plane);
 
-			Device.mFullTransform.mul(Device.mProject, Device.mView);
-			SetProject(Device.mProject);
+			Device->mFullTransform.mul(Device->mProject, Device->mView);
+			SetProject(Device->mProject);
 			Rdsgraph_Genderal.RenderHUDObjects.setup(function);
 
-			Device.mProject = Pold;
-			Device.mFullTransform = FTold;
-			SetProject(Device.mProject);
+			Device->mProject = Pold;
+			Device->mFullTransform = FTold;
+			SetProject(Device->mProject);
 		}
 		GUniformAllocator->Uniform[i]->Unlock();
 	}

@@ -47,19 +47,19 @@ public:
 	// Levels
 	xr_vector<sLevelInfo>	Levels;
 	u32						Level_Current;
-	void					Level_Scan			();
-	int						Level_ID			(LPCSTR name, LPCSTR ver, bool bSet);
-	void					Level_Set			(u32 ID);
-	void					LoadAllArchives		();
-	CInifile*				GetArchiveHeader	(LPCSTR name, LPCSTR ver);
+	virtual void					Level_Scan			();
+	virtual int						Level_ID			(LPCSTR name, LPCSTR ver, bool bSet);
+	virtual void					Level_Set			(u32 ID);
+	virtual void					LoadAllArchives		();
+	virtual CInifile*				GetArchiveHeader	(LPCSTR name, LPCSTR ver);
 
 	// Loading
-	void					LoadBegin			();
-	void					LoadEnd				();
-	void					LoadTitleInt		(LPCSTR str1, LPCSTR str2, LPCSTR str3);
-	void					LoadStage			();
-	void					LoadSwitch			();
-	void					LoadDraw			();
+	virtual void					LoadBegin			();
+	virtual void					LoadEnd				();
+	virtual void					LoadTitleInt		(LPCSTR str1, LPCSTR str2, LPCSTR str3);
+	virtual void					LoadStage			();
+	virtual void					LoadSwitch			();
+	virtual void					LoadDraw			();
 
 	virtual	void			OnEvent				(EVENT E, u64 P1, u64 P2);
 
@@ -68,8 +68,8 @@ public:
 	virtual					~CApplication		();
 
 	virtual void	_BCL	OnFrame				();
-			void			load_draw_internal	();
-			void			destroy_loading_shaders();
+	virtual	void			load_draw_internal	();
+	virtual	void			destroy_loading_shaders();
 };
 
 extern ENGINE_API	CApplication*	pApp;

@@ -2,6 +2,7 @@
 #include "resource.h"
 #include "dedicated_server_only.h"
 
+#include "device.h"
 #ifdef INGAME_EDITOR
 #	include "../XrWeatherEditor/Public/ide.hpp"
 #	include "engine_impl.hpp"

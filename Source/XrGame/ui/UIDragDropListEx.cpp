@@ -957,7 +957,7 @@ void CUICellContainer::Draw()
 		for ( ; it != m_cells_to_draw.end(); ++it ) // all cells
 		{
 			CUICell& cell = (*it);
-			if ( !cell.Empty() && (cell.m_item->m_drawn_frame != Device.dwFrame) )
+			if ( !cell.Empty() && (cell.m_item->m_drawn_frame != Device->dwFrame) )
 			{
 				cell.m_item->Draw();
 			}

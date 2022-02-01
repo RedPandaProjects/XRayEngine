@@ -54,7 +54,7 @@ CBaseMonster::SDebugInfo CBaseMonster::show_debug_info()
 	DBG().text(this).clear	 ();
 	DBG().text(this).add_item("---------------------------------------", x, y+=delta_y, delimiter_color);
 
-	xr_sprintf(text, "-- Monster : [%s]  Current Time = [%u]", *cName(), Device.dwTimeGlobal);
+	xr_sprintf(text, "-- Monster : [%s]  Current Time = [%u]", *cName(), Device->dwTimeGlobal);
 	DBG().text(this).add_item(text, x, y+=delta_y, color);
 	DBG().text(this).add_item("-----------   PROPERTIES   ------------", x, y+=delta_y, delimiter_color);
 
@@ -901,7 +901,7 @@ void   CBaseMonster::add_debug_info (debug::text_tree& root_s)
 		xr_string source = (*i).m_sound->_handle() ? (*i).m_sound->_handle()->file_name() : "no source";
 
 		xr_string status = "not yet started";
-		if ( Device.dwTimeGlobal >= (*i).m_start_time )
+		if ( Device->dwTimeGlobal >= (*i).m_start_time )
 		{
 			status = (*i).m_sound->_feedback() ? "playing" : "already played";
 		}

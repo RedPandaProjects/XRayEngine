@@ -24,7 +24,7 @@ IC void SetCamera(float angle, const Fvector& C, float height, float radius, flo
     float asp 	= height/radius;
 	float fp	= dist+4.f*radius;
     float np	= dist-4.f*radius; clamp(np,0.1f,fp);
-    EDevice.m_Camera.Set		(hpb,D);
+    EDevice->m_Camera.Set		(hpb,D);
     P.build_projection_HAT	(ta,asp,np,fp);
     RCache.set_xform_project(P);
 }
@@ -45,38 +45,38 @@ void CImageManager::CreateLODTexture(const Fbox& bb, U32Vec& tgt_data, u32 tgt_w
     float R 					= _max(S.x,S.z);
     bb.getcenter				(C);
 
-    Fmatrix save_projection		= EDevice.mProjection;
-    Fvector save_pos 			= EDevice.m_Camera.GetPosition();
-    Fvector save_hpb 			= EDevice.m_Camera.GetHPB();
-    float save_far		 		= EDevice.m_Camera._Zfar();
-	ECameraStyle save_style 	= EDevice.m_Camera.GetStyle();
+    Fmatrix save_projection		= EDevice->mProjection;
+    Fvector save_pos 			= EDevice->m_Camera.GetPosition();
+    Fvector save_hpb 			= EDevice->m_Camera.GetHPB();
+    float save_far		 		= EDevice->m_Camera._Zfar();
+	ECameraStyle save_style 	= EDevice->m_Camera.GetStyle();
 
     float D		= 500.f;
     u32 pitch 					= tgt_w*samples;
 
     tgt_data.resize				(pitch*tgt_h);
-	EDevice.m_Camera.SetStyle	(csPlaneMove);
-    EDevice.m_Camera.SetDepth	(D*2,true);
+	EDevice->m_Camera.SetStyle	(csPlaneMove);
+    EDevice->m_Camera.SetDepth	(D*2,true);
 
     // save render params
     Flags32 old_flag			= psDeviceFlags;
-	u32 old_dwFillMode			= EDevice.dwFillMode;
-    u32 old_dwShadeMode			= EDevice.dwShadeMode;
+	u32 old_dwFillMode			= EDevice->dwFillMode;
+    u32 old_dwShadeMode			= EDevice->dwShadeMode;
     // set render params
 
     u32 cc						= 	EPrefs->scene_clear_color;
     EPrefs.scene_clear_color 	= 	0x0000000;
     psDeviceFlags.zero			();
 	psDeviceFlags.set			(rsFilterLinear,TRUE);
-	EDevice.dwFillMode			= D3DFILL_SOLID;
-    EDevice.dwShadeMode			= D3DSHADE_GOURAUD;
+	EDevice->dwFillMode			= D3DFILL_SOLID;
+    EDevice->dwShadeMode			= D3DSHADE_GOURAUD;
 
     SetCamera(0,C,S.y,R,D);
 
     for (int frame=0; frame<samples; frame++){
     	float angle 			= frame*(PI_MUL_2/samples);
 	    SetCamera				(angle,C,S.y,R,D);
-	    EDevice.MakeScreenshot	(pixels,tgt_w,tgt_h);
+	    EDevice->MakeScreenshot	(pixels,tgt_w,tgt_h);
         // copy LOD to final
 		for (u32 y=0; y<tgt_h; y++)
     		CopyMemory			(tgt_data.begin()+y*pitch+frame*tgt_w,pixels.begin()+y*tgt_w,tgt_w*sizeof(u32));
@@ -93,16 +93,16 @@ void CImageManager::CreateLODTexture(const Fbox& bb, U32Vec& tgt_data, u32 tgt_w
 	}
         
     // restore render params
-	EDevice.dwFillMode			= old_dwFillMode;
-    EDevice.dwShadeMode			= old_dwShadeMode;
+	EDevice->dwFillMode			= old_dwFillMode;
+    EDevice->dwShadeMode			= old_dwShadeMode;
     psDeviceFlags 				= old_flag;
     EPrefs.scene_clear_color 	= cc;
 
-	EDevice.m_Camera.SetStyle	(save_style);
+	EDevice->m_Camera.SetStyle	(save_style);
     RCache.set_xform_project	(save_projection);
-    EDevice.m_Camera.Set			(save_hpb,save_pos);
-    EDevice.m_Camera.Set			(save_hpb,save_pos);
-    EDevice.m_Camera.SetDepth	(save_far,false);
+    EDevice->m_Camera.Set			(save_hpb,save_pos);
+    EDevice->m_Camera.Set			(save_hpb,save_pos);
+    EDevice->m_Camera.SetDepth	(save_far,false);
 }
 */
 
@@ -110,7 +110,7 @@ DEFINE_VECTOR(Fvector4,Fvector4Vec,Fvector4It);
 BOOL GetPointColor(SPickQuery::SResult* R, u32& alpha, u32& color)
 {
     CSurface* surf			= R->e_mesh->GetSurfaceByFaceID(R->tag); VERIFY(surf);
-    Shader_xrLC* c_sh		= EDevice.ShaderXRLC.Get(surf->_ShaderXRLCName());
+    Shader_xrLC* c_sh		= EDevice->ShaderXRLC.Get(surf->_ShaderXRLCName());
     if (!c_sh->flags.bRendering) return FALSE;
     const Fvector2*			cuv[3];
     R->e_mesh->GetFaceTC	(R->tag,cuv);
@@ -177,21 +177,21 @@ const u32 lod_ss_quality  = 8;
 void CreateLODSamples(const Fbox& bbox, U32Vec& tgt_data, u32 tgt_w, u32 tgt_h)
 {
 	U32Vec 	s_pixels,d_pixels;
-    Fmatrix save_projection		= EDevice.mProject;
-    Fmatrix save_view			= EDevice.mView;
+    Fmatrix save_projection		= EDevice->mProject;
+    Fmatrix save_view			= EDevice->mView;
 
     // save render params
     Flags32 old_flag			= psDeviceFlags;
-	u32 old_dwFillMode			= EDevice.dwFillMode;
-    u32 old_dwShadeMode			= EDevice.dwShadeMode;
+	u32 old_dwFillMode			= EDevice->dwFillMode;
+    u32 old_dwShadeMode			= EDevice->dwShadeMode;
     // set render params
 
     u32 cc						= 	EPrefs->scene_clear_color;
     EPrefs->scene_clear_color 	= 	0x0000000;
     psDeviceFlags.zero			();
 	psDeviceFlags.set			(rsFilterLinear,TRUE);
-	EDevice.dwFillMode			= D3DFILL_SOLID;
-    EDevice.dwShadeMode			= D3DSHADE_GOURAUD;
+	EDevice->dwFillMode			= D3DFILL_SOLID;
+    EDevice->dwShadeMode			= D3DSHADE_GOURAUD;
 
     Fvector vP,vD,vN,vR;
     Fmatrix mV,mP;
@@ -217,8 +217,8 @@ void CreateLODSamples(const Fbox& bbox, U32Vec& tgt_data, u32 tgt_w, u32 tgt_h)
         mP.build_projection_ortho(R,bb.max.y-bb.min.y,bb.min.z,bb.max.z);
 	    RCache.set_xform_project(mP);
 	    RCache.set_xform_view	(mV);
-        EDevice.mFullTransform.mul(mP,mV);
-        EDevice.MakeScreenshot	(s_pixels,tgt_w*lod_ss_quality,tgt_h*lod_ss_quality);
+        EDevice->mFullTransform.mul(mP,mV);
+        EDevice->MakeScreenshot	(s_pixels,tgt_w*lod_ss_quality,tgt_h*lod_ss_quality);
         d_pixels.resize 		(tgt_w*tgt_h);
 		imf_Process				(d_pixels.data(),tgt_w,tgt_h,s_pixels.data(),tgt_w*lod_ss_quality,tgt_h*lod_ss_quality,imf_box);
         // copy LOD to final
@@ -235,8 +235,8 @@ void CreateLODSamples(const Fbox& bbox, U32Vec& tgt_data, u32 tgt_w, u32 tgt_h)
 	}
 
     // restore render params
-	EDevice.dwFillMode			= old_dwFillMode;
-    EDevice.dwShadeMode			= old_dwShadeMode;
+	EDevice->dwFillMode			= old_dwFillMode;
+    EDevice->dwShadeMode			= old_dwShadeMode;
     psDeviceFlags 				= old_flag;
     EPrefs->scene_clear_color 	= cc;
 
@@ -279,7 +279,7 @@ void CImageManager::CreateLODTexture(CEditableObject* OBJECT, U32Vec& lod_pixels
     // preload textures
     for (SurfaceIt surf_it=OBJECT->Surfaces().begin(); surf_it!=OBJECT->Surfaces().end(); surf_it++){
     	CSurface* surf			= *surf_it;
-        Shader_xrLC* c_sh		= EDevice.ShaderXRLC.Get(surf->_ShaderXRLCName());
+        Shader_xrLC* c_sh		= EDevice->ShaderXRLC.Get(surf->_ShaderXRLCName());
         if (!c_sh->flags.bRendering) continue;
         if (0==surf->m_ImageData)surf->CreateImageData();
     }    

@@ -45,14 +45,14 @@ CHW::CHW() :
 	//pBaseRT(NULL),
 	//pBaseZB(NULL)
 {
-	Device.seqAppActivate.Add(this);
-	Device.seqAppDeactivate.Add(this);
+	Device->seqAppActivate.Add(this);
+	Device->seqAppDeactivate.Add(this);
 }
 
 CHW::~CHW()
 {
-	Device.seqAppActivate.Remove(this);
-	Device.seqAppDeactivate.Remove(this);
+	Device->seqAppActivate.Remove(this);
+	Device->seqAppDeactivate.Remove(this);
 }
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction

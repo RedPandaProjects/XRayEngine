@@ -24,7 +24,7 @@ xr_token rpoint_game_type[]={
 };
 
 
-#ifdef _EDITOR
+#if DEV_MODE
 bool GameTypeChooser::LoadStream(IReader& F)
 {
     m_GameType.assign	(F.r_u16());
@@ -72,7 +72,7 @@ void GameTypeChooser::SaveLTX(CInifile& ini, LPCSTR sect_name)
 }
 #endif
 
-#ifndef XRGAME_EXPORTS
+#if DEV_MODE
 void  GameTypeChooser::FillProp(LPCSTR pref, PropItemVec& items)
 {
 	PHelper().CreateGameType		(items, PrepareKey(pref, "Game Type"), this);

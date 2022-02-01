@@ -31,7 +31,7 @@ void CAI_Rat::update_home_position	()
 		m_home_position			= rat_leader->m_home_position;
 	}
 
-	if (Device.dwTimeGlobal < m_time_to_change_graph_point)
+	if (Device->dwTimeGlobal < m_time_to_change_graph_point)
 		return;
 	
 	if (ai().cross_table().vertex(ai_location().level_vertex_id()).game_vertex_id() != m_next_graph_point)

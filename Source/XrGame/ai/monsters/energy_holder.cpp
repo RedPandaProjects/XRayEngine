@@ -17,7 +17,7 @@ void CEnergyHolder::reinit()
 {
 	m_active					= true;
 	m_value						= 1.0f;
-	m_time_last_update			= Device.dwTimeGlobal;
+	m_time_last_update			= Device->dwTimeGlobal;
 }
 
 void CEnergyHolder::reload(LPCSTR section, LPCSTR prefix, LPCSTR suffix) 
@@ -50,7 +50,7 @@ void CEnergyHolder::schedule_update()
 	if (!m_enable) return;
 	
 	// Обновить значение энергии
-	u32		cur_time	= Device.dwTimeGlobal;
+	u32		cur_time	= Device->dwTimeGlobal;
 	float	dt			= float(cur_time - m_time_last_update) / 1000.f;
 
 	if (!is_active()) 
@@ -71,5 +71,5 @@ void CEnergyHolder::schedule_update()
 void CEnergyHolder::enable()
 {
 	m_enable			= true;
-	m_time_last_update	= Device.dwTimeGlobal;
+	m_time_last_update	= Device->dwTimeGlobal;
 }

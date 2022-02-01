@@ -46,7 +46,7 @@ void CLevel::IR_OnMouseWheel( int direction )
 	if(	g_bDisableAllInput	) return;
 
 	if (CurrentGameUI()->IR_UIOnMouseWheel(direction)) return;
-	if( Device.Paused()
+	if( Device->Paused()
 #ifdef DEBUG
 		&& !psActorFlags.test(AF_NO_CLIP) 
 #endif //DEBUG
@@ -72,7 +72,7 @@ void CLevel::IR_OnMouseMove( int dx, int dy )
 {
 	if(g_bDisableAllInput)							return;
 	if (CurrentGameUI()->IR_UIOnMouseMove(dx,dy))		return;
-	if (Device.Paused() && !IsDemoPlay() 
+	if (Device->Paused() && !IsDemoPlay() 
 #ifdef DEBUG
 		&& !psActorFlags.test(AF_NO_CLIP) 
 #endif //DEBUG
@@ -97,11 +97,11 @@ extern float g_separate_radius;
 
 void CLevel::IR_OnKeyboardPress	(int key)
 {
-	if(Device.dwPrecacheFrame)
+	if(Device->dwPrecacheFrame)
 		return;
 
 #ifdef INGAME_EDITOR
-	if (Device.editor() && (pInput->iGetAsyncKeyState(DIK_LALT) || pInput->iGetAsyncKeyState(DIK_RALT)))
+	if (Device->WeatherEditor() && (pInput->iGetAsyncKeyState(DIK_LALT) || pInput->iGetAsyncKeyState(DIK_RALT)))
 		return;
 #endif // #ifdef INGAME_EDITOR
 
@@ -112,17 +112,17 @@ void CLevel::IR_OnKeyboardPress	(int key)
 	if(_curr==kPAUSE)
 	{
 		#ifdef INGAME_EDITOR
-			if (Device.editor())	return;
+			if (Device->WeatherEditor())	return;
 		#endif // INGAME_EDITOR
 
 		if (!g_block_pause && (IsGameTypeSingle() || IsDemoPlay()))
 		{
 #ifdef DEBUG
 			if(psActorFlags.test(AF_NO_CLIP))
-				Device.Pause(!Device.Paused(), TRUE, TRUE, "li_pause_key_no_clip");
+				Device->Pause(!Device->Paused(), TRUE, TRUE, "li_pause_key_no_clip");
 			else
 #endif //DEBUG
-				Device.Pause(!Device.Paused(), TRUE, TRUE, "li_pause_key");
+				Device->Pause(!Device->Paused(), TRUE, TRUE, "li_pause_key");
 		}
 		return;
 	}
@@ -158,7 +158,7 @@ void CLevel::IR_OnKeyboardPress	(int key)
 
 	if ( b_ui_exist && CurrentGameUI()->IR_UIOnKeyboardPress(key)) return;
 
-	if ( Device.Paused() && !IsDemoPlay() 
+	if ( Device->Paused() && !IsDemoPlay() 
 #ifdef DEBUG
 		&& !psActorFlags.test(AF_NO_CLIP) 
 #endif //DEBUG
@@ -457,7 +457,7 @@ void CLevel::IR_OnKeyboardRelease(int key)
 	if (!bReady || g_bDisableAllInput	)								return;
 	if ( CurrentGameUI() && CurrentGameUI()->IR_UIOnKeyboardRelease(key)) return;
 	if (game && game->OnKeyboardRelease(get_binded_action(key)) )		return;
-	if (Device.Paused() 
+	if (Device->Paused() 
 #ifdef DEBUG
 		&& !psActorFlags.test(AF_NO_CLIP)
 #endif //DEBUG
@@ -478,25 +478,25 @@ void CLevel::IR_OnKeyboardHold(int key)
 	// Lain: added
 	if ( key == DIK_UP )
 	{
-		static u32 time = Device.dwTimeGlobal;
-		if ( Device.dwTimeGlobal - time > 20 )
+		static u32 time = Device->dwTimeGlobal;
+		if ( Device->dwTimeGlobal - time > 20 )
 		{
 			if ( CBaseMonster* pBM = smart_cast<CBaseMonster*>(CurrentEntity()) )
 			{
 				DBG().debug_info_up();
-				time = Device.dwTimeGlobal;
+				time = Device->dwTimeGlobal;
 			}
 		}
 	}
 	else if ( key == DIK_DOWN )
 	{
-		static u32 time = Device.dwTimeGlobal;
-		if ( Device.dwTimeGlobal - time > 20 )
+		static u32 time = Device->dwTimeGlobal;
+		if ( Device->dwTimeGlobal - time > 20 )
 		{
 			if ( CBaseMonster* pBM = smart_cast<CBaseMonster*>(CurrentEntity()) )
 			{
 				DBG().debug_info_down();
-				time = Device.dwTimeGlobal;
+				time = Device->dwTimeGlobal;
 			}
 		}
 	}
@@ -504,7 +504,7 @@ void CLevel::IR_OnKeyboardHold(int key)
 #endif // DEBUG
 
 	if (CurrentGameUI() && CurrentGameUI()->IR_UIOnKeyboardHold(key)) return;
-	if (Device.Paused() && !Level().IsDemoPlay() 
+	if (Device->Paused() && !Level().IsDemoPlay() 
 #ifdef DEBUG
 		&& !psActorFlags.test(AF_NO_CLIP)
 #endif //DEBUG

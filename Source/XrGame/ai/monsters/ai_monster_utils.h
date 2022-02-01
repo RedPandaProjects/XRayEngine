@@ -60,7 +60,7 @@ IC void def_lerp(float &_cur, float _target, float _vel, float _dt)
 
 IC u32	time() 
 {
-	return Device.dwTimeGlobal;
+	return Device->dwTimeGlobal;
 }
 
 //////////////////////////////////////////////////////////////////////////

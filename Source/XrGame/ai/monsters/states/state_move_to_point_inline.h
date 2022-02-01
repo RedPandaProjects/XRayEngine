@@ -37,7 +37,7 @@ TEMPLATE_SPECIALIZATION
 bool CStateMonsterMoveToPointAbstract::check_completion()
 {	
 	if (data.action.time_out !=0) {
-		if (time_state_started + data.action.time_out < Device.dwTimeGlobal) return true;
+		if (time_state_started + data.action.time_out < Device->dwTimeGlobal) return true;
 	} 
 	
 	bool real_path_end = ((fis_zero(data.completion_dist)) ? (data.point.distance_to_xz(object->Position()) < ai().level_graph().header().cell_size()) : true);
@@ -97,7 +97,7 @@ bool CStateMonsterMoveToPointExAbstract::check_completion()
 {	
 	if ( data.action.time_out != 0 )
 	{
-		if ( time_state_started + data.action.time_out < Device.dwTimeGlobal ) 
+		if ( time_state_started + data.action.time_out < Device->dwTimeGlobal ) 
 			return					true;
 	} 
 
@@ -105,7 +105,7 @@ bool CStateMonsterMoveToPointExAbstract::check_completion()
 	float const dist_to_target	=	data.point.distance_to_xz(self_pos);
 	float const completion_dist	=	_max(data.completion_dist, ai().level_graph().header().cell_size());
 
-	if ( Device.dwTimeGlobal < time_state_started + 200 )
+	if ( Device->dwTimeGlobal < time_state_started + 200 )
 	{
 		if ( dist_to_target > completion_dist )
 			return					false;

@@ -68,7 +68,7 @@ void UIMinimapEditorForm::LoadClick()
     xr_string                   fn;
     m_ImageData.clear();
 
-    if (EFS.GetOpenName(EDevice.m_hWnd,"$app_root$", fn, false, NULL, 0))
+    if (EFS.GetOpenName(EDevice->m_hWnd,"$app_root$", fn, false, NULL, 0))
     {
         if (Stbi_Load(fn.c_str(), m_ImageData, m_ImageW, m_ImageH, m_ImageA))
         {

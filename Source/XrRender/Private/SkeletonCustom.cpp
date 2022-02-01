@@ -5,7 +5,7 @@
 #include 	"SkeletonCustom.h"
 #include	"SkeletonX.h"
 #include	"../../xrEngine/fmesh.h"
-#ifndef _EDITOR
+#ifndef REDITOR
 #include	"../../xrEngine/Render.h"
 #endif
 int			psSkeletonUpdate	= 32;
@@ -15,7 +15,7 @@ xrCriticalSection	UCalc_Mutex
 #endif // PROFILE_CRITICAL_SECTIONS
 ;
 
-#ifndef _EDITOR
+#ifndef REDITOR
 #include "../../xrServerEntities/smart_cast.h"
 #else
 #include "../../xrAPI/xrAPI.h"
@@ -188,7 +188,7 @@ void	CKinematics::Load(const char* N, IReader *data, u32 dwFlags)
         LD->close	();
     }
 
-#ifndef _EDITOR    
+#ifndef REDITOR    
 	// User data
 	IReader* UD 	= data->open_chunk(OGF_S_USERDATA);
     pUserData		= UD?xr_new<CInifile>(UD,FS.get_path("$game_config$")->m_Path):0;
@@ -629,7 +629,7 @@ void CKinematics::AddWallmark(const Fmatrix* parent_xform, const Fvector3& start
 	}
 
 	// ok. allocate wallmark
-	intrusive_ptr<CSkeletonWallmark>		wm = xr_new<CSkeletonWallmark>(this,parent_xform,shader,cp,RDEVICE.fTimeGlobal);
+	intrusive_ptr<CSkeletonWallmark>		wm = xr_new<CSkeletonWallmark>(this,parent_xform,shader,cp,Device->fTimeGlobal);
 	wm->m_LocalBounds.set		(cp,size*2.f);
 	wm->XFORM()->transform_tiny	(wm->m_Bounds.P,cp);
 	wm->m_Bounds.R				= wm->m_Bounds.R; 
@@ -654,19 +654,19 @@ void CKinematics::AddWallmark(const Fmatrix* parent_xform, const Fvector3& start
 }
 
 static const float LIFE_TIME=30.f;
-struct zero_wm_pred : public std::unary_function<intrusive_ptr<CSkeletonWallmark>, bool>
+struct zero_wm_pred
 {
 	bool operator()(const intrusive_ptr<CSkeletonWallmark> x){ return x==0; }
 };
 
 void CKinematics::CalculateWallmarks()
 {
-	if (!wallmarks.empty()&&(wm_frame!=RDEVICE.dwFrame)){
-		wm_frame			= RDEVICE.dwFrame;
+	if (!wallmarks.empty()&&(wm_frame!=Device->dwFrame)){
+		wm_frame			= Device->dwFrame;
 		bool need_remove	= false; 
 		for (SkeletonWMVecIt it=wallmarks.begin(); it!=wallmarks.end(); it++){
 			intrusive_ptr<CSkeletonWallmark>& wm = *it;
-			float w	= (RDEVICE.fTimeGlobal-wm->TimeStart())/LIFE_TIME;
+			float w	= (Device->fTimeGlobal-wm->TimeStart())/LIFE_TIME;
 			if (w<1.f){
 				// append wm to WallmarkEngine
 				if (::Render->ViewBase.testSphere_dirty(wm->m_Bounds.P,wm->m_Bounds.R))
@@ -696,7 +696,7 @@ void CKinematics::RenderWallmark(intrusive_ptr<CSkeletonWallmark> wm, FVF::LIT* 
 	// skin vertices
 	for (u32 f_idx=0; f_idx<wm->m_Faces.size(); f_idx++){
 		CSkeletonWallmark::WMFace F = wm->m_Faces[f_idx];
-		float w	= (RDEVICE.fTimeGlobal-wm->TimeStart())/LIFE_TIME;
+		float w	= (Device->fTimeGlobal-wm->TimeStart())/LIFE_TIME;
 		for (u32 k=0; k<3; k++){
 			Fvector P;
 			if (F.bone_id[k][0]==F.bone_id[k][1]){

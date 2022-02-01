@@ -1,7 +1,7 @@
 //---------------------------------------------------------------------------
 #include "stdafx.h"
 #pragma hdrstop
-
+#include "..\xrServerEntities\xrEProps.h"
 #include "LightAnimLibrary.h"
 //---------------------------------------------------------------------------
 #define LANIM_VERSION		0x0001
@@ -281,7 +281,7 @@ CLAItem* ELightAnimLibrary::AppendItem(LPCSTR name, CLAItem* src)
 	return I;
 }
 
-#ifdef _EDITOR
+#if DEV_MODE 
 void ELightAnimLibrary::RemoveObject(LPCSTR _fname, EItemType type, bool& res)   
 {
 	if (TYPE_FOLDER==type){
@@ -295,7 +295,8 @@ void ELightAnimLibrary::RemoveObject(LPCSTR _fname, EItemType type, bool& res)
             res = true;
             return;
         }
-    }else THROW;
+    }
+    else R_ASSERT(0);;
     res = false;
 }
 //---------------------------------------------------------------------------

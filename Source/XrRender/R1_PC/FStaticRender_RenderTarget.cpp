@@ -41,14 +41,14 @@ CRenderTarget::CRenderTarget()
 
 BOOL CRenderTarget::Create	()
 {
-	curWidth			= Device.dwWidth;
-	curHeight			= Device.dwHeight;
+	curWidth			= Device->dwWidth;
+	curHeight			= Device->dwHeight;
 
 	// Select mode to operate in
 	float	amount		= ps_r__Supersample?float(ps_r__Supersample):1	;
 	float	scale		= _sqrt	(amount);
-	rtWidth				= clampr(iFloor(scale*Device.dwWidth  + .5f), 128, 2048);
-	rtHeight			= clampr(iFloor(scale*Device.dwHeight + .5f), 128, 2048);
+	rtWidth				= clampr(iFloor(scale*Device->dwWidth  + .5f), 128, 2048);
+	rtHeight			= clampr(iFloor(scale*Device->dwHeight + .5f), 128, 2048);
 	while (rtWidth%2)	rtWidth	--;
 	while (rtHeight%2)	rtHeight--;
 	Msg					("* SSample: %dx%d",rtWidth,rtHeight);
@@ -63,7 +63,7 @@ BOOL CRenderTarget::Create	()
 	}
 	//RImplementation.o.color_mapping = RT_color_map->valid();
 
-	if ((rtHeight!=Device.dwHeight) || (rtWidth!=Device.dwWidth))	{
+	if ((rtHeight!=Device->dwHeight) || (rtWidth!=Device->dwWidth))	{
 		R_CHK		(HW.pDevice->CreateDepthStencilSurface	(rtWidth,rtHeight,HW.Caps.fDepth,D3DMULTISAMPLE_NONE,0,TRUE,&ZB,NULL));
 	} else {
 		ZB			= HW.pBaseZB;
@@ -75,8 +75,8 @@ BOOL CRenderTarget::Create	()
 
 	//	Igor: TMP
 	//	Create an RT for online screenshot makining
-	//u32		w = Device.dwWidth, h = Device.dwHeight;
-	//HW.pDevice->CreateOffscreenPlainSurface(Device.dwWidth,Device.dwHeight,D3DFMT_A8R8G8B8,D3DPOOL_SYSTEMMEM,&pFB,NULL);
+	//u32		w = Device->dwWidth, h = Device->dwHeight;
+	//HW.pDevice->CreateOffscreenPlainSurface(Device->dwWidth,Device->dwHeight,D3DFMT_A8R8G8B8,D3DPOOL_SYSTEMMEM,&pFB,NULL);
 	HW.pDevice->CreateOffscreenPlainSurface(rtWidth,rtHeight,HW.Caps.fTarget,D3DPOOL_SYSTEMMEM,&pFB,NULL);
 
 	// Shaders and stream
@@ -118,7 +118,7 @@ void	CRenderTarget::calc_tc_noise		(Fvector2& p0, Fvector2& p1)
 //.	if (bDebug)	Msg			("%d,%d,%f",tw,th,param_noise_scale);
 
 	// calculate shift from FPSes
-	im_noise_time					-= Device.fTimeDelta;
+	im_noise_time					-= Device->fTimeDelta;
 	if (im_noise_time<0)			{
 		im_noise_shift_w			= ::Random.randI(tw?tw:1);
 		im_noise_shift_h			= ::Random.randI(th?th:1);
@@ -130,8 +130,8 @@ void	CRenderTarget::calc_tc_noise		(Fvector2& p0, Fvector2& p1)
 	u32			shift_h				= im_noise_shift_h;
 	float		start_u				= (float(shift_w)+.5f)/(tw);
 	float		start_v				= (float(shift_h)+.5f)/(th);
-	u32			_w					= Device.dwWidth;
-	u32			_h					= Device.dwHeight;
+	u32			_w					= Device->dwWidth;
+	u32			_h					= Device->dwHeight;
 	u32			cnt_w				= _w / tw;
 	u32			cnt_h				= _h / th;
 	float		end_u				= start_u + float(cnt_w) + 1;
@@ -146,7 +146,7 @@ void CRenderTarget::calc_tc_duality_ss	(Fvector2& r0, Fvector2& r1, Fvector2& l0
 	// Calculate ordinaty TCs from blur and SS
 	float	tw			= float(rtWidth);
 	float	th			= float(rtHeight);
-	if (rtHeight!=Device.dwHeight)	param_blur = 1.f;
+	if (rtHeight!=Device->dwHeight)	param_blur = 1.f;
 	Fvector2			shift,p0,p1;
 	shift.set			(.5f/tw, .5f/th);
 	shift.mul			(param_blur);
@@ -201,7 +201,7 @@ BOOL CRenderTarget::NeedPostProcess()
 BOOL CRenderTarget::Perform		()
 {
 	return Available() && 
-		( ((BOOL)RImplementation.m_bMakeAsyncSS) || NeedPostProcess() || (ps_r__Supersample>1) || (frame_distort==(Device.dwFrame-1)));
+		( ((BOOL)RImplementation.m_bMakeAsyncSS) || NeedPostProcess() || (ps_r__Supersample>1) || (frame_distort==(Device->dwFrame-1)));
 }
 
 #include <dinput.h>
@@ -212,7 +212,7 @@ void CRenderTarget::Begin		()
 	/*
 	if (g_pGameLevel->IR_GetKeyState(DIK_LSHIFT))	
 	{
-		Msg					("[%5d]------------------------",Device.dwFrame);
+		Msg					("[%5d]------------------------",Device->dwFrame);
 		SHOW				(param_blur)
 		SHOW				(param_gray)
 		SHOW				(param_duality_h)
@@ -232,8 +232,8 @@ void CRenderTarget::Begin		()
 		// Base RT
 		RCache.set_RT			(HW.pBaseRT);
 		RCache.set_ZB			(HW.pBaseZB);
-		curWidth				= Device.dwWidth;
-		curHeight				= Device.dwHeight;
+		curWidth				= Device->dwWidth;
+		curHeight				= Device->dwHeight;
 	} else {
 		// Our 
 		RCache.set_RT			(RT->pRT);
@@ -241,7 +241,7 @@ void CRenderTarget::Begin		()
 		curWidth				= rtWidth;
 		curHeight				= rtHeight;
 	}
-	Device.Clear				();
+	Device->Clear				();
 }
 
 struct TL_2c3uv {
@@ -297,8 +297,8 @@ void CRenderTarget::End		()
 	// combination/postprocess
 	RCache.set_RT		(HW.pBaseRT);
 	RCache.set_ZB		(HW.pBaseZB);
-	curWidth			= Device.dwWidth;
-	curHeight			= Device.dwHeight;
+	curWidth			= Device->dwWidth;
+	curHeight			= Device->dwHeight;
 	
 	if (!bPerform)		return;
 
@@ -314,8 +314,8 @@ void CRenderTarget::End		()
 	
 	// Draw full-screen quad textured with our scene image
 	u32		Offset;
-	float	_w			= float(Device.dwWidth);
-	float	_h			= float(Device.dwHeight);
+	float	_w			= float(Device->dwWidth);
+	float	_h			= float(Device->dwHeight);
 	
 	Fvector2			n0,n1,r0,r1,l0,l1;
 	calc_tc_duality_ss	(r0,r1,l0,l1);
@@ -365,7 +365,7 @@ void CRenderTarget::End		()
 
 void	CRenderTarget::phase_distortion	()
 {
-	frame_distort								= Device.dwFrame;
+	frame_distort								= Device->dwFrame;
 	RCache.set_RT								(RT_distort->pRT);
 	RCache.set_ZB								(ZB);
 	RCache.set_CullMode							(CULL_CCW);

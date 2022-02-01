@@ -14,6 +14,7 @@
 #include "../XrECore/Editor/pick_defs.h"
 #include "../XrCore/doug_lea_allocator.h"
 #include "../XrCore/FixedMap.h"
+#include "../XrEngine/XrEditorSceneInterface.h"
 //refs
 #ifndef _DEBUG
 #define USE_ARENA_ALLOCATOR
@@ -110,7 +111,7 @@ struct st_LevelOptions{
     void			Reset			();
 };
 
-class EScene
+class EScene:public XrEditorSceneInterface
 {
     CMemoryWriter 	m_SaveCache;
 public:
@@ -335,6 +336,10 @@ public:
     shared_str 		LevelPrefix		(){return m_LevelOp.m_LevelPrefix; }
 
 	void 			FillProp		(LPCSTR pref, PropItemVec& items, ObjClassID cls_id);
+	void Play();
+	bool IsSimulate();
+	void Stop();
+	virtual	void LoadCFrom(CObjectSpace* Space, CDB::build_callback cb);
 protected:
     typedef std::pair<xr_string,xr_string>  TSubstPair;
     typedef xr_vector<TSubstPair>           TSubstPairs;

@@ -15,10 +15,6 @@
 #include "../../../xrRender/Private/hw.h"
 #include "../../../xrEngine/pure.h"
 class CGameFont;
-#include "..\..\include\xrRender\drawutils.h"
-#include "../../../xrRender/Public/xrD3dDefs.h"
-#include "../../../xrRender/Public/shader.h"
-#include "../../../xrRender/Public/R_Backend.h"
 
 #include "..\..\xrEngine\fmesh.h"
 #include "..\..\xrEngine\_d3d_extensions.h"

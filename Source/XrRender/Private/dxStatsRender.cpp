@@ -59,6 +59,10 @@ void dxStatsRender::SetDrawParams (IRenderDeviceRender *pRender)
 	dxRenderDeviceRender *pR = (dxRenderDeviceRender*) pRender;
 
 	RCache.set_xform_world  (Fidentity);
-	RCache.set_Shader		(pR->m_SelectionShader);
+#ifdef REDITOR
+	RCache.set_Shader(EDevice->m_SelectionShader);
+#else
+	RCache.set_Shader(pR->m_SelectionShader);
+#endif
 	RCache.set_c			("tfactor",1,1,1,1);
 }

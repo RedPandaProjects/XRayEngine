@@ -122,7 +122,7 @@ void CAgentLocationManager::make_suitable	(CAI_Stalker *object, const CCoverPoin
 
 		// check if member cover is too close
 		if ((*I)->cover()->m_position.distance_to_sqr(location->position()) <= _sqr(5.f)) {
-//			Msg						("%6d : object [%s] disabled cover for object [%s]",Device.dwFrame,*object->cName(),*(*I)->object().cName());
+//			Msg						("%6d : object [%s] disabled cover for object [%s]",Device->dwFrame,*object->cName(),*(*I)->object().cName());
 			(*I)->object().on_cover_blocked	((*I)->cover());
 			(*I)->cover						(0);
 		}
@@ -177,7 +177,7 @@ float CAgentLocationManager::danger		(const CCoverPoint *cover, CAI_Stalker *mem
 	LOCATIONS::const_iterator	I = m_danger_locations.begin();
 	LOCATIONS::const_iterator	E = m_danger_locations.end();
 	for ( ; I != E; ++I) {
-		if (Device.dwTimeGlobal > (*I)->m_level_time + (*I)->m_interval)
+		if (Device->dwTimeGlobal > (*I)->m_level_time + (*I)->m_interval)
 			continue;
 
 		if (!(*I)->mask().test(mask))
@@ -188,7 +188,7 @@ float CAgentLocationManager::danger		(const CCoverPoint *cover, CAI_Stalker *mem
 			continue;
 
 		result					*= 
-			float(Device.dwTimeGlobal - (*I)->m_level_time)/float((*I)->m_interval);
+			float(Device->dwTimeGlobal - (*I)->m_level_time)/float((*I)->m_interval);
 	}
 
 	return						(result);

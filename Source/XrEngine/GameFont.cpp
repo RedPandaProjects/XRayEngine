@@ -2,14 +2,7 @@
 #pragma hdrstop
 
 #include "GameFont.h"
-#ifndef _EDITOR
-    #include "Render.h"
-#endif
-#ifdef _EDITOR
-unsigned short int mbhMulti2Wide
-	( wide_char *WideStr , wide_char *WidePos , const unsigned short int WideStrSize , const char *MultiStr  ){return 0;};
-#endif
-
+#include "Render.h"
 extern ENGINE_API BOOL g_bRendering; 
 ENGINE_API Fvector2		g_current_font_scale={1.0f,1.0f};
 
@@ -257,7 +250,7 @@ void CGameFont::MasterOut(
 	BOOL bCheckDevice , BOOL bUseCoords , BOOL bScaleCoords , BOOL bUseSkip , 
 	float _x , float _y , float _skip , LPCSTR fmt , va_list p )
 {
-	if ( bCheckDevice && ( ! RDEVICE.b_is_Active ) )
+	if ( bCheckDevice && ( ! Device->b_is_Active ) )
 		return;
 
 	String rs;
@@ -367,7 +360,7 @@ float CGameFont::CurrentHeight_	()
 void CGameFont::SetHeightI(float S)
 {
 	VERIFY			( uFlags&fsDeviceIndependent );
-	fCurrentHeight	= S*RDEVICE.dwHeight;
+	fCurrentHeight	= S*Device->dwHeight;
 };
 
 void CGameFont::SetHeight(float S)

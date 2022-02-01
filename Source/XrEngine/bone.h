@@ -141,7 +141,7 @@ enum EJointType
     jtForceU32 = u32(-1)
 };
 
-struct ECORE_API SJointLimit
+struct ENGINE_API SJointLimit
 {
 	Fvector2		limit;
     float 			spring_factor;
@@ -155,7 +155,7 @@ struct ECORE_API SJointLimit
     }
 };
 
-struct ECORE_API SBoneShape
+struct ENGINE_API SBoneShape
 {
     enum EShapeType
 	{
@@ -197,7 +197,7 @@ struct ECORE_API SBoneShape
     }
 };
 
-struct ECORE_API SJointIKData
+struct ENGINE_API SJointIKData
 {
     // IK
     EJointType		type;
@@ -302,7 +302,7 @@ class 	IBoneData
 class CBone;
 DEFINE_VECTOR		    (CBone*,BoneVec,BoneIt);
 
-class ECORE_API CBone:
+class ENGINE_API CBone:
 	public CBoneInstance,
 	public IBoneData
 {
@@ -310,11 +310,9 @@ class ECORE_API CBone:
 	shared_str			parent_name;
 	shared_str			wmap;
 	Fvector			    rest_offset;
-	Fvector			    rest_rotate;    // XYZ format (Game format)
 	float			    rest_length;
 
 	Fvector			    mot_offset;
-	Fvector			    mot_rotate;		// XYZ format (Game format)
 	float			    mot_length;
 
     Fmatrix			    mot_transform;
@@ -326,6 +324,10 @@ class ECORE_API CBone:
     //Fmatrix			    last_transform;
 
     //Fmatrix				render_transform;
+public:
+
+	Fvector			    rest_rotate;    // XYZ format (Game format)
+	Fvector			    mot_rotate;		// XYZ format (Game format)
 public:
 	int				    SelfID;
     CBone*			    parent;
@@ -396,14 +398,11 @@ IC	float	_BCL		editor_hi_limit ( u8 k ) const	{ return IK_data.limits[k].limit.y
     void			    ResetData		();
     void			    CopyData		(CBone* bone);
     
-#if defined _EDITOR || defined _MAYA_EXPORT
+#if DEV_MODE
 	void			    ShapeScale		(const Fvector& amount);
-	void			    ShapeRotate		(const Fvector& amount);
-	void			    ShapeMove		(const Fvector& amount);
 	void			    BindRotate		(const Fvector& amount);
 	void			    BindMove		(const Fvector& amount);
 	void			    BoneMove		(const Fvector& amount);
-	void			    BoneRotate		(const Fvector& axis, float angle);
 
 	bool 			    Pick			(float& dist, const Fvector& S, const Fvector& D, const Fmatrix& parent);
 

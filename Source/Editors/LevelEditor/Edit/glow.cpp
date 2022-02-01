@@ -78,29 +78,29 @@ void CGlow::Render(int priority, bool strictB2F)
         if (gt->m_Flags.is(ESceneGlowTool::flTestVisibility))
         { 
             Fvector D;
-            D.sub(EDevice.vCameraPosition,GetPosition());
+            D.sub(EDevice->vCameraPosition,GetPosition());
             float dist 	= D.normalize_magn();
             if (!Scene->RayPickObject(dist,GetPosition(),D,OBJCLASS_SCENEOBJECT,0,0)){
-                if (m_GShader){	EDevice.SetShader(m_GShader);
-                }else{			EDevice.SetShader(EDevice.m_WireShader);}
+                if (m_GShader){	EDevice->SetShader(m_GShader);
+                }else{			EDevice->SetShader(EDevice->m_WireShader);}
                 Fvector p = GetPosition();
                 m_RenderSprite.Render(p,m_fRadius,m_Flags.is(gfFixedSize));
                 DU_impl.DrawRomboid(p, VIS_RADIUS, 0x00FF8507);
             }else{
                 // рендерим bounding sphere
-                EDevice.SetShader(EDevice.m_WireShader);
+                EDevice->SetShader(EDevice->m_WireShader);
                 DU_impl.DrawRomboid(GetPosition(), VIS_RADIUS, 0x00FF8507);
             }
         }else{
-            if (m_GShader){	EDevice.SetShader(m_GShader);
-            }else{			EDevice.SetShader(EDevice.m_WireShader);}
+            if (m_GShader){	EDevice->SetShader(m_GShader);
+            }else{			EDevice->SetShader(EDevice->m_WireShader);}
             Fvector p = GetPosition();
             m_RenderSprite.Render(p,m_fRadius,m_Flags.is(gfFixedSize));
         }
         if( Selected() ){
             Fbox bb; GetBox(bb);
             u32 clr = 0xFFFFFFFF;
-            EDevice.SetShader(EDevice.m_WireShader);
+            EDevice->SetShader(EDevice->m_WireShader);
             DU_impl.DrawSelectionBoxB(bb,&clr);
             if (gt->m_Flags.is(ESceneGlowTool::flDrawCross))
             {

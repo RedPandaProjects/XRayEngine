@@ -468,9 +468,9 @@ CRT*	CResourceManager::_CreateRT		(LPCSTR Name, u32 w, u32 h,	D3DFORMAT f, u32 S
 		RT->dwFlags				|=	xr_resource_flagged::RF_REGISTERED;
 		m_rtargets.insert		(mk_pair(RT->set_name(Name),RT));
 #ifdef USE_DX11
-		if (Device.b_is_Ready)	RT->create	(Name,w,h,f, SampleCount, useUAV );
+		if (Device->b_is_Ready)	RT->create	(Name,w,h,f, SampleCount, useUAV );
 #else
-		if (Device.b_is_Ready)	RT->create	(Name,w,h,f, SampleCount );
+		if (Device->b_is_Ready)	RT->create	(Name,w,h,f, SampleCount );
 #endif
 		return					RT;
 	}
@@ -501,7 +501,7 @@ CRTC*	CResourceManager::_CreateRTC		(LPCSTR Name, u32 size,	D3DFORMAT f)
 		CRTC *RT				=	xr_new<CRTC>();
 		RT->dwFlags				|=	xr_resource_flagged::RF_REGISTERED;
 		m_rtargets_c.insert		(mk_pair(RT->set_name(Name),RT));
-		if (Device.b_is_Ready)	RT->create	(Name,size,f);
+		if (Device->b_is_Ready)	RT->create	(Name,size,f);
 		return					RT;
 	}
 }
@@ -592,7 +592,7 @@ CTexture* CResourceManager::_CreateTexture	(LPCSTR _Name)
 		T->dwFlags			|=	xr_resource_flagged::RF_REGISTERED;
 		m_textures.insert	(mk_pair(T->set_name(Name),T));
 		T->Preload			();
-		if (Device.b_is_Ready && !bDeferredLoad) T->Load();
+		if (Device->b_is_Ready && !bDeferredLoad) T->Load();
 		return		T;
 	}
 }

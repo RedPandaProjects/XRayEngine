@@ -13,7 +13,7 @@ struct 	FSChunkDef;
 class 	CExporter;
 class	CCustomObject;
 
-#ifdef _EDITOR
+#if 1
 #	include "pick_defs.h"
 #endif
 
@@ -180,7 +180,7 @@ struct st_RenderBuffer;
 class CSurface;
 class CSector;
 
-#ifdef _EDITOR
+#if 1
 	struct ECORE_API st_RenderBuffer{
 		u32			dwStartVertex;
 	    u32			dwNumVertex;
@@ -212,7 +212,7 @@ class ECORE_API CEditableMesh {
     void            GenerateCFModel		();
 	void 			GenerateRenderBuffers();
     void			UnloadCForm     	();
-#ifdef _EDITOR
+#if 1
 	void 			UnloadRenderBuffers	();
 #endif
 public:
@@ -265,7 +265,7 @@ protected:
     VMapVec		    m_VMaps;
     VMRefsVec	    m_VMRefs;
 
-#ifdef _EDITOR
+#if 1
     CDB::MODEL*		m_CFModel;
 	RBMap*			m_RenderBuffers;
 #endif
@@ -313,7 +313,7 @@ public:
 	    
     // pick routine
 	bool            RayPick					(float& dist, const Fvector& start, const Fvector& dir, const Fmatrix& inv_parent, SRayPickInfo* pinf = NULL);
-#ifdef _EDITOR
+#if 1
 	void            RayQuery				(SPickQuery& pinf);
 	void            RayQuery				(const Fmatrix& parent, const Fmatrix& inv_parent, SPickQuery& pinf);
 	void            BoxQuery				(const Fmatrix& parent, const Fmatrix& inv_parent, SPickQuery& pinf);

@@ -135,14 +135,14 @@ void CSector::Render(int priority, bool strictB2F)
                 Fcolor color;
                 float k = Selected()?0.4f:0.2f;
                 color.set(sector_color.r,sector_color.g,sector_color.b,k);
-			    EDevice.SetShader(EDevice.m_SelectionShader);
-                EDevice.SetRS(D3DRS_CULLMODE,D3DCULL_NONE);
+			    EDevice->SetShader(EDevice->m_SelectionShader);
+                EDevice->SetRS(D3DRS_CULLMODE,D3DCULL_NONE);
                 for (SItemIt it=sector_items.begin();it!=sector_items.end();++it)
                 {
                     it->object->GetFullTransformToWorld(matrix);
                     it->mesh->RenderSelection( matrix, 0, color.get() );
                 }
-                EDevice.SetRS(D3DRS_CULLMODE,D3DCULL_CCW);
+                EDevice->SetRS(D3DRS_CULLMODE,D3DCULL_CCW);
             }
         }else if (false==strictB2F)
         {
@@ -155,15 +155,15 @@ void CSector::Render(int priority, bool strictB2F)
             color2.set(sector_color.r*k2,sector_color.g*k2,sector_color.b*k2,1.f);
             if (lt->m_Flags.is(ESceneSectorTool::flDrawSolid))
             {
-                EDevice.SetShader(EDevice.m_WireShader);
-                EDevice.SetRS(D3DRS_CULLMODE,D3DCULL_NONE);
+                EDevice->SetShader(EDevice->m_WireShader);
+                EDevice->SetRS(D3DRS_CULLMODE,D3DCULL_NONE);
                 for (SItemIt it=sector_items.begin();it!=sector_items.end();++it)
                 {
                     it->object->GetFullTransformToWorld(matrix);
                     it->mesh->RenderSelection( matrix, 0, color.get() );
                     it->mesh->RenderEdge( matrix, 0, color2.get() );
                 }
-                EDevice.SetRS(D3DRS_CULLMODE,D3DCULL_CCW);
+                EDevice->SetRS(D3DRS_CULLMODE,D3DCULL_CCW);
             }
             if (Selected()){
                 RCache.set_xform_world(Fidentity);
@@ -646,7 +646,7 @@ bool CSector::Validate(bool bMsg)
     for (SItemIt it=sector_items.begin();it!=sector_items.end();it++){
         for (SurfFacesPairIt sf_it=it->mesh->m_SurfFaces.begin(); sf_it!=it->mesh->m_SurfFaces.end(); sf_it++){
             CSurface* surf 		= sf_it->first;
-            Shader_xrLC* c_sh	= EDevice.ShaderXRLC.Get(surf->_ShaderXRLCName());
+            Shader_xrLC* c_sh	= EDevice->ShaderXRLC.Get(surf->_ShaderXRLCName());
             if (c_sh->flags.bRendering)	bRenderableFound = true;
         }
 	}

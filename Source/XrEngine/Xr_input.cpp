@@ -26,7 +26,7 @@ static bool g_exclusive	= true;
 static void on_error_dialog			(bool before)
 {
 #ifdef INGAME_EDITOR
-	if (Device.editor())
+	if (Device->WeatherEditor())
 		return;
 #endif // #ifdef INGAME_EDITOR
 	if (!pInput || !g_exclusive)
@@ -44,7 +44,7 @@ CInput::CInput						( BOOL bExclusive, int deviceForInit)
 {
 	g_exclusive							= !!bExclusive;
 
-	Log("Starting INPUT device...");
+	Log("Starting INPUT Device->..");
 
 	pDI 								=	NULL;
 	pMouse								=	NULL;
@@ -87,18 +87,18 @@ CInput::CInput						( BOOL bExclusive, int deviceForInit)
 	Debug.set_on_dialog				(&on_error_dialog);
 
 #ifdef ENGINE_BUILD
-	Device.seqAppActivate.Add		(this);
-	Device.seqAppDeactivate.Add		(this, REG_PRIORITY_HIGH);
-	Device.seqFrame.Add				(this, REG_PRIORITY_HIGH);
+	Device->seqAppActivate.Add		(this);
+	Device->seqAppDeactivate.Add		(this, REG_PRIORITY_HIGH);
+	Device->seqFrame.Add				(this, REG_PRIORITY_HIGH);
 #endif
 }
 
 CInput::~CInput(void)
 {
 #ifdef ENGINE_BUILD
-	Device.seqFrame.Remove			(this);
-	Device.seqAppDeactivate.Remove	(this);
-	Device.seqAppActivate.Remove	(this);
+	Device->seqFrame.Remove			(this);
+	Device->seqAppDeactivate.Remove	(this);
+	Device->seqAppActivate.Remove	(this);
 #endif
 	//_______________________
 
@@ -119,7 +119,7 @@ CInput::~CInput(void)
 
 //-----------------------------------------------------------------------------
 // Name: CreateInputDevice()
-// Desc: Create a DirectInput device.
+// Desc: Create a DirectInput Device->
 //-----------------------------------------------------------------------------
 HRESULT CInput::CreateInputDevice( LPDIRECTINPUTDEVICE8* device, GUID guidDevice, const DIDATAFORMAT* pdidDataFormat, u32 dwFlags, u32 buf_size )
 {
@@ -135,10 +135,10 @@ HRESULT CInput::CreateInputDevice( LPDIRECTINPUTDEVICE8* device, GUID guidDevice
 	// Set the cooperativity level to let DirectInput know how this device
 	// should interact with the system and with other DirectInput applications.
 #ifdef INGAME_EDITOR
-	if (!Device.editor())
+	if (!Device->WeatherEditor())
 #endif // #ifdef INGAME_EDITOR
 	{
-		HRESULT	_hr = (*device)->SetCooperativeLevel( RDEVICE.m_hWnd, dwFlags );
+		HRESULT	_hr = (*device)->SetCooperativeLevel( Device->m_hWnd, dwFlags );
 		if (FAILED(_hr) && (_hr==E_NOTIMPL)) Msg("! INPUT: Can't set coop level. Emulation???");
 		else R_CHK(_hr);
 	}
@@ -214,10 +214,9 @@ void CInput::KeyUpdate	( )
 		KBState[od[idx].dwOfs]		= od[idx].dwData & 0x80;
 	}
 
-#ifndef _EDITOR
 	bool b_alt_tab				= false;
 
-	if(!b_altF4 && KBState[DIK_F4] && (KBState[DIK_RMENU] || KBState[DIK_LMENU]) )
+	if(!Device->IsEditorMode() && !b_altF4 && KBState[DIK_F4] && (KBState[DIK_RMENU] || KBState[DIK_LMENU]) )
 	{
 		b_altF4				= TRUE;
 		Engine.Event.Defer	("KERNEL:disconnect");
@@ -225,12 +224,9 @@ void CInput::KeyUpdate	( )
 	}
 
 
-#endif
 	if(b_altF4)					return;
 
-	#ifndef _EDITOR
-   	if(Device.dwPrecacheFrame==0)
-	#endif
+   	if(1)
 	{
 
 		for (u32 i = 0; i < dwElements; i++)
@@ -244,10 +240,11 @@ void CInput::KeyUpdate	( )
 			else
 			{
 				cbStack.back()->IR_OnKeyboardRelease	( key );
-	#ifndef _EDITOR
-				if(key==DIK_TAB  && (iGetAsyncKeyState(DIK_RMENU) || iGetAsyncKeyState(DIK_LMENU)) )
-					b_alt_tab = true;
-	#endif
+				if (!Device->IsEditorMode()) 
+				{
+					if (key == DIK_TAB && (iGetAsyncKeyState(DIK_RMENU) || iGetAsyncKeyState(DIK_LMENU)))
+						b_alt_tab = true;
+				}
 			}
 		}
 
@@ -256,10 +253,10 @@ void CInput::KeyUpdate	( )
 				cbStack.back()->IR_OnKeyboardHold( i );
 	}
 
-#ifndef _EDITOR
-	if(b_alt_tab)
-		SendMessage(Device.m_hWnd, WM_SYSCOMMAND, SC_MINIMIZE, 0);
-#endif
+
+	if(!Device->IsEditorMode()&&b_alt_tab)
+		SendMessage(Device->m_hWnd, WM_SYSCOMMAND, SC_MINIMIZE, 0);
+
 /*
 #ifndef _EDITOR
 //update xinput if exist
@@ -288,7 +285,7 @@ void CInput::KeyUpdate	( )
 			cbStack.back()->IR_OnMouseMove	( dx, dy );
 	}
 
-	if(Device.fTimeGlobal > stop_vibration_time)
+	if(Device->fTimeGlobal > stop_vibration_time)
 	{
 		stop_vibration_time		= flt_max;
 		set_vibration			(0, 0);
@@ -358,10 +355,8 @@ void CInput::MouseUpdate( )
 		if ( hr != S_OK ) return;
 	};
 
-	#ifndef _EDITOR
-	if(Device.dwPrecacheFrame)
+	if(!Device->IsEditorMode()&& Device->dwPrecacheFrame)
 		return;
-    #endif
 	BOOL				mouse_prev[COUNT_MOUSE_BUTTONS];
 
 	mouse_prev[0]		= mouseState[0];
@@ -520,11 +515,11 @@ void CInput::OnAppDeactivate	(void)
 
 void CInput::OnFrame			(void)
 {
-	RDEVICE.Statistic->Input.Begin			();
-	dwCurTime		= RDEVICE.TimerAsync_MMT	();
+	Device->Statistic->Input.Begin			();
+	dwCurTime		= Device->TimerAsync_MMT	();
 	if (pKeyboard)	KeyUpdate				();
 	if (pMouse)		MouseUpdate				();
-	RDEVICE.Statistic->Input.End			();
+	Device->Statistic->Input.End			();
 }
 
 IInputReceiver*	 CInput::CurrentIR()
@@ -544,19 +539,15 @@ void CInput::unacquire				()
 void CInput::acquire				(const bool &exclusive)
 {
 	pKeyboard->SetCooperativeLevel	(
-#ifdef INGAME_EDITOR
-		Device.editor() ? Device.editor()->main_handle() : 
-#endif // #ifdef INGAME_EDITOR
-		RDEVICE.m_hWnd,
+		Device->WeatherEditor() ? Device->WeatherEditor()->main_handle() : 
+		Device->m_hWnd,
 		(exclusive ? DISCL_EXCLUSIVE : DISCL_NONEXCLUSIVE) | DISCL_FOREGROUND
 	);
 	pKeyboard->Acquire				();
 
 	pMouse->SetCooperativeLevel		(
-#ifdef INGAME_EDITOR
-		Device.editor() ? Device.editor()->main_handle() :
-#endif // #ifdef INGAME_EDITOR
-		RDEVICE.m_hWnd,
+		Device->WeatherEditor() ? Device->WeatherEditor()->main_handle() :
+		Device->m_hWnd,
 		(exclusive ? DISCL_EXCLUSIVE : DISCL_NONEXCLUSIVE) | DISCL_FOREGROUND | DISCL_NOWINKEY
 	);
 	pMouse->Acquire					();
@@ -575,8 +566,5 @@ bool CInput::get_exclusive_mode		()
 
 void  CInput::feedback(u16 s1, u16 s2, float time)
 {
-	stop_vibration_time = RDEVICE.fTimeGlobal + time;
-#ifndef _EDITOR
-//.	set_vibration (s1, s2);
-#endif
+	stop_vibration_time = Device->fTimeGlobal + time;
 }

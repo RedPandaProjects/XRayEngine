@@ -67,7 +67,7 @@ void CEditableObject::BoxQuery(const Fmatrix& parent, const Fmatrix& inv_parent,
         (*m)->BoxQuery(parent, inv_parent, pinf);
 }
 
-#ifdef _EDITOR
+#if 1
 bool CEditableObject::FrustumPick(const CFrustum& frustum, const Fmatrix& parent){
 	for(EditMeshIt m = m_Meshes.begin();m!=m_Meshes.end();m++)
 		if((*m)->FrustumPick(frustum, parent))	return true;
@@ -131,13 +131,13 @@ void CEditableObject::Render(const Fmatrix& parent, int priority, bool strictB2F
                 {
                     if (surfaces)
                     {
-                        EDevice.SetShader((*surfaces)[s_id]->_Shader());
+                        EDevice->SetShader((*surfaces)[s_id]->_Shader());
                        
                     }
                     else
                     {
 
-                        EDevice.SetShader((*s_it)->_Shader());
+                        EDevice->SetShader((*s_it)->_Shader());
                     }
                     for (EditMeshIt _M=m_Meshes.begin(); _M!=m_Meshes.end(); _M++)
                         if (IsSkeleton())
@@ -166,7 +166,7 @@ void CEditableObject::RenderEdge(const Fmatrix& parent, CEditableMesh* mesh, CSu
 {
     if (!(m_LoadState.is(LS_RBUFFERS))) DefferedLoadRP();
 
-    EDevice.SetShader(EDevice.m_WireShader);
+    EDevice->SetShader(EDevice->m_WireShader);
     if(mesh) mesh->RenderEdge(parent, surf, color);
     else for(EditMeshIt _M = m_Meshes.begin();_M!=m_Meshes.end();_M++)
             (*_M)->RenderEdge(parent, surf, color);
@@ -177,12 +177,12 @@ void CEditableObject::RenderSelection(const Fmatrix& parent, CEditableMesh* mesh
     if (!(m_LoadState.is(LS_RBUFFERS))) DefferedLoadRP();
 
     RCache.set_xform_world(parent);
-    EDevice.SetShader(EDevice.m_SelectionShader);
-    EDevice.RenderNearer(0.0005);
+    EDevice->SetShader(EDevice->m_SelectionShader);
+    EDevice->RenderNearer(0.0005);
     if(mesh) mesh->RenderSelection(parent, surf, color);
     else for(EditMeshIt _M = m_Meshes.begin();_M!=m_Meshes.end();_M++)
          	(*_M)->RenderSelection(parent, surf, color);
-    EDevice.ResetNearer();
+    EDevice->ResetNearer();
 }
 
 IC static void CalculateLODTC(int frame, int w_cnt, int h_cnt, Fvector2& lt, Fvector2& rb)
@@ -225,7 +225,7 @@ void CEditableObject::GetLODFrame(int frame, Fvector p[4], Fvector2 t[4], const 
 void CEditableObject::RenderLOD(const Fmatrix& parent)
 {
     Fvector C;
-    C.sub			(parent.c,EDevice.m_Camera.GetPosition()); C.y = 0;
+    C.sub			(parent.c,EDevice->m_Camera.GetPosition()); C.y = 0;
     float m 		= C.magnitude();
     if (m<EPS) return;
     C.div			(m);
@@ -253,7 +253,7 @@ void CEditableObject::RenderLOD(const Fmatrix& parent)
     	GetLODFrame(max_frame,p,t);
         for (int i=0; i<4; i++){ LOD[i].p.set(p[i]); LOD[i].t.set(t[i]); }
     	RCache.set_xform_world(parent);
-        EDevice.SetShader		(m_LODShader?m_LODShader:EDevice.m_WireShader);
+        EDevice->SetShader		(m_LODShader?m_LODShader:EDevice->m_WireShader);
     	DU_impl.DrawPrimitiveLIT	(D3DPT_TRIANGLEFAN, 2, LOD, 4, true, false);
     }
 }
@@ -380,8 +380,8 @@ bool CEditableObject::CheckShaderCompatible()
 	bool bRes 			= true;
 	for(SurfaceIt s_it=m_Surfaces.begin(); s_it!=m_Surfaces.end(); s_it++)
     {
-    	IBlender* 		B = EDevice.Resources->_FindBlender(*(*s_it)->m_ShaderName);
-        Shader_xrLC* 	C = EDevice.ShaderXRLC.Get(*(*s_it)->m_ShaderXRLCName);
+    	IBlender* 		B = EDevice->Resources->_FindBlender(*(*s_it)->m_ShaderName);
+        Shader_xrLC* 	C = EDevice->ShaderXRLC.Get(*(*s_it)->m_ShaderXRLCName);
         if (!B||!C){
         	ELog.Msg	(mtError,"Object '%s': invalid or missing shader [E:'%s', C:'%s']",GetName(),(*s_it)->_ShaderName(),(*s_it)->_ShaderXRLCName());
             bRes 		= false;
@@ -394,7 +394,7 @@ bool CEditableObject::CheckShaderCompatible()
     }
     return bRes;
 }
-#ifdef _EDITOR
+#if 1
 void CEditableObject::AddBone(CBone* parent_bone)
 {
 	CBone* B 			= xr_new<CBone>();
@@ -466,7 +466,7 @@ void CEditableObject::DeleteBone(CBone* bone)
 
 
     bone_to_delete = bone;
-    bone_to_delete_frame = EDevice.dwFrame;
+    bone_to_delete_frame = EDevice->dwFrame;
 	PrepareBones	();
 
     for (EditMeshIt _M=m_Meshes.begin(); _M!=m_Meshes.end(); _M++)

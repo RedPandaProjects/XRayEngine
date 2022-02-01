@@ -153,13 +153,17 @@ private:
 public:
 	RDebugRender()
 	{
-		//Device.seqRender.Add		(this);
-		Device.seqRender.Add		(this,REG_PRIORITY_LOW-100);
+#ifndef REDITOR
+		//Device->seqRender.Add		(this);
+		Device->seqRender.Add		(this,REG_PRIORITY_LOW-100);
+#endif
 	}
 
 virtual	~RDebugRender()
 	{
-		Device.seqRender.Remove		(this);
+#ifndef REDITOR
+		Device->seqRender.Remove		(this);
+#endif
 	}
 
 void OnRender()

@@ -44,7 +44,7 @@ bool CStateChimeraThreatenAbstract::check_start_conditions()
 	if (object->Position().distance_to(object->EnemyMan.get_enemy_position()) < MIN_DIST_TO_ENEMY) return false;
 	if (object->HitMemory.is_hit())						return false;
 	if (object->hear_dangerous_sound)					return false;
-	if (m_last_time_threaten + THREATEN_DELAY > Device.dwTimeGlobal) return false;
+	if (m_last_time_threaten + THREATEN_DELAY > Device->dwTimeGlobal) return false;
 
 	return true;
 }
@@ -95,14 +95,14 @@ TEMPLATE_SPECIALIZATION
 void CStateChimeraThreatenAbstract::finalize()
 {
 	inherited::finalize		();
-	m_last_time_threaten	 = Device.dwTimeGlobal;
+	m_last_time_threaten	 = Device->dwTimeGlobal;
 }
 
 TEMPLATE_SPECIALIZATION
 void CStateChimeraThreatenAbstract::critical_finalize()
 {
 	inherited::critical_finalize();
-	m_last_time_threaten	 = Device.dwTimeGlobal;
+	m_last_time_threaten	 = Device->dwTimeGlobal;
 }
 
 

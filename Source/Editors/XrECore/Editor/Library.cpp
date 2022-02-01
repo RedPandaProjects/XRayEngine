@@ -25,8 +25,8 @@ ELibrary::~ELibrary()
 
 void ELibrary::OnCreate()
 {
-	//EDevice.seqDevCreate.Add	(this,REG_PRIORITY_NORMAL);
-	//EDevice.seqDevDestroy.Add(this,REG_PRIORITY_NORMAL);
+	//EDevice->seqDevCreate.Add	(this,REG_PRIORITY_NORMAL);
+	//EDevice->seqDevDestroy.Add(this,REG_PRIORITY_NORMAL);
     m_bReady = true;
 }
 //----------------------------------------------------
@@ -35,8 +35,8 @@ void ELibrary::OnDestroy()
 {
 	VERIFY(m_bReady);
     m_bReady = false;
-//	EDevice.seqDevCreate.Remove(this);
-//	EDevice.seqDevDestroy.Remove(this);
+//	EDevice->seqDevCreate.Remove(this);
+//	EDevice->seqDevDestroy.Remove(this);
 
     // remove all instance CEditableObject
 	EditObjPairIt O = m_EditObjects.begin();

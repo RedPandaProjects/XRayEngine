@@ -414,7 +414,7 @@ virtual				void						GetGlobalTransformDynamic					(Fmatrix* m) 																
 //#define script_type_list save_type_list(CPhysicsShell)
 
 struct dContact;
-struct SGameMtl;
+class SGameMtl;
 XRPHYSICS_API void	StaticEnvironmentCB ( bool& do_colide, bool bo1, dContact& c, SGameMtl* material_1, SGameMtl* material_2 );
 
 // Implementation creator

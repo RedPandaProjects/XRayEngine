@@ -80,7 +80,7 @@ void dx103DFluidEmitters::ApplyDensity( const CEmitter &Emitter)
 	// Draw gaussian ball of color
 	RCache.set_Element(m_EmitterTechnique[ET_SimpleGausian]);
 
-	float t = Device.fTimeGlobal;
+	float t = Device->fTimeGlobal;
 
 	float fRadius = Emitter.m_fRadius;
 
@@ -131,7 +131,7 @@ void dx103DFluidEmitters::ApplyVelocity( const CEmitter &Emitter)
 	float fRadius = Emitter.m_fRadius;
 	Fvector FlowVelocity = Emitter.m_vFlowVelocity;
 
-	float t = Device.fTimeGlobal;
+	float t = Device->fTimeGlobal;
 
 	switch (Emitter.m_eType)
 	{

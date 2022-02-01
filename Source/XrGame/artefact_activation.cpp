@@ -87,7 +87,7 @@ void SArtefactActivation::UpdateActivation()
 		return;
 
 	VERIFY(!physics_world()->Processing());
-	m_cur_state_time				+=	Device.fTimeDelta;
+	m_cur_state_time				+=	Device->fTimeDelta;
 	if(m_cur_state_time				>=	m_activation_states[int(m_cur_activation_state)].m_time){
 		m_cur_activation_state		=	(EActivationStates)(int)(m_cur_activation_state+1);
 		
@@ -202,7 +202,7 @@ void SArtefactActivation::SpawnAnomaly()
 		Level().Send				(P,net_flags(TRUE));
 		F_entity_Destroy			(object);
 //. #ifdef DEBUG
-		Msg("artefact [%s] spawned a zone [%s] at [%f]", *m_af->cName(), zone_sect, Device.fTimeGlobal);
+		Msg("artefact [%s] spawned a zone [%s] at [%f]", *m_af->cName(), zone_sect, Device->fTimeGlobal);
 //. #endif
 }
 shared_str clear_brackets(LPCSTR src)

@@ -84,20 +84,20 @@ public:
 	void					update_smooth		(IRenderable*	O=0);
 	
 	ICF	float				get_hemi			()	{
-		if (dwFrameSmooth!=Device.dwFrame)		update_smooth();
+		if (dwFrameSmooth!=Device->dwFrame)		update_smooth();
 		return									hemi_smooth;
 	}
 	ICF	float				get_sun				()	{
-		if (dwFrameSmooth!=Device.dwFrame)		update_smooth();
+		if (dwFrameSmooth!=Device->dwFrame)		update_smooth();
 		return									sun_smooth;
 	}
 	ICF Fvector3&			get_approximate		()	{
-		if (dwFrameSmooth!=Device.dwFrame)		update_smooth();
+		if (dwFrameSmooth!=Device->dwFrame)		update_smooth();
 		return									approximate;
 	}
 
 	const float*			get_hemi_cube		(){
-		if (dwFrameSmooth!=Device.dwFrame)		update_smooth();
+		if (dwFrameSmooth!=Device->dwFrame)		update_smooth();
 		return									hemi_cube_smooth;
 	}
 

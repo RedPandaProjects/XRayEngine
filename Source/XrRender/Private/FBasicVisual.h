@@ -40,7 +40,7 @@ private:
 class		ECORE_API			dxRender_Visual : public IRenderVisual
 {
 public:
-#ifdef _EDITOR
+#ifdef REDITOR
     ogf_desc					desc		;
 #endif
 #ifdef DEBUG

@@ -412,7 +412,7 @@ void CController::control_hit()
 	play_control_sound_hit		();
 /*
 	active_control_fx			= true;
-	time_control_hit_started	= Device.dwTimeGlobal;
+	time_control_hit_started	= Device->dwTimeGlobal;
 */
 }
 
@@ -431,7 +431,7 @@ void CController::UpdateCL()
 
 	if (active_control_fx) {
 		u32 time_to_show	= 150;
-		float percent		= float((Device.dwTimeGlobal - time_control_hit_started)) / float(time_to_show);
+		float percent		= float((Device->dwTimeGlobal - time_control_hit_started)) / float(time_to_show);
 		float percent2		= 1 - (percent - TEXTURE_SIZE_PERCENT) / 2 ;
 
 		
@@ -439,20 +439,20 @@ void CController::UpdateCL()
 			CurrentGameUI()->RemoveCustomStatic("controller_fx2");
 			SDrawStaticStruct* s = CurrentGameUI()->AddCustomStatic("controller_fx", true);
 			
-			float x1 = Device.dwWidth  / 2 - ((Device.dwWidth	/ 2) * percent);
-			float y1 = Device.dwHeight / 2 - ((Device.dwHeight	/ 2) * percent);
-			float x2 = Device.dwWidth  / 2 + ((Device.dwWidth	/ 2) * percent);
-			float y2 = Device.dwHeight / 2 + ((Device.dwHeight	/ 2) * percent);
+			float x1 = Device->dwWidth  / 2 - ((Device->dwWidth	/ 2) * percent);
+			float y1 = Device->dwHeight / 2 - ((Device->dwHeight	/ 2) * percent);
+			float x2 = Device->dwWidth  / 2 + ((Device->dwWidth	/ 2) * percent);
+			float y2 = Device->dwHeight / 2 + ((Device->dwHeight	/ 2) * percent);
 
 			s->wnd()->SetWndRect				(Frect().set(x1,y1,x2-x1,y2-y1));
 		} else if (percent2 > 0){
 			CurrentGameUI()->RemoveCustomStatic("controller_fx");
 			SDrawStaticStruct* s = CurrentGameUI()->AddCustomStatic("controller_fx2", true);
 			
-			float x1 = Device.dwWidth  / 2 - ((Device.dwWidth	/ 2) * percent2);
-			float y1 = Device.dwHeight / 2 - ((Device.dwHeight	/ 2) * percent2);
-			float x2 = Device.dwWidth  / 2 + ((Device.dwWidth	/ 2) * percent2);
-			float y2 = Device.dwHeight / 2 + ((Device.dwHeight	/ 2) * percent2);
+			float x1 = Device->dwWidth  / 2 - ((Device->dwWidth	/ 2) * percent2);
+			float y1 = Device->dwHeight / 2 - ((Device->dwHeight	/ 2) * percent2);
+			float x2 = Device->dwWidth  / 2 + ((Device->dwWidth	/ 2) * percent2);
+			float y2 = Device->dwHeight / 2 + ((Device->dwHeight	/ 2) * percent2);
 
 			s->wnd()->SetWndRect				(Frect().set(x1,y1,x2-x1,y2-y1));
 		} else {
@@ -556,7 +556,7 @@ void CController::psy_fire()
 	draw_fire_particles			();
 /*	
 	active_control_fx			= true;
-	time_control_hit_started	= Device.dwTimeGlobal;
+	time_control_hit_started	= Device->dwTimeGlobal;
 */
 }
 

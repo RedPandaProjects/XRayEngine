@@ -186,10 +186,10 @@ void ESceneWallmarkTool::OnRender(int priority, bool strictB2F)
         VERIFY(slot->shader);
 		if ((u32(priority)==slot->shader->E[0]->flags.iPriority)&&(strictB2F==!!(slot->shader->E[0]->flags.bStrictB2F))){
             // Projection and xform
-            float _43				= EDevice.mProject._43;
-            EDevice.mProject._43 	-= 0.01f;
+            float _43				= EDevice->mProject._43;
+            EDevice->mProject._43 	-= 0.01f;
             RCache.set_xform_world	(Fidentity);
-            RCache.set_xform_project(EDevice.mProject);
+            RCache.set_xform_project(EDevice->mProject);
 
             float	ssaCLIP		   	= r_ssaDISCARD/4;
 
@@ -201,7 +201,7 @@ void ESceneWallmarkTool::OnRender(int priority, bool strictB2F)
                 wallmark* W			= *w_it;
                 VERIFY3				(W->verts.size()<=MAX_R_VERTEX,"ERROR: Invalid wallmark.",*slot->tx_name);
                 if (RImplementation.ViewBase.testSphere_dirty(W->bounds.P,W->bounds.R)){
-                    float dst		= EDevice.vCameraPosition.distance_to_sqr(W->bounds.P);
+                    float dst		= EDevice->vCameraPosition.distance_to_sqr(W->bounds.P);
                     float ssa		= W->bounds.R * W->bounds.R / dst;
                     if (ssa>=ssaCLIP){
                         // fill wallmark
@@ -240,8 +240,8 @@ void ESceneWallmarkTool::OnRender(int priority, bool strictB2F)
                 RCache.Render		(D3DPT_TRIANGLELIST,w_offset,w_count/3);
             }
             // Projection
-            EDevice.mProject._43		= _43;
-            RCache.set_xform_project	(EDevice.mProject);
+            EDevice->mProject._43		= _43;
+            RCache.set_xform_project	(EDevice->mProject);
         }
         if ((1==priority)&&(false==strictB2F)){
             for (WMVecIt w_it=slot->items.begin(); w_it!=slot->items.end(); w_it++){
@@ -636,14 +636,14 @@ void ESceneWallmarkTool::BuildMatrix	(Fmatrix &mView, float inv_w, float inv_h, 
 	Fmatrix				mScale,mRot;
     Fvector				at,up,right,y;
 	at.sub				(from,sml_normal);
-	y.set				(EDevice.vCameraTop);
+	y.set				(EDevice->vCameraTop);
 
     if (m_Flags.is(flAxisAlign)){
         y.set			(0,1,0);
         if (_abs(sml_normal.y)>0.99f) y.set(1,0,0);
     }else{
-        y.set			(EDevice.vCameraTop);
-        if (fsimilar(y.dotproduct(sml_normal),1.f,EPS)) y.set(EDevice.vCameraRight);
+        y.set			(EDevice->vCameraTop);
+        if (fsimilar(y.dotproduct(sml_normal),1.f,EPS)) y.set(EDevice->vCameraRight);
     }
 	right.crossproduct	(y,sml_normal);
 	up.crossproduct		(sml_normal,right);
@@ -822,7 +822,7 @@ bool ESceneWallmarkTool::Validate(bool)
     for (WMSVecIt slot_it=marks.begin(); slot_it!=marks.end(); slot_it++){
         wm_slot* slot= *slot_it;	
         if (slot->items.size()){
-            IBlender* 	B 	= EDevice.Resources->_FindBlender(*slot->sh_name); 
+            IBlender* 	B 	= EDevice->Resources->_FindBlender(*slot->sh_name); 
             if (!B||B->canBeLMAPped()){
                 ELog.Msg	(mtError,"Wallmarks: Invalid or missing shader '%s'.",*slot->sh_name);
                 bRes 		= false;

@@ -9,6 +9,7 @@
 
 #include "securom_api.h"
 
+#include "device.h"
 extern XRCDB_API BOOL *cdb_bDebug;
 
 void	SetupGPU(IRenderDeviceRender *pRender)
@@ -128,7 +129,7 @@ void CRenderDevice::Create	()
 {
 	if (b_is_Ready)		return;		// prevent double call
 	Statistic			= xr_new<CStats>();
-	Log					("Starting RENDER device...");
+	Log					("Starting RENDER Device->..");
 
 #ifdef _EDITOR
 	psCurrentVidMode[0]	= dwWidth;
@@ -177,7 +178,7 @@ cdb_bDebug		= &bDebug;
 	if (!m_pRender)
 		m_pRender			= RenderFactory->CreateRenderDeviceRender();
 	SetupGPU(m_pRender);
-	Log					("Starting RENDER device...");
+	Log					("Starting RENDER Device->..");
 
 #ifdef _EDITOR
 	psCurrentVidMode[0]	= dwWidth;
@@ -193,7 +194,7 @@ cdb_bDebug		= &bDebug;
 		fWidth_2,
 		fHeight_2,
 #ifdef INGAME_EDITOR
-		editor() ? false :
+		WeatherEditor() ? false :
 #endif // #ifdef INGAME_EDITOR
 		true
 	);

@@ -1,13 +1,9 @@
 
 #pragma once
 
-#define	MTL_EXPORT_API
-#define ENGINE_API
-#define DLL_API		
-#define ECORE_API
 //#include "../xrEngine/stdafx.h"
 
-#include "../xrCore/xrCore.h"
+#include "../XrEngine/stdafx.h"
 
 #include "../xrServerEntities/smart_cast.h"
 //#include "../xrEngine/pure.h"
@@ -31,9 +27,9 @@
 //	VERIFY( g_pGameLevel );
 //	return *g_pGameLevel;
 //}
-class CGameMtlLibrary;
-IC CGameMtlLibrary &GMLibrary()
+class XrGameMaterialLibraryInterface;
+IC XrGameMaterialLibraryInterface&GMLibrary()
 {
-	VERIFY(PGMLib);
-	return *PGMLib;
+	VERIFY(GameMaterialLibrary);
+	return *GameMaterialLibrary;
 }

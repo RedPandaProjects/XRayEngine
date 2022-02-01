@@ -9,9 +9,6 @@
 #pragma once
 
 #include "object_broker.h"
-#ifdef XRSEFACTORY_EXPORTS
-#	include "script_value.h"
-#endif
 
 IC	CScriptValueContainer::~CScriptValueContainer	()
 {
@@ -20,7 +17,7 @@ IC	CScriptValueContainer::~CScriptValueContainer	()
 
 IC	void CScriptValueContainer::add			(CScriptValue *new_value)
 {
-#ifdef XRSEFACTORY_EXPORTS
+#if 0
 	CScriptValue		*value = 0;
 	xr_vector<CScriptValue*>::const_iterator	I = m_values.begin();
 	xr_vector<CScriptValue*>::const_iterator	E = m_values.end();
@@ -39,7 +36,7 @@ IC	void CScriptValueContainer::add			(CScriptValue *new_value)
 
 IC	void CScriptValueContainer::assign		()
 {
-#ifdef XRSEFACTORY_EXPORTS
+#if 0
 	xr_vector<CScriptValue*>::iterator	I = m_values.begin();
 	xr_vector<CScriptValue*>::iterator	E = m_values.end();
 	for ( ; I != E; ++I)

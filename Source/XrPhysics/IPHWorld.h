@@ -43,11 +43,10 @@ class IPHWorld:
 extern "C" XRPHYSICS_API	IPHWorld *		__stdcall	physics_world();
 class CObjectSpace;
 class CObjectList;
-class CRenderDeviceBase;
-extern "C" XRPHYSICS_API	void			__stdcall	create_physics_world( bool mt, CObjectSpace* os, CObjectList *lo, CRenderDeviceBase *dv  );
+class XrDeviceInterface;
+extern "C" XRPHYSICS_API	void			__stdcall	create_physics_world( bool mt, CObjectSpace* os, CObjectList *lo, XrDeviceInterface *dv  );
 extern "C" XRPHYSICS_API	void			__stdcall	destroy_physics_world();
 class CGameMtlLibrary;
-extern "C" XRPHYSICS_API	void			__stdcall	set_mtl_lib(CGameMtlLibrary * l);
 extern "C" XRPHYSICS_API	CObjectSpace*	__stdcall	create_object_space();
 struct hdrCFORM;
 extern "C" XRPHYSICS_API	CObjectSpace*	__stdcall	mesh_create_object_space(Fvector* verts, CDB::TRI* tris, const hdrCFORM &H, CDB::build_callback build_callback);

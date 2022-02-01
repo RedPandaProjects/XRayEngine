@@ -2,13 +2,12 @@
 #define dxRenderDeviceRender_included
 #pragma once
 
-#ifndef _EDITOR
+#ifndef REDITOR
 	#define DEV dxRenderDeviceRender::Instance().Resources
 #else
-	#define DEV EDevice.Resources
+	#define DEV EDevice->Resources
 #endif
 
-#ifndef _EDITOR
 
 #include "RenderDeviceRender.h"
 #include "xr_effgamma.h"
@@ -18,7 +17,7 @@ class CResourceManager;
 class dxRenderDeviceRender : public IRenderDeviceRender
 {
 public:
-	static dxRenderDeviceRender& Instance() {  return *((dxRenderDeviceRender*)(&*Device.m_pRender));}
+	static dxRenderDeviceRender& Instance() {  return *((dxRenderDeviceRender*)(&*Device->m_pRender));}
 
 	dxRenderDeviceRender();
 
@@ -67,7 +66,7 @@ public:
 	virtual void	ClearTarget();
 	virtual void	SetCacheXform(Fmatrix &mView, Fmatrix &mProject);
 	virtual void	OnAssetsChanged();
-
+#ifndef REDITOR
 public:
 	CResourceManager*	Resources;
 	ref_shader			m_WireShader;
@@ -76,9 +75,9 @@ public:
 private:
 
 	CGammaControl		m_Gamma;
+#endif
 };
 
-#endif //ifndef _EDITOR
 
 
 #endif	//	RenderDeviceRender_included

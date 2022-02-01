@@ -31,7 +31,7 @@ void CLevel::cl_Process_Spawn(NET_Packet& P)
 		return;
 	}
 //-------------------------------------------------
-//.	Msg ("M_SPAWN - %s[%d][%x] - %d %d", *s_name,  E->ID, E,E->ID_Parent, Device.dwFrame);
+//.	Msg ("M_SPAWN - %s[%d][%x] - %d %d", *s_name,  E->ID, E,E->ID_Parent, Device->dwFrame);
 //-------------------------------------------------
 	//force object to be local for server client
 	if (OnServer())		{

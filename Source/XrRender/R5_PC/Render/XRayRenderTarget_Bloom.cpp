@@ -7,8 +7,8 @@ void XRayRenderTarget::RenderBloom()
 	{
 		HW->Context->Lock(GRenderTarget->FrameBuffer_Bloom_1);
 		HW->Context->SetFrameBuffer(GRenderTarget->FrameBuffer_Bloom_1);
-		float		_w = float(Device.dwWidth);
-		float		_h = float(Device.dwHeight);
+		float		_w = float(Device->dwWidth);
+		float		_h = float(Device->dwHeight);
 		float		_2w = _w / 2;	float tw = RT_BLOOM_SIZE_X;
 		float		_2h = _h / 2; float th = RT_BLOOM_SIZE_Y;
 		float		_aspect_w = _2w / tw;

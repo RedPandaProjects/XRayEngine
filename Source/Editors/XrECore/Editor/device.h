@@ -1,7 +1,6 @@
-#ifndef DeviceH
-#define DeviceH
+#pragma once
 
-#include "../../../xrengine/device.h"
+#include "../../../xrengine/XrDeviceInterface.h"
 #include "ui_camera.h"
 #include "../../../xrRender/Private/hwcaps.h"
 #include "../../../xrRender/Private/hw.h"
@@ -21,7 +20,7 @@ class CResourceManager;
 #undef CreateWindow
 //------------------------------------------------------------------------------
 class ECORE_API CEditorRenderDevice :
-	public CRenderDeviceBase
+	public XrDeviceInterface
 {
     friend class 			CUI_Camera;
     friend class 			TUI;
@@ -37,7 +36,6 @@ class ECORE_API CEditorRenderDevice :
     void					_SetupStates();
 	void					_Create		(IReader* F);
 	void					_Destroy	(BOOL	bKeepTextures);
-	void 					Reset  		();
 public:
     ref_shader				m_WireShader;
     ref_shader				m_SelectionShader;
@@ -86,7 +84,7 @@ public:
 
 	// Dependent classes
 	CResourceManager*		Resources;	  
-	CEStats*				Statistic;
+	CEStats*				EStatistic;
 
 	CGameFont* 				pSystemFont;
 
@@ -104,8 +102,8 @@ public:
 							CEditorRenderDevice 	();
     virtual 				~CEditorRenderDevice	();
 
-	void	Pause							(BOOL bOn, BOOL bTimer, BOOL bSound, LPCSTR reason){};
-	BOOL	Paused							(){return FALSE;};
+	
+	virtual  bool			Paused()const { return FALSE; };
     void					time_factor		(float);
 	bool 					Create			();
 	void 					Destroy			();
@@ -115,15 +113,14 @@ public:
 
     void 					RenderNearer	(float f_Near);
     void 					ResetNearer		();
-	BOOL 					Begin();
+	bool 					Begin();
 	void 					End				();
 
 	void 					Initialize		(void);
 	void 					ShutDown		(void);
 	void 					Reset			(IReader* F, BOOL bKeepTextures);
 
-	IC CTimer* GetTimerGlobal				(){return &TimerGlobal;}
-
+	virtual void DumpResourcesMemoryUsage() {}
     IC float				GetRenderArea	(){return m_RenderArea;}
 	// Sprite rendering
 	IC float 				_x2real			(float x)
@@ -159,10 +156,9 @@ public:
 
 	void 					InitTimer		();
 	// Mode control
-	IC u32	 				TimerAsync		(void)
-    { return TimerGlobal.GetElapsed_ms();}
-	IC u32	 				TimerAsync_MMT	(void)
-    { return TimerAsync()+Timer_MM_Delta; }
+	virtual void	Pause(BOOL bOn, BOOL bTimer, BOOL bSound, LPCSTR reason) {}
+	virtual void PreCache(u32 amount, bool b_draw_loadscreen, bool b_wait_user_input) {}
+	virtual void Clear() {}
 public:
     Shader_xrLC_LIB			ShaderXRLC;
 private:
@@ -174,9 +170,11 @@ private:
 public:
 	void CreateWindow();
 	void DestryWindow();
+	virtual			bool				IsEditorMode() { return true; }
+	virtual void Reset(bool precache);
 };
 
-extern ECORE_API CEditorRenderDevice EDevice;
+extern ECORE_API CEditorRenderDevice* EDevice;
 
 // video
 enum {
@@ -194,12 +192,11 @@ enum {
 
 #define DEFAULT_CLEARCOLOR 0x00555555
 
-#define		REQ_CREATE()	if (!EDevice.bReady)	return;
-#define		REQ_DESTROY()	if (EDevice.bReady)	return;
+#define		REQ_CREATE()	if (!EDevice->bReady)	return;
+#define		REQ_DESTROY()	if (EDevice->bReady)	return;
 
 #include "../../../xrCPU_Pipe/xrCPU_Pipe.h"
 ENGINE_API extern xrDispatchTable	PSGP;
 
 #include "../../../xrRender/Private/R_Backend_Runtime.h"
 
-#endif

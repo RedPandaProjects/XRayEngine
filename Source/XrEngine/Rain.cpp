@@ -78,7 +78,7 @@ void	CEffect_Rain::Born		(Item& dest, float radius)
 	float	pitch		= drop_max_angle*k-PI_DIV_2;
     axis.setHP			(g_pGamePersistent->Environment().CurrentEnv->wind_direction,pitch);
     
-	Fvector&	view	= Device.vCameraPosition;
+	Fvector&	view	= Device->vCameraPosition;
 	float		angle	= ::Random.randF	(0,PI_MUL_2);
 	float		dist	= ::Random.randF	(); dist = _sqrt(dist)*radius; 
 	float		x		= dist*_cos		(angle);
@@ -110,12 +110,12 @@ void CEffect_Rain::RenewItem(Item& dest, float height, BOOL bHit)
 {
 	dest.uv_set			= Random.randI(2);
     if (bHit){
-		dest.dwTime_Life= Device.dwTimeGlobal + iFloor(1000.f*height/dest.fSpeed) - Device.dwTimeDelta;
-		dest.dwTime_Hit	= Device.dwTimeGlobal + iFloor(1000.f*height/dest.fSpeed) - Device.dwTimeDelta;
+		dest.dwTime_Life= Device->dwTimeGlobal + iFloor(1000.f*height/dest.fSpeed) - Device->dwTimeDelta;
+		dest.dwTime_Hit	= Device->dwTimeGlobal + iFloor(1000.f*height/dest.fSpeed) - Device->dwTimeDelta;
 		dest.Phit.mad	(dest.P,dest.D,height);
 	}else{
-		dest.dwTime_Life= Device.dwTimeGlobal + iFloor(1000.f*height/dest.fSpeed) - Device.dwTimeDelta;
-		dest.dwTime_Hit	= Device.dwTimeGlobal + iFloor(2*1000.f*height/dest.fSpeed)-Device.dwTimeDelta;
+		dest.dwTime_Life= Device->dwTimeGlobal + iFloor(1000.f*height/dest.fSpeed) - Device->dwTimeDelta;
+		dest.dwTime_Hit	= Device->dwTimeGlobal + iFloor(2*1000.f*height/dest.fSpeed)-Device->dwTimeDelta;
 		dest.Phit.set	(dest.P);
 	}
 }
@@ -146,7 +146,7 @@ void	CEffect_Rain::OnFrame	()
 		
 //		float f					= 0.9f*hemi_factor + 0.1f*hemi_val;
 		float f					= hemi_val;
-		float t					= Device.fTimeDelta;
+		float t					= Device->fTimeDelta;
 		clamp					(t, 0.001f, 1.0f);
 		hemi_factor				= hemi_factor*(1.0f-t) + f*t;
 	}
@@ -174,7 +174,7 @@ void	CEffect_Rain::OnFrame	()
 	if (snd_Ambient._feedback())
 	{
 //		Fvector					sndP;
-//		sndP.mad				(Device.vCameraPosition,Fvector().set(0,1,0),source_offset);
+//		sndP.mad				(Device->vCameraPosition,Fvector().set(0,1,0),source_offset);
 //		snd_Ambient.set_position(sndP);
 		snd_Ambient.set_volume	(_max(0.1f,factor) * hemi_factor );
 	}
@@ -213,33 +213,33 @@ void	CEffect_Rain::Render	()
 	// build source plane
     Fplane src_plane;
     Fvector norm	={0.f,-1.f,0.f};
-    Fvector upper; 	upper.set(Device.vCameraPosition.x,Device.vCameraPosition.y+source_offset,Device.vCameraPosition.z);
+    Fvector upper; 	upper.set(Device->vCameraPosition.x,Device->vCameraPosition.y+source_offset,Device->vCameraPosition.z);
     src_plane.build(upper,norm);
 	
 	// perform update
 	u32			vOffset;
 	FVF::LIT	*verts		= (FVF::LIT	*) RCache.Vertex.Lock(desired_items*4,hGeom_Rain->vb_stride,vOffset);
 	FVF::LIT	*start		= verts;
-	const Fvector&	vEye	= Device.vCameraPosition;
+	const Fvector&	vEye	= Device->vCameraPosition;
 	for (u32 I=0; I<items.size(); I++){
 		// physics and time control
 		Item&	one		=	items[I];
 
-		if (one.dwTime_Hit<Device.dwTimeGlobal)		Hit (one.Phit);
-		if (one.dwTime_Life<Device.dwTimeGlobal)	Born(one,source_radius);
+		if (one.dwTime_Hit<Device->dwTimeGlobal)		Hit (one.Phit);
+		if (one.dwTime_Life<Device->dwTimeGlobal)	Born(one,source_radius);
 
 // последн€€ дельта ??
-//.		float xdt		= float(one.dwTime_Hit-Device.dwTimeGlobal)/1000.f;
-//.		float dt		= Device.fTimeDelta;//xdt<Device.fTimeDelta?xdt:Device.fTimeDelta;
-		float dt		= Device.fTimeDelta;
+//.		float xdt		= float(one.dwTime_Hit-Device->dwTimeGlobal)/1000.f;
+//.		float dt		= Device->fTimeDelta;//xdt<Device->fTimeDelta?xdt:Device->fTimeDelta;
+		float dt		= Device->fTimeDelta;
 		one.P.mad		(one.D,one.fSpeed*dt);
 
-		Device.Statistic->TEST1.Begin();
+		Device->Statistic->TEST1.Begin();
 		Fvector	wdir;	wdir.set(one.P.x-vEye.x,0,one.P.z-vEye.z);
 		float	wlen	= wdir.square_magnitude();
 		if (wlen>b_radius_wrap_sqr)	{
 			wlen		= _sqrt(wlen);
-//.			Device.Statistic->TEST3.Begin();
+//.			Device->Statistic->TEST3.Begin();
 			if ((one.P.y-vEye.y)<sink_offset){
 				// need born
 				one.invalidate();
@@ -269,9 +269,9 @@ void	CEffect_Rain::Render	()
 //					Log("4");
 				}
 			}
-//.			Device.Statistic->TEST3.End();
+//.			Device->Statistic->TEST3.End();
 		}
-		Device.Statistic->TEST1.End();
+		Device->Statistic->TEST1.End();
 
 		// Build line
 		Fvector&	pos_head	= one.P;
@@ -321,7 +321,7 @@ void	CEffect_Rain::Render	()
 	if (0==P)			return;
 	
 	{
-		float	dt				= Device.fTimeDelta;
+		float	dt				= Device->fTimeDelta;
 		_IndexStream& _IS		= RCache.Index;
 		RCache.set_Shader		(DM_Drop->shader);
 		

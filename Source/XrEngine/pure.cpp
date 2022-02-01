@@ -18,7 +18,5 @@ DECLARE_RP(AppStart);
 DECLARE_RP(AppEnd);
 DECLARE_RP(DeviceReset);
 DECLARE_RP(ScreenResolutionChanged);
-#ifdef _EDITOR
 DECLARE_RP(DrawUI);
-#endif
 

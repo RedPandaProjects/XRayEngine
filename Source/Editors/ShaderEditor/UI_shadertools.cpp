@@ -132,28 +132,28 @@ void CShaderTool::PrepareLighting()
     L.type = D3DLIGHT_DIRECTIONAL;
     L.diffuse.set(1,1,1,1);
     L.direction.set(1,-1,1); L.direction.normalize();
-	EDevice.SetLight(0,L);
-	EDevice.LightEnable(0,true);
+	EDevice->SetLight(0,L);
+	EDevice->LightEnable(0,true);
 
     L.diffuse.set(0.3,0.3,0.3,1);
     L.direction.set(-1,-1,-1); L.direction.normalize();
-	EDevice.SetLight(1,L);
-	EDevice.LightEnable(1,true);
+	EDevice->SetLight(1,L);
+	EDevice->LightEnable(1,true);
 
     L.diffuse.set(0.3,0.3,0.3,1);
     L.direction.set(1,-1,-1); L.direction.normalize();
-	EDevice.SetLight(2,L);
-	EDevice.LightEnable(2,true);
+	EDevice->SetLight(2,L);
+	EDevice->LightEnable(2,true);
 
     L.diffuse.set(0.3,0.3,0.3,1);
     L.direction.set(-1,-1,1); L.direction.normalize();
-	EDevice.SetLight(3,L);
-	EDevice.LightEnable(3,true);
+	EDevice->SetLight(3,L);
+	EDevice->LightEnable(3,true);
 
 	L.diffuse.set(1.0,0.8,0.7,1);
     L.direction.set(0,1,0); L.direction.normalize();
-	EDevice.SetLight(4,L);
-	EDevice.LightEnable(4,true);
+	EDevice->SetLight(4,L);
+	EDevice->LightEnable(4,true);
 }
 
 void CShaderTool::OnDeviceCreate()

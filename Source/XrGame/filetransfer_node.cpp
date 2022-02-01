@@ -315,7 +315,7 @@ filetransfer_node::~filetransfer_node()
 
 void filetransfer_node::calculate_chunk_size(u32 peak_throughput, u32 current_throughput)
 {
-	if ((Device.dwTimeGlobal - m_last_chunksize_update_time) < 1000)
+	if ((Device->dwTimeGlobal - m_last_chunksize_update_time) < 1000)
 		return;
 
 	if (m_last_peak_throughput < peak_throughput)		//peak throughput is increasing, so we can increase upload size :)
@@ -331,7 +331,7 @@ void filetransfer_node::calculate_chunk_size(u32 peak_throughput, u32 current_th
 			m_chunk_size = data_max_chunk_size;
 			return;
 		}
-		if ((Device.dwTimeGlobal - m_last_chunksize_update_time) < 3000)
+		if ((Device->dwTimeGlobal - m_last_chunksize_update_time) < 3000)
 			return;
 
 		m_chunk_size = static_cast<u32>(
@@ -343,7 +343,7 @@ void filetransfer_node::calculate_chunk_size(u32 peak_throughput, u32 current_th
 	}
 	clamp(m_chunk_size, data_min_chunk_size, data_max_chunk_size);
 	m_last_peak_throughput			= peak_throughput;
-	m_last_chunksize_update_time	= Device.dwTimeGlobal;
+	m_last_chunksize_update_time	= Device->dwTimeGlobal;
 }
 
 bool filetransfer_node::make_data_packet(NET_Packet & packet)

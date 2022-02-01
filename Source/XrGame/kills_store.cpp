@@ -34,7 +34,7 @@ void kills_store::add_kill(shared_str const & killer,
 	}
 
 	kill						new_kill;
-	new_kill.m_kill_time		= Device.dwTimeGlobal;
+	new_kill.m_kill_time		= Device->dwTimeGlobal;
 	new_kill.m_weapon_id		= weapon_id;
 	new_kill.m_kill_type		= kill_type;
 	new_kill.m_spec_kill_type	= spec_kill_type;

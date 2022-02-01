@@ -61,7 +61,7 @@ void R_dsgraph_structure::r_dsgraph_render_lods	(bool _setup_zb, bool _clear)
 			// calculate direction and shift
 			FLOD*							lodV		=	(FLOD*)P.pVisual;
 			Fvector							Ldir,shift	;
-			Ldir.sub						(lodV->vis.sphere.P,Device.vCameraPosition).normalize();
+			Ldir.sub						(lodV->vis.sphere.P,Device->vCameraPosition).normalize();
 			shift.mul						(Ldir,-.5f * lodV->vis.sphere.R);
 
 			// gen geometry

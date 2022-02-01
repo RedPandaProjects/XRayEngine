@@ -123,12 +123,12 @@ public:
 
     void			Quit			()	{	m_Flags.set(flNeedQuit,TRUE); }
     
-    u32 			&GetRenderWidth	()	{   return EDevice.m_RenderWidth; }
-    u32&GetRenderHeight	()	{   return EDevice.m_RenderHeight; }
-    int 			GetRealWidth	()	{   return EDevice.dwWidth; }
-    int 			GetRealHeight	()  {   return EDevice.dwHeight; }
+    u32 			&GetRenderWidth	()	{   return EDevice->m_RenderWidth; }
+    u32&GetRenderHeight	()	{   return EDevice->m_RenderHeight; }
+    int 			GetRealWidth	()	{   return EDevice->dwWidth; }
+    int 			GetRealHeight	()  {   return EDevice->dwHeight; }
 
-    IC float 		ZFar			()	{	return EDevice.m_Camera.m_Zfar; }
+    IC float 		ZFar			()	{	return EDevice->m_Camera.m_Zfar; }
     IC TShiftState	GetShiftState 	()	{	return m_ShiftState; }
 
     virtual bool 	OnCreate		();
@@ -147,7 +147,7 @@ public:
     // only redraw scene
     void 			RedrawScene			(bool bForced=false){   m_Flags.set(flRedraw,TRUE); 		if (bForced) RealRedrawScene();}
 
-    void 			SetRenderQuality	(float q)      {   EDevice.m_ScreenQuality = q;}
+    void 			SetRenderQuality	(float q)      {   EDevice->m_ScreenQuality = q;}
 // mouse action
     void 			EnableSelectionRect	(bool flag );                                               
     void 			UpdateSelectionRect	(const Ivector2& from, const Ivector2& to );
@@ -157,7 +157,7 @@ public:
     bool  IsMouseCaptured		()	{	return m_MouseCaptured|m_MouseMultiClickCaptured;}
     bool  IsMouseInUse		()	{	return bMouseInUse;}
 
-    bool  KeyDown     		(WORD Key, TShiftState Shift);
+   virtual bool  KeyDown     		(WORD Key, TShiftState Shift);
     bool  KeyUp       		(WORD Key, TShiftState Shift);
     bool  KeyPress    		(WORD Key, TShiftState Shift);
 	void  MousePress			(TShiftState Shift, int X, int Y);

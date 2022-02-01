@@ -17,13 +17,13 @@ void	light::vis_prepare			()
 	//		. camera inside light volume	= visible,	shedule for 'small' interval
 	//		. perform testing				= ???,		pending
 
-	u32	frame	= Device.dwFrame;
+	u32	frame	= Device->dwFrame;
 	if (frame	<	vis.frame2test)		return;
 
 	float	safe_area					= VIEWPORT_NEAR;
 	{
-		float	a0	= deg2rad(Device.fFOV*Device.fASPECT/2.f);
-		float	a1	= deg2rad(Device.fFOV/2.f);
+		float	a0	= deg2rad(Device->fFOV*Device->fASPECT/2.f);
+		float	a1	= deg2rad(Device->fFOV/2.f);
 		float	x0	= VIEWPORT_NEAR/_cos	(a0);
 		float	x1	= VIEWPORT_NEAR/_cos	(a1);
 		float	c	= _sqrt					(x0*x0 + x1*x1);
@@ -31,7 +31,7 @@ void	light::vis_prepare			()
 	}
 
 	//Msg	("sc[%f,%f,%f]/c[%f,%f,%f] - sr[%f]/r[%f]",VPUSH(spatial.center),VPUSH(position),spatial.radius,range);
-	//Msg	("dist:%f, sa:%f",Device.vCameraPosition.distance_to(spatial.center),safe_area);
+	//Msg	("dist:%f, sa:%f",Device->vCameraPosition.distance_to(spatial.center),safe_area);
 	bool	skiptest	= false;
 	if (ps_r2_ls_flags.test(R2FLAG_EXP_DONT_TEST_UNSHADOWED) && !flags.bShadow)	skiptest=true;
 	if (ps_r2_ls_flags.test(R2FLAG_EXP_DONT_TEST_SHADOWED) && flags.bShadow)	skiptest=true;
@@ -39,7 +39,7 @@ void	light::vis_prepare			()
 	//	TODO: DX10: Remove this pessimization
 	//skiptest	= true;
 
-	if (skiptest || Device.vCameraPosition.distance_to(spatial.sphere.P)<=(spatial.sphere.R*1.01f+safe_area))	{	// small error
+	if (skiptest || Device->vCameraPosition.distance_to(spatial.sphere.P)<=(spatial.sphere.R*1.01f+safe_area))	{	// small error
 		vis.visible		=	true;
 		vis.pending		=	false;
 		vis.frame2test	=	frame	+ ::Random.randI(delay_small_min,delay_small_max);
@@ -74,7 +74,7 @@ void	light::vis_update			()
 
 	if (!vis.pending)	return;
 
-	u32	frame			= Device.dwFrame;
+	u32	frame			= Device->dwFrame;
 	u64 fragments		= RImplementation.occq_get	(vis.query_id);
 	//Log					("",fragments);
 	vis.visible			= (fragments > cullfragments);

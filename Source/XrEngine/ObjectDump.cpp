@@ -72,8 +72,8 @@ ENGINE_API std::string dbg_object_props_dump_string( const CObject *obj )
 		get_string(bool (!!props.net_SV_Update ) ).c_str(), get_string( bool (!!props.crow ) ).c_str(), get_string( bool (!!props.bPreDestroy ) ).c_str() 
 		)
 		+
-		make_string( "\n dbg_update_cl: %d, dwFrame_UpdateCL: %d, dwFrame_AsCrow :%d, Device.dwFrame :%d, Device.dwTimeGlobal: %d  \n",
-		obj->dbg_update_cl, obj->dwFrame_UpdateCL, obj->dwFrame_AsCrow, Device.dwFrame, Device.dwTimeGlobal );
+		make_string( "\n dbg_update_cl: %d, dwFrame_UpdateCL: %d, dwFrame_AsCrow :%d, Device->dwFrame :%d, Device->dwTimeGlobal: %d  \n",
+		obj->dbg_update_cl, obj->dwFrame_UpdateCL, obj->dwFrame_AsCrow, Device->dwFrame, Device->dwTimeGlobal );
 }
 ENGINE_API std::string dbg_object_full_dump_string( const CObject *obj )
 {

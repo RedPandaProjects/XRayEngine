@@ -34,7 +34,7 @@ void reward_manager::update_tasks		()
 
 	u32 const tmp_award_id		= m_to_reward_queue.front();
 
-	if ((Device.dwTimeGlobal - m_last_reward_time) < m_reward_process_time)
+	if ((Device->dwTimeGlobal - m_last_reward_time) < m_reward_process_time)
 		return;
 	
 	process_reward				(tmp_award_id);
@@ -135,7 +135,7 @@ void reward_manager::process_reward		(u32 const award_id)
 
 	tmp_iter->second->m_play_sound.play(NULL, sm_2D);
 	m_reward_process_time			= tmp_iter->second->m_process_time;
-	m_last_reward_time				= Device.dwTimeGlobal;
+	m_last_reward_time				= Device->dwTimeGlobal;
 }
 
 }//namespace award_system

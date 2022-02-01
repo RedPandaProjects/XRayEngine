@@ -7,8 +7,8 @@ void CRenderTarget::draw_rain( light &RainSetup )
 	// Common calc for quad-rendering
 	u32		Offset;
 	u32		C					= color_rgba	(255,255,255,255);
-	float	_w					= float			(Device.dwWidth);
-	float	_h					= float			(Device.dwHeight);
+	float	_w					= float			(Device->dwWidth);
+	float	_h					= float			(Device->dwHeight);
 	Fvector2					p0,p1;
 	p0.set						(.5f/_w, .5f/_h);
 	p1.set						((_w+.5f)/_w, (_h+.5f)/_h );
@@ -16,15 +16,15 @@ void CRenderTarget::draw_rain( light &RainSetup )
 
 	// Common constants (light-related)
 	Fvector		L_dir;
-	Device.mView.transform_dir	(L_dir,RainSetup.direction);
+	Device->mView.transform_dir	(L_dir,RainSetup.direction);
 	L_dir.normalize				();
 
 	Fvector		W_dirX;
-	Device.mView.transform_dir	(W_dirX,Fvector().set(1.0f, 0.0f, 0.0f));
+	Device->mView.transform_dir	(W_dirX,Fvector().set(1.0f, 0.0f, 0.0f));
 	W_dirX.normalize				();
 
 	Fvector		W_dirZ;
-	Device.mView.transform_dir	(W_dirZ,Fvector().set(0.0f, 0.0f, 1.0f));
+	Device->mView.transform_dir	(W_dirZ,Fvector().set(0.0f, 0.0f, 1.0f));
 	W_dirZ.normalize				();
 
 	// Perform masking (only once - on the first/near phase)
@@ -57,8 +57,8 @@ void CRenderTarget::draw_rain( light &RainSetup )
 	// recalculate d_Z, to perform depth-clipping
 	const float fRainFar = ps_r3_dyn_wet_surf_far;
 
-	Fvector	center_pt;			center_pt.mad	(Device.vCameraPosition,Device.vCameraDirection,fRainFar);
-	Device.mFullTransform.transform(center_pt)	;
+	Fvector	center_pt;			center_pt.mad	(Device->vCameraPosition,Device->vCameraDirection,fRainFar);
+	Device->mFullTransform.transform(center_pt)	;
 	d_Z							= center_pt.z	;
 
 	// nv-stencil recompression
@@ -97,7 +97,7 @@ void CRenderTarget::draw_rain( light &RainSetup )
 
 		// compute xforms
 		FPU::m64r			();
-		Fmatrix				xf_invview;		xf_invview.invert	(Device.mView)	;
+		Fmatrix				xf_invview;		xf_invview.invert	(Device->mView)	;
 
 		// shadow xform
 		Fmatrix				m_shadow;
@@ -125,7 +125,7 @@ void CRenderTarget::draw_rain( light &RainSetup )
 
 		// compute xforms
 		FPU::m64r			();
-		Fmatrix				xf_invview;		xf_invview.invert	(Device.mView)	;
+		Fmatrix				xf_invview;		xf_invview.invert	(Device->mView)	;
 
 		// shadow xform
 		Fmatrix				m_shadow;
@@ -144,7 +144,7 @@ void CRenderTarget::draw_rain( light &RainSetup )
 			Fmatrix			m_xform;
 			//Fvector			direction	= RainSetup.direction	;
 			Fvector			normal	;	normal.setHP(1,0);
-			//w_shift		+=	0.003f*Device.fTimeDelta;
+			//w_shift		+=	0.003f*Device->fTimeDelta;
 			//Fvector			position;	position.set(0,0,0);
 			//m_xform.build_camera_dir	(position,direction,normal)	;
 			m_xform.identity();
@@ -159,8 +159,8 @@ void CRenderTarget::draw_rain( light &RainSetup )
 
 		// Make jitter texture
 		Fvector2					j0,j1;
-		float	scale_X				= float(Device.dwWidth)	/ float(TEX_jitter);
-		//float	scale_Y				= float(Device.dwHeight)/ float(TEX_jitter);
+		float	scale_X				= float(Device->dwWidth)	/ float(TEX_jitter);
+		//float	scale_Y				= float(Device->dwHeight)/ float(TEX_jitter);
 		float	offset				= (.5f / float(TEX_jitter));
 		j0.set						(offset,offset);
 		j1.set						(scale_X,scale_X).add(offset);
@@ -194,10 +194,10 @@ void CRenderTarget::draw_rain( light &RainSetup )
 			zMin = ps_r2_sun_near;
 			zMax = OLES_SUN_LIMIT_27_01_07;
 		}
-		center_pt.mad(Device.vCameraPosition,Device.vCameraDirection,zMin);	Device.mFullTransform.transform	(center_pt);
+		center_pt.mad(Device->vCameraPosition,Device->vCameraDirection,zMin);	Device->mFullTransform.transform	(center_pt);
 		zMin = center_pt.z	;
 
-		center_pt.mad(Device.vCameraPosition,Device.vCameraDirection,zMax);	Device.mFullTransform.transform	(center_pt);
+		center_pt.mad(Device->vCameraPosition,Device->vCameraDirection,zMax);	Device->mFullTransform.transform	(center_pt);
 		zMax = center_pt.z	;
 		*/
 

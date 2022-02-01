@@ -34,7 +34,7 @@ void CMonsterHitMemory::add_hit(CObject *who, EHitSide side)
 {
 	SMonsterHit			new_hit_info;
 	new_hit_info.object		= who;
-	new_hit_info.time		= Device.dwTimeGlobal;
+	new_hit_info.time		= Device->dwTimeGlobal;
 	new_hit_info.side		= side;
 	new_hit_info.position	= monster->Position();
 
@@ -72,7 +72,7 @@ void CMonsterHitMemory::remove_non_actual()
 			m_hits.end(),
 			predicate_old_hit(
 				time_memory,
-				Device.dwTimeGlobal
+				Device->dwTimeGlobal
 			)
 		),
 		m_hits.end()

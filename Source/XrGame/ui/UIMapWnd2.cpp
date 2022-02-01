@@ -39,11 +39,11 @@ void CUIMapWnd::init_xml_nav( CUIXml& xml )
 
 void CUIMapWnd::UpdateNav()
 {
-	if ( Device.dwTimeGlobal - m_nav_timing < 10 )
+	if ( Device->dwTimeGlobal - m_nav_timing < 10 )
 	{
 		return;
 	}
-	m_nav_timing = Device.dwTimeGlobal;
+	m_nav_timing = Device->dwTimeGlobal;
 
 	if ( m_btn_nav[btn_up]->CursorOverWindow() && m_btn_nav[btn_up]->GetButtonState() == CUIButton::BUTTON_PUSHED )
 	{

@@ -116,7 +116,6 @@ public:
 	friend class	CRenumbererConverter;
 };
 #endif
-
 #ifdef AI_COMPILER
 struct NodeCompressed6 {
 public:

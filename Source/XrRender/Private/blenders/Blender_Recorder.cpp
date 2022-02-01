@@ -88,7 +88,7 @@ void	CBlender_Compile::_cpp_Compile	(ShaderElement* _SH)
 	bDetail_Diffuse	= FALSE;
 	bDetail_Bump	= FALSE;
 
-#ifndef _EDITOR
+#ifndef REDITOR
 #if RENDER==R_R1
 	if (RImplementation.o.no_detail_textures)
 		bDetail = FALSE;
@@ -99,7 +99,7 @@ void	CBlender_Compile::_cpp_Compile	(ShaderElement* _SH)
 	{
 		DEV->m_textures_description.GetTextureUsage(base, bDetail_Diffuse, bDetail_Bump);
 
-#ifndef _EDITOR
+#ifndef REDITOR
 #if RENDER!=R_R1
 		//	Detect the alowance of detail bump usage here.
 		if (  !(RImplementation.o.advancedpp && ps_r2_ls_flags.test(R2FLAG_DETAIL_BUMP) ) )
@@ -135,7 +135,7 @@ void	CBlender_Compile::SetParams		(int iPriority, bool bStrictB2F)
 	SH->flags.iPriority		= iPriority;
 	SH->flags.bStrictB2F	= bStrictB2F;
 	if (bStrictB2F){			
-#ifdef _EDITOR    
+#ifdef REDITOR    
 		if (1!=(SH->flags.iPriority/2)){
         	Log("!If StrictB2F true then Priority must div 2.");
             SH->flags.bStrictB2F	= FALSE;
@@ -187,7 +187,7 @@ void	CBlender_Compile::PassEnd			()
 	SetMapping				();
 	proto.constants	= DEV->_CreateConstantTable(ctable);
 	proto.T 		= DEV->_CreateTextureList	(passTextures);
-#ifdef _EDITOR
+#ifdef REDITOR
 	proto.M			= DEV->_CreateMatrixList	(passMatrices);
 #endif
 	proto.C			= DEV->_CreateConstantList	(passConstants);
@@ -274,7 +274,7 @@ void	CBlender_Compile::StageSET_Address	(u32 adr)
 }
 void	CBlender_Compile::StageSET_XForm	(u32 tf, u32 tc)
 {
-#ifdef _EDITOR
+#ifdef REDITOR
 	RS.SetTSS	(Stage(),D3DTSS_TEXTURETRANSFORMFLAGS,	tf);
 	RS.SetTSS	(Stage(),D3DTSS_TEXCOORDINDEX,			tc);
 #endif

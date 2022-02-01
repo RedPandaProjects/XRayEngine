@@ -1,10 +1,4 @@
-#ifndef	STDAFX_3DA
-#define STDAFX_3DA
 #pragma once
-
-#ifdef _EDITOR
-	#include "..\editors\XrECore\stdafx.h"
-#else
 
 #include "../xrCore/xrCore.h"
 #include "../../xrAPI/xrAPI.h"
@@ -42,7 +36,7 @@
 #ifndef NO_XRLOG
 #include "../xrcore/log.h"
 #endif
-#include "device.h"
+#include "XrDeviceInterface.h"
 #include "../xrcore/fs.h"
 
 #include "../xrcdb/xrXRC.h"
@@ -67,6 +61,3 @@ extern ENGINE_API CInifile *pGameIni;
 
 #define READ_IF_EXISTS(ltx,method,section,name,default_value)\
 	(((ltx)->line_exist(section, name)) ? ((ltx)->method(section, name)) : (default_value))
-
-#endif // !M_BORLAND
-#endif // !defined STDAFX_3DA

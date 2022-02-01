@@ -161,7 +161,7 @@ TEMPLATE_SPECIALIZATION
 bool CStateMonsterAttackAbstract::check_find_enemy_state()
 {
 	// check state find enemy
-	if (object->EnemyMan.get_enemy_time_last_seen() + FIND_ENEMY_DELAY < Device.dwTimeGlobal) 
+	if (object->EnemyMan.get_enemy_time_last_seen() + FIND_ENEMY_DELAY < Device->dwTimeGlobal) 
 		return true;
 	return false;
 }
@@ -175,8 +175,8 @@ bool CStateMonsterAttackAbstract::check_run_away_state()
 	if (prev_substate == eStateAttack_RunAway) {
 		if (!get_state(eStateAttack_RunAway)->check_completion()) 
 			return true;
-		else m_time_next_run_away = Device.dwTimeGlobal + 10000;
-	} else if ((object->EnemyMan.get_enemy() != Actor()) && object->Morale.is_despondent() && (m_time_next_run_away < Device.dwTimeGlobal)) {
+		else m_time_next_run_away = Device->dwTimeGlobal + 10000;
+	} else if ((object->EnemyMan.get_enemy() != Actor()) && object->Morale.is_despondent() && (m_time_next_run_away < Device->dwTimeGlobal)) {
 		return true;
 	}
 

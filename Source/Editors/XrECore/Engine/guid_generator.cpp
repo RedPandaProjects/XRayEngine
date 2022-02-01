@@ -15,7 +15,7 @@
 #	include <rpc.h>
 #endif
 
-xrGUID generate_guid()
+ECORE_API xrGUID generate_guid()
 {
 	xrGUID			result;
 #ifdef WINVER

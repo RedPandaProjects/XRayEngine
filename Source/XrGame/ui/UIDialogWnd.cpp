@@ -39,7 +39,7 @@ bool CUIDialogWnd::IR_process()
 
 	if(GetHolder()->IgnorePause())		return true;
 
-	if(Device.Paused()&&!WorkInPause())	return false;
+	if(Device->Paused()&&!WorkInPause())	return false;
 	
 	return true;
 }

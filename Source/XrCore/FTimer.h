@@ -1,5 +1,3 @@
-#ifndef FTimerH
-#define FTimerH
 #pragma once
 
 class	CTimer_paused;
@@ -18,7 +16,7 @@ public:
 
 extern XRCORE_API pauseMngr		g_pauseMngr;
 
-class XRCORE_API CTimerBase		{
+class  CTimerBase		{
 protected:
 	u64			qwStartTime		;
 	u64			qwPausedTime	;
@@ -45,7 +43,7 @@ public:
 	}
 };
 
-class XRCORE_API CTimer : public CTimerBase {
+class  CTimer : public CTimerBase {
 private:
 	typedef CTimerBase					inherited;
 
@@ -130,7 +128,7 @@ public:
 	}
 };
 
-class XRCORE_API CTimer_paused_ex : public CTimer		{
+class  CTimer_paused_ex : public CTimer		{
 	u64							save_clock;
 public:
 	CTimer_paused_ex			()		{ }
@@ -150,7 +148,7 @@ public:
 	}
 };
 
-class XRCORE_API CTimer_paused  : public CTimer_paused_ex		{
+class  CTimer_paused  : public CTimer_paused_ex		{
 public:
 	CTimer_paused				()		{ g_pauseMngr.Register(this);	}
 	virtual ~CTimer_paused		()		{ g_pauseMngr.UnRegister(this);	}
@@ -186,5 +184,3 @@ public:
 		return		_result		;
 	}
 };
-
-#endif // FTimerH

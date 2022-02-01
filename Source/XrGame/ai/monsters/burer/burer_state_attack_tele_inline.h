@@ -49,7 +49,7 @@ void CStateBurerAttackTele<Object>::execute()
 			{
 				float const time				=	object->anim().get_animation_length (eAnimTelekinesis, 0);
 				m_anim_end_tick					=	current_time() + TTime(time*1000);
-				time_started					=	Device.dwTimeGlobal;
+				time_started					=	Device->dwTimeGlobal;
 			}
 			else
 			{
@@ -295,7 +295,7 @@ void CStateBurerAttackTele<Object>::FireAllToEnemy()
 template <typename Object>
 void CStateBurerAttackTele<Object>::ExecuteTeleContinue()
 {
-	if (time_started + object->m_tele_time_to_hold > Device.dwTimeGlobal) return;
+	if (time_started + object->m_tele_time_to_hold > Device->dwTimeGlobal) return;
 
 	if (!object->EnemyMan.see_enemy_now()) return;
 
@@ -307,7 +307,7 @@ void CStateBurerAttackTele<Object>::ExecuteTeleContinue()
 	while (i < object->CTelekinesis::get_objects_count()) {
 		tele_object = object->CTelekinesis::get_object_by_index(i);
 
-		if ((tele_object.get_state() == TS_Keep) && (tele_object.time_keep_started + 1500 < Device.dwTimeGlobal)) {
+		if ((tele_object.get_state() == TS_Keep) && (tele_object.time_keep_started + 1500 < Device->dwTimeGlobal)) {
 
 			object_found = true;
 			break;
@@ -319,7 +319,7 @@ void CStateBurerAttackTele<Object>::ExecuteTeleContinue()
 		m_action		= ACTION_TELE_FIRE;
 		selected_object = tele_object.get_object();
 	} else {
-		if (!IsActiveObjects() || (time_started + MAX_TIME_CHECK_FAILURE < Device.dwTimeGlobal)) {
+		if (!IsActiveObjects() || (time_started + MAX_TIME_CHECK_FAILURE < Device->dwTimeGlobal)) {
 			m_action						= ACTION_COMPLETED;
 		} 
 	}

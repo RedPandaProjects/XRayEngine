@@ -63,7 +63,7 @@ void CUIGameSP::OnFrame()
 {
 	inherited::OnFrame();
 	
-	if(Device.Paused())	return;
+	if(Device->Paused())	return;
 
 	if(m_game_objective)
 	{
@@ -88,7 +88,7 @@ void CUIGameSP::OnFrame()
 bool CUIGameSP::IR_UIOnKeyboardPress(int dik) 
 {
 	if(inherited::IR_UIOnKeyboardPress(dik)) return true;
-	if( Device.Paused()		) return false;
+	if( Device->Paused()		) return false;
 
 #ifdef DEBUG
 	hud_adjust_mode_keyb	(dik);
@@ -298,13 +298,13 @@ void CChangeLevelWnd::Show()
 	
 
 	g_block_pause							= true;
-	Device.Pause							(TRUE, TRUE, TRUE, "CChangeLevelWnd_show");
+	Device->Pause							(TRUE, TRUE, TRUE, "CChangeLevelWnd_show");
 	bShowPauseString						= FALSE;
 }
 
 void CChangeLevelWnd::Hide()
 {
 	g_block_pause							= false;
-	Device.Pause							(FALSE, TRUE, TRUE, "CChangeLevelWnd_hide");
+	Device->Pause							(FALSE, TRUE, TRUE, "CChangeLevelWnd_hide");
 }
 

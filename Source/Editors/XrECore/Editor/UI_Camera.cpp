@@ -85,10 +85,10 @@ void CUI_Camera::BuildCamera()
     m_CamMat.translate_over(m_Position);
     UI->OutCameraPos();
     
-	EDevice.vCameraPosition.set	(m_CamMat.c);
-	EDevice.vCameraDirection.set	(m_CamMat.k);
-	EDevice.vCameraTop.set		(m_CamMat.j);
-    EDevice.vCameraRight.set		(m_CamMat.i);
+	EDevice->vCameraPosition.set	(m_CamMat.c);
+	EDevice->vCameraDirection.set	(m_CamMat.k);
+	EDevice->vCameraTop.set		(m_CamMat.j);
+    EDevice->vCameraRight.set		(m_CamMat.i);
 }
 
 void CUI_Camera::SetDepth(float _far, bool bForcedUpdate)
@@ -100,7 +100,7 @@ void CUI_Camera::SetViewport(float _near, float _far, float _fov)
 {
     if (m_Znear!=_near)		{m_Znear=_near; UI->Resize();}
     if (m_Zfar!=_far)		{m_Zfar=_far; UI->Resize();}
-    if (EDevice.fFOV!=_fov)	{EDevice.fFOV=_fov; UI->Resize();}
+    if (EDevice->fFOV!=_fov)	{EDevice->fFOV=_fov; UI->Resize();}
 }
 
 void CUI_Camera::SetSensitivity(float sm, float sr)
@@ -167,7 +167,7 @@ void CUI_Camera::Scale(float dy)
 void CUI_Camera::Rotate(float dx, float dy)
 {
 	m_HPB.x-=m_SR*dx;
-	m_HPB.y-=m_SR*dy*EDevice.fASPECT;
+	m_HPB.y-=m_SR*dy*EDevice->fASPECT;
 
     BuildCamera();
 }
@@ -274,8 +274,8 @@ void CUI_Camera::MouseRayFromPoint( Fvector& start, Fvector& direction, const Iv
 
 	start.set( m_Position );
 
-	float size_y = m_Znear * tan( deg2rad(EDevice.fFOV) * 0.5f );
-	float size_x = size_y / EDevice.fASPECT;
+	float size_y = m_Znear * tan( deg2rad(EDevice->fFOV) * 0.5f );
+	float size_x = size_y / EDevice->fASPECT;
 
 	float r_pt = float(point2.x) * size_x / (float) halfwidth;
 	float u_pt = float(point2.y) * size_y / (float) halfheight;
@@ -292,8 +292,8 @@ void CUI_Camera::ZoomExtents(const Fbox& bb)
     float R,H1,H2;
     bb.getsphere(C,R);
 	D.mul(m_CamMat.k,-1);
-    H1 = R/sinf(deg2rad(EDevice.fFOV)*0.5f);
-    H2 = R/sinf(deg2rad(EDevice.fFOV)*0.5f/EDevice.fASPECT);
+    H1 = R/sinf(deg2rad(EDevice->fFOV)*0.5f);
+    H2 = R/sinf(deg2rad(EDevice->fFOV)*0.5f/EDevice->fASPECT);
     m_Position.mad(C,D,_max(H1,H2));
 	m_Target.set(C);
 
@@ -336,7 +336,7 @@ void CUI_Camera::ArcBall(TShiftState Shift, float dx, float dy)
         	dist -= dx*m_SM;
 	    }else if (Shift&ssLeft){
     	    m_HPB.x-=m_SR*dx;
-        	m_HPB.y-=m_SR*dy*EDevice.fASPECT;
+        	m_HPB.y-=m_SR*dy*EDevice->fASPECT;
 	    }
     }
 

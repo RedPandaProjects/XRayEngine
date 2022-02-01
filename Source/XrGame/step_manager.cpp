@@ -116,7 +116,7 @@ void CStepManager::on_animation_start(MotionID motion_id, CBlend *blend)
 	if(m_object->character_ik_controller	())
 		m_object->character_ik_controller	()->PlayLegs(blend);
 
-	m_time_anim_started = Device.dwTimeGlobal; 
+	m_time_anim_started = Device->dwTimeGlobal; 
 	
 	// искать текущую анимацию в STEPS_MAP
 	STEPS_MAP_IT it = m_steps_map.find(motion_id);
@@ -155,12 +155,12 @@ void CStepManager::update(bool b_hud_view)
 	if (m_step_info.disable)	return;
 	if (!m_blend)				return;
 
-	float dist_sqr = m_object->Position().distance_to_sqr(Device.vCameraPosition);
+	float dist_sqr = m_object->Position().distance_to_sqr(Device->vCameraPosition);
 	bool b_play = dist_sqr < 400.0f; //20m
 
 	// получить параметры шага
 	SStepParam	&step		= m_step_info.params;
-	u32		cur_time		= Device.dwTimeGlobal;
+	u32		cur_time		= Device->dwTimeGlobal;
 
 	// время одного цикла анимации
 	float cycle_anim_time	= get_blend_time() / step.cycles;

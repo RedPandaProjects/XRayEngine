@@ -80,35 +80,35 @@ void UIMainMenuForm::Draw()
                 }
                 if (ImGui::BeginMenu("Fill Mode"))
                 {
-                    bool selected[3] = { EDevice.dwFillMode == D3DFILL_POINT,EDevice.dwFillMode == D3DFILL_WIREFRAME,EDevice.dwFillMode == D3DFILL_SOLID };
+                    bool selected[3] = { EDevice->dwFillMode == D3DFILL_POINT,EDevice->dwFillMode == D3DFILL_WIREFRAME,EDevice->dwFillMode == D3DFILL_SOLID };
                     if (ImGui::MenuItem("Point", "", &selected[0]))
                     {
-                        EDevice.dwFillMode = D3DFILL_POINT;
+                        EDevice->dwFillMode = D3DFILL_POINT;
                         UI->RedrawScene();
                     }
                     if (ImGui::MenuItem("Wireframe", "", &selected[1]))
                     {
-                        EDevice.dwFillMode = D3DFILL_WIREFRAME;
+                        EDevice->dwFillMode = D3DFILL_WIREFRAME;
                         UI->RedrawScene();
                     }
                     if (ImGui::MenuItem("Solid", "", &selected[2]))
                     {
-                        EDevice.dwFillMode = D3DFILL_SOLID;
+                        EDevice->dwFillMode = D3DFILL_SOLID;
                         UI->RedrawScene();
                     }
                     ImGui::EndMenu();
                 }
                 if (ImGui::BeginMenu("Shader Mode"))
                 {
-                    bool selected[2] = { EDevice.dwShadeMode == D3DSHADE_FLAT,EDevice.dwShadeMode == D3DSHADE_GOURAUD };
+                    bool selected[2] = { EDevice->dwShadeMode == D3DSHADE_FLAT,EDevice->dwShadeMode == D3DSHADE_GOURAUD };
                     if (ImGui::MenuItem("Flat", "", &selected[0]))
                     {
-                        EDevice.dwShadeMode = D3DSHADE_FLAT;
+                        EDevice->dwShadeMode = D3DSHADE_FLAT;
                         UI->RedrawScene();
                     }
                     if (ImGui::MenuItem("Gouraud", "", &selected[1]))
                     {
-                        EDevice.dwShadeMode = D3DSHADE_GOURAUD;
+                        EDevice->dwShadeMode = D3DSHADE_GOURAUD;
                         UI->RedrawScene();
                     }
                     ImGui::EndMenu();

@@ -13,7 +13,7 @@
  #include "exportskeleton.h"
  #include "exportobjectOGF.h"
 
-#ifdef _EDITOR
+#if 1
  #include "Shader.h"
 
 bool CEditableObject::Load(const char* fname)
@@ -199,7 +199,7 @@ void CEditableObject::Save(IWriter& F)
 	bOnModified			= false;
 }
 
-#if 1 //#ifdef _EDITOR
+#if 1 //#if 1
 
 bool CEditableObject::Load(IReader& F)
 {

@@ -3,7 +3,7 @@
 
 #include "ParticleEffectDef.h"
 #include "ParticleEffect.h"
-#ifdef _EDITOR
+#ifdef REDITOR
 	#include "Editor/UI_ToolsCustom.h"
 	#include "Editor/ParticleEffectActions.h"
 #else
@@ -33,14 +33,14 @@ CPEDef::CPEDef()
     m_APDefaultRotation.set		(-PI_DIV_2,0.f,0.f);
 	// flags
     m_Flags.zero		();
-#ifdef _EDITOR
+#ifdef REDITOR
 	m_EditChoose = false;
 #endif
 }
 
 CPEDef::~CPEDef()
 {
-#ifdef _EDITOR
+#ifdef REDITOR
 	for (EPAVecIt it=m_EActionList.begin(); it!=m_EActionList.end(); it++) xr_delete(*it);
 #endif
 }
@@ -130,7 +130,7 @@ void CPEDef::ExecuteCollision(PAPI::Particle* particles, u32 p_cnt, float dt, CP
 			float dist 	= dir.magnitude();
 			if (dist>=EPS){
 				dir.div	(dist);
-#ifdef _EDITOR                
+#ifdef REDITOR                
 				if (Tools->RayPick(m.posB,dir,dist,&pt,&n)){
 #else
 				collide::rq_result	RQ;
@@ -238,7 +238,7 @@ BOOL CPEDef::Load(IReader& F)
 		}
 	}
 
-#ifdef _EDITOR
+#ifdef REDITOR
     if (pCreateEAction&&F.find_chunk(PED_CHUNK_EDATA))
 	{
         m_EActionList.resize(F.r_u32());
@@ -297,7 +297,7 @@ BOOL CPEDef::Load2(CInifile& ini)
 	{
 		m_APDefaultRotation			= ini.r_fvector3	("align_to_path", "default_rotation");
 	}
-#ifdef _EDITOR
+#ifdef REDITOR
 	if(pCreateEAction)
 	{
 		u32 count		= ini.r_u32("_effect", "action_count");
@@ -362,7 +362,7 @@ void CPEDef::Save2(CInifile& ini)
 	{
 		ini.w_fvector3	("align_to_path", "default_rotation", m_APDefaultRotation);
 	}
-#ifdef _EDITOR
+#ifdef REDITOR
     ini.w_u32			("_effect", "action_count", m_EActionList.size());
     u32					action_id = 0;
 	for (EPAVecIt it=m_EActionList.begin(); it!=m_EActionList.end(); ++it,++action_id)
@@ -439,7 +439,7 @@ void CPEDef::Save(IWriter& F)
 		F.w_fvector3	(m_APDefaultRotation);
 		F.close_chunk	();
 	}
-#ifdef _EDITOR
+#ifdef REDITOR
 	F.open_chunk	(PED_CHUNK_EDATA);
     F.w_u32			(m_EActionList.size());
     for (EPAVecIt it=m_EActionList.begin(); it!=m_EActionList.end(); it++){
@@ -450,7 +450,7 @@ void CPEDef::Save(IWriter& F)
 #endif
 }
 
-#ifdef _EDITOR
+#ifdef REDITOR
 void PS::CPEDef::Compile(EPAVec& v)
 {
 	m_Actions.clear	();

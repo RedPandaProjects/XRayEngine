@@ -34,7 +34,7 @@ void CHUDCrosshair::SetDispersion	(float disp)
 { 
 	Fvector4 r;
 	Fvector R			= { VIEWPORT_NEAR*_sin(disp), 0.f, VIEWPORT_NEAR };
-	Device.mProject.transform	(r,R);
+	Device->mProject.transform	(r,R);
 
 	Fvector2		scr_size;
 	scr_size.set	(float(::Render->getTarget()->get_width()), float(::Render->getTarget()->get_height()));
@@ -47,7 +47,7 @@ void CHUDCrosshair::SetFirstBulletDispertion(float fbdisp)
 {
 	Fvector4 r;
 	Fvector R			= { VIEWPORT_NEAR*_sin(fbdisp), 0.f, VIEWPORT_NEAR };
-	Device.mProject.transform	(r,R);
+	Device->mProject.transform	(r,R);
 
 	Fvector2		scr_size;
 	scr_size.set	(float(::Render->getTarget()->get_width()), float(::Render->getTarget()->get_height()));

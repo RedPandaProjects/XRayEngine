@@ -80,11 +80,11 @@ void CMosquitoBald::Affect(SZoneObjectInfo* O)
 
 void CMosquitoBald::UpdateSecondaryHit()
 {
-	if(m_dwAffectFrameNum == Device.dwFrame)	
+	if(m_dwAffectFrameNum == Device->dwFrame)	
 		return;
 
-	m_dwAffectFrameNum	= Device.dwFrame;
-	if(Device.dwPrecacheFrame)					
+	m_dwAffectFrameNum	= Device->dwFrame;
+	if(Device->dwPrecacheFrame)					
 		return;
 
 	OBJECT_INFO_VEC_IT it;

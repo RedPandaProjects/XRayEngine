@@ -428,7 +428,7 @@ void CActor::ActorUse()
 						if ( !m_pPersonWeLookingAt->deadbody_closed_status() )
 						{
 							if(pEntityAliveWeLookingAt->AlreadyDie() && 
-								pEntityAliveWeLookingAt->GetLevelDeathTime()+3000 < Device.dwTimeGlobal)
+								pEntityAliveWeLookingAt->GetLevelDeathTime()+3000 < Device->dwTimeGlobal)
 								// 99.9% dead
 								pGameSP->StartCarBody(this, m_pPersonWeLookingAt );
 						}

@@ -91,7 +91,7 @@ struct	  ECORE_API		SPass			: public xr_resource_flagged									{
 
 	ref_texture_list					T;
 	ref_constant_list					C;
-#ifdef _EDITOR
+#ifdef REDITOR
 	ref_matrix_list						M;
 #endif
 

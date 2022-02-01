@@ -86,7 +86,7 @@ void	CRenderTarget::phase_luminance()
 	}
 
 	// 222: Perform LUM-SAT, pass 2, 8x8 => 1x1
-	u32			gpu_id	= Device.dwFrame%HW.Caps.iGPUNum;
+	u32			gpu_id	= Device->dwFrame%HW.Caps.iGPUNum;
 	u_setrt		(rt_LUM_pool[gpu_id*2+1],NULL,NULL,NULL);
 	{
 		// Build filter-kernel
@@ -112,7 +112,7 @@ void	CRenderTarget::phase_luminance()
 		pv++;
 		RCache.Vertex.Unlock		(4,g_bloom_filter->vb_stride);
 
-		f_luminance_adapt			= .9f*f_luminance_adapt + .1f*Device.fTimeDelta*ps_r2_tonemap_adaptation;
+		f_luminance_adapt			= .9f*f_luminance_adapt + .1f*Device->fTimeDelta*ps_r2_tonemap_adaptation;
 		float		amount			= ps_r2_ls_flags.test(R2FLAG_TONEMAP)?ps_r2_tonemap_amount:0;
 		Fvector3	_none, _full, _result;
 				_none.set			(1,							0,		1						);

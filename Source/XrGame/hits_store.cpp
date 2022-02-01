@@ -37,7 +37,7 @@ void hits_store::add_hit(shared_str const & hitter,
 	}
 	
 	bullet_hit				tmp_hit;
-	tmp_hit.m_hit_time		= Device.dwTimeGlobal;
+	tmp_hit.m_hit_time		= Device->dwTimeGlobal;
 	tmp_hit.m_dist			= bullet_fly_dist;
 	tmp_hit.m_weapon_id		= weapon_id;
 	tmp_hit.m_bone_id		= bone_id;

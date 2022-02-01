@@ -13,23 +13,19 @@
 #	include "CustomHUD.h"
 #endif
 
-#ifdef _EDITOR
-	bool g_dedicated_server	= false;
-#endif
 
 #ifdef INGAME_EDITOR
 #	include "editor_environment_manager.hpp"
 #endif // INGAME_EDITOR
 
-ENGINE_API	IGame_Persistent*		g_pGamePersistent	= NULL;
 
-IGame_Persistent::IGame_Persistent	()
+IGame_Persistent::IGame_Persistent	(bool bIsEditor)
 {
-	RDEVICE.seqAppStart.Add			(this);
-	RDEVICE.seqAppEnd.Add			(this);
-	RDEVICE.seqFrame.Add			(this,REG_PRIORITY_HIGH+1);
-	RDEVICE.seqAppActivate.Add		(this);
-	RDEVICE.seqAppDeactivate.Add	(this);
+	Device->seqAppStart.Add			(this);
+	Device->seqAppEnd.Add			(this);
+	Device->seqFrame.Add			(this,REG_PRIORITY_HIGH+1);
+	Device->seqAppActivate.Add		(this);
+	Device->seqAppDeactivate.Add	(this);
 
 	m_pMainMenu						= NULL;
 
@@ -38,31 +34,35 @@ IGame_Persistent::IGame_Persistent	()
 	pEnvironment					= xr_new<CEnvironment>();
 	#endif
 #else // #ifdef INGAME_EDITOR
-	if (RDEVICE.editor())
-		pEnvironment				= xr_new<XrWeatherEditor::environment::manager>();
-	else
+	if (!bIsEditor)
 	{
-		switch (xrGameManager::GetGame())
+		if (Device->WeatherEditor())
+			pEnvironment = xr_new<XrWeatherEditor::environment::manager>();
+		else
 		{
-		case EGame::SHOC:
-			pEnvironment = xr_new<CEnvironmentSOC>();
-			break;
-		default:
-			pEnvironment = xr_new<CEnvironment>();
-			break;
+			switch (xrGameManager::GetGame())
+			{
+			case EGame::SHOC:
+				pEnvironment = xr_new<CEnvironmentSOC>();
+				break;
+			default:
+				pEnvironment = xr_new<CEnvironment>();
+				break;
 
+			}
 		}
 	}
+	
 #endif // #ifdef INGAME_EDITOR
 }
 
 IGame_Persistent::~IGame_Persistent	()
 {
-	RDEVICE.seqFrame.Remove			(this);
-	RDEVICE.seqAppStart.Remove		(this);
-	RDEVICE.seqAppEnd.Remove			(this);
-	RDEVICE.seqAppActivate.Remove	(this);
-	RDEVICE.seqAppDeactivate.Remove	(this);
+	Device->seqFrame.Remove			(this);
+	Device->seqAppStart.Remove		(this);
+	Device->seqAppEnd.Remove			(this);
+	Device->seqAppActivate.Remove	(this);
+	Device->seqAppDeactivate.Remove	(this);
 #ifndef _EDITOR
 	xr_delete						(pEnvironment);
 #endif
@@ -148,17 +148,17 @@ void IGame_Persistent::OnGameStart()
 	if (strstr(Core.Params,"-noprefetch"))	return;
 
 	// prefetch game objects & models
-	float	p_time		=			1000.f*Device.GetTimerGlobal()->GetElapsed_sec();
+	float	p_time		=			1000.f*Device->GetTimerGlobal()->GetElapsed_sec();
 	u32	mem_0			=			Memory.mem_usage()	;
 
 	Log				("Loading objects...");
 	ObjectPool.prefetch					();
 	Log				("Loading models...");
 	Render->models_Prefetch				();
-	//Device.Resources->DeferredUpload	();
-	Device.m_pRender->ResourcesDeferredUpload();
+	//Device->Resources->DeferredUpload	();
+	Device->m_pRender->ResourcesDeferredUpload();
 
-	p_time				=			1000.f*Device.GetTimerGlobal()->GetElapsed_sec() - p_time;
+	p_time				=			1000.f*Device->GetTimerGlobal()->GetElapsed_sec() - p_time;
 	u32		p_mem		=			Memory.mem_usage() - mem_0	;
 
 	Msg					("* [prefetch] time:    %d ms",	iFloor(p_time));
@@ -178,13 +178,13 @@ void IGame_Persistent::OnFrame		()
 {
 #ifndef _EDITOR
 
-	if(!Device.Paused() || Device.dwPrecacheFrame)
+	if(!Device->Paused() || Device->dwPrecacheFrame)
 		Environment().OnFrame	();
 
 
-	Device.Statistic->Particles_starting= ps_needtoplay.size	();
-	Device.Statistic->Particles_active	= ps_active.size		();
-	Device.Statistic->Particles_destroy	= ps_destroy.size		();
+	Device->Statistic->Particles_starting= ps_needtoplay.size	();
+	Device->Statistic->Particles_active	= ps_active.size		();
+	Device->Statistic->Particles_destroy	= ps_destroy.size		();
 
 	// Play req particle systems
 	while (ps_needtoplay.size())
@@ -253,6 +253,6 @@ void IGame_Persistent::destroy_particles		(const bool &all_particles)
 void IGame_Persistent::OnAssetsChanged()
 {
 #ifndef _EDITOR
-	Device.m_pRender->OnAssetsChanged(); //Resources->m_textures_description.Load();
+	Device->m_pRender->OnAssetsChanged(); //Resources->m_textures_description.Load();
 #endif    
 }

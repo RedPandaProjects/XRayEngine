@@ -387,81 +387,81 @@ void CEnvDescriptorMixer::clear	()
 
 void CEnvDescriptorMixer::lerp	(IEnvironment* , IEnvDescriptor& A_, IEnvDescriptor& B_, float f, IEnvModifier& Mdf_, float modifier_power)
 {
-	CEnvDescriptor& A = *static_cast<CEnvDescriptor*>(&A);
-	CEnvDescriptor& B = *static_cast<CEnvDescriptor*>(&B);
+	CEnvDescriptor& A = *dynamic_cast<CEnvDescriptor*>(&A_);
+	CEnvDescriptor& B = *dynamic_cast<CEnvDescriptor*>(&B_);
 
 	CEnvModifier& Mdf = *static_cast<CEnvModifier*>(&Mdf_);
 	float	modif_power		=	1.f/(modifier_power+1);	// the environment itself
 	float	fi				=	1-f;
 
-	m_pDescriptorMixer->lerp(&*A.m_pDescriptor, &*B.m_pDescriptor);
+	m_pDescriptorMixer->lerp(&*A_.m_pDescriptor, &*B_.m_pDescriptor);
 	/*
 	sky_r_textures.clear		();
-	sky_r_textures.push_back	(mk_pair(0,A.sky_texture));
-	sky_r_textures.push_back	(mk_pair(1,B.sky_texture));
+	sky_r_textures.push_back	(mk_pair(0,A_.sky_texture));
+	sky_r_textures.push_back	(mk_pair(1,B_.sky_texture));
 
 	sky_r_textures_env.clear	();
 
-	sky_r_textures_env.push_back(mk_pair(0,A.sky_texture_env));
-	sky_r_textures_env.push_back(mk_pair(1,B.sky_texture_env));
+	sky_r_textures_env.push_back(mk_pair(0,A_.sky_texture_env));
+	sky_r_textures_env.push_back(mk_pair(1,B_.sky_texture_env));
 
 	clouds_r_textures.clear		();
-	clouds_r_textures.push_back	(mk_pair(0,A.clouds_texture));
-	clouds_r_textures.push_back	(mk_pair(1,B.clouds_texture));
+	clouds_r_textures.push_back	(mk_pair(0,A_.clouds_texture));
+	clouds_r_textures.push_back	(mk_pair(1,B_.clouds_texture));
 	*/
 
 	weight					=	f;
 
-	clouds_color.lerp		(A.clouds_color,B.clouds_color,f);
+	clouds_color.lerp		(A_.clouds_color,B_.clouds_color,f);
 
-	sky_rotation			=	(fi*A.sky_rotation + f*B.sky_rotation);
+	sky_rotation			=	(fi*A_.sky_rotation + f*B_.sky_rotation);
 
-//.	far_plane				=	(fi*A.far_plane + f*B.far_plane + Mdf.far_plane)*psVisDistance*modif_power;
+//.	far_plane				=	(fi*A_.far_plane + f*B_.far_plane + Mdf.far_plane)*psVisDistance*modif_power;
 	if(Mdf.use_flags.test(eViewDist))
-		far_plane				=	(fi*A.far_plane + f*B.far_plane + Mdf.far_plane)*psVisDistance*modif_power;
+		far_plane				=	(fi*A_.far_plane + f*B_.far_plane + Mdf.far_plane)*psVisDistance*modif_power;
 	else
-		far_plane				=	(fi*A.far_plane + f*B.far_plane)*psVisDistance;
+		far_plane				=	(fi*A_.far_plane + f*B_.far_plane)*psVisDistance;
 	
-//.	fog_color.lerp			(A.fog_color,B.fog_color,f).add(Mdf.fog_color).mul(modif_power);
-	fog_color.lerp			(A.fog_color,B.fog_color,f);
+//.	fog_color.lerp			(A_.fog_color,B_.fog_color,f).add(Mdf.fog_color).mul(modif_power);
+	fog_color.lerp			(A_.fog_color,B_.fog_color,f);
 	if(Mdf.use_flags.test(eFogColor))
 		fog_color.add(Mdf.fog_color).mul(modif_power);
 
-//.	fog_density				=	(fi*A.fog_density + f*B.fog_density + Mdf.fog_density)*modif_power;
-	fog_density				=	(fi*A.fog_density + f*B.fog_density);
+//.	fog_density				=	(fi*A_.fog_density + f*B_.fog_density + Mdf.fog_density)*modif_power;
+	fog_density				=	(fi*A_.fog_density + f*B_.fog_density);
 	if(Mdf.use_flags.test(eFogDensity))
 	{
 		fog_density			+= Mdf.fog_density;
 		fog_density			*= modif_power;
 	}
 
-	fog_distance			=	(fi*A.fog_distance + f*B.fog_distance);
+	fog_distance			=	(fi*A_.fog_distance + f*B_.fog_distance);
 	fog_near				=	(1.0f - fog_density)*0.85f * fog_distance;
 	fog_far					=	0.99f * fog_distance;
 	
-	rain_density			=	fi*A.rain_density + f*B.rain_density;
-	rain_color.lerp			(A.rain_color,B.rain_color,f);
-	bolt_period				=	fi*A.bolt_period + f*B.bolt_period;
-	bolt_duration			=	fi*A.bolt_duration + f*B.bolt_duration;
+	rain_density			=	fi*A_.rain_density + f*B_.rain_density;
+	rain_color.lerp			(A_.rain_color,B_.rain_color,f);
+	bolt_period				=	fi*A_.bolt_period + f*B_.bolt_period;
+	bolt_duration			=	fi*A_.bolt_duration + f*B_.bolt_duration;
 	// wind
-	wind_velocity			=	fi*A.wind_velocity + f*B.wind_velocity;
-	wind_direction			=	fi*A.wind_direction + f*B.wind_direction;
+	wind_velocity			=	fi*A_.wind_velocity + f*B_.wind_velocity;
+	wind_direction			=	fi*A_.wind_direction + f*B_.wind_direction;
 
 	m_fSunShaftsIntensity	=	fi*A.m_fSunShaftsIntensity + f*B.m_fSunShaftsIntensity;
 	m_fWaterIntensity		=	fi*A.m_fWaterIntensity + f*B.m_fWaterIntensity;
 
 	// colors
-//.	sky_color.lerp			(A.sky_color,B.sky_color,f).add(Mdf.sky_color).mul(modif_power);
-	sky_color.lerp			(A.sky_color,B.sky_color,f);
+//.	sky_color.lerp			(A_.sky_color,B_.sky_color,f).add(Mdf.sky_color).mul(modif_power);
+	sky_color.lerp			(A_.sky_color,B_.sky_color,f);
 	if(Mdf.use_flags.test(eSkyColor))
 		sky_color.add(Mdf.sky_color).mul(modif_power);
 
-//.	ambient.lerp			(A.ambient,B.ambient,f).add(Mdf.ambient).mul(modif_power);
-	ambient.lerp			(A.ambient,B.ambient,f);
+//.	ambient.lerp			(A_.ambient,B_.ambient,f).add(Mdf.ambient).mul(modif_power);
+	ambient.lerp			(A_.ambient,B_.ambient,f);
 	if(Mdf.use_flags.test(eAmbientColor))
 		ambient.add(Mdf.ambient).mul(modif_power);
 
-	hemi_color.lerp			(A.hemi_color,B.hemi_color,f);
+	hemi_color.lerp			(A_.hemi_color,B_.hemi_color,f);
 
 	if(Mdf.use_flags.test(eHemiColor))
 	{
@@ -473,11 +473,11 @@ void CEnvDescriptorMixer::lerp	(IEnvironment* , IEnvDescriptor& A_, IEnvDescript
 		hemi_color.z			*= modif_power;
 	}
 
-	sun_color.lerp			(A.sun_color,B.sun_color,f);
+	sun_color.lerp			(A_.sun_color,B_.sun_color,f);
 
-	R_ASSERT				( _valid(A.sun_dir) );
-	R_ASSERT				( _valid(B.sun_dir) );
-	sun_dir.lerp			(A.sun_dir,B.sun_dir,f).normalize();
+	R_ASSERT				( _valid(A_.sun_dir) );
+	R_ASSERT				( _valid(B_.sun_dir) );
+	sun_dir.lerp			(A_.sun_dir,B_.sun_dir,f).normalize();
 	R_ASSERT				( _valid(sun_dir) );
 
 	VERIFY2					(sun_dir.y<0,"Invalid sun direction settings while lerp");}
@@ -729,11 +729,11 @@ void CEnvironment::load		()
 		create_mixer		();
 
 	m_pRender->OnLoad();
-	//tonemap					= Device.Resources->_CreateTexture("$user$tonemap");	//. hack
+	//tonemap					= Device->Resources->_CreateTexture("$user$tonemap");	//. hack
 	if (!eff_Rain)    		eff_Rain 		= xr_new<CEffect_Rain>();
 	if (!eff_LensFlare)		eff_LensFlare 	= xr_new<CLensFlare>();
 	if (!eff_Thunderbolt)	eff_Thunderbolt	= xr_new<CEffect_Thunderbolt>();
-	
+	return;
 	load_weathers			();
 	load_weather_effects	();
 }

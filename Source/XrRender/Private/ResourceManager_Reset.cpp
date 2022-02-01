@@ -2,7 +2,7 @@
 #pragma hdrstop
 
 #include "ResourceManager.h"
-#ifndef _EDITOR
+#ifndef REDITOR
 #include	"../../xrEngine/Render.h"
 #else
 #include "../../xrAPI/xrAPI.h"

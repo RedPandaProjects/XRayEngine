@@ -6,10 +6,10 @@
 #define D3DUtilsH
 #include "DrawUtils.h"
 //----------------------------------------------------
-
-#ifdef _EDITOR
-#	define DU_DRAW_DIP	EDevice.DIP
-#	define DU_DRAW_DP	EDevice.DP
+#ifdef REDITOR
+class CEditableObject;
+#	define DU_DRAW_DIP	EDevice->DIP
+#	define DU_DRAW_DP	EDevice->DP
 #else
 #	define DU_DRAW_DIP	RCache.dbg_DIP
 #	define DU_DRAW_DP	RCache.dbg_DP
@@ -23,8 +23,8 @@ struct SPrimitiveBuffer{
     u32						p_cnt;
 	typedef fastdelegate::FastDelegate0<> TOnRender;
     TOnRender				OnRender;
-    void xr_stdcall			RenderDIP()	{DU_DRAW_DIP(p_type,pGeom,0,0,v_cnt,0,p_cnt);}
-    void xr_stdcall			RenderDP()	{DU_DRAW_DP	(p_type,pGeom,0,p_cnt);}
+    void 			RenderDIP();
+    void 			RenderDP();
 public:
                             SPrimitiveBuffer():OnRender(0),pGeom(0){;}
     void					CreateFromData(D3DPRIMITIVETYPE _pt, u32 _p_cnt, u32 FVF, LPVOID vertices, u32 _v_cnt, u16* indices=0, u32 _i_cnt=0);
@@ -47,6 +47,9 @@ class ECORE_API CDrawUtilities: public CDUInterface, public pureRender{
     SPrimitiveBuffer		m_SolidBox;
     SPrimitiveBuffer		m_WireBox;
 	CGameFont* 				m_Font;
+#ifdef REDITOR
+    CEditableObject* m_axis_object;
+#endif
 public:
 	ref_geom 	vs_L;
 	ref_geom 	vs_TL;
@@ -72,7 +75,9 @@ public:
         m_DD_base		= 0;
 		m_Font	= 0;
     }
-    
+#ifdef REDITOR
+    void DestroyObjects();
+#endif
     void OnDeviceCreate	();
     virtual void  OnDeviceDestroy();
 
@@ -139,7 +144,7 @@ public:
 	virtual void  DrawObjectAxis(const Fmatrix& T, float sz, BOOL sel);
 	virtual void  DrawSelectionRect(const Ivector2& m_SelStart, const Ivector2& m_SelEnd);
 
-	virtual void  DrawIndexedPrimitive	(int prim_type, u32 pc, const Fvector& pos, const Fvector* vb, const u32& vb_size, const u32* ib, const u32& ib_size, const u32& clr_argb, float scale=1.0f){};
+    virtual void  DrawIndexedPrimitive(int prim_type, u32 pc, const Fvector& pos, const Fvector* vb, const u32& vb_size, const u32* ib, const u32& ib_size, const u32& clr_argb, float scale = 1.0f);
     virtual void  DrawPrimitiveL(D3DPRIMITIVETYPE pt, u32 pc, Fvector* vertices, int vc, u32 color, BOOL bCull, BOOL bCycle);
     virtual void  DrawPrimitiveTL(D3DPRIMITIVETYPE pt, u32 pc, FVF::TL* vertices, int vc, BOOL bCull, BOOL bCycle);
     virtual void  DrawPrimitiveLIT(D3DPRIMITIVETYPE pt, u32 pc, FVF::LIT* vertices, int vc, BOOL bCull, BOOL bCycle);

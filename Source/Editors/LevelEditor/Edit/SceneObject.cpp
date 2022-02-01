@@ -115,7 +115,7 @@ void CSceneObject::Render(int priority, bool strictB2F)
     if (Selected()){
     	if (1==priority){
             if (false==strictB2F){
-                EDevice.SetShader(EDevice.m_WireShader);
+                EDevice->SetShader(EDevice->m_WireShader);
                 RCache.set_xform_world(_Transform());
                 u32 clr = 0xFFFFFFFF;
                 DU_impl.DrawSelectionBoxB(m_pReference->GetBox(),&clr);
@@ -129,8 +129,8 @@ void CSceneObject::Render(int priority, bool strictB2F)
 void CSceneObject::RenderBlink()
 {
     if (m_iBlinkTime>0){
-        if (m_iBlinkTime>(int)EDevice.dwTimeGlobal){
-        	int alpha = iFloor(sqrtf(float(m_iBlinkTime-EDevice.dwTimeGlobal)/BLINK_TIME)*64);
+        if (m_iBlinkTime>(int)EDevice->dwTimeGlobal){
+        	int alpha = iFloor(sqrtf(float(m_iBlinkTime-EDevice->dwTimeGlobal)/BLINK_TIME)*64);
 			m_pReference->RenderSelection(_Transform(),0, m_BlinkSurf, D3DCOLOR_ARGB(alpha,255,255,255));
             UI->RedrawScene	();
         }else{
@@ -258,8 +258,8 @@ void CSceneObject::OnFrame()
 	if (m_pReference) m_pReference->OnFrame();
 	if (psDeviceFlags.is(rsStatistic)){
     	if (IsStatic()||IsMUStatic()||Selected()){
-            EDevice.Statistic->dwLevelSelFaceCount 	+= GetFaceCount();
-            EDevice.Statistic->dwLevelSelVertexCount += GetVertexCount();
+            EDevice->EStatistic->dwLevelSelFaceCount 	+= GetFaceCount();
+            EDevice->EStatistic->dwLevelSelVertexCount += GetVertexCount();
         }
     }
 }
@@ -377,7 +377,7 @@ void CSceneObject::OnShowHint(AStringVec& dest)
 	        dest.push_back(xr_string("Game Mtl: ")+xr_string(surf->_GameMtlName()));
             int gm_id			= surf->_GameMtl(); 
             if (gm_id!=GAMEMTL_NONE_ID){ 
-                SGameMtl* mtl 	= GMLib.GetMaterialByID(gm_id);
+                SGameMtl* mtl 	=  GameMaterialLibrary->GetMaterialByID(gm_id);
                 if (mtl)		dest.push_back(xr_string().sprintf("Occlusion Factor: %3.2f",mtl->fSndOcclusionFactor));
             }
         }else if (pinf.e_obj->m_objectFlags.is(CEditableObject::eoHOM)){
@@ -394,7 +394,7 @@ void CSceneObject::OnShowHint(AStringVec& dest)
 void CSceneObject::Blink(CSurface* surf)
 {
 	m_BlinkSurf		= surf;
-    m_iBlinkTime	= EDevice.dwTimeGlobal+BLINK_TIME+EDevice.dwTimeDelta;
+    m_iBlinkTime	= EDevice->dwTimeGlobal+BLINK_TIME+EDevice->dwTimeDelta;
 }
 //----------------------------------------------------
 

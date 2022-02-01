@@ -93,7 +93,7 @@ void CSHGameMtlTools::FillItemList()
 {
 
 	ListItemsVec items;
-    for (GameMtlIt m_it=GMLib.FirstMaterial(); m_it!=GMLib.LastMaterial(); m_it++)
+    for (GameMtlIt m_it=GameMaterialLibraryEditors->FirstMaterial(); m_it!= GameMaterialLibraryEditors->LastMaterial(); m_it++)
         LHelper().CreateItem(items,*(*m_it)->m_Name,0);
     // assign items
 	Ext.m_Items->AssignItems(items,0,false);
@@ -103,8 +103,8 @@ void CSHGameMtlTools::Load()
 {
     m_bLockUpdate		= TRUE;
 
-    GMLib.Unload	();
-    GMLib.Load		();
+    GameMaterialLibrary->Unload	();
+    GameMaterialLibrary->Load		();
     ResetCurrentItem();
 
 	m_bLockUpdate		= FALSE;
@@ -119,7 +119,7 @@ bool CSHGameMtlTools::Save()
     string_path 		fn;
     FS.update_path		(fn,_game_data_,GAMEMTL_FILENAME);
     EFS.MarkFile		(fn,false);
-    bool bRes			= GMLib.Save();
+    bool bRes			= GameMaterialLibrary->Save();
     
 	m_bLockUpdate		= FALSE;
 
@@ -130,7 +130,7 @@ bool CSHGameMtlTools::Save()
 SGameMtl* CSHGameMtlTools::FindItem(LPCSTR name)
 {
 	if (name && name[0]){
-    	return GMLib.GetMaterial(name);
+    	return GameMaterialLibraryEditors->GetMaterial(name);
     }else return 0;
 }
 
@@ -158,7 +158,7 @@ void CSHGameMtlTools::AppendItem(LPCSTR path, LPCSTR parent_name)
 
 void CSHGameMtlTools::AppendItem(LPCSTR path, bool dynamic, SGameMtl* parent )
 {
-    SGameMtl* S = GMLib.AppendMaterial(parent);
+    SGameMtl* S = GameMaterialLibraryEditors->AppendMaterial(parent);
     m_LastSelection = path;
     S->m_Name = m_LastSelection.c_str();
     if (!parent)		S->Flags.set(SGameMtl::flDynamic, dynamic);
@@ -193,7 +193,7 @@ void CSHGameMtlTools::OnRemoveItem(LPCSTR name, EItemType type)
             m_Mtl = 0;
             Tools->UpdateProperties(true);
         }
-        GMLib.RemoveMaterial(name);
+        GameMaterialLibraryEditors->RemoveMaterial(name);
     }
 }
 
@@ -226,7 +226,7 @@ void CSHGameMtlTools::RealUpdateProperties()
 {
 	PropItemVec items;
     if (m_Mtl)
-    	m_Mtl->FillProp	(items,m_CurrentItem);
+    	static_cast<SGameMtlEditor*>( m_Mtl)->FillProp	(items,m_CurrentItem);
     Ext.m_ItemProps->AssignItems		(items);
     Ext.m_ItemProps->SetModifiedEvent	(TOnModifiedEvent(this,&CSHGameMtlTools::Modified));
 }

@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
+#include "device.h"
 
 #ifdef INGAME_EDITOR
 #include "engine_impl.hpp"
@@ -42,12 +43,12 @@ bool engine_impl::on_message	(
 		LRESULT &result
 	)
 {
-	return			(Device.on_message(hWnd, uMsg, wParam, lParam, result));
+	return			(EngineDevice->on_message(hWnd, uMsg, wParam, lParam, result));
 }
 
 void engine_impl::on_idle		()
 {
-	Device.on_idle	();
+	EngineDevice->on_idle	();
 }
 
 void engine_impl::on_resize		()
@@ -58,10 +59,10 @@ void engine_impl::on_resize		()
 
 void engine_impl::pause			(bool const &value)
 {
-	if (value == !!Device.Paused())
+	if (value == !!Device->Paused())
 		return;
 
-	Device.Pause						(value ? TRUE : FALSE, TRUE, TRUE, "editor query");
+	EngineDevice->Pause						(value ? TRUE : FALSE, TRUE, TRUE, "editor query");
 }
 
 void engine_impl::capture_input	(bool const &value)

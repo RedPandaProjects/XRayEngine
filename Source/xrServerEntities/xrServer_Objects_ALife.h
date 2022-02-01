@@ -96,7 +96,7 @@ public:
 	virtual							~CSE_ALifeGraphPoint();
 	virtual bool					match_configuration	() const { return false; }
 
-#ifndef XRGAME_EXPORTS
+#if DEV_MODE
 	virtual void 			on_render				(CDUInterface* du, ISE_AbstractLEOwner* owner, bool bSelected, const Fmatrix& parent,int priority, bool strictB2F);
 #endif
 SERVER_ENTITY_DECLARE_END
@@ -244,13 +244,13 @@ public:
 		return						(inherited1::base());
 	}
 
-#ifndef XRGAME_EXPORTS
+#if DEV_MODE
 	virtual void		FillProps	(LPCSTR pref, PropItemVec& items)
 	{
    		inherited1::FillProps		(pref, items);
    		inherited2::FillProps		(pref, items);
 	};	
-#endif // #ifndef XRGAME_EXPORTS
+#endif // #if DEV_MODE
 
 	virtual CSE_Abstract			*cast_abstract			()
 	{
@@ -497,9 +497,9 @@ SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeObjectHangingLamp,CSE_ALifeDynamicObjectVi
 	virtual bool					used_ai_locations			() const;
 	virtual bool					match_configuration			() const;
 	virtual bool			validate					();
-#ifndef XRGAME_EXPORTS
+#if DEV_MODE
 	virtual void 			on_render					(CDUInterface* du, ISE_AbstractLEOwner* owner, bool bSelected, const Fmatrix& parent,int priority, bool strictB2F);
-#endif // #ifndef XRGAME_EXPORTS
+#endif // #if DEV_MODE
 	virtual CSE_Abstract			*cast_abstract				() {return this;}
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeObjectHangingLamp)
@@ -575,7 +575,7 @@ virtual bool					used_ai_locations	() const;
 virtual bool					can_switch_offline	() const;
 virtual ISE_Shape*  	shape				();
 
-#ifndef XRGAME_EXPORTS
+#if DEV_MODE
 virtual	void			set_additional_info	(void* info);
 #endif
 

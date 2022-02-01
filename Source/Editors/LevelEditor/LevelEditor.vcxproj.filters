@@ -367,9 +367,6 @@
     <ClCompile Include="..\..\xrServerEntities\LevelGameDef.cpp">
       <Filter>ServerEntities</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\XrEngine\ObjectAnimator.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="UI\Tools\UILightTool.cpp">
       <Filter>UI\Tools</Filter>
     </ClCompile>
@@ -422,6 +419,12 @@
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="XrSEFactoryManager.cpp" />
+    <ClCompile Include="Engine\XrGameManager.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\XRayEditor.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Edit\SceneSummaryInfo.h">
@@ -681,5 +684,11 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="XrSEFactoryManager.h" />
+    <ClInclude Include="Engine\XRayEditor.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\XrGameManager.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

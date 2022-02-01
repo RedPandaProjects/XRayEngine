@@ -50,17 +50,17 @@ void CDetailManager::hw_Render()
 {
 	// Render-prepare
 	//	Update timer
-	//	Can't use Device.fTimeDelta since it is smoothed! Don't know why, but smoothed value looks more choppy!
-	float fDelta = Device.fTimeGlobal-m_global_time_old;
+	//	Can't use Device->fTimeDelta since it is smoothed! Don't know why, but smoothed value looks more choppy!
+	float fDelta = Device->fTimeGlobal-m_global_time_old;
 	if ( (fDelta<0) || (fDelta>1))	fDelta = 0.03;
-	m_global_time_old = Device.fTimeGlobal;
+	m_global_time_old = Device->fTimeGlobal;
 
 	m_time_rot_1	+= (PI_MUL_2*fDelta/swing_current.rot1);
 	m_time_rot_2	+= (PI_MUL_2*fDelta/swing_current.rot2);
 	m_time_pos		+= fDelta*swing_current.speed;
 
-	//float		tm_rot1		= (PI_MUL_2*Device.fTimeGlobal/swing_current.rot1);
-	//float		tm_rot2		= (PI_MUL_2*Device.fTimeGlobal/swing_current.rot2);
+	//float		tm_rot1		= (PI_MUL_2*Device->fTimeGlobal/swing_current.rot1);
+	//float		tm_rot2		= (PI_MUL_2*Device->fTimeGlobal/swing_current.rot2);
 	float		tm_rot1		= m_time_rot_1;
 	float		tm_rot2		= m_time_rot_2;
 
@@ -76,7 +76,7 @@ void CDetailManager::hw_Render()
 	Fvector4	wave;
 	Fvector4	consts;
 	consts.set				(scale,		scale,		ps_r__Detail_l_aniso,	ps_r__Detail_l_ambient);
-	//wave.set				(1.f/5.f,		1.f/7.f,	1.f/3.f,	Device.fTimeGlobal*swing_current.speed);
+	//wave.set				(1.f/5.f,		1.f/7.f,	1.f/3.f,	Device->fTimeGlobal*swing_current.speed);
 	wave.set				(1.f/5.f,		1.f/7.f,	1.f/3.f,	m_time_pos);
 	//RCache.set_c			(&*hwc_consts,	scale,		scale,		ps_r__Detail_l_aniso,	ps_r__Detail_l_ambient);				// consts
 	//RCache.set_c			(&*hwc_wave,	wave.div(PI_MUL_2));	// wave
@@ -85,7 +85,7 @@ void CDetailManager::hw_Render()
 	hw_Render_dump(consts, wave.div(PI_MUL_2), dir1, 1, 0);
 
 	// Wave1
-	//wave.set				(1.f/3.f,		1.f/7.f,	1.f/5.f,	Device.fTimeGlobal*swing_current.speed);
+	//wave.set				(1.f/3.f,		1.f/7.f,	1.f/5.f,	Device->fTimeGlobal*swing_current.speed);
 	wave.set				(1.f/3.f,		1.f/7.f,	1.f/5.f,	m_time_pos);
 	//RCache.set_c			(&*hwc_wave,	wave.div(PI_MUL_2));	// wave
 	//RCache.set_c			(&*hwc_wind,	dir2);																					// wind-dir
@@ -95,7 +95,7 @@ void CDetailManager::hw_Render()
 	// Still
 	consts.set				(scale,		scale,		scale,				1.f);
 	//RCache.set_c			(&*hwc_s_consts,scale,		scale,		scale,				1.f);
-	//RCache.set_c			(&*hwc_s_xform,	Device.mFullTransform);
+	//RCache.set_c			(&*hwc_s_xform,	Device->mFullTransform);
 	//hw_Render_dump			(&*hwc_s_array,	0, 1, c_hdr );
 	hw_Render_dump(consts, wave.div(PI_MUL_2), dir2, 0, 1);
 }
@@ -108,7 +108,7 @@ void CDetailManager::hw_Render_dump(const Fvector4 &consts, const Fvector4 &wave
 	static shared_str strArray("array");
 	static shared_str strXForm("xform");
 
-	Device.Statistic->RenderDUMP_DT_Count	= 0;
+	Device->Statistic->RenderDUMP_DT_Count	= 0;
 
 	// Matrices and offsets
 	u32		vOffset	=	0;
@@ -141,7 +141,7 @@ void CDetailManager::hw_Render_dump(const Fvector4 &consts, const Fvector4 &wave
 				RCache.set_c(strConsts, consts);
 				RCache.set_c(strWave, wave);
 				RCache.set_c(strDir2D, wind);
-				RCache.set_c(strXForm, Device.mFullTransform);
+				RCache.set_c(strXForm, Device->mFullTransform);
 
 				//ref_constant constArray = RCache.get_c(strArray);
 				//VERIFY(constArray);
@@ -190,7 +190,7 @@ void CDetailManager::hw_Render_dump(const Fvector4 &consts, const Fvector4 &wave
 						dwBatch	++;
 						if (dwBatch == hw_BatchSize)	{
 							// flush
-							Device.Statistic->RenderDUMP_DT_Count					+=	dwBatch;
+							Device->Statistic->RenderDUMP_DT_Count					+=	dwBatch;
 							u32 dwCNT_verts			= dwBatch * Object.number_vertices;
 							u32 dwCNT_prims			= (dwBatch * Object.number_indices)/3;
 							//RCache.get_ConstantCache_Vertex().b_dirty				=	TRUE;
@@ -216,7 +216,7 @@ void CDetailManager::hw_Render_dump(const Fvector4 &consts, const Fvector4 &wave
 				// flush if nessecary
 				if (dwBatch)
 				{
-					Device.Statistic->RenderDUMP_DT_Count	+= dwBatch;
+					Device->Statistic->RenderDUMP_DT_Count	+= dwBatch;
 					u32 dwCNT_verts			= dwBatch * Object.number_vertices;
 					u32 dwCNT_prims			= (dwBatch * Object.number_indices)/3;
 					//RCache.get_ConstantCache_Vertex().b_dirty				=	TRUE;

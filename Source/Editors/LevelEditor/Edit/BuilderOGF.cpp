@@ -113,7 +113,7 @@ bool SceneBuilder::BuildSOMModel()
                         bResult 		= FALSE; 
                         break; 
                     }
-                    SGameMtl* mtl 		= GMLib.GetMaterialByID(gm_id);
+                    SGameMtl* mtl 		=  GameMaterialLibrary->GetMaterialByID(gm_id);
                     if (0==mtl){
                         ELog.DlgMsg		(mtError,"Object '%s', surface '%s' contain undefined game material.",(*m_it)->Parent()->m_LibName.c_str(),surf->_Name());
                         bResult 		= FALSE; 

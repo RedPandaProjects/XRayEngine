@@ -46,8 +46,8 @@ void CUIMotionIcon::Init(Frect const& zonemap_rect)
 	sz.mul						(rel_sz*k);
 
 
-	//float h = Device.dwHeight;
-	//float w = Device.dwWidth;
+	//float h = Device->dwHeight;
+	//float w = Device->dwWidth;
 	AttachChild					(&m_luminosity_progress);
 	xml_init.InitProgressShape	(uiXml, "luminosity_progress", 0, &m_luminosity_progress);	
 	m_luminosity_progress.SetWndSize(sz);
@@ -105,9 +105,9 @@ void CUIMotionIcon::Update()
 	if(cur_pos!=m_luminosity){
 		float _diff = _abs(m_luminosity-cur_pos);
 		if(m_luminosity>cur_pos){
-			cur_pos				+= _diff*Device.fTimeDelta;
+			cur_pos				+= _diff*Device->fTimeDelta;
 		}else{
-			cur_pos				-= _diff*Device.fTimeDelta;
+			cur_pos				-= _diff*Device->fTimeDelta;
 		}
 		clamp(cur_pos, 0.f, 100.f);
 		m_luminosity_progress.SetPos(cur_pos/100.f);

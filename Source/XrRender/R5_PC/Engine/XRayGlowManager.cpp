@@ -129,14 +129,14 @@ void XRayGlowManager::Unload	()
 void XRayGlowManager::Add	(ref_glow G_)
 {
 	XRayGlow*	G		= (XRayGlow*)	G_._get		();
-	if (G->dwFrame	==Device.dwFrame)		return;
-	G->dwFrame		= Device.dwFrame;
+	if (G->dwFrame	==Device->dwFrame)		return;
+	G->dwFrame		= Device->dwFrame;
 
 
-	float	dt		= Device.fTimeDelta;
+	float	dt		= Device->fTimeDelta;
 	float	dlim2 = MAX_GlowsDist2;
 
-	float	range = Device.vCameraPosition.distance_to_sqr	(G->spatial.sphere.P);
+	float	range = Device->vCameraPosition.distance_to_sqr	(G->spatial.sphere.P);
 	if (range < dlim2) 
 	{
 		// 2. Use result of test
@@ -158,8 +158,8 @@ void XRayGlowManager::Add	(ref_glow G_)
 
 IC void FillSprite(FVF::LIT*& pv, const Fvector& pos, float r, u32 clr)
 {
-	const Fvector& T = Device.vCameraTop;
-	const Fvector& R = Device.vCameraRight;
+	const Fvector& T = Device->vCameraTop;
+	const Fvector& R = Device->vCameraRight;
 	Fvector		Vr, Vt;
 	Vr.mul(R, r);
 	Vt.mul(T, r);
@@ -185,7 +185,7 @@ void XRayGlowManager::Render			()
 	CObject* o_main = g_pGameLevel->CurrentViewEntity();
 
 	// 1. Test some number of glows
-	Fvector start = Device.vCameraPosition;
+	Fvector start = Device->vCameraPosition;
 	for (int i = 0; i < XRayRenderConsole::ps_r_GlowsPerFrame; i++, dwTestID++)
 	{
 		u32	ID = dwTestID % Selected.size();
@@ -211,7 +211,7 @@ void XRayGlowManager::RenderSelected()
 
 
 	Fplane			NP;
-	NP.build(Device.vCameraPosition, Device.vCameraDirection);
+	NP.build(Device->vCameraPosition, Device->vCameraDirection);
 
 	if (m_VertexBuffer.empty())
 	{
@@ -236,7 +236,7 @@ void XRayGlowManager::RenderSelected()
 		// Now perform dotproduct if need it
 		float	scale = 1.f, dist_sq;
 		Fvector	dir;
-		dir.sub(Device.vCameraPosition, G.position);
+		dir.sub(Device->vCameraPosition, G.position);
 		dist_sq = dir.square_magnitude();
 		if (G.direction.square_magnitude() > EPS) {
 			dir.div(sqrt(dist_sq));

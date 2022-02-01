@@ -173,7 +173,7 @@ void stalker_movement_manager_obstacles::move_along_path					(CPHMovementControl
 	VERIFY							( m_doors_actor );
 
 	if ( !ai().doors().actualize_doors_state(*m_doors_actor,old_desirable_speed()) ) {
-//		Msg							( "%6d stalker %s waits for the some door to be open/closed", Device.dwTimeGlobal, object().cName().c_str() );
+//		Msg							( "%6d stalker %s waits for the some door to be open/closed", Device->dwTimeGlobal, object().cName().c_str() );
 		float						desirable_speed = old_desirable_speed();
 		set_desirable_speed			(0.f);
 
@@ -183,7 +183,7 @@ void stalker_movement_manager_obstacles::move_along_path					(CPHMovementControl
 		return;
 	}
 
-//	Msg								( "%6d stalker %s is going", Device.dwTimeGlobal, object().cName().c_str() );
+//	Msg								( "%6d stalker %s is going", Device->dwTimeGlobal, object().cName().c_str() );
 
 #ifndef MASTER_GOLD
 	if (!psAI_Flags.test(aiObstaclesAvoiding)) {
@@ -192,7 +192,7 @@ void stalker_movement_manager_obstacles::move_along_path					(CPHMovementControl
 	}
 #endif // MASTER_GOLD
 
-	if (Device.dwTimeGlobal < (m_last_fail_time + fail_check_time)) {
+	if (Device->dwTimeGlobal < (m_last_fail_time + fail_check_time)) {
 		inherited::move_along_path	( movement_control, dest_position, time_delta);
 		return;
 	}

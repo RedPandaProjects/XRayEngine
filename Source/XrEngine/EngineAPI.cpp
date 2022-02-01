@@ -8,6 +8,7 @@
 #include "../XrAPI/xrGameManager.h"
 #include "securom_api.h"
 #include "..\XrAPI\xrGameManager.h"
+#include "device.h"
 extern xr_token* vid_quality_token;
 
 //////////////////////////////////////////////////////////////////////
@@ -154,7 +155,7 @@ void CEngineAPI::Initialize(void)
 		g_current_renderer	= 1;
 	}
 
-	Device.ConnectToRender();
+	EngineDevice->ConnectToRender();
 
 	// game	
 	{

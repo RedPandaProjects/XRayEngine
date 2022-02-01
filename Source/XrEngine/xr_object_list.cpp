@@ -92,10 +92,10 @@ void	CObjectList::o_sleep		( CObject*		O		)
 
 void	CObjectList::SingleUpdate	(CObject* O)
 {
-	if ( Device.dwFrame == O->dwFrame_UpdateCL ) {
+	if ( Device->dwFrame == O->dwFrame_UpdateCL ) {
 #ifdef DEBUG
 //		if (O->getDestroy())
-//			Msg					("- !!!processing_enabled ->destroy_queue.push_back %s[%d] frame [%d]",O->cName().c_str(), O->ID(), Device.dwFrame);
+//			Msg					("- !!!processing_enabled ->destroy_queue.push_back %s[%d] frame [%d]",O->cName().c_str(), O->ID(), Device->dwFrame);
 #endif // #ifdef DEBUG
 
 		return;
@@ -104,7 +104,7 @@ void	CObjectList::SingleUpdate	(CObject* O)
 	if ( !O->processing_enabled() ) {
 #ifdef DEBUG
 //		if (O->getDestroy())
-//			Msg					("- !!!processing_enabled ->destroy_queue.push_back %s[%d] frame [%d]",O->cName().c_str(), O->ID(), Device.dwFrame);
+//			Msg					("- !!!processing_enabled ->destroy_queue.push_back %s[%d] frame [%d]",O->cName().c_str(), O->ID(), Device->dwFrame);
 #endif // #ifdef DEBUG
 
 		return;
@@ -113,14 +113,14 @@ void	CObjectList::SingleUpdate	(CObject* O)
 	if (O->H_Parent())
 		SingleUpdate			(O->H_Parent());
 
-	Device.Statistic->UpdateClient_updated	++;
-	O->dwFrame_UpdateCL			= Device.dwFrame;
+	Device->Statistic->UpdateClient_updated	++;
+	O->dwFrame_UpdateCL			= Device->dwFrame;
 
-//	Msg							("[%d][0x%08x]IAmNotACrowAnyMore (CObjectList::SingleUpdate)", Device.dwFrame, dynamic_cast<void*>(O));
+//	Msg							("[%d][0x%08x]IAmNotACrowAnyMore (CObjectList::SingleUpdate)", Device->dwFrame, dynamic_cast<void*>(O));
 
 	O->UpdateCL					();
 
-	VERIFY3						(O->dbg_update_cl == Device.dwFrame, "Broken sequence of calls to 'UpdateCL'",*O->cName());
+	VERIFY3						(O->dbg_update_cl == Device->dwFrame, "Broken sequence of calls to 'UpdateCL'",*O->cName());
 #if 0//ndef DEBUG
 	__try
 	{
@@ -172,14 +172,14 @@ void	CObjectList::SingleUpdate	(CObject* O)
 
 #ifdef DEBUG
 //	if (O->getDestroy())
-//		Msg						("- !!!processing_enabled ->destroy_queue.push_back %s[%d] frame [%d]",O->cName().c_str(), O->ID(), Device.dwFrame);
+//		Msg						("- !!!processing_enabled ->destroy_queue.push_back %s[%d] frame [%d]",O->cName().c_str(), O->ID(), Device->dwFrame);
 #endif // #ifdef DEBUG
 }
 
 void CObjectList::clear_crow_vec(Objects& o)
 {
 	for (u32 _it=0; _it<o.size(); _it++) {
-//		Msg				("[%d][0x%08x]IAmNotACrowAnyMore (clear_crow_vec)", Device.dwFrame, dynamic_cast<void*>(o[_it]));
+//		Msg				("[%d][0x%08x]IAmNotACrowAnyMore (clear_crow_vec)", Device->dwFrame, dynamic_cast<void*>(o[_it]));
 		o[_it]->IAmNotACrowAnyMore();
 	}
 	o.clear_not_free();
@@ -187,13 +187,13 @@ void CObjectList::clear_crow_vec(Objects& o)
 
 void CObjectList::Update		(bool bForce)
 {
-	if ( !Device.Paused() || bForce )
+	if ( !Device->Paused() || bForce )
 	{
 		// Clients
-		if (Device.fTimeDelta>EPS_S || bForce)			
+		if (Device->fTimeDelta>EPS_S || bForce)			
 		{
 			// Select Crow-Mode
-			Device.Statistic->UpdateClient_updated	= 0;
+			Device->Statistic->UpdateClient_updated	= 0;
 
 			Objects& crows				= m_crows[0];
 
@@ -224,7 +224,7 @@ void CObjectList::Update		(bool bForce)
 #	endif // ifdef DEBUG
 #endif
 
-			Device.Statistic->UpdateClient_crows	= crows.size	();
+			Device->Statistic->UpdateClient_crows	= crows.size	();
 			Objects* workload			= 0;
 			if (!psDeviceFlags.test(rsDisableObjectsAsCrows))	
 				workload				= &crows;
@@ -233,9 +233,9 @@ void CObjectList::Update		(bool bForce)
 				clear_crow_vec			(crows);
 			}
 
-			Device.Statistic->UpdateClient.Begin	();
-			Device.Statistic->UpdateClient_active	= objects_active.size();
-			Device.Statistic->UpdateClient_total	= objects_active.size() + objects_sleeping.size();
+			Device->Statistic->UpdateClient.Begin	();
+			Device->Statistic->UpdateClient_active	= objects_active.size();
+			Device->Statistic->UpdateClient_total	= objects_active.size() + objects_sleeping.size();
 
 			u32 const objects_count		= workload->size();
 			CObject** objects			= (CObject**)_alloca(objects_count*sizeof(CObject*));
@@ -253,7 +253,7 @@ void CObjectList::Update		(bool bForce)
 			for (CObject** i = b; i != e; ++i)
 				SingleUpdate			(*i);
 
-			Device.Statistic->UpdateClient.End		();
+			Device->Statistic->UpdateClient.End		();
 		}
 	}
 
@@ -289,7 +289,7 @@ void CObjectList::Update		(bool bForce)
 //			Msg				("Object [%x]", O);
 #ifdef DEBUG
 			if( debug_destroy )
-				Msg			("Destroying object[%x][%x] [%d][%s] frame[%d]",dynamic_cast<void*>(O), O, O->ID(),*O->cName(), Device.dwFrame);
+				Msg			("Destroying object[%x][%x] [%d][%s] frame[%d]",dynamic_cast<void*>(O), O, O->ID(),*O->cName(), Device->dwFrame);
 #endif // DEBUG
 			O->net_Destroy	( );
 			Destroy			(O);
@@ -451,7 +451,7 @@ void		CObjectList::Destroy			( CObject*	O		)
 	if (0==O)								return;
 	net_Unregister							(O);
 
-	if ( !Device.Paused() ) {
+	if ( !Device->Paused() ) {
 		if ( !m_crows[1].empty() ) {
 			Msg								( "assertion !m_crows[1].empty() failed: %d", m_crows[1].size() );
 
@@ -459,7 +459,7 @@ void		CObjectList::Destroy			( CObject*	O		)
 			Objects::const_iterator	const e	= m_crows[1].end( );
 			for (u32 j=0; i != e; ++i, ++j )
 				Msg							( "%d %s", j, (*i)->cName().c_str() );
-			VERIFY							( Device.Paused() || m_crows[1].empty() );
+			VERIFY							( Device->Paused() || m_crows[1].empty() );
 			m_crows[1].clear_not_free		();
 		}
 	}
@@ -564,7 +564,7 @@ void CObjectList::register_object_to_destroy(CObject *object_to_destroy)
 		CObject* O = *it;
 		if(!O->getDestroy() && O->H_Parent()==object_to_destroy)
 		{
-			Msg("setDestroy called, but not-destroyed child found parent[%d] child[%d]",object_to_destroy->ID(), O->ID(), Device.dwFrame);
+			Msg("setDestroy called, but not-destroyed child found parent[%d] child[%d]",object_to_destroy->ID(), O->ID(), Device->dwFrame);
 			O->setDestroy(TRUE);
 		}
 	}
@@ -576,7 +576,7 @@ void CObjectList::register_object_to_destroy(CObject *object_to_destroy)
 		CObject* O = *it;
 		if(!O->getDestroy() && O->H_Parent()==object_to_destroy)
 		{
-			Msg("setDestroy called, but not-destroyed child found parent[%d] child[%d]",object_to_destroy->ID(), O->ID(), Device.dwFrame);
+			Msg("setDestroy called, but not-destroyed child found parent[%d] child[%d]",object_to_destroy->ID(), O->ID(), Device->dwFrame);
 			O->setDestroy(TRUE);
 		}
 	}

@@ -20,6 +20,7 @@
 #ifndef NO_XR_GAME
 #	include "../xrEngine/std_classes.h"
 #	include "level.h"
+#	include "XrLevelEditor.h"
 #	include "gamepersistent.h"
 #	include "hudmanager.h"
 #	include "actor.h"
@@ -193,6 +194,7 @@ void CObjectFactory::register_classes	()
 #ifndef NO_XR_GAME
 	// client entities
 	add<CLevel>													(CLSID_GAME_LEVEL				,"level");
+	add<CLevelEditor>											(CLSID_EDITOR_LEVEL,			"level_editor");
 	add<CGamePersistent>										(CLSID_GAME_PERSISTANT			,"game");
 	add<CHUDManager>											(CLSID_HUDMANAGER				,"hud_manager");
 	//Server Game type

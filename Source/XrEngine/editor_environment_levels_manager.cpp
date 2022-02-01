@@ -37,7 +37,7 @@ manager::~manager					()
 	CInifile::Destroy				(m_config_mp);
 	m_config_mp						= 0;
 
-	if (!Device.editor())
+	if (!Device->WeatherEditor())
 		return;
 
 	::ide().destroy					(m_property_holder);

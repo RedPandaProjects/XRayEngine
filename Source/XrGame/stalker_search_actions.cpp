@@ -74,7 +74,7 @@ void CStalkerActionReachEnemyLocation::finalize		()
 void CStalkerActionReachEnemyLocation::execute			()
 {
 #ifdef TEST_MENTAL_STATE
-	VERIFY								((start_level_time() == Device.dwTimeGlobal) || (object().movement().mental_state() == eMentalStateDanger));
+	VERIFY								((start_level_time() == Device->dwTimeGlobal) || (object().movement().mental_state() == eMentalStateDanger));
 #endif // TEST_MENTAL_STATE
 
 	inherited::execute					();
@@ -266,7 +266,7 @@ void CStalkerActionHoldAmbushLocation::execute						()
 	if (!completed())
 		return;
 
-	if (mem_object.m_last_level_time + 60000 < Device.dwTimeGlobal)
+	if (mem_object.m_last_level_time + 60000 < Device->dwTimeGlobal)
 		return;
 
 	object().memory().enable			( object().memory().enemy().selected(), false);

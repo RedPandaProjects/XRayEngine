@@ -112,6 +112,7 @@ public:
     virtual void	LoadSettings			(CInifile*);
     virtual Ivector2 GetRenderMousePosition()const;
     virtual void OnDrawUI();
+    bool  KeyDown(WORD Key, TShiftState Shift);
 };    
 extern CLevelMain*	LUI;
 

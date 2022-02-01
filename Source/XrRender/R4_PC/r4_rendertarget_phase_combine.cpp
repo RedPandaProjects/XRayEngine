@@ -15,7 +15,7 @@ void CRenderTarget::DoAsyncScreenshot()
 		HRESULT hr;
 
 		//	HACK: unbind RT. CopyResourcess needs src and targetr to be unbound.
-		//u_setrt				( Device.dwWidth,Device.dwHeight,HW.pBaseRT,NULL,NULL,HW.pBaseZB);
+		//u_setrt				( Device->dwWidth,Device->dwHeight,HW.pBaseRT,NULL,NULL,HW.pBaseZB);
 
 		//ID3DTexture2D *pTex = 0;
 		//if (RImplementation.o.dx10_msaa)
@@ -46,7 +46,7 @@ void	CRenderTarget::phase_combine	()
 	Fvector2	p0,p1;
 
 	//*** exposure-pipeline
-	u32			gpu_id	= Device.dwFrame%HW.Caps.iGPUNum;
+	u32			gpu_id	= Device->dwFrame%HW.Caps.iGPUNum;
 	{
 		t_LUM_src->surface_set		(rt_LUM_pool[gpu_id*2+0]->pSurface);
 		t_LUM_dest->surface_set		(rt_LUM_pool[gpu_id*2+1]->pSurface);
@@ -123,10 +123,10 @@ void	CRenderTarget::phase_combine	()
 		static Fmatrix		m_saved_viewproj;
 		
 		// (new-camera) -> (world) -> (old_viewproj)
-		Fmatrix	m_invview;	m_invview.invert	(Device.mView);
+		Fmatrix	m_invview;	m_invview.invert	(Device->mView);
 		m_previous.mul		(m_saved_viewproj,m_invview);
-		m_current.set		(Device.mProject)		;
-		m_saved_viewproj.set(Device.mFullTransform)	;
+		m_current.set		(Device->mProject)		;
+		m_saved_viewproj.set(Device->mFullTransform)	;
 		float	scale		= ps_r2_mblur/2.f;
 		m_blur_scale.set	(scale,-scale).div(12.f);
 	}
@@ -136,7 +136,7 @@ void	CRenderTarget::phase_combine	()
 	{
 		PIX_EVENT(combine_1);
 		// Compute params
-		Fmatrix		m_v2w;			m_v2w.invert				(Device.mView		);
+		Fmatrix		m_v2w;			m_v2w.invert				(Device->mView		);
 		IEnvDescriptorMixer& envdesc= *g_pGamePersistent->Environment().CurrentEnv		;
 		const float minamb			= 0.001f;
 		Fvector4	ambclr			= { _max(envdesc.ambient.x*2,minamb),	_max(envdesc.ambient.y*2,minamb),			_max(envdesc.ambient.z*2,minamb),	0	};
@@ -153,11 +153,11 @@ void	CRenderTarget::phase_combine	()
 
 		float		fSSAONoise = 2.0f;
 					fSSAONoise *= tan(deg2rad(67.5f/2.0f));
-					fSSAONoise /= tan(deg2rad(Device.fFOV/2.0f));
+					fSSAONoise /= tan(deg2rad(Device->fFOV/2.0f));
 
 		float		fSSAOKernelSize = 150.0f;
 					fSSAOKernelSize *= tan(deg2rad(67.5f/2.0f));
-					fSSAOKernelSize /= tan(deg2rad(Device.fFOV/2.0f));
+					fSSAOKernelSize /= tan(deg2rad(Device->fFOV/2.0f));
 
 
 		// sun-params
@@ -166,7 +166,7 @@ void	CRenderTarget::phase_combine	()
 			Fvector		L_dir,L_clr;	float L_spec;
 			L_clr.set					(fuckingsun->color.r,fuckingsun->color.g,fuckingsun->color.b);
 			L_spec						= u_diffuse2s	(L_clr);
-			Device.mView.transform_dir	(L_dir,fuckingsun->direction);
+			Device->mView.transform_dir	(L_dir,fuckingsun->direction);
 			L_dir.normalize				();
 
 			sunclr.set				(L_clr.x,L_clr.y,L_clr.z,L_spec);
@@ -175,8 +175,8 @@ void	CRenderTarget::phase_combine	()
 
 		/*
 		// Fill VB
-		//float	_w					= float(Device.dwWidth);
-		//float	_h					= float(Device.dwHeight);
+		//float	_w					= float(Device->dwWidth);
+		//float	_h					= float(Device->dwHeight);
 		//p0.set						(.5f/_w, .5f/_h);
 		//p1.set						((_w+.5f)/_w, (_h+.5f)/_h );
 		//p0.set						(.5f/_w, .5f/_h);
@@ -196,8 +196,8 @@ void	CRenderTarget::phase_combine	()
 		*/
 
 		// Fill VB
-		float	scale_X				= float(Device.dwWidth)	/ float(TEX_jitter);
-		float	scale_Y				= float(Device.dwHeight)/ float(TEX_jitter);
+		float	scale_X				= float(Device->dwWidth)	/ float(TEX_jitter);
+		float	scale_Y				= float(Device->dwHeight)/ float(TEX_jitter);
 
 		// Fill vertex buffer
 		FVF::TL* pv					= (FVF::TL*)	RCache.Vertex.Lock	(4,g_combine->vb_stride,Offset);
@@ -345,14 +345,14 @@ void	CRenderTarget::phase_combine	()
    if( RImplementation.o.dx10_msaa )
    {
 	   if		(PP_Complex)	u_setrt		( rt_Generic,0,0,HW.pBaseZB );			// LDR RT
-	   else					   u_setrt		( Device.dwWidth,Device.dwHeight,HW.pBaseRT,NULL,NULL,HW.pBaseZB);
+	   else					   u_setrt		( Device->dwWidth,Device->dwHeight,HW.pBaseRT,NULL,NULL,HW.pBaseZB);
    }
    else
    {
       if		(PP_Complex)	u_setrt		( rt_Color,0,0,HW.pBaseZB );			// LDR RT
-      else					   u_setrt		( Device.dwWidth,Device.dwHeight,HW.pBaseRT,NULL,NULL,HW.pBaseZB);
+      else					   u_setrt		( Device->dwWidth,Device->dwHeight,HW.pBaseRT,NULL,NULL,HW.pBaseZB);
    }
-	//. u_setrt				( Device.dwWidth,Device.dwHeight,HW.pBaseRT,NULL,NULL,HW.pBaseZB);
+	//. u_setrt				( Device->dwWidth,Device->dwHeight,HW.pBaseRT,NULL,NULL,HW.pBaseZB);
 	RCache.set_CullMode		( CULL_NONE )	;
 	RCache.set_Stencil		( FALSE		)	;
 
@@ -372,8 +372,8 @@ void	CRenderTarget::phase_combine	()
 			Fvector4	uv6;
 		};
 
-		float	_w					= float(Device.dwWidth);
-		float	_h					= float(Device.dwHeight);
+		float	_w					= float(Device->dwWidth);
+		float	_h					= float(Device->dwHeight);
 		float	ddw					= 1.f/_w;
 		float	ddh					= 1.f/_h;
 		p0.set						(.5f/_w, .5f/_h);
@@ -389,7 +389,7 @@ void	CRenderTarget::phase_combine	()
 
 		//	Set up variable
 		Fvector2	vDofKernel;
-		vDofKernel.set(0.5f/Device.dwWidth, 0.5f/Device.dwHeight);
+		vDofKernel.set(0.5f/Device->dwWidth, 0.5f/Device->dwHeight);
 		vDofKernel.mul(ps_r2_dof_kernel_size);
 
 		// Draw COLOR
@@ -479,8 +479,8 @@ void	CRenderTarget::phase_combine	()
 	/*
 	if (0)		{
 		u32		C					= color_rgba	(255,255,255,255);
-		float	_w					= float(Device.dwWidth)/3;
-		float	_h					= float(Device.dwHeight)/3;
+		float	_w					= float(Device->dwWidth)/3;
+		float	_h					= float(Device->dwHeight)/3;
 
 		// draw light-spheres
 #ifdef DEBUG
@@ -577,8 +577,8 @@ void CRenderTarget::phase_combine_volumetric()
 	RCache.set_ColorWriteEnable(D3DCOLORWRITEENABLE_RED|D3DCOLORWRITEENABLE_GREEN|D3DCOLORWRITEENABLE_BLUE);
 	{
 		// Fill VB
-		float	scale_X				= float(Device.dwWidth)	/ float(TEX_jitter);
-		float	scale_Y				= float(Device.dwHeight)/ float(TEX_jitter);
+		float	scale_X				= float(Device->dwWidth)	/ float(TEX_jitter);
+		float	scale_Y				= float(Device->dwHeight)/ float(TEX_jitter);
 
 		// Fill vertex buffer
 		FVF::TL* pv					= (FVF::TL*)	RCache.Vertex.Lock	(4,g_combine->vb_stride,Offset);

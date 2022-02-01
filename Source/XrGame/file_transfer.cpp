@@ -160,7 +160,7 @@ void server_site::on_message(NET_Packet* packet, ClientID const & sender)
 
 void server_site::stop_obsolete_receivers()
 {
-	u32 current_time = Device.dwTimeGlobal;
+	u32 current_time = Device->dwTimeGlobal;
 	buffer_vector<ClientID>	to_stop_receivers(
 		_alloca(m_receivers.size() * sizeof(ClientID)),
 		m_receivers.size());
@@ -606,7 +606,7 @@ void client_site::stop_receiving_sessions	(buffer_vector<ClientID> const & rsess
 
 void client_site::stop_obsolete_receivers()
 {
-	u32 current_time = Device.dwTimeGlobal;
+	u32 current_time = Device->dwTimeGlobal;
 	buffer_vector<ClientID>	to_stop_receivers(
 		_alloca(m_receivers.size() * sizeof(ClientID)),
 		m_receivers.size());

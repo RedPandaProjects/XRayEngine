@@ -28,14 +28,14 @@ void player_state_mad::OnPlayerKilled(u16 killer_id,
 	if ((tmp_local_player->GameID == killer_id) &&
 		((kill_type.second == SKT_KNIFEKILL) || (kill_type.second == SKT_BACKSTAB)))
 	{
-		m_kill_times.push_back(Device.dwTimeGlobal);
+		m_kill_times.push_back(Device->dwTimeGlobal);
 	}
 	clear_old_kills();
 }
 
 void player_state_mad::clear_old_kills()
 {
-	u32 current_time = Device.dwTimeGlobal;
+	u32 current_time = Device->dwTimeGlobal;
 
 	while (	!m_kill_times.empty() &&
 			((current_time - m_kill_times.front()) > mad_time_period) )

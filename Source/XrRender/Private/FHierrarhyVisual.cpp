@@ -7,7 +7,7 @@
 
 #include "FHierrarhyVisual.h"
 #include "../../xrEngine/Fmesh.h"
-#ifndef _EDITOR
+#ifndef REDITOR
 #include "../../xrEngine/render.h"
 #else
 #include "../../xrAPI/xrAPI.h"
@@ -48,7 +48,7 @@ void FHierrarhyVisual::Load(const char* N, IReader *data, u32 dwFlags)
 		u32 cnt = data->r_u32		();
 		children.resize				(cnt);
 		for (u32 i=0; i<cnt; i++)	{
-#ifdef _EDITOR
+#ifdef REDITOR
 			THROW;
 #else
 			u32 ID	= data->r_u32();

@@ -160,7 +160,7 @@ CActor::CActor() : CEntityAlive(),current_ik_cam_shift(0)
 
 
 #ifdef DEBUG
-	Device.seqRender.Add	(this,REG_PRIORITY_LOW);
+	Device->seqRender.Add	(this,REG_PRIORITY_LOW);
 #endif
 
 	//разрешить использование пояса в inventory
@@ -215,7 +215,7 @@ CActor::~CActor()
 	xr_delete				(m_memory);
 	xr_delete				(game_news_registry);
 #ifdef DEBUG
-	Device.seqRender.Remove(this);
+	Device->seqRender.Remove(this);
 #endif
 	//xr_delete(Weapons);
 	for (int i=0; i<eacMaxCam; ++i) xr_delete(cameras[i]);
@@ -486,7 +486,7 @@ void	CActor::Hit(SHit* pHDS)
 		if (ps && ps->testFlag(GAME_PLAYER_FLAG_INVINCIBLE))
 		{
 			bPlaySound = false;
-			if (Device.dwFrame != last_hit_frame &&
+			if (Device->dwFrame != last_hit_frame &&
 				HDS.bone() != BI_NONE)
 			{		
 				// вычислить позицию и направленность партикла
@@ -508,7 +508,7 @@ void	CActor::Hit(SHit* pHDS)
 		};
 		 
 
-		last_hit_frame = Device.dwFrame;
+		last_hit_frame = Device->dwFrame;
 	};
 
 	if(	!g_dedicated_server				&& 
@@ -947,7 +947,7 @@ void CActor::UpdateCL	()
 		}
 	}
 
-	UpdateInventoryOwner			(Device.dwTimeDelta);
+	UpdateInventoryOwner			(Device->dwTimeDelta);
 
 	if(m_feel_touch_characters>0)
 	{
@@ -963,7 +963,7 @@ void CActor::UpdateCL	()
 	if(m_holder)
 		m_holder->UpdateEx( currentFOV() );
 
-	m_snd_noise -= 0.3f*Device.fTimeDelta;
+	m_snd_noise -= 0.3f*Device->fTimeDelta;
 
 	inherited::UpdateCL				();
 	m_pPhysics_support->in_UpdateCL	();
@@ -977,7 +977,7 @@ void CActor::UpdateCL	()
 	SetZoomAimingMode		(false);
 	CWeapon* pWeapon		= smart_cast<CWeapon*>(inventory().ActiveItem());	
 
-	cam_Update(float(Device.dwTimeDelta)/1000.0f, currentFOV());
+	cam_Update(float(Device->dwTimeDelta)/1000.0f, currentFOV());
 
 	if(Level().CurrentEntity() && this->ID()==Level().CurrentEntity()->ID() )
 	{
@@ -1476,8 +1476,8 @@ void CActor::RenderIndicator			(Fvector dpos, float r1, float r2, const ui_shade
 	M.mul						(XFORM(),BI.mTransform);
 
 	Fvector pos = M.c; pos.add(dpos);
-	const Fvector& T        = Device.vCameraTop;
-	const Fvector& R        = Device.vCameraRight;
+	const Fvector& T        = Device->vCameraTop;
+	const Fvector& R        = Device->vCameraRight;
 	Fvector Vr, Vt;
 	Vr.x            = R.x*r1;
 	Vr.y            = R.y*r1;
@@ -1527,12 +1527,12 @@ void CActor::RenderText				(LPCSTR Text, Fvector dpos, float* pdup, u32 color)
 	//------------------------------------------------
 	Fvector v0, v1;
 	v0.set(M.c); v1.set(M.c);
-	Fvector T        = Device.vCameraTop;
+	Fvector T        = Device->vCameraTop;
 	v1.add(T);
 
 	Fvector v0r, v1r;
-	Device.mFullTransform.transform(v0r,v0);
-	Device.mFullTransform.transform(v1r,v1);
+	Device->mFullTransform.transform(v0r,v0);
+	Device->mFullTransform.transform(v1r,v1);
 	float size = v1r.distance_to(v0r);
 	CGameFont* pFont = UI().Font().pFontArial14;
 	if (!pFont) return;
@@ -1547,13 +1547,13 @@ void CActor::RenderText				(LPCSTR Text, Fvector dpos, float* pdup, u32 color)
 	M.c.y += dpos.y;
 
 	Fvector4 v_res;	
-	Device.mFullTransform.transform(v_res,M.c);
+	Device->mFullTransform.transform(v_res,M.c);
 
 	if (v_res.z < 0 || v_res.w < 0)	return;
 	if (v_res.x < -1.f || v_res.x > 1.f || v_res.y<-1.f || v_res.y>1.f) return;
 
-	float x = (1.f + v_res.x)/2.f * (Device.dwWidth);
-	float y = (1.f - v_res.y)/2.f * (Device.dwHeight);
+	float x = (1.f + v_res.x)/2.f * (Device->dwWidth);
+	float y = (1.f - v_res.y)/2.f * (Device->dwHeight);
 
 	pFont->SetAligment	(CGameFont::alCenter);
 	pFont->SetColor		(color);

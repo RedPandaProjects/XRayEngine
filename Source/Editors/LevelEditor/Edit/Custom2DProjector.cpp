@@ -55,9 +55,9 @@ void CCustom2DProjector::CreateRMFromObjects(const Fbox& box, ObjectList& lst)
 void CCustom2DProjector::Render(bool blended)
 {
 	if (!Valid()) return;
-    EDevice.RenderNearer(0.001f);
+    EDevice->RenderNearer(0.001f);
 	RCache.set_xform_world(Fidentity);
-    EDevice.SetShader	(blended?shader_blended:shader_overlap);
+    EDevice->SetShader	(blended?shader_blended:shader_overlap);
     div_t cnt 			= div(mesh.size(),MAX_BUF_SIZE);
     u32 vBase;
     _VertexStream* Stream = &RCache.Vertex;
@@ -65,15 +65,15 @@ void CCustom2DProjector::Render(bool blended)
 		FVF::V*	pv	 	= (FVF::V*)Stream->Lock(MAX_BUF_SIZE,geom->vb_stride,vBase);
 		CopyMemory		(pv,mesh.data()+k*MAX_BUF_SIZE,sizeof(FVF::V)*MAX_BUF_SIZE);
 		Stream->Unlock	(MAX_BUF_SIZE,geom->vb_stride);
-		EDevice.DP		(D3DPT_TRIANGLELIST,geom,vBase,MAX_BUF_SIZE/3);
+		EDevice->DP		(D3DPT_TRIANGLELIST,geom,vBase,MAX_BUF_SIZE/3);
     }
     if (cnt.rem){
 		FVF::V*	pv	 	= (FVF::V*)Stream->Lock(cnt.rem,geom->vb_stride,vBase);
 		CopyMemory		(pv,mesh.data()+cnt.quot*MAX_BUF_SIZE,sizeof(FVF::V)*cnt.rem);
 		Stream->Unlock	(cnt.rem,geom->vb_stride);
-		EDevice.DP		(D3DPT_TRIANGLELIST,geom,vBase,cnt.rem/3);
+		EDevice->DP		(D3DPT_TRIANGLELIST,geom,vBase,cnt.rem/3);
     }
-    EDevice.ResetNearer	();
+    EDevice->ResetNearer	();
 }
 
 void CCustom2DProjector::CreateShader()

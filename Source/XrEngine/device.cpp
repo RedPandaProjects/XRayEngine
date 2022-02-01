@@ -27,19 +27,19 @@
 
 #include "xrSash.h"
 #include "igame_persistent.h"
+#include "device.h"
 
 #pragma comment( lib, "d3dx9.lib"		)
 
-ENGINE_API CRenderDevice Device;
 ENGINE_API CLoadScreenRenderer load_screen_renderer;
-
+CRenderDevice* EngineDevice = nullptr;
 
 ENGINE_API BOOL g_bRendering = FALSE; 
 
 BOOL		g_bLoaded = FALSE;
 ref_light	precache_light = 0;
 
-BOOL CRenderDevice::Begin	()
+bool CRenderDevice::Begin	()
 {
 #ifndef DEDICATED_SERVER
 
@@ -158,7 +158,7 @@ void CRenderDevice::End		(void)
 	// end scene
 	//	Present goes here, so call OA Frame end.
 	if (g_SASH.IsBenchmarkRunning())
-		g_SASH.DisplayFrame(Device.fTimeGlobal);
+		g_SASH.DisplayFrame(Device->fTimeGlobal);
 	m_pRender->End();
 	//RCache.OnFrameEnd	();
 	//Memory.dbg_check		();
@@ -179,27 +179,27 @@ volatile u32	mt_Thread_marker		= 0x12345678;
 void 			mt_Thread	(void *ptr)	{
 	while (true) {
 		// waiting for Device permission to execute
-		Device.mt_csEnter.Enter	();
+		Device->mt_csEnter.Enter	();
 
-		if (Device.mt_bMustExit) {
-			Device.mt_bMustExit = FALSE;				// Important!!!
-			Device.mt_csEnter.Leave();					// Important!!!
+		if (Device->mt_bMustExit) {
+			Device->mt_bMustExit = FALSE;				// Important!!!
+			Device->mt_csEnter.Leave();					// Important!!!
 			return;
 		}
 		// we has granted permission to execute
-		mt_Thread_marker			= Device.dwFrame;
+		mt_Thread_marker			= Device->dwFrame;
  
-		for (u32 pit=0; pit<Device.seqParallel.size(); pit++)
-			Device.seqParallel[pit]	();
-		Device.seqParallel.clear_not_free	();
-		Device.seqFrameMT.Process	(rp_Frame);
+		for (u32 pit=0; pit<Device->seqParallel.size(); pit++)
+			Device->seqParallel[pit]	();
+		Device->seqParallel.clear_not_free	();
+		Device->seqFrameMT.Process	(rp_Frame);
 
 		// now we give control to device - signals that we are ended our work
-		Device.mt_csEnter.Leave	();
+		Device->mt_csEnter.Leave	();
 		// waits for device signal to continue - to start again
-		Device.mt_csLeave.Enter	();
+		Device->mt_csLeave.Enter	();
 		// returns sync signal to device
-		Device.mt_csLeave.Leave	();
+		Device->mt_csLeave.Leave	();
 	}
 }
 
@@ -252,7 +252,7 @@ void CRenderDevice::on_idle		()
 		return;
 	}else 
 	{
-		if ( (!Device.dwPrecacheFrame) && (!g_SASH.IsBenchmarkRunning())
+		if ( (!Device->dwPrecacheFrame) && (!g_SASH.IsBenchmarkRunning())
 			&& g_bLoaded)
 			g_SASH.StartBenchmark();
 
@@ -317,9 +317,9 @@ void CRenderDevice::on_idle		()
 
 	// Ensure, that second thread gets chance to execute anyway
 	if (dwFrame!=mt_Thread_marker)			{
-		for (u32 pit=0; pit<Device.seqParallel.size(); pit++)
-			Device.seqParallel[pit]			();
-		Device.seqParallel.clear_not_free	();
+		for (u32 pit=0; pit<Device->seqParallel.size(); pit++)
+			Device->seqParallel[pit]			();
+		Device->seqParallel.clear_not_free	();
 		seqFrameMT.Process					(rp_Frame);
 	}
 
@@ -369,7 +369,7 @@ void CRenderDevice::message_loop_editor	()
 void CRenderDevice::message_loop()
 {
 #ifdef INGAME_EDITOR
-	if (editor()) {
+	if (WeatherEditor()) {
 		message_loop_editor	();
 		return;
 	}
@@ -486,7 +486,7 @@ void CRenderDevice::FrameMove()
 
 void ProcessLoading				(RP_FUNC *f)
 {
-	Device.seqFrame.Process				(rp_Frame);
+	Device->seqFrame.Process				(rp_Frame);
 	g_bLoaded							= TRUE;
 }
 
@@ -511,7 +511,7 @@ void CRenderDevice::Pause(BOOL bOn, BOOL bTimer, BOOL bSound, LPCSTR reason)
 		if(!Paused())						
 			bShowPauseString				= 
 #ifdef INGAME_EDITOR
-				editor() ? FALSE : 
+				WeatherEditor() ? FALSE : 
 #endif // #ifdef INGAME_EDITOR
 #ifdef DEBUG
 				!xr_strcmp(reason, "li_pause_key_no_clip")?	FALSE:
@@ -561,7 +561,7 @@ void CRenderDevice::Pause(BOOL bOn, BOOL bTimer, BOOL bSound, LPCSTR reason)
 
 }
 
-BOOL CRenderDevice::Paused()
+bool CRenderDevice::Paused() const
 {
 	return g_pauseMngr.Paused();
 };
@@ -572,25 +572,25 @@ void CRenderDevice::OnWM_Activate(WPARAM wParam, LPARAM lParam)
 	BOOL fMinimized					= (BOOL) HIWORD(wParam);
 	BOOL bActive					= ((fActive!=WA_INACTIVE) && (!fMinimized))?TRUE:FALSE;
 	
-	if (bActive!=Device.b_is_Active)
+	if (bActive!=Device->b_is_Active)
 	{
-		Device.b_is_Active			= bActive;
+		Device->b_is_Active			= bActive;
 
-		if (Device.b_is_Active)	
+		if (Device->b_is_Active)	
 		{
-			Device.seqAppActivate.Process(rp_AppActivate);
+			Device->seqAppActivate.Process(rp_AppActivate);
 			app_inactive_time		+= TimerMM.GetElapsed_ms() - app_inactive_time_start;
 
 #ifndef DEDICATED_SERVER
 #	ifdef INGAME_EDITOR
-			if (!editor())
+			if (!WeatherEditor())
 #	endif // #ifdef INGAME_EDITOR
 				ShowCursor			(FALSE);
 #endif // #ifndef DEDICATED_SERVER
 		}else	
 		{
 			app_inactive_time_start	= TimerMM.GetElapsed_ms();
-			Device.seqAppDeactivate.Process(rp_AppDeactivate);
+			Device->seqAppDeactivate.Process(rp_AppDeactivate);
 			ShowCursor				(TRUE);
 		}
 	}
@@ -617,7 +617,7 @@ CLoadScreenRenderer::CLoadScreenRenderer()
 
 void CLoadScreenRenderer::start(bool b_user_input) 
 {
-	Device.seqRender.Add			(this, 0);
+	Device->seqRender.Add			(this, 0);
 	b_registered					= true;
 	b_need_user_input				= b_user_input;
 }
@@ -625,7 +625,7 @@ void CLoadScreenRenderer::start(bool b_user_input)
 void CLoadScreenRenderer::stop()
 {
 	if(!b_registered)				return;
-	Device.seqRender.Remove			(this);
+	Device->seqRender.Remove			(this);
 	pApp->destroy_loading_shaders	();
 	b_registered					= false;
 	b_need_user_input				= false;

@@ -6,7 +6,7 @@
 #include "../../weighted_random.h"
 
 inline
-TTime   current_time () { return Device.dwTimeGlobal; }
+TTime   current_time () { return Device->dwTimeGlobal; }
 
 template<typename _Object>
 class CStateMonsterAttackOnRun : public CState<_Object> {

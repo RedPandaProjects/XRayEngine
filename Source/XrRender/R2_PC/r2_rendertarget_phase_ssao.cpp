@@ -35,20 +35,20 @@ void CRenderTarget::phase_ssao	()
 	RCache.set_Stencil(FALSE);//TODO - disable later
 
 	{
-		Fmatrix	m_v2w;				m_v2w.invert(Device.mView);
+		Fmatrix	m_v2w;				m_v2w.invert(Device->mView);
 		// Fill VB
-		float	_w					= float(Device.dwWidth);
-		float	_h					= float(Device.dwHeight);
+		float	_w					= float(Device->dwWidth);
+		float	_h					= float(Device->dwHeight);
 		p0.set						(.5f/_w, .5f/_h);
 		p1.set						((_w+.5f)/_w, (_h+.5f)/_h );
 
 		float		fSSAONoise = 2.0f;
 		fSSAONoise *= tan(deg2rad(67.5f));
-		fSSAONoise /= tan(deg2rad(Device.fFOV));
+		fSSAONoise /= tan(deg2rad(Device->fFOV));
 
 		float		fSSAOKernelSize = 150.0f;
 		fSSAOKernelSize *= tan(deg2rad(67.5f));
-		fSSAOKernelSize /= tan(deg2rad(Device.fFOV));
+		fSSAOKernelSize /= tan(deg2rad(Device->fFOV));
 
 		float	scale_X				= _w	/ float(TEX_jitter);
 		float	scale_Y				= _h / float(TEX_jitter);
@@ -99,10 +99,10 @@ void CRenderTarget::phase_downsamp	()
 	RCache.set_Stencil(FALSE);//TODO - disable later
 
 	{
-		Fmatrix	m_v2w;				m_v2w.invert(Device.mView);
+		Fmatrix	m_v2w;				m_v2w.invert(Device->mView);
 		// Fill VB
-		float	_w					= float(Device.dwWidth) * 0.5f;
-		float	_h					= float(Device.dwHeight) * 0.5f;
+		float	_w					= float(Device->dwWidth) * 0.5f;
+		float	_h					= float(Device->dwHeight) * 0.5f;
 		p0.set						(.5f/_w, .5f/_h);
 		p1.set						((_w+.5f)/_w, (_h+.5f)/_h );
 

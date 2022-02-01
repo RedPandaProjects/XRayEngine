@@ -94,10 +94,10 @@ void CWeapon::Hit					(SHit* pHDS)
 
 void CWeapon::UpdateXForm	()
 {
-	if (Device.dwFrame == dwXF_Frame)
+	if (Device->dwFrame == dwXF_Frame)
 		return;
 
-	dwXF_Frame				= Device.dwFrame;
+	dwXF_Frame				= Device->dwFrame;
 
 	if (!H_Parent())
 		return;
@@ -161,9 +161,9 @@ void CWeapon::UpdateXForm	()
 
 void CWeapon::UpdateFireDependencies_internal()
 {
-	if (Device.dwFrame!=dwFP_Frame) 
+	if (Device->dwFrame!=dwFP_Frame) 
 	{
-		dwFP_Frame			= Device.dwFrame;
+		dwFP_Frame			= Device->dwFrame;
 
 		UpdateXForm			();
 
@@ -821,7 +821,7 @@ void CWeapon::UpdateCL		()
 		{
 			if (hud_adj_mode==0 && 
 				GetState()==eIdle && 
-				(Device.dwTimeGlobal-m_dw_curr_substate_time>20000) && 
+				(Device->dwTimeGlobal-m_dw_curr_substate_time>20000) && 
 				!IsZoomed()&&
 				g_player_hud->attached_item(1)==NULL)
 			{
@@ -1092,7 +1092,7 @@ int CWeapon::GetSuitableAmmoTotal( bool use_item_to_spawn ) const
 	{
 		return ae_count + m_iAmmoCurrentTotal;
 	}
-	m_BriefInfo_CalcFrame = Device.dwFrame;
+	m_BriefInfo_CalcFrame = Device->dwFrame;
 
 	m_iAmmoCurrentTotal = 0;
 	for ( u8 i = 0; i < u8(m_ammoTypes.size()); ++i ) 
@@ -1677,9 +1677,9 @@ void CWeapon::UpdateHudAdditonal		(Fmatrix& trans)
 		trans.mulB_43				(hud_rotation);
 
 		if(pActor->IsZoomAimingMode())
-			m_zoom_params.m_fZoomRotationFactor += Device.fTimeDelta/m_zoom_params.m_fZoomRotateTime;
+			m_zoom_params.m_fZoomRotationFactor += Device->fTimeDelta/m_zoom_params.m_fZoomRotateTime;
 		else
-			m_zoom_params.m_fZoomRotationFactor -= Device.fTimeDelta/m_zoom_params.m_fZoomRotateTime;
+			m_zoom_params.m_fZoomRotationFactor -= Device->fTimeDelta/m_zoom_params.m_fZoomRotateTime;
 
 		clamp(m_zoom_params.m_fZoomRotationFactor, 0.f, 1.f);
 	}

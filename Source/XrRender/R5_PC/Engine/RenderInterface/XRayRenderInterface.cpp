@@ -316,7 +316,7 @@ u32 XRayRenderInterface::active_phase()
 
 void XRayRenderInterface::OnFrame()
 {
-	Device.seqParallel.insert(Device.seqParallel.begin(), fastdelegate::FastDelegate0<>(&HOM, &CHOM::MT_RENDER));
+	Device->seqParallel.insert(Device->seqParallel.begin(), fastdelegate::FastDelegate0<>(&HOM, &CHOM::MT_RENDER));
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -347,12 +347,12 @@ DWORD XRayRenderInterface::get_dx_level()
 void XRayRenderInterface::create()
 {
 	GRenderFastAllocator = xr_new<XRayRenderFastAllocator>();
-	Device.seqFrame.Add(this, REG_PRIORITY_HIGH + 0x12345678);
+	Device->seqFrame.Add(this, REG_PRIORITY_HIGH + 0x12345678);
 	m_bHUD = FALSE;
 	m_ScreenTransformation = BearRenderInterface::CreateUniformBuffer(sizeof(float) * 4, 1, true);
 	{
 		_vector4<float> ScreenTransformation;
-		ScreenTransformation.set(static_cast<float>(Device.dwWidth), static_cast<float>(Device.dwHeight), 1.f / static_cast<float>(Device.dwWidth), 1.f / static_cast<float>(Device.dwHeight));
+		ScreenTransformation.set(static_cast<float>(Device->dwWidth), static_cast<float>(Device->dwHeight), 1.f / static_cast<float>(Device->dwWidth), 1.f / static_cast<float>(Device->dwHeight));
 		memcpy(m_ScreenTransformation->Lock(), &ScreenTransformation, sizeof(float) * 4);
 		m_ScreenTransformation->Unlock();
 	}
@@ -382,7 +382,7 @@ void XRayRenderInterface::destroy()
 	xr_delete(GRenderTarget); GRenderTarget = 0;
 	m_ScreenTransformation.clear();
 	m_BloomScreenTransformation.clear();
-	Device.seqFrame.Remove(this);
+	Device->seqFrame.Remove(this);
 
 	xr_delete(GRenderFastAllocator);
 }
@@ -398,7 +398,7 @@ void XRayRenderInterface::reset_end()
 	GRenderTarget->CompileShader();
 	{
 		_vector4<float> ScreenTransformation;
-		ScreenTransformation.set(static_cast<float>(Device.dwWidth), static_cast<float>(Device.dwHeight), 1.f / static_cast<float>(Device.dwWidth), 1.f / static_cast<float>(Device.dwHeight));
+		ScreenTransformation.set(static_cast<float>(Device->dwWidth), static_cast<float>(Device->dwHeight), 1.f / static_cast<float>(Device->dwWidth), 1.f / static_cast<float>(Device->dwHeight));
 		memcpy(m_ScreenTransformation->Lock(), &ScreenTransformation, sizeof(float) * 4);
 		m_ScreenTransformation->Unlock();
 	}

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#ifdef _EDITOR
+#ifdef REDITOR
 #	include "skeletonX.h"
 #	include "skeletoncustom.h"
 #endif // _EDITOR

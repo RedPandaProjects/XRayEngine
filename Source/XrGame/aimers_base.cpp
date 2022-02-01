@@ -60,7 +60,7 @@ void base::aim_at_position		(
 #if 0
 	Msg									(
 		"[%d][%s] bone_position[%f][%f][%f] object_position[%f][%f][%f] object_direction[%f][%f][%f]",
-		Device.dwFrame,
+		Device->dwFrame,
 		m_animated.LL_MotionDefName_dbg(m_animation_id).first,
 		VPUSH(bone_position),
 		VPUSH(object_position),

@@ -55,7 +55,7 @@ void					CRender::create()
 	L_Shadows = 0;
 	L_Projector = 0;
 
-	Device.seqFrame.Add(this, REG_PRIORITY_HIGH + 0x12345678);
+	Device->seqFrame.Add(this, REG_PRIORITY_HIGH + 0x12345678);
 
 	// c-setup
 	dxRenderDeviceRender::Instance().Resources->RegisterConstantSetup("L_dynamic_pos", &r1_dlight_binder_PR);
@@ -121,7 +121,7 @@ void					CRender::destroy				()
 	
 	//*** Components
 	xr_delete					(Target);
-	Device.seqFrame.Remove		(this);
+	Device->seqFrame.Remove		(this);
 
 	r_dsgraph_destroy			();
 }
@@ -302,7 +302,7 @@ void					CRender::apply_object			(IRenderable*		O )
 		float o_sun			= 0.5f*LT.get_sun						();
 		RCache.set_c		(c_ldynamic_props,o_sun,o_sun,o_sun,o_hemi);
 		// shadowing
-		if ((LT.shadow_recv_frame==Device.dwFrame) && O->renderable_ShadowReceive())	
+		if ((LT.shadow_recv_frame==Device->dwFrame) && O->renderable_ShadowReceive())	
 			RImplementation.L_Projector->setup	(LT.shadow_recv_slot);
 	}
 }
@@ -341,18 +341,18 @@ extern float		r_ssaHZBvsTEX;
 
 ICF bool			pred_sp_sort		(ISpatial* _1, ISpatial* _2)
 {
-	float	d1		= _1->spatial.sphere.P.distance_to_sqr(Device.vCameraPosition);
-	float	d2		= _2->spatial.sphere.P.distance_to_sqr(Device.vCameraPosition);
+	float	d1		= _1->spatial.sphere.P.distance_to_sqr(Device->vCameraPosition);
+	float	d2		= _2->spatial.sphere.P.distance_to_sqr(Device->vCameraPosition);
 	return	d1<d2;
 }
 
 void CRender::Calculate				()
 {
-	Device.Statistic->RenderCALC.Begin();
+	Device->Statistic->RenderCALC.Begin();
 
 	// Transfer to global space to avoid deep pointer access
 	IRender_Target* T				=	getTarget	();
-	float	fov_factor				=	_sqr		(90.f / Device.fFOV);
+	float	fov_factor				=	_sqr		(90.f / Device->fFOV);
 	g_fSCREEN						=	float(T->get_width()*T->get_height())*fov_factor*(EPS_S+ps_r__LOD);
 	r_ssaDISCARD					=	_sqr(ps_r__ssaDISCARD)		/g_fSCREEN;
 	r_ssaDONTSORT					=	_sqr(ps_r__ssaDONTSORT/3)	/g_fSCREEN;
@@ -363,7 +363,7 @@ void CRender::Calculate				()
 	r_ssaHZBvsTEX					=	_sqr(ps_r__ssaHZBvsTEX/3)	/g_fSCREEN;
 
 	// Frustum & HOM rendering
-	ViewBase.CreateFromMatrix		(Device.mFullTransform,FRUSTUM_P_LRTB|FRUSTUM_P_FAR);
+	ViewBase.CreateFromMatrix		(Device->mFullTransform,FRUSTUM_P_LRTB|FRUSTUM_P_FAR);
 	View							= 0;
 	HOM.Enable						();
 	HOM.Render						(ViewBase);
@@ -371,15 +371,15 @@ void CRender::Calculate				()
 	phase							= PHASE_NORMAL;
 
 	// Detect camera-sector
-	if (!vLastCameraPos.similar(Device.vCameraPosition,EPS_S)) 
+	if (!vLastCameraPos.similar(Device->vCameraPosition,EPS_S)) 
 	{
-		CSector* pSector		= (CSector*)detectSector(Device.vCameraPosition);
+		CSector* pSector		= (CSector*)detectSector(Device->vCameraPosition);
 		if (pSector && (pSector!=pLastSector))
 			g_pGamePersistent->OnSectorChanged( translateSector(pSector) );
 
 		if (0==pSector) pSector = pLastSector;
 		pLastSector = pSector;
-		vLastCameraPos.set(Device.vCameraPosition);
+		vLastCameraPos.set(Device->vCameraPosition);
 	}
 
 	// Check if camera is too near to some portal - if so force DualRender
@@ -387,7 +387,7 @@ void CRender::Calculate				()
 	{
 		Fvector box_radius;		box_radius.set(EPS_L*2,EPS_L*2,EPS_L*2);
 		Sectors_xrc.box_options	(CDB::OPT_FULL_TEST);
-		Sectors_xrc.box_query	(rmPortals,Device.vCameraPosition,box_radius);
+		Sectors_xrc.box_query	(rmPortals,Device->vCameraPosition,box_radius);
 		for (int K=0; K<Sectors_xrc.r_count(); K++)
 		{
 			CPortal*	pPortal		= (CPortal*) Portals[rmPortals->get_tris()[Sectors_xrc.r_begin()[K].id].dummy];
@@ -407,8 +407,8 @@ void CRender::Calculate				()
 			(
 			pLastSector,
 			ViewBase,
-			Device.vCameraPosition,
-			Device.mFullTransform,
+			Device->vCameraPosition,
+			Device->mFullTransform,
 			CPortalTraverser::VQ_HOM + CPortalTraverser::VQ_SSA + CPortalTraverser::VQ_FADE
 			);
 
@@ -539,7 +539,7 @@ void CRender::Calculate				()
 	}
 
 	// End calc
-	Device.Statistic->RenderCALC.End	();
+	Device->Statistic->RenderCALC.End	();
 }
 
 void	CRender::rmNear		()
@@ -571,7 +571,7 @@ void	CRender::Render		()
 	}
 
 	g_r											= 1;
-	Device.Statistic->RenderDUMP.Begin();
+	Device->Statistic->RenderDUMP.Begin();
 	// Begin
 	Target->Begin								();
 	o.vis_intersect								= FALSE			;
@@ -622,7 +622,7 @@ void	CRender::Render		()
 	if (L_Projector) L_Projector->finalize		();
 
 	// HUD
-	Device.Statistic->RenderDUMP.End	();
+	Device->Statistic->RenderDUMP.End	();
 }
 
 void	CRender::ApplyBlur4		(FVF::TL4uv* pv, u32 w, u32 h, float k)

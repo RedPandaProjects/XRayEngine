@@ -187,7 +187,7 @@ CCommandVar CommandLoad(CCommandVar p1, CCommandVar p2)
     	if (!p1.IsString())
         {
         	xr_string temp_fn	= LTools->m_LastFileName.c_str();
-        	if (EFS.GetOpenName	(EDevice.m_hWnd, _maps_, temp_fn ))
+        	if (EFS.GetOpenName	(EDevice->m_hWnd, _maps_, temp_fn ))
             	return 			ExecCommand(COMMAND_LOAD,temp_fn);
         }else
         {
@@ -301,7 +301,7 @@ CCommandVar CommandClear(CCommandVar p1, CCommandVar p2)
 {
     if( !Scene->locked() ){
         if (!Scene->IfModified()) return TRUE;
-        EDevice.m_Camera.Reset	();
+        EDevice->m_Camera.Reset	();
         Scene->Reset			();
         Scene->m_LevelOp.Reset	();
         Tools->m_LastFileName 		= "";
@@ -370,7 +370,7 @@ CCommandVar CommandShowClipEditor(CCommandVar p1, CCommandVar p2)
 CCommandVar CommandImportCompilerError(CCommandVar p1, CCommandVar p2)
 {
     xr_string fn;
-    if(EFS.GetOpenName(EDevice.m_hWnd,"$logs$", fn, false, NULL, 0)){
+    if(EFS.GetOpenName(EDevice->m_hWnd,"$logs$", fn, false, NULL, 0)){
         Scene->LoadCompilerError(fn.c_str());
     }
     UI->RedrawScene		();
@@ -455,7 +455,7 @@ CCommandVar CommandLoadSelection(CCommandVar p1, CCommandVar p2)
     if( !Scene->locked() )
     {
         xr_string fn			= LTools->m_LastSelectionName;
-        if( EFS.GetOpenName(EDevice.m_hWnd, _maps_, fn ) )
+        if( EFS.GetOpenName(EDevice->m_hWnd, _maps_, fn ) )
         {
         	LPCSTR maps_path	= FS.get_path(_maps_)->m_Path;
         	if (fn.c_str()==strstr(fn.c_str(),maps_path))
@@ -959,6 +959,7 @@ char* CLevelMain::GetCaption()
 
 bool  CLevelMain::ApplyShortCut(DWORD Key, TShiftState Shift)
 {
+    if (Scene->IsSimulate())return true;
     return inherited::ApplyShortCut(Key,Shift);
 }
 //---------------------------------------------------------------------------
@@ -1152,22 +1153,22 @@ bool CLevelMain::SelectionFrustum(CFrustum& frustum)
 
     SRayPickInfo pinf;
     for (int i=0; i<4; i++){
-	    EDevice.m_Camera.MouseRayFromPoint(st, d, pt[i]);
+	    EDevice->m_Camera.MouseRayFromPoint(st, d, pt[i]);
         if (EPrefs->bp_lim_depth){
-			pinf.inf.range = EDevice.m_Camera._Zfar(); // max pick range
+			pinf.inf.range = EDevice->m_Camera._Zfar(); // max pick range
             if (Scene->RayPickObject(pinf.inf.range, st, d, OBJCLASS_SCENEOBJECT, &pinf, 0))
 	            if (pinf.inf.range > depth) depth = pinf.inf.range;
         }
     }
-    if (depth<EDevice.m_Camera._Znear()) depth = EDevice.m_Camera._Zfar();
+    if (depth<EDevice->m_Camera._Znear()) depth = EDevice->m_Camera._Zfar();
     else depth += EPrefs->bp_depth_tolerance;
 
     for (int i=0; i<4; i++){
-	    EDevice.m_Camera.MouseRayFromPoint(st, d, pt[i]);
+	    EDevice->m_Camera.MouseRayFromPoint(st, d, pt[i]);
         p[i].mad(st,d,depth);
     }
 
-    Fvector pos = EDevice.m_Camera.GetPosition();
+    Fvector pos = EDevice->m_Camera.GetPosition();
     frustum.CreateFromPoints(p,4,pos);
 
     Fplane P; P.build(p[0],p[1],p[2]);
@@ -1233,9 +1234,9 @@ void CLevelMain::OutCameraPos()
 {
 	if (m_bReady){
         xr_string s;
-        const Fvector& c 	= EDevice.m_Camera.GetPosition();
+        const Fvector& c 	= EDevice->m_Camera.GetPosition();
         s.sprintf("C: %3.1f, %3.1f, %3.1f",c.x,c.y,c.z);
-    //	const Fvector& hpb 	= EDevice.m_Camera.GetHPB();
+    //	const Fvector& hpb 	= EDevice->m_Camera.GetHPB();
     //	s.sprintf(" Cam: %3.1f�, %3.1f�, %3.1f�",rad2deg(hpb.y),rad2deg(hpb.x),rad2deg(hpb.z));
        // fraBottomBar->paCamera->Caption=s; fraBottomBar->paCamera->Repaint();
 
@@ -1294,6 +1295,19 @@ void CLevelMain::OnDrawUI()
     {
         LTools->GetToolForm()->OnDrawUI();
     }
+}
+
+bool CLevelMain::KeyDown(WORD Key, TShiftState Shift)
+{
+    if (Scene->IsSimulate())
+    {
+        if (Key == VK_ESCAPE)
+        {
+            Scene->Stop();
+        }
+        return true;
+    }
+    return TUI::KeyDown(Key, Shift);
 }
 
 //---------------------------------------------------------------------------

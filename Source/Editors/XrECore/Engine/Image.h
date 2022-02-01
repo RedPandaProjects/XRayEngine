@@ -6,7 +6,7 @@
 #define AFX_IMAGE_H__4281EEAB_9522_40E5_A90D_831A40E1A344__INCLUDED_
 #pragma once
 
-class ENGINE_API CImage
+class ECORE_API CImage
 {
 public:
 	u32   dwWidth;

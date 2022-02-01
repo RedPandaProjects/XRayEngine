@@ -95,7 +95,7 @@ void CActor::net_Export	(NET_Packet& P)					// export to server
 	Fvector				p = Position();
 	P.w_vec3			(p);//Position());
 
-	P.w_float /*w_angle8*/			(angle_normalize(r_model_yaw)); //Device.vCameraDirection.getH());//
+	P.w_float /*w_angle8*/			(angle_normalize(r_model_yaw)); //Device->vCameraDirection.getH());//
 	P.w_float /*w_angle8*/			(angle_normalize(unaffected_r_torso.yaw));//(r_torso.yaw);
 	P.w_float /*w_angle8*/			(angle_normalize(unaffected_r_torso.pitch));//(r_torso.pitch);
 	P.w_float /*w_angle8*/			(angle_normalize(unaffected_r_torso.roll));//(r_torso.roll);
@@ -634,7 +634,7 @@ BOOL CActor::net_Spawn		(CSE_Abstract* DC)
 		{
 			static g_Y = 0;
 			pStatGraph = xr_new<CStatGraph>();
-			pStatGraph->SetRect(0, g_Y, Device.dwWidth, 100, 0xff000000, 0xff000000);
+			pStatGraph->SetRect(0, g_Y, Device->dwWidth, 100, 0xff000000, 0xff000000);
 			g_Y += 110;
 			if (g_Y > 700) g_Y = 100;
 			pStatGraph->SetGrid(0, 0.0f, 10, 1.0f, 0xff808080, 0xffffffff);

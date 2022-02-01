@@ -84,10 +84,10 @@ using XrWeatherEditor::environment::manager;
 manager::manager	()
 {
 	// testing properties
-	if (!Device.editor())
+	if (!Device->WeatherEditor())
 		return;
 
-	XrWeatherEditor::ide&			ide = *Device.editor();
+	XrWeatherEditor::ide&			ide = *Device->WeatherEditor();
 	XrWeatherEditor::property_holder*holder = ide.create_property_holder();
 	ide.active				(holder);
 

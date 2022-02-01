@@ -142,7 +142,7 @@ void game_state_accumulator::OnPlayerSpawned(game_PlayerState const * ps)
 {
 	if (ps == m_local_player)
 	{
-		m_last_player_spawn_time = Device.dwTimeGlobal;
+		m_last_player_spawn_time = Device->dwTimeGlobal;
 	}
 	for (accumulative_values_collection_t::iterator i = m_accumulative_values.begin(),
 		ie = m_accumulative_values.end(); i != ie; ++i)
@@ -369,7 +369,7 @@ bool game_state_accumulator::check_kill_params(u32 count,
 		tmp_predicate.m_after_time		= m_last_player_spawn_time;
 	} else
 	{
-		tmp_predicate.m_after_time		= Device.dwTimeGlobal - time_period;
+		tmp_predicate.m_after_time		= Device->dwTimeGlobal - time_period;
 	}
 	tmp_predicate.m_owner			= this;
 	tmp_predicate.m_kill_type		= kill_type;

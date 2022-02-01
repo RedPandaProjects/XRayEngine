@@ -97,7 +97,7 @@ void harvest_time::OnPlayerSpawned(game_PlayerState const * ps)
 {
 	if (ps == m_owner->get_local_player())
 	{
-		m_spawn_time = Device.dwTimeGlobal;
+		m_spawn_time = Device->dwTimeGlobal;
 	}
 }
 

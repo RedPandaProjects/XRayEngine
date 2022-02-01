@@ -12,7 +12,7 @@ void XRayConsoleRender::Copy(IConsoleRender & _in)
 
 void XRayConsoleRender::OnRender(bool bGame)
 {
-	Ivector4 R = { 0,0,Device.dwWidth,Device.dwHeight };
+	Ivector4 R = { 0,0,Device->dwWidth,Device->dwHeight };
 	if (bGame) R.w /= 2;
 	if (m_VertexBuffer.empty())
 	{

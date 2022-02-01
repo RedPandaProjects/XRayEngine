@@ -76,7 +76,7 @@ manager::~manager					()
 	delete_data						(m_thunderbolts_ids);
 	delete_data						(m_collections_ids);
 
-	if (!Device.editor() || !m_property_holder)
+	if (!Device->WeatherEditor() || !m_property_holder)
 		return;
 
 	::ide().destroy					(m_property_holder);

@@ -73,33 +73,33 @@ void dxRainRender::Render(CEffect_Rain &owner)
 	// build source plane
 	Fplane src_plane;
 	Fvector norm	={0.f,-1.f,0.f};
-	Fvector upper; 	upper.set(Device.vCameraPosition.x,Device.vCameraPosition.y+source_offset,Device.vCameraPosition.z);
+	Fvector upper; 	upper.set(Device->vCameraPosition.x,Device->vCameraPosition.y+source_offset,Device->vCameraPosition.z);
 	src_plane.build(upper,norm);
 
 	// perform update
 	u32			vOffset;
 	FVF::LIT	*verts		= (FVF::LIT	*) RCache.Vertex.Lock(desired_items*4,hGeom_Rain->vb_stride,vOffset);
 	FVF::LIT	*start		= verts;
-	const Fvector&	vEye	= Device.vCameraPosition;
+	const Fvector&	vEye	= Device->vCameraPosition;
 	for (u32 I=0; I<owner.items.size(); I++){
 		// physics and time control
 		CEffect_Rain::Item&	one		=	owner.items[I];
 
-		if (one.dwTime_Hit<Device.dwTimeGlobal)		owner.Hit (one.Phit);
-		if (one.dwTime_Life<Device.dwTimeGlobal)	owner.Born(one,source_radius);
+		if (one.dwTime_Hit<Device->dwTimeGlobal)		owner.Hit (one.Phit);
+		if (one.dwTime_Life<Device->dwTimeGlobal)	owner.Born(one,source_radius);
 
 		// последн€€ дельта ??
-		//.		float xdt		= float(one.dwTime_Hit-Device.dwTimeGlobal)/1000.f;
-		//.		float dt		= Device.fTimeDelta;//xdt<Device.fTimeDelta?xdt:Device.fTimeDelta;
-		float dt		= Device.fTimeDelta;
+		//.		float xdt		= float(one.dwTime_Hit-Device->dwTimeGlobal)/1000.f;
+		//.		float dt		= Device->fTimeDelta;//xdt<Device->fTimeDelta?xdt:Device->fTimeDelta;
+		float dt		= Device->fTimeDelta;
 		one.P.mad		(one.D,one.fSpeed*dt);
 
-		Device.Statistic->TEST1.Begin();
+		Device->Statistic->TEST1.Begin();
 		Fvector	wdir;	wdir.set(one.P.x-vEye.x,0,one.P.z-vEye.z);
 		float	wlen	= wdir.square_magnitude();
 		if (wlen>b_radius_wrap_sqr)	{
 			wlen		= _sqrt(wlen);
-			//.			Device.Statistic->TEST3.Begin();
+			//.			Device->Statistic->TEST3.Begin();
 			if ((one.P.y-vEye.y)<sink_offset){
 				// need born
 				one.invalidate();
@@ -129,9 +129,9 @@ void dxRainRender::Render(CEffect_Rain &owner)
 					//					Log("4");
 				}
 			}
-			//.			Device.Statistic->TEST3.End();
+			//.			Device->Statistic->TEST3.End();
 		}
-		Device.Statistic->TEST1.End();
+		Device->Statistic->TEST1.End();
 
 		// Build line
 		Fvector&	pos_head	= one.P;
@@ -183,7 +183,7 @@ void dxRainRender::Render(CEffect_Rain &owner)
 	if (0==P)			return;
 
 	{
-		float	dt				= Device.fTimeDelta;
+		float	dt				= Device->fTimeDelta;
 		_IndexStream& _IS		= RCache.Index;
 		RCache.set_Shader		(DM_Drop->shader);
 

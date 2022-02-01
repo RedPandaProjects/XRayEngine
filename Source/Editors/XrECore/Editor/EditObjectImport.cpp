@@ -14,7 +14,7 @@ extern "C" {
 #include "lwo2.h"
 };
 
-#ifdef _EDITOR
+#if 1
 	#include "ResourceManager.h"
     
 	extern "C" __declspec(dllimport) lwObject* LWO_ImportObject(char* filename, lwObject *new_obj);

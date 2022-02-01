@@ -31,7 +31,7 @@ void player_state_cherub::OnPlayerTakeArtefact	(game_PlayerState const * ps)
 
 	m_bearer_id			= ps->GameID;
 	m_bearer_name		= ps->getName();
-	m_art_take_time		= Device.dwTimeGlobal;
+	m_art_take_time		= Device->dwTimeGlobal;
 }
 
 void player_state_cherub::OnPlayerDropArtefact	(game_PlayerState const * ps)

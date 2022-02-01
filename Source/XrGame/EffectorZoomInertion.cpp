@@ -15,7 +15,7 @@
 CEffectorZoomInertion::CEffectorZoomInertion	() : CEffectorCam(eCEZoom,100000.f)
 {
 	Load();
-	SetRndSeed		(Device.dwTimeContinual);
+	SetRndSeed		(Device->dwTimeContinual);
 	m_dwTimePassed	= 0;
 }
 
@@ -125,7 +125,7 @@ BOOL CEffectorZoomInertion::ProcessCam(SCamEffectorInfo& info)
 	if(!camera_moved)
 		info.d.add(m_vCurrentPoint);
 
-	m_dwTimePassed += Device.dwTimeDelta;
+	m_dwTimePassed += Device->dwTimeDelta;
 
 	return TRUE;
 }

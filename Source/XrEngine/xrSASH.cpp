@@ -3,6 +3,7 @@
 
 #include "xr_ioconsole.h"
 #include "xr_ioc_cmd.h"
+#include "device.h"
 
 xrSASH	ENGINE_API g_SASH;
 
@@ -494,7 +495,7 @@ void xrSASH::TryInitEngine( bool bNoRun)
 	if (bNoRun)
 	{
 		InitSound2();
-		Device.Create();
+		EngineDevice->Create();
 	}
 
 }

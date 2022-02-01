@@ -9,7 +9,7 @@
 #include "directx\d3dx9.h"
 #pragma warning(default:4995)
 
-#ifndef _EDITOR
+#ifndef REDITOR
 	#include	"../../xrEngine/Render.h"
 #else
 #include "../../xrAPI/xrAPI.h"
@@ -118,7 +118,7 @@ void CSkeletonX::_Render_soft	(ref_geom& hGeom, u32 vCount, u32 iOffset, u32 pCo
 		cache_vCount		= vCount;
 		cache_vOffset		= vOffset;
 		
-		RDEVICE.Statistic->RenderDUMP_SKIN.Begin	();
+		Device->Statistic->RenderDUMP_SKIN.Begin	();
 		if (*Vertices1W)
 		{
 			PSGP.skin1W(
@@ -157,7 +157,7 @@ void CSkeletonX::_Render_soft	(ref_geom& hGeom, u32 vCount, u32 iOffset, u32 pCo
 		}else
 			R_ASSERT2(0,"unsupported soft rendering");
 
-		RDEVICE.Statistic->RenderDUMP_SKIN.End	();
+		Device->Statistic->RenderDUMP_SKIN.End	();
 		_VS.Unlock			(vCount,hGeom->vb_stride);
 	}
 
@@ -337,7 +337,7 @@ void CSkeletonX::_Load	(const char* N, IReader *data, u32& dwVertCount)
 		Debug.fatal	(DEBUG_INFO,"Invalid vertex type in skinned model '%s'",N);
 		break;
 	}
-#ifdef _EDITOR
+#ifdef REDITOR
 	if (bids.size()>0)	
 #else
 	if (bids.size()>1)	

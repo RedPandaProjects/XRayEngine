@@ -28,7 +28,7 @@ inline void CObjectList::o_crow		(CObject*	O)
 	VERIFY						( std::find(crows.begin(),crows.end(),O) == crows.end() );
 	crows.push_back				( O );
 
-	O->dwFrame_AsCrow			= Device.dwFrame;
+	O->dwFrame_AsCrow			= Device->dwFrame;
 }
 
 void CObject::MakeMeCrow			()
@@ -39,7 +39,7 @@ void CObject::MakeMeCrow			()
 	if ( !processing_enabled() )
 		return;
 
-	u32 const device_frame_id		= Device.dwFrame;
+	u32 const device_frame_id		= Device->dwFrame;
 	u32 const object_frame_id		= dwFrame_AsCrow;
 	if (
 			(u32)_InterlockedCompareExchange(
@@ -252,13 +252,13 @@ void	CObject::spatial_update		(float eps_P, float eps_R)
 		// Empty
 		bUpdate							= TRUE;
 		PositionStack.push_back			(SavedPosition());
-		PositionStack.back().dwTime		= Device.dwTimeGlobal;
+		PositionStack.back().dwTime		= Device->dwTimeGlobal;
 		PositionStack.back().vPosition	= Position();
 	} else {
 		if (PositionStack.back().vPosition.similar(Position(),eps_P))
 		{
 			// Just update time
-			PositionStack.back().dwTime		= Device.dwTimeGlobal;
+			PositionStack.back().dwTime		= Device->dwTimeGlobal;
 		} else {
 			// Register _new_ record
 			bUpdate							= TRUE;
@@ -269,7 +269,7 @@ void	CObject::spatial_update		(float eps_P, float eps_R)
 				PositionStack[1]				= PositionStack[2];
 				PositionStack[2]				= PositionStack[3];
 			}
-			PositionStack.back().dwTime		= Device.dwTimeGlobal;
+			PositionStack.back().dwTime		= Device->dwTimeGlobal;
 			PositionStack.back().vPosition	= Position();
 		}
 	}
@@ -297,8 +297,8 @@ void CObject::UpdateCL			()
 #ifdef DEBUG
 	VERIFY2								(_valid(renderable.xform),*cName());
 
-	if (Device.dwFrame==dbg_update_cl)								Debug.fatal	(DEBUG_INFO,"'UpdateCL' called twice per frame for %s",*cName());
-	dbg_update_cl	= Device.dwFrame;
+	if (Device->dwFrame==dbg_update_cl)								Debug.fatal	(DEBUG_INFO,"'UpdateCL' called twice per frame for %s",*cName());
+	dbg_update_cl	= Device->dwFrame;
 
 	if (Parent && spatial.node_ptr)									Debug.fatal	(DEBUG_INFO,"Object %s has parent but is still registered inside spatial DB",*cName());
 
@@ -314,11 +314,11 @@ void CObject::UpdateCL			()
 		MakeMeCrow	();
 	else
 	{
-		float dist = Device.vCameraPosition.distance_to_sqr(Position());
+		float dist = Device->vCameraPosition.distance_to_sqr(Position());
 		if (dist < CROW_RADIUS*CROW_RADIUS)	
 			MakeMeCrow	();
 		else 
-		if( (Visual() && Visual()->getVisData().hom_frame+2 > Device.dwFrame) && (dist < CROW_RADIUS2*CROW_RADIUS2) )
+		if( (Visual() && Visual()->getVisData().hom_frame+2 > Device->dwFrame) && (dist < CROW_RADIUS2*CROW_RADIUS2) )
 			MakeMeCrow	();
 	}
 }
@@ -335,7 +335,7 @@ void CObject::shedule_Update	( u32 T )
 	MakeMeCrow					();	
 	/*
 	if (AlwaysTheCrow())																	MakeMeCrow	();
-	else if (Device.vCameraPosition.distance_to_sqr(Position()) < CROW_RADIUS*CROW_RADIUS)	MakeMeCrow	();
+	else if (Device->vCameraPosition.distance_to_sqr(Position()) < CROW_RADIUS*CROW_RADIUS)	MakeMeCrow	();
 	*/
 }
 
@@ -418,10 +418,10 @@ void CObject::setDestroy			(BOOL _destroy)
 #ifdef DEBUG
 		extern BOOL debug_destroy;
 		if(debug_destroy)
-			Msg("cl setDestroy [%d][%d]",ID(),Device.dwFrame);
+			Msg("cl setDestroy [%d][%d]",ID(),Device->dwFrame);
 #endif
 #ifdef MP_LOGGING
-		Msg("cl setDestroy [%d][%d]",ID(),Device.dwFrame);
+		Msg("cl setDestroy [%d][%d]",ID(),Device->dwFrame);
 #endif //#ifdef MP_LOGGING
 	}else
 		VERIFY		(!g_pGameLevel->Objects.registered_object_to_destroy(this));

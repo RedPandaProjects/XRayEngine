@@ -421,7 +421,7 @@ void CWeaponMagazined::OnStateSwitch	(u32 S)
 void CWeaponMagazined::UpdateCL			()
 {
 	inherited::UpdateCL	();
-	float dt = Device.fTimeDelta;
+	float dt = Device->fTimeDelta;
 
 	
 
@@ -454,10 +454,10 @@ void CWeaponMagazined::UpdateCL			()
 
 void CWeaponMagazined::UpdateSounds	()
 {
-	if (Device.dwFrame == dwUpdateSounds_Frame)  
+	if (Device->dwFrame == dwUpdateSounds_Frame)  
 		return;
 	
-	dwUpdateSounds_Frame = Device.dwFrame;
+	dwUpdateSounds_Frame = Device->dwFrame;
 
 	Fvector P						= get_LastFP();
 	m_sounds.SetPosition("sndShow", P);

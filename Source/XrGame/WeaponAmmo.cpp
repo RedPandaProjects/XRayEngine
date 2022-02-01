@@ -63,7 +63,7 @@ void CCartridge::Load(LPCSTR section, u8 LocalAmmoType)
 
 	m_flags.set			(cfExplosive, pSettings->r_bool(section, "explosive"));
 
-	bullet_material_idx		=  GMLib.GetMaterialIdx(WEAPON_MATERIAL_NAME);
+	bullet_material_idx		=  GameMaterialLibrary->GetMaterialIdx(WEAPON_MATERIAL_NAME);
 	VERIFY	(u16(-1)!=bullet_material_idx);
 	VERIFY	(param_s.fWallmarkSize>0);
 
@@ -166,7 +166,7 @@ bool CWeaponAmmo::Get(CCartridge &cartridge)
 	cartridge.param_s = cartridge_param;
 
 	cartridge.m_flags.set(CCartridge::cfTracer ,m_tracer);
-	cartridge.bullet_material_idx = GMLib.GetMaterialIdx(WEAPON_MATERIAL_NAME);
+	cartridge.bullet_material_idx = GameMaterialLibrary->GetMaterialIdx(WEAPON_MATERIAL_NAME);
 	cartridge.m_InvShortName = NameShort();
 	--m_boxCurr;
 	if(m_pInventory)m_pInventory->InvalidateState();

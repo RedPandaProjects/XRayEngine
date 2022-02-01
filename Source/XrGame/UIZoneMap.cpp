@@ -116,7 +116,7 @@ void CUIZoneMap::Update()
 	CActor* pActor = smart_cast<CActor*>( Level().CurrentViewEntity() );
 	if ( !pActor ) return;
 
-	if ( !( Device.dwFrame % 20 ) && IsGameTypeSingle() )
+	if ( !( Device->dwFrame % 20 ) && IsGameTypeSingle() )
 	{
 		string16	text_str;
 		xr_strcpy( text_str, sizeof(text_str), "" );
@@ -133,9 +133,9 @@ void CUIZoneMap::Update()
 		m_Counter_text.SetText( text_str );
 	}
 
-	UpdateRadar( Device.vCameraPosition );
+	UpdateRadar( Device->vCameraPosition );
 	float h, p;
-	Device.vCameraDirection.getHP( h, p );
+	Device->vCameraDirection.getHP( h, p );
 	SetHeading( -h );
 
 	m_clock_wnd->TextItemControl()->SetText( InventoryUtilities::GetGameTimeAsString( InventoryUtilities::etpTimeToMinutes ).c_str() );

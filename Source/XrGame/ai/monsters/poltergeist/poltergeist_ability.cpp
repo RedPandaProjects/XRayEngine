@@ -76,7 +76,7 @@ void CPolterSpecialAbility::on_die()
 
 void CPolterSpecialAbility::on_hit(SHit* pHDS)
 {
-	if (m_object->g_Alive() && (pHDS->hit_type == ALife::eHitTypeFireWound) && (Device.dwFrame != m_last_hit_frame)) {
+	if (m_object->g_Alive() && (pHDS->hit_type == ALife::eHitTypeFireWound) && (Device->dwFrame != m_last_hit_frame)) {
 		if(BI_NONE != pHDS->bone()) {
 
 			//вычислить координаты попадания
@@ -91,7 +91,7 @@ void CPolterSpecialAbility::on_hit(SHit* pHDS)
 		}
 	} 
 
-	m_last_hit_frame = Device.dwFrame;
+	m_last_hit_frame = Device->dwFrame;
 }
 
 
@@ -140,7 +140,7 @@ void CPoltergeist::StrangeSounds(const Fvector &position)
 
 				// Получить пару материалов
 				CDB::TRI*	pTri	= Level().ObjectSpace.GetStaticTris() + l_rq.element;
-				SGameMtlPair* mtl_pair = GMLib.GetMaterialPair(material().self_material_idx(),pTri->material);
+				SGameMtlPair* mtl_pair = GameMaterialLibrary->GetMaterialPair(material().self_material_idx(),pTri->material);
 				if (!mtl_pair) continue;
 
 				// Играть звук

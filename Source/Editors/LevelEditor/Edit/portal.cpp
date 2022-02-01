@@ -63,7 +63,7 @@ void CPortal::Render(int priority, bool strictB2F)
         FvectorVec& src 	= m_SimplifyVertices;//(fraBottomBar->miDrawPortalSimpleModel->Checked)?m_SimplifyVertices:m_Vertices;
         if (src.size()<2) 	return;
 
-        EDevice.SetShader	(EDevice.m_WireShader);
+        EDevice->SetShader	(EDevice->m_WireShader);
         RCache.set_xform_world	(Fidentity);
 
         u32 				i;
@@ -78,26 +78,26 @@ void CPortal::Render(int priority, bool strictB2F)
 		if (m_SectorFront){
 			col.set			(m_SectorFront->sector_color);
 	        if (!Selected())col.mul_rgb(0.7f);
-		    EDevice.SetRS(D3DRS_CULLMODE,D3DCULL_CCW);
+		    EDevice->SetRS(D3DRS_CULLMODE,D3DCULL_CCW);
     	    DU_impl.DrawPrimitiveL	(D3DPT_TRIANGLEFAN, V.size()-2, V.data(), V.size(), col.get(), true, false);
-		    EDevice.SetRS(D3DRS_CULLMODE,D3DCULL_CCW);
+		    EDevice->SetRS(D3DRS_CULLMODE,D3DCULL_CCW);
         }
         // back
 		if (m_SectorBack){
 			col.set			(m_SectorBack->sector_color);
 	        if (!Selected())col.mul_rgb(0.7f);
-		    EDevice.SetRS(D3DRS_CULLMODE,D3DCULL_CW);
+		    EDevice->SetRS(D3DRS_CULLMODE,D3DCULL_CW);
     	    DU_impl.DrawPrimitiveL	(D3DPT_TRIANGLEFAN, V.size()-2, V.data(), V.size(), col.get(), true, false);
-		    EDevice.SetRS(D3DRS_CULLMODE,D3DCULL_CCW);
+		    EDevice->SetRS(D3DRS_CULLMODE,D3DCULL_CCW);
         }
 		col.set				(1.f,1.f,1.f,1.f);
-		EDevice.RenderNearer(0.0002);
+		EDevice->RenderNearer(0.0002);
         if (!Selected())	col.mul_rgb(0.5f);
     	// render portal edges
     	EScenePortalTool* lt = dynamic_cast<EScenePortalTool*>(FParentTools); VERIFY(lt);
         FvectorVec& src_ln 	= (lt->m_Flags.is(EScenePortalTool::flDrawSimpleModel))?m_SimplifyVertices:m_Vertices;
         DU_impl.DrawPrimitiveL	(D3DPT_LINESTRIP, src_ln.size(), src_ln.data(), src_ln.size(), col.get(), true, true);
-        EDevice.ResetNearer	();
+        EDevice->ResetNearer	();
         DU_impl.DrawFaceNormal	(m_Center,m_Normal,1,0xFFFFFFFF);
         DU_impl.DrawFaceNormal	(m_Center,m_Normal,1,0x00000000);
 /*		for (int k=0; k<1000; k++){

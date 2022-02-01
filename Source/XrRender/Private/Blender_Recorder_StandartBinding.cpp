@@ -11,7 +11,7 @@
 #include "blenders\Blender.h"
 
 #include "../../xrEngine/igame_persistent.h"
-#ifndef _EDITOR
+#ifndef REDITOR
 #include "../../xrEngine/environment.h"
 #endif
 
@@ -78,8 +78,8 @@ class cl_texgen : public R_constant_setup
 			0.5f,				0.5f,				0.0f,			1.0f
 		};
 #else	//	USE_DX10
-		float	_w						= float(RDEVICE.dwWidth);
-		float	_h						= float(RDEVICE.dwHeight);
+		float	_w						= float(Device->dwWidth);
+		float	_h						= float(Device->dwHeight);
 		float	o_w						= (.5f / _w);
 		float	o_h						= (.5f / _h);
 		Fmatrix			mTexelAdjust		= 
@@ -113,8 +113,8 @@ class cl_VPtexgen : public R_constant_setup
 			0.5f,				0.5f,				0.0f,			1.0f
 		};
 #else	//	USE_DX10
-		float	_w						= float(RDEVICE.dwWidth);
-		float	_h						= float(RDEVICE.dwHeight);
+		float	_w						= float(Device->dwWidth);
+		float	_h						= float(Device->dwHeight);
 		float	o_w						= (.5f / _w);
 		float	o_h						= (.5f / _h);
 		Fmatrix			mTexelAdjust		= 
@@ -134,17 +134,17 @@ class cl_VPtexgen : public R_constant_setup
 static cl_VPtexgen		binder_VPtexgen;
 
 // fog
-#ifndef _EDITOR
+#ifndef REDITOR
 class cl_fog_plane	: public R_constant_setup {
 	u32			marker;
 	Fvector4	result;
 	virtual void setup(R_constant* C)
 	{
-		if (marker!=Device.dwFrame)
+		if (marker!=Device->dwFrame)
 		{
 			// Plane
 			Fvector4		plane;
-			Fmatrix&	M	= Device.mFullTransform;
+			Fmatrix&	M	= Device->mFullTransform;
 			plane.x			= -(M._14 + M._13);
 			plane.y			= -(M._24 + M._23);
 			plane.z			= -(M._34 + M._33);
@@ -168,7 +168,7 @@ class cl_fog_params	: public R_constant_setup {
 	Fvector4	result;
 	virtual void setup(R_constant* C)
 	{
-		if (marker!=Device.dwFrame)
+		if (marker!=Device->dwFrame)
 		{
 			// Near/Far
 			float	n		= g_pGamePersistent->Environment().CurrentEnv->fog_near	;
@@ -185,7 +185,7 @@ class cl_fog_color	: public R_constant_setup {
 	u32			marker;
 	Fvector4	result;
 	virtual void setup	(R_constant* C)	{
-		if (marker!=Device.dwFrame)	{
+		if (marker!=Device->dwFrame)	{
 			IEnvDescriptor&	desc	= *g_pGamePersistent->Environment().CurrentEnv;
 			result.set				(desc.fog_color.x,	desc.fog_color.y, desc.fog_color.z,	0);
 		}
@@ -198,7 +198,7 @@ class cl_fog_color	: public R_constant_setup {
 class cl_times		: public R_constant_setup {
 	virtual void setup(R_constant* C)
 	{
-		float 		t	= RDEVICE.fTimeGlobal;
+		float 		t	= Device->fTimeGlobal;
 		RCache.set_c	(C,t,t*10,t/10,_sin(t))	;
 	}
 };
@@ -208,7 +208,7 @@ static cl_times		binder_times;
 class cl_eye_P		: public R_constant_setup {
 	virtual void setup(R_constant* C)
 	{
-		Fvector&		V	= RDEVICE.vCameraPosition;
+		Fvector&		V	= Device->vCameraPosition;
 		RCache.set_c	(C,V.x,V.y,V.z,1);
 	}
 };
@@ -218,7 +218,7 @@ static cl_eye_P		binder_eye_P;
 class cl_eye_D		: public R_constant_setup {
 	virtual void setup(R_constant* C)
 	{
-		Fvector&		V	= RDEVICE.vCameraDirection;
+		Fvector&		V	= Device->vCameraDirection;
 		RCache.set_c	(C,V.x,V.y,V.z,0);
 	}
 };
@@ -228,19 +228,19 @@ static cl_eye_D		binder_eye_D;
 class cl_eye_N		: public R_constant_setup {
 	virtual void setup(R_constant* C)
 	{
-		Fvector&		V	= RDEVICE.vCameraTop;
+		Fvector&		V	= Device->vCameraTop;
 		RCache.set_c	(C,V.x,V.y,V.z,0);
 	}
 };
 static cl_eye_N		binder_eye_N;
 
-#ifndef _EDITOR
+#ifndef REDITOR
 // D-Light0
 class cl_sun0_color	: public R_constant_setup {
 	u32			marker;
 	Fvector4	result;
 	virtual void setup	(R_constant* C)	{
-		if (marker!=Device.dwFrame)	{
+		if (marker!=Device->dwFrame)	{
 			IEnvDescriptor&	desc	= *g_pGamePersistent->Environment().CurrentEnv;
 			result.set				(desc.sun_color.x,	desc.sun_color.y, desc.sun_color.z,	0);
 		}
@@ -251,7 +251,7 @@ class cl_sun0_dir_w	: public R_constant_setup {
 	u32			marker;
 	Fvector4	result;
 	virtual void setup	(R_constant* C)	{
-		if (marker!=Device.dwFrame)	{
+		if (marker!=Device->dwFrame)	{
 			IEnvDescriptor&	desc	= *g_pGamePersistent->Environment().CurrentEnv;
 			result.set				(desc.sun_dir.x,	desc.sun_dir.y, desc.sun_dir.z,	0);
 		}
@@ -262,10 +262,10 @@ class cl_sun0_dir_e	: public R_constant_setup {
 	u32			marker;
 	Fvector4	result;
 	virtual void setup	(R_constant* C)	{
-		if (marker!=Device.dwFrame)	{
+		if (marker!=Device->dwFrame)	{
 			Fvector D;
 			IEnvDescriptor&	desc		= *g_pGamePersistent->Environment().CurrentEnv;
-			Device.mView.transform_dir	(D,desc.sun_dir);
+			Device->mView.transform_dir	(D,desc.sun_dir);
 			D.normalize					();
 			result.set					(D.x,D.y,D.z,0);
 		}
@@ -278,7 +278,7 @@ class cl_amb_color	: public R_constant_setup {
 	u32			marker;
 	Fvector4	result;
 	virtual void setup	(R_constant* C)	{
-		if (marker!=Device.dwFrame)	{
+		if (marker!=Device->dwFrame)	{
 			IEnvDescriptorMixer&	desc	= *g_pGamePersistent->Environment().CurrentEnv;
 			result.set				(desc.ambient.x, desc.ambient.y, desc.ambient.z, desc.weight);
 		}
@@ -289,7 +289,7 @@ class cl_hemi_color	: public R_constant_setup {
 	u32			marker;
 	Fvector4	result;
 	virtual void setup	(R_constant* C)	{
-		if (marker!=Device.dwFrame)	{
+		if (marker!=Device->dwFrame)	{
 			IEnvDescriptor&	desc	= *g_pGamePersistent->Environment().CurrentEnv;
 			result.set				(desc.hemi_color.x, desc.hemi_color.y, desc.hemi_color.z, desc.hemi_color.w);
 		}
@@ -302,7 +302,7 @@ static class cl_screen_res : public R_constant_setup
 {	
 	virtual void setup	(R_constant* C)
 	{
-		RCache.set_c	(C, (float)RDEVICE.dwWidth, (float)RDEVICE.dwHeight, 1.0f/(float)RDEVICE.dwWidth, 1.0f/(float)RDEVICE.dwHeight);
+		RCache.set_c	(C, (float)Device->dwWidth, (float)Device->dwHeight, 1.0f/(float)Device->dwWidth, 1.0f/(float)Device->dwHeight);
 	}
 }	binder_screen_res;
 
@@ -337,7 +337,7 @@ void	CBlender_Compile::SetMapping	()
 	r_Constant				("m_texgen",			&binder_texgen);
 	r_Constant				("mVPTexgen",			&binder_VPtexgen);
 
-#ifndef _EDITOR
+#ifndef REDITOR
 	// fog-params
 	r_Constant				("fog_plane",		&binder_fog_plane);
 	r_Constant				("fog_params",		&binder_fog_params);
@@ -351,7 +351,7 @@ void	CBlender_Compile::SetMapping	()
 	r_Constant				("eye_direction",	&binder_eye_D);
 	r_Constant				("eye_normal",		&binder_eye_N);
 
-#ifndef _EDITOR
+#ifndef REDITOR
 	// global-lighting (env params)
 	r_Constant				("L_sun_color",		&binder_sun0_color);
 	r_Constant				("L_sun_dir_w",		&binder_sun0_dir_w);

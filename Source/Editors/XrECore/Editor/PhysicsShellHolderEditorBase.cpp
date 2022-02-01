@@ -12,7 +12,7 @@ static void SetBoneMaterials( IKinematics &K )
     {
 		CBoneData& bd =  K.LL_GetData( i );
         if (*(bd.game_mtl_name))
-	        bd.game_mtl_idx = GMLib.GetMaterialIdx( bd.game_mtl_name.c_str() );
+	        bd.game_mtl_idx = GameMaterialLibrary->GetMaterialIdx( bd.game_mtl_name.c_str() );
         else
         	bd.game_mtl_idx = 0 ;
     }

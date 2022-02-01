@@ -9,10 +9,12 @@ XRAPI_API IRenderFactory*	RenderFactory = NULL;
 XRAPI_API CDUInterface*	DU = NULL;
 XRAPI_API xr_token*	vid_mode_token = NULL;
 XRAPI_API IUIRender* UIRender = NULL;
-#ifndef	_EDITOR
-//XRAPI_API CSound_manager_interface*	Sound = NULL;
-XRAPI_API CGameMtlLibrary*	PGMLib = NULL;
-#endif
+XRAPI_API XrDeviceInterface* Device = NULL;
+XRAPI_API	IGame_Persistent* g_pGamePersistent;
+XRAPI_API	bool g_dedicated_server = false;
+XRAPI_API XrGameMaterialLibraryInterface* GameMaterialLibrary = NULL;
+XRAPI_API XrGameEditorInterface* GameEditor = NULL;
+XRAPI_API XrEditorSceneInterface* EditorScene = NULL;
 #ifdef DEBUG
 	XRAPI_API IDebugRender*	DRender = NULL;
 #endif // DEBUG

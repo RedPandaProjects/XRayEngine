@@ -35,8 +35,8 @@ void CRenderTarget::accum_spot	(light* L)
 		// setup xform
 		L->xform_calc					();
 		RCache.set_xform_world			(L->m_xform			);
-		RCache.set_xform_view			(Device.mView		);
-		RCache.set_xform_project		(Device.mProject	);
+		RCache.set_xform_view			(Device->mView		);
+		RCache.set_xform_project		(Device->mProject	);
 		bIntersect						= enable_scissor	(L);
 		enable_dbt_bounds				(L);
 
@@ -94,7 +94,7 @@ void CRenderTarget::accum_spot	(light* L)
 		};
 
 		// compute xforms
-		Fmatrix			xf_world;		xf_world.invert	(Device.mView);
+		Fmatrix			xf_world;		xf_world.invert	(Device->mView);
 		Fmatrix			xf_view			= L->X.S.view;
 		Fmatrix			xf_project;		xf_project.mul	(m_TexelAdjust,L->X.S.project);
 		m_Shadow.mul					(xf_view, xf_world);
@@ -122,8 +122,8 @@ void CRenderTarget::accum_spot	(light* L)
 	L_clr.set					(L->color.r,L->color.g,L->color.b);
 	L_clr.mul					(L->get_LOD());
 	L_spec						= u_diffuse2s	(L_clr);
-	Device.mView.transform_tiny	(L_pos,L->position);
-	Device.mView.transform_dir	(L_dir,L->direction);
+	Device->mView.transform_tiny	(L_pos,L->position);
+	Device->mView.transform_dir	(L_dir,L->direction);
 	L_dir.normalize				();
 
 	// Draw volume with projective texgen
@@ -279,8 +279,8 @@ void CRenderTarget::accum_volumetric(light* L)
 		// setup xform
 		L->xform_calc					();
 		RCache.set_xform_world			(L->m_xform			);
-		RCache.set_xform_view			(Device.mView		);
-		RCache.set_xform_project		(Device.mProject	);
+		RCache.set_xform_view			(Device->mView		);
+		RCache.set_xform_project		(Device->mProject	);
 		bIntersect						= enable_scissor	(L);
 
 		//enable_dbt_bounds				(L);
@@ -313,7 +313,7 @@ void CRenderTarget::accum_volumetric(light* L)
 		};
 
 		// compute xforms
-		Fmatrix			xf_world;		xf_world.invert	(Device.mView);
+		Fmatrix			xf_world;		xf_world.invert	(Device->mView);
 		Fmatrix			xf_view			= L->X.S.view;
 		Fmatrix			xf_project;		xf_project.mul	(m_TexelAdjust,L->X.S.project);
 		m_Shadow.mul					(xf_view, xf_world);
@@ -356,8 +356,8 @@ void CRenderTarget::accum_volumetric(light* L)
 	for (u32 i=0; i<8; i++)		{
 		Fvector		pt;
 		BB.getpoint	(i,pt);
-		//Device.mFullTransform.transform	(pt);
-		Device.mFullTransform.transform	(mView);
+		//Device->mFullTransform.transform	(pt);
+		Device->mFullTransform.transform	(mView);
 		bbp.modify	(pt);
 	}
 	*/
@@ -378,14 +378,14 @@ void CRenderTarget::accum_volumetric(light* L)
 	//float	scaledRadius = L->spatial.sphere.R;
 	//Fvector	rr = Fvector().set(scaledRadius,scaledRadius,scaledRadius);
 	//Fvector pt = L->spatial.sphere.P;
-	Device.mView.transform(pt);
+	Device->mView.transform(pt);
 	aabb.setb( pt, rr);
 /*	
 	//	Calculate presise AABB assuming we are drawing for the spot light
 	{
 		aabb.invalidate();
 		Fmatrix	transform;
-		transform.mul( Device.mView, L->m_xform);		 
+		transform.mul( Device->mView, L->m_xform);		 
 		for (u32 i=0; i<DU_CONE_NUMVERTEX; ++i)
 		{
 			Fvector		pt = du_cone_vertices[i];
@@ -409,8 +409,8 @@ void CRenderTarget::accum_volumetric(light* L)
 	L_clr.mul					(1/fQuality);
 	L_clr.mul					(L->get_LOD());
 	L_spec						= u_diffuse2s	(L_clr);
-	Device.mView.transform_tiny	(L_pos,L->position);
-	Device.mView.transform_dir	(L_dir,L->direction);
+	Device->mView.transform_tiny	(L_pos,L->position);
+	Device->mView.transform_dir	(L_dir,L->direction);
 	L_dir.normalize				();
 
 	// Draw volume with projective texgen
@@ -484,7 +484,7 @@ void CRenderTarget::accum_volumetric(light* L)
 
 			//	Transform frustum to clip space
 			Fmatrix PlaneTransform;
-			PlaneTransform.transpose(Device.mInvFullTransform);
+			PlaneTransform.transpose(Device->mInvFullTransform);
 			//HW.pDevice->SetRenderState(D3DRS_CLIPPLANEENABLE, 0x3F);
 
 			for ( int i=0; i<6; ++i)
@@ -509,7 +509,7 @@ void CRenderTarget::accum_volumetric(light* L)
 			/*
 			//	Transform frustum to clip space
 			Fmatrix PlaneTransform;
-			PlaneTransform.transpose(Device.mInvFullTransform);
+			PlaneTransform.transpose(Device->mInvFullTransform);
 			HW.pDevice->SetRenderState(D3DRS_CLIPPLANEENABLE, 0x3F);
 
 			for ( int i=0; i<6; ++i)

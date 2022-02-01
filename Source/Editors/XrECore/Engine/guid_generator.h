@@ -12,6 +12,6 @@
 
 #include "xrLevel.h"
 
-ENGINE_API extern xrGUID generate_guid();
+ECORE_API extern xrGUID generate_guid();
 
 #endif //guid_generatorH

@@ -52,7 +52,7 @@ IC				bool			valide				() const {	 return state_valide( state ); }
 
 IC				void	get_calculate_state ( calculate_state	&s ) const	
 {
-		s.calc_time			= Device.dwTimeGlobal;
+		s.calc_time			= Device->dwTimeGlobal;
 		s.blending			= valide() && ( state.blending || state.foot_step != s.foot_step ); //prev_state.state !=calculate_state::not_definite &&
 
 		s.collide_pos		= state.collide_pos;
@@ -80,7 +80,7 @@ IC bool state_valide( const calculate_state &prev_state )
 	if( dbg_always_valide )
 		return	true;
 #endif
-	return (Device.dwTimeGlobal <= (prev_state.calc_time + UCalc_Interval + Device.dwTimeDelta));
+	return (Device->dwTimeGlobal <= (prev_state.calc_time + UCalc_Interval + Device->dwTimeDelta));
 }
 
 IC bool state_valide( const ik_limb_state& s )

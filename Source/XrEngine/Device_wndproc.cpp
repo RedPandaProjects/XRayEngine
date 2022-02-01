@@ -1,5 +1,6 @@
 #include "stdafx.h"
 
+#include "device.h"
 bool CRenderDevice::on_message	(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT &result)
 {
 	switch (uMsg) {
@@ -8,8 +9,8 @@ bool CRenderDevice::on_message	(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 						   }
 		case WM_ACTIVATE : {
 #ifdef INGAME_EDITOR
-			if (editor()) {
-				Device.b_is_Active	= TRUE;
+			if (WeatherEditor()) {
+				Device->b_is_Active	= TRUE;
 				break;
 			}
 #endif // #ifdef INGAME_EDITOR
@@ -18,7 +19,7 @@ bool CRenderDevice::on_message	(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		}
 		case WM_SETCURSOR : {
 #ifdef INGAME_EDITOR
-			if (editor())
+			if (WeatherEditor())
 				break;
 #endif // #ifdef INGAME_EDITOR
 
@@ -27,7 +28,7 @@ bool CRenderDevice::on_message	(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		}
 		case WM_SYSCOMMAND : {
 #ifdef INGAME_EDITOR
-			if (editor())
+			if (WeatherEditor())
 				break;
 #endif // #ifdef INGAME_EDITOR
 
@@ -44,7 +45,7 @@ bool CRenderDevice::on_message	(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		}
 		case WM_CLOSE : {
 #ifdef INGAME_EDITOR
-			if (editor())
+			if (WeatherEditor())
 				break;
 #endif // #ifdef INGAME_EDITOR
 
@@ -62,7 +63,7 @@ bool CRenderDevice::on_message	(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 LRESULT CALLBACK WndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
 	LRESULT		result;
-	if (Device.on_message(hWnd, uMsg, wParam, lParam, result))
+	if (EngineDevice->on_message(hWnd, uMsg, wParam, lParam, result))
 		return	(result);
 
 	return		(DefWindowProc(hWnd, uMsg, wParam, lParam));

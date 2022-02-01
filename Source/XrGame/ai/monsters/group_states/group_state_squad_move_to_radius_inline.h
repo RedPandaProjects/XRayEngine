@@ -72,7 +72,7 @@ TEMPLATE_SPECIALIZATION
 bool CStateGroupSquadMoveToRadiusExAbstract::check_completion()
 {	
 	if (data.action.time_out !=0) {
-		if (time_state_started + data.action.time_out < Device.dwTimeGlobal) return true;
+		if (time_state_started + data.action.time_out < Device->dwTimeGlobal) return true;
 	}
 	if (object->Position().distance_to_xz(object->EnemyMan.get_enemy()->Position()) < data.completion_dist - 2.f) return true;
 	if (data.point.distance_to_xz(object->Position()) <= 2.f) return true;
@@ -132,7 +132,7 @@ TEMPLATE_SPECIALIZATION
 bool CStateGroupSquadMoveToRadiusAbstract::check_completion()
 {	
 	if (data.action.time_out !=0) {
-		if (time_state_started + data.action.time_out < Device.dwTimeGlobal) return true;
+		if (time_state_started + data.action.time_out < Device->dwTimeGlobal) return true;
 	}
 
 	if (data.point.distance_to_xz(object->Position()) <= 1.f) return true;

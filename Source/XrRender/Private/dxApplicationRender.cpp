@@ -1,9 +1,10 @@
 #include "stdafx.h"
 
 #include "dxApplicationRender.h"
+#ifndef REDITOR
 #include "../../xrEngine/x_ray.h"
 #include "../../xrEngine/GameFont.h"
-
+#endif
 void draw_multiline_text(CGameFont* F, float fTargetWidth, LPCSTR pszText);
 
 void dxApplicationRender::Copy(IApplicationRender &_in)
@@ -13,23 +14,29 @@ void dxApplicationRender::Copy(IApplicationRender &_in)
 
 void dxApplicationRender::LoadBegin()
 {
+#ifndef REDITOR
 	ll_hGeom.create		(FVF::F_TL, RCache.Vertex.Buffer(), RCache.QuadIB);
 	sh_progress.create	("hud\\default","ui\\ui_actor_loadgame_screen");
 	hLevelLogo_Add.create	("hud\\default","ui\\ui_actor_widescreen_sidepanels.dds");
 
 	ll_hGeom2.create		(FVF::F_TL, RCache.Vertex.Buffer(),NULL);
+#endif
 }
 
 void dxApplicationRender::destroy_loading_shaders()
 {
+#ifndef REDITOR
 	hLevelLogo.destroy		();
 	sh_progress.destroy		();
 	hLevelLogo_Add.destroy	();
+#endif
 }
 
 void dxApplicationRender::setLevelLogo(LPCSTR pszLogoName)
 {
+#ifndef REDITOR
 	hLevelLogo.create("hud\\default", pszLogoName);
+#endif
 }
 
 void dxApplicationRender::KillHW()
@@ -41,6 +48,7 @@ u32 calc_progress_color(u32, u32, int, int);
 
 void dxApplicationRender::load_draw_internal(CApplication &owner)
 {
+#ifndef REDITOR
 #if defined(USE_DX10) || defined(USE_DX11)
 	//	TODO: DX10: remove this???
 	RImplementation.rmNormal();
@@ -67,8 +75,8 @@ void dxApplicationRender::load_draw_internal(CApplication &owner)
 //	HW.pContext->ClearDepthStencilView( RCache.get_ZB(), D3D_CLEAR_DEPTH|D3D_CLEAR_STENCIL, 1.0f, 0);
 #endif	//	USE_DX10
 
-	float	_w					= (float)Device.dwWidth;
-	float	_h					= (float)Device.dwHeight;
+	float	_w					= (float)Device->dwWidth;
+	float	_h					= (float)Device->dwHeight;
 	bool	b_ws				= (_w/_h) > 1.34f;
 	bool	b_16x9				= b_ws && ((_w/_h)>1.77f);
 	float	ws_k				= (b_16x9) ? 0.75f : 0.8333f;	//16:9 or 16:10
@@ -242,8 +250,9 @@ void dxApplicationRender::load_draw_internal(CApplication &owner)
 
 		draw_face					(hLevelLogo, r, logo_tex_coords, Fvector2().set(1,1));
 	}
+#endif
 }
-
+#ifndef REDITOR
 void dxApplicationRender::draw_face(ref_shader& sh, Frect& coords, Frect& tex_coords, const Fvector2& tsz)
 {
 	u32	Offset;
@@ -323,3 +332,4 @@ void draw_multiline_text(CGameFont* F, float fTargetWidth, LPCSTR pszText)
 		}
 	}
 }
+#endif

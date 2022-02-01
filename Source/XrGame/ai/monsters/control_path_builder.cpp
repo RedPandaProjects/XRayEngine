@@ -160,7 +160,7 @@ bool CControlPathBuilder::build_special(const Fvector &target, u32 node, u32 vel
 	update_path							();	
 
 	// check if path built successfully
-	if (!path_completed() && (detail().time_path_built() >= Device.dwTimeGlobal))	
+	if (!path_completed() && (detail().time_path_built() >= Device->dwTimeGlobal))	
 		return true;
 
 	return false;

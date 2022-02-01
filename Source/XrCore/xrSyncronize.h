@@ -32,7 +32,6 @@ public:
 	};
 
 private:
-	xrCriticalSection(xrCriticalSection const & copy) {}; //noncopyable
 	void*				pmutex;
 #ifdef PROFILE_CRITICAL_SECTIONS
 	LPCSTR				m_id;

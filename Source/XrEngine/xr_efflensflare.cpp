@@ -246,11 +246,11 @@ void CLensFlare::OnFrame(shared_str id)
 {
 #pragma FIXME("Panda: я это сломал!")
 	return;
-/*	if (dwFrame==Device.dwFrame)return;
+/*	if (dwFrame==Device->dwFrame)return;
 #ifndef _EDITOR
 	if (!g_pGameLevel)			return;
 #endif
-	dwFrame			= Device.dwFrame;
+	dwFrame			= Device->dwFrame;
 
 	R_ASSERT		( _valid(g_pGamePersistent->Environment().CurrentEnv->sun_dir) );
 	vSunDir.mul		(g_pGamePersistent->Environment().CurrentEnv->sun_dir,-1);
@@ -268,19 +268,19 @@ void CLensFlare::OnFrame(shared_str id)
     case lfsNone: m_State=lfsShow; m_Current=desc; break;
     case lfsIdle: if (desc!=m_Current) m_State=lfsHide; 	break;
     case lfsShow: 
-        m_StateBlend 	= m_Current?(m_StateBlend + m_Current->m_StateBlendUpSpeed * Device.fTimeDelta * tf):1.f+EPS;
+        m_StateBlend 	= m_Current?(m_StateBlend + m_Current->m_StateBlendUpSpeed * Device->fTimeDelta * tf):1.f+EPS;
         if (m_StateBlend>=1.f) m_State=lfsIdle;
     break;
     case lfsHide: 
-        m_StateBlend 	= m_Current?(m_StateBlend - m_Current->m_StateBlendDnSpeed * Device.fTimeDelta * tf):0.f-EPS;
+        m_StateBlend 	= m_Current?(m_StateBlend - m_Current->m_StateBlendDnSpeed * Device->fTimeDelta * tf):0.f-EPS;
         if (m_StateBlend<=0.f){ 	
             m_State		= lfsShow;
             m_Current	= desc;
-	        m_StateBlend= m_Current?m_Current->m_StateBlendUpSpeed * Device.fTimeDelta * tf:0;
+	        m_StateBlend= m_Current?m_Current->m_StateBlendUpSpeed * Device->fTimeDelta * tf:0;
         }
     break;
     }
-//	Msg				("%6d : [%s] -> [%s]", Device.dwFrame, state_to_string(previous_state), state_to_string(m_State));
+//	Msg				("%6d : [%s] -> [%s]", Device->dwFrame, state_to_string(previous_state), state_to_string(m_State));
     clamp(m_StateBlend,0.f,1.f);
 
     if ((m_Current==0)||(LightColor.magnitude_rgb()==0.f)){bRender=false; return;}
@@ -296,10 +296,10 @@ void CLensFlare::OnFrame(shared_str id)
 	matEffCamPos.identity();
 	// Calculate our position and direction
 
-	matEffCamPos.i.set(Device.vCameraRight);
-	matEffCamPos.j.set(Device.vCameraTop);
-	matEffCamPos.k.set(Device.vCameraDirection);
-	vecPos.set(Device.vCameraPosition);
+	matEffCamPos.i.set(Device->vCameraRight);
+	matEffCamPos.j.set(Device->vCameraTop);
+	matEffCamPos.k.set(Device->vCameraDirection);
+	vecPos.set(Device->vCameraPosition);
 
 	vecDir.set(0.0f, 0.0f, 1.0f);
 	matEffCamPos.transform_dir(vecDir);
@@ -335,10 +335,10 @@ void CLensFlare::OnFrame(shared_str id)
 
 #ifdef _EDITOR
 	float dist = UI->ZFar();
-    if (Tools->RayPick(Device.m_Camera.GetPosition(),vSunDir,dist))
-		fBlend = fBlend - BLEND_DEC_SPEED * Device.fTimeDelta;
+    if (Tools->RayPick(Device->m_Camera.GetPosition(),vSunDir,dist))
+		fBlend = fBlend - BLEND_DEC_SPEED * Device->fTimeDelta;
 	else
-		fBlend = fBlend + BLEND_INC_SPEED * Device.fTimeDelta;
+		fBlend = fBlend + BLEND_INC_SPEED * Device->fTimeDelta;
 #else
 
 	//	Side vectors to bend normal.
@@ -355,7 +355,7 @@ void CLensFlare::OnFrame(shared_str id)
 
 	CObject*	o_main		= g_pGameLevel->CurrentViewEntity();
 	R_ASSERT				( _valid(vSunDir) );
-	STranspParam TP			(&m_ray_cache[0],Device.vCameraPosition,vSunDir,1000.f,EPS_L);
+	STranspParam TP			(&m_ray_cache[0],Device->vCameraPosition,vSunDir,1000.f,EPS_L);
 
 	R_ASSERT				( _valid(TP.P) );
 	R_ASSERT				( _valid(TP.D) );
@@ -392,8 +392,8 @@ void CLensFlare::OnFrame(shared_str id)
 
 	fVisResult *= (1.0f/MAX_RAYS);
 
-	//blend_lerp(fBlend,TP.vis,BLEND_DEC_SPEED,Device.fTimeDelta);
-	blend_lerp(fBlend,fVisResult,BLEND_DEC_SPEED,Device.fTimeDelta);
+	//blend_lerp(fBlend,TP.vis,BLEND_DEC_SPEED,Device->fTimeDelta);
+	blend_lerp(fBlend,fVisResult,BLEND_DEC_SPEED,Device->fTimeDelta);
 
 #endif
 	clamp( fBlend, 0.0f, 1.0f );
@@ -402,7 +402,7 @@ void CLensFlare::OnFrame(shared_str id)
 	if (m_Current->m_Flags.is(CLensFlareDescriptor::flGradient))
     {
 		Fvector				scr_pos;
-		Device.mFullTransform.transform	( scr_pos, vecLight );
+		Device->mFullTransform.transform	( scr_pos, vecLight );
 		float kx = 1, ky = 1;
 		float sun_blend		= 0.5f;
 		float sun_max		= 2.5f;

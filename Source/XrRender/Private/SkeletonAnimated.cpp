@@ -59,7 +59,7 @@ void	CKinematicsAnimated::Bone_Motion_Stop_IM	(CBoneData* bd, CBlend* handle)
 	LL_GetBlendInstance	(bd->GetSelfID()).blend_remove	(handle);
 }
 
-#if (defined DEBUG || defined _EDITOR)
+#if (defined DEBUG || defined REDITOR)
 
 std::pair<LPCSTR,LPCSTR> CKinematicsAnimated::LL_MotionDefName_dbg	(MotionID ID)
 {
@@ -464,9 +464,9 @@ void CKinematicsAnimated::LL_UpdateTracks( float dt, bool b_force, bool leave_bl
 		for (; I!=E; I++)
 		{
 			CBlend& B = *(*I);
-			if ( !b_force && B.dwFrame == RDEVICE.dwFrame )
+			if ( !b_force && B.dwFrame == Device->dwFrame )
 					continue;
-			B.dwFrame =	RDEVICE.dwFrame;
+			B.dwFrame =	Device->dwFrame;
 			if( B.update( dt, B.Callback ) && !leave_blends )
 			{
 				DestroyCycle( B );
@@ -535,18 +535,18 @@ void	CKinematicsAnimated::LL_UpdateFxTracks( float dt )
 void CKinematicsAnimated::UpdateTracks	()
 {
 	_DBG_SINGLE_USE_MARKER;
-	if (Update_LastTime==RDEVICE.dwTimeGlobal) return;
-	u32 DT	= RDEVICE.dwTimeGlobal-Update_LastTime;
+	if (Update_LastTime==Device->dwTimeGlobal) return;
+	u32 DT	= Device->dwTimeGlobal-Update_LastTime;
 	if (DT>66) DT=66;
 	float dt = float(DT)/1000.f;
 	
 	if( GetUpdateTracksCalback()  )
 	{
-		if( ( *GetUpdateTracksCalback() )( float(RDEVICE.dwTimeGlobal-Update_LastTime)/1000.f, *this ) )
-					Update_LastTime = RDEVICE.dwTimeGlobal;
+		if( ( *GetUpdateTracksCalback() )( float(Device->dwTimeGlobal-Update_LastTime)/1000.f, *this ) )
+					Update_LastTime = Device->dwTimeGlobal;
 		return;
 	}
-	Update_LastTime 	= RDEVICE.dwTimeGlobal;
+	Update_LastTime 	= Device->dwTimeGlobal;
 	LL_UpdateTracks	( dt, false, false );
 }
 
@@ -698,7 +698,7 @@ void CKinematicsAnimated::Load(const char* N, IReader *data, u32 dwFlags)
             {
                 if (!FS.exist(fn, "$game_meshes$", nm))
                 {
-#ifdef _EDITOR
+#ifdef REDITOR
                     Msg			("!Can't find motion file '%s'.",nm);
                     return;
 #else
@@ -737,7 +737,7 @@ void CKinematicsAnimated::Load(const char* N, IReader *data, u32 dwFlags)
             {
                 if (!FS.exist(fn, "$game_meshes$", nm))
                 {
-#ifdef _EDITOR
+#ifdef REDITOR
                     Msg			("!Can't find motion file '%s'.",nm);
                     return;
 #else
@@ -852,7 +852,7 @@ void	CKinematicsAnimated::LL_BoneMatrixBuild	( CBoneInstance &bi, const Fmatrix 
 	RES.mk_xform			(Result.Q,Result.T);
 	bi.mTransform.mul_43	(*parent,RES);
 #ifdef DEBUG
-#ifndef _EDITOR
+#ifndef REDITOR
 		if(!check_scale(RES))
 		{
 			VERIFY(check_scale(bi.mTransform));
@@ -964,7 +964,7 @@ void	CKinematicsAnimated::SetBlendDestroyCallback		( IBlendDestroyCallback	*cb )
 	m_blend_destroy_callback = cb;
 }
 
-#ifdef _EDITOR
+#ifdef REDITOR
 MotionID CKinematicsAnimated::ID_Motion(LPCSTR  N, u16 slot)
 {
 	MotionID 				motion_ID;

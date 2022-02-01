@@ -170,7 +170,7 @@ struct ECORE_API STextureParams{
 	}
     void Load (IReader& F);
     void Save (IWriter& F);
-#ifdef _EDITOR
+#ifdef REDITOR
 	PropValue::TOnChange			OnTypeChangeEvent;
 	void 	OnTypeChange	(PropValue* v);
     void 			FillProp		(LPCSTR base_name, PropItemVec& items, PropValue::TOnChange OnChangeEvent);

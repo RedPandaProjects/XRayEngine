@@ -43,8 +43,8 @@ void CRenderTarget::accum_direct		(u32 sub_phase)
 	// Common calc for quad-rendering
 	u32		Offset;
 	u32		C					= color_rgba	(255,255,255,255);
-	float	_w					= float			(Device.dwWidth);
-	float	_h					= float			(Device.dwHeight);
+	float	_w					= float			(Device->dwWidth);
+	float	_h					= float			(Device->dwHeight);
 	Fvector2					p0,p1;
 	p0.set						(.5f/_w, .5f/_h);
 	p1.set						((_w+.5f)/_w, (_h+.5f)/_h );
@@ -54,7 +54,7 @@ void CRenderTarget::accum_direct		(u32 sub_phase)
 	Fvector		L_dir,L_clr;	float L_spec;
 	L_clr.set					(fuckingsun->color.r,fuckingsun->color.g,fuckingsun->color.b);
 	L_spec						= u_diffuse2s	(L_clr);
-	Device.mView.transform_dir	(L_dir,fuckingsun->direction);
+	Device->mView.transform_dir	(L_dir,fuckingsun->direction);
 	L_dir.normalize				();
 
 	// Perform masking (only once - on the first/near phase)
@@ -84,8 +84,8 @@ void CRenderTarget::accum_direct		(u32 sub_phase)
 	}
 
 	// recalculate d_Z, to perform depth-clipping
-	Fvector	center_pt;			center_pt.mad	(Device.vCameraPosition,Device.vCameraDirection,ps_r2_sun_near);
-	Device.mFullTransform.transform(center_pt)	;
+	Fvector	center_pt;			center_pt.mad	(Device->vCameraPosition,Device->vCameraDirection,ps_r2_sun_near);
+	Device->mFullTransform.transform(center_pt)	;
 	d_Z							= center_pt.z	;
 
 	// nv-stencil recompression
@@ -113,7 +113,7 @@ void CRenderTarget::accum_direct		(u32 sub_phase)
 
 		// compute xforms
 		FPU::m64r			();
-		Fmatrix				xf_invview;		xf_invview.invert	(Device.mView)	;
+		Fmatrix				xf_invview;		xf_invview.invert	(Device->mView)	;
 
 		// shadow xform
 		Fmatrix				m_shadow;
@@ -140,7 +140,7 @@ void CRenderTarget::accum_direct		(u32 sub_phase)
 			float	w_dir				= g_pGamePersistent->Environment().CurrentEnv->wind_direction	;
 			//float	w_speed				= g_pGamePersistent->Environment().CurrentEnv->wind_velocity	;
 			Fvector			normal	;	normal.setHP(w_dir,0);
-							w_shift		+=	0.003f*Device.fTimeDelta;
+							w_shift		+=	0.003f*Device->fTimeDelta;
 			Fvector			position;	position.set(0,0,0);
 			m_xform.build_camera_dir	(position,direction,normal)	;
 			Fvector			localnormal;m_xform.transform_dir(localnormal,normal); localnormal.normalize();
@@ -153,8 +153,8 @@ void CRenderTarget::accum_direct		(u32 sub_phase)
 
 		// Make jitter texture
 		Fvector2					j0,j1;
-		float	scale_X				= float(Device.dwWidth)	/ float(TEX_jitter);
-		//float	scale_Y				= float(Device.dwHeight)/ float(TEX_jitter);
+		float	scale_X				= float(Device->dwWidth)	/ float(TEX_jitter);
+		//float	scale_Y				= float(Device->dwHeight)/ float(TEX_jitter);
 		float	offset				= (.5f / float(TEX_jitter));
 		j0.set						(offset,offset);
 		j1.set						(scale_X,scale_X).add(offset);
@@ -185,10 +185,10 @@ void CRenderTarget::accum_direct		(u32 sub_phase)
 			zMin = ps_r2_sun_near;
 			zMax = OLES_SUN_LIMIT_27_01_07;
 		}
-		center_pt.mad(Device.vCameraPosition,Device.vCameraDirection,zMin);	Device.mFullTransform.transform	(center_pt);
+		center_pt.mad(Device->vCameraPosition,Device->vCameraDirection,zMin);	Device->mFullTransform.transform	(center_pt);
 		zMin = center_pt.z	;
 
-		center_pt.mad(Device.vCameraPosition,Device.vCameraDirection,zMax);	Device.mFullTransform.transform	(center_pt);
+		center_pt.mad(Device->vCameraPosition,Device->vCameraDirection,zMax);	Device->mFullTransform.transform	(center_pt);
 		zMax = center_pt.z	;
 
 		if (u_DBT_enable(zMin,zMax))	{
@@ -240,8 +240,8 @@ void CRenderTarget::accum_direct_cascade	( u32 sub_phase, Fmatrix& xform, Fmatri
 	// Common calc for quad-rendering
 	u32		Offset;
 	u32		C					= color_rgba	(255,255,255,255);
-	float	_w					= float			(Device.dwWidth);
-	float	_h					= float			(Device.dwHeight);
+	float	_w					= float			(Device->dwWidth);
+	float	_h					= float			(Device->dwHeight);
 	Fvector2					p0,p1;
 	p0.set						(.5f/_w, .5f/_h);
 	p1.set						((_w+.5f)/_w, (_h+.5f)/_h );
@@ -251,7 +251,7 @@ void CRenderTarget::accum_direct_cascade	( u32 sub_phase, Fmatrix& xform, Fmatri
 	Fvector		L_dir,L_clr;	float L_spec;
 	L_clr.set					(fuckingsun->color.r,fuckingsun->color.g,fuckingsun->color.b);
 	L_spec						= u_diffuse2s	(L_clr);
-	Device.mView.transform_dir	(L_dir,fuckingsun->direction);
+	Device->mView.transform_dir	(L_dir,fuckingsun->direction);
 	L_dir.normalize				();
 
 	// Perform masking (only once - on the first/near phase)
@@ -281,8 +281,8 @@ void CRenderTarget::accum_direct_cascade	( u32 sub_phase, Fmatrix& xform, Fmatri
 	}
 
 	// recalculate d_Z, to perform depth-clipping
-	Fvector	center_pt;			center_pt.mad	(Device.vCameraPosition,Device.vCameraDirection,ps_r2_sun_near);
-	Device.mFullTransform.transform(center_pt)	;
+	Fvector	center_pt;			center_pt.mad	(Device->vCameraPosition,Device->vCameraDirection,ps_r2_sun_near);
+	Device->mFullTransform.transform(center_pt)	;
 	d_Z							= center_pt.z	;
 
 	// nv-stencil recompression
@@ -311,7 +311,7 @@ void CRenderTarget::accum_direct_cascade	( u32 sub_phase, Fmatrix& xform, Fmatri
 
 		// compute xforms
 		FPU::m64r			();
-		Fmatrix				xf_invview;		xf_invview.invert	(Device.mView)	;
+		Fmatrix				xf_invview;		xf_invview.invert	(Device->mView)	;
 
 		// shadow xform
 		Fmatrix				m_shadow;
@@ -338,7 +338,7 @@ void CRenderTarget::accum_direct_cascade	( u32 sub_phase, Fmatrix& xform, Fmatri
 			float	w_dir				= g_pGamePersistent->Environment().CurrentEnv->wind_direction	;
 			//float	w_speed				= g_pGamePersistent->Environment().CurrentEnv->wind_velocity	;
 			Fvector			normal	;	normal.setHP(w_dir,0);
-							w_shift		+=	0.003f*Device.fTimeDelta;
+							w_shift		+=	0.003f*Device->fTimeDelta;
 			Fvector			position;	position.set(0,0,0);
 			m_xform.build_camera_dir	(position,direction,normal)	;
 			Fvector			localnormal;m_xform.transform_dir(localnormal,normal); localnormal.normalize();
@@ -352,14 +352,14 @@ void CRenderTarget::accum_direct_cascade	( u32 sub_phase, Fmatrix& xform, Fmatri
 		Fmatrix			m_Texgen;
 		m_Texgen.identity();
  		RCache.xforms.set_W( m_Texgen );
- 		RCache.xforms.set_V( Device.mView );
- 		RCache.xforms.set_P( Device.mProject );
+ 		RCache.xforms.set_V( Device->mView );
+ 		RCache.xforms.set_P( Device->mProject );
  		u_compute_texgen_screen	( m_Texgen );
 
 		// Make jitter texture
 		Fvector2					j0,j1;
-		float	scale_X				= float(Device.dwWidth)	/ float(TEX_jitter);
-		//float	scale_Y				= float(Device.dwHeight)/ float(TEX_jitter);
+		float	scale_X				= float(Device->dwWidth)	/ float(TEX_jitter);
+		//float	scale_Y				= float(Device->dwHeight)/ float(TEX_jitter);
 		float	offset				= (.5f / float(TEX_jitter));
 		j0.set						(offset,offset);
 		j1.set						(scale_X,scale_X).add(offset);
@@ -429,10 +429,10 @@ void CRenderTarget::accum_direct_cascade	( u32 sub_phase, Fmatrix& xform, Fmatri
 			zMin = ps_r2_sun_near;
 			zMax = OLES_SUN_LIMIT_27_01_07;
 		}
-		center_pt.mad(Device.vCameraPosition,Device.vCameraDirection,zMin);	Device.mFullTransform.transform	(center_pt);
+		center_pt.mad(Device->vCameraPosition,Device->vCameraDirection,zMin);	Device->mFullTransform.transform	(center_pt);
 		zMin = center_pt.z	;
 
-		center_pt.mad(Device.vCameraPosition,Device.vCameraDirection,zMax);	Device.mFullTransform.transform	(center_pt);
+		center_pt.mad(Device->vCameraPosition,Device->vCameraDirection,zMax);	Device->mFullTransform.transform	(center_pt);
 		zMax = center_pt.z	;
 
 		if (u_DBT_enable(zMin,zMax))	{
@@ -492,8 +492,8 @@ void CRenderTarget::accum_direct_blend	()
 		// Common calc for quad-rendering
 		u32		Offset;
 		u32		C					= color_rgba	(255,255,255,255);
-		float	_w					= float			(Device.dwWidth);
-		float	_h					= float			(Device.dwHeight);
+		float	_w					= float			(Device->dwWidth);
+		float	_h					= float			(Device->dwHeight);
 		Fvector2					p0,p1;
 		p0.set						(.5f/_w, .5f/_h);
 		p1.set						((_w+.5f)/_w, (_h+.5f)/_h );
@@ -531,8 +531,8 @@ void CRenderTarget::accum_direct_f		(u32 sub_phase)
 	// Common calc for quad-rendering
 	u32		Offset;
 	u32		C					= color_rgba	(255,255,255,255);
-	float	_w					= float			(Device.dwWidth);
-	float	_h					= float			(Device.dwHeight);
+	float	_w					= float			(Device->dwWidth);
+	float	_h					= float			(Device->dwHeight);
 	Fvector2					p0,p1;
 	p0.set						(.5f/_w, .5f/_h);
 	p1.set						((_w+.5f)/_w, (_h+.5f)/_h );
@@ -542,7 +542,7 @@ void CRenderTarget::accum_direct_f		(u32 sub_phase)
 	Fvector		L_dir,L_clr;	float L_spec;
 	L_clr.set					(fuckingsun->color.r,fuckingsun->color.g,fuckingsun->color.b);
 	L_spec						= u_diffuse2s	(L_clr);
-	Device.mView.transform_dir	(L_dir,fuckingsun->direction);
+	Device->mView.transform_dir	(L_dir,fuckingsun->direction);
 	L_dir.normalize				();
 
 	// Perform masking (only once - on the first/near phase)
@@ -575,8 +575,8 @@ void CRenderTarget::accum_direct_f		(u32 sub_phase)
 	}
 
 	// recalculate d_Z, to perform depth-clipping
-	Fvector	center_pt;			center_pt.mad	(Device.vCameraPosition,Device.vCameraDirection,ps_r2_sun_near);
-	Device.mFullTransform.transform(center_pt)	;
+	Fvector	center_pt;			center_pt.mad	(Device->vCameraPosition,Device->vCameraDirection,ps_r2_sun_near);
+	Device->mFullTransform.transform(center_pt)	;
 	d_Z							= center_pt.z	;
 
 	// nv-stencil recompression
@@ -604,7 +604,7 @@ void CRenderTarget::accum_direct_f		(u32 sub_phase)
 		Fmatrix				m_shadow;
 		{
 			FPU::m64r		();
-			Fmatrix			xf_invview;		xf_invview.invert	(Device.mView)	;
+			Fmatrix			xf_invview;		xf_invview.invert	(Device->mView)	;
 			Fmatrix			xf_project;		xf_project.mul		(m_TexelAdjust,fuckingsun->X.D.combine);
 			m_shadow.mul	(xf_project,	xf_invview);
 
@@ -620,8 +620,8 @@ void CRenderTarget::accum_direct_f		(u32 sub_phase)
 
 		// Make jitter texture
 		Fvector2					j0,j1;
-		float	scale_X				= float(Device.dwWidth)	/ float(TEX_jitter);
-		//float	scale_Y				= float(Device.dwHeight)/ float(TEX_jitter);
+		float	scale_X				= float(Device->dwWidth)	/ float(TEX_jitter);
+		//float	scale_Y				= float(Device->dwHeight)/ float(TEX_jitter);
 		float	offset				= (.5f / float(TEX_jitter));
 		j0.set						(offset,offset);
 		j1.set						(scale_X,scale_X).add(offset);
@@ -661,8 +661,8 @@ void CRenderTarget::accum_direct_lum	()
 	// Common calc for quad-rendering
 	u32		Offset;
 	// u32		C					= color_rgba	(255,255,255,255);
-	float	_w					= float			(Device.dwWidth);
-	float	_h					= float			(Device.dwHeight);
+	float	_w					= float			(Device->dwWidth);
+	float	_h					= float			(Device->dwHeight);
 	Fvector2					p0,p1;
 	p0.set						(.5f/_w, .5f/_h);
 	p1.set						((_w+.5f)/_w, (_h+.5f)/_h );
@@ -672,12 +672,12 @@ void CRenderTarget::accum_direct_lum	()
 	Fvector		L_dir,L_clr;	float L_spec;
 	L_clr.set					(fuckingsun->color.r,fuckingsun->color.g,fuckingsun->color.b);
 	L_spec						= u_diffuse2s	(L_clr);
-	Device.mView.transform_dir	(L_dir,fuckingsun->direction);
+	Device->mView.transform_dir	(L_dir,fuckingsun->direction);
 	L_dir.normalize				();
 
 	// recalculate d_Z, to perform depth-clipping
-	Fvector	center_pt;			center_pt.mad	(Device.vCameraPosition,Device.vCameraDirection,ps_r2_sun_near);
-	Device.mFullTransform.transform(center_pt)	;
+	Fvector	center_pt;			center_pt.mad	(Device->vCameraPosition,Device->vCameraDirection,ps_r2_sun_near);
+	Device->mFullTransform.transform(center_pt)	;
 	d_Z							= center_pt.z	;
 
 	// nv-stencil recompression
@@ -691,8 +691,8 @@ void CRenderTarget::accum_direct_lum	()
 
 		// Make jitter texture
 		Fvector2					j0,j1;
-		float	scale_X				= float(Device.dwWidth)	/ float(TEX_jitter);
-//		float	scale_Y				= float(Device.dwHeight)/ float(TEX_jitter);
+		float	scale_X				= float(Device->dwWidth)	/ float(TEX_jitter);
+//		float	scale_Y				= float(Device->dwHeight)/ float(TEX_jitter);
 		float	offset				= (.5f / float(TEX_jitter));
 		j0.set						(offset,offset);
 		j1.set						(scale_X,scale_X).add(offset);
@@ -821,8 +821,8 @@ void CRenderTarget::accum_direct_volumetric	(u32 sub_phase, const u32 Offset, co
 		Fmatrix			m_Texgen;
 		m_Texgen.identity();
  		RCache.xforms.set_W( m_Texgen );
- 		RCache.xforms.set_V( Device.mView );
- 		RCache.xforms.set_P( Device.mProject );
+ 		RCache.xforms.set_V( Device->mView );
+ 		RCache.xforms.set_P( Device->mProject );
  		u_compute_texgen_screen	( m_Texgen );
 
 		RCache.set_c				("m_texgen",			m_Texgen);
@@ -846,12 +846,12 @@ void CRenderTarget::accum_direct_volumetric	(u32 sub_phase, const u32 Offset, co
 		RCache.set_c("volume_range", zMin, zMax, 0, 0);
 
 		Fvector	center_pt;
-		center_pt.mad(Device.vCameraPosition,Device.vCameraDirection,zMin);	
-		Device.mFullTransform.transform(center_pt);
+		center_pt.mad(Device->vCameraPosition,Device->vCameraDirection,zMin);	
+		Device->mFullTransform.transform(center_pt);
 		zMin = center_pt.z	;
 
-		center_pt.mad(Device.vCameraPosition,Device.vCameraDirection,zMax);	
-		Device.mFullTransform.transform	(center_pt);
+		center_pt.mad(Device->vCameraPosition,Device->vCameraDirection,zMax);	
+		Device->mFullTransform.transform	(center_pt);
 		zMax = center_pt.z	;
 
 

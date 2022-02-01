@@ -13,6 +13,9 @@
     <Filter Include="Render">
       <UniqueIdentifier>{593c3986-0d03-46a3-af38-f8fdcf08f115}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Render\Interface">
+      <UniqueIdentifier>{acae559e-c3ca-49c5-a2db-95a29e68ed5c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WildMagic\WmlMath.cpp">
@@ -146,9 +149,6 @@
     <ClCompile Include="Editor\EStats.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
-    <ClCompile Include="Editor\Engine.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
     <ClCompile Include="Editor\ELog.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
@@ -224,26 +224,11 @@
     <ClCompile Include="Editor\c_dinput.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
-    <ClCompile Include="Editor\BoneEditor.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\bone.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
     <ClCompile Include="Editor\xrLoadSurface.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
     <ClCompile Include="Editor\UI_ToolsCustom.cpp">
       <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\cl_collector.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\guid_generator.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Image.cpp">
-      <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Engine\nv_algebra.cpp">
       <Filter>Engine</Filter>
@@ -255,60 +240,6 @@
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Engine\bone.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrEngine\defines.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrEngine\Envelope.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrEngine\fmesh.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrEngine\GameFont.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrEngine\IGame_Persistent.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrEngine\IInputReceiver.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrEngine\interp.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrEngine\motion.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrEngine\pure.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrEngine\Xr_input.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrEngine\xrImage_Resampler.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrEngine\SkeletonMotions.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrEngine\tntQAVI.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrEngine\perlin.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrEngine\xrTheora_Surface.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrEngine\xrTheora_Stream.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrEngine\LightAnimLibrary.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrEngine\xrHemisphere.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="..\..\XrRender\Private\FBasicVisual.cpp">
@@ -399,12 +330,6 @@
       <Filter>Render</Filter>
     </ClCompile>
     <ClCompile Include="..\..\XrRender\Private\HW.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\dxRenderFactory.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\dxFontRender.cpp">
       <Filter>Render</Filter>
     </ClCompile>
     <ClCompile Include="..\..\XrRender\Private\R_Backend_hemi.cpp">
@@ -518,7 +443,6 @@
     <ClCompile Include="..\..\XrRender\Private\Blender_Particle.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\XrCPU_Pipe\xrSkin2W.cpp" />
     <ClCompile Include="Editor\UIRenderForm.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
@@ -535,11 +459,80 @@
     <ClCompile Include="Editor\UILogForm.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\XrEngine\GameMtlLib.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Editor\UIEditLightAnim.cpp">
       <Filter>Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\XrGamePersistentEditors.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\XrGameMaterialLibraryEditors.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XrRender\Private\dxRenderFactory.cpp">
+      <Filter>Render\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XrRender\Private\dxStatGraphRender.cpp">
+      <Filter>Render\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XrRender\Private\dxStatsRender.cpp">
+      <Filter>Render\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XrRender\Private\dxThunderboltDescRender.cpp">
+      <Filter>Render\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XrRender\Private\dxThunderboltRender.cpp">
+      <Filter>Render\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XrRender\Private\dxUIRender.cpp">
+      <Filter>Render\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XrRender\Private\dxUISequenceVideoItem.cpp">
+      <Filter>Render\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XrRender\Private\dxUIShader.cpp">
+      <Filter>Render\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XrRender\Private\dxWallMarkArray.cpp">
+      <Filter>Render\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XrRender\Private\dxApplicationRender.cpp">
+      <Filter>Render\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XrRender\Private\dxConsoleRender.cpp">
+      <Filter>Render\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XrRender\Private\dxDebugRender.cpp">
+      <Filter>Render\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XrRender\Private\dxEnvironmentRender.cpp">
+      <Filter>Render\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XrRender\Private\dxFontRender.cpp">
+      <Filter>Render\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XrRender\Private\dxLensFlareRender.cpp">
+      <Filter>Render\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XrRender\Private\dxObjectSpaceRender.cpp">
+      <Filter>Render\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XrRender\Private\dxParticleCustom.cpp">
+      <Filter>Render\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XrRender\Private\dxRainRender.cpp">
+      <Filter>Render\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XrRender\Private\dxRenderDeviceRender.cpp">
+      <Filter>Render\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Image.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XrCPU_Pipe\xrSkin2W.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\guid_generator.cpp">
+      <Filter>Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -673,9 +666,6 @@
     <ClInclude Include="Editor\EStats.h">
       <Filter>Editor</Filter>
     </ClInclude>
-    <ClInclude Include="Editor\engine.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
     <ClInclude Include="Editor\ELog.h">
       <Filter>Editor</Filter>
     </ClInclude>
@@ -724,16 +714,7 @@
     <ClInclude Include="Editor\UI_ToolsCustom.h">
       <Filter>Editor</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\cl_collector.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\cl_intersect.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\guid_generator.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Image.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Engine\nv_algebra.h">
@@ -775,6 +756,72 @@
     </ClInclude>
     <ClInclude Include="Editor\UIEditLightAnim.h">
       <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\XrGamePersistentEditors.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\XrGameMaterialLibraryEditors.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XrRender\Private\dxRenderFactory.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XrRender\Private\dxStatGraphRender.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XrRender\Private\dxStatsRender.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XrRender\Private\dxThunderboltDescRender.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XrRender\Private\dxThunderboltRender.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XrRender\Private\dxUIRender.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XrRender\Private\dxUISequenceVideoItem.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XrRender\Private\dxUIShader.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XrRender\Private\dxWallMarkArray.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XrRender\Private\dxApplicationRender.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XrRender\Private\dxConsoleRender.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XrRender\Private\dxDebugRender.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XrRender\Private\dxEnvironmentRender.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XrRender\Private\dxFontRender.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XrRender\Private\dxLensFlareRender.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XrRender\Private\dxObjectSpaceRender.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XrRender\Private\dxParticleCustom.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XrRender\Private\dxRainRender.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XrRender\Private\dxRenderDeviceRender.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\guid_generator.h">
+      <Filter>Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

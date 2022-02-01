@@ -83,7 +83,7 @@ void faster_than_bullets_time::OnPlayerKilled(u16 killer_id, u16 target_id, u16 
 	if (m_owner->get_hits_store().fetch_hits(tmp_predicate, tmp_hits_result))
 	{
 		VERIFY(tmp_predicate.m_last_hit_time);
-		m_no_demag_time = Device.dwTimeGlobal - tmp_predicate.m_last_hit_time;
+		m_no_demag_time = Device->dwTimeGlobal - tmp_predicate.m_last_hit_time;
 	}
 }
 

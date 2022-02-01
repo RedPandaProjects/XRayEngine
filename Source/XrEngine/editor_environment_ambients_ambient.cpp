@@ -72,7 +72,7 @@ ambient::~ambient			()
 	delete_data				(m_sound_channels_ids);
 	xr_delete				(m_sounds_collection);
 
-	if (!Device.editor())
+	if (!Device->WeatherEditor())
 		return;
 
 	::ide().destroy			(m_property_holder);

@@ -145,14 +145,14 @@ void ESceneGroupTool::OnDrawUI()
             ELog.Msg(mtError, "Nothing selected.");
         else 
             Scene->UndoSave();
-        EDevice.seqDrawUI.Remove(this);
+        EDevice->seqDrawUI.Remove(this);
     }
 }
 void ESceneGroupTool::AlignToObject()
 {
     m_ChooseIt = m_Objects.begin();
     m_ChooseCnt = 0;
-    EDevice.seqDrawUI.Add(this);  
+    EDevice->seqDrawUI.Add(this);  
 }
 //----------------------------------------------------
 
@@ -290,7 +290,7 @@ void ESceneGroupTool::MakeThumbnail()
 
         U32Vec pixels;
         u32 w=512,h=512;
-        if (EDevice.MakeScreenshot	(pixels,w,h))
+        if (EDevice->MakeScreenshot	(pixels,w,h))
         {
             xr_string tex_name		= ChangeFileExt(object->GetName(),".thm");
             SStringVec lst;

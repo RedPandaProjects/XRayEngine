@@ -22,16 +22,9 @@
 #	include "object_factory.h"
 #endif
 
-#ifndef XRSEFACTORY_EXPORTS
+#if DEV_MODE
 #	include "xrEProps.h"
 	
-	IPropHelper &PHelper()
-	{
-		NODEFAULT;
-#	ifdef DEBUG
-		return(*(IPropHelper*)0);
-#	endif
-	}
 
 #	ifdef XRGAME_EXPORTS
 #		include "ai_space.h"
@@ -236,7 +229,7 @@ void CSE_Abstract::Spawn_Write				(NET_Packet	&tNetPacket, BOOL bLocal)
 //	tNetPacket.w_u64			(m_min_spawn_interval);
 //	tNetPacket.w_u64			(m_max_spawn_interval);
 
-#ifdef XRSEFACTORY_EXPORTS
+#if DEV_MODE
 	CScriptValueContainer::assign();
 #endif
 
@@ -431,12 +424,11 @@ xr_token game_types[]={
 	{ 0,				0				}
 };
 
-#ifndef XRGAME_EXPORTS
+#if DEV_MODE
 void CSE_Abstract::FillProps(LPCSTR pref, PropItemVec& items)
 {
-#ifdef XRSEFACTORY_EXPORTS
+
     m_gameType.FillProp(pref, items);
-#endif // #ifdef XRSEFACTORY_EXPORTS
 /*
 #ifdef XRGAME_EXPORTS
 #	ifdef DEBUG

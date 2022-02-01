@@ -31,13 +31,13 @@ namespace PS
 			float			m_Time0;
 			float			m_Time1;
 							SEffect				(){m_Flags.zero();/*set(flEnabled)*/m_Time0=0;m_Time1=0;}
-#ifdef _EDITOR
+#ifdef REDITOR
             BOOL			Equal				(const SEffect&);
 #endif
 		};
 		DEFINE_VECTOR(SEffect*,EffectVec,EffectIt);
 		EffectVec			m_Effects;
-#ifdef _EDITOR
+#ifdef REDITOR
 // change Equal if variables changed 
 		void   	OnEffectsEditClick	(ButtonValue* sender, bool& bDataModified, bool& bSafe);
 		void   	OnEffectTypeChange	(PropValue* sender);
@@ -59,7 +59,7 @@ namespace PS
 		void 				Save2		  	(CInifile& ini);
 		BOOL 				Load2		 	(CInifile& ini);
 
-#ifdef _EDITOR
+#ifdef REDITOR
         void				Clone			(CPGDef* source);
 #endif
 	};

@@ -515,7 +515,7 @@ void CWayObject::Render(int priority, bool strictB2F)
 //	inherited::Render(priority, strictB2F);
     if ((1==priority)&&(false==strictB2F)){
         RCache.set_xform_world(Fidentity);
-        EDevice.SetShader		(EDevice.m_WireShader);
+        EDevice->SetShader		(EDevice->m_WireShader);
         for (WPIt it=m_WayPoints.begin(); it!=m_WayPoints.end(); it++) (*it)->Render(GetName(),Selected());
         if( Selected() ){
             u32 clr = 0xFFFFFFFF;

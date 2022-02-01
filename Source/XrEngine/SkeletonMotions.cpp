@@ -105,34 +105,41 @@ BOOL motions_value::load		(LPCSTR N, IReader *data, vecBones* bones)
 				MP->r_stringZ	(buf,sizeof(buf));
 				u16 m_idx 		= u16			(MP->r_u32());
 				*b_it			= find_bone_id	(bones,buf);
-#ifdef _EDITOR
-				if (*b_it==BI_NONE )
-                {
-					bRes		= false;
-					Msg			("!Can't find bone: '%s'", buf);
-				}
+				if (Device->IsEditorMode())
+				{
 
-				if (rm_bones.size() <= m_idx)
-                {
-					bRes		= false;
-					Msg			("!Can't load: '%s' invalid bones count", N);
+					if (*b_it == BI_NONE)
+					{
+						bRes = false;
+						Msg("!Can't find bone: '%s'", buf);
+					}
+
+					if (rm_bones.size() <= m_idx)
+					{
+						bRes = false;
+						Msg("!Can't load: '%s' invalid bones count", N);
+					}
 				}
-#else
-				VERIFY3			(*b_it!=BI_NONE,"Can't find bone:", buf);
-#endif
+				else
+				{
+					VERIFY3(*b_it != BI_NONE, "Can't find bone:", buf);
+				}
 				if (bRes)		rm_bones[m_idx] = u16(*b_it);
 			}
 			part_bone_cnt		= u16(part_bone_cnt + (u16)PART.bones.size());
 		}
 
-#ifdef _EDITOR
-		if (part_bone_cnt!=(u16)bones->size()){
-			bRes = false;
-			Msg("!Different bone count[%s] [Object: '%d' <-> Motions: '%d']", N, bones->size(),part_bone_cnt);
+		if (Device->IsEditorMode())
+		{
+			if (part_bone_cnt != (u16)bones->size()) {
+				bRes = false;
+				Msg("!Different bone count[%s] [Object: '%d' <-> Motions: '%d']", N, bones->size(), part_bone_cnt);
+			}
 		}
-#else
-		VERIFY3(part_bone_cnt==(u16)bones->size(),"Different bone count '%s'",N);
-#endif
+		else
+		{
+			VERIFY3(part_bone_cnt == (u16)bones->size(), "Different bone count '%s'", N);
+		}
 		if (bRes)
 		{
 			// motion defs (cycle&fx)
@@ -435,7 +442,7 @@ float	motion_marks::	time_to_next_mark	(float time) const
 	return result_dist;
 }
 
-void ENGINE_API motion_marks::Load(IReader* R)
+void motion_marks::Load(IReader* R)
 {
 	xr_string 			tmp;
 	R->r_string			(tmp);
@@ -449,7 +456,7 @@ void ENGINE_API motion_marks::Load(IReader* R)
 		item.second			= R->r_float();
 	}
 }
-#ifdef _EDITOR
+#if DEV_MODE
 void motion_marks::Save(IWriter* W)
 {
 	W->w_string			(name.c_str());

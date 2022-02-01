@@ -66,7 +66,7 @@ public:
 
 	virtual void				OnCalculateBones		();
 public: 
-#ifdef _EDITOR
+#ifdef REDITOR
 public:
 #else
 private:
@@ -116,7 +116,7 @@ public:
 	IUpdateTracksCallback		*GetUpdateTracksCalback		( ){ return m_update_tracks_callback; }
 //	LPCSTR						LL_MotionDefName_dbg	(LPVOID		ptr);
 
-#ifdef _EDITOR
+#ifdef REDITOR
     u32							LL_CycleCount	(){u32 cnt=0; for (u32 k=0; k<m_Motions.size(); k++) cnt+=m_Motions[k].motions.cycle()->size(); return cnt;}
     u32							LL_FXCount		(){u32 cnt=0; for (u32 k=0; k<m_Motions.size(); k++) cnt+=m_Motions[k].motions.fx()->size(); return cnt;}
 	accel_map*					LL_Motions		(u32 slot){return m_Motions[slot].motions.motion_map();}

@@ -107,7 +107,7 @@ public:
 									CSE_Abstract			(LPCSTR caSection);
 	virtual							~CSE_Abstract			();
 	virtual void					OnEvent					(NET_Packet &tNetPacket, u16 type, u32 time, ClientID sender ){};
-#ifndef XRGAME_EXPORTS
+#if DEV_MODE
 	virtual void					FillProps				(LPCSTR pref, PropItemVec &items);
 	virtual void			FillProp				(LPCSTR pref, PropItemVec &items);
 	virtual void 			on_render				(CDUInterface* du, ISE_AbstractLEOwner* owner, bool bSelected, const Fmatrix& parent,int priority, bool strictB2F){} 

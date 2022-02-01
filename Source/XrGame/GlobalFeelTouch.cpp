@@ -34,7 +34,7 @@ void GlobalFeelTouch::feel_touch_update(Fvector& P, float R)
 	//we ignore P and R arguments, we need just delete evaled denied objects...
 	xr_vector<Feel::Touch::DenyTouch>::iterator new_end = 
 		std::remove_if(feel_touch_disable.begin(), feel_touch_disable.end(), 
-			std::bind2nd(delete_predicate_by_time(), Device.dwTimeGlobal));
+			std::bind2nd(delete_predicate_by_time(), Device->dwTimeGlobal));
 	feel_touch_disable.erase(new_end, feel_touch_disable.end());
 }
 

@@ -88,7 +88,7 @@ private:
 static u32 const exception_items_clear_time = 2000; //2 seconds
 PIItem CInventory::GetNextItemInActiveSlot(u8 const priority_value, bool ignore_ammo)
 {
-	if (m_next_item_iteration_time + exception_items_clear_time <= Device.dwTimeGlobal)
+	if (m_next_item_iteration_time + exception_items_clear_time <= Device->dwTimeGlobal)
 	{
 		m_next_items_exceptions.clear();
 		m_next_items_exceptions.insert(ActiveItem());
@@ -106,7 +106,7 @@ PIItem CInventory::GetNextItemInActiveSlot(u8 const priority_value, bool ignore_
 	if (best_fit)
 	{
 		m_next_items_exceptions.insert(best_fit);
-		m_next_item_iteration_time = Device.dwTimeGlobal;
+		m_next_item_iteration_time = Device->dwTimeGlobal;
 		return best_fit;
 	}
 

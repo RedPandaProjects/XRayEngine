@@ -75,7 +75,7 @@ void CSpectator::UpdateCL()
 	if (m_fTimeDelta < 0.0f)
 		m_fTimeDelta = EPS_S;
 
-	if (Device.Paused())
+	if (Device->Paused())
 	{
 
 #ifdef DEBUG
@@ -88,7 +88,7 @@ void CSpectator::UpdateCL()
 			m_pActorToLookAt->dbg_update_shedule	= 0;
 			Game().dbg_update_shedule				= 0;
 #endif
-			Device.dwTimeDelta					= 0;
+			Device->dwTimeDelta					= 0;
 			m_pActorToLookAt->UpdateCL();
 			m_pActorToLookAt->shedule_Update	(0);
 			Game().shedule_Update				(0);
@@ -348,13 +348,13 @@ void CSpectator::FirstEye_ToPlayer(CObject* pObject)
 			}*/
 		}
 	};
-	if (Device.Paused() && pOldActor)
+	if (Device->Paused() && pOldActor)
 	{
 #ifdef DEBUG
 		pOldActor->dbg_update_cl		= 0;
 		pOldActor->dbg_update_shedule	= 0;
 #endif
-		Device.dwTimeDelta				= 0;
+		Device->dwTimeDelta				= 0;
 		pOldActor->UpdateCL				();
 		pOldActor->shedule_Update		(0);
 #ifdef DEBUG
@@ -421,11 +421,11 @@ void CSpectator::cam_Update	(CActor* A)
 		cameras[eacFreeFly]->Set(cam->yaw, cam->pitch, 0);
 		P.y -= 1.6f;
 		XFORM().translate_over(P);
-		if (Device.Paused())
+		if (Device->Paused())
 		{
-			Device.fTimeDelta = m_fTimeDelta;	//fake, to update cam (problem with fov)
+			Device->fTimeDelta = m_fTimeDelta;	//fake, to update cam (problem with fov)
 			g_pGameLevel->Cameras().UpdateFromCamera(cam);
-			Device.fTimeDelta = 0.0f;			//fake, to update cam (problem with fov)
+			Device->fTimeDelta = 0.0f;			//fake, to update cam (problem with fov)
 		} else
 		{
 			g_pGameLevel->Cameras().UpdateFromCamera(cam);
@@ -449,11 +449,11 @@ void CSpectator::cam_Update	(CActor* A)
 		
 		cam->Update					(point,dangle);
 //		cam->vPosition.set(point0);
-		if (Device.Paused())
+		if (Device->Paused())
 		{
-			Device.fTimeDelta = m_fTimeDelta;	//fake, to update cam (problem with fov)
+			Device->fTimeDelta = m_fTimeDelta;	//fake, to update cam (problem with fov)
 			g_pGameLevel->Cameras().UpdateFromCamera(cam);
-			Device.fTimeDelta = 0.0f;			//fake, to update cam (problem with fov)
+			Device->fTimeDelta = 0.0f;			//fake, to update cam (problem with fov)
 		} else
 		{
 			g_pGameLevel->Cameras().UpdateFromCamera(cam);

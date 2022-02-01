@@ -4,7 +4,7 @@
 #include "ESceneAIMapTools_Export.h"
 #include "ESceneAIMapTools.h"
 
-void ESceneAIMapTool::UnpackPosition(Fvector& Pdest, const NodePosition& Psrc, Fbox& bb, SAIParams& params)
+void ESceneAIMapTool::UnpackPosition(Fvector& Pdest, const SNodePositionOld& Psrc, Fbox& bb, SAIParams& params)
 {
     Pdest.x = float(Psrc.x)*params.fPatchSize;
     Pdest.y = (float(Psrc.y)/65535)*(bb.max.y-bb.min.y) + bb.min.y;
@@ -16,7 +16,7 @@ u32 ESceneAIMapTool::UnpackLink(u32& L)
 	return L&0x00ffffff;
 }
 
-void ESceneAIMapTool::PackPosition(NodePosition& Dest, Fvector& Src, Fbox& bb, SAIParams& params)
+void ESceneAIMapTool::PackPosition(SNodePositionOld& Dest, Fvector& Src, Fbox& bb, SAIParams& params)
 {
 	float sp = 1/params.fPatchSize;
 	int px,py,pz;
@@ -61,7 +61,7 @@ bool ESceneAIMapTool::Export(LPCSTR path)
         for (AINodeIt it=m_Nodes.begin(); it!=m_Nodes.end(); it++){
             u32 			id;
             u16 			pl;
-            NodePosition 	np;
+            SNodePositionOld 	np;
 
             id = (*it)->n1?(u32)(*it)->n1->idx:InvalidNode;  	F->w(&id,3);
             id = (*it)->n2?(u32)(*it)->n2->idx:InvalidNode;  	F->w(&id,3);
@@ -80,7 +80,7 @@ bool ESceneAIMapTool::Export(LPCSTR path)
 /*
 	u32 			id;
     u16 			pl;
-	NodePosition 	np;
+	SNodePositionOld 	np;
     F.r				(&id,3); 			n1 = (SAINode*)tools->UnpackLink(id);
     F.r				(&id,3); 			n2 = (SAINode*)tools->UnpackLink(id);
     F.r				(&id,3); 			n3 = (SAINode*)tools->UnpackLink(id);

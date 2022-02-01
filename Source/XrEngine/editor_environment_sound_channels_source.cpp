@@ -23,7 +23,7 @@ source::source				(shared_str const& source) :
 
 source::~source				()
 {
-	if (!Device.editor())
+	if (!Device->WeatherEditor())
 		return;
 
 	::ide().destroy		(m_property_holder);

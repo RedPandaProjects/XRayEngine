@@ -63,7 +63,7 @@ void double_shot_double_kill::OnPlayerKilled(u16 killer_id, u16 target_id, u16 w
 	}
 	kill_shot_id				tmp_kill_shot;
 	tmp_kill_shot.m_shot_number = m_shot_count;
-	tmp_kill_shot.m_shot_time	= Device.dwTimeGlobal;
+	tmp_kill_shot.m_shot_time	= Device->dwTimeGlobal;
 	m_kills.push_obsolete		(tmp_kill_shot);
 }
 

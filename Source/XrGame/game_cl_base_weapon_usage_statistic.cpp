@@ -784,7 +784,7 @@ void WeaponUsageStatistic::OnPlayerSpawned(game_PlayerState* ps)
 	PlayerStat.m_dwCurMoneyRoundDelta	= 0;
 	m_dwTotalNumRespawns[ConvertToTeamIndex(ps->team)]++;	
 	PlayerStat.m_dwCurrentTeam			= ConvertToTeamIndex(ps->team);
-	PlayerStat.last_alive_update_time	= Device.dwTimeGlobal;
+	PlayerStat.last_alive_update_time	= Device->dwTimeGlobal;
 }
 
 void WeaponUsageStatistic::OnPlayerAddMoney(game_PlayerState* ps, s32 MoneyAmount)
@@ -947,9 +947,9 @@ void WeaponUsageStatistic::SVUpdateAliveTimes()
 				{
 					Player_Statistic& pstat = *(owner.FindPlayer(ps->getName()));
 					u8 team = owner.ConvertToTeamIndex(ps->team);
-					u32 time_dif = Device.dwTimeGlobal - pstat.last_alive_update_time;
+					u32 time_dif = Device->dwTimeGlobal - pstat.last_alive_update_time;
 					pstat.m_dwTotalAliveTime[team]	+= time_dif;
-					pstat.last_alive_update_time = Device.dwTimeGlobal;
+					pstat.last_alive_update_time = Device->dwTimeGlobal;
 				}
 			}
 		}

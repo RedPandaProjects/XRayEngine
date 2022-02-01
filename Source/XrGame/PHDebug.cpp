@@ -412,7 +412,7 @@ void DBG_OpenCashedDraw()
 void DBG_ClosedCashedDraw(u32 remove_time)
 {
 	dbg_ph_draw_mode			=dmSecondaryThread			;
-	cash_draw_remove_time	=remove_time+Device.dwTimeGlobal;
+	cash_draw_remove_time	=remove_time+Device->dwTimeGlobal;
 }
 
 IC void push( PHABS_DBG_V &v, SPHDBGDrawAbsract* a )
@@ -503,7 +503,7 @@ void DBG_PHAbstructRender()
 		{
 			(*i)->render();
 		}
-		if(cash_draw_remove_time<Device.dwTimeGlobal)
+		if(cash_draw_remove_time<Device->dwTimeGlobal)
 		{
 			clear_vector(dbg_draw_cashed);
 		}
@@ -523,11 +523,11 @@ static void DBG_DrawTarckObj();
 static u32 previous_frame = u32(-1);
 void DBG_RenderUpdate( )
 {
-	if( Device.Paused() || Device.dwFrame == previous_frame || !(Device.fTimeDelta>EPS_S) )
+	if( Device->Paused() || Device->dwFrame == previous_frame || !(Device->fTimeDelta>EPS_S) )
 		return;
 	draw_frame=!draw_frame;
 	clear_vector(dbg_draw_simple);
-	previous_frame = Device.dwFrame;
+	previous_frame = Device->dwFrame;
 	dbg_draw_cashed.insert(dbg_draw_cashed.end(), dbg_draw_cashed_secondary.begin(), dbg_draw_cashed_secondary.end());
 	dbg_draw_cashed_secondary.clear();
 	DBG_DrawTarckObj();

@@ -72,7 +72,7 @@ public:
 	  CPHParticlesPlayCall( contact, invert_n, psn ), b_called ( false )
 	{
 		static const u32 time_to_call_remove  = 3000;
-		remove_time = Device.dwTimeGlobal + time_to_call_remove;
+		remove_time = Device->dwTimeGlobal + time_to_call_remove;
 	}
 	const Fvector 	&position() const
 	{
@@ -88,7 +88,7 @@ private:
 		b_called = true;
 		CPHParticlesPlayCall::run();
 	}
-	virtual bool 			obsolete						()const{return Device.dwTimeGlobal > remove_time ;}
+	virtual bool 			obsolete						()const{return Device->dwTimeGlobal > remove_time ;}
 };
 
 
@@ -253,11 +253,11 @@ void  TContactShotMark(CDB::TRI* T,dContactGeom* c)
 		return;
 	//float vel_cret= GetVelCret(c);
 
-	Fvector to_camera;to_camera.sub(cast_fv(c->pos),Device.vCameraPosition);
+	Fvector to_camera;to_camera.sub(cast_fv(c->pos),Device->vCameraPosition);
 	float square_cam_dist=to_camera.square_magnitude();
 	if(data)
 	{
-		SGameMtlPair* mtl_pair		= GMLib.GetMaterialPair(T->material,data->material);
+		SGameMtlPair* mtl_pair		= GameMaterialLibrary->GetMaterialPair(T->material,data->material);
 		if(mtl_pair)
 		{
 			//if(vel_cret>Pars::vel_cret_wallmark && !mtl_pair->CollideMarks.empty())
@@ -272,7 +272,7 @@ void  TContactShotMark(CDB::TRI* T,dContactGeom* c)
 			if(square_cam_dist<SQUARE_SOUND_EFFECT_DIST)
 			{
 			
-				SGameMtl* static_mtl =  GMLib.GetMaterialByIdx(T->material);
+				SGameMtl* static_mtl =  GameMaterialLibrary->GetMaterialByIdx(T->material);
 				VERIFY( static_mtl );
 				if(!static_mtl->Flags.test(SGameMtl::flPassable))
 				{
@@ -298,7 +298,7 @@ void  TContactShotMark(CDB::TRI* T,dContactGeom* c)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			if( square_cam_dist<SQUARE_PARTICLE_EFFECT_DIST && !mtl_pair->CollideParticles.empty() )
 			{
-				SGameMtl* static_mtl =  GMLib.GetMaterialByIdx(T->material);
+				SGameMtl* static_mtl =  GameMaterialLibrary->GetMaterialByIdx(T->material);
 				VERIFY( static_mtl );
 				LPCSTR ps_name = *mtl_pair->CollideParticles[::Random.randI(0,mtl_pair->CollideParticles.size())];
 				play_particles<Pars>( vel_cret, data, c, b_invert_normal, static_mtl, ps_name );

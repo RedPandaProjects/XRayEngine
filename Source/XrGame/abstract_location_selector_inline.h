@@ -65,7 +65,7 @@ IC	void CSelectorTemplate::set_query_interval(const u32 query_interval)
 TEMPLATE_SPECIALIZATION
 IC	bool CSelectorTemplate::actual(const _vertex_id_type start_vertex_id, bool path_completed)
 {
-	if (!used() || (((m_last_query_time + m_query_interval) > Device.dwTimeGlobal) && !path_completed))
+	if (!used() || (((m_last_query_time + m_query_interval) > Device->dwTimeGlobal) && !path_completed))
 		return				(true);
 
 	perform_search			(start_vertex_id);
@@ -90,7 +90,7 @@ IC	bool CSelectorTemplate::used() const
 TEMPLATE_SPECIALIZATION
 IC	void CSelectorTemplate::select_location	(const _vertex_id_type start_vertex_id, bool path_completed)
 {
-	if (used() && (((m_last_query_time + m_query_interval) <= Device.dwTimeGlobal) || path_completed)) {
+	if (used() && (((m_last_query_time + m_query_interval) <= Device->dwTimeGlobal) || path_completed)) {
 		perform_search		(start_vertex_id);
 		if (!failed() && dest_vertex_id) 
 			*dest_vertex_id	= m_selected_vertex_id;
@@ -108,7 +108,7 @@ IC	void CSelectorTemplate::perform_search		(const _vertex_id_type vertex_id)
 	_vertex_id_type				start_vertex_id = vertex_id;
 	before_search				(start_vertex_id);
 
-	m_last_query_time			= Device.dwTimeGlobal;
+	m_last_query_time			= Device->dwTimeGlobal;
 	
 	m_evaluator->m_path			= m_path;
 	ai().graph_engine().search	(*m_graph,start_vertex_id,start_vertex_id,0,*m_evaluator);

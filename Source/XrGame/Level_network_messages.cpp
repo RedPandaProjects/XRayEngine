@@ -45,10 +45,10 @@ static bool SimmulateNetworkLag()
 	if (!lag_simmulator_max_ping && !lag_simmulator_min_ping)
 		return false;
 	
-	if (!max_lag_time || (max_lag_time <= Device.dwTimeGlobal))
+	if (!max_lag_time || (max_lag_time <= Device->dwTimeGlobal))
 	{
-		CRandom				tmp_random(Device.dwTimeGlobal);
-		max_lag_time		= Device.dwTimeGlobal + tmp_random.randI(lag_simmulator_min_ping, lag_simmulator_max_ping);
+		CRandom				tmp_random(Device->dwTimeGlobal);
+		max_lag_time		= Device->dwTimeGlobal + tmp_random.randI(lag_simmulator_min_ping, lag_simmulator_max_ping);
 		return false;
 	}
 	return true;

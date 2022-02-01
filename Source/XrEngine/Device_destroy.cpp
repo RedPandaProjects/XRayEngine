@@ -4,6 +4,7 @@
 #include "render.h"
 #include "IGame_Persistent.h"
 #include "xr_IOConsole.h"
+#include "device.h"
 
 void CRenderDevice::_Destroy	(BOOL bKeepTextures)
 {

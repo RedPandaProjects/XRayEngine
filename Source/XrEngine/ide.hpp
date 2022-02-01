@@ -19,8 +19,8 @@ namespace XrWeatherEditor {
 
 inline XrWeatherEditor::ide&	ide	()
 {
-	VERIFY	(Device.editor());
-	return	(*Device.editor());
+	VERIFY	(Device->WeatherEditor());
+	return	(*Device->WeatherEditor());
 }
 
 #endif // #ifdef INGAME_EDITOR

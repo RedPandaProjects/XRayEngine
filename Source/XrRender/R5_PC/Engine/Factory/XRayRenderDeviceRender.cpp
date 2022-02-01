@@ -64,7 +64,7 @@ void XRayRenderDeviceRender::updateGamma()
 
 void XRayRenderDeviceRender::OnDeviceDestroy(BOOL bKeepTextures)
 {
-	Device.Statistic->OnDeviceDestroy();
+	Device->Statistic->OnDeviceDestroy();
 	m_ViewportSet_Shader.Clear();
 	m_ViewportSet_VertexBuffer.clear();
 	GRenderInterface.destroy();
@@ -91,11 +91,11 @@ void XRayRenderDeviceRender::Reset(HWND hWnd, u32& dwWidth, u32& dwHeight, float
 
 		FVF::TL* p = (FVF::TL*) m_ViewportSet_VertexBuffer->Lock();
 		p->set(0, 0, 0xFFFFFFFF, 0, 0); p++;
-		p->set(int(RDEVICE.dwWidth), 0, 0xFFFFFFFF, 1, 0); p++;
-		p->set(0, int(RDEVICE.dwHeight), 0xFFFFFFFF, 0, 1); p++;
-		p->set(int(RDEVICE.dwWidth), 0, 0xFFFFFFFF, 1, 0); p++;
-		p->set(int(RDEVICE.dwWidth), int(RDEVICE.dwHeight), 0xFFFFFFFF, 1, 1); p++;
-		p->set(0, int(RDEVICE.dwHeight), 0xFFFFFFFF, 0, 1); p++;
+		p->set(int(Device->dwWidth), 0, 0xFFFFFFFF, 1, 0); p++;
+		p->set(0, int(Device->dwHeight), 0xFFFFFFFF, 0, 1); p++;
+		p->set(int(Device->dwWidth), 0, 0xFFFFFFFF, 1, 0); p++;
+		p->set(int(Device->dwWidth), int(Device->dwHeight), 0xFFFFFFFF, 1, 1); p++;
+		p->set(0, int(Device->dwHeight), 0xFFFFFFFF, 0, 1); p++;
 		m_ViewportSet_VertexBuffer->Unlock();
 	}
 
@@ -121,19 +121,19 @@ void XRayRenderDeviceRender::OnDeviceCreate(LPCSTR shName)
 		FVF::TL* p = (FVF::TL*) m_ViewportSet_VertexBuffer->Lock();
 		p->set(0, 0, 0xFFFFFFFF, 0, 0); p++;
 
-		p->set(int(RDEVICE.dwWidth), 0, 0xFFFFFFFF, 1, 0); p++;
-		p->set(0, int(RDEVICE.dwHeight), 0xFFFFFFFF, 0, 1); p++;
+		p->set(int(Device->dwWidth), 0, 0xFFFFFFFF, 1, 0); p++;
+		p->set(0, int(Device->dwHeight), 0xFFFFFFFF, 0, 1); p++;
 
-		p->set(int(RDEVICE.dwWidth), 0, 0xFFFFFFFF, 1, 0); p++;
-		p->set(int(RDEVICE.dwWidth), int(RDEVICE.dwHeight), 0xFFFFFFFF, 1, 1); p++;
-		p->set(0, int(RDEVICE.dwHeight), 0xFFFFFFFF, 0, 1); p++;
+		p->set(int(Device->dwWidth), 0, 0xFFFFFFFF, 1, 0); p++;
+		p->set(int(Device->dwWidth), int(Device->dwHeight), 0xFFFFFFFF, 1, 1); p++;
+		p->set(0, int(Device->dwHeight), 0xFFFFFFFF, 0, 1); p++;
 		m_ViewportSet_VertexBuffer->Unlock();
 
 	}
 
 
 	GResourcesManager->CompileBlender(m_ViewportSet_Shader, "viewport\\set", RT_BASIC);
-	Device.Statistic->OnDeviceCreate();
+	Device->Statistic->OnDeviceCreate();
 	/*GXRayRenderResource->LoadShaders(shName);*/
 
 }
@@ -205,7 +205,7 @@ void XRayRenderDeviceRender::Begin()
 {
 	HW->Context->Reset();
 	HW->Context->BeginEvent(TEXT("RenderBase"));
-	HW->Context->SetViewport(0, 0, static_cast<float>(RDEVICE.dwWidth), static_cast<float>(RDEVICE.dwHeight));
+	HW->Context->SetViewport(0, 0, static_cast<float>(Device->dwWidth), static_cast<float>(Device->dwHeight));
 	HW->Context->SetScissor(false, 0, 0, 0, 0);
 	HW->Context->Lock(GRenderTarget->FrameBuffer_Generic2);
 }

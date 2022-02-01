@@ -79,7 +79,7 @@ public:
 					SBullet				();
 					~SBullet			();
 
-	bool			CanBeRenderedNow	() const { return (Device.dwFrame > init_frame_num);}
+	bool			CanBeRenderedNow	() const { return (Device->dwFrame > init_frame_num);}
 
 	void			Init				(const	Fvector& position,
 										const	Fvector& direction,

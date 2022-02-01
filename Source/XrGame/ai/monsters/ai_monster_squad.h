@@ -193,8 +193,8 @@ public:
 
 	// Lain: added
 	MEMBER_COMMAND_MAP* get_commands   () { return &m_commands; }
-	bool            home_in_danger     () { return Device.dwTimeGlobal < m_home_danger_end_tick; }
-	void            set_home_in_danger () { m_home_danger_end_tick = Device.dwTimeGlobal + m_home_danger_mode_time; }
+	bool            home_in_danger     () { return Device->dwTimeGlobal < m_home_danger_end_tick; }
+	void            set_home_in_danger () { m_home_danger_end_tick = Device->dwTimeGlobal + m_home_danger_mode_time; }
 
 private:
 	// danger mode is turns on when monsters hear dangerous sound or get a hit

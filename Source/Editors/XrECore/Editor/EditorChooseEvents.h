@@ -207,7 +207,7 @@ namespace ChoseEvents
                     dest = reinterpret_cast<u32*>(reinterpret_cast<char*>(rect.pBits)+(rect.Pitch*y));
                     for (u32 i = 0; i < THUMB_WIDTH; i++)
                     {
-                        dest[i] = item->CalculateBGR(EDevice.fTimeGlobal, frame);
+                        dest[i] = item->CalculateBGR(EDevice->fTimeGlobal, frame);
                         dest[i] = subst_alpha(dest[i], 0xFF);
                     }
                 }
@@ -219,7 +219,7 @@ namespace ChoseEvents
     //---------------------------------------------------------------------------
     void   FillEShader(ChooseItemVec& items, void* param)
     {
-        CResourceManager::map_Blender& blenders = EDevice.Resources->_GetBlenders();
+        CResourceManager::map_Blender& blenders = EDevice->Resources->_GetBlenders();
         CResourceManager::map_BlenderIt _S = blenders.begin();
         CResourceManager::map_BlenderIt _E = blenders.end();
         for (; _S != _E; _S++)			items.push_back(SChooseItem(_S->first, ""));
@@ -227,7 +227,7 @@ namespace ChoseEvents
     //---------------------------------------------------------------------------
     void   FillCShader(ChooseItemVec& items, void* param)
     {
-        Shader_xrLCVec& shaders = EDevice.ShaderXRLC.Library();
+        Shader_xrLCVec& shaders = EDevice->ShaderXRLC.Library();
         Shader_xrLCIt _F = shaders.begin();
         Shader_xrLCIt _E = shaders.end();
         for (; _F != _E; _F++)				items.push_back(SChooseItem(_F->Name, ""));
@@ -235,13 +235,13 @@ namespace ChoseEvents
     //---------------------------------------------------------------------------
     void   FillPE(ChooseItemVec& items, void* param)
     {
-        for (PS::PEDIt E = ::Render->PSLibrary.FirstPED(); E != ::Render->PSLibrary.LastPED(); E++)items.push_back(SChooseItem(*(*E)->m_Name, "EFFECT"));
+        for (PS::PEDIt E = ::RImplementation.PSLibrary.FirstPED(); E != ::RImplementation.PSLibrary.LastPED(); E++)items.push_back(SChooseItem(*(*E)->m_Name, "EFFECT"));
     }
     //---------------------------------------------------------------------------
     void   FillParticles(ChooseItemVec& items, void* param)
     {
-        for (PS::PEDIt E = ::Render->PSLibrary.FirstPED(); E != ::Render->PSLibrary.LastPED(); E++)items.push_back(SChooseItem(*(*E)->m_Name, "EFFECT"));
-        for (PS::PGDIt G = ::Render->PSLibrary.FirstPGD(); G != ::Render->PSLibrary.LastPGD(); G++)items.push_back(SChooseItem(*(*G)->m_Name, "GROUP"));
+        for (PS::PEDIt E = ::RImplementation.PSLibrary.FirstPED(); E != ::RImplementation.PSLibrary.LastPED(); E++)items.push_back(SChooseItem(*(*E)->m_Name, "EFFECT"));
+        for (PS::PGDIt G = ::RImplementation.PSLibrary.FirstPGD(); G != ::RImplementation.PSLibrary.LastPGD(); G++)items.push_back(SChooseItem(*(*G)->m_Name, "GROUP"));
     }
 
     void   SelectPE(SChooseItem* item, PropItemVec& info_items)
@@ -249,7 +249,7 @@ namespace ChoseEvents
         string64 	str;
         u32 		i = 0;
         PHelper().CreateCaption(info_items, "", "used in groups");
-        for (PS::PGDIt G = ::Render->PSLibrary.FirstPGD(); G != ::Render->PSLibrary.LastPGD(); ++G)
+        for (PS::PGDIt G = ::RImplementation.PSLibrary.FirstPGD(); G != ::RImplementation.PSLibrary.LastPGD(); ++G)
         {
             PS::CPGDef* def = (*G);
             PS::CPGDef::EffectIt pe_it = def->m_Effects.begin();
@@ -270,7 +270,7 @@ namespace ChoseEvents
         string64 	str;
         u32 		i = 0;
         PHelper().CreateCaption(info_items, "", "using effects");
-        for (PS::PGDIt G = ::Render->PSLibrary.FirstPGD(); G != ::Render->PSLibrary.LastPGD(); G++)
+        for (PS::PGDIt G = ::RImplementation.PSLibrary.FirstPGD(); G != ::RImplementation.PSLibrary.LastPGD(); G++)
         {
             PS::CPGDef* def = (*G);
             if (def->m_Name == item->name)
@@ -346,8 +346,8 @@ namespace ChoseEvents
     //---------------------------------------------------------------------------
     void   FillGameMaterial(ChooseItemVec& items, void* param)
     {
-        GameMtlIt _F = GMLib.FirstMaterial();
-        GameMtlIt _E = GMLib.LastMaterial();
+        GameMtlIt _F = GameMaterialLibrary->FirstMaterial();
+        GameMtlIt _E = GameMaterialLibrary->LastMaterial();
         for (; _F != _E; _F++)				items.push_back(SChooseItem(*(*_F)->m_Name, ""));
     }
     //---------------------------------------------------------------------------

@@ -6,7 +6,7 @@
 
 #include "EditObject.h"
 
-#ifdef _EDITOR
+#if 1
 	#include "ui_main.h"
 #endif
 
@@ -15,12 +15,12 @@
 #include "EditMesh.h"
 
 
-#ifdef _EDITOR
+#if 1
 	#include "SkeletonAnimated.h"
 	#include "AnimationKeyCalculate.h"
 #endif
 
-#ifndef _EDITOR
+#if 0
 	bool check_scale( Fmatrix F ){ return true;}
 #endif
 
@@ -38,7 +38,7 @@ public:
 	IC bool operator() (CBone* B) { return (xr_strcmp(B->WMap(),wm_name)==0); }
 };
 //----------------------------------------------------
-#ifdef _EDITOR
+#if 1
 extern CBone* 	bone_to_delete;
 extern u32 		bone_to_delete_frame;
 
@@ -53,7 +53,7 @@ void CEditableObject::OnFrame()
 	            m_ActiveSMotion->_Evaluate(i,m_SMParam.Frame(),T,R);
                 (*b_it)->_Update(T,R);
             }
-            m_SMParam.Update(EDevice.fTimeDelta,m_ActiveSMotion->fSpeed,!m_ActiveSMotion->m_Flags.is(esmStopAtEnd));
+            m_SMParam.Update(EDevice->fTimeDelta,m_ActiveSMotion->fSpeed,!m_ActiveSMotion->m_Flags.is(esmStopAtEnd));
         }else{
 		    //for (BoneIt b_it=lst.begin(); b_it!=lst.end(); b_it++) (*b_it)->Reset();
         }
@@ -61,7 +61,7 @@ void CEditableObject::OnFrame()
     }
     if(bone_to_delete)
     {
-        if(EDevice.dwFrame > bone_to_delete_frame+3)
+        if(EDevice->dwFrame > bone_to_delete_frame+3)
     		xr_delete(bone_to_delete);
     }
 }
@@ -81,7 +81,7 @@ void CEditableObject::GotoBindPose()
     BoneVec& lst = m_Bones;
     for (BoneIt b_it=lst.begin(); b_it!=lst.end(); b_it++) (*b_it)->Reset();
     CalculateAnimation(0);
-#ifdef _EDITOR
+#if 1
     UI->RedrawScene();
 #endif
 }
@@ -587,16 +587,16 @@ bool CEditableObject::CheckBoneCompliance(CSMotion* M)
 
 void CEditableObject::OptimizeSMotions()
 {
-#ifdef _EDITOR
+#if 1
 	SPBItem* pb				= UI->ProgressStart(m_SMotions.size(),"Motions optimizing...");
 #endif
 	for (SMotionIt s_it=m_SMotions.begin(); s_it!=m_SMotions.end(); s_it++){
         (*s_it)->Optimize	();
-#ifdef _EDITOR
+#if 1
 		pb->Inc				();
 #endif
 	}
-#ifdef _EDITOR
+#if 1
     UI->ProgressEnd				(pb);
 #endif
 }

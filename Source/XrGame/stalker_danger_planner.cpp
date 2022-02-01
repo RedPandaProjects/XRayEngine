@@ -53,7 +53,7 @@ void CStalkerDangerPlanner::finalize			()
 		return;
 
 	if (object().memory().enemy().selected())
-		object().memory().danger().time_line	(Device.dwTimeGlobal);
+		object().memory().danger().time_line	(Device->dwTimeGlobal);
 
 //	object().sound().remove_active_sounds		(u32(-1));
 }

@@ -636,7 +636,7 @@ BOOL CImageManager::CreateOBJThumbnail(LPCSTR tex_name, CEditableObject* obj, in
 
 	U32Vec pixels;
     u32 w=512,h=512;
-    if (EDevice.MakeScreenshot(pixels,w,h)){
+    if (EDevice->MakeScreenshot(pixels,w,h)){
         EObjectThumbnail tex(tex_name,false);
         tex.CreateFromData(pixels.data(),w,h,obj->GetFaceCount(),obj->GetVertexCount());
         tex.Save(age);
@@ -697,12 +697,12 @@ EImageThumbnail* CImageManager::CreateThumbnail(LPCSTR src_name, ECustomThumbnai
 void CImageManager::RefreshTextures(AStringVec* modif)
 {
     if (FS.can_write_to_alias(_textures_)){
-        if (modif) EDevice.Resources->ED_UpdateTextures(modif);
+        if (modif) EDevice->Resources->ED_UpdateTextures(modif);
         else{
             UI->SetStatus("Refresh textures...");
             AStringVec modif_files;
             ImageLib.SynchronizeTextures(true,true,false,0,&modif_files);
-            EDevice.Resources->ED_UpdateTextures(&modif_files);
+            EDevice->Resources->ED_UpdateTextures(&modif_files);
             UI->SetStatus("");
         }
     }else{

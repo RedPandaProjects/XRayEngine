@@ -15,7 +15,7 @@
 #include "lua/library_linkage.h"
 #include "luabind/library_linkage.h"
 
-
+CSE_Abstract* F_entity_Create(LPCSTR section);
 extern "C" {
 	DLL_API DLL_Pure*	__cdecl xrFactory_Create		(CLASS_ID clsid)
 	{
@@ -32,6 +32,11 @@ extern "C" {
 	{
 		xr_delete			(O);
 	}
+	DLL_API	ISE_Abstract* __cdecl xrFactory_Create_From_Section(LPCSTR section)
+	{
+		return					(F_entity_Create(section));
+	}
+
 };
 
 void CCC_RegisterCommands	();

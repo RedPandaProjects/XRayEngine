@@ -186,11 +186,11 @@ u32 last_hold_time =0;
 
 bool CUIScrollBar::OnKeyboardHold(int dik)
 {
-	if ( dik == MOUSE_1 && (last_hold_time + m_hold_delay) < Device.dwTimeContinual)//100
+	if ( dik == MOUSE_1 && (last_hold_time + m_hold_delay) < Device->dwTimeContinual)//100
 	{
 		if ( OnMouseDownEx() )
 		{
-			last_hold_time = Device.dwTimeContinual;
+			last_hold_time = Device->dwTimeContinual;
 			return true;
 		}
 	}

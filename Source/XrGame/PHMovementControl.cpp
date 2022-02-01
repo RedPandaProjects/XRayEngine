@@ -108,7 +108,7 @@ CPHMovementControl::~CPHMovementControl(void)
 
 static ALife::EHitType	 DefineCollisionHitType	( u16 material_idx )	
 {
-	if(GMLib.GetMaterialByIdx( material_idx )->Flags.test(SGameMtl::flInjurious)&&IsGameTypeSingle())
+	if(GameMaterialLibrary->GetMaterialByIdx( material_idx )->Flags.test(SGameMtl::flInjurious)&&IsGameTypeSingle())
 		return ALife::eHitTypeRadiation;
 	else									
 		return ALife::eHitTypeStrike;
@@ -190,7 +190,7 @@ void CPHMovementControl::Calculate(Fvector& vAccel,const Fvector& camDir,float /
 
 	if(m_character->LastMaterialIDX()!=GAMEMTL_NONE_IDX)
 	{
-		const SGameMtl *last_material=GMLib.GetMaterialByIdx(m_character->LastMaterialIDX());
+		const SGameMtl *last_material=GameMaterialLibrary->GetMaterialByIdx(m_character->LastMaterialIDX());
 		if( last_material->Flags.test(SGameMtl::flInjurious) )
 			mat_injurios = m_character->LastMaterialIDX();
 	}
@@ -199,7 +199,7 @@ void CPHMovementControl::Calculate(Fvector& vAccel,const Fvector& camDir,float /
 	{
 		if( fis_zero(gcontact_HealthLost) )
 				m_character->SetHitType( DefineCollisionHitType( mat_injurios ) );
-		gcontact_HealthLost+=Device.fTimeDelta*GMLib.GetMaterialByIdx( mat_injurios )->fInjuriousSpeed;
+		gcontact_HealthLost+=Device->fTimeDelta*GameMaterialLibrary->GetMaterialByIdx( mat_injurios )->fInjuriousSpeed;
 	}
 
 */
@@ -1329,7 +1329,7 @@ BOOL CPHMovementControl::BorderTraceCallback(collide::rq_result& result, LPVOID 
 		mtl_idx			= T->material;
 	}
 	VERIFY	(T);
-	SGameMtl* mtl		= GMLib.GetMaterialByIdx(mtl_idx);
+	SGameMtl* mtl		= GameMaterialLibrary->GetMaterialByIdx(mtl_idx);
 	if(mtl->Flags.test(SGameMtl::flInjurious))
 	{
 		Fvector tri_norm;
@@ -1373,7 +1373,7 @@ void	CPHMovementControl::				UpdateObjectBox(CPHCharacter *ach)
 	Fvector2 poses_dir;poses_dir.set(p.x-pa.x,p.z-pa.z);float plane_dist=poses_dir.magnitude(); 
 	if(plane_dist>2.f) return;
 	if(plane_dist>EPS_S)poses_dir.mul(1.f/plane_dist);
-	Fvector2 plane_cam;plane_cam.set(Device.vCameraDirection.x,Device.vCameraDirection.z);plane_cam.normalize_safe();
+	Fvector2 plane_cam;plane_cam.set(Device->vCameraDirection.x,Device->vCameraDirection.z);plane_cam.normalize_safe();
 	Fvector2 plane_i;plane_i.set(pObject->XFORM().i.x,pObject->XFORM().i.z);
 	Fvector2 plane_k;plane_k.set(pObject->XFORM().k.x,pObject->XFORM().k.z);
 	float R=_abs(poses_dir.dotproduct(plane_i)*cbox.x)+_abs(poses_dir.dotproduct(plane_k)*cbox.z);

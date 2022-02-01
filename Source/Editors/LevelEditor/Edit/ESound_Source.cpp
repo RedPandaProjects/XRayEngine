@@ -76,7 +76,7 @@ void ESoundSource::Render(int priority, bool strictB2F)
 {
     if((1==priority)&&(false==strictB2F)){
 	 	RCache.set_xform_world	(Fidentity);
-	 	EDevice.SetShader		(EDevice.m_WireShader);
+	 	EDevice->SetShader		(EDevice->m_WireShader);
         u32 clr0				= Selected()?SOUND_SEL0_COLOR:SOUND_NORM_COLOR;
         u32 clr1				= Selected()?SOUND_SEL1_COLOR:SOUND_NORM_COLOR;
         if (Selected()){ 
@@ -379,7 +379,7 @@ void ESoundSource::OnFrame()
                     m_Source.set_params		(&m_Params);
                     m_StopTime				= 0xFFFFFFFF;
 				}else{
-                    if (EDevice.dwTimeGlobal>=m_NextTime)
+                    if (EDevice->dwTimeGlobal>=m_NextTime)
                     {
                     	bool bFullPlay		= fis_zero(m_PlayTime.x)&&fis_zero(m_PlayTime.y);
                         m_Source.play		(0,bFullPlay?0:sm_Looped);
@@ -387,15 +387,15 @@ void ESoundSource::OnFrame()
                         if (bFullPlay)
                         {
                             m_StopTime		= 0xFFFFFFFF;
-                            m_NextTime		= EDevice.dwTimeGlobal+iFloor(m_Source.get_length_sec()/1000.0f)+Random.randF(m_RandomPause.x,m_RandomPause.y)*1000;
+                            m_NextTime		= EDevice->dwTimeGlobal+iFloor(m_Source.get_length_sec()/1000.0f)+Random.randF(m_RandomPause.x,m_RandomPause.y)*1000;
                         }else{
-                            m_StopTime		= bFullPlay?0:EDevice.dwTimeGlobal+Random.randF(m_PlayTime.x,m_PlayTime.y)*1000;
+                            m_StopTime		= bFullPlay?0:EDevice->dwTimeGlobal+Random.randF(m_PlayTime.x,m_PlayTime.y)*1000;
                             m_NextTime		= m_StopTime+Random.randF(m_RandomPause.x,m_RandomPause.y)*1000;
                         }
                     }
                 }
             }else{
-                if (EDevice.dwTimeGlobal>=m_StopTime)
+                if (EDevice->dwTimeGlobal>=m_StopTime)
 	            	m_Source.stop_deffered();
             }
             

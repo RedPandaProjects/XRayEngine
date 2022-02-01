@@ -1,3 +1,4 @@
+#include "..\..\Editors\XrECore\Editor\render.h"
 #include "stdafx.h"
 //#include "../../xrEngine/xr_effgamma.h"
 #include "xr_effgamma.h"
@@ -18,14 +19,14 @@ IC u32 convert				(float c)	{
 }
 IC void MouseRayFromPoint	( Fvector& direction, int x, int y, Fmatrix& m_CamMat )
 {
-	int halfwidth		= Device.dwWidth/2;
-	int halfheight		= Device.dwHeight/2;
+	int halfwidth		= Device->dwWidth/2;
+	int halfheight		= Device->dwHeight/2;
 
 	Ivector2 point2;
 	point2.set			(x-halfwidth, halfheight-y);
 
 	float size_y		= VIEWPORT_NEAR * tanf( deg2rad(60.f) * 0.5f );
-	float size_x		= size_y / (Device.fHeight_2/Device.fWidth_2);
+	float size_x		= size_y / (Device->fHeight_2/Device->fWidth_2);
 
 	float r_pt			= float(point2.x) * size_x / (float) halfwidth;
 	float u_pt			= float(point2.y) * size_y / (float) halfheight;
@@ -210,11 +211,11 @@ void CRender::ScreenshotImpl	(ScreenshotMode mode, LPCSTR name, CMemoryWriter* m
 				if(hr!=D3D_OK)		goto _end_;
 
 				// save
-				u32* data			= (u32*)xr_malloc(Device.dwHeight*Device.dwHeight*4);
-				imf_Process			(data,Device.dwHeight,Device.dwHeight,(u32*)D.pBits,Device.dwWidth,Device.dwHeight,imf_lanczos3);
-				p.scanlenght		= Device.dwHeight*4;
-				p.width				= Device.dwHeight;
-				p.height			= Device.dwHeight;
+				u32* data			= (u32*)xr_malloc(Device->dwHeight*Device->dwHeight*4);
+				imf_Process			(data,Device->dwHeight,Device->dwHeight,(u32*)D.pBits,Device->dwWidth,Device->dwHeight,imf_lanczos3);
+				p.scanlenght		= Device->dwHeight*4;
+				p.width				= Device->dwHeight;
+				p.height			= Device->dwHeight;
 				p.data				= data;
 				p.maketga			(*fs);
 				xr_free				(data);
@@ -232,7 +233,7 @@ void CRender::ScreenshotImpl	(ScreenshotMode mode, LPCSTR name, CMemoryWriter* m
 
 void CRender::ScreenshotImpl	(ScreenshotMode mode, LPCSTR name, CMemoryWriter* memory_writer)
 {
-	if (!Device.b_is_Ready)			return;
+	if (!Device->b_is_Ready)			return;
 	if ((psDeviceFlags.test(rsFullscreen)) == 0) {
 		if(name && FS.exist(name))
 			FS.file_delete(0,name);
@@ -245,7 +246,7 @@ void CRender::ScreenshotImpl	(ScreenshotMode mode, LPCSTR name, CMemoryWriter* m
 	IDirect3DSurface9*	pFB;
 	D3DLOCKED_RECT		D;
 	HRESULT				hr;
-	hr					= HW.pDevice->CreateOffscreenPlainSurface(Device.dwWidth,Device.dwHeight,D3DFMT_A8R8G8B8,D3DPOOL_SYSTEMMEM,&pFB,NULL);
+	hr					= HW.pDevice->CreateOffscreenPlainSurface(Device->dwWidth,Device->dwHeight,D3DFMT_A8R8G8B8,D3DPOOL_SYSTEMMEM,&pFB,NULL);
 	if(hr!=D3D_OK)		return;
 
 	hr					= HW.pDevice->GetFrontBufferData(0,pFB);
@@ -257,7 +258,7 @@ void CRender::ScreenshotImpl	(ScreenshotMode mode, LPCSTR name, CMemoryWriter* m
 
 	// Image processing (gamma-correct)
 	u32* pPixel		= (u32*)D.pBits;
-	u32* pEnd		= pPixel+(Device.dwWidth*Device.dwHeight);
+	u32* pEnd		= pPixel+(Device->dwWidth*Device->dwHeight);
 	//	IGOR: Remove inverse color correction and kill alpha
 	/*
 	D3DGAMMARAMP	G;
@@ -408,11 +409,11 @@ void CRender::ScreenshotImpl	(ScreenshotMode mode, LPCSTR name, CMemoryWriter* m
 				if(hr!=D3D_OK)		goto _end_;
 
 				// save
-				u32* data			= (u32*)xr_malloc(Device.dwHeight*Device.dwHeight*4);
-				imf_Process			(data,Device.dwHeight,Device.dwHeight,(u32*)D.pBits,Device.dwWidth,Device.dwHeight,imf_lanczos3);
-				p.scanlenght		= Device.dwHeight*4;
-				p.width				= Device.dwHeight;
-				p.height			= Device.dwHeight;
+				u32* data			= (u32*)xr_malloc(Device->dwHeight*Device->dwHeight*4);
+				imf_Process			(data,Device->dwHeight,Device->dwHeight,(u32*)D.pBits,Device->dwWidth,Device->dwHeight,imf_lanczos3);
+				p.scanlenght		= Device->dwHeight*4;
+				p.width				= Device->dwHeight;
+				p.height			= Device->dwHeight;
 				p.data				= data;
 				p.maketga			(*fs);
 				xr_free				(data);
@@ -469,7 +470,7 @@ void CRender::ScreenshotAsyncEnd(CMemoryWriter &memory_writer)
 	{
 
 		u32* pPixel		= (u32*)MappedData.pData;
-		u32* pEnd		= pPixel+(Device.dwWidth*Device.dwHeight);
+		u32* pEnd		= pPixel+(Device->dwWidth*Device->dwHeight);
 
 		//	Kill alpha and swap r and b.
 		for (;pPixel!=pEnd; pPixel++)	
@@ -482,9 +483,9 @@ void CRender::ScreenshotAsyncEnd(CMemoryWriter &memory_writer)
 				);
 		}
 
-		memory_writer.w( &Device.dwWidth, sizeof(Device.dwWidth) );
-		memory_writer.w( &Device.dwHeight, sizeof(Device.dwHeight) );
-		memory_writer.w( MappedData.pData, (Device.dwWidth*Device.dwHeight)*4 );
+		memory_writer.w( &Device->dwWidth, sizeof(Device->dwWidth) );
+		memory_writer.w( &Device->dwHeight, sizeof(Device->dwHeight) );
+		memory_writer.w( MappedData.pData, (Device->dwWidth*Device->dwHeight)*4 );
 	}
 
 #ifdef USE_DX11
@@ -498,7 +499,7 @@ void CRender::ScreenshotAsyncEnd(CMemoryWriter &memory_writer)
 
 void CRender::ScreenshotAsyncEnd(CMemoryWriter &memory_writer)
 {
-	if (!Device.b_is_Ready)			return;
+	if (!Device->b_is_Ready)			return;
 
 	VERIFY(!m_bMakeAsyncSS);
 
@@ -515,8 +516,8 @@ void CRender::ScreenshotAsyncEnd(CMemoryWriter &memory_writer)
 	u32 rtWidth = Target->get_rtwidth();
 	u32 rtHeight = Target->get_rtheight();
 #else	//	RENDER != R_R1
-	u32 rtWidth = Device.dwWidth;
-	u32 rtHeight = Device.dwHeight;
+	u32 rtWidth = Device->dwWidth;
+	u32 rtHeight = Device->dwHeight;
 #endif	//	RENDER != R_R1
 
 	// Image processing (gamma-correct)

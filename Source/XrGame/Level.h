@@ -83,10 +83,11 @@ protected:
 	// debug renderer
 	CDebugRenderer				*m_debug_renderer;
 #endif
-
+protected:
 	CPHCommander				*m_ph_commander;
 	CPHCommander				*m_ph_commander_scripts;
 	CPHCommander				*m_ph_commander_physics_worldstep;
+private:
 	// Local events
 	EVENT						eChangeRP;
 	EVENT						eDemoPlay;
@@ -152,7 +153,7 @@ public:
 
 	CObject*					CurrentControlEntity	( void ) const		{ return pCurrentControlEntity; }
 	void						SetControlEntity		( CObject* O  )		{ pCurrentControlEntity=O; }
-private:
+protected:
 	
 	void						make_NetCorrectionPrediction	();
 
@@ -166,7 +167,7 @@ private:
 	shared_str					m_client_digest;	//for screenshots
 public:
 	shared_str const			get_cdkey_digest() const { return m_client_digest; };
-private:
+protected:
 	bool						m_bConnectResultReceived;
 	bool						m_bConnectResult;
 	xr_string					m_sConnectResult;

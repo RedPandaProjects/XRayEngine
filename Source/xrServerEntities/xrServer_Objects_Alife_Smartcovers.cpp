@@ -13,7 +13,7 @@
 #	include "character_info.h"
 #endif // AI_COMPILER
 
-#ifdef XRSEFACTORY_EXPORTS
+#if DEV_MODE
 #	include "ai_space.h"
 #	include "script_engine.h"
 #	pragma warning(push)
@@ -26,7 +26,7 @@
 static SFillPropData			fp_data;
 #endif // XRSEFACTORY_EXPORTS
 
-#ifdef XRSEFACTORY_EXPORTS
+#if DEV_MODE
 bool parse_bool		(luabind::object const &table, LPCSTR identifier)
 {
 	VERIFY2						(table.type() == LUA_TTABLE, "invalid loophole description passed");
@@ -71,7 +71,8 @@ BOOL is_combat_cover			(shared_str const &table_id)
 
 CSE_SmartCover::CSE_SmartCover	(LPCSTR section) : CSE_ALifeDynamicObject(section)
 {
-#ifdef XRSEFACTORY_EXPORTS
+#if DEV_MODE
+	if(Device->IsEditorMode())
 	fp_data.inc					();
 #endif // XRSEFACTORY_EXPORTS
 
@@ -84,7 +85,8 @@ CSE_SmartCover::CSE_SmartCover	(LPCSTR section) : CSE_ALifeDynamicObject(section
 
 CSE_SmartCover::~CSE_SmartCover	()
 {
-#ifdef XRSEFACTORY_EXPORTS
+#if DEV_MODE
+	if (Device->IsEditorMode())
 	fp_data.dec					();
 #endif // XRSEFACTORY_EXPORTS
 }
@@ -170,10 +172,10 @@ void CSE_SmartCover::UPDATE_Write(NET_Packet &tNetPacket)
 {
 	inherited1::UPDATE_Write	(tNetPacket);
 }
-#ifndef XRGAME_EXPORTS
+#if DEV_MODE
 void CSE_SmartCover::FillProps	(LPCSTR pref, PropItemVec& items)
 {
-#	ifdef XRSEFACTORY_EXPORTS
+
 	PHelper().CreateFloat		(items, PrepareKey(pref,*s_name,"hold position time"), 	&m_hold_position_time,	0.f, 60.f);
 	RListValue *value			= PHelper().CreateRList	 	(items,	PrepareKey(pref,*s_name,"description"),			&m_description,			&*fp_data.smart_covers.begin(),	fp_data.smart_covers.size());
 	value->OnChangeEvent.bind	(this,&CSE_SmartCover::OnChangeDescription);
@@ -185,11 +187,10 @@ void CSE_SmartCover::FillProps	(LPCSTR pref, PropItemVec& items)
 		PHelper().CreateBOOL	(items, PrepareKey(pref, *s_name, "is combat cover"), &m_is_combat_cover);
 		PHelper().CreateBOOL	(items, PrepareKey(pref, *s_name, "can fire"), &m_can_fire);
 	}
-#	endif // #ifdef XRSEFACTORY_EXPORTS
 }
 #endif // #ifndef XRGAME_EXPORTS
 
-#ifdef XRSEFACTORY_EXPORTS
+#if DEV_MODE
 void CSE_SmartCover::set_loopholes_table_checker(BOOLValue *value){
 	value->OnChangeEvent.bind	(this,&CSE_SmartCover::OnChangeLoopholes);
 }
@@ -249,33 +250,10 @@ void parse_table	(luabind::object const &table, LPCSTR identifier, luabind::obje
 }
 
 namespace smart_cover {
-	static	LPCSTR				s_enter_loophole_id = "<__ENTER__>";
-	static	LPCSTR				s_exit_loophole_id  = "<__EXIT__>";
-
-	shared_str	transform_vertex(shared_str const &vertex_id, bool const &in)
-	{
-		if (*vertex_id.c_str())
-			return				(vertex_id);
-
-		if (in)
-			return				(s_enter_loophole_id);
-
-		return					(s_exit_loophole_id);
-	}
-
-	shared_str	parse_vertex	(luabind::object const &table, LPCSTR identifier, bool const &in)
-	{
-		return					(
-			transform_vertex(
-			parse_string(
-			table,
-			identifier
-			),
-			in
-			)
-			);
-	}
+	shared_str	transform_vertex(shared_str const& vertex_id, bool const& in);
+	shared_str	parse_vertex(luabind::object const& table, LPCSTR identifier, bool const& in);
 } // namespace smart_cover
+
 
 void CSE_SmartCover::set_enterable (shared_str const &id)
 {

@@ -59,12 +59,12 @@ void CCameraLook::UpdateDistance( Fvector& point )
 void CCameraLook::Move( int cmd, float val, float factor)
 {
 	switch (cmd){
-	case kCAM_ZOOM_IN:	dist	-= val?val:(rot_speed.z*Device.fTimeDelta);	break;
-	case kCAM_ZOOM_OUT:	dist	+= val?val:(rot_speed.z*Device.fTimeDelta);	break;
-	case kDOWN:			pitch	-= val?val:(rot_speed.x*Device.fTimeDelta/factor);	break;
-	case kUP:			pitch	+= val?val:(rot_speed.x*Device.fTimeDelta/factor);	break;
-	case kLEFT:			yaw		-= val?val:(rot_speed.y*Device.fTimeDelta/factor);	break;
-	case kRIGHT:		yaw		+= val?val:(rot_speed.y*Device.fTimeDelta/factor);	break;
+	case kCAM_ZOOM_IN:	dist	-= val?val:(rot_speed.z*Device->fTimeDelta);	break;
+	case kCAM_ZOOM_OUT:	dist	+= val?val:(rot_speed.z*Device->fTimeDelta);	break;
+	case kDOWN:			pitch	-= val?val:(rot_speed.x*Device->fTimeDelta/factor);	break;
+	case kUP:			pitch	+= val?val:(rot_speed.x*Device->fTimeDelta/factor);	break;
+	case kLEFT:			yaw		-= val?val:(rot_speed.y*Device->fTimeDelta/factor);	break;
+	case kRIGHT:		yaw		+= val?val:(rot_speed.y*Device->fTimeDelta/factor);	break;
 	}
 	if (bClampYaw)		clamp(yaw,lim_yaw[0],lim_yaw[1]);
 	if (bClampPitch)	clamp(pitch,lim_pitch[0],lim_pitch[1]);
@@ -171,13 +171,13 @@ void CCameraLook2::UpdateAutoAim()
 											m_autoaim_inertion_yaw.x,
 											m_autoaim_inertion_yaw.y,
 											PI,
-											Device.fTimeDelta);
+											Device->fTimeDelta);
 
 	pitch			= angle_inertion_var(	pitch,xyz.x,
 											m_autoaim_inertion_pitch.x,
 											m_autoaim_inertion_pitch.y,
 											PI,
-											Device.fTimeDelta);
+											Device->fTimeDelta);
 }
 
 void CCameraLook2::Load(LPCSTR section)
@@ -220,7 +220,7 @@ void CCameraFixedLook::Move	(int cmd, float val, float factor)
 void CCameraFixedLook::Update(Fvector& point, Fvector& noise_dangle)
 {
 	Fquaternion	new_dir;
-	new_dir.slerp		(m_current_dir, m_final_dir, Device.fTimeDelta);	//1 sec
+	new_dir.slerp		(m_current_dir, m_final_dir, Device->fTimeDelta);	//1 sec
 	m_current_dir.set	(new_dir);
 	
 	Fmatrix	rm;

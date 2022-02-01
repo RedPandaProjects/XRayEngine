@@ -9,7 +9,7 @@
 #pragma warning(default:4995)
 #include "HW.h"
 
-#ifndef _EDITOR
+#ifndef REDITOR
 #include "../../xrEngine/XR_IOConsole.h"
 
 	void	fill_vid_mode_list			(CHW* _hw);
@@ -54,7 +54,7 @@ void CHW::Reset		(HWND hwnd)
 	_RELEASE			(pBaseZB);
 	_RELEASE			(pBaseRT);
 
-#ifndef _EDITOR
+#ifndef REDITOR
 //#ifndef DEDICATED_SERVER
 //	BOOL	bWindowed		= !psDeviceFlags.is	(rsFullscreen);
 //#else
@@ -83,7 +83,7 @@ void CHW::Reset		(HWND hwnd)
 #ifdef DEBUG
 	R_CHK				(pDevice->CreateStateBlock			(D3DSBT_ALL,&dwDebugSB));
 #endif
-#ifndef _EDITOR
+#ifndef REDITOR
 	updateWindowProps	(hwnd);
 #endif
 }
@@ -103,7 +103,7 @@ void CHW::CreateD3D	()
 
 	LPCSTR		_name			= "xrd3d9-null.dll";
 
-#ifndef _EDITOR
+#ifndef REDITOR
 	if (!g_dedicated_server)
 #endif    
 		_name			= "d3d9.dll";
@@ -166,7 +166,7 @@ void	CHW::DestroyDevice	()
 	_SHOW_REF				("refCount:dwDebugSB",dwDebugSB);
 	_RELEASE				(dwDebugSB);
 #endif
-#ifdef _EDITOR
+#ifdef REDITOR
 	_RELEASE				(HW.pDevice);
 #else
 	_SHOW_REF				("DeviceREF:",HW.pDevice);
@@ -174,14 +174,14 @@ void	CHW::DestroyDevice	()
 #endif    
 	DestroyD3D				();
 	
-#ifndef _EDITOR
+#ifndef REDITOR
 	free_vid_mode_list		();
 #endif
 }
 void	CHW::selectResolution	(u32 &dwWidth, u32 &dwHeight, BOOL bWindowed)
 {
 	fill_vid_mode_list			(this);
-#ifndef _EDITOR
+#ifndef REDITOR
 	if (g_dedicated_server)
 	{
 		dwWidth		= 640;
@@ -196,7 +196,7 @@ void	CHW::selectResolution	(u32 &dwWidth, u32 &dwHeight, BOOL bWindowed)
 			dwHeight	= psCurrentVidMode[1];
 		}else //check
 		{
-#ifndef _EDITOR
+#ifndef REDITOR
 			string64					buff;
 			xr_sprintf					(buff,sizeof(buff),"%dx%d",psCurrentVidMode[0],psCurrentVidMode[1]);
 
@@ -229,7 +229,7 @@ void		CHW::CreateDevice		(HWND m_hWnd, bool move_window)
 
 	BOOL  bWindowed			= TRUE;
 	
-#ifndef _EDITOR
+#ifndef REDITOR
 	if (!g_dedicated_server)
 		bWindowed			= !psDeviceFlags.is(rsFullscreen);
 #else
@@ -327,7 +327,7 @@ void		CHW::CreateDevice		(HWND m_hWnd, bool move_window)
 	D3DPRESENT_PARAMETERS&	P	= DevPP;
     ZeroMemory				( &P, sizeof(P) );
 
-#ifndef _EDITOR
+#ifndef REDITOR
 	selectResolution	(P.BackBufferWidth, P.BackBufferHeight, bWindowed);
 #endif
 // Back buffer
@@ -409,7 +409,7 @@ void		CHW::CreateDevice		(HWND m_hWnd, bool move_window)
 	u32	memory									= pDevice->GetAvailableTextureMem	();
 	Msg		("*     Texture memory: %d M",		memory/(1024*1024));
 	Msg		("*          DDI-level: %2.1f",		float(D3DXGetDriverLevel(pDevice))/100.f);
-#ifndef _EDITOR
+#ifndef REDITOR
 	updateWindowProps							(m_hWnd);
 	fill_vid_mode_list							(this);
 #endif
@@ -530,7 +530,7 @@ void	CHW::updateWindowProps	(HWND m_hWnd)
 //#endif
 
 	BOOL	bWindowed				= TRUE;
-#ifndef _EDITOR
+#ifndef REDITOR
 	if (!g_dedicated_server)
 		bWindowed			= !psDeviceFlags.is(rsFullscreen);
 #endif	
@@ -556,7 +556,7 @@ void	CHW::updateWindowProps	(HWND m_hWnd)
 			BOOL			bCenter = TRUE;
 			if (strstr(Core.Params, "-center_screen"))	bCenter = TRUE;
 
-#ifndef _EDITOR
+#ifndef REDITOR
 			if (g_dedicated_server)
 				bCenter		= TRUE;
 #endif
@@ -596,7 +596,7 @@ void	CHW::updateWindowProps	(HWND m_hWnd)
 		SetWindowLong			( m_hWnd, GWL_EXSTYLE, WS_EX_TOPMOST);
 	}
 
-#ifndef _EDITOR
+#ifndef REDITOR
 	if (!g_dedicated_server)
 	{
 		ShowCursor	(FALSE);
@@ -613,7 +613,7 @@ struct _uniq_mode
 	bool operator() (LPCSTR _other) {return !stricmp(_val,_other);}
 };
 
-#ifndef _EDITOR
+#ifndef REDITOR
 
 /*
 void free_render_mode_list()

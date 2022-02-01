@@ -37,7 +37,7 @@ struct ENGINE_API SCamEffectorInfo
 	}
 };
 
-enum ECameraStyle       {
+enum EUIToolsCameraStyle       {
 	csCamDebug,
 	csFirstEye,
 	csLookAt,

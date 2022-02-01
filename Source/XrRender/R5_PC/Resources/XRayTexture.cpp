@@ -42,7 +42,7 @@ XRayTexture::XRayTexture(shared_str texture)
 		else
 		{
 			BOOL bstop_at_end = (0 != strstr(texture.c_str(), "intro\\")) || (0 != strstr(texture.c_str(), "outro\\"));
-			pTheora->Play(!bstop_at_end, RDEVICE.dwTimeContinual);
+			pTheora->Play(!bstop_at_end, Device->dwTimeContinual);
 
 			// Now create texture
 			u32 _w = pTheora->Width(false);
@@ -171,7 +171,7 @@ bool XRayTexture::Update()
 		return true;
 	case XRayTexture::TT_Seq:
 	{
-		size_t	frame = RDEVICE.dwTimeContinual / m_seq_ms;
+		size_t	frame = Device->dwTimeContinual / m_seq_ms;
 		u32	frame_data = SeqTextures.size();
 		if (m_seq_cycles) {
 			u32	frame_id = frame % (frame_data * 2);
@@ -197,7 +197,7 @@ bool XRayTexture::Update()
 	break;
 	case XRayTexture::TT_Movie:
 	{
-		if (pTheora->Update(m_play_time != 0xFFFFFFFF ? m_play_time : RDEVICE.dwTimeContinual))
+		if (pTheora->Update(m_play_time != 0xFFFFFFFF ? m_play_time : Device->dwTimeContinual))
 		{
 
 			int _pos = 0;
@@ -215,7 +215,7 @@ bool XRayTexture::Update()
 
 void XRayTexture::video_Play(BOOL looped, u32 _time)
 {
-	if (pTheora) pTheora->Play(looped, (_time != 0xFFFFFFFF) ? (m_play_time = _time) : Device.dwTimeContinual);
+	if (pTheora) pTheora->Play(looped, (_time != 0xFFFFFFFF) ? (m_play_time = _time) : Device->dwTimeContinual);
 }
 
 void XRayTexture::video_Pause(BOOL state)

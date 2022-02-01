@@ -185,7 +185,7 @@ void CLevelDebug::draw_object_info()
 		}
 
 		Fmatrix		res;
-		res.mul		(Device.mFullTransform,it->first->XFORM());
+		res.mul		(Device->mFullTransform,it->first->XFORM());
 
 		Fvector4	v_res;
 
@@ -202,8 +202,8 @@ void CLevelDebug::draw_object_info()
 			if (v_res.x < -1.f || v_res.x > 1.f || v_res.y<-1.f || v_res.y>1.f) continue;
 
 			// get real (x,y)
-			float x = (1.f + v_res.x)/2.f * (Device.dwWidth);
-			float y = (1.f - v_res.y)/2.f * (Device.dwHeight) - delta_height;
+			float x = (1.f + v_res.x)/2.f * (Device->dwWidth);
+			float y = (1.f - v_res.y)/2.f * (Device->dwHeight) - delta_height;
 			float start_y = y;
 
 			// handle all of the text inside class

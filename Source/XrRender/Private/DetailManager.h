@@ -10,7 +10,7 @@
 #include "detailformat.h"
 #include "detailmodel.h"
 
-#ifdef _EDITOR
+#ifdef REDITOR
 //.	#include	"ESceneClassList.h"
 	const int	dm_max_decompress	= 14;
 	class CCustomObject;
@@ -111,7 +111,7 @@ public:
 	DetailVec						objects;
 	vis_list						m_visibles	[3];	// 0=still, 1=Wave1, 2=Wave2
 
-#ifndef _EDITOR    
+#ifndef REDITOR    
 	xrXRC							xrc;
 #endif    
 	CacheSlot1 						cache_level1[dm_cache1_line][dm_cache1_line];
@@ -126,7 +126,7 @@ public:
 	void							UpdateVisibleM	();
 	void							UpdateVisibleS	();
 public:
-#ifdef _EDITOR
+#ifdef REDITOR
 	virtual ObjectList* 			GetSnapList		()=0;
 #endif
 
@@ -189,7 +189,7 @@ public:
 
 	void					MT_CALC			() ;
 	ICF	void						MT_SYNC			() {
-		if (m_frame_calc == RDEVICE.dwFrame)
+		if (m_frame_calc == Device->dwFrame)
 			return;
 
 		MT_CALC						(); 

@@ -21,7 +21,7 @@ void	CFireDispertionController::SetDispertion(float const new_disp)
 	{
 		start_disp	= fsimilar(start_disp, 0.f) ? new_disp : current_disp;
 		end_disp	= new_disp;
-		start_time	= Device.fTimeGlobal;
+		start_time	= Device->fTimeGlobal;
 	}
 	Update();
 }
@@ -45,7 +45,7 @@ void	CFireDispertionController::Update()
 	}
 	float diff_time		= tmp_inertion * _abs(end_disp - start_disp);
 	float end_time		= start_time + diff_time;
-	float current_time = Device.fTimeGlobal;
+	float current_time = Device->fTimeGlobal;
 	if (end_time == start_time)
 	{
 		current_disp = end_disp;

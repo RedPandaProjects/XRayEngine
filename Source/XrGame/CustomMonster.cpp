@@ -206,7 +206,7 @@ void CCustomMonster::reinit		()
 	sound().reinit				();
 
 	m_client_update_delta		= 0;
-	m_last_client_update_time	= Device.dwTimeGlobal;
+	m_last_client_update_time	= Device->dwTimeGlobal;
 
 	eye_pp_stage				= 0;
 	m_dwLastUpdateTime			= 0xffffffff;
@@ -329,11 +329,11 @@ void CCustomMonster::shedule_Update	( u32 DT )
 	if (g_Alive()) {
 		if ( false && g_mt_config.test(mtAiVision) )
 #ifndef DEBUG
-			Device.seqParallel.push_back	(fastdelegate::FastDelegate0<>(this,&CCustomMonster::Exec_Visibility));
+			Device->seqParallel.push_back	(fastdelegate::FastDelegate0<>(this,&CCustomMonster::Exec_Visibility));
 #else // DEBUG
 		{
 			if (!psAI_Flags.test(aiStalker) || !!smart_cast<CActor*>(Level().CurrentEntity()))
-				Device.seqParallel.push_back(fastdelegate::FastDelegate0<>(this,&CCustomMonster::Exec_Visibility));
+				Device->seqParallel.push_back(fastdelegate::FastDelegate0<>(this,&CCustomMonster::Exec_Visibility));
 			else
 				Exec_Visibility				();
 		}
@@ -347,24 +347,24 @@ void CCustomMonster::shedule_Update	( u32 DT )
 	// Queue setup
 	if (dt > 3) return;
 
-	m_dwCurrentTime	= Device.dwTimeGlobal;
+	m_dwCurrentTime	= Device->dwTimeGlobal;
 
 	VERIFY				(_valid(Position()));
 	if (Remote())		{
 	} else {
 		// here is monster AI call
 		m_fTimeUpdateDelta				= dt;
-		Device.Statistic->AI_Think.Begin	();
-		Device.Statistic->TEST1.Begin();
+		Device->Statistic->AI_Think.Begin	();
+		Device->Statistic->TEST1.Begin();
 		if (GetScriptControl())
 			ProcessScripts();
 		else {
-			if (Device.dwFrame > spawn_time() + g_AI_inactive_time)
+			if (Device->dwFrame > spawn_time() + g_AI_inactive_time)
 				Think					();
 		}
-		m_dwLastUpdateTime				= Device.dwTimeGlobal;
-		Device.Statistic->TEST1.End();
-		Device.Statistic->AI_Think.End	();
+		m_dwLastUpdateTime				= Device->dwTimeGlobal;
+		Device->Statistic->TEST1.End();
+		Device->Statistic->AI_Think.End	();
 
 		// Look and action streams
 		float							temp = conditions().health();
@@ -424,8 +424,8 @@ void CCustomMonster::update_sound_player()
 void CCustomMonster::UpdateCL	()
 { 
 	START_PROFILE("CustomMonster/client_update")
-	m_client_update_delta		= (u32)std::min(Device.dwTimeGlobal - m_last_client_update_time, u32(100) );
-	m_last_client_update_time	= Device.dwTimeGlobal;
+	m_client_update_delta		= (u32)std::min(Device->dwTimeGlobal - m_last_client_update_time, u32(100) );
+	m_last_client_update_time	= Device->dwTimeGlobal;
 
 #ifdef DEBUG
 	if( animation_movement() )
@@ -453,7 +453,7 @@ void CCustomMonster::UpdateCL	()
 	*/
 
 	if (g_mt_config.test(mtSoundPlayer))
-		Device.seqParallel.push_back	(fastdelegate::FastDelegate0<>(this,&CCustomMonster::update_sound_player));
+		Device->seqParallel.push_back	(fastdelegate::FastDelegate0<>(this,&CCustomMonster::update_sound_player));
 	else {
 		START_PROFILE("CustomMonster/client_update/sound_player")
 		update_sound_player	();
@@ -466,7 +466,7 @@ void CCustomMonster::UpdateCL	()
 		return;
 	}
 
-	m_dwCurrentTime		= Device.dwTimeGlobal;
+	m_dwCurrentTime		= Device->dwTimeGlobal;
 
 	// distinguish interpolation/extrapolation
 	u32	dwTime			= Level().timeServer()-NET_Latency;
@@ -636,25 +636,25 @@ void CCustomMonster::eye_pp_s1			()
 #endif
 	}
 	// Standart visibility
-	Device.Statistic->AI_Vis_Query.Begin		();
+	Device->Statistic->AI_Vis_Query.Begin		();
 	Fmatrix									mProject,mFull,mView;
 	mView.build_camera_dir					(eye_matrix.c,eye_matrix.k,eye_matrix.j);
 	VERIFY									(_valid(eye_matrix));
 	mProject.build_projection				(deg2rad(new_fov),1,0.1f,new_range);
 	mFull.mul								(mProject,mView);
 	feel_vision_query						(mFull,eye_matrix.c);
-	Device.Statistic->AI_Vis_Query.End		();
+	Device->Statistic->AI_Vis_Query.End		();
 }
 
 void CCustomMonster::eye_pp_s2				( )
 {
 	// Tracing
-	Device.Statistic->AI_Vis_RayTests.Begin	();
+	Device->Statistic->AI_Vis_RayTests.Begin	();
 	u32 dwTime			= Level().timeServer();
 	u32 dwDT			= dwTime-eye_pp_timestamp;
 	eye_pp_timestamp	= dwTime;
 	feel_vision_update						(this,eye_matrix.c,float(dwDT)/1000.f,memory().visual().transparency_threshold());
-	Device.Statistic->AI_Vis_RayTests.End	();
+	Device->Statistic->AI_Vis_RayTests.End	();
 }
 
 void CCustomMonster::Exec_Visibility	( )
@@ -662,7 +662,7 @@ void CCustomMonster::Exec_Visibility	( )
 	//if (0==Sector())				return;
 	if (!g_Alive())					return;
 
-	Device.Statistic->AI_Vis.Begin	();
+	Device->Statistic->AI_Vis.Begin	();
 	switch (eye_pp_stage%2)	
 	{
 	case 0:	
@@ -671,7 +671,7 @@ void CCustomMonster::Exec_Visibility	( )
 	case 1:	eye_pp_s2();			break;
 	}
 	++eye_pp_stage					;
-	Device.Statistic->AI_Vis.End		();
+	Device->Statistic->AI_Vis.End		();
 }
 
 void CCustomMonster::UpdateCamera()
@@ -718,7 +718,7 @@ BOOL CCustomMonster::net_Spawn	(CSE_Abstract* DC)
 	SetfHealth							(E->get_health());
 	if (!g_Alive()) {
 		set_death_time			();
-//		Msg						("%6d : Object [%d][%s][%s] is spawned DEAD",Device.dwTimeGlobal,ID(),*cName(),*cNameSect());
+//		Msg						("%6d : Object [%d][%s][%s] is spawned DEAD",Device->dwTimeGlobal,ID(),*cName(),*cNameSect());
 	}
 
 	if (ai().get_level_graph() && UsedAI_Locations() && (e->ID_Parent == 0xffff)) {
@@ -807,13 +807,13 @@ void CCustomMonster::net_Destroy()
 	sound().unload				();
 	movement().net_Destroy		();
 	
-	Device.remove_from_seq_parallel	(
+	Device->remove_from_seq_parallel	(
 		fastdelegate::FastDelegate0<>(
 			this,
 			&CCustomMonster::update_sound_player
 		)
 	);
-	Device.remove_from_seq_parallel	(
+	Device->remove_from_seq_parallel	(
 		fastdelegate::FastDelegate0<>(
 			this,
 			&CCustomMonster::Exec_Visibility
@@ -1055,19 +1055,19 @@ bool CCustomMonster::update_critical_wounded	(const u16 &bone_id, const float &p
 	// object should not be critical wounded
 	VERIFY							(m_critical_wound_type == u32(-1));
 	// check 'multiple updates during last hit' situation
-	VERIFY							(Device.dwTimeGlobal >= m_last_hit_time);
+	VERIFY							(Device->dwTimeGlobal >= m_last_hit_time);
 
 	if (m_critical_wound_threshold < 0) return (false);
 
 
-	float							time_delta = m_last_hit_time ? float(Device.dwTimeGlobal - m_last_hit_time)/1000.f : 0.f;
+	float							time_delta = m_last_hit_time ? float(Device->dwTimeGlobal - m_last_hit_time)/1000.f : 0.f;
 	m_critical_wound_accumulator	+= power - m_critical_wound_decrease_quant*time_delta;
 	clamp							(m_critical_wound_accumulator,0.f,m_critical_wound_threshold);
 
 #if 0//def _DEBUG
 	Msg								(
 		"%6d [%s] update_critical_wounded: %f[%f] (%f,%f) [%f]",
-		Device.dwTimeGlobal,
+		Device->dwTimeGlobal,
 		*cName(),
 		m_critical_wound_accumulator,
 		power,
@@ -1077,7 +1077,7 @@ bool CCustomMonster::update_critical_wounded	(const u16 &bone_id, const float &p
 	);
 #endif // DEBUG
 
-	m_last_hit_time					= Device.dwTimeGlobal;
+	m_last_hit_time					= Device->dwTimeGlobal;
 	if (m_critical_wound_accumulator < m_critical_wound_threshold)
 		return						(false);
 

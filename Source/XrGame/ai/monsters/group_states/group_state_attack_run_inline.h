@@ -22,7 +22,7 @@ void CStateGroupAttackRunAbstract::initialize()
 	object->path().prepare_builder	();	
 
 	// interception
-	m_intercept_tick = Device.dwTimeGlobal;
+	m_intercept_tick = Device->dwTimeGlobal;
 	m_intercept.setHP(::Random.randF(M_PI*2.f), 0);
 	m_intercept.normalize_safe();
 	if ( !m_intercept.magnitude() )
@@ -33,15 +33,15 @@ void CStateGroupAttackRunAbstract::initialize()
 	m_intercept_length = 3000 + rand()%4000;
 
 	// prediction
-	m_memorized_tick = Device.dwTimeGlobal;
+	m_memorized_tick = Device->dwTimeGlobal;
 	m_memorized_pos  = object->EnemyMan.get_enemy()->Position();
 	m_predicted_vel  = cr_fvector3(0.f);
 
 	// encirclement
-	if ( Device.dwTimeGlobal > m_next_encircle_tick )
+	if ( Device->dwTimeGlobal > m_next_encircle_tick )
 	{
 		m_encircle_time = 2000 + rand()%4000;
-		m_next_encircle_tick = Device.dwTimeGlobal + 8000 + rand()%8000;
+		m_next_encircle_tick = Device->dwTimeGlobal + 8000 + rand()%8000;
 	}
 	else
 	{
@@ -69,9 +69,9 @@ void CStateGroupAttackRunAbstract::initialize()
 TEMPLATE_SPECIALIZATION
 void CStateGroupAttackRunAbstract::execute()
 {	
- 	if ( Device.dwTimeGlobal > m_intercept_tick + m_intercept_length )
+ 	if ( Device->dwTimeGlobal > m_intercept_tick + m_intercept_length )
  	{
- 		m_intercept_tick   = Device.dwTimeGlobal;
+ 		m_intercept_tick   = Device->dwTimeGlobal;
  		m_intercept_length = 2000 + (rand()%4000);
  		m_intercept.setHP(::Random.randF(M_PI*2.f), 0);
  		m_intercept.normalize_safe();
@@ -84,12 +84,12 @@ void CStateGroupAttackRunAbstract::execute()
  	const Fvector enemy_pos = object->EnemyMan.get_enemy()->Position();
  	const int     memory_update_ms = 250;
  
- 	if ( Device.dwTimeGlobal > m_memorized_tick + memory_update_ms )
+ 	if ( Device->dwTimeGlobal > m_memorized_tick + memory_update_ms )
  	{
- 		m_predicted_vel  = (enemy_pos-m_memorized_pos) * (1000.f / (Device.dwTimeGlobal-m_memorized_tick));
+ 		m_predicted_vel  = (enemy_pos-m_memorized_pos) * (1000.f / (Device->dwTimeGlobal-m_memorized_tick));
 		m_predicted_vel.clamp( Fvector().set(10,10,10) );
 
- 		m_memorized_tick = Device.dwTimeGlobal;
+ 		m_memorized_tick = Device->dwTimeGlobal;
  		m_memorized_pos  = enemy_pos;
  	}
  
@@ -160,7 +160,7 @@ void CStateGroupAttackRunAbstract::execute()
 
 	const bool enemy_at_home = object->Home->at_home(enemy_pos);
 
-	if ( !enemy_at_home || Device.dwTimeGlobal < time_state_started + m_encircle_time )
+	if ( !enemy_at_home || Device->dwTimeGlobal < time_state_started + m_encircle_time )
 	{
  		object->path().set_use_dest_orient	(true);
   		object->path().set_dest_direction	(m_encircle_dir);
@@ -193,7 +193,7 @@ void CStateGroupAttackRunAbstract::execute()
 // 
 // 
 // 	//	if ( g_bDogsDirMode )
-// 	if ( Device.dwTimeGlobal-time_state_started < m_max_encircle_time )
+// 	if ( Device->dwTimeGlobal-time_state_started < m_max_encircle_time )
 // 	{
 //  		CMonsterSquad *squad	= monster_squad().get_squad(object);
 //  		if (squad && squad->SquadActive()) {

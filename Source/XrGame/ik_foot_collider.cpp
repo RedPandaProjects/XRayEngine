@@ -46,7 +46,7 @@ struct ik_pick_result
 
 bool ignore_tri( CDB::TRI &tri )
 {
-	SGameMtl* material=GMLib.GetMaterialByIdx( tri.material );
+	SGameMtl* material=GameMaterialLibrary->GetMaterialByIdx( tri.material );
 
 	return	(material->Flags.test( SGameMtl::flPassable )&& 
 			!material->Flags.test( SGameMtl::flActorObstacle )

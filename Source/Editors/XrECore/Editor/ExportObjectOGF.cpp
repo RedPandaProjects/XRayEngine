@@ -8,7 +8,7 @@
 #include "bone.h"
 #include "motion.h"
 
-#ifdef _EDITOR
+#if 1
 #include "std_classes.h"
 #include "ui_main.h"
 #endif
@@ -297,8 +297,8 @@ bool CExportObjectOGF::PrepareMESH(CEditableMesh* MESH)
         SSplit* split	= FindSplit(surf);
         if (0==split)
 		{
-#ifdef _EDITOR
-            SGameMtl* M = GMLib.GetMaterialByID(surf->_GameMtl());
+#if 1
+            SGameMtl* M = GameMaterialLibrary->GetMaterialByID(surf->_GameMtl());
             if (0==M)
 			{
                 ELog.DlgMsg		(mtError,"Surface: '%s' contains undefined game material.",surf->_Name());

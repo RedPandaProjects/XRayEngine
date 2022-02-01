@@ -291,7 +291,7 @@ void CControllerPsyHit::death_glide_end()
 
 	m_object->Hit_Psy		(Actor(), monster->m_tube_damage);
 
-	m_time_last_tube	=	Device.dwTimeGlobal;
+	m_time_last_tube	=	Device->dwTimeGlobal;
 	stop					();
 }
 

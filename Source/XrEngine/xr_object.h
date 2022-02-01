@@ -7,7 +7,7 @@
 #include "irenderable.h"
 #include "icollidable.h"
 #include "engineapi.h"
-#include "device.h"
+#include "Device.h"
 // refs
 //class	ENGINE_API	IRender_Visual;
 class	ENGINE_API	IRender_Sector;
@@ -97,7 +97,7 @@ public:
 	virtual BOOL						Ready				()					{ return Props.net_Ready;	}
 	BOOL								GetTmpPreDestroy		()		const	{ return Props.bPreDestroy;	}
 	void								SetTmpPreDestroy	(BOOL b)			{ Props.bPreDestroy = b;}
-	virtual float						shedule_Scale		()					{ return Device.vCameraPosition.distance_to(Position())/200.f; }
+	virtual float						shedule_Scale		()					{ return Device->vCameraPosition.distance_to(Position())/200.f; }
 	virtual bool						shedule_Needed		()					{return processing_enabled();};
 
 	// Parentness

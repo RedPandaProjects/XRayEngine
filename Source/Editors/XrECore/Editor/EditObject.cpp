@@ -10,7 +10,7 @@
 #include "EditObject.h"
 #include "EditMesh.h"
 
-#ifdef _EDITOR
+#if 1
 	#include "motion.h"
 	#include "bone.h"
 	#include "ImageManager.h"
@@ -19,7 +19,7 @@
 // mimimal bounding box size
 float g_MinBoxSize 	= 0.05f;
 
-#ifdef _EDITOR
+#if 1
 void CSurface::CreateImageData()
 {
 	VERIFY		(0==m_ImageData);
@@ -45,7 +45,7 @@ CEditableObject::CEditableObject(LPCSTR name):
 	m_objectFlags.zero	();
     m_ObjectVersion	= 0;
 
-#ifdef _EDITOR
+#if 1
     vs_SkeletonGeom	= 0;
 #endif
 	m_BBox.invalidate();
@@ -110,7 +110,7 @@ CEditableMesh* CEditableObject::FindMeshByName	(const char* name, CEditableMesh*
 
 void CEditableObject::ClearGeometry ()
 {
-#ifdef _EDITOR
+#if 1
     OnDeviceDestroy();
 #endif
     if (!m_Meshes.empty())
@@ -120,7 +120,7 @@ void CEditableObject::ClearGeometry ()
             xr_delete(*s_it);
     m_Meshes.clear();
     m_Surfaces.clear();
-#ifdef _EDITOR
+#if 1
     // bones
     for(BoneIt b_it=m_Bones.begin(); b_it!=m_Bones.end();b_it++)xr_delete(*b_it);
     m_Bones.clear();
@@ -187,7 +187,7 @@ void CEditableObject::TranslateToWorld(const Fmatrix& parent)
 {
 	EditMeshIt m = m_Meshes.begin();
 	for(;m!=m_Meshes.end();m++) (*m)->Transform( parent );
-#ifdef _EDITOR
+#if 1
 	OnDeviceDestroy();
 #endif
 	UpdateBox();
@@ -241,7 +241,7 @@ void CEditableObject::PrepareOGFDesc(ogf_desc& desc)
     desc.modif_name		= m_ModifName.c_str();
     desc.modif_time		= m_ModifTime;
     desc.build_name		= strconcat(sizeof(tmp),tmp,"\\\\",Core.CompName,"\\",Core.UserName);
-    _ctime32(&desc.build_time);
+    ctime(&desc.build_time);
 }
 
 void CEditableObject::SetVersionToCurrent(BOOL bCreate, BOOL bModif)

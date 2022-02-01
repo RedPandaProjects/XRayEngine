@@ -52,8 +52,8 @@ void CEStats::Show(CGameFont* font)
 
 	// calc FPS & TPS
     CBackend::_stats& DPS = RCache.stat;
-	if (EDevice.fTimeDelta>EPS_S) {
-		float fps  = 1.f/EDevice.fTimeDelta;
+	if (EDevice->fTimeDelta>EPS_S) {
+		float fps  = 1.f/EDevice->fTimeDelta;
 		float fOne = 0.3f;
 		float fInv = 1.f-fOne;
 		fFPS = fInv*fFPS + fOne*fps;

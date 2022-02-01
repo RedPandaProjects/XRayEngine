@@ -134,7 +134,7 @@ void CBastArtefact::UpdateCLChild()
 	//Log						("--- A - CBastArtefact",renderable.xform);
 
 	//современем энергия по немногу тоже уменьшается
-	if(m_fEnergy>0) m_fEnergy -= m_fEnergyDecreasePerTime*Device.fTimeDelta;
+	if(m_fEnergy>0) m_fEnergy -= m_fEnergyDecreasePerTime*Device->fTimeDelta;
 
 	if (getVisible() && m_pPhysicsShell) {
 		if(m_bStrike) {
@@ -171,7 +171,7 @@ void CBastArtefact::UpdateCLChild()
 				dir.y += ::Random.randF(-0.05f, 0.5f);
 		
 				m_pPhysicsShell->applyImpulse(dir, 
-								  m_fStrikeImpulse * Device.fTimeDelta *
+								  m_fStrikeImpulse * Device->fTimeDelta *
 								  m_pPhysicsShell->getMass());
 			}
 			else

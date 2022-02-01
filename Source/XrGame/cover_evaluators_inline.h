@@ -40,7 +40,7 @@ IC	void CCoverEvaluatorBase::initialize				(const Fvector &start_position, bool 
 	m_best_value			= 1000.f;
 	m_loophole				= 0;
 	if (!fake_call)
-		m_last_update		= Device.dwTimeGlobal;
+		m_last_update		= Device->dwTimeGlobal;
 }
 
 IC	void CCoverEvaluatorBase::finalize					()

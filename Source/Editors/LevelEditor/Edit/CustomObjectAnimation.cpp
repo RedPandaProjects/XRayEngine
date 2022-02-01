@@ -38,7 +38,7 @@ void CCustomObject::AnimationUpdate(float t)
     m_Motion->_Evaluate		(t,P,r);
     R.set					(-r.x,-r.y,-r.z);
 
-//    speed					= speed*0.9f+(P.distance_to(GetPosition())/EDevice.fTimeDelta)*0.1f;
+//    speed					= speed*0.9f+(P.distance_to(GetPosition())/EDevice->fTimeDelta)*0.1f;
 //    Log("speed: ",speed);
     SetPosition(P);
     SetRotation(R);
@@ -47,7 +47,7 @@ void CCustomObject::AnimationUpdate(float t)
     UpdateTransform			(true);
     m_CO_Flags.set			(flAutoKey,bAK);
     if (m_CO_Flags.is(flCameraView))
-    	EDevice.m_Camera.Set	(-r.y,-r.x,-r.z,P.x,P.y,P.z);
+    	EDevice->m_Camera.Set	(-r.y,-r.x,-r.z,P.x,P.y,P.z);
 }
 
 void CCustomObject::AnimationOnFrame()
@@ -57,7 +57,7 @@ void CCustomObject::AnimationOnFrame()
     if (Selected()&&m_MotionParams->bPlay)
     {
     	AnimationUpdate			(m_MotionParams->Frame());
-        m_MotionParams->Update	(EDevice.fTimeDelta,1.f,true);
+        m_MotionParams->Update	(EDevice->fTimeDelta,1.f,true);
     }
 }
 
@@ -80,14 +80,14 @@ void CCustomObject::AnimationDrawPath()
             path_points.push_back(T);
         }
 
-        EDevice.SetShader		(EDevice.m_WireShader);
+        EDevice->SetShader		(EDevice->m_WireShader);
         RCache.set_xform_world	(Fidentity);
         if (!path_points.empty())
         	DU_impl.DrawPrimitiveL		(D3DPT_LINESTRIP,path_points.size()-1,path_points.data(),path_points.size(),clr,true,false);
         CEnvelope* E 			= m_Motion->Envelope();
         for (KeyIt k_it=E->keys.begin(); k_it!=E->keys.end(); k_it++){
             m_Motion->_Evaluate	((*k_it)->time,T,r);
-            if (EDevice.m_Camera.GetPosition().distance_to_sqr(T)<50.f*50.f){
+            if (EDevice->m_Camera.GetPosition().distance_to_sqr(T)<50.f*50.f){
                 DU_impl.DrawCross	(T,0.1f,0.1f,0.1f, 0.1f,0.1f,0.1f, clr,false);
                 DU_impl.OutText		(T,xr_string().sprintf("K: %3.3f",(*k_it)->time).c_str(),0xffffffff,0x00000000);
             }
@@ -167,7 +167,7 @@ void CCustomObject::OnDrawUI()
                 m_MotionParams->max_t = mx;
                 m_Motion->SetParam(m_MotionParams->min_t * 30.f, m_MotionParams->max_t * 30.f, 30.f);
             }
-            EDevice.seqDrawUI.Remove(this);
+            EDevice->seqDrawUI.Remove(this);
             m_ButtonId = 0;
         }
         UIPropertiesModal::Update();
@@ -188,7 +188,7 @@ void CCustomObject::OnDrawUI()
                 m_MotionParams->max_t = mx;
                 m_Motion->SetParam(m_MotionParams->min_t * 30.f, m_MotionParams->max_t * 30.f, 30.f);
             }
-            EDevice.seqDrawUI.Remove(this);
+            EDevice->seqDrawUI.Remove(this);
             m_ButtonId = 0;
         }
         UIPropertiesModal::Update();
@@ -217,7 +217,7 @@ void 	CCustomObject::OnMotionCommandsClick(ButtonValue* value, bool& bModif, boo
 		PHelper().CreateFloat	(items,"Scale",			&m_ScaleFactor, 	-1000.f, 1000.f);
         UIPropertiesModal::Show(items);
         m_ButtonId = 2;
-        EDevice.seqDrawUI.Add(this);
+        EDevice->seqDrawUI.Add(this);
     }break;
     case 3:{
         m_ButtonId = 3;
@@ -230,7 +230,7 @@ void 	CCustomObject::OnMotionCommandsClick(ButtonValue* value, bool& bModif, boo
 		PHelper().CreateFloat	(items,"Speed (m/sec)", &m_Speed, 		0.f, 100.f);
         UIPropertiesModal::Show(items);
         m_ButtonId = 3;
-        EDevice.seqDrawUI.Add(this);
+        EDevice->seqDrawUI.Add(this);
     }break;
     case 4:{
     	float mn,mx;
@@ -251,7 +251,7 @@ void 	CCustomObject::OnMotionFilesClick(ButtonValue* value, bool& bModif, bool& 
     xr_string fn;
 	switch(B->btn_num){
     case 0:
-        if(EFS.GetOpenName(EDevice.m_hWnd,"$game_anims$", fn)){
+        if(EFS.GetOpenName(EDevice->m_hWnd,"$game_anims$", fn)){
             m_Motion->LoadMotion(fn.c_str());
             m_MotionParams->Set	(m_Motion);
             AnimationUpdate		(m_MotionParams->Frame());

@@ -1,5 +1,4 @@
-#ifndef xrCoreH
-#define xrCoreH
+
 #pragma once
 
 #include "Config.h"
@@ -319,5 +318,3 @@ public:
 
 extern XRCORE_API xrCore Core;
 #include "Bone.h"
-#endif
-

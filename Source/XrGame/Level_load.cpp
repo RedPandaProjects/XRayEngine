@@ -109,7 +109,7 @@ BOOL CLevel::Load_GameSpecific_After()
 				Sounds_Random.push_back	(ref_sound());
 				Sound->create			(Sounds_Random.back(),*I->first,st_Effect,sg_SourceType);
 			}
-			Sounds_Random_dwNextTime= Device.TimerAsync	()	+ 50000;
+			Sounds_Random_dwNextTime= Device->TimerAsync	()	+ 50000;
 			Sounds_Random_Enabled	= FALSE;
 		}
 
@@ -184,14 +184,14 @@ void CLevel::Load_GameSpecific_CFORM	( CDB::TRI* tris, u32 count )
 {
 	typedef xr_vector<translation_pair>	ID_INDEX_PAIRS;
 	ID_INDEX_PAIRS						translator;
-	translator.reserve					(GMLib.CountMaterial());
-	u16									default_id = (u16)GMLib.GetMaterialIdx("default");
+	translator.reserve					(GameMaterialLibrary->CountMaterial());
+	u16									default_id = (u16)GameMaterialLibrary->GetMaterialIdx("default");
 	translator.push_back				(translation_pair(u32(-1),default_id));
 
 	u16									index = 0, static_mtl_count = 1;
 	int max_ID							= 0;
 	int max_static_ID					= 0;
-	for (GameMtlIt I=GMLib.FirstMaterial(); GMLib.LastMaterial()!=I; ++I, ++index) {
+	for (GameMtlIt I=GameMaterialLibrary->FirstMaterial(); GameMaterialLibrary->LastMaterial()!=I; ++I, ++index) {
 		if (!(*I)->Flags.test(SGameMtl::flDynamic)) {
 			++static_mtl_count;
 			translator.push_back		(translation_pair((*I)->GetID(),index));
@@ -209,7 +209,7 @@ void CLevel::Load_GameSpecific_CFORM	( CDB::TRI* tris, u32 count )
 			ID_INDEX_PAIRS::iterator	i = std::find(translator.begin(),translator.end(),(u16)(*I).material);
 			if (i != translator.end()) {
 				(*I).material			= (*i).m_index;
-				SGameMtl* mtl			= GMLib.GetMaterialByIdx	((*i).m_index);
+				SGameMtl* mtl			= GameMaterialLibrary->GetMaterialByIdx	((*i).m_index);
 				(*I).suppress_shadows	= mtl->Flags.is(SGameMtl::flSuppressShadows);
 				(*I).suppress_wm		= mtl->Flags.is(SGameMtl::flSuppressWallmarks);
 				continue;
@@ -228,7 +228,7 @@ void CLevel::Load_GameSpecific_CFORM	( CDB::TRI* tris, u32 count )
 			ID_INDEX_PAIRS::iterator	i = std::lower_bound(translator.begin(),translator.end(),(u16)(*I).material);
 			if ((i != translator.end()) && ((*i).m_id == (*I).material)) {
 				(*I).material			= (*i).m_index;
-				SGameMtl* mtl			= GMLib.GetMaterialByIdx	((*i).m_index);
+				SGameMtl* mtl			= GameMaterialLibrary->GetMaterialByIdx	((*i).m_index);
 				(*I).suppress_shadows	= mtl->Flags.is(SGameMtl::flSuppressShadows);
 				(*I).suppress_wm		= mtl->Flags.is(SGameMtl::flSuppressWallmarks);
 				continue;

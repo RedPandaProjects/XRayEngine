@@ -365,7 +365,7 @@ void CStalkerActionDangerInDirectionSearch::execute							()
 			if (object().memory().danger().selected()->object())
 				object().memory().enable(object().memory().danger().selected()->object(),false);
 			else
-				object().memory().danger().time_line(Device.dwTimeGlobal);
+				object().memory().danger().time_line(Device->dwTimeGlobal);
 		}
 	}
 

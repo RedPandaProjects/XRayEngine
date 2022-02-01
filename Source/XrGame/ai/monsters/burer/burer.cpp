@@ -284,7 +284,7 @@ void CBurer::UpdateGraviObject()
 		return;
 	}
 
-	float dt = float(Device.dwTimeGlobal - m_gravi_object.time_last_update);
+	float dt = float(Device->dwTimeGlobal - m_gravi_object.time_last_update);
 	float dist = dt * float(m_gravi.speed)/1000.f;
 		
 	if (dist < m_gravi.step) return;
@@ -336,7 +336,7 @@ void CBurer::UpdateGraviObject()
 	}
 																								
 	m_gravi_object.cur_pos				= new_pos;
-	m_gravi_object.time_last_update		= Device.dwTimeGlobal;
+	m_gravi_object.time_last_update		= Device->dwTimeGlobal;
 
 	// ---------------------------------------------------------------------
 	// draw particle
@@ -423,7 +423,7 @@ void	CBurer::Hit								(SHit* pHDS)
 {
 	if ( m_shield_active							&& 
 		 pHDS->hit_type == ALife::eHitTypeFireWound	&& 
-		 Device.dwFrame != last_hit_frame				) 
+		 Device->dwFrame != last_hit_frame				) 
 	{
 		// вычислить позицию и направленность партикла
 		Fmatrix pos; 
@@ -442,7 +442,7 @@ void	CBurer::Hit								(SHit* pHDS)
 		inherited::Hit								(pHDS);
 	}
 
-	last_hit_frame								=	Device.dwFrame;
+	last_hit_frame								=	Device->dwFrame;
 }
 
 void CBurer::Die(CObject* who)

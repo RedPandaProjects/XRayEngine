@@ -199,13 +199,13 @@ void stalker_movement_params::actualize_loophole					() const
 {
 	if (m_selected_loophole_actual) {
 		if (!m_cover || !m_cover_selected_loophole || m_cover->description()->loophole(m_cover_selected_loophole->id())) {
-			if (m_last_selection_time + time_before_selection > Device.dwTimeGlobal)
+			if (m_last_selection_time + time_before_selection > Device->dwTimeGlobal)
 				return;
 		}
 	}
 
 	m_selected_loophole_actual	= true;
-	m_last_selection_time		= Device.dwTimeGlobal;
+	m_last_selection_time		= Device->dwTimeGlobal;
 
 	float						value;
 	Fvector						position = m_manager->position_to_cover_from();

@@ -4,7 +4,7 @@
 #include "DetailManager.h"
 #include "cl_intersect.h"
 
-#ifdef _EDITOR
+#ifdef REDITOR
 #	include "scene.h"
 #	include "sceneobject.h"
 #	include "../../Editors/XrETools/ETools.h"
@@ -40,7 +40,7 @@ IC bool		InterpolateAndDither(float* alpha255,	u32 x, u32 y, u32 sx, u32 sy, u32
 	return	c	> dither[col][row];
 }
 
-#ifndef _EDITOR
+#ifndef REDITOR
 #ifdef	DEBUG
 //#include "../Public/DebugRender.h"
 #include "dxDebugRender.h"
@@ -83,7 +83,7 @@ void		CDetailManager::cache_Decompress(Slot* S)
 	Fvector		bC,bD;
 	D.vis.box.get_CD	(bC,bD);
 
-#ifdef _EDITOR
+#ifdef REDITOR
 	ETOOLS::box_options	(CDB::OPT_FULL_TEST);
 	// Select polygons
 	SBoxPickInfoVec		pinf;
@@ -185,14 +185,14 @@ void		CDetailManager::cache_Decompress(Slot* S)
 			float		r_u,r_v,r_range;
 			for (u32 tid=0; tid<triCount; tid++)
 			{
-#ifdef _EDITOR
+#ifdef REDITOR
 				Fvector verts[3];
 				SBoxPickInfo& I=pinf[tid];
 				for (int k=0; k<(int)I.inf.size(); k++){
 					VERIFY(I.s_obj);
-RDEVICE.Statistic->TEST0.Begin	();
+Device->Statistic->TEST0.Begin	();
 					I.e_obj->GetFaceWorld(I.s_obj->_Transform(),I.e_mesh,I.inf[k].id,verts);
-RDEVICE.Statistic->TEST0.End		();
+Device->Statistic->TEST0.End		();
 					if (CDB::TestRayTri(Item_P,dir,verts,r_u,r_v,r_range,TRUE))
 					{
 						if (r_range>=0)	{
@@ -203,7 +203,7 @@ RDEVICE.Statistic->TEST0.End		();
 				}
 #else
 				CDB::TRI&	T		= tris[xrc.r_begin()[tid].id];
-				SGameMtl* mtl		= GMLib.GetMaterialByIdx(T.material);
+				SGameMtl* mtl		= GameMaterialLibrary->GetMaterialByIdx(T.material);
 				if(mtl->Flags.test(SGameMtl::flPassable))	
 					continue;
 
@@ -243,7 +243,7 @@ RDEVICE.Statistic->TEST0.End		();
 			ItemBB.xform					(Dobj->bv_bb,mXform);
 			Bounds.merge					(ItemBB);
 
-#ifndef _EDITOR
+#ifndef REDITOR
 #ifdef		DEBUG
 			if(det_render_debug)
 				draw_obb(  mXform, color_rgba		(255,0,0,255) );//Fmatrix().mul_43( mXform, Fmatrix().scale(5,5,5) )

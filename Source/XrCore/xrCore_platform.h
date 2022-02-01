@@ -1,5 +1,3 @@
-#ifndef XRCORE_PLATFORM_H
-#define XRCORE_PLATFORM_H
 #pragma once
 
 #define VC_EXTRALEAN				// Exclude rarely-used stuff from Windows headers
@@ -46,5 +44,3 @@
 	#include <windowsx.h>
 #endif
 #pragma warning(pop)
-
-#endif

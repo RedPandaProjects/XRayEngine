@@ -178,7 +178,7 @@ void CActor::AddGameNews_deffered	 (GAME_NEWS_DATA& news_data, u32 delay)
 	//*d = news_data;
 	m_defferedMessages.push_back( SDefNewsMsg() );
 	m_defferedMessages.back().news_data = d;
-	m_defferedMessages.back().time = Device.dwTimeGlobal+delay;
+	m_defferedMessages.back().time = Device->dwTimeGlobal+delay;
 	std::sort(m_defferedMessages.begin(), m_defferedMessages.end() );
 }
 
@@ -187,7 +187,7 @@ void CActor::UpdateDefferedMessages()
 	while( m_defferedMessages.size() )
 	{
 		SDefNewsMsg& M = m_defferedMessages.back();
-		if(M.time <=Device.dwTimeGlobal)
+		if(M.time <=Device->dwTimeGlobal)
 		{
 			AddGameNews					(*M.news_data);		
 			xr_delete					(M.news_data);

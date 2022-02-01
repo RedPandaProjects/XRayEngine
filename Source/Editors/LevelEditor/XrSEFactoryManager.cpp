@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "..\..\XrAPI\xrGameManager.h"
-XrGameManager* g_SEFactoryManager = nullptr;
+XrSEFactoryManager* g_SEFactoryManager = nullptr;
 
-XrGameManager::XrGameManager()
+XrSEFactoryManager::XrSEFactoryManager()
 {
 	auto a = xrGameManager::GetGame();
 	const char* Name = "XrSE_Factory.dll";
@@ -29,19 +29,19 @@ XrGameManager::XrGameManager()
 	m_pFInitialize();
 }
 
-XrGameManager::~XrGameManager()
+XrSEFactoryManager::~XrSEFactoryManager()
 {
 	m_pFDestroy();
 	FreeLibrary(m_Module);
 }
 
 
-ISE_Abstract* XrGameManager::create_entity(LPCSTR section)
+ISE_Abstract* XrSEFactoryManager::create_entity(LPCSTR section)
 {
 	return m_pFCreateEntity(section);
 }
 
-void XrGameManager::destroy_entity(ISE_Abstract*& abstract)
+void XrSEFactoryManager::destroy_entity(ISE_Abstract*& abstract)
 {
 	m_pFDestroyEntity(abstract);
 }

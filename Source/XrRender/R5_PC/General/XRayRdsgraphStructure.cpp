@@ -34,12 +34,12 @@ float		r_ssaGLOD_start, r_ssaGLOD_end;
 ICF float CalcSSA(float& distSQ, Fvector& C, XRayRenderVisual* V)
 {
 	float R = V->Vis.sphere.R + 0;
-	distSQ = Device.vCameraPosition.distance_to_sqr(C) + EPS;
+	distSQ = Device->vCameraPosition.distance_to_sqr(C) + EPS;
 	return R / distSQ;
 }
 ICF float CalcSSA(float& distSQ, Fvector& C, float R)
 {
-	distSQ = Device.vCameraPosition.distance_to_sqr(C) + EPS;
+	distSQ = Device->vCameraPosition.distance_to_sqr(C) + EPS;
 	return R / distSQ;
 }
 ICF float calcLOD(float ssa, float R)
@@ -52,8 +52,8 @@ IC bool IsValuableToRender(XRayRenderVisual* pVisual, bool sm)
 {
 	auto GetDistFromCamera = [](const Fvector& from_position)
 	{
-		float distance = Device.vCameraPosition.distance_to(from_position);
-		float fov_K = 70.f / Device.fFOV;
+		float distance = Device->vCameraPosition.distance_to(from_position);
+		float fov_K = 70.f / Device->fFOV;
 		float adjusted_distane = distance / fov_K;
 
 		return adjusted_distane;
@@ -124,8 +124,8 @@ IC bool IsValuableToRenderDyn(XRayRenderVisual* pVisual, Fmatrix& transform_matr
 {
 	auto GetDistFromCamera = [](const Fvector& from_position)
 	{
-		float distance = Device.vCameraPosition.distance_to(from_position);
-		float fov_K = 70.f / Device.fFOV;
+		float distance = Device->vCameraPosition.distance_to(from_position);
+		float fov_K = 70.f / Device->fFOV;
 		float adjusted_distane = distance / fov_K;
 
 		return adjusted_distane;

@@ -3,7 +3,7 @@
 
 #include "ResourceManager.h"
 
-#ifndef _EDITOR
+#ifndef REDITOR
 #include "../../xrEngine/render.h"
 #endif
 
@@ -81,7 +81,7 @@ void CTexture::apply_load	(u32 dwStage)	{
 
 void CTexture::apply_theora	(u32 dwStage)
 {
-	if (pTheora->Update(m_play_time!=0xFFFFFFFF?m_play_time:RDEVICE.dwTimeContinual))
+	if (pTheora->Update(m_play_time!=0xFFFFFFFF?m_play_time:Device->dwTimeContinual))
     {
 		R_ASSERT(D3DRTYPE_TEXTURE == pSurface->GetType());
 		ID3DTexture2D*	T2D		= (ID3DTexture2D*)pSurface;
@@ -124,7 +124,7 @@ void CTexture::apply_avi	(u32 dwStage)
 };
 void CTexture::apply_seq	(u32 dwStage)	{
 	// SEQ
-	u32	frame		=RDEVICE.dwTimeContinual/seqMSPF; //RDEVICE.dwTimeGlobal
+	u32	frame		=Device->dwTimeContinual/seqMSPF; //Device->dwTimeGlobal
 	u32	frame_data	= seqDATA.size();
 	if (flags.seqCycles)		{
 		u32	frame_id	= frame%(frame_data*2);
@@ -163,7 +163,7 @@ void CTexture::Load		()
 
 	Preload							();
 //#ifndef		DEDICATED_SERVER
-#ifndef _EDITOR
+#ifndef REDITOR
 	if (!g_dedicated_server)
 #endif
 	{
@@ -184,7 +184,7 @@ void CTexture::Load		()
 			{
 				flags.MemoryUsage	= pTheora->Width(true)*pTheora->Height(true)*4;
 				BOOL bstop_at_end	= (0!=strstr(cName.c_str(), "intro\\")) || (0!=strstr(cName.c_str(), "outro\\"));
-				pTheora->Play		(!bstop_at_end, RDEVICE.dwTimeContinual);
+				pTheora->Play		(!bstop_at_end, Device->dwTimeContinual);
 
 				// Now create texture
 				ID3DTexture2D*	pTexture = 0;
@@ -333,7 +333,7 @@ void CTexture::desc_update	()
 
 void CTexture::video_Play		(BOOL looped, u32 _time)	
 { 
-	if (pTheora) pTheora->Play	(looped,(_time!=0xFFFFFFFF)?(m_play_time=_time):RDEVICE.dwTimeContinual);
+	if (pTheora) pTheora->Play	(looped,(_time!=0xFFFFFFFF)?(m_play_time=_time):Device->dwTimeContinual);
 }
 
 void CTexture::video_Pause		(BOOL state)

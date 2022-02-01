@@ -3,14 +3,14 @@
 #pragma once
 
 // Forward references
-struct	ENGINE_API	vertRender;
-struct	ENGINE_API	vertBoned1W;
-struct	ENGINE_API	vertBoned2W;
-struct	ENGINE_API	vertBoned3W;
-struct	ENGINE_API	vertBoned4W;
-class	ENGINE_API	CBoneInstance;
+struct		vertRender;
+struct		vertBoned1W;
+struct		vertBoned2W;
+struct		vertBoned3W;
+struct		vertBoned4W;
+class		CBoneInstance;
 class	light;
-class	ENGINE_API CRenderDevice;
+class	 XrDeviceInterface;
 
 // Skinning processor specific functions
 // NOTE: Destination memory is uncacheble write-combining (AGP), so avoid non-linear writes
@@ -23,7 +23,7 @@ typedef void		xrSkin2W		(vertRender* D, vertBoned2W* S, u32 vCount, CBoneInstanc
 typedef void		xrSkin3W		(vertRender* D, vertBoned3W* S, u32 vCount, CBoneInstance* Bones);
 typedef void		xrSkin4W		(vertRender* D, vertBoned4W* S, u32 vCount, CBoneInstance* Bones);
 
-typedef void		xrPLC_calc3		(int& c0, int& c1, int& c2, CRenderDevice& Device, Fvector* P, Fvector& N, light* L, float energy, Fvector& O);
+typedef void		xrPLC_calc3		(int& c0, int& c1, int& c2, XrDeviceInterface& Device, Fvector* P, Fvector& N, light* L, float energy, Fvector& O);
 
 #pragma pack(push,8)
 struct xrDispatchTable

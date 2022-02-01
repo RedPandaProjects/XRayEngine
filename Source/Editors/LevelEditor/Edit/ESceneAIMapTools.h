@@ -105,9 +105,9 @@ protected:
 	SAINode* 			GetNode					(Fvector vAt, bool bIgnoreConstraints);
 	void				UpdateLinks				(SAINode* N, bool bIgnoreConstraints);
 
-	void 				UnpackPosition			(Fvector& Pdest, const NodePosition& Psrc, Fbox& bb, SAIParams& params);
+	void 				UnpackPosition			(Fvector& Pdest, const SNodePositionOld& Psrc, Fbox& bb, SAIParams& params);
 	u32 				UnpackLink				(u32& L);
-	void				PackPosition			(NodePosition& Dest, Fvector& Src, Fbox& bb, SAIParams& params);
+	void				PackPosition			(SNodePositionOld& Dest, Fvector& Src, Fbox& bb, SAIParams& params);
 
     void				EnumerateNodes			();
     void				DenumerateNodes			();

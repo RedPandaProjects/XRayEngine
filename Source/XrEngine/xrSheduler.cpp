@@ -90,8 +90,8 @@ void CSheduler::internal_Register	(ISheduled* O, BOOL RT)
 	{
 		// Fill item structure
 		Item						TNext;
-		TNext.dwTimeForExecute		= Device.dwTimeGlobal;
-		TNext.dwTimeOfLastExecute	= Device.dwTimeGlobal;
+		TNext.dwTimeForExecute		= Device->dwTimeGlobal;
+		TNext.dwTimeOfLastExecute	= Device->dwTimeGlobal;
 		TNext.Object				= O;
 		TNext.scheduled_name		= O->shedule_Name();
 		O->shedule.b_RT				= TRUE;
@@ -100,8 +100,8 @@ void CSheduler::internal_Register	(ISheduled* O, BOOL RT)
 	} else {
 		// Fill item structure
 		Item						TNext;
-		TNext.dwTimeForExecute		= Device.dwTimeGlobal;
-		TNext.dwTimeOfLastExecute	= Device.dwTimeGlobal;
+		TNext.dwTimeForExecute		= Device->dwTimeGlobal;
+		TNext.dwTimeOfLastExecute	= Device->dwTimeGlobal;
 		TNext.Object				= O;
 		TNext.scheduled_name		= O->shedule_Name();
 		O->shedule.b_RT				= FALSE;
@@ -294,7 +294,7 @@ void CSheduler::Pop					()
 void CSheduler::ProcessStep			()
 {
 	// Normal priority
-	u32		dwTime					= Device.dwTimeGlobal;
+	u32		dwTime					= Device->dwTimeGlobal;
 	CTimer							eTimer;
 	for (int i=0;!Items.empty() && Top().dwTimeForExecute < dwTime; ++i) {
 		u32		delta_ms			= dwTime - Top().dwTimeForExecute;
@@ -325,9 +325,9 @@ void CSheduler::ProcessStep			()
 		Pop							();
 
 		// Real update call
-		// Msg						("------- %d:",Device.dwFrame);
+		// Msg						("------- %d:",Device->dwFrame);
 #ifdef DEBUG
-		T.Object->dbg_startframe	= Device.dwFrame;
+		T.Object->dbg_startframe	= Device->dwFrame;
 		eTimer.Start				();
 //		LPCSTR		_obj_name		= T.Object->shedule_Name().c_str();
 #endif // DEBUG
@@ -387,7 +387,7 @@ void CSheduler::ProcessStep			()
 		if ((i % 3) != (3 - 1))
 			continue;
 
-		if (Device.dwPrecacheFrame==0 && CPU::QPC() > cycles_limit)		
+		if (Device->dwPrecacheFrame==0 && CPU::QPC() > cycles_limit)		
 		{
 			// we have maxed out the load - increase heap
 			psShedulerTarget		+= (psShedulerReaction * 3);
@@ -416,20 +416,20 @@ void CSheduler::Switch				()
 */
 void CSheduler::Update				()
 {
-	R_ASSERT						(Device.Statistic);
+	R_ASSERT						(Device->Statistic);
 	// Initialize
-	Device.Statistic->Sheduler.Begin();
+	Device->Statistic->Sheduler.Begin();
 	cycles_start					= CPU::QPC			();
 	cycles_limit					= CPU::qpc_freq * u64 (iCeil(psShedulerCurrent)) / 1000i64 + cycles_start;
 	internal_Registration			();
 	g_bSheduleInProgress			= TRUE;
 
 #ifdef DEBUG_SCHEDULER
-	Msg								("SCHEDULER: PROCESS STEP %d",Device.dwFrame);
+	Msg								("SCHEDULER: PROCESS STEP %d",Device->dwFrame);
 #endif // DEBUG_SCHEDULER
 	// Realtime priority
 	m_processing_now				= true;
-	u32	dwTime						= Device.dwTimeGlobal;
+	u32	dwTime						= Device->dwTimeGlobal;
 	for (u32 it=0; it<ItemsRT.size(); it++)
 	{
 		Item&	T					= ItemsRT[it];
@@ -447,8 +447,8 @@ void CSheduler::Update				()
 
 		u32	Elapsed					= dwTime-T.dwTimeOfLastExecute;
 #ifdef DEBUG
-		VERIFY						(T.Object->dbg_startframe != Device.dwFrame);
-		T.Object->dbg_startframe	= Device.dwFrame;
+		VERIFY						(T.Object->dbg_startframe != Device->dwFrame);
+		T.Object->dbg_startframe	= Device->dwFrame;
 #endif
 		T.Object->shedule_Update	(Elapsed);
 		T.dwTimeOfLastExecute		= dwTime;
@@ -458,14 +458,14 @@ void CSheduler::Update				()
 	ProcessStep						();
 	m_processing_now				= false;
 #ifdef DEBUG_SCHEDULER
-	Msg								("SCHEDULER: PROCESS STEP FINISHED %d",Device.dwFrame);
+	Msg								("SCHEDULER: PROCESS STEP FINISHED %d",Device->dwFrame);
 #endif // DEBUG_SCHEDULER
 	clamp							(psShedulerTarget,3.f,66.f);
 	psShedulerCurrent				= 0.9f*psShedulerCurrent + 0.1f*psShedulerTarget;
-	Device.Statistic->fShedulerLoad	= psShedulerCurrent;
+	Device->Statistic->fShedulerLoad	= psShedulerCurrent;
 
 	// Finalize
 	g_bSheduleInProgress			= FALSE;
 	internal_Registration			();
-	Device.Statistic->Sheduler.End	();
+	Device->Statistic->Sheduler.End	();
 }

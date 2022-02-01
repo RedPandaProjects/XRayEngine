@@ -91,8 +91,8 @@ CEnvironment::CEnvironment	() :
 	PerlinNoise1D->SetOctaves(2);
 	PerlinNoise1D->SetAmplitude(0.66666f);
 
-//	tsky0					= Device.Resources->_CreateTexture("$user$sky0");
-//	tsky1					= Device.Resources->_CreateTexture("$user$sky1");
+//	tsky0					= Device->Resources->_CreateTexture("$user$sky0");
+//	tsky1					= Device->Resources->_CreateTexture("$user$sky1");
 
 	string_path				file_name;
 	m_ambients_config		=
@@ -462,7 +462,7 @@ void CEnvironment::lerp		(float& current_weight)
 	EM.hemi_color.set		( 0,0,0 );
 	EM.use_flags.zero		();
 
-	Fvector	view			= Device.vCameraPosition;
+	Fvector	view			= Device->vCameraPosition;
 	float	mpower			= 0;
 	for (auto mit=Modifiers.begin(); mit!=Modifiers.end(); mit++)
 		mpower				+= EM.sum(**mit,view);
@@ -473,8 +473,9 @@ void CEnvironment::lerp		(float& current_weight)
 
 void CEnvironment::OnFrame()
 {
+	return;
 #ifdef _EDITOR
-	SetGameTime				(fGameTime+Device.fTimeDelta*fTimeFactor,fTimeFactor);
+	SetGameTime				(fGameTime+Device->fTimeDelta*fTimeFactor,fTimeFactor);
     if (fsimilar(ed_to_time,DAY_LENGTH)&&fsimilar(ed_from_time,0.f)){
 	    if (fGameTime>DAY_LENGTH)	fGameTime-=DAY_LENGTH;
     }else{
@@ -515,7 +516,7 @@ void CEnvironment::OnFrame()
 #endif // #ifndef MASTER_GOLD
 
 	PerlinNoise1D->SetFrequency		(wind_gust_factor*MAX_NOISE_FREQ);
-	wind_strength_factor			= clampr(PerlinNoise1D->GetContinious(Device.fTimeGlobal)+0.5f,0.f,1.f); 
+	wind_strength_factor			= clampr(PerlinNoise1D->GetContinious(Device->fTimeGlobal)+0.5f,0.f,1.f); 
 
     shared_str l_id						=	(current_weight<0.5f)?Current[0]->lens_flare_id:Current[1]->lens_flare_id;
 	eff_LensFlare->OnFrame				(l_id);

@@ -69,7 +69,7 @@ void EParticlesObject::OnFrame()
     Fbox bb; GetBox(bb);
     if (::Render->occ_visible(bb))
 	    if (m_Particles)
-        	m_Particles->OnFrame(EDevice.dwTimeDelta);
+        	m_Particles->OnFrame(EDevice->dwTimeDelta);
 }
 //----------------------------------------------------
 
@@ -82,7 +82,7 @@ void EParticlesObject::Render(int priority, bool strictB2F)
 	    if (1==priority){
             if (false==strictB2F){
                 // draw emitter
-	    		EDevice.SetShader(EDevice.m_WireShader);
+	    		EDevice->SetShader(EDevice->m_WireShader);
                 if( !Selected() )
     				DU_impl.DrawCross	(GetPosition(),0.30f,0.1f,0.3f,0.3f,0.3f,0.3f,0xFFFFEBAA,false);
                     
@@ -97,7 +97,7 @@ void EParticlesObject::Render(int priority, bool strictB2F)
             }
         }
         if (m_Particles)
-        	::Render->model_Render(dynamic_cast<IRenderVisual*>(m_Particles), _Transform(),priority,strictB2F,1.f);
+        	::RImplementation.model_Render(dynamic_cast<IRenderVisual*>(m_Particles), _Transform(),priority,strictB2F,1.f);
     }
 }
 //----------------------------------------------------

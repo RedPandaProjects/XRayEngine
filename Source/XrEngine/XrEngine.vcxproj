@@ -35,7 +35,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
@@ -341,6 +341,10 @@
     <ClInclude Include="trivial_encryptor.h" />
     <ClInclude Include="vis_common.h" />
     <ClInclude Include="WaveForm.h" />
+    <ClInclude Include="XrDeviceInterface.h" />
+    <ClInclude Include="XrEditorSceneInterface.h" />
+    <ClInclude Include="XrGameEditorInterface.h" />
+    <ClInclude Include="XrGameMaterialLibraryInterface.h" />
     <ClInclude Include="xrHemisphere.h" />
     <ClInclude Include="xrImage_Resampler.h" />
     <ClInclude Include="xrLevel.h" />
@@ -364,6 +368,7 @@
     <ClCompile Include="ai_script_lua_debug.cpp" />
     <ClCompile Include="ai_script_lua_extension.cpp" />
     <ClCompile Include="bone.cpp" />
+    <ClCompile Include="BoneEditor.cpp" />
     <ClCompile Include="CameraBase.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="cf_dynamic_mesh.cpp" />
@@ -445,7 +450,6 @@
     <ClCompile Include="fmesh.cpp" />
     <ClCompile Include="GameFont.cpp" />
     <ClCompile Include="GameMtlLib.cpp" />
-    <ClCompile Include="GameMtlLib_Engine.cpp" />
     <ClCompile Include="ICollidable.cpp" />
     <ClCompile Include="IGame_Level.cpp" />
     <ClCompile Include="IGame_Level_check_textures.cpp" />
@@ -487,6 +491,10 @@
     <ClCompile Include="Text_Console_WndProc.cpp" />
     <ClCompile Include="thunderbolt.cpp" />
     <ClCompile Include="tntQAVI.cpp" />
+    <ClCompile Include="XrDeviceInterface.cpp" />
+    <ClCompile Include="XrEditorSceneInterface.cpp" />
+    <ClCompile Include="XrGameEditorInterface.cpp" />
+    <ClCompile Include="XrGameMaterialLibraryInterface.cpp" />
     <ClCompile Include="xrHemisphere.cpp" />
     <ClCompile Include="xrImage_Resampler.cpp" />
     <ClCompile Include="xrSASH.cpp" />

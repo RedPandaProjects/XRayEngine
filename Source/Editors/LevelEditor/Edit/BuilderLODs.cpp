@@ -20,7 +20,7 @@ DEFINE_VECTOR(Fvector4,Fvector4Vec,Fvector4It);
 BOOL GetPointColor(SPickQuery::SResult* R, u32& alpha)
 {
     CSurface* surf			= R->e_mesh->GetSurfaceByFaceID(R->tag); VERIFY(surf);
-    Shader_xrLC* c_sh		= EDevice.ShaderXRLC.Get(surf->_ShaderXRLCName());
+    Shader_xrLC* c_sh		= EDevice->ShaderXRLC.Get(surf->_ShaderXRLCName());
     if (!c_sh->flags.bRendering) return FALSE;
     const Fvector2*			cuv[3];
     R->e_mesh->GetFaceTC	(R->tag,cuv);
@@ -127,7 +127,7 @@ int	SceneBuilder::BuildObjectLOD(const Fmatrix& parent, CEditableObject* E, int 
     // preload textures
     for (SurfaceIt surf_it=E->Surfaces().begin(); surf_it!=E->Surfaces().end(); surf_it++){
     	CSurface* surf			= *surf_it;
-        Shader_xrLC* c_sh		= EDevice.ShaderXRLC.Get(surf->_ShaderXRLCName());
+        Shader_xrLC* c_sh		= EDevice->ShaderXRLC.Get(surf->_ShaderXRLCName());
         if (!c_sh->flags.bRendering) continue;
         if (0==surf->m_ImageData)surf->CreateImageData();
     }    

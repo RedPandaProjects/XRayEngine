@@ -17,6 +17,7 @@
 #include "iniStreamImpl.h"
 #include "../XrEcore/Editor/EditObject.h"
 #include "../XrETools/ETools.h"
+#include "XrGameManager.h"
 
 //----------------------------------------------------
 #define SPAWNPOINT_CHUNK_VERSION		0xE411
@@ -80,7 +81,7 @@ void CLE_Visual::OnDrawUI()
             source->visual_name = name;
             visual = ::Render->model_Create(source->visual_name.c_str());
         }
-        EDevice.seqDrawUI.Remove(this);
+        EDevice->seqDrawUI.Remove(this);
     }
     UIChooseForm::Update();
 }
@@ -101,7 +102,7 @@ void CLE_Visual::OnChangeVisual	()
               if (mr == mrYes)
               {
                   UIChooseForm::SelectItem(smVisual, 1);
-                  EDevice.seqDrawUI.Add(this);
+                  EDevice->seqDrawUI.Add(this);
               }
 
               g_tmp_lock = false;
@@ -249,7 +250,7 @@ void CSpawnPoint::CLE_Motion::PlayMotion()
 //------------------------------------------------------------------------------
 void CSpawnPoint::SSpawnData::Create(LPCSTR _entity_ref)
 {
-    m_Data 	= g_SEFactoryManager->create_entity	(_entity_ref);
+    m_Data 	= g_XrGameManager->CreateFromSection	(_entity_ref);
     if (m_Data){
     	m_Data->set_name	(_entity_ref);
         if (m_Data->visual())
@@ -284,7 +285,7 @@ void CSpawnPoint::SSpawnData::Create(LPCSTR _entity_ref)
 
 void CSpawnPoint::SSpawnData::Destroy()
 {
-    g_SEFactoryManager->destroy_entity		(m_Data);
+    g_XrGameManager->Destroy		(m_Data);
     xr_delete			(m_Visual);
     xr_delete			(m_Motion);
 }
@@ -460,13 +461,13 @@ void CSpawnPoint::SSpawnData::FillProp(LPCSTR pref, PropItemVec& items)
 void CSpawnPoint::SSpawnData::Render(bool bSelected, const Fmatrix& parent,int priority, bool strictB2F)
 {
 	if (m_Visual&&m_Visual->visual)
-    	::Render->model_Render	(m_Visual->visual,parent,priority,strictB2F,1.f);
+    	::RImplementation.model_Render	(m_Visual->visual,parent,priority,strictB2F,1.f);
 
     if (m_Motion&&m_Motion->animator&&bSelected&&(1==priority)&&(false==strictB2F))
         m_Motion->animator->DrawPath();
 
     RCache.set_xform_world		(Fidentity);
-	EDevice.SetShader			(EDevice.m_WireShader);
+	EDevice->SetShader			(EDevice->m_WireShader);
     m_Data->on_render			(&DU_impl,this,bSelected,parent,priority,strictB2F);
 
     if(bSelected)
@@ -480,7 +481,7 @@ void CSpawnPoint::SSpawnData::Render(bool bSelected, const Fmatrix& parent,int p
             visual_data* vc 		= m_Data->visual_collection()+idx;
             M.mul					(parent, vc->matrix);
             CLE_Visual* v 			= *it;
-            ::Render->model_Render	(v->visual,M,priority,strictB2F,1.f);
+            ::RImplementation.model_Render	(v->visual,M,priority,strictB2F,1.f);
         }
     }
 }
@@ -510,7 +511,7 @@ void CSpawnPoint::SSpawnData::OnFrame()
 	    if (m_Data->m_editor_flags.is(ISE_Abstract::flMotionChange))
         	m_Motion->OnChangeMotion();
     	if (m_Motion->animator)
-    		m_Motion->animator->Update(EDevice.fTimeDelta);
+    		m_Motion->animator->Update(EDevice->fTimeDelta);
     }
 
     if (m_Data->m_editor_flags.is(ISE_Abstract::flVisualChange))
@@ -844,13 +845,13 @@ void CSpawnPoint::Render( int priority, bool strictB2F )
                             Fcolor c;
                             c.set(RP_COLORS[r]);
                             c.mul_rgb(k*0.9f+0.1f);
-                            DU_impl.DrawEntity(c.get(),EDevice.m_WireShader);
+                            DU_impl.DrawEntity(c.get(),EDevice->m_WireShader);
                         }
                     }break;
                     case ptEnvMod:
                     {
                         Fvector pos={0,0,0};
-                        EDevice.SetShader(EDevice.m_WireShader);
+                        EDevice->SetShader(EDevice->m_WireShader);
                         DU_impl.DrawCross(pos,0.25f,0x20FFAE00,true);
                         if (Selected())
                             DU_impl.DrawSphere(Fidentity,GetPosition(),m_EM_Radius,0x30FFAE00,0x00FFAE00,true,true);
@@ -878,7 +879,7 @@ void CSpawnPoint::Render( int priority, bool strictB2F )
                     }
                 }
                 
-                Fvector D;	D.sub(EDevice.vCameraPosition,GetPosition());
+                Fvector D;	D.sub(EDevice->vCameraPosition,GetPosition());
                 float dist 	= D.normalize_magn();
                 if (!st->m_Flags.is(ESceneSpawnTool::flPickSpawnType)||
                     !Scene->RayPickObject(dist,GetPosition(),D,OBJCLASS_SCENEOBJECT,0,0))
@@ -889,7 +890,7 @@ void CSpawnPoint::Render( int priority, bool strictB2F )
                 RCache.set_xform_world(Fidentity);
                 Fbox bb; GetBox(bb);
                 u32 clr = 0xFFFFFFFF;
-                EDevice.SetShader(EDevice.m_WireShader);
+                EDevice->SetShader(EDevice->m_WireShader);
                 DU_impl.DrawSelectionBoxB(bb,&clr);
             }
         }
@@ -1354,13 +1355,13 @@ void CSpawnPoint::OnProfileChange(PropValue* prop)
         VERIFY					(s_name.size());
         if (0!=strcmp(m_SpawnData.m_Data->name(),*s_name))
         {
-            ISE_Abstract* tmp	= g_SEFactoryManager->create_entity	(*s_name);
+            ISE_Abstract* tmp	= g_XrGameManager->CreateFromSection	(*s_name);
             VERIFY				(tmp);
             NET_Packet 			Packet;
             tmp->Spawn_Write	(Packet,TRUE);
             R_ASSERT			(m_SpawnData.m_Data->Spawn_Read(Packet));
             m_SpawnData.m_Data->set_editor_flag(ISE_Abstract::flVisualChange|ISE_Abstract::flVisualAnimationChange);
-            g_SEFactoryManager->destroy_entity		(tmp);
+            g_XrGameManager->Destroy		(tmp);
         }
     }else{
 		m_SpawnData.m_Profile	= SectionToEditor(m_SpawnData.m_Data->name());

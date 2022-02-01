@@ -3,64 +3,17 @@
 #pragma hdrstop
 
 #include "GameMtlLib.h"
-//#include "../include/xrapi/xrapi.h"
-
-CGameMtlLibrary GMLib;
-//CSound_manager_interface*	Sound = NULL;
-#ifdef	_EDITOR
-CGameMtlLibrary*			PGMLib = NULL;
-#endif
-CGameMtlLibrary::	CGameMtlLibrary		()
-	{
-	    material_index 		= 0;
-	    material_pair_index = 0;
-#ifndef _EDITOR
-        material_count	    = 0;
-#endif
-		PGMLib = &GMLib;
-    }
-
-void SGameMtl::Load(IReader& fs)
+CGameMtlLibrary::CGameMtlLibrary()
 {
-	R_ASSERT(fs.find_chunk(GAMEMTL_CHUNK_MAIN));
-	ID						= fs.r_u32();
-    fs.r_stringZ			(m_Name);
-
-    if (fs.find_chunk(GAMEMTL_CHUNK_DESC)){
-		fs.r_stringZ		(m_Desc);
-    }
-    
-	R_ASSERT(fs.find_chunk(GAMEMTL_CHUNK_FLAGS));
-    Flags.assign			(fs.r_u32());
-
-	R_ASSERT(fs.find_chunk(GAMEMTL_CHUNK_PHYSICS));
-    fPHFriction				= fs.r_float();
-    fPHDamping				= fs.r_float();
-    fPHSpring				= fs.r_float();
-    fPHBounceStartVelocity 	= fs.r_float();
-    fPHBouncing				= fs.r_float();
-
-	R_ASSERT(fs.find_chunk(GAMEMTL_CHUNK_FACTORS));
-    fShootFactor			= fs.r_float();
-    fBounceDamageFactor		= fs.r_float();
-    fVisTransparencyFactor	= fs.r_float();
-    fSndOcclusionFactor		= fs.r_float();
-
-
-	if(fs.find_chunk(GAMEMTL_CHUNK_FACTORS_MP))
-	    fShootFactorMP	    = fs.r_float();
-    else
-	    fShootFactorMP	    = fShootFactor;
-
-	if(fs.find_chunk(GAMEMTL_CHUNK_FLOTATION))
-	    fFlotationFactor	= fs.r_float();
-
-    if(fs.find_chunk(GAMEMTL_CHUNK_INJURIOUS))
-    	fInjuriousSpeed		= fs.r_float();
-    
-	if(fs.find_chunk(GAMEMTL_CHUNK_DENSITY))
-    	fDensityFactor		= fs.r_float();
+    material_index = 0;
+    material_pair_index = 0;
+    material_count = 0;
 }
+
+CGameMtlLibrary::~CGameMtlLibrary()
+{
+}
+
 
 void CGameMtlLibrary::Load()
 {
@@ -136,43 +89,3 @@ void CGameMtlLibrary::Load()
 	FS.r_close		(F);
 }
 
-#ifdef GM_NON_GAME
-SGameMtlPair::~SGameMtlPair		()
-{
-}                
-void SGameMtlPair::Load(IReader& fs)
-{
-	shared_str				buf;
-
-	R_ASSERT(fs.find_chunk(GAMEMTLPAIR_CHUNK_PAIR));
-	mtl0				= fs.r_u32();
-	mtl1				= fs.r_u32();
-	ID					= fs.r_u32();
-	ID_parent			= fs.r_u32();
-    u32 own_mask		= fs.r_u32(); 
-    if (GAMEMTL_NONE_ID==ID_parent) OwnProps.one	();
-    else							OwnProps.assign	(own_mask);
-
-	R_ASSERT(fs.find_chunk(GAMEMTLPAIR_CHUNK_BREAKING));
-	fs.r_stringZ		(buf); 	BreakingSounds	= buf.size()?*buf:"";
-
-	R_ASSERT(fs.find_chunk(GAMEMTLPAIR_CHUNK_STEP));
-	fs.r_stringZ		(buf);	StepSounds		= buf.size()?*buf:"";
-
-	R_ASSERT(fs.find_chunk(GAMEMTLPAIR_CHUNK_COLLIDE));
-	fs.r_stringZ		(buf);	CollideSounds	= buf.size()?*buf:"";
-	fs.r_stringZ		(buf);	CollideParticles= buf.size()?*buf:"";
-	fs.r_stringZ		(buf);	CollideMarks	= buf.size()?*buf:"";
-}
-#endif
-
-#ifdef DEBUG
-LPCSTR SGameMtlPair::dbg_Name()
-{
-	static string256 nm;
-	SGameMtl* M0 = GMLib.GetMaterialByID(GetMtl0());
-	SGameMtl* M1 = GMLib.GetMaterialByID(GetMtl1());
-	xr_sprintf(nm,sizeof(nm),"Pair: %s - %s",*M0->m_Name,*M1->m_Name);
-	return nm;
-}
-#endif

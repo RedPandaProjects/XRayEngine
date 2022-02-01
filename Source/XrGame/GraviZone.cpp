@@ -76,7 +76,7 @@ bool CBaseGraviZone ::IdleState()
 {
 	bool result = inherited::IdleState();
 
-	m_dwTeleTime += Device.dwTimeDelta;
+	m_dwTeleTime += Device->dwTimeDelta;
 
 	if(!result)
 	{

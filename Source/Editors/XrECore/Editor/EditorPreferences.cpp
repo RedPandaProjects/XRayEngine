@@ -58,15 +58,15 @@ void CCustomPreferences::ApplyValues()
 	Tools->m_MoveSnapTo		= snap_moveto;
 	Tools->m_RotateSnapAngle= snap_angle;
 
-    EDevice.m_Camera.SetViewport(view_np, view_fp, rad2deg(view_fov));
+    EDevice->m_Camera.SetViewport(view_np, view_fp, rad2deg(view_fov));
     Tools->SetFog	(fog_color,fog_fogness);
 
     UI->m_MouseSM	= 0.2f*tools_sens_move*tools_sens_move;
     UI->m_MouseSR	= 0.02f*tools_sens_rot*tools_sens_rot;
     UI->m_MouseSS	= 0.02f*tools_sens_scale*tools_sens_scale;
 
-    EDevice.m_Camera.SetSensitivity	(cam_sens_move, cam_sens_rot);
-    EDevice.m_Camera.SetFlyParams	(cam_fly_speed, cam_fly_alt);
+    EDevice->m_Camera.SetSensitivity	(cam_sens_move, cam_sens_rot);
+    EDevice->m_Camera.SetFlyParams	(cam_fly_speed, cam_fly_alt);
 
     ExecCommand		(COMMAND_UPDATE_GRID);
 }
@@ -105,7 +105,7 @@ void CCustomPreferences::OnKeyboardCommonFileClick(ButtonValue* B, bool& bModif,
     xr_string fn;
 	switch(B->btn_num){
     case 0:
-        if(EFS.GetOpenName(EDevice.m_hWnd,"$import$", fn, false, NULL, 6)){
+        if(EFS.GetOpenName(EDevice->m_hWnd,"$import$", fn, false, NULL, 6)){
             CInifile* 	I 	= xr_new<CInifile>(fn.c_str(), TRUE, TRUE, TRUE);
 		    LoadShortcuts	(I);
             xr_delete		(I);
@@ -141,7 +141,7 @@ void CCustomPreferences::FillProp(PropItemVec& props)
     PHelper().CreateU32		(props,"Scene\\Common\\Undo Level", 		    &scene_undo_level,	0, 		125);
     PHelper().CreateFloat	(props,"Scene\\Grid\\Cell Size", 	           	&grid_cell_size,	0.1f,	10.f);
     PHelper().CreateU32		(props,"Scene\\Grid\\Cell Count", 	           	&grid_cell_count,	10, 	1000);
-    PHelper().CreateFloat(props, "Scene\\RadiusRender", &EDevice.RadiusRender,10.f,100000.f);
+    PHelper().CreateFloat(props, "Scene\\RadiusRender", &EDevice->RadiusRender,10.f,100000.f);
 
     PHelper().CreateBOOL	(props,"Tools\\Box Pick\\Limited Depth",		&bp_lim_depth);
     PHelper().CreateBOOL	(props,"Tools\\Box Pick\\Back Face Culling",	&bp_cull);
@@ -241,7 +241,7 @@ void CCustomPreferences::Load(CInifile* I)
     scene_clear_color	= R_U32_SAFE	("editor_prefs","scene_clear_color"	,scene_clear_color	);
 
     object_flags.flags	= R_U32_SAFE	("editor_prefs","object_flags"		,object_flags.flags );
-    EDevice.RadiusRender = R_FLOAT_SAFE("render", "render_radius", EDevice.RadiusRender);
+    EDevice->RadiusRender = R_FLOAT_SAFE("render", "render_radius", EDevice->RadiusRender);
 
 
     start_w = R_U32_SAFE("render", "w", 1280);
@@ -313,11 +313,11 @@ void CCustomPreferences::Save(CInifile* I)
         I->w_string("editor_prefs", L.c_str(), V.c_str());
     }
     I->w_string("editor_prefs", "weather", sWeather.c_str());
-    I->w_bool("render", "maximized", EDevice.dwMaximized);
-    I->w_u32("render", "w", EDevice.dwWidth);
-    I->w_u32("render", "h", EDevice.dwHeight);
+    I->w_bool("render", "maximized", EDevice->dwMaximized);
+    I->w_u32("render", "w", EDevice->dwWidth);
+    I->w_u32("render", "h", EDevice->dwHeight);
     I->w_bool("windows", "log", bAllowLogCommands);
-    I->w_float("render", "render_radius", EDevice.RadiusRender);
+    I->w_float("render", "render_radius", EDevice->RadiusRender);
 
     // load shortcuts
     SaveShortcuts(I);

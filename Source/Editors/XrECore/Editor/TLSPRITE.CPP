@@ -24,10 +24,10 @@ void CTLSprite::Render(Fvector &pos, float radius, bool bFixedSize, u32 clr)
 	FVF::TL			P;
     float 			cx,cy,sz;
 
-	P.transform		( pos, EDevice.mFullTransform );
-    cx				= EDevice._x2real(P.p.x);
-    cy				= EDevice._y2real(P.p.y);
-    if (bFixedSize) sz = EDevice._x2real(radius)-EDevice._x2real(0);
+	P.transform		( pos, EDevice->mFullTransform );
+    cx				= EDevice->_x2real(P.p.x);
+    cy				= EDevice->_y2real(P.p.y);
+    if (bFixedSize) sz = EDevice->_x2real(radius)-EDevice->_x2real(0);
     else			sz = UI->GetRenderWidth()*radius/P.p.w;
     mesh.m[0].p.x = cx-sz;	mesh.m[0].p.y = cy+sz;
     mesh.m[1].p.x = cx-sz;	mesh.m[1].p.y = cy-sz;
@@ -43,11 +43,11 @@ void CTLSprite::Render(Fvector &pos, u32 color, float radius, float angle)
 {
 	FVF::TL			P;
 
-	P.transform     (pos, EDevice.mFullTransform);
+	P.transform     (pos, EDevice->mFullTransform);
     if (P.p.w<=0) 	return;
 
-	float cx		= EDevice._x2real(P.p.x);
-	float cy		= EDevice._y2real(P.p.y);
+	float cx		= EDevice->_x2real(P.p.x);
+	float cy		= EDevice->_y2real(P.p.y);
 
 	float sz		= (UI->GetRenderWidth()*radius)/P.p.w;
 	if (sz<1.5f) 	return;
@@ -73,8 +73,8 @@ void CTLSprite::Render( Fvector &pos, u32 color, float radius, const Fvector& D 
     P2.mad 			(pos,D,radius);
 
 	FVF::TL			s1,s2;
-	s1.transform	(P1,EDevice.mFullTransform);
-	s2.transform	(P2,EDevice.mFullTransform);
+	s1.transform	(P1,EDevice->mFullTransform);
+	s2.transform	(P2,EDevice->mFullTransform);
 
     if ((s1.p.w<=0)||(s2.p.w<=0)) return;
 
@@ -86,10 +86,10 @@ void CTLSprite::Render( Fvector &pos, u32 color, float radius, const Fvector& D 
 	dir.norm		();
 	R.cross			(dir);
 
-	mesh.m[0].p.x 	= EDevice._x2real(s1.p.x+l1*R.x);	mesh.m[0].p.y = EDevice._y2real(s1.p.y+l1*R.y); mesh.m[0].p.z = s2.p.z; mesh.m[0].p.w = s2.p.w;
-	mesh.m[1].p.x 	= EDevice._x2real(s2.p.x+l2*R.x);	mesh.m[1].p.y = EDevice._y2real(s2.p.y+l2*R.y); mesh.m[1].p.z = s2.p.z; mesh.m[1].p.w = s2.p.w;
-	mesh.m[2].p.x 	= EDevice._x2real(s1.p.x-l1*R.x);	mesh.m[2].p.y = EDevice._y2real(s1.p.y-l1*R.y); mesh.m[2].p.z = s2.p.z; mesh.m[2].p.w = s2.p.w;
-	mesh.m[3].p.x 	= EDevice._x2real(s2.p.x-l2*R.x);	mesh.m[3].p.y = EDevice._y2real(s2.p.y-l2*R.y); mesh.m[3].p.z = s2.p.z; mesh.m[3].p.w = s2.p.w;
+	mesh.m[0].p.x 	= EDevice->_x2real(s1.p.x+l1*R.x);	mesh.m[0].p.y = EDevice->_y2real(s1.p.y+l1*R.y); mesh.m[0].p.z = s2.p.z; mesh.m[0].p.w = s2.p.w;
+	mesh.m[1].p.x 	= EDevice->_x2real(s2.p.x+l2*R.x);	mesh.m[1].p.y = EDevice->_y2real(s2.p.y+l2*R.y); mesh.m[1].p.z = s2.p.z; mesh.m[1].p.w = s2.p.w;
+	mesh.m[2].p.x 	= EDevice->_x2real(s1.p.x-l1*R.x);	mesh.m[2].p.y = EDevice->_y2real(s1.p.y-l1*R.y); mesh.m[2].p.z = s2.p.z; mesh.m[2].p.w = s2.p.w;
+	mesh.m[3].p.x 	= EDevice->_x2real(s2.p.x-l2*R.x);	mesh.m[3].p.y = EDevice->_y2real(s2.p.y-l2*R.y); mesh.m[3].p.z = s2.p.z; mesh.m[3].p.w = s2.p.w;
 
 	mesh.setcolor	(color);
 
@@ -102,8 +102,8 @@ void CTLSprite::Render( Fvector &pos, u32 color, float radius, const Fvector& D 
     P2.direct		(pos,D,-radius);
 
 	FVF::TL			s1,s2;
-	s1.transform	(P1,EDevice.m_FullTransform);
-	s2.transform	(P2,EDevice.m_FullTransform);
+	s1.transform	(P1,EDevice->m_FullTransform);
+	s2.transform	(P2,EDevice->m_FullTransform);
 
     if ((s1.p.w<=0)||(s2.p.w<=0)) return;
 
@@ -124,7 +124,7 @@ void CTLSprite::Render( Fvector &pos, u32 color, float radius, const Fvector& D 
 
 	mesh.setcolor	(RGBA_MAKE(iFloor(color.r),iFloor(color.g),iFloor(color.b),iFloor(color.a)));
 
-    EDevice.DP	(D3DPT_TRIANGLESTRIP, FVF::F_TL, &mesh, 4);
+    EDevice->DP	(D3DPT_TRIANGLESTRIP, FVF::F_TL, &mesh, 4);
 */
 /*    Fvector2 		dir;
     dir.x			= p1.x-p0.x;
@@ -135,7 +135,7 @@ void CTLSprite::Render( Fvector &pos, u32 color, float radius, const Fvector& D 
     P0.direct		(pos,);
 
 	FVF::TL			P;
-	P.transform		(pos,EDevice.m_FullTransform);
+	P.transform		(pos,EDevice->m_FullTransform);
 	float sz		= UI->GetRenderWidth()*radius/P.p.w;
 	float sz0		= radius/P.p.w;//(radius/p0.w)/2;
 	float sz1		= radius/P.p.w;//radius/p1.w;
@@ -155,7 +155,7 @@ void CTLSprite::Render( Fvector &pos, u32 color, float radius, const Fvector& D 
 	mesh.setdepth	(P.p.z, P.p.w);
 	mesh.setcolor	(RGBA_MAKE(iFloor(color.r),iFloor(color.g),iFloor(color.b),iFloor(color.a)));
 
-    EDevice.DP	(D3DPT_TRIANGLESTRIP, FVF::F_TL, &mesh, 4);
+    EDevice->DP	(D3DPT_TRIANGLESTRIP, FVF::F_TL, &mesh, 4);
 */
 }
 
@@ -165,7 +165,7 @@ void CTLSprite::UpdateTC(){
     int			frame;
 
 	float fSPF 	= fPlayTime/float(iCount);
-	fLocalTime	+=EDevice.fTimeDelta;
+	fLocalTime	+=EDevice->fTimeDelta;
 	if (fLocalTime>=fPlayTime) fLocalTime-=fPlayTime;
 	frame		= iFloor( fLocalTime/fSPF );
 

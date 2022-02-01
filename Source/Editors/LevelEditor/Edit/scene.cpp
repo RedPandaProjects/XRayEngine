@@ -19,6 +19,17 @@
 #include "ESceneDOTools.h"
 #include "ESceneLightTools.h"
 #include "lephysics.h"
+
+
+#include "..\XrEngine\std_classes.h"
+#include "..\XrEngine\IGame_Persistent.h"
+#include "..\XrEngine\XR_IOConsole.h"
+#include "..\XrEngine\CustomHUD.h"
+#include "..\XrEngine\CameraManager.h"
+#include "..\XrEngine\IGame_Level.h"
+#include "..\XrEngine\x_ray.h"
+#include "..\XrCDB\xrCDB.h"
+#include "..\XrCDB\ISpatial.h"
 //----------------------------------------------------
 EScene* Scene;
 //----------------------------------------------------
@@ -75,7 +86,8 @@ EScene::EScene()
 
     for (int i=0; i<OBJCLASS_COUNT; i++)
         m_SceneTools.insert(mk_pair((ObjClassID)i,(ESceneToolBase*)NULL));
-
+    g_SpatialSpace = xr_new<ISpatial_DB>();
+    g_SpatialSpacePhysic = xr_new<ISpatial_DB>();
     // first init scene graph for objects
    // mapRenderObjects.init(MAX_VISUALS);
 // 	Build options
@@ -88,6 +100,9 @@ EScene::EScene()
 EScene::~EScene()
 {
 	//xr_delete(g_frmConflictLoadObject);
+    xr_delete(g_SpatialSpace);
+    xr_delete(g_SpatialSpacePhysic);
+
 	VERIFY( m_Valid == false );
     m_ESO_SnapObjects.clear	();
 
@@ -583,6 +598,35 @@ void EScene::FillProp(LPCSTR pref, PropItemVec& items, ObjClassID cls_id)
             mt->FillProp				(mt->ClassDesc(), items);
         }
     }
+}
+
+void EScene::Play()
+{
+    if (IsSimulate())return;
+    Console->Execute("main_menu off");
+    g_hud = (CCustomHUD*)NEW_INSTANCE(CLSID_HUDMANAGER);
+    g_pGameLevel = (IGame_Level*)NEW_INSTANCE(CLSID_EDITOR_LEVEL);
+    g_pGameLevel->net_Start("all/single/new", "localhost");
+    g_pGameLevel->IR_Capture();
+}
+
+bool EScene::IsSimulate()
+{
+    return g_pGameLevel;
+}
+
+void EScene::Stop()
+{
+    if (!IsSimulate())return;
+    g_pGameLevel->IR_Release();
+    g_pGameLevel->net_Stop();
+    DEL_INSTANCE(g_pGameLevel);
+    DEL_INSTANCE(g_hud);
+}
+
+void EScene::LoadCFrom(CObjectSpace* Space, CDB::build_callback cb)
+{
+    g_scene_physics.GenerateCFrom(Space,cb);
 }
 
 void EScene::RegisterSubstObjectName(const xr_string& _from, const xr_string& _to)

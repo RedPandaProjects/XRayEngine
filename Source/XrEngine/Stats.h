@@ -2,8 +2,6 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#if !defined(AFX_STATS_H__4C8D1860_0EE2_11D4_B4E3_4854E82A090D__INCLUDED_)
-#define AFX_STATS_H__4C8D1860_0EE2_11D4_B4E3_4854E82A090D__INCLUDED_
 #pragma once
 
 class ENGINE_API CGameFont;
@@ -21,7 +19,6 @@ public:
 	CStatTimer	Physics;			// movement+collision
 };
 
-#ifndef _EDITOR
 class ENGINE_API CStats: 
 	public pureRender,
 	public CStatsPhysics
@@ -104,25 +101,22 @@ public:
 	shared_str	eval_line_2;
 	shared_str	eval_line_3;
 
-	void			Show			(void);
+	virtual void			Show			(void);
 	virtual void 	OnRender		();
-	void			OnDeviceCreate	(void);
-	void			OnDeviceDestroy	(void);
+	virtual void			OnDeviceCreate	(void);
+	virtual void			OnDeviceDestroy	(void);
 public:
 	xr_vector		<shared_str>	errors;
 	CRegistrator	<pureStats>		seqStats;
 public:
 					CStats			();
-					~CStats			();
+					virtual				~CStats			();
 
 	IC CGameFont*	Font			(){return pFont;}
 
 private:
 	FactoryPtr<IStatsRender>	m_pRender;
 };
-#else
-class CEStats;
-#endif
 enum{
 	st_sound			= (1<<0),
 	st_sound_min_dist	= (1<<1),
@@ -134,4 +128,3 @@ enum{
 
 extern Flags32 g_stats_flags;
 
-#endif // !defined(AFX_STATS_H__4C8D1860_0EE2_11D4_B4E3_4854E82A090D__INCLUDED_)

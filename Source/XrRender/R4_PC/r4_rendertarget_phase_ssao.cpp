@@ -35,22 +35,22 @@ void CRenderTarget::phase_ssao	()
 	}*/
 
 	// Compute params
-	Fmatrix		m_v2w;			m_v2w.invert				(Device.mView		);
+	Fmatrix		m_v2w;			m_v2w.invert				(Device->mView		);
 
 	float		fSSAONoise = 2.0f;
 	fSSAONoise *= tan(deg2rad(67.5f));
-	fSSAONoise /= tan(deg2rad(Device.fFOV));
+	fSSAONoise /= tan(deg2rad(Device->fFOV));
 
 	float		fSSAOKernelSize = 150.0f;
 	fSSAOKernelSize *= tan(deg2rad(67.5f));
-	fSSAOKernelSize /= tan(deg2rad(Device.fFOV));
+	fSSAOKernelSize /= tan(deg2rad(Device->fFOV));
 
 	// Fill VB
-	float	scale_X				= float(Device.dwWidth)	* 0.5f / float(TEX_jitter);
-	float	scale_Y				= float(Device.dwHeight) * 0.5f / float(TEX_jitter);
+	float	scale_X				= float(Device->dwWidth)	* 0.5f / float(TEX_jitter);
+	float	scale_Y				= float(Device->dwHeight) * 0.5f / float(TEX_jitter);
 
-	float _w = float(Device.dwWidth) * 0.5f;
-	float _h = float(Device.dwHeight) * 0.5f;
+	float _w = float(Device->dwWidth) * 0.5f;
+	float _h = float(Device->dwHeight) * 0.5f;
 
 	set_viewport(HW.pContext, _w, _h);
 
@@ -99,7 +99,7 @@ void CRenderTarget::phase_ssao	()
 		//RCache.set_Stencil( FALSE, D3DCMP_EQUAL, 0x01, 0xff, 0 );
 	}  
 
-	set_viewport(HW.pContext, float(Device.dwWidth), float(Device.dwHeight));
+	set_viewport(HW.pContext, float(Device->dwWidth), float(Device->dwHeight));
 
 	RCache.set_Stencil	(FALSE);
 }
@@ -119,12 +119,12 @@ void CRenderTarget::phase_downsamp	()
     u_setrt( rt_half_depth,0,0,0/*HW.pBaseZB*/ );
 	FLOAT ColorRGBA[4] = {0.0f, 0.0f, 0.0f, 0.0f};
     HW.pContext->ClearRenderTargetView(rt_half_depth->pRT, ColorRGBA);
-	u32 w = Device.dwWidth;
-	u32 h = Device.dwHeight;
+	u32 w = Device->dwWidth;
+	u32 h = Device->dwHeight;
 
 	if (RImplementation.o.ssao_half_data)
 	{
-		set_viewport(HW.pContext, float(Device.dwWidth) * 0.5f, float(Device.dwHeight) * 0.5f);
+		set_viewport(HW.pContext, float(Device->dwWidth) * 0.5f, float(Device->dwHeight) * 0.5f);
 		w /= 2;
 		h /= 2;
 	}
@@ -132,7 +132,7 @@ void CRenderTarget::phase_downsamp	()
 	RCache.set_Stencil	(FALSE);
 
 	{
-		Fmatrix		m_v2w;			m_v2w.invert				(Device.mView		);
+		Fmatrix		m_v2w;			m_v2w.invert				(Device->mView		);
 
 		// Fill VB
 		float	scale_X				= float(w)	/ float(TEX_jitter);
@@ -155,5 +155,5 @@ void CRenderTarget::phase_downsamp	()
 	}
 
 	if (RImplementation.o.ssao_half_data)
-		set_viewport(HW.pContext, float(Device.dwWidth), float(Device.dwHeight));
+		set_viewport(HW.pContext, float(Device->dwWidth), float(Device->dwHeight));
 }

@@ -38,7 +38,6 @@ dxRenderFactory RenderFactoryImpl;
 	xr_delete((dx##Class*&)pObject); \
 } \
 
-#ifndef _EDITOR
 	RENDER_FACTORY_IMPLEMENT(UISequenceVideoItem)
 	RENDER_FACTORY_IMPLEMENT(UIShader)
 	RENDER_FACTORY_IMPLEMENT(StatGraphRender)
@@ -50,9 +49,6 @@ dxRenderFactory RenderFactoryImpl;
 	RENDER_FACTORY_IMPLEMENT(ApplicationRender)
 	RENDER_FACTORY_IMPLEMENT(WallMarkArray)
 	RENDER_FACTORY_IMPLEMENT(StatsRender)
-#endif // _EDITOR
-
-#ifndef _EDITOR
     RENDER_FACTORY_IMPLEMENT(ThunderboltRender)
     RENDER_FACTORY_IMPLEMENT(ThunderboltDescRender)
     RENDER_FACTORY_IMPLEMENT(RainRender)
@@ -61,5 +57,4 @@ dxRenderFactory RenderFactoryImpl;
     RENDER_FACTORY_IMPLEMENT(EnvDescriptorMixerRender)
     RENDER_FACTORY_IMPLEMENT(EnvDescriptorRender)
     RENDER_FACTORY_IMPLEMENT(FlareRender)
-#endif
 RENDER_FACTORY_IMPLEMENT(FontRender)

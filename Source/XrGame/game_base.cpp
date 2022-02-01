@@ -113,7 +113,7 @@ void	game_PlayerState::net_Export(NET_Packet& P, BOOL Full)
 	P.w_s8			(	skin	);
 	P.w_u8			(	m_bCurrentVoteAgreed	);
 
-	P.w_u32			(Device.dwTimeGlobal - DeathTime);
+	P.w_u32			(Device->dwTimeGlobal - DeathTime);
 	if (Full)
 	{
 		m_account.net_Export(P);

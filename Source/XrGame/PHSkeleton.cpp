@@ -152,8 +152,8 @@ void CPHSkeleton::Update(u32 dt)
 	}
 
 	if(b_removing&&
-		Device.dwTimeGlobal>m_remove_time&&
-		//(Device.dwTimeGlobal-m_unsplit_time)*phTimefactor>remove_time&&
+		Device->dwTimeGlobal>m_remove_time&&
+		//(Device->dwTimeGlobal-m_unsplit_time)*phTimefactor>remove_time&&
 		m_unsplited_shels.empty()) 
 	{
 		if (obj->Local())	obj->DestroyObject	();
@@ -394,7 +394,7 @@ void CPHSkeleton::CopySpawnInit()
 void CPHSkeleton::SetAutoRemove(u32 time/*=CSE_PHSkeleton::existence_time*/)
 {
 	b_removing=true;
-	m_remove_time=Device.dwTimeGlobal+iFloor(time/phTimefactor);
+	m_remove_time=Device->dwTimeGlobal+iFloor(time/phTimefactor);
 	SetNotNeedSave();
 	PPhysicsShellHolder()->SheduleRegister();
 }
