@@ -608,6 +608,7 @@ void EScene::Play()
     g_pGameLevel = (IGame_Level*)NEW_INSTANCE(CLSID_EDITOR_LEVEL);
     g_pGameLevel->net_Start("all/single/new", "localhost");
     g_pGameLevel->IR_Capture();
+    GetTool(OBJCLASS_SPAWNPOINT)->m_EditFlags.set(ESceneToolBase::flVisible, false);
 }
 
 bool EScene::IsSimulate()
@@ -622,11 +623,22 @@ void EScene::Stop()
     g_pGameLevel->net_Stop();
     DEL_INSTANCE(g_pGameLevel);
     DEL_INSTANCE(g_hud);
+    GetTool(OBJCLASS_SPAWNPOINT)->m_EditFlags.set(ESceneToolBase::flVisible, true);
 }
 
 void EScene::LoadCFrom(CObjectSpace* Space, CDB::build_callback cb)
 {
     g_scene_physics.GenerateCFrom(Space,cb);
+}
+
+void EScene::LoadSpawn(xr_vector<NET_Packet>& Ps)
+{
+    bool bHasHOM = false;
+    ObjectList& lst = ListObj(OBJCLASS_SPAWNPOINT);
+    for (ObjectIt it = lst.begin(); it != lst.end(); it++) 
+    {
+        (*it)->ExportSpawn(Ps);
+    }
 }
 
 void EScene::RegisterSubstObjectName(const xr_string& _from, const xr_string& _to)

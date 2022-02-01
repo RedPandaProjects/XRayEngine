@@ -340,6 +340,7 @@ public:
 	bool IsSimulate();
 	void Stop();
 	virtual	void LoadCFrom(CObjectSpace* Space, CDB::build_callback cb);
+	virtual void LoadSpawn(xr_vector<NET_Packet>& Ps);
 protected:
     typedef std::pair<xr_string,xr_string>  TSubstPair;
     typedef xr_vector<TSubstPair>           TSubstPairs;

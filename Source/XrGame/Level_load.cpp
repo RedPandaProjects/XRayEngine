@@ -214,7 +214,7 @@ void CLevel::Load_GameSpecific_CFORM	( CDB::TRI* tris, u32 count )
 				(*I).suppress_wm		= mtl->Flags.is(SGameMtl::flSuppressWallmarks);
 				continue;
 			}
-
+			if(Device->IsEditorMode()==false)
 			Debug.fatal					(DEBUG_INFO,"Game material '%d' not found",(*I).material);
 		}
 		return;
@@ -233,7 +233,7 @@ void CLevel::Load_GameSpecific_CFORM	( CDB::TRI* tris, u32 count )
 				(*I).suppress_wm		= mtl->Flags.is(SGameMtl::flSuppressWallmarks);
 				continue;
 			}
-
+			if (Device->IsEditorMode() == false)
 			Debug.fatal					(DEBUG_INFO,"Game material '%d' not found",(*I).material);
 		}
 	}

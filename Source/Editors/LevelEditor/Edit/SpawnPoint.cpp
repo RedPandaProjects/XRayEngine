@@ -410,6 +410,15 @@ bool CSpawnPoint::SSpawnData::ExportGame(SExportStreams* F, CSpawnPoint* owner)
     return true;
 }
 
+void CSpawnPoint::SSpawnData::ExportSpawn(xr_vector<NET_Packet>& Ps, CSpawnPoint* owner)
+{
+    m_Data->set_name_replace(owner->GetName());
+    m_Data->position().set(owner->GetPosition());
+    m_Data->angle().set(owner->GetRotation());
+    Ps.push_back(NET_Packet());
+    m_Data->Spawn_Write(Ps.back(), TRUE);
+}
+
 void CSpawnPoint::SSpawnData::OnAnimControlClick(ButtonValue* value, bool& bModif, bool& bSafe)
 {
 	ButtonValue* B				= dynamic_cast<ButtonValue*>(value); R_ASSERT(B);
@@ -1462,6 +1471,10 @@ bool CSpawnPoint::OnChooseQuery(LPCSTR specific)
          m.getXYZ (	FRotation );
          UpdateTransform();
      }
+ }
+ void CSpawnPoint::ExportSpawn(xr_vector<NET_Packet>& Ps)
+ {
+     m_SpawnData.ExportSpawn(Ps,this);
  }
  void CSpawnPoint::OnUpdateTransform()
  {

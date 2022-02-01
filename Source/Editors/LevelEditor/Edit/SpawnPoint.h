@@ -87,6 +87,7 @@ public:
         void		    SaveLTX			(CInifile& ini, LPCSTR sect_name);
 
 		bool 			ExportGame		(SExportStreams* F, CSpawnPoint* owner);
+        void            ExportSpawn     (xr_vector<NET_Packet>& Ps, CSpawnPoint* owner);
 
 		void			FillProp		(LPCSTR pref, PropItemVec& values);
 
@@ -171,6 +172,7 @@ public:
     virtual bool	OnChooseQuery	(LPCSTR specific);
     virtual	void	OnSceneRemove	();
     		void 	UseSimulatePose ();
+    virtual	void  ExportSpawn(xr_vector<NET_Packet>& Ps);
 public:
   
     virtual	IKinematics*	   _BCL	ObjectKinematics	 ()				 	{ if(!m_SpawnData.m_Visual||!m_SpawnData.m_Visual->visual)return 0;return m_SpawnData.m_Visual->visual->dcast_PKinematics();}
