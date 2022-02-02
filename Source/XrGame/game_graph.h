@@ -38,6 +38,7 @@ private:
 	IReader							*m_reader;
 #endif // AI_COMPILER
 	CVertex							*m_nodes;
+	BYTE							*m_edges;
 	mutable ENABLED					m_enabled;
 	_GRAPH_ID						m_current_level_some_vertex_id;
 

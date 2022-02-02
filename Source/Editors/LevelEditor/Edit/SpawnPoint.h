@@ -88,6 +88,7 @@ public:
 
 		bool 			ExportGame		(SExportStreams* F, CSpawnPoint* owner);
         void            ExportSpawn     (xr_vector<NET_Packet>& Ps, CSpawnPoint* owner);
+        void            PreExportSpawn( CSpawnPoint* owner);
 
 		void			FillProp		(LPCSTR pref, PropItemVec& values);
 
@@ -96,6 +97,7 @@ public:
     	void 	OnAnimControlClick		(ButtonValue* value, bool& bModif, bool& bSafe);  
         
 		virtual void get_bone_xform				(LPCSTR name, Fmatrix& xform);
+        IC ISE_Abstract* GetEntity() { return m_Data; }
 	};
 
 	SSpawnData    	m_SpawnData;
@@ -173,8 +175,10 @@ public:
     virtual	void	OnSceneRemove	();
     		void 	UseSimulatePose ();
     virtual	void  ExportSpawn(xr_vector<NET_Packet>& Ps);
+    virtual void	PreExportSpawn();
 public:
-  
+
+    IC ISE_Abstract* GetEntity() { PreExportSpawn(); return m_SpawnData.GetEntity(); }
     virtual	IKinematics*	   _BCL	ObjectKinematics	 ()				 	{ if(!m_SpawnData.m_Visual||!m_SpawnData.m_Visual->visual)return 0;return m_SpawnData.m_Visual->visual->dcast_PKinematics();}
 private:
     virtual void 	OnUpdateTransform();

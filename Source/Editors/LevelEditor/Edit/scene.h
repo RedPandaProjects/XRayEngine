@@ -15,6 +15,7 @@
 #include "../XrCore/doug_lea_allocator.h"
 #include "../XrCore/FixedMap.h"
 #include "../XrEngine/XrEditorSceneInterface.h"
+#include "../AI/game_graph_builder.h"
 //refs
 #ifndef _DEBUG
 #define USE_ARENA_ALLOCATOR
@@ -343,6 +344,11 @@ public:
 	virtual void LoadSpawn(xr_vector<NET_Packet>&Ps);
 	virtual struct NodeCompressed* GetAINodes();
 	virtual struct hdrNODES* GetAIHeader();
+	virtual void* GetGraphEdges();
+	virtual void* GetGraphVertex();
+	virtual void* GetGraphHeader();
+	virtual void* GetCrossTableHeader();
+	virtual void* GetCrossTableVertex();
 	void BuildSpawn();
 	void BuildAIMap();
 protected:
@@ -360,6 +366,7 @@ private:
 	xr_vector< NodeCompressed> m_AIMapNodes;
 	hdrNODES m_AIMapHeader;
 	xr_vector<NET_Packet> m_Spawn;
+	CGameGraphBuilder m_GraphBuilder;
 };
 
 //----------------------------------------------------

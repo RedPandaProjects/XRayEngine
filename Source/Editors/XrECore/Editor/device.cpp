@@ -359,6 +359,7 @@ void CEditorRenderDevice::End()
     CHK_DX(HW.pDevice->EndScene());
 
 	CHK_DX(HW.pDevice->Present( NULL, NULL, NULL, NULL ));
+
 }
 
 void CEditorRenderDevice::UpdateView()

@@ -26,7 +26,7 @@ namespace GameGraph {
 		LOCATION_COUNT		= (u32(1) << (8*sizeof(_LOCATION_ID))),
 	};
 
-#ifdef AI_COMPILER
+#if DEV_MODE
 	struct
 #else
 	class
@@ -73,7 +73,7 @@ namespace GameGraph {
 	typedef associative_vector<_LEVEL_ID,SLevel>		LEVEL_MAP;
 
 #pragma pack(push,1)
-#ifdef AI_COMPILER
+#if DEV_MODE
 	struct
 #else
 	class
@@ -86,7 +86,7 @@ namespace GameGraph {
 		IC	const float				&distance			() const;
 	};
 
-#ifdef AI_COMPILER
+#if DEV_MODE
 	struct
 #else
 	class
@@ -117,7 +117,7 @@ namespace GameGraph {
 		friend class CGameGraph;
 	};
 
-#ifdef AI_COMPILER
+#if DEV_MODE
 	struct
 #else
 	class
@@ -143,12 +143,11 @@ namespace GameGraph {
 		IC	const SLevel			*level				(LPCSTR level_name, bool) const;
 		IC	void					load				(IReader *reader);
 		IC	void					save				(IWriter *reader);
-		IC	void					load_from_editor	();
 		friend class CGameGraph;
 	};
 #pragma pack(pop)
 
-#ifdef AI_COMPILER
+#if DEV_MODE
 	struct
 #else
 	class

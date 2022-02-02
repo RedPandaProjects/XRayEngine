@@ -204,6 +204,7 @@ public:
 	virtual void 	SaveLTX			(CInifile& ini, LPCSTR sect_name);
 
     virtual bool	ExportGame		(SExportStreams* data){return true;}
+    virtual void	PreExportSpawn  () {}
     virtual void	ExportSpawn     (xr_vector<NET_Packet>& Ps) { }
 	virtual bool 	GetBox			(Fbox& box)	 {return false;}
 	virtual bool 	GetUTBox		(Fbox& box){return false;}

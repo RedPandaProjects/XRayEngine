@@ -109,8 +109,7 @@ protected:
 	u32 				UnpackLink				(u32& L);
 	void				PackPosition			(SNodePositionOld& Dest, Fvector& Src, Fbox& bb, SAIParams& params);
 
-    void				EnumerateNodes			();
-    void				DenumerateNodes			();
+   
 
     bool				RealUpdateSnapList		();
 	int 				RemoveOutOfBoundsNodes	();
@@ -204,7 +203,8 @@ public:
 
     // other
     int					AddNode					(const Fvector& pos, bool bIgnoreConstraints, bool bAutoLink, int cnt);
-
+    void				EnumerateNodes();
+    void				DenumerateNodes();
     IC AINodeVec&			Nodes					(){return m_Nodes;}
     IC SAIParams&          AIParams                (){ return m_Params; }
     void				CalculateNodesBBox      (Fbox& bb);

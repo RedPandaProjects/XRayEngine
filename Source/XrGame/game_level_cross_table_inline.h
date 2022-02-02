@@ -7,7 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-
+#include "..\XrEngine\XrEditorSceneInterface.h"
 #ifdef AI_COMPILER
 IC CGameLevelCrossTable::CGameLevelCrossTable(LPCSTR fName)
 {
@@ -26,6 +26,12 @@ IC CGameLevelCrossTable::CGameLevelCrossTable(LPCSTR fName)
 	m_tpaCrossTable		= (CCell*)m_chunk->pointer();
 }
 #endif // AI_COMPILER
+IC CGameLevelCrossTable::CGameLevelCrossTable()
+{
+	VERIFY(Device->IsEditorMode());
+	m_tCrossTableHeader = *(CHeader*)EditorScene->GetCrossTableHeader();
+	m_tpaCrossTable = (CCell*)EditorScene->GetCrossTableVertex();
+}
 
 IC CGameLevelCrossTable::CGameLevelCrossTable	(const void *buffer, const u32 &buffer_size)
 {

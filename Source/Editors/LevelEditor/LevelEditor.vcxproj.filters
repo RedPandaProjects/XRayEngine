@@ -19,6 +19,9 @@
     <Filter Include="UI\Tools">
       <UniqueIdentifier>{3e179e6c-ce08-4955-a1ad-7b268a674b30}</UniqueIdentifier>
     </Filter>
+    <Filter Include="AI">
+      <UniqueIdentifier>{3c668c27-43ef-4094-ada1-0cd394721cb4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Edit\SceneSummaryInfo.cpp">
@@ -428,6 +431,33 @@
     <ClCompile Include="Edit\scene_aimap.cpp">
       <Filter>Edit</Filter>
     </ClCompile>
+    <ClCompile Include="AI\game_graph_builder.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="AI\level_graph.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="AI\level_graph_vertex.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="AI\level_spawn_constructor.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="AI\patrol_path.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="AI\patrol_path_storage.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="AI\patrol_point.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="AI\alife_space.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="AI\xrThread.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Edit\SceneSummaryInfo.h">
@@ -692,6 +722,249 @@
     </ClInclude>
     <ClInclude Include="Engine\XrGameManager.h">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\data_storage_bucket_list_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\data_storage_constructor.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\data_storage_double_linked_list.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\data_storage_double_linked_list_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\data_storage_single_linked_list.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\data_storage_single_linked_list_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\edge_path.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\edge_path_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\game_graph.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\game_graph_builder.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\game_graph_builder_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\game_graph_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\game_level_cross_table.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\game_level_cross_table_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\graph_abstract.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\graph_abstract_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\graph_edge.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\graph_edge_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\graph_engine.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\graph_engine_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\graph_engine_space.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\graph_vertex.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\graph_vertex_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\level_graph.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\level_graph_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\level_graph_space.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\level_graph_vertex_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\level_spawn_constructor.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\level_spawn_constructor_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\path_manager.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\path_manager_game.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\path_manager_game_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\path_manager_game_level.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\path_manager_game_level_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\path_manager_game_vertex_type.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\path_manager_game_vertex_type_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\path_manager_generic.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\path_manager_generic_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\path_manager_level.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\path_manager_level_evaluator.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\path_manager_level_evaluator_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\path_manager_level_flooder.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\path_manager_level_flooder_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\path_manager_level_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\path_manager_level_straight_line.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\path_manager_level_straight_line_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\path_manager_params.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\path_manager_params_flooder.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\path_manager_params_game_level.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\path_manager_params_straight_line.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\patrol_path.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\patrol_path_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\patrol_path_storage.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\patrol_path_storage_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\patrol_point.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\patrol_point_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\vertex_allocator_fixed.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\vertex_allocator_fixed_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\vertex_manager_fixed.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\vertex_manager_fixed_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\vertex_manager_hash_fixed.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\vertex_manager_hash_fixed_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\vertex_path.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\vertex_path_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\a_star.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\a_star_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\cover_point.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\cover_point_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\data_storage_binary_heap.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\data_storage_binary_heap_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\data_storage_bucket_list.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\game_graph_space.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\alife_space.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\manager_builder_allocator_constructor.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\manager_builder_allocator_constructor_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\builder_allocator_constructor_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\builder_allocator_constructor.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\xrThread.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\dijkstra.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\dijkstra_inline.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AI\LevelGameDef.h">
+      <Filter>AI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

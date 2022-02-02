@@ -49,7 +49,6 @@ class	ECORE_API CRender : public IRender_interface
 	BOOL val_bInvisible;
 public:
 	// options
-	s32						m_skinning;
 
 	// Data
 	CFrustum				ViewBase;
@@ -66,7 +65,6 @@ public:
 	CRender();
 	virtual 				~CRender();
 
-	void					shader_option_skinning(u32 mode) { m_skinning = mode; }
 
 	void 					Initialize();
 	void 					ShutDown();

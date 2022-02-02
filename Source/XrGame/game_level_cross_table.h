@@ -81,6 +81,7 @@ private:
 
 public:
 	IC						CGameLevelCrossTable	(const void *buffer, const u32 &buffer_size);
+	IC						CGameLevelCrossTable	();
 #ifdef AI_COMPILER
 	IC						CGameLevelCrossTable	(LPCSTR fName);
 #endif // AI_COMPILER

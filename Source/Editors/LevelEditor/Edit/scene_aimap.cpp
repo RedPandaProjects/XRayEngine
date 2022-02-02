@@ -77,6 +77,50 @@ void	Compress(NodeCompressed& Dest, SAINode* Src, hdrNODES& H)
 	//	Dest.links	= BYTE(Src.neighbours.size());
 }
 
+
+
+class CNodeRenumberer 
+{
+
+
+public:
+	CNodeRenumberer(
+		xr_vector<NodeCompressed>& nodes,
+		xr_vector<u32>& sorted,
+		xr_vector<u32>& renumbering
+	) 
+	{
+		u32					N = (u32)nodes.size();
+		sorted.resize(N);
+		renumbering.resize(N);
+
+		for (u32 i = 0; i < N; ++i)
+			sorted[i] = i;
+
+		std::stable_sort(sorted.begin(), sorted.end(), [&nodes](u32 vertex_id0, u32 vertex_id1)
+			{
+				return		(nodes[vertex_id0].p.xz() < nodes[vertex_id1].p.xz());
+			});
+
+		for (u32 i = 0; i < N; ++i)
+			renumbering[sorted[i]] = i;
+
+		for (u32 i = 0; i < N; ++i) {
+			for (u32 j = 0; j < 4; ++j) {
+				u32			vertex_id = nodes[i].link(u8(j));
+				if (vertex_id >= N)
+					continue;
+				nodes[i].link(u8(j), renumbering[vertex_id]);
+			}
+		}
+
+		std::stable_sort(nodes.begin(), nodes.end(),[](const NodeCompressed& vertex0, const NodeCompressed& vertex1) 
+		{
+			return		(vertex0.p.xz() < vertex1.p.xz());
+		});
+	}
+};
+
 NodeCompressed* EScene::GetAINodes()
 {
     return m_AIMapNodes.data();
@@ -89,10 +133,14 @@ hdrNODES* EScene::GetAIHeader()
 
 
 
+
 void EScene::BuildAIMap()
 {
     ESceneAIMapTool* AIMapTool = dynamic_cast<ESceneAIMapTool*>(GetTool(OBJCLASS_AIMAP));
 	g_params = AIMapTool->AIParams();
+
+	AIMapTool->EnumerateNodes();
+
 	size_t Index = 0;
 	auto CalculateHeight = [&AIMapTool](Fbox& BB)->float
 	{
@@ -120,5 +168,8 @@ void EScene::BuildAIMap()
 		Compress(NC, Node, m_AIMapHeader);
 		m_AIMapNodes.push_back(NC);
     }
+	xr_vector<u32>	sorted;
+	xr_vector<u32>	renumbering;
+	CNodeRenumberer	A(m_AIMapNodes, sorted, renumbering);
 
 }

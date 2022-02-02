@@ -1,4 +1,5 @@
 #include "..\xrServerEntities\game_graph_space.h"
+#include "..\XrEngine\XrEditorSceneInterface.h"
 ////////////////////////////////////////////////////////////////////////////
 //	Module 		: game_graph_inline.h
 //	Created 	: 18.02.2003
@@ -27,16 +28,13 @@ IC CGameGraph::CGameGraph									(LPCSTR file_name, u32 current_version)
 #endif // AI_COMPILER
 IC CGameGraph::CGameGraph()
 {
-	{
-		static CVertex null_point = { {0,0,0}, {0,0,0},0,0,255,0,0,0 };
-		m_nodes = (CVertex*)&null_point;
-	}
-	m_nodes = nullptr;
-	m_header.load_from_editor();
+	m_nodes =(CVertex*) EditorScene->GetGraphVertex();
+	m_edges = (BYTE*)EditorScene->GetGraphEdges();
+	m_header = *(GameGraph::CHeader*)EditorScene->GetGraphHeader();
 	m_current_level_some_vertex_id = _GRAPH_ID(-1);
 	m_enabled.assign(header().vertex_count(), true);
-	m_cross_tables = nullptr;
-	m_current_level_cross_table = 0;
+	m_cross_tables = nullptr; 
+	m_current_level_cross_table = xr_new<CGameLevelCrossTable>();
 }
 IC CGameGraph::CGameGraph											(const IReader &_stream)
 {
@@ -45,6 +43,7 @@ IC CGameGraph::CGameGraph											(const IReader &_stream)
 	m_header.load					(&stream);
 	R_ASSERT2						(header().version() == XRAI_CURRENT_VERSION,"Graph version mismatch!");
 	m_nodes							= (CVertex*)stream.pointer();
+	m_edges							= (BYTE*)stream.pointer();
 	m_current_level_some_vertex_id	= _GRAPH_ID(-1);
 	m_enabled.assign				(header().vertex_count(),true);
 	u8								*temp = (u8*)(m_nodes + header().vertex_count());
@@ -55,8 +54,7 @@ IC CGameGraph::CGameGraph											(const IReader &_stream)
 
 IC CGameGraph::~CGameGraph											()
 {
-	if (Device->IsEditorMode())return;
-	xr_delete					(m_current_level_cross_table);
+	xr_delete(m_current_level_cross_table);
 #ifdef AI_COMPILER
 	FS.r_close					(m_reader);
 #endif // AI_COMPILER
@@ -113,7 +111,7 @@ IC	bool CGameGraph::valid_vertex_id								(u32 const vertex_id) const
 
 IC	void CGameGraph::begin											(u32 const vertex_id, const_iterator &start, const_iterator &end) const
 {
-	end							= (start = (const CEdge *)((BYTE *)m_nodes + vertex(_GRAPH_ID(vertex_id))->edge_offset())) + vertex(_GRAPH_ID(vertex_id))->edge_count();
+	end							= (start = (const CEdge *)(m_edges + vertex(_GRAPH_ID(vertex_id))->edge_offset())) + vertex(_GRAPH_ID(vertex_id))->edge_count();
 }
 
 IC	const CGameGraph::_GRAPH_ID &CGameGraph::value					(u32 const vertex_id, const_iterator &i) const
@@ -335,16 +333,10 @@ IC	void GameGraph::CHeader::save									(IWriter *writer)
 		(*I).second.save		(writer);
 }
 
-IC void GameGraph::CHeader::load_from_editor()
-{
-	m_version = 0;
-	m_vertex_count = 1;
-	m_edge_count = 0;
-	m_death_point_count = 0;
-}
 
 IC	void CGameGraph::set_current_level								(u32 const level_id)
 {
+	VERIFY(!Device->IsEditorMode());
 	xr_delete					(m_current_level_cross_table);
 	u32							*current_cross_table = m_cross_tables;
 	GameGraph::LEVEL_MAP::const_iterator	I = header().levels().begin();

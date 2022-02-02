@@ -10,5 +10,10 @@ public:
 	virtual	void LoadCFrom(CObjectSpace*Space, CDB::build_callback)=0;
 	virtual struct NodeCompressed*	GetAINodes()=0;
 	virtual struct hdrNODES*		GetAIHeader()=0;
+	virtual void* GetGraphEdges() = 0;
+	virtual void* GetGraphVertex() = 0;
+	virtual void* GetGraphHeader() = 0;
+	virtual void* GetCrossTableHeader() = 0;
+	virtual void* GetCrossTableVertex() = 0;
 
 };

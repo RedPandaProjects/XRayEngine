@@ -93,4 +93,3 @@ public:
 
 #pragma pack	(pop)
 
-const u32 XRAI_CURRENT_VERSION		=	10;

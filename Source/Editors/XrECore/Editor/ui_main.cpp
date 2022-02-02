@@ -550,6 +550,12 @@ bool TUI::Idle()
     if (m_bAppActive && !m_Flags.is(flNeedQuit) && !m_AppClosed)
     RealRedrawScene();
 
+    {
+        for (u32 pit = 0; pit < Device->seqParallel.size(); pit++)
+            Device->seqParallel[pit]();
+        Device->seqParallel.clear_not_free();
+        Device->seqFrameMT.Process(rp_Frame);
+    }
     // test quit
     if (m_Flags.is(flNeedQuit))	RealQuit();
     return !m_AppClosed;

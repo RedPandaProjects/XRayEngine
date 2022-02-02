@@ -604,6 +604,7 @@ void EScene::Play()
 {
     if (IsSimulate())return;
     BuildAIMap();
+    m_GraphBuilder.build_graph();
     BuildSpawn();
     Console->Execute("main_menu off");
     g_hud = (CCustomHUD*)NEW_INSTANCE(CLSID_HUDMANAGER);
@@ -685,4 +686,29 @@ bool EScene::GetSubstObjectName(const xr_string& _from, xr_string& _to) const
     }
 
     return (It!=It_e);
+}
+
+void* EScene::GetGraphEdges()
+{
+    return m_GraphBuilder.graph_edges();
+}
+
+void* EScene::GetGraphVertex()
+{
+    return m_GraphBuilder.graph_vertex();
+}
+
+void* EScene::GetGraphHeader()
+{
+    return m_GraphBuilder.graph_header();
+}
+
+void* EScene::GetCrossTableHeader()
+{
+    return const_cast<void*>( (const void*) & m_GraphBuilder.cross().header());
+}
+
+void* EScene::GetCrossTableVertex()
+{
+    return const_cast<void*>((const void*)&m_GraphBuilder.cross().vertex(0));
 }
