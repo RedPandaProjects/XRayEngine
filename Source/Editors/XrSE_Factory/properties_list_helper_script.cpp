@@ -16,28 +16,18 @@ using namespace luabind;
 
 struct CChooseType {};
 
-typedef IPropHelper& (__stdcall *TPHelper) ();
+typedef IPropHelper& (__stdcall* TPHelper) ();
 
-CScriptPropertiesListHelper	*g_property_list_helper = 0;
+CScriptPropertiesListHelper* g_property_list_helper = 0;
 
-void load_prop_helper			()
+void load_prop_helper()
 {
-	
-	g_property_list_helper	= xr_new<CScriptPropertiesListHelper>( );
+	g_property_list_helper = xr_new<CScriptPropertiesListHelper>();
 }
 
-/*IPropHelper &PHelper()
-{
-	static	bool			first_time = true;
-	if (first_time) {
-		first_time			= false;
-		load_prop_helper	();
-	}
-	R_ASSERT3				(::Phe,"Cannot find entry point of the function or Cannot find library",prop_helper_library);
-	return					(_PHelper());
-}*/
 
-CScriptPropertiesListHelper *properties_helper()
+
+CScriptPropertiesListHelper* properties_helper()
 {
 	if (!g_property_list_helper)
 	{
@@ -47,7 +37,7 @@ CScriptPropertiesListHelper *properties_helper()
 			load_prop_helper();
 		}
 	}
-		//ai().script_engine().script_log	(ScriptStorage::eLuaMessageTypeError,"Editor is not started, therefore prop_helper cannot be accessed!");
+	//ai().script_engine().script_log	(ScriptStorage::eLuaMessageTypeError,"Editor is not started, therefore prop_helper cannot be accessed!");
 
 	return								(g_property_list_helper);
 }

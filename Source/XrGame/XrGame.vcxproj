@@ -9039,9 +9039,6 @@
     <ClCompile Include="ZudaArtifact.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Editors\XrEProps\XrEProps.vcxproj">
-      <Project>{6d47afc7-0557-4bbf-8902-b248f3621419}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\External\Crypto\Crypto.vcxproj">
       <Project>{376f4128-2bf6-47a3-a76d-4585a5a36be0}</Project>
     </ProjectReference>

@@ -71,7 +71,7 @@ void CSE_Visual::OnChangeAnim(PropValue* sender)
 	abstract->set_editor_flag	(ISE_Abstract::flVisualAnimationChange);
 }
 
-#if DEV_MODE
+#ifndef XRGAME_EXPORTS
 void CSE_Visual::FillProps		(LPCSTR pref, PropItemVec &items)
 {
 	ISE_Abstract* abstract		= smart_cast<ISE_Abstract*>(this); VERIFY(abstract);
@@ -116,7 +116,7 @@ void CSE_Motion::OnChangeMotion	(PropValue* sender)
 	abstract->set_editor_flag	(ISE_Abstract::flMotionChange);
 }
 
-#if DEV_MODE
+#ifndef XRGAME_EXPORTS
 void CSE_Motion::FillProps(		LPCSTR pref, PropItemVec &items)
 {
 	ISE_Abstract* abstract		= smart_cast<ISE_Abstract*>(this); VERIFY(abstract);

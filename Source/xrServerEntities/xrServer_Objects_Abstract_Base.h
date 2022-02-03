@@ -35,7 +35,7 @@ public:
 
     void							set_visual				(LPCSTR name, bool load=true);
 	LPCSTR							get_visual				() const {return *visual_name;};
-#if DEV_MODE
+#ifndef XRGAME_EXPORTS
 	virtual void					FillProps				(LPCSTR pref, PropItemVec &items);
 #endif // #ifndef XRGAME_EXPORTS
 
@@ -58,7 +58,7 @@ public:
     void							set_motion				(LPCSTR name);
 	LPCSTR							get_motion				() const {return *motion_name;};
 
-#if DEV_MODE
+#ifndef XRGAME_EXPORTS
 	virtual void					FillProps				(LPCSTR pref, PropItemVec &items);
 #endif // #ifndef XRGAME_EXPORTS
 
@@ -93,7 +93,7 @@ public:
 public:
 	virtual void			Spawn_Write				(NET_Packet &tNetPacket, BOOL bLocal) = 0;
 	virtual BOOL			Spawn_Read				(NET_Packet &tNetPacket) = 0;
-#if DEV_MODE
+#ifndef XRGAME_EXPORTS
 	virtual void			FillProp				(LPCSTR pref, PropItemVec &items) = 0;
 	virtual void 			on_render				(CDUInterface* du, ISE_AbstractLEOwner* owner, bool bSelected, const Fmatrix& parent,int priority, bool strictB2F) = 0;
 	virtual	visual_data*	visual_collection		() const = 0;

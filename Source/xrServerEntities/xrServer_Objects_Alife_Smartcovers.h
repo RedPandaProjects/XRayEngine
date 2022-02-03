@@ -40,7 +40,7 @@ public:
 	luabind::object					m_available_loopholes;
 #endif // #ifndef AI_COMPILER
 
-#if DEV_MODE
+#ifdef XRSEFACTORY_EXPORTS
 private:
 	typedef xr_vector<visual_data>	visuals_collection;
 
@@ -66,7 +66,7 @@ public:
 #ifndef AI_COMPILER
 	void					set_available_loopholes (luabind::object table);
 #endif // #ifndef AI_COMPILER
-#if DEV_MODE
+#ifdef XRSEFACTORY_EXPORTS
 	virtual void 			on_render				(CDUInterface* du, ISE_AbstractLEOwner* owner, bool bSelected, const Fmatrix& parent,int priority, bool strictB2F);
 	virtual	visual_data*	visual_collection		() const { return &*m_visuals.begin(); }
 	virtual	u32				visual_collection_size	() const { return m_visuals.size(); }
