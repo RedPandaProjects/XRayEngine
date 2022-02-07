@@ -1,7 +1,7 @@
 #ifndef REWARD_MANAGER_INCLUDED
 #define REWARD_MANAGER_INCLUDED
 
-#include "associative_vector.h"
+#include "../xrEngine/associative_vector.h"
 
 class game_cl_mp;
 

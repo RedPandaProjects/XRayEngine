@@ -2,7 +2,7 @@
 #include "UIGameLog.h"
 
 #include "../hudsound.h"
-#include "../../xrServerEntities/alife_space.h"
+#include "../../XrEngine/alife_space.h"
 #include "../EntityCondition.h"
 
 class	CUIPdaMsgListItem;

@@ -11,10 +11,73 @@
 #include "patrol_path.h"
 #include "patrol_point.h"
 #include "levelgamedef.h"
+#include "WayPoint.h"
 
 CPatrolPathStorage::~CPatrolPathStorage		()
 {
 	delete_data					(m_registry);
+}
+
+void CPatrolPathStorage::load_editor(const CLevelGraph* level_graph, const CGameLevelCrossTable* cross, const CGameGraph* game_graph)
+{
+	for (auto& Obj : Scene->ListObj(OBJCLASS_WAY))
+	{
+		CWayObject* Way = dynamic_cast<CWayObject*>(Obj);
+		shared_str	patrol_name =Way->GetName();
+		const_iterator			I = m_registry.find(patrol_name);
+		VERIFY3(I == m_registry.end(), "Duplicated patrol path found", *patrol_name);
+		m_registry.insert(
+			std::make_pair(
+				patrol_name,
+				&xr_new<CPatrolPath>(
+					patrol_name
+					)->load_editor(
+						level_graph,
+						cross,
+						game_graph,
+						Way
+					)
+			)
+		);
+	}
+
+	/*
+	
+	  F->patrolpath.stream.open_chunk	(WAYOBJECT_CHUNK_VERSION);
+        F->patrolpath.stream.w_u16		(WAYOBJECT_VERSION);
+        F->patrolpath.stream.close_chunk	();
+
+        F->patrolpath.stream.open_chunk	(WAYOBJECT_CHUNK_NAME);
+        F->patrolpath.stream.w_stringZ	(GetName());
+        F->patrolpath.stream.close_chunk	();
+
+        int l_cnt		= 0;
+        F->patrolpath.stream.open_chunk	(WAYOBJECT_CHUNK_POINTS);
+        F->patrolpath.stream.w_u16		((u16)m_WayPoints.size());
+        for (WPIt it=m_WayPoints.begin(); it!=m_WayPoints.end(); it++){
+            CWayPoint* W = *it;
+            F->patrolpath.stream.w_fvector3	(W->m_vPosition);
+            F->patrolpath.stream.w_u32		(W->m_Flags.get());
+	        F->patrolpath.stream.w_stringZ	(*W->m_Name?*W->m_Name:"");
+            l_cnt		+= W->m_Links.size();
+        }
+        F->patrolpath.stream.close_chunk	();
+
+        F->patrolpath.stream.open_chunk	(WAYOBJECT_CHUNK_LINKS);
+        F->patrolpath.stream.w_u16		((u16)l_cnt);
+        for (auto it=m_WayPoints.begin(); it!=m_WayPoints.end(); it++){
+            CWayPoint* W= *it;
+            int from	= it-m_WayPoints.begin();
+            for (WPLIt l_it=W->m_Links.begin(); l_it!=W->m_Links.end(); l_it++){
+                WPIt to= std::find(m_WayPoints.begin(),m_WayPoints.end(),(*l_it)->way_point); R_ASSERT(to!=m_WayPoints.end());
+                F->patrolpath.stream.w_u16	((u16)from);
+                F->patrolpath.stream.w_u16	((u16)(to-m_WayPoints.begin()));
+	            F->patrolpath.stream.w_float	((*l_it)->probability);
+            }
+        }
+        F->patrolpath.stream.close_chunk	();
+	*/
+
 }
 
 void CPatrolPathStorage::load_raw			(const CLevelGraph *level_graph, const CGameLevelCrossTable *cross, const CGameGraph *game_graph, IReader &stream)
@@ -25,29 +88,7 @@ void CPatrolPathStorage::load_raw			(const CLevelGraph *level_graph, const CGame
 		return;
 		
 	u32							chunk_iterator;
-	for (IReader *sub_chunk = chunk->open_chunk_iterator(chunk_iterator); sub_chunk; sub_chunk = chunk->open_chunk_iterator(chunk_iterator,sub_chunk)) {
-		R_ASSERT				(sub_chunk->find_chunk(WAYOBJECT_CHUNK_VERSION));
-		R_ASSERT				(sub_chunk->r_u16() == WAYOBJECT_VERSION);
-		R_ASSERT				(sub_chunk->find_chunk(WAYOBJECT_CHUNK_NAME));
-
-		shared_str				patrol_name;
-		sub_chunk->r_stringZ	(patrol_name);
-		const_iterator			I = m_registry.find(patrol_name);
-		VERIFY3					(I == m_registry.end(),"Duplicated patrol path found",*patrol_name);
-		m_registry.insert		(
-			std::make_pair(
-				patrol_name,
-				&xr_new<CPatrolPath>(
-					patrol_name
-				)->load_raw(
-					level_graph,
-					cross,
-					game_graph,
-					*sub_chunk
-				)
-			)
-		);
-	}
+	
 	
 	chunk->close				();
 }

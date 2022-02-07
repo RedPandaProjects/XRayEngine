@@ -31,6 +31,7 @@ public:
 public:
 							CPatrolPath		(shared_str name = "");
 	virtual					~CPatrolPath	();
+			CPatrolPath&	load_editor(const CLevelGraph* level_graph, const CGameLevelCrossTable* cross, const CGameGraph* game_graph,class CWayObject* object);
 			CPatrolPath		&load_raw		(const CLevelGraph *level_graph, const CGameLevelCrossTable *cross, const CGameGraph *game_graph, IReader &stream);
 	IC		const CVertex	*point			(shared_str name) const;
 	template <typename T>

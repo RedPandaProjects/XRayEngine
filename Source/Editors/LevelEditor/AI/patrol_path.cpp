@@ -9,6 +9,7 @@
 #include "stdafx.h"
 #include "patrol_path.h"
 #include "levelgamedef.h"
+#include "WayPoint.h"
 
 LPCSTR TEST_PATROL_PATH_NAME		= "val_dogs_nest4_centre";
 
@@ -40,6 +41,29 @@ CPatrolPath	&CPatrolPath::load_raw	(const CLevelGraph *level_graph, const CGameL
 
 CPatrolPath::~CPatrolPath	()
 {
+}
+
+CPatrolPath& CPatrolPath::load_editor(const CLevelGraph* level_graph, const CGameLevelCrossTable* cross, const CGameGraph* game_graph, CWayObject* object)
+{
+	u32				vertex_count = object->m_WayPoints.size();
+	int l_cnt = 0;
+	for (u32 i = 0; i < vertex_count; ++i)
+	{
+		add_vertex(CPatrolPoint(this).load_editor(level_graph, cross, game_graph, object, i), i);
+	}
+
+	for (auto it = object->m_WayPoints.begin(); it != object->m_WayPoints.end(); it++) {
+		CWayPoint* W = *it;
+		int from = it - object->m_WayPoints.begin();
+		for (WPLIt l_it = W->m_Links.begin(); l_it != W->m_Links.end(); l_it++) {
+			WPIt to = std::find(object->m_WayPoints.begin(), object->m_WayPoints.end(), (*l_it)->way_point); R_ASSERT(to != object->m_WayPoints.end());
+			u16			vertex0 = (u16)from;
+			u16			vertex1 = (u16)(to - object->m_WayPoints.begin());
+			float		probability = (*l_it)->probability;
+			add_edge(vertex0, vertex1, probability);
+		}
+	}
+	return			(*this);
 }
 
 #ifdef DEBUG

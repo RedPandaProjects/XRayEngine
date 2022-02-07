@@ -8,7 +8,7 @@
 
 #include "stdafx.h"
 #include "alife_spawn_registry.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "game_base.h"
 #include "ai_space.h"
 #include "game_graph.h"
@@ -92,7 +92,8 @@ void CALifeSpawnRegistry::load				(LPCSTR spawn_name)
 
 void CALifeSpawnRegistry::load_from_editor()
 {
-	Msg("* Loading spawn registry...");
+	R_ASSERT(false);
+/*	Msg("* Loading spawn registry...");
 	ai().patrol_path_storage_from_editor();
 
 	VERIFY(!m_game_graph);
@@ -103,7 +104,7 @@ void CALifeSpawnRegistry::load_from_editor()
 
 	build_root_spawns();
 
-	Msg("* %d spawn points are successfully loaded", m_spawns.vertex_count());
+	Msg("* %d spawn points are successfully loaded", m_spawns.vertex_count());*/
 }
 
 struct dummy {

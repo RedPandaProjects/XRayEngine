@@ -8,7 +8,7 @@
 
 #include "stdafx.h"
 #include "material_manager.h"
-#include "alife_space.h"
+#include "../xrEngine/alife_space.h"
 #include "phmovementcontrol.h"
 #include "entity_alive.h"
 #include "CharacterPhysicsSupport.h"

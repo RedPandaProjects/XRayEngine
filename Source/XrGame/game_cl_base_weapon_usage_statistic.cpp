@@ -2,7 +2,7 @@
 #include "game_cl_base.h"
 #include "Level.h"
 #include "Weapon.h"
-#include "alife_space.h"
+#include "../xrEngine/alife_space.h"
 #include "hit.h"
 #include "Actor.h"
 #include "ExplosiveItem.h"

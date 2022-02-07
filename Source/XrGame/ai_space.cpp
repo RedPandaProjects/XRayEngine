@@ -275,12 +275,12 @@ void CAI_Space::game_graph				(CGameGraph *game_graph)
 	m_graph_engine			= xr_new<CGraphEngine>(this->game_graph().header().vertex_count());
 }
 
-const CGameLevelCrossTable &CAI_Space::cross_table		() const
+const IGameLevelCrossTable &CAI_Space::cross_table		() const
 {
 	return					(game_graph().cross_table());
 }
 
-const CGameLevelCrossTable *CAI_Space::get_cross_table	() const
+const IGameLevelCrossTable *CAI_Space::get_cross_table	() const
 {
 	return					(&game_graph().cross_table());
 }

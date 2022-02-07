@@ -35,6 +35,8 @@ public:
 	virtual	void					save				(IWriter &stream);
 
 public:
+
+			void					load_editor			(const CLevelGraph* level_graph, const CGameLevelCrossTable* cross, const CGameGraph* game_graph);
 			void					load_raw			(const CLevelGraph *level_graph, const CGameLevelCrossTable *cross, const CGameGraph *game_graph, IReader &stream);
 	IC		const CPatrolPath		*path				(shared_str patrol_name, bool no_assert = false) const;
 	IC		const PATROL_REGISTRY	&patrol_paths		() const;

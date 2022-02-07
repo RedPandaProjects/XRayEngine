@@ -1,7 +1,7 @@
 #pragma once
 
 #include "game_base_space.h"
-#include "alife_space.h"
+#include "../xrEngine/alife_space.h"
 #include "gametype_chooser.h"
 #include "player_account.h"
 

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "alife_space.h"
+#include "../xrEngine/alife_space.h"
 #include "hit_immunity_space.h"
 
 class CHitImmunity

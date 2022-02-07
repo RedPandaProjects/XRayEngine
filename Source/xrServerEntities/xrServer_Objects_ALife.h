@@ -11,8 +11,8 @@
 
 #include "pch_script.h"
 #include "xrServer_Objects.h"
-#include "alife_space.h"
-#include "game_graph_space.h"
+#include "../XrEngine/alife_space.h"
+#include "../XrEngine/game_graph_space.h"
 #ifdef XRGAME_EXPORTS
 #include "alife_smart_terrain_task.h"
 #endif //#ifdef XRGAME_EXPORTS

@@ -6,7 +6,7 @@
 #include "../xr_level_controller.h"
 #include "../../xrEngine/xr_input.h"
 #include "../level.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "UIXmlInit.h"
 #include "UIProgressBar.h"
 

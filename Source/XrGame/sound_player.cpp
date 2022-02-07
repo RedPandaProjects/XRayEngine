@@ -16,7 +16,7 @@
 #include "Kinematics.h"
 #include "profiler.h"
 #include "sound_collection_storage.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 
 CSoundPlayer::CSoundPlayer			(CObject *object)
 {

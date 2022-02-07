@@ -10,14 +10,14 @@
 #include "patrol_path_storage.h"
 #include "patrol_path.h"
 #include "patrol_point.h"
-#include "levelgamedef.h"
+#include "../xrEngine/levelgamedef.h"
 
 CPatrolPathStorage::~CPatrolPathStorage		()
 {
 	delete_data					(m_registry);
 }
 
-void CPatrolPathStorage::load_raw			(const CLevelGraph *level_graph, const CGameLevelCrossTable *cross, const CGameGraph *game_graph, IReader &stream)
+void CPatrolPathStorage::load_raw			(const CLevelGraph *level_graph, const IGameLevelCrossTable*cross, const CGameGraph *game_graph, IReader &stream)
 {
 	IReader						*chunk = stream.open_chunk(WAY_PATROLPATH_CHUNK);
 

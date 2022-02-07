@@ -20,7 +20,7 @@
 #include "string_table.h"
 #include "Kinematics.h"
 #include "ai_object_location.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "../xrEngine/igame_persistent.h"
 
 

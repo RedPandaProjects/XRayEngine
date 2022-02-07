@@ -8,9 +8,9 @@
 
 #pragma once
 
-#include "game_graph_space.h"
+#include "../XrEngine/game_graph_space.h"
 #include "xrserver_space.h"
-#include "alife_space.h"
+#include "../XrEngine/alife_space.h"
 #include "script_export_space.h"
 
 class CSE_ALifeMonsterAbstract;

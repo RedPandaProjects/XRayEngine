@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "..\xrServerEntities\game_graph_space.h"
+#include "..\XrEngine\game_graph_space.h"
 #include "game_level_cross_table.h"
 
 class CGameGraph {
@@ -33,10 +33,8 @@ public:
 
 private:
 	CHeader							m_header;
-#ifdef AI_COMPILER
-	IReader* m_reader;
-#endif // AI_COMPILER
-	CVertex* m_nodes;
+	CVertex*						m_nodes;
+	BYTE*							m_edge;
 	mutable ENABLED					m_enabled;
 	_GRAPH_ID						m_current_level_some_vertex_id;
 
@@ -46,7 +44,8 @@ private:
 public:
 
 public:
-	IC								CGameGraph				();
+									CGameGraph				(class CGameGraphBuilder*Builder);
+	IC	const CGameLevelCrossTable	&cross_table			() const;
 
 public:
 	IC virtual						~CGameGraph				();

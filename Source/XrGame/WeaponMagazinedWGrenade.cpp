@@ -8,7 +8,7 @@
 #include "Actor.h"
 #include "xr_level_controller.h"
 #include "level.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "game_base_space.h"
 #include "../xrphysics/MathUtils.h"
 #include "player_hud.h"

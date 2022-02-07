@@ -13,7 +13,7 @@
 #include "Kinematics.h"
 #include "ai_object_location.h"
 #include "../xrphysics/mathutils.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "player_hud.h"
 #include "gamepersistent.h"
 #include "effectorFall.h"

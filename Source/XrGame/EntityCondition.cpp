@@ -9,7 +9,7 @@
 #include "entity_alive.h"
 #include "KinematicsAnimated.h"
 #include "Kinematics.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "ActorHelmet.h"
 
 #define MAX_HEALTH 1.0f

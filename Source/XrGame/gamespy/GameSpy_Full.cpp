@@ -9,7 +9,7 @@
 #include "GameSpy_SAKE.h"
 #include "GameSpy_ATLAS.h"
 #include "../MainMenu.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 
 
 CGameSpy_Full::CGameSpy_Full()	

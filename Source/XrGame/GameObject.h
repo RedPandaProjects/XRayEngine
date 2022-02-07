@@ -8,7 +8,7 @@
 
 #include "../xrEngine/xr_object.h"
 #include "xrServer_Space.h"
-#include "alife_space.h"
+#include "../xrEngine/alife_space.h"
 #include "UsableScriptObject.h"
 #include "script_binder.h"
 #include "Hit.h"

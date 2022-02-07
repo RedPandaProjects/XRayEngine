@@ -2,7 +2,7 @@
 #ifndef CHARACTER_PHYSICS_SUPPORT
 #define CHARACTER_PHYSICS_SUPPORT
 
-#include "alife_space.h"
+#include "../xrEngine/alife_space.h"
 #include "PHSkeleton.h"
 #include "Entity_Alive.h"
 #include "PHSoundPlayer.h"

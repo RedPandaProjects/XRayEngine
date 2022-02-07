@@ -9,9 +9,9 @@
 #pragma once
 
 #include "xrServer_Objects_Abstract.h"
-#include "object_interfaces.h"
+#include "../XrEngine/object_broker.h"
 #include "script_value_container.h"
-#include "alife_space.h"
+#include "../XrEngine/alife_space.h"
 #include "../xrCore/client_id.h"
 
 class NET_Packet;

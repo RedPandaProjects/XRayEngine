@@ -1,6 +1,6 @@
 #include "pch_script.h"
 #include "xml_str_id_loader.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 /*
 #include "InfoPortion.h"
 #include "gameobject.h"

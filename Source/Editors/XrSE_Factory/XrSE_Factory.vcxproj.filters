@@ -417,9 +417,6 @@
     <ClInclude Include="..\..\xrServerEntities\lua_studio.h">
       <Filter>Scripts\lua_studio</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\xrServerEntities\alife_space.h">
-      <Filter>ServerStuff\Common\ALifeStuff</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\xrServerEntities\game_graph_space.h">
       <Filter>ServerStuff\Common\ALifeStuff</Filter>
     </ClInclude>
@@ -679,9 +676,6 @@
     </ClCompile>
     <ClCompile Include="..\..\xrServerEntities\lua_studio.cpp">
       <Filter>Scripts\lua_studio</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\xrServerEntities\alife_space.cpp">
-      <Filter>ServerStuff\Common\ALifeStuff</Filter>
     </ClCompile>
     <ClCompile Include="alife_artefact_order.cpp">
       <Filter>ServerStuff\Common\ALifeStuff\artefact_order</Filter>

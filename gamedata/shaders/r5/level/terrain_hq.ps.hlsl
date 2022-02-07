@@ -41,7 +41,7 @@ PS_BASE_OUT main(PS_TERRAIN_IN input)
 
     float4 color = float4((light * base.rgb * 2) * detail.rgb * 2, 1.f);
 	
-	    PS_BASE_OUT output;
+	PS_BASE_OUT output;
     output.color = float4(lerp(FogColor.rgb, color.rgb, input.fog), 1.f);
     output.compute.z = input.out_position_z;
     output.compute.xyw = float3(1.f, 1.f, 1.f);

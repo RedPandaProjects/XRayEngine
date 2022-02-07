@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "alife_space.h"
+#include "../xrEngine/alife_space.h"
 #include "script_export_space.h"
 
 class CScriptGameObject;

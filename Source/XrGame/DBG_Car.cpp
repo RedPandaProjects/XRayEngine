@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #ifdef DEBUG
 #include "PHDebug.h"
-#include "alife_space.h"
+#include "../xrEngine/alife_space.h"
 #include "hit.h"
 #include "PHDestroyable.h"
 #include "Car.h"

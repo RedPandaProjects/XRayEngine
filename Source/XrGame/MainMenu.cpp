@@ -25,7 +25,7 @@
 
 #include <shellapi.h>
 
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 
 #include "account_manager.h"
 #include "login_manager.h"

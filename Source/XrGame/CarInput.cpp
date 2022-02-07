@@ -4,7 +4,7 @@
 
 #include "PHDebug.h"
 #endif
-#include "alife_space.h"
+#include "../xrEngine/alife_space.h"
 #include "hit.h"
 #include "phdestroyable.h"
 #include "car.h"

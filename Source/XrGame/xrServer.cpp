@@ -13,7 +13,7 @@
 #include "ai_space.h"
 #include "../xrEngine/IGame_Persistent.h"
 #include "string_table.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 
 #include "../xrEngine/XR_IOConsole.h"
 #include "ui/UIInventoryUtilities.h"

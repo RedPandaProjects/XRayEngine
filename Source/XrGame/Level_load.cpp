@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "LevelGameDef.h"
+#include "../xrEngine/LevelGameDef.h"
 #include "ai_space.h"
 #include "ParticlesObject.h"
 #include "script_process.h"

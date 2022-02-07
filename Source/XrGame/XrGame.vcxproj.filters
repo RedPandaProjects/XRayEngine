@@ -1174,15 +1174,6 @@
     <Filter Include="AI\ANavigation\GameLevelCrossTable">
       <UniqueIdentifier>{a638bc80-0173-4146-ba0b-f45c26b216f9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="AI\ANavigation\GraphAbstract">
-      <UniqueIdentifier>{a9a4fc1c-63a8-445c-a360-454a40be9657}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\ANavigation\GraphAbstract\GraphEdge">
-      <UniqueIdentifier>{fe5df553-737a-4f41-ae07-e4f8a2ab8645}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\ANavigation\GraphAbstract\GraphVertex">
-      <UniqueIdentifier>{f4044004-9c30-4fa6-806c-9c7d758e95d6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="AI\ANavigation\LevelGraph">
       <UniqueIdentifier>{1c6d8a64-0b59-4c61-8fcc-d65eb8d15bd7}</UniqueIdentifier>
     </Filter>
@@ -3162,9 +3153,6 @@
     <ClInclude Include="alife_simulator_inline.h">
       <Filter>AI\ALife</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\alife_space.h">
-      <Filter>AI\ALife</Filter>
-    </ClInclude>
     <ClInclude Include="alife_interaction_manager.h">
       <Filter>AI\ALife\interaction_manager</Filter>
     </ClInclude>
@@ -4752,40 +4740,10 @@
     <ClInclude Include="game_graph.h">
       <Filter>AI\ANavigation\GameGraph</Filter>
     </ClInclude>
-    <ClInclude Include="game_graph_inline.h">
-      <Filter>AI\ANavigation\GameGraph</Filter>
-    </ClInclude>
-    <ClInclude Include="..\xrServerEntities\game_graph_space.h">
-      <Filter>AI\ANavigation\GameGraph</Filter>
-    </ClInclude>
     <ClInclude Include="game_level_cross_table.h">
       <Filter>AI\ANavigation\GameLevelCrossTable</Filter>
     </ClInclude>
-    <ClInclude Include="game_level_cross_table_inline.h">
-      <Filter>AI\ANavigation\GameLevelCrossTable</Filter>
-    </ClInclude>
-    <ClInclude Include="graph_edge.h">
-      <Filter>AI\ANavigation\GraphAbstract\GraphEdge</Filter>
-    </ClInclude>
-    <ClInclude Include="graph_edge_inline.h">
-      <Filter>AI\ANavigation\GraphAbstract\GraphEdge</Filter>
-    </ClInclude>
-    <ClInclude Include="graph_vertex.h">
-      <Filter>AI\ANavigation\GraphAbstract\GraphVertex</Filter>
-    </ClInclude>
-    <ClInclude Include="graph_vertex_inline.h">
-      <Filter>AI\ANavigation\GraphAbstract\GraphVertex</Filter>
-    </ClInclude>
     <ClInclude Include="level_graph.h">
-      <Filter>AI\ANavigation\LevelGraph</Filter>
-    </ClInclude>
-    <ClInclude Include="level_graph_inline.h">
-      <Filter>AI\ANavigation\LevelGraph</Filter>
-    </ClInclude>
-    <ClInclude Include="level_graph_space.h">
-      <Filter>AI\ANavigation\LevelGraph</Filter>
-    </ClInclude>
-    <ClInclude Include="level_graph_vertex_inline.h">
       <Filter>AI\ANavigation\LevelGraph</Filter>
     </ClInclude>
     <ClInclude Include="ai_object_location.h">
@@ -5321,9 +5279,6 @@
     </ClInclude>
     <ClInclude Include="Tracer.h">
       <Filter>Core\Client\Level\Bullet Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="..\xrServerEntities\LevelGameDef.h">
-      <Filter>Core\Client\Level\SeniorityHierarchyHolder</Filter>
     </ClInclude>
     <ClInclude Include="seniority_hierarchy_holder.h">
       <Filter>Core\Client\Level\SeniorityHierarchyHolder</Filter>
@@ -7683,9 +7638,6 @@
     <ClCompile Include="alife_simulator_script.cpp">
       <Filter>AI\ALife</Filter>
     </ClCompile>
-    <ClCompile Include="..\xrServerEntities\alife_space.cpp">
-      <Filter>AI\ALife</Filter>
-    </ClCompile>
     <ClCompile Include="alife_interaction_manager.cpp">
       <Filter>AI\ALife\interaction_manager</Filter>
     </ClCompile>
@@ -8556,9 +8508,6 @@
     <ClCompile Include="level_graph_debug2.cpp">
       <Filter>AI\ANavigation\LevelGraph</Filter>
     </ClCompile>
-    <ClCompile Include="level_graph_vertex.cpp">
-      <Filter>AI\ANavigation\LevelGraph</Filter>
-    </ClCompile>
     <ClCompile Include="patrol_path.cpp">
       <Filter>AI\ANavigation\PatrolPaths\PatrolPath</Filter>
     </ClCompile>
@@ -8936,9 +8885,6 @@
     </ClCompile>
     <ClCompile Include="Tracer.cpp">
       <Filter>Core\Client\Level\Bullet Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="..\xrServerEntities\LevelGameDef.cpp">
-      <Filter>Core\Client\Level\SeniorityHierarchyHolder</Filter>
     </ClCompile>
     <ClCompile Include="seniority_hierarchy_holder.cpp">
       <Filter>Core\Client\Level\SeniorityHierarchyHolder</Filter>
@@ -11040,6 +10986,12 @@
     <ClCompile Include="XrLevelEditor.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
+    <ClCompile Include="game_level_cross_table.cpp">
+      <Filter>AI\ANavigation\GameLevelCrossTable</Filter>
+    </ClCompile>
+    <ClCompile Include="game_graph.cpp">
+      <Filter>AI\ANavigation\GameGraph</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="ai\monsters\chimera\chimera_attack_state.h">
@@ -11048,17 +11000,12 @@
     <CustomBuild Include="ai\monsters\chimera\chimera_attack_state_inline.h">
       <Filter>AI\AMonsters\monsters\Chimera\states</Filter>
     </CustomBuild>
-    <CustomBuild Include="graph_abstract.h">
-      <Filter>AI\ANavigation\GraphAbstract</Filter>
-    </CustomBuild>
-    <CustomBuild Include="graph_abstract_inline.h">
-      <Filter>AI\ANavigation\GraphAbstract</Filter>
-    </CustomBuild>
     <CustomBuild Include="Explosive.h">
       <Filter>Core\Client\Objects\items &amp; weapons\Explosives</Filter>
     </CustomBuild>
     <CustomBuild Include="ui\UIRankFaction.h">
       <Filter>UI\Common\PDA\Statistics &amp; Rankings</Filter>
     </CustomBuild>
+    <CustomBuild Include="graph_abstract.h" />
   </ItemGroup>
 </Project>

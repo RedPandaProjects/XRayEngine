@@ -3,7 +3,7 @@
 #include "level.h"
 #include "ui/UIXmlInit.h"
 #include "ui/UIStatic.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "string_table.h"
 
 #include "InventoryOwner.h"

@@ -9,7 +9,7 @@
 #pragma once
 #ifndef XRSEFACTORY_EXPORTS
 class CGameGraph;
-class CGameLevelCrossTable;
+class IGameLevelCrossTable;
 class CLevelGraph;
 class CGraphEngine;
 class CEF_Storage;
@@ -70,8 +70,8 @@ public:
 	IC		CGameGraph					*get_game_graph			() const;
 	IC		CLevelGraph					&level_graph			() const;
 	IC		const CLevelGraph			*get_level_graph		() const;
-			const CGameLevelCrossTable	&cross_table			() const;
-			const CGameLevelCrossTable	*get_cross_table		() const;
+			const IGameLevelCrossTable	&cross_table			() const;
+			const IGameLevelCrossTable	*get_cross_table		() const;
 	IC		const CPatrolPathStorage	&patrol_paths			() const;
 	IC		CEF_Storage					&ef_storage				() const;
 	IC		CGraphEngine				&graph_engine			() const;

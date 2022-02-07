@@ -9,8 +9,8 @@
 #ifndef OBSTACLES_QUERY_H
 #define OBSTACLES_QUERY_H
 
-#include "object_broker.h"
-#include "associative_vector.h"
+#include "../xrEngine/object_broker.h"
+#include "../xrEngine/associative_vector.h"
 
 class CGameObject;
 

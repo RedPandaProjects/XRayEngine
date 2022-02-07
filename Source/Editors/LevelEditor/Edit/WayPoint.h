@@ -20,6 +20,9 @@ struct SWPLink{
 DEFINE_VECTOR(SWPLink*,WPLVec,WPLIt);
 
 class CWayPoint{
+
+    friend class CPatrolPoint;
+    friend class CPatrolPath;
     friend class CWayObject;
     friend class TfrmPropertiesWayPoint;
     shared_str		m_Name;
@@ -55,6 +58,8 @@ class CWayObject: public CCustomObject
 {
 protected:
     friend class TfrmPropertiesWayPoint;
+    friend class CPatrolPath;
+    friend class CPatrolPoint;
 	EWayType		m_Type;
     WPVec			m_WayPoints;
     typedef CCustomObject inherited;

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "UIWindow.h"
-#include "..\..\xrServerEntities\alife_space.h"
+#include "..\..\XrEngine\alife_space.h"
 #include "..\..\xrServerEntities\inventory_space.h"
 #include "..\actor_defs.h"
 

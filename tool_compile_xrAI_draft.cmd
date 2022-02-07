@@ -1,1 +1,1 @@
-start Bin\Win32\Development\xrai.exe -f test -draft -keep_temp_files
+start Bin\Win32\Debug\xrai.exe -f test_light -draft -keep_temp_files

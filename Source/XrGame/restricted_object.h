@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "alife_space.h"
+#include "../xrEngine/alife_space.h"
 
 class CSE_Abstract;
 class CCustomMonster;

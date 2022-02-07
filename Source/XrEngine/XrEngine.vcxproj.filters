@@ -250,6 +250,117 @@
     <Filter Include="My Amplifier Results">
       <UniqueIdentifier>{12b4f4fa-3402-43db-8088-f621ac8c2c71}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game API\Server">
+      <UniqueIdentifier>{9bf0dc47-04f2-484f-a79a-7e6d27cfb9e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interfaces\AI">
+      <UniqueIdentifier>{c4e91bd5-e5a6-4c5d-b959-1264536fcb08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife">
+      <UniqueIdentifier>{6d7200ae-c3c2-47bc-9c6d-808168945834}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Shared">
+      <UniqueIdentifier>{ab7d6cd7-ba70-4212-8ea3-9c0edd095397}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Shared\associative_vector">
+      <UniqueIdentifier>{1bfc5551-f0af-4b13-8521-b8e291e4ae2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search">
+      <UniqueIdentifier>{3e92da15-42ac-4afb-85f9-97ad6666f43c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search\algorithms">
+      <UniqueIdentifier>{6e3d44a8-b8d5-4a1a-bfcf-2bd8e15feb31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search\algorithms\A%2a">
+      <UniqueIdentifier>{231cc7c6-7ba0-40e5-9582-bace72439ae7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search\algorithms\Dijkstra">
+      <UniqueIdentifier>{74eb62fd-d945-4bd9-886c-3c3a398447d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Shared\object_broker">
+      <UniqueIdentifier>{5ee8afe9-b847-416b-ba90-64b9d9e40695}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search\data_storages">
+      <UniqueIdentifier>{0cce0594-21d1-4fa2-87c8-b746becb0bed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search\data_storages\algorithms">
+      <UniqueIdentifier>{0cd91437-da5e-4209-8154-b17ac6724ca1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search\data_storages\algorithms\lists">
+      <UniqueIdentifier>{95fc2f67-70aa-4bd5-82ef-c1769fe5bc67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search\data_storages\algorithms\lists\bucket_list">
+      <UniqueIdentifier>{61451149-fb68-4ef5-8ff5-059be41c3f28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search\data_storages\algorithms\lists\double_linked_list">
+      <UniqueIdentifier>{c7e887ce-fad5-4b2b-89ba-409f7bef41f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search\data_storages\algorithms\lists\single_linked_list">
+      <UniqueIdentifier>{545ab3f1-931d-499a-b5bd-b3e458d8a71e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search\data_storages\algorithms\priority_queues">
+      <UniqueIdentifier>{4af25da0-4543-4535-8d76-3ce88a604559}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search\data_storages\algorithms\priority_queues\binary_heap">
+      <UniqueIdentifier>{43530479-c2eb-44cb-9d94-1e44ae6f7a76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search\data_storages\data_storage_constructors">
+      <UniqueIdentifier>{53430373-049a-4e36-bfc2-f60c53609576}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search\data_storages\data_storage_constructors\builder_allocator">
+      <UniqueIdentifier>{de13034a-0770-4b29-b145-3ab58ede352c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search\data_storages\data_storage_constructors\manager_builder">
+      <UniqueIdentifier>{ea6f57f2-fdc0-48c7-8398-b8deb141ad78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search\data_storages\vertex_manager">
+      <UniqueIdentifier>{d92a1b9e-2dd8-4a83-aba8-5b840a69b95f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search\data_storages\vertex_manager\fixed">
+      <UniqueIdentifier>{63aab31b-7cbf-479f-ab1b-e1d3b3de60c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search\data_storages\vertex_manager\hash_fixed">
+      <UniqueIdentifier>{6f5d5dd2-9e56-4959-8c86-c084b13aaa44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search\data_storages\vertex_allocators">
+      <UniqueIdentifier>{9377bd98-041a-435a-a7b5-0f3f957216f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search\data_storages\path_builders">
+      <UniqueIdentifier>{8893a071-7c3f-40fa-80c8-bad619b7ced6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search\data_storages\path_builders\edge_path">
+      <UniqueIdentifier>{736e1c8b-b3fb-4ae6-9b1e-f0d76a639b8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search\data_storages\path_builders\vertex_path">
+      <UniqueIdentifier>{da9f6c59-08f4-46b8-8ff7-a07045029b9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Space">
+      <UniqueIdentifier>{62dd330a-a030-4452-b732-7d10457df72c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search\graph_engine">
+      <UniqueIdentifier>{a0a26efc-fba0-4b33-ba23-1a51a0fd2742}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search\graphs">
+      <UniqueIdentifier>{5f94af65-dd5b-470f-b3b1-0ce985285d09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search\graphs\abstract_graph">
+      <UniqueIdentifier>{5fce2d4c-fb68-4cd4-8139-0d21a8dbfafc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search\graphs\abstract_graph\graph_edge">
+      <UniqueIdentifier>{35b7e2e3-c471-4fc7-9c66-000f83eb55b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search\graphs\abstract_graph\graph_vertex">
+      <UniqueIdentifier>{6ab949c1-4b13-4cae-a8dd-f844ba43f015}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search\graphs\cross_table">
+      <UniqueIdentifier>{d1d243f3-dbf0-4661-a836-a361408c9f22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search\graphs\game_graph">
+      <UniqueIdentifier>{f717be57-2d80-4e36-be53-69fedcb73991}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game API\Alife\Search\graphs\level_graph">
+      <UniqueIdentifier>{a477e0f2-04d4-4295-879c-d9f40fc81c33}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="_d3d_extensions.h">
@@ -639,6 +750,186 @@
     <ClInclude Include="XrEditorSceneInterface.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="xrISEAbstract.h">
+      <Filter>Game API\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="alife_space.h">
+      <Filter>Game API\Alife\Space</Filter>
+    </ClInclude>
+    <ClInclude Include="associative_vector.h">
+      <Filter>Game API\Alife\Shared\associative_vector</Filter>
+    </ClInclude>
+    <ClInclude Include="associative_vector_compare_predicate.h">
+      <Filter>Game API\Alife\Shared\associative_vector</Filter>
+    </ClInclude>
+    <ClInclude Include="associative_vector_compare_predicate_inline.h">
+      <Filter>Game API\Alife\Shared\associative_vector</Filter>
+    </ClInclude>
+    <ClInclude Include="associative_vector_inline.h">
+      <Filter>Game API\Alife\Shared\associative_vector</Filter>
+    </ClInclude>
+    <ClInclude Include="a_star_inline.h">
+      <Filter>Game API\Alife\Search\algorithms\A%2a</Filter>
+    </ClInclude>
+    <ClInclude Include="a_star.h">
+      <Filter>Game API\Alife\Search\algorithms\A%2a</Filter>
+    </ClInclude>
+    <ClInclude Include="dijkstra.h">
+      <Filter>Game API\Alife\Search\algorithms\Dijkstra</Filter>
+    </ClInclude>
+    <ClInclude Include="dijkstra_inline.h">
+      <Filter>Game API\Alife\Search\algorithms\Dijkstra</Filter>
+    </ClInclude>
+    <ClInclude Include="object_destroyer.h">
+      <Filter>Game API\Alife\Shared\object_broker</Filter>
+    </ClInclude>
+    <ClInclude Include="object_comparer.h">
+      <Filter>Game API\Alife\Shared\object_broker</Filter>
+    </ClInclude>
+    <ClInclude Include="object_cloner.h">
+      <Filter>Game API\Alife\Shared\object_broker</Filter>
+    </ClInclude>
+    <ClInclude Include="object_broker.h">
+      <Filter>Game API\Alife\Shared\object_broker</Filter>
+    </ClInclude>
+    <ClInclude Include="object_saver.h">
+      <Filter>Game API\Alife\Shared\object_broker</Filter>
+    </ClInclude>
+    <ClInclude Include="object_loader.h">
+      <Filter>Game API\Alife\Shared\object_broker</Filter>
+    </ClInclude>
+    <ClInclude Include="object_interfaces.h">
+      <Filter>Game API\Alife\Shared\object_broker</Filter>
+    </ClInclude>
+    <ClInclude Include="data_storage_bucket_list.h">
+      <Filter>Game API\Alife\Search\data_storages\algorithms\lists\bucket_list</Filter>
+    </ClInclude>
+    <ClInclude Include="data_storage_bucket_list_inline.h">
+      <Filter>Game API\Alife\Search\data_storages\algorithms\lists\bucket_list</Filter>
+    </ClInclude>
+    <ClInclude Include="data_storage_double_linked_list_inline.h">
+      <Filter>Game API\Alife\Search\data_storages\algorithms\lists\double_linked_list</Filter>
+    </ClInclude>
+    <ClInclude Include="data_storage_double_linked_list.h">
+      <Filter>Game API\Alife\Search\data_storages\algorithms\lists\double_linked_list</Filter>
+    </ClInclude>
+    <ClInclude Include="data_storage_single_linked_list.h">
+      <Filter>Game API\Alife\Search\data_storages\algorithms\lists\single_linked_list</Filter>
+    </ClInclude>
+    <ClInclude Include="data_storage_single_linked_list_inline.h">
+      <Filter>Game API\Alife\Search\data_storages\algorithms\lists\single_linked_list</Filter>
+    </ClInclude>
+    <ClInclude Include="data_storage_binary_heap_inline.h">
+      <Filter>Game API\Alife\Search\data_storages\algorithms\priority_queues\binary_heap</Filter>
+    </ClInclude>
+    <ClInclude Include="data_storage_binary_heap.h">
+      <Filter>Game API\Alife\Search\data_storages\algorithms\priority_queues\binary_heap</Filter>
+    </ClInclude>
+    <ClInclude Include="data_storage_constructor.h">
+      <Filter>Game API\Alife\Search\data_storages\data_storage_constructors</Filter>
+    </ClInclude>
+    <ClInclude Include="builder_allocator_constructor_inline.h">
+      <Filter>Game API\Alife\Search\data_storages\data_storage_constructors\builder_allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="builder_allocator_constructor.h">
+      <Filter>Game API\Alife\Search\data_storages\data_storage_constructors\builder_allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="manager_builder_allocator_constructor.h">
+      <Filter>Game API\Alife\Search\data_storages\data_storage_constructors\manager_builder</Filter>
+    </ClInclude>
+    <ClInclude Include="manager_builder_allocator_constructor_inline.h">
+      <Filter>Game API\Alife\Search\data_storages\data_storage_constructors\manager_builder</Filter>
+    </ClInclude>
+    <ClInclude Include="edge_path_inline.h">
+      <Filter>Game API\Alife\Search\data_storages\path_builders\edge_path</Filter>
+    </ClInclude>
+    <ClInclude Include="edge_path.h">
+      <Filter>Game API\Alife\Search\data_storages\path_builders\edge_path</Filter>
+    </ClInclude>
+    <ClInclude Include="vertex_path_inline.h">
+      <Filter>Game API\Alife\Search\data_storages\path_builders\vertex_path</Filter>
+    </ClInclude>
+    <ClInclude Include="vertex_path.h">
+      <Filter>Game API\Alife\Search\data_storages\path_builders\vertex_path</Filter>
+    </ClInclude>
+    <ClInclude Include="vertex_allocator_fixed_inline.h">
+      <Filter>Game API\Alife\Search\data_storages\vertex_allocators</Filter>
+    </ClInclude>
+    <ClInclude Include="vertex_allocator_fixed.h">
+      <Filter>Game API\Alife\Search\data_storages\vertex_allocators</Filter>
+    </ClInclude>
+    <ClInclude Include="vertex_manager_fixed_inline.h">
+      <Filter>Game API\Alife\Search\data_storages\vertex_manager\fixed</Filter>
+    </ClInclude>
+    <ClInclude Include="vertex_manager_fixed.h">
+      <Filter>Game API\Alife\Search\data_storages\vertex_manager\fixed</Filter>
+    </ClInclude>
+    <ClInclude Include="vertex_manager_hash_fixed_inline.h">
+      <Filter>Game API\Alife\Search\data_storages\vertex_manager\hash_fixed</Filter>
+    </ClInclude>
+    <ClInclude Include="vertex_manager_hash_fixed.h">
+      <Filter>Game API\Alife\Search\data_storages\vertex_manager\hash_fixed</Filter>
+    </ClInclude>
+    <ClInclude Include="graph_engine.h">
+      <Filter>Game API\Alife\Search\graph_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="graph_engine_inline.h">
+      <Filter>Game API\Alife\Search\graph_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="graph_engine_space.h">
+      <Filter>Game API\Alife\Search\graph_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="graph_abstract.h">
+      <Filter>Game API\Alife\Search\graphs\abstract_graph</Filter>
+    </ClInclude>
+    <ClInclude Include="graph_abstract_inline.h">
+      <Filter>Game API\Alife\Search\graphs\abstract_graph</Filter>
+    </ClInclude>
+    <ClInclude Include="graph_edge.h">
+      <Filter>Game API\Alife\Search\graphs\abstract_graph\graph_edge</Filter>
+    </ClInclude>
+    <ClInclude Include="graph_edge_inline.h">
+      <Filter>Game API\Alife\Search\graphs\abstract_graph\graph_edge</Filter>
+    </ClInclude>
+    <ClInclude Include="graph_vertex.h">
+      <Filter>Game API\Alife\Search\graphs\abstract_graph\graph_vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="graph_vertex_inline.h">
+      <Filter>Game API\Alife\Search\graphs\abstract_graph\graph_vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="game_level_cross_table.h">
+      <Filter>Game API\Alife\Search\graphs\cross_table</Filter>
+    </ClInclude>
+    <ClInclude Include="game_level_cross_table_inline.h">
+      <Filter>Game API\Alife\Search\graphs\cross_table</Filter>
+    </ClInclude>
+    <ClInclude Include="game_graph.h">
+      <Filter>Game API\Alife\Search\graphs\game_graph</Filter>
+    </ClInclude>
+    <ClInclude Include="game_graph_inline.h">
+      <Filter>Game API\Alife\Search\graphs\game_graph</Filter>
+    </ClInclude>
+    <ClInclude Include="level_graph.h">
+      <Filter>Game API\Alife\Search\graphs\level_graph</Filter>
+    </ClInclude>
+    <ClInclude Include="level_graph_inline.h">
+      <Filter>Game API\Alife\Search\graphs\level_graph</Filter>
+    </ClInclude>
+    <ClInclude Include="level_graph_space.h">
+      <Filter>Game API\Alife\Search\graphs\level_graph</Filter>
+    </ClInclude>
+    <ClInclude Include="level_graph_vertex_inline.h">
+      <Filter>Game API\Alife\Search\graphs\level_graph</Filter>
+    </ClInclude>
+    <ClInclude Include="game_graph_space.h">
+      <Filter>Game API\Alife\Search\graphs\game_graph</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelGameDef.h">
+      <Filter>Game API</Filter>
+    </ClInclude>
+    <ClInclude Include="object_type_traits.h">
+      <Filter>Game API\Alife\Shared\object_broker</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="defines.cpp">
@@ -1003,6 +1294,24 @@
     </ClCompile>
     <ClCompile Include="XrEditorSceneInterface.cpp">
       <Filter>Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="alife_space.cpp">
+      <Filter>Game API\Alife\Space</Filter>
+    </ClCompile>
+    <ClCompile Include="level_graph_vertex.cpp">
+      <Filter>Game API\Alife\Search\graphs\level_graph</Filter>
+    </ClCompile>
+    <ClCompile Include="game_graph.cpp">
+      <Filter>Game API\Alife\Search\graphs\game_graph</Filter>
+    </ClCompile>
+    <ClCompile Include="game_level_cross_table.cpp">
+      <Filter>Game API\Alife\Search\graphs\cross_table</Filter>
+    </ClCompile>
+    <ClCompile Include="level_graph.cpp">
+      <Filter>Game API\Alife\Search\graphs\level_graph</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelGameDef.cpp">
+      <Filter>Game API</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

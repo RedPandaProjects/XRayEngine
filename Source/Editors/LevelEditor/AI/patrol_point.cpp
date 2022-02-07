@@ -18,7 +18,7 @@
 #ifdef DEBUG
 #	include "patrol_path.h"
 #endif
-
+#include "WayPoint.h"
 CPatrolPoint::CPatrolPoint									(const CPatrolPath *path)
 {
 #ifdef DEBUG
@@ -88,6 +88,13 @@ CPatrolPoint &CPatrolPoint::load_raw						(const CLevelGraph *level_graph, const
 #endif
 	correct_position	(level_graph,cross,game_graph);
 	return				(*this);
+}
+
+CPatrolPoint& CPatrolPoint::load_editor(const CLevelGraph* level_graph, const CGameLevelCrossTable* cross, const CGameGraph* game_graph, CWayObject* object, size_t id)
+{
+	m_position = object->m_WayPoints[id]->m_vPosition;
+	m_flags = object->m_WayPoints[id]->m_Flags.get();
+	m_name = object->m_WayPoints[id]->m_Name;
 }
 
 void CPatrolPoint::load										(IReader &stream)

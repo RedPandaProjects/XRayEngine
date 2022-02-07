@@ -13,7 +13,7 @@
 #include "editor_environment_detail.hpp"
 #include "ide.hpp"
 #include "../XrWeatherEditor/Public/property_holder.hpp"
-#include "../xrServerEntities/object_broker.h"
+#include "object_broker.h"
 #include "editor_environment_weathers_weather.hpp"
 #include "editor_environment_weathers_time.hpp"
 #include "property_collection.hpp"

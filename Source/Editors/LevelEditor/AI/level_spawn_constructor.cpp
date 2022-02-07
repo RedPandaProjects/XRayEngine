@@ -11,16 +11,17 @@
 #include "game_level_cross_table.h"
 #include "level_graph.h"
 #include "graph_engine.h"
-#include "xrmessages.h"
-#include "xrServer_Objects_ALife_All.h"
-#include "factory_api.h"
-#include "clsid_game.h"
-#include "game_base_space.h"
+#include "..\xrServerEntities\xrMessages.h"
+#include "..\xrServerEntities\xrServer_Objects_ALife_All.h"
+#include "..\xrServerEntities\clsid_game.h"
+#include "..\xrServerEntities\game_base_space.h"
 #include "game_spawn_constructor.h"
 #include "patrol_path_storage.h"
 #include "space_restrictor_wrapper.h"
-#include "object_broker.h"
-#include "restriction_space.h"
+#include "..\xrServerEntities\object_broker.h"
+#include "..\xrServerEntities\restriction_space.h"
+#include "scene.h"
+#include "SpawnPoint.h"
 
 #define IGNORE_ZERO_SPAWN_POSITIONS
 
@@ -28,11 +29,10 @@ const float y_shift_correction = .15f;
 
 CLevelSpawnConstructor::~CLevelSpawnConstructor					()
 {
-	GRAPH_POINT_STORAGE::iterator	I = m_graph_points.begin();
-	GRAPH_POINT_STORAGE::iterator	E = m_graph_points.end();
+	/*/GRAPH_POINT_STORAGE::iterator	I = m_graph_points.begin();	GRAPH_POINT_STORAGE::iterator	E = m_graph_points.end();
 	for ( ; I != E; ++I)
 		F_entity_Destroy			((CSE_Abstract*&)(*I));
-
+		*/
 	VERIFY					(!m_level_graph);
 	VERIFY					(!m_cross_table);
 	VERIFY					(!m_graph_engine);
@@ -70,15 +70,18 @@ IC	CGraphEngine &CLevelSpawnConstructor::graph_engine			() const
 
 void CLevelSpawnConstructor::init								()
 {
-	// loading level graph
+	m_level_graph = xr_new<CLevelGraph>();
+	m_game_spawn_constructor->game_graph().set_current_level(game_graph().header().level(*m_level.name()).id());
+	m_cross_table = &game_graph().cross_table();
+	m_game_spawn_constructor->patrol_path_storage().load_editor(&level_graph(), &cross_table(), &game_graph());
+	/*// loading level graph
 	string_path				file_name;
 	FS.update_path			(file_name,"$game_levels$",*m_level.name());
 	xr_strcat				(file_name,"\\");
-	m_level_graph			= xr_new<CLevelGraph>(file_name);
+
 	
 	// loading cross table
-	m_game_spawn_constructor->game_graph().set_current_level	(game_graph().header().level(*m_level.name()).id());
-	m_cross_table			= &game_graph().cross_table();
+	
 
 	// loading patrol paths
 	FS.update_path			(file_name,"$game_levels$",*m_level.name());
@@ -86,9 +89,9 @@ void CLevelSpawnConstructor::init								()
 	if (FS.exist(file_name)) {
 		IReader				*stream	= FS.r_open(file_name);
 		VERIFY				(stream);
-		m_game_spawn_constructor->patrol_path_storage().load_raw(&level_graph(),&cross_table(),&game_graph(),*stream);
+		
 		FS.r_close			(stream);
-	}
+	}*/
 }
 
 CSE_Abstract *CLevelSpawnConstructor::create_object						(IReader *chunk)
@@ -186,61 +189,61 @@ void CLevelSpawnConstructor::add_free_object					(CSE_Abstract			*abstract)
 void CLevelSpawnConstructor::load_objects						()
 {
 	// loading spawn points
-	string_path					file_name;
-	FS.update_path				(file_name,"$game_levels$",*m_level.name());
-	xr_strcat					(file_name,"\\level.spawn");
-	IReader						*level_spawn = FS.r_open(file_name);
+	
 	u32							id;
-	IReader						*chunk = level_spawn->open_chunk_iterator(id);
-	for ( ; chunk; chunk = level_spawn->open_chunk_iterator(id,chunk)) {
-		CSE_Abstract			*abstract = create_object(chunk);
-		if (abstract->m_tClassID == CLSID_AI_GRAPH) {
-			add_graph_point		(abstract);
-			continue;
-		}
 
-//		if (abstract->m_tClassID == CLSID_AI_SPAWN_GROUP) {
-//			add_spawn_group		(abstract);
-//			continue;
-//		}
-
-		if (!abstract->m_gameType.MatchType(eGameIDSingle)) 
+	for (auto& Obj : Scene->ListObj(OBJCLASS_SPAWNPOINT))
+	{
+		CSpawnPoint* Spawn = dynamic_cast<CSpawnPoint*>(Obj);
+		CSE_Abstract* abstract = smart_cast<CSE_Abstract*>(Spawn->GetEntity());
+		if (!abstract)
 		{
-			F_entity_Destroy	(abstract);
+			continue;
+		}
+		if (abstract->m_tClassID == CLSID_AI_GRAPH)
+		{
+			add_graph_point(abstract);
 			continue;
 		}
 
-		CSE_ALifeObject			*alife_object = smart_cast<CSE_ALifeObject*>(abstract);
+		//		if (abstract->m_tClassID == CLSID_AI_SPAWN_GROUP) {
+		//			add_spawn_group		(abstract);
+		//			continue;
+		//		}
+
+		if (!abstract->m_gameType.MatchType(eGameIDSingle))
+		{
+			continue;
+		}
+
+		CSE_ALifeObject* alife_object = smart_cast<CSE_ALifeObject*>(abstract);
 		if (!alife_object) {
-			F_entity_Destroy	(abstract);
 			continue;
 		}
 
-		CSE_ALifeCreatureActor	*actor = smart_cast<CSE_ALifeCreatureActor*>(alife_object);
+		CSE_ALifeCreatureActor* actor = smart_cast<CSE_ALifeCreatureActor*>(alife_object);
 		if (actor) {
-			R_ASSERT3			(!m_actor,"Too many actors on the level ",*m_level.name());
-			m_actor				= actor;
+			R_ASSERT3(!m_actor, "Too many actors on the level ", *m_level.name());
+			m_actor = actor;
 		}
 
-		m_spawns.push_back		(alife_object);
+		m_spawns.push_back(alife_object);
 
-		CSE_ALifeDynamicObject	*dynamic_object = smart_cast<CSE_ALifeDynamicObject*>(alife_object);
+		CSE_ALifeDynamicObject* dynamic_object = smart_cast<CSE_ALifeDynamicObject*>(alife_object);
 		if (dynamic_object) {
-			add_story_object	(dynamic_object);
+			add_story_object(dynamic_object);
 			add_space_restrictor(dynamic_object);
 		}
 
 		if (smart_cast<CSE_ALifeLevelChanger*>(abstract))
-			add_level_changer	(abstract);
+			add_level_changer(abstract);
 
-//		if (xr_strlen(alife_object->m_spawn_control))
-//			add_group_object	(alife_object,alife_object->m_spawn_control);
+		//		if (xr_strlen(alife_object->m_spawn_control))
+		//			add_group_object	(alife_object,alife_object->m_spawn_control);
 
-		add_free_object			(alife_object);
+		add_free_object(alife_object);
+
 	}
-	
-	FS.r_close					(level_spawn);
-
 	R_ASSERT2					(!m_spawns.empty(),"There are no spawn-points!");
 }
 
