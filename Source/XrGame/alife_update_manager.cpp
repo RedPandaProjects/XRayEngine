@@ -368,7 +368,7 @@ void CALifeUpdateManager::set_interactive		(ALife::_OBJECT_ID id, bool value)
 
 void CALifeUpdateManager::jump_to_level			(LPCSTR level_name) const
 {
-	const CGameGraph::SLevel			&level = ai().game_graph().header().level(level_name);
+	const IGameGraph::SLevel			&level = ai().game_graph().header().level(level_name);
 	GameGraph::_GRAPH_ID				dest = GameGraph::_GRAPH_ID(-1);
 	GraphEngineSpace::CGameLevelParams	evaluator(level.id());
 	bool								failed = !ai().graph_engine().search(ai().game_graph(),graph().actor()->m_tGraphID,GameGraph::_GRAPH_ID(-1),0,evaluator);

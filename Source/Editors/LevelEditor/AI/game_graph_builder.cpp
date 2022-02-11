@@ -15,26 +15,21 @@
 #include "..\XrECore\Engine\guid_generator.h"
 #include "../../xrServerEntities/xrServer_Objects_Abstract.h"
 #include "../../xrServerEntities/xrServer_Objects_ALife.h"
-#include "graph_engine.h"
+#include "graph_engine_editor.h"
 #include "scene.h"
 #include "SpawnPoint.h"
 
 
 CGameGraphBuilder::CGameGraphBuilder		()
 {
-	m_level_graph			= 0;
+	m_level_graph = 0; 
 	m_graph					= 0;
 	m_cross_table			= 0;
-	m_edges					= 0;
-	m_vertexs = 0;
 }
 
 CGameGraphBuilder::~CGameGraphBuilder		()
 {
 	Msg						("Freeing resources");
-	xr_free(m_vertexs);
-	xr_free					(m_edges);
-	xr_delete				(m_level_graph);
 	xr_delete				(m_graph);
 	xr_delete				(m_cross_table);
 }
@@ -55,11 +50,7 @@ void CGameGraphBuilder::load_level_graph	()
 	
 
 	Msg						("Loading AI map");
-	
-
-	xr_delete(m_level_graph);
-	m_level_graph			= xr_new<CLevelGraph>();
-	
+	m_level_graph =  Scene->GetLevelGraph();
 	Msg						("%d nodes loaded",level_graph().header().vertex_count());
 	
 }
@@ -148,14 +139,14 @@ IC	bool sort_predicate_greater(const T &first, const T &second)
 
 void CGameGraphBuilder::mark_vertices		(u32 level_vertex_id)
 {
-	CLevelGraph::const_iterator			I, E;
+	ILevelGraph::const_iterator			I, E;
 	m_mark_stack.reserve				(8192);
 	m_mark_stack.push_back				(level_vertex_id);
 
 	for ( ; !m_mark_stack.empty(); ) {
 		level_vertex_id					= m_mark_stack.back();
 		m_mark_stack.resize				(m_mark_stack.size() - 1);
-		CLevelGraph::CVertex			*node = level_graph().vertex(level_vertex_id);
+		ILevelGraph::CVertex			*node = level_graph().vertex(level_vertex_id);
 		level_graph().begin				(level_vertex_id,I,E);
 		m_marks[level_vertex_id]		= true;
 		for ( ; I != E; ++I) {
@@ -224,8 +215,8 @@ void CGameGraphBuilder::recursive_update	(const u32 &game_vertex_id)
 			*result							= game_vertex_id;
 
 			distances[*I]					= curr_dist;
-			CLevelGraph::const_iterator		i, e;
-			CLevelGraph::CVertex			*node = level_graph().vertex(*I);
+			ILevelGraph::const_iterator		i, e;
+			ILevelGraph::CVertex			*node = level_graph().vertex(*I);
 			level_graph().begin				(*I,i,e);
 			for ( ; i != e; ++i) {
 				u32							dwNexNodeID = node->link(i);
@@ -293,19 +284,20 @@ void CGameGraphBuilder::build_cross_table	()
 //	Msg						("CT : %f",timer.GetElapsed_sec());
 	iterate_distances		();
 
-	CGameLevelCrossTable::CHeader		tCrossTableHeader;
+	IGameLevelCrossTable::CHeader		tCrossTableHeader;
 
 	tCrossTableHeader.dwVersion = XRAI_CURRENT_VERSION;
 	tCrossTableHeader.dwNodeCount = level_graph().header().vertex_count();
 	tCrossTableHeader.dwGraphPointCount = graph().header().vertex_count();
 	tCrossTableHeader.m_level_guid = level_graph().header().guid();
 	tCrossTableHeader.m_game_guid = m_graph_guid;
-	if (m_cross_table)xr_delete(m_cross_table);
-	m_cross_table = xr_new< CGameLevelCrossTable>(tCrossTableHeader);
-
+	xr_delete(m_cross_table);
+	CGameLevelCrossTableEditor* cross_table = xr_new< CGameLevelCrossTableEditor>();
+	cross_table->realloc(tCrossTableHeader);
+	m_cross_table = cross_table;
 	for (int i = 0, n = level_graph().header().vertex_count(); i < n; i++)
 	{
-		CGameLevelCrossTable::CCell& tCrossTableCell = m_cross_table->vertex(i);
+		IGameLevelCrossTable::CCell& tCrossTableCell = cross_table->vertex(i);
 		tCrossTableCell.tGraphIndex = (GameGraph::_GRAPH_ID)m_results[i];
 		VERIFY(graph().header().vertex_count() > tCrossTableCell.tGraphIndex);
 		tCrossTableCell.fDistance = float(m_distances[tCrossTableCell.tGraphIndex][i]) * level_graph().header().cell_size();
@@ -321,14 +313,14 @@ void CGameGraphBuilder::fill_neighbours		(const u32 &game_vertex_id)
 
 	u32									level_vertex_id = graph().vertex(game_vertex_id)->data().level_vertex_id();
 
-	CLevelGraph::const_iterator			I, E;
+	ILevelGraph::const_iterator			I, E;
 	m_mark_stack.reserve				(8192);
 	m_mark_stack.push_back				(level_vertex_id);
 
 	for ( ; !m_mark_stack.empty(); ) {
 		level_vertex_id					= m_mark_stack.back();
 		m_mark_stack.resize				(m_mark_stack.size() - 1);
-		CLevelGraph::CVertex			*node = level_graph().vertex(level_vertex_id);
+		ILevelGraph::CVertex			*node = level_graph().vertex(level_vertex_id);
 		level_graph().begin				(level_vertex_id,I,E);
 		m_marks[level_vertex_id]		= true;
 		for ( ; I != E; ++I) {
@@ -529,7 +521,7 @@ void CGameGraphBuilder::build_game_graph()
 	CTimer					timer;
 	timer.Start				();
 
-	m_graph_engine			= xr_new<CGraphEngine>(level_graph().header().vertex_count());
+	m_graph_engine			= xr_new<CGraphEngineEditor>(level_graph().header().vertex_count());
 //	Msg						("BG : %f",timer.GetElapsed_sec());
 
 	generate_edges			();
@@ -566,38 +558,43 @@ void CGameGraphBuilder::build_graph	()
 
 
 
-	
-	m_graph_header.m_version			= XRAI_CURRENT_VERSION;
+	IGameGraph::CHeader GameGraphHeader;
+	GameGraphHeader.m_version			= XRAI_CURRENT_VERSION;
 	VERIFY						(graph().vertices().size() < (u32(1) << (8*sizeof(GameGraph::_GRAPH_ID))));
-	m_graph_header.m_vertex_count		= (GameGraph::_GRAPH_ID)graph().vertices().size();
+	GameGraphHeader.m_vertex_count		= (GameGraph::_GRAPH_ID)graph().vertices().size();
 	VERIFY						(graph().edge_count() < (u32(1) << (8*sizeof(GameGraph::_GRAPH_ID))));
-	m_graph_header.m_edge_count			= (GameGraph::_GRAPH_ID)graph().edge_count();
-	m_graph_header.m_death_point_count	= 0;
-	m_graph_header.m_guid				= m_graph_guid;
+	GameGraphHeader.m_edge_count			= (GameGraph::_GRAPH_ID)graph().edge_count();
+	GameGraphHeader.m_death_point_count	= 0;
+	GameGraphHeader.m_guid				= m_graph_guid;
 
-	CGameGraph::SLevel			level;
+	IGameGraph::SLevel			level;
 	level.m_offset.set(0, 0, 0);
 	level.m_id = 0;
 	level.m_name = "editor";
 	level.m_section = "";
 	level.m_guid = level_graph().header().guid();
-	m_graph_header.m_levels.clear();
-	m_graph_header.m_levels.insert(std::make_pair(level.m_id, level));
-	xr_free(m_vertexs);
-	m_vertexs = xr_alloc<GameGraph::CVertex>((GameGraph::_GRAPH_ID)graph().vertices().size());
+	GameGraphHeader.m_levels.clear();
+	GameGraphHeader.m_levels.insert(std::make_pair(level.m_id, level));
+
+
+	CGameGraphEditor* game_graph  =static_cast<CGameGraphEditor *>( Scene->GetGameGraph());
+	game_graph->realloc(GameGraphHeader);
+	game_graph->set_cross_table(m_cross_table);
+	m_cross_table = nullptr;
+
 	{
 		u32								edge_offset = 0;
 		size_t index = 0;
 		graph_type::const_vertex_iterator	I = graph().vertices().begin();
 		graph_type::const_vertex_iterator	E = graph().vertices().end();
 		for (; I != E; ++I) {
-			CGameGraph::CVertex& vertex = (*I).second->data();
+			IGameGraph::CVertex& vertex = (*I).second->data();
 
 			VERIFY((*I).second->edges().size() < 256);
 			vertex.tNeighbourCount = (u8)(*I).second->edges().size();
 			vertex.dwEdgeOffset = edge_offset;
-			m_vertexs[index++] = vertex;
-			edge_offset += vertex.tNeighbourCount * sizeof(CGameGraph::CEdge);
+			*game_graph->vertex(index++) = vertex;
+			edge_offset += vertex.tNeighbourCount * sizeof(IGameGraph::CEdge);
 
 
 		}
@@ -611,12 +608,7 @@ void CGameGraphBuilder::build_graph	()
 		}
 	}
 
-	xr_free(m_edges);
-
-	if (count_edges != 0)
-	{
-		m_edges = xr_alloc<GameGraph::CEdge>(count_edges);
-	}
+	
 
 	{
 		size_t index = 0;
@@ -626,7 +618,7 @@ void CGameGraphBuilder::build_graph	()
 			graph_type::const_iterator	i = (*I).second->edges().begin();
 			graph_type::const_iterator	e = (*I).second->edges().end();
 			for (; i != e; ++i) {
-				auto&edge = m_edges[index++];
+				auto&edge = *game_graph->edge(index++);
 				VERIFY((*i).vertex_id() < (u32(1) << (8 * sizeof(GameGraph::_GRAPH_ID))));
 				edge.m_vertex_id = (GameGraph::_GRAPH_ID)(*i).vertex_id();
 				edge.m_path_distance = (*i).weight();
@@ -639,15 +631,3 @@ void CGameGraphBuilder::build_graph	()
 	Msg						("Level graph is generated successfully");
 }
 
-GameGraph::CEdge* CGameGraphBuilder::graph_edges() const
-{
-	return m_edges;
-}
-GameGraph::CVertex* CGameGraphBuilder::graph_vertex() const
-{
-	return m_vertexs;
-}
-GameGraph::CHeader* CGameGraphBuilder::graph_header() const
-{
-	return const_cast<GameGraph::CHeader*> ( & m_graph_header);
-}

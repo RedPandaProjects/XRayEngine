@@ -40,7 +40,7 @@
 
 #define PropertyGP(a,b)	__declspec( property( get=a, put=b ) )
 #define THROW			FATAL("THROW");
-#define THROW2(a)		FATAL(a);
+#define THROW2(a)		R_ASSERT(a);
 #define clMsg 			Msg
 
 class PropValue;

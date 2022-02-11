@@ -13,24 +13,7 @@
 LPCSTR LEVEL_GRAPH_NAME = "level.ai";
 CLevelGraph::CLevelGraph		()
 {
-	if (Device->IsEditorMode())
-	{
-		m_header = (CHeader*)EditorScene->GetAIHeader();
-		m_nodes = (CVertex*)EditorScene->GetAINodes();
-		m_row_length = iFloor((header().box().max.z - header().box().min.z) / header().cell_size() + EPS_L + 1.5f);
-		m_column_length = iFloor((header().box().max.x - header().box().min.x) / header().cell_size() + EPS_L + 1.5f);
-		m_access_mask.assign(header().vertex_count(), true);
-		unpack_xz(vertex_position(header().box().max), m_max_x, m_max_z);
-#ifdef DEBUG
-#	ifndef AI_COMPILER
-		m_current_level_id = -1;
-		m_current_actual = false;
-		m_current_center = Fvector().set(flt_max, flt_max, flt_max);
-		m_current_radius = Fvector().set(flt_max, flt_max, flt_max);
-#	endif
-#endif
-		return;
-	}
+	VERIFY(Device->IsEditorMode() == false);
 #ifndef AI_COMPILER
 #ifdef DEBUG
 	sh_debug->create				("debug\\ai_nodes","$null");
@@ -65,8 +48,6 @@ CLevelGraph::CLevelGraph		()
 
 CLevelGraph::~CLevelGraph		()
 {
-	if (!Device->IsEditorMode())
-	{
+	VERIFY(Device->IsEditorMode() == false);
 		FS.r_close(m_reader);
-	}
 }

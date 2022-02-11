@@ -18,7 +18,7 @@ CPatrolPathStorage::~CPatrolPathStorage		()
 	delete_data					(m_registry);
 }
 
-void CPatrolPathStorage::load_editor(const CLevelGraph* level_graph, const CGameLevelCrossTable* cross, const CGameGraph* game_graph)
+void CPatrolPathStorage::load_editor(const ILevelGraph* level_graph, const CGameLevelCrossTable* cross, const IGameGraph* game_graph)
 {
 	for (auto& Obj : Scene->ListObj(OBJCLASS_WAY))
 	{
@@ -80,7 +80,7 @@ void CPatrolPathStorage::load_editor(const CLevelGraph* level_graph, const CGame
 
 }
 
-void CPatrolPathStorage::load_raw			(const CLevelGraph *level_graph, const CGameLevelCrossTable *cross, const CGameGraph *game_graph, IReader &stream)
+void CPatrolPathStorage::load_raw			(const ILevelGraph *level_graph, const CGameLevelCrossTable *cross, const IGameGraph *game_graph, IReader &stream)
 {
 	IReader						*chunk = stream.open_chunk(WAY_PATROLPATH_CHUNK);
 

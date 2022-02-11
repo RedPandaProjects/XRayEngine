@@ -7,7 +7,7 @@
 
 #define SPAWNPOINT_VERSION   			0x0017
 
-#include "../../xrServerEntities/LevelGameDef.h"
+#include "../../xrEngine/LevelGameDef.h"
 #include "../../xrServerEntities/xrServer_Objects_abstract.h"
 #include "CustomObject.h"
 #include "../XrEcore/editor/PhysicsShellHolderEditorBase.h"

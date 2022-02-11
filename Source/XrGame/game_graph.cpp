@@ -18,6 +18,7 @@ CGameGraph::CGameGraph(const IReader& _stream)
 
 CGameGraph::~CGameGraph()
 {
+	VERIFY(Device->IsEditorMode() == false);
 	xr_delete(m_current_level_cross_table);
 }
 

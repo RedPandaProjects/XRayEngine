@@ -10,7 +10,7 @@
 
 extern u32	dwfGetIDByLevelName	(CInifile *ini, LPCSTR level_name);
 
-IC	CGameGraph &CGameSpawnConstructor::game_graph		() const
+IC	IGameGraph &CGameSpawnConstructor::game_graph		() const
 {
 	return						(*m_game_graph);
 }

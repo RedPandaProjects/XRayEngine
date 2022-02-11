@@ -16,11 +16,11 @@
 #include "data_storage_bucket_list.h"
 #include "data_storage_binary_heap.h"
 #include "path_manager.h"
-#include "graph_engine_space.h"
+#include "graph_engine_editor_space.h"
 
 using namespace GraphEngineSpace;
 
-class CGraphEngine
+class CGraphEngineEditor
 {
 public:
 	typedef CDataStorageBucketList<u32,u32,8*1024,false>	CPriorityQueue;
@@ -41,8 +41,8 @@ public:
 
 public:
 
-	IC				CGraphEngine			(u32 max_vertex_count);
-	virtual			~CGraphEngine			();
+	IC				CGraphEngineEditor			(u32 max_vertex_count);
+	virtual			~CGraphEngineEditor			();
 
 	template <
 		typename _Graph,
@@ -83,4 +83,4 @@ public:
 			);
 };
 
-#include "graph_engine_inline.h"
+#include "graph_engine_editor_inline.h"

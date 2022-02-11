@@ -216,6 +216,7 @@ public:
 			bool	neighbour_in_direction		(const Fvector &direction, u32 start_vertex_id) const;
 
 	IC		CVertex* vertices					() { return m_nodes; }
+	public:
 
 };
 

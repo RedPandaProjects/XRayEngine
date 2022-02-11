@@ -89,7 +89,7 @@ void CGameSpawnConstructor::load_spawns	(LPCSTR name, bool no_separator_check)
 	// init game graph
 	generate_temp_file_name				("game_graph","",m_game_graph_id);
 	xrMergeGraphs						(m_game_graph_id,name,false);
-	m_game_graph						= xr_new<CGameGraph>(m_game_graph_id);
+	m_game_graph						= xr_new<IGameGraph>(m_game_graph_id);
 
 	// load levels
 	GameGraph::SLevel					level;
@@ -267,10 +267,10 @@ void CGameSpawnConstructor::process_actor			(LPCSTR start_level_name)
 	if (!xr_strcmp(*actor_level_name(),start_level_name))
 		return;
 
-	const CGameGraph::SLevel		&level = game_graph().header().level(start_level_name);
+	const IGameGraph::SLevel		&level = game_graph().header().level(start_level_name);
 	GameGraph::_GRAPH_ID				dest = GameGraph::_GRAPH_ID(-1);
 	GraphEngineSpace::CGameLevelParams	evaluator(level.id());
-	CGraphEngine					*graph_engine = xr_new<CGraphEngine>(game_graph().header().vertex_count());
+	CGraphEngineEditor					*graph_engine = xr_new<CGraphEngineEditor>(game_graph().header().vertex_count());
 
 	bool							failed = !graph_engine->search(game_graph(),m_actor->m_tGraphID,GameGraph::_GRAPH_ID(-1),0,evaluator);
 	if (failed) {

@@ -34,9 +34,7 @@
     <ClCompile Include="..\..\XrRender\Private\DetailManager_VS.cpp" />
     <ClCompile Include="..\..\XrRender\Private\stats_manager.cpp" />
     <ClCompile Include="..\..\xrServerEntities\gametype_chooser.cpp" />
-    <ClCompile Include="..\..\xrServerEntities\LevelGameDef.cpp" />
-    <ClCompile Include="AI\alife_space.cpp" />
-    <ClCompile Include="AI\game_graph.cpp" />
+    <ClCompile Include="AI\game_graph_editor.cpp" />
     <ClCompile Include="AI\game_graph_builder.cpp" />
     <ClCompile Include="AI\game_spawn_constructor.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -46,14 +44,34 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Development|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="AI\level_graph.cpp" />
-    <ClCompile Include="AI\level_graph_vertex.cpp" />
-    <ClCompile Include="AI\level_spawn_constructor.cpp" />
+    <ClCompile Include="AI\level_graph_editor.cpp" />
+    <ClCompile Include="AI\level_spawn_constructor.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Development|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="AI\patrol_path.cpp" />
     <ClCompile Include="AI\patrol_path_storage.cpp" />
     <ClCompile Include="AI\patrol_point.cpp" />
-    <ClCompile Include="AI\server_entity_wrapper.cpp" />
-    <ClCompile Include="AI\space_restrictor_wrapper.cpp" />
+    <ClCompile Include="AI\server_entity_wrapper.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Development|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="AI\space_restrictor_wrapper.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Development|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="AI\xrThread.cpp" />
     <ClCompile Include="Edit\Builder.cpp" />
     <ClCompile Include="Edit\BuilderCF.cpp" />
@@ -196,53 +214,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\XrRender\Private\DetailManager.h" />
-    <ClInclude Include="AI\alife_space.h" />
-    <ClInclude Include="AI\a_star.h" />
-    <ClInclude Include="AI\a_star_inline.h" />
-    <ClInclude Include="AI\builder_allocator_constructor.h" />
-    <ClInclude Include="AI\builder_allocator_constructor_inline.h" />
     <ClInclude Include="AI\cover_point.h" />
     <ClInclude Include="AI\cover_point_inline.h" />
-    <ClInclude Include="AI\data_storage_binary_heap.h" />
-    <ClInclude Include="AI\data_storage_binary_heap_inline.h" />
-    <ClInclude Include="AI\data_storage_bucket_list.h" />
-    <ClInclude Include="AI\data_storage_bucket_list_inline.h" />
-    <ClInclude Include="AI\data_storage_constructor.h" />
-    <ClInclude Include="AI\data_storage_double_linked_list.h" />
-    <ClInclude Include="AI\data_storage_double_linked_list_inline.h" />
-    <ClInclude Include="AI\data_storage_single_linked_list.h" />
-    <ClInclude Include="AI\data_storage_single_linked_list_inline.h" />
-    <ClInclude Include="AI\dijkstra.h" />
-    <ClInclude Include="AI\dijkstra_inline.h" />
-    <ClInclude Include="AI\edge_path.h" />
-    <ClInclude Include="AI\edge_path_inline.h" />
-    <ClInclude Include="AI\game_graph.h" />
+    <ClInclude Include="AI\game_graph_editor.h" />
     <ClInclude Include="AI\game_graph_builder.h" />
     <ClInclude Include="AI\game_graph_builder_inline.h" />
-    <ClInclude Include="AI\game_graph_inline.h" />
-    <ClInclude Include="AI\game_graph_space.h" />
-    <ClInclude Include="AI\game_level_cross_table.h" />
-    <ClInclude Include="AI\game_level_cross_table_inline.h" />
+    <ClInclude Include="AI\game_level_cross_table_editor.h" />
+    <ClCompile Include="AI\game_level_cross_table_editor.cpp" />
     <ClInclude Include="AI\game_spawn_constructor.h" />
     <ClInclude Include="AI\game_spawn_constructor_inline.h" />
-    <ClInclude Include="AI\graph_abstract.h" />
-    <ClInclude Include="AI\graph_abstract_inline.h" />
-    <ClInclude Include="AI\graph_edge.h" />
-    <ClInclude Include="AI\graph_edge_inline.h" />
-    <ClInclude Include="AI\graph_engine.h" />
-    <ClInclude Include="AI\graph_engine_inline.h" />
-    <ClInclude Include="AI\graph_engine_space.h" />
-    <ClInclude Include="AI\graph_vertex.h" />
-    <ClInclude Include="AI\graph_vertex_inline.h" />
-    <ClInclude Include="AI\LevelGameDef.h" />
-    <ClInclude Include="AI\level_graph.h" />
-    <ClInclude Include="AI\level_graph_inline.h" />
-    <ClInclude Include="AI\level_graph_space.h" />
-    <ClInclude Include="AI\level_graph_vertex_inline.h" />
+    <ClInclude Include="AI\graph_engine_editor.h" />
+    <ClInclude Include="AI\graph_engine_editor_inline.h" />
+    <ClInclude Include="AI\graph_engine_editor_space.h" />
+    <ClInclude Include="AI\level_graph_editor.h" />
     <ClInclude Include="AI\level_spawn_constructor.h" />
     <ClInclude Include="AI\level_spawn_constructor_inline.h" />
-    <ClInclude Include="AI\manager_builder_allocator_constructor.h" />
-    <ClInclude Include="AI\manager_builder_allocator_constructor_inline.h" />
     <ClInclude Include="AI\path_manager.h" />
     <ClInclude Include="AI\path_manager_game.h" />
     <ClInclude Include="AI\path_manager_game_inline.h" />
@@ -274,14 +260,6 @@
     <ClInclude Include="AI\server_entity_wrapper_inline.h" />
     <ClInclude Include="AI\space_restrictor_wrapper.h" />
     <ClInclude Include="AI\space_restrictor_wrapper_inline.h" />
-    <ClInclude Include="AI\vertex_allocator_fixed.h" />
-    <ClInclude Include="AI\vertex_allocator_fixed_inline.h" />
-    <ClInclude Include="AI\vertex_manager_fixed.h" />
-    <ClInclude Include="AI\vertex_manager_fixed_inline.h" />
-    <ClInclude Include="AI\vertex_manager_hash_fixed.h" />
-    <ClInclude Include="AI\vertex_manager_hash_fixed_inline.h" />
-    <ClInclude Include="AI\vertex_path.h" />
-    <ClInclude Include="AI\vertex_path_inline.h" />
     <ClInclude Include="AI\xrThread.h" />
     <ClInclude Include="Edit\Builder.h" />
     <ClInclude Include="Edit\Cursor3D.h" />

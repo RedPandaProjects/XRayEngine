@@ -5,7 +5,7 @@
 #ifndef WayPointH
 #define WayPointH
 
-#include "../../xrServerEntities/LevelGameDef.h"
+#include "../../xrEngine/LevelGameDef.h"
 #include "CustomObject.h"
 
 class CFrustum;

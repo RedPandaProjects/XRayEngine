@@ -17,14 +17,14 @@ template <
 	typename _index_type,
 	typename _iteration_type
 >	class CPathManager <
-		CLevelGraph,
+		ILevelGraph,
 		_DataStorage,
 		CAbstractVertexEvaluator,
 		_dist_type,
 		_index_type,
 		_iteration_type
 	> : public CPathManager <
-			CLevelGraph,
+			ILevelGraph,
 			_DataStorage,
 			SBaseParameters<
 				_dist_type,
@@ -37,7 +37,7 @@ template <
 		>
 {
 protected:
-	typedef CLevelGraph _Graph;
+	typedef ILevelGraph _Graph;
 	typedef CAbstractVertexEvaluator _Parameters;
 	typedef typename CPathManager <
 				_Graph,

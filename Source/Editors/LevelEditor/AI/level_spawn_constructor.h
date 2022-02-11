@@ -11,11 +11,11 @@
 #include "xrThread.h"
 #include "spawn_constructor_space.h"
 
-class CLevelGraph;
-class CGameLevelCrossTable;
+class ILevelGraph;
+class IGameLevelCrossTable;
 class CGameSpawnConstructor;
 class CSE_ALifeCreatureActor;
-class CGraphEngine;
+class CGraphEngineEditor;
 class CSE_Abstract;
 class CSE_ALifeObject;
 class CSE_ALifeGraphPoint;
@@ -37,7 +37,7 @@ public:
 //	typedef xr_map<shared_str,CSE_SpawnGroup*>					SPAWN_GROUPS;
 
 private:
-	CGameGraph::SLevel					m_level;
+	IGameGraph::SLevel					m_level;
 	SPAWN_STORAGE						m_spawns;
 	LEVEL_POINT_STORAGE					m_level_points;
 	GRAPH_POINT_STORAGE					m_graph_points;
@@ -46,13 +46,13 @@ private:
 //	SPAWN_GROUPS						m_spawn_groups;
 	CGameSpawnConstructor				*m_game_spawn_constructor;
 	CSE_ALifeCreatureActor				*m_actor;
-	CLevelGraph							*m_level_graph;
-	CGraphEngine						*m_graph_engine;
+	ILevelGraph							*m_level_graph;
+	CGraphEngineEditor						*m_graph_engine;
 	LEVEL_CHANGER_STORAGE				m_level_changers;
 	bool								m_no_separator_check;
 
 private:
-	const CGameLevelCrossTable			*m_cross_table;
+	const IGameLevelCrossTable			*m_cross_table;
 
 protected:
 			void						init								();
@@ -75,19 +75,19 @@ protected:
 			void						update_artefact_spawn_positions		();
 //	IC		void						normalize_probability				(CSE_ALifeAnomalousZone *zone);
 //	IC		void						free_group_objects					();
-	IC		const CGameGraph			&game_graph							() const;
-	IC		const CLevelGraph			&level_graph						() const;
-	IC		const CGameLevelCrossTable	&cross_table						() const;
-	IC		CGraphEngine				&graph_engine						() const;
+	IC		const IGameGraph			&game_graph							() const;
+	IC		const ILevelGraph			&level_graph						() const;
+	IC		const IGameLevelCrossTable	&cross_table						() const;
+	IC		CGraphEngineEditor				&graph_engine						() const;
 	IC		LEVEL_CHANGER_STORAGE		&level_changers						() const;
 	IC		u32							level_id							(shared_str level_name) const;
 
 public:
-	IC									CLevelSpawnConstructor				(const CGameGraph::SLevel &level, CGameSpawnConstructor *game_spawn_constructor, bool no_separator_check);
+	IC									CLevelSpawnConstructor				(const IGameGraph::SLevel &level, CGameSpawnConstructor *game_spawn_constructor, bool no_separator_check);
 	virtual								~CLevelSpawnConstructor				();
 	virtual void						Execute								();
 	IC		CSE_ALifeCreatureActor		*actor								() const;
-	IC		const CGameGraph::SLevel	&level								() const;
+	IC		const IGameGraph::SLevel	&level								() const;
 			void						update								();
 	IC		CGameSpawnConstructor		&game_spawn_constructor				() const;
 };

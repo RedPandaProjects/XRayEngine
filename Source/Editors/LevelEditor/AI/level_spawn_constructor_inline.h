@@ -8,7 +8,7 @@
 
 #pragma once
 
-IC	CLevelSpawnConstructor::CLevelSpawnConstructor			(const CGameGraph::SLevel &level, CGameSpawnConstructor *game_spawn_constructor, bool no_separator_check) :
+IC	CLevelSpawnConstructor::CLevelSpawnConstructor			(const IGameGraph::SLevel &level, CGameSpawnConstructor *game_spawn_constructor, bool no_separator_check) :
 	CThread						(level.id())
 {
 	m_level						= level;
@@ -26,7 +26,7 @@ IC	CSE_ALifeCreatureActor *CLevelSpawnConstructor::actor	() const
 	return						(m_actor);
 }
 
-IC	const CGameGraph::SLevel &CLevelSpawnConstructor::level	() const
+IC	const IGameGraph::SLevel &CLevelSpawnConstructor::level	() const
 {
 	return						(m_level);
 }

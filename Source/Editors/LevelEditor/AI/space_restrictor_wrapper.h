@@ -11,8 +11,8 @@
 #include "shapedata.h"
 
 class CSE_ALifeSpaceRestrictor;
-class CLevelGraph;
-class CGraphEngine;
+class ILevelGraph;
+class CGraphEngineEditor;
 
 class CSpaceRestrictorWrapper {
 private:
@@ -24,8 +24,8 @@ public:
 
 private:
 	object_type				*m_object;
-	CLevelGraph				*m_level_graph;
-	CGraphEngine			*m_graph_engine;
+	ILevelGraph				*m_level_graph;
+	CGraphEngineEditor			*m_graph_engine;
 	BORDER					m_border;
 	BORDER					m_internal;
 	Fmatrix					m_xform;
@@ -37,13 +37,13 @@ private:
 			void			verify_connectivity		();
 			bool			inside					(const Fvector &position, float radius = EPS_L) const;
 			bool			inside					(u32 level_vertex_id, bool partially_inside, float radius = EPS_L) const;
-	IC		CLevelGraph		&level_graph			() const;
-	IC		CGraphEngine	&graph_engine			() const;
+	IC		ILevelGraph		&level_graph			() const;
+	IC		CGraphEngineEditor	&graph_engine			() const;
 
 public:
 							CSpaceRestrictorWrapper	(CSE_ALifeSpaceRestrictor *object);
 	IC		object_type		&object					() const;
-			void			verify					(CLevelGraph &level_graph, CGraphEngine &graph_engine, bool no_separator_check);
+			void			verify					(ILevelGraph &level_graph, CGraphEngineEditor &graph_engine, bool no_separator_check);
 };
 
 #include "space_restrictor_wrapper_inline.h"

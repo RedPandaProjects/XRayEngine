@@ -29,7 +29,7 @@ CALifeSpawnRegistry::CALifeSpawnRegistry	(LPCSTR section)
 
 CALifeSpawnRegistry::~CALifeSpawnRegistry	()
 {
-	xr_delete					(m_game_graph);
+	if(!Device->IsEditorMode())	xr_delete(m_game_graph);
 	m_chunk->close				();
 	FS.r_close					(m_file);
 }
@@ -92,19 +92,17 @@ void CALifeSpawnRegistry::load				(LPCSTR spawn_name)
 
 void CALifeSpawnRegistry::load_from_editor()
 {
-	R_ASSERT(false);
-/*	Msg("* Loading spawn registry...");
+	Msg("* Loading spawn registry...");
 	ai().patrol_path_storage_from_editor();
 
-	VERIFY(!m_game_graph);
-	m_game_graph = xr_new<CGameGraph>();
+	m_game_graph = EditorScene->GetGameGraph();
 	ai().game_graph(m_game_graph);
 	
 	build_story_spawns();
 
 	build_root_spawns();
 
-	Msg("* %d spawn points are successfully loaded", m_spawns.vertex_count());*/
+	Msg("* %d spawn points are successfully loaded", m_spawns.vertex_count());
 }
 
 struct dummy {

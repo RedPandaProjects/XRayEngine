@@ -10,9 +10,9 @@
 #include "space_restrictor_wrapper.h"
 #include "../../xrServerEntities/xrServer_Objects_ALife.h"
 #include "level_graph.h"
-#include "graph_engine.h"
+#include "graph_engine_editor.h"
 
-IC	Fvector construct_position		(CLevelGraph &level_graph,u32 level_vertex_id, float x, float z)
+IC	Fvector construct_position		(ILevelGraph &level_graph,u32 level_vertex_id, float x, float z)
 {
 	return							(Fvector().set(x,level_graph.vertex_plane_y(level_vertex_id,x,z),z));
 }
@@ -88,15 +88,15 @@ bool CSpaceRestrictorWrapper::inside				(const Fvector &position, float radius) 
 
 struct border_merge_predicate {
 	CSpaceRestrictorWrapper			*m_restriction;
-	CLevelGraph						*m_level_graph;
+	ILevelGraph						*m_level_graph;
 
-	IC			border_merge_predicate	(CSpaceRestrictorWrapper *restriction, CLevelGraph *level_graph)
+	IC			border_merge_predicate	(CSpaceRestrictorWrapper *restriction, ILevelGraph *level_graph)
 	{
 		m_restriction				= restriction;
 		m_level_graph				= level_graph;
 	}
 
-	IC	void	operator()				(const CLevelGraph::CVertex &vertex) const
+	IC	void	operator()				(const ILevelGraph::CVertex &vertex) const
 	{
 		if (m_restriction->inside(m_level_graph->vertex_id(&vertex),true) && !m_restriction->inside(m_level_graph->vertex_id(&vertex),false))
 			m_restriction->m_border.push_back	(m_level_graph->vertex_id(&vertex));
@@ -178,9 +178,9 @@ bool CSpaceRestrictorWrapper::inside				(u32 level_vertex_id, bool partially_ins
 }
 
 struct sort_by_xz_predicate {
-	CLevelGraph						*m_level_graph;
+	ILevelGraph						*m_level_graph;
 
-	IC			sort_by_xz_predicate(CLevelGraph *level_graph)
+	IC			sort_by_xz_predicate(ILevelGraph *level_graph)
 	{
 		VERIFY						(level_graph);
 		m_level_graph				= level_graph;
@@ -224,8 +224,8 @@ void CSpaceRestrictorWrapper::verify_connectivity	()
 	}
 
 	u32								start_vertex_id = u32(-1);
-	CLevelGraph::const_vertex_iterator	I = level_graph().begin();
-	CLevelGraph::const_vertex_iterator	E = level_graph().end();
+	ILevelGraph::const_vertex_iterator	I = level_graph().begin();
+	ILevelGraph::const_vertex_iterator	E = level_graph().end();
 	for ( ; I != E; ++I)
 		if (!inside(level_graph().vertex(I),true)) {
 			start_vertex_id			= level_graph().vertex(I);
@@ -268,7 +268,7 @@ void CSpaceRestrictorWrapper::verify_connectivity	()
 	);
 }
 
-void CSpaceRestrictorWrapper::verify				(CLevelGraph &level_graph, CGraphEngine &graph_engine, bool no_separator_check)
+void CSpaceRestrictorWrapper::verify				(ILevelGraph &level_graph, CGraphEngineEditor &graph_engine, bool no_separator_check)
 {
 	VERIFY							(!m_level_graph);
 	m_level_graph					= &level_graph;

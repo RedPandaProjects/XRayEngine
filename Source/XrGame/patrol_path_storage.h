@@ -9,9 +9,9 @@
 #pragma once
 
 class CPatrolPath;
-class CLevelGraph;
+class ILevelGraph;
 class IGameLevelCrossTable;
-class CGameGraph;
+class IGameGraph;
 
 #include "../xrEngine/object_interfaces.h"
 #include "../xrEngine/associative_vector.h"
@@ -35,7 +35,7 @@ public:
 	virtual	void					save				(IWriter &stream);
 	
 public:
-			void					load_raw			(const CLevelGraph *level_graph, const IGameLevelCrossTable *cross, const CGameGraph *game_graph, IReader &stream);
+			void					load_raw			(const ILevelGraph *level_graph, const IGameLevelCrossTable *cross, const IGameGraph *game_graph, IReader &stream);
 	IC		const CPatrolPath		*path				(shared_str patrol_name, bool no_assert = false) const;
 	IC		const PATROL_REGISTRY	&patrol_paths		() const;
 };

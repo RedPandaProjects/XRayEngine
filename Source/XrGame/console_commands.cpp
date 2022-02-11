@@ -804,10 +804,10 @@ public:
 
 	virtual void Execute				(LPCSTR args)
 	{
-		if (!ai().get_level_graph())
+		if (!ai().get_level_graph()|| dynamic_cast<CLevelGraph*>(&ai().level_graph())==0)
 			return;
 
-		ai().level_graph().setup_current_level	(-1);
+		dynamic_cast<CLevelGraph*>(&ai().level_graph())->setup_current_level	(-1);
 	}
 };
 
@@ -820,12 +820,10 @@ public:
 
 	virtual void Execute					(LPCSTR args)
 	{
-		if (!ai().get_level_graph())
+		if (!ai().get_level_graph() || dynamic_cast<CLevelGraph*>(&ai().level_graph()) == 0)
 			return;
 
-		ai().level_graph().setup_current_level	(
-			ai().level_graph().level_id()
-		);
+		dynamic_cast<CLevelGraph*>(&ai().level_graph())->setup_current_level(ai().level_graph().level_id());
 	}
 };
 
@@ -839,9 +837,13 @@ public:
 	{
 		if (!ai().get_level_graph())
 			return;
+		if (!ai().get_level_graph() || dynamic_cast<CLevelGraph*>(&ai().level_graph()) == 0)
+			return;
+
+	
 
 		if (!*args) {
-			ai().level_graph().setup_current_level	(-1);
+			dynamic_cast<CLevelGraph*>(&ai().level_graph())->setup_current_level(-1);
 			return;
 		}
 
@@ -850,8 +852,7 @@ public:
 			Msg				("! There is no level %s in the game graph",args);
 			return;
 		}
-
-		ai().level_graph().setup_current_level	(level->id());
+		dynamic_cast<CLevelGraph*>(&ai().level_graph())->setup_current_level(level->id());
 	}
 };
 

@@ -76,7 +76,7 @@ private:
 	xr_vector<ALife::_SPAWN_ID>		m_temp1;
 
 private:
-	CGameGraph						*m_game_graph;
+	IGameGraph						*m_game_graph;
 	SPAWN_GRAPH						*m_spawn_graph;
 	CPatrolPathStorage				*m_patrol_path_storage;
 	CInifile						*m_game_info;
@@ -108,7 +108,7 @@ public:
 	IC		void					add_level_changer		(CSE_ALifeLevelChanger *level_changer);
 	IC		void					add_level_points		(const LEVEL_POINT_STORAGE &level_points);
 	IC		u32						level_id				(LPCSTR level_name);
-	IC		CGameGraph				&game_graph				() const;
+	IC		IGameGraph				&game_graph				() const;
 	IC		CInifile				&game_info				();
 	IC		void					add_edge				(ALife::_SPAWN_ID id0, ALife::_SPAWN_ID id1, float weight);
 	IC		u32						level_point_count		() const;

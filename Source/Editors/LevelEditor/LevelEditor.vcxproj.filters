@@ -25,86 +25,11 @@
     <Filter Include="AI\Search">
       <UniqueIdentifier>{1fa59ab4-7448-44cc-8dfb-6c55733a77c1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="AI\Search\data_storages">
-      <UniqueIdentifier>{1af0f034-14ec-4e6c-a8d4-0be6d916b3d1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\Search\algorithms">
-      <UniqueIdentifier>{7fa8670d-20a7-4fb4-9b08-cb8dcca544c7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\Search\algorithms\Dijkstra">
-      <UniqueIdentifier>{721550d3-17d9-446c-a613-36e99e5bb29e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\Search\algorithms\A%2a">
-      <UniqueIdentifier>{9a52d412-701f-4f67-b6c4-c1c52af998ec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\Search\data_storages\algorithms">
-      <UniqueIdentifier>{6fa02b04-8d22-4fee-a3b1-39935ac9481c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\Search\data_storages\data_storage_constructors">
-      <UniqueIdentifier>{5060b6cb-59e6-47af-a445-9bcd5b4c5f6b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\Search\data_storages\path_builders">
-      <UniqueIdentifier>{42029a99-8b08-4554-a848-5f5ede36bfac}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\Search\data_storages\vertex_allocators">
-      <UniqueIdentifier>{723186e6-6495-438f-b5d5-6b649b7d9587}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\Search\data_storages\vertex_managers">
-      <UniqueIdentifier>{fa70210e-46c7-48f9-8c19-11c2ae27a4db}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\Search\data_storages\algorithms\lists">
-      <UniqueIdentifier>{1ad685b7-02dc-4282-a985-51cb9e1c0a04}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\Search\data_storages\algorithms\lists\bucket_list">
-      <UniqueIdentifier>{1e5b84c3-d720-423c-89f3-4288fec0832b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\Search\data_storages\algorithms\lists\double_linked_list">
-      <UniqueIdentifier>{ade554b9-3ed3-400f-9025-9e9fec777e2a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\Search\data_storages\algorithms\lists\single_linked_list">
-      <UniqueIdentifier>{aa054fbd-cab2-4b2c-8634-24f0818ee1c4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\Search\data_storages\algorithms\priority_queues">
-      <UniqueIdentifier>{c75385f6-3e88-42b6-93bc-ffb508d92a6f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\Search\data_storages\algorithms\priority_queues\binary_heap">
-      <UniqueIdentifier>{7553dad8-a403-4fcb-9e3a-2b2eef5704d6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\Search\data_storages\data_storage_constructors\builder_allocator">
-      <UniqueIdentifier>{f0dcbf9d-b23b-4f5b-8339-f83e1e12fe23}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\Search\data_storages\data_storage_constructors\manager_builder_allocator">
-      <UniqueIdentifier>{84e4672a-b728-499d-b110-ba6051ebec02}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\Search\data_storages\path_builders\edge_path">
-      <UniqueIdentifier>{ce8f326b-efb5-452e-8544-485216ca56b1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\Search\data_storages\path_builders\vertex_path">
-      <UniqueIdentifier>{f023c806-9807-4e0c-bc7e-08534708e310}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\Search\data_storages\vertex_allocators\fixed">
-      <UniqueIdentifier>{b5d3aeca-4f55-4085-ae6a-01a269ce1eeb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\Search\data_storages\vertex_managers\fixed">
-      <UniqueIdentifier>{1f2abd4a-2910-48c3-96d0-b0656a865e2d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\Search\data_storages\vertex_managers\hash_fixed">
-      <UniqueIdentifier>{e845f412-d123-438a-8312-85f1e3e41a0b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="AI\Search\graph_engine">
       <UniqueIdentifier>{b782a041-ec9c-41c5-b945-a4849056c1f9}</UniqueIdentifier>
     </Filter>
     <Filter Include="AI\Search\graphs">
       <UniqueIdentifier>{6bc284e5-db2b-4b73-b720-51b6a84f7a5a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\Search\graphs\abstract_graph">
-      <UniqueIdentifier>{927277a0-06ab-41ef-995b-828f0914003a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\Search\graphs\abstract_graph\graph_edge">
-      <UniqueIdentifier>{247772fb-66c3-4ac6-8a02-f3012248a400}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AI\Search\graphs\abstract_graph\graph_vertex">
-      <UniqueIdentifier>{d546ebed-31e0-4783-9b3e-8f5618975cdc}</UniqueIdentifier>
     </Filter>
     <Filter Include="AI\Search\graphs\cross_table">
       <UniqueIdentifier>{c10776f4-c66c-4a11-9a19-02eebac07dcd}</UniqueIdentifier>
@@ -517,9 +442,6 @@
     <ClCompile Include="..\..\xrServerEntities\gametype_chooser.cpp">
       <Filter>ServerEntities</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\xrServerEntities\LevelGameDef.cpp">
-      <Filter>ServerEntities</Filter>
-    </ClCompile>
     <ClCompile Include="UI\Tools\UILightTool.cpp">
       <Filter>UI\Tools</Filter>
     </ClCompile>
@@ -581,16 +503,10 @@
     <ClCompile Include="Edit\scene_aimap.cpp">
       <Filter>Edit</Filter>
     </ClCompile>
-    <ClCompile Include="AI\alife_space.cpp">
-      <Filter>AI</Filter>
-    </ClCompile>
     <ClCompile Include="AI\xrThread.cpp">
       <Filter>AI</Filter>
     </ClCompile>
-    <ClCompile Include="AI\level_graph.cpp">
-      <Filter>AI\Search\graphs\level_graph</Filter>
-    </ClCompile>
-    <ClCompile Include="AI\level_graph_vertex.cpp">
+    <ClCompile Include="AI\level_graph_editor.cpp">
       <Filter>AI\Search\graphs\level_graph</Filter>
     </ClCompile>
     <ClCompile Include="AI\game_graph_builder.cpp">
@@ -614,11 +530,14 @@
     <ClCompile Include="AI\game_spawn_constructor.cpp">
       <Filter>AI\Spawn\game_spawn_constructor</Filter>
     </ClCompile>
-    <ClCompile Include="AI\game_graph.cpp">
+    <ClCompile Include="AI\game_graph_editor.cpp">
       <Filter>AI\Search\graphs\game_graph</Filter>
     </ClCompile>
     <ClCompile Include="AI\server_entity_wrapper.cpp">
       <Filter>AI\Spawn</Filter>
+    </ClCompile>
+    <ClCompile Include="AI\game_level_cross_table_editor.cpp">
+      <Filter>AI\Search\graphs\cross_table</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -885,148 +804,25 @@
     <ClInclude Include="Engine\XrGameManager.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="AI\alife_space.h">
-      <Filter>AI</Filter>
-    </ClInclude>
     <ClInclude Include="AI\xrThread.h">
       <Filter>AI</Filter>
     </ClInclude>
-    <ClInclude Include="AI\LevelGameDef.h">
-      <Filter>AI</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\a_star.h">
-      <Filter>AI\Search\algorithms\A%2a</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\a_star_inline.h">
-      <Filter>AI\Search\algorithms\A%2a</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\dijkstra_inline.h">
-      <Filter>AI\Search\algorithms\Dijkstra</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\dijkstra.h">
-      <Filter>AI\Search\algorithms\Dijkstra</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\data_storage_constructor.h">
-      <Filter>AI\Search\data_storages\data_storage_constructors</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\data_storage_bucket_list.h">
-      <Filter>AI\Search\data_storages\algorithms\lists\bucket_list</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\data_storage_bucket_list_inline.h">
-      <Filter>AI\Search\data_storages\algorithms\lists\bucket_list</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\data_storage_double_linked_list_inline.h">
-      <Filter>AI\Search\data_storages\algorithms\lists\double_linked_list</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\data_storage_double_linked_list.h">
-      <Filter>AI\Search\data_storages\algorithms\lists\double_linked_list</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\data_storage_single_linked_list.h">
-      <Filter>AI\Search\data_storages\algorithms\lists\single_linked_list</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\data_storage_single_linked_list_inline.h">
-      <Filter>AI\Search\data_storages\algorithms\lists\single_linked_list</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\data_storage_binary_heap.h">
-      <Filter>AI\Search\data_storages\algorithms\priority_queues\binary_heap</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\data_storage_binary_heap_inline.h">
-      <Filter>AI\Search\data_storages\algorithms\priority_queues\binary_heap</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\builder_allocator_constructor.h">
-      <Filter>AI\Search\data_storages\data_storage_constructors\builder_allocator</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\builder_allocator_constructor_inline.h">
-      <Filter>AI\Search\data_storages\data_storage_constructors\builder_allocator</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\manager_builder_allocator_constructor.h">
-      <Filter>AI\Search\data_storages\data_storage_constructors\manager_builder_allocator</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\manager_builder_allocator_constructor_inline.h">
-      <Filter>AI\Search\data_storages\data_storage_constructors\manager_builder_allocator</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\edge_path.h">
-      <Filter>AI\Search\data_storages\path_builders\edge_path</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\edge_path_inline.h">
-      <Filter>AI\Search\data_storages\path_builders\edge_path</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\vertex_path_inline.h">
-      <Filter>AI\Search\data_storages\path_builders\vertex_path</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\vertex_path.h">
-      <Filter>AI\Search\data_storages\path_builders\vertex_path</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\vertex_allocator_fixed_inline.h">
-      <Filter>AI\Search\data_storages\vertex_allocators\fixed</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\vertex_allocator_fixed.h">
-      <Filter>AI\Search\data_storages\vertex_allocators\fixed</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\vertex_manager_fixed_inline.h">
-      <Filter>AI\Search\data_storages\vertex_managers\fixed</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\vertex_manager_fixed.h">
-      <Filter>AI\Search\data_storages\vertex_managers\fixed</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\vertex_manager_hash_fixed.h">
-      <Filter>AI\Search\data_storages\vertex_managers\hash_fixed</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\vertex_manager_hash_fixed_inline.h">
-      <Filter>AI\Search\data_storages\vertex_managers\hash_fixed</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\graph_engine.h">
+    <ClInclude Include="AI\graph_engine_editor.h">
       <Filter>AI\Search\graph_engine</Filter>
     </ClInclude>
-    <ClInclude Include="AI\graph_engine_inline.h">
+    <ClInclude Include="AI\graph_engine_editor_inline.h">
       <Filter>AI\Search\graph_engine</Filter>
     </ClInclude>
-    <ClInclude Include="AI\graph_engine_space.h">
+    <ClInclude Include="AI\graph_engine_editor_space.h">
       <Filter>AI\Search\graph_engine</Filter>
     </ClInclude>
-    <ClInclude Include="AI\graph_abstract_inline.h">
-      <Filter>AI\Search\graphs\abstract_graph</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\graph_abstract.h">
-      <Filter>AI\Search\graphs\abstract_graph</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\graph_edge.h">
-      <Filter>AI\Search\graphs\abstract_graph\graph_edge</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\graph_edge_inline.h">
-      <Filter>AI\Search\graphs\abstract_graph\graph_edge</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\graph_vertex_inline.h">
-      <Filter>AI\Search\graphs\abstract_graph\graph_vertex</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\graph_vertex.h">
-      <Filter>AI\Search\graphs\abstract_graph\graph_vertex</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\game_graph.h">
+    <ClInclude Include="AI\game_graph_editor.h">
       <Filter>AI\Search\graphs\game_graph</Filter>
     </ClInclude>
-    <ClInclude Include="AI\game_graph_inline.h">
-      <Filter>AI\Search\graphs\game_graph</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\game_graph_space.h">
-      <Filter>AI\Search\graphs\game_graph</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\game_level_cross_table.h">
+    <ClInclude Include="AI\game_level_cross_table_editor.h">
       <Filter>AI\Search\graphs\cross_table</Filter>
     </ClInclude>
-    <ClInclude Include="AI\game_level_cross_table_inline.h">
-      <Filter>AI\Search\graphs\cross_table</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\level_graph.h">
-      <Filter>AI\Search\graphs\level_graph</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\level_graph_inline.h">
-      <Filter>AI\Search\graphs\level_graph</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\level_graph_space.h">
-      <Filter>AI\Search\graphs\level_graph</Filter>
-    </ClInclude>
-    <ClInclude Include="AI\level_graph_vertex_inline.h">
+    <ClInclude Include="AI\level_graph_editor.h">
       <Filter>AI\Search\graphs\level_graph</Filter>
     </ClInclude>
     <ClInclude Include="AI\path_manager.h">

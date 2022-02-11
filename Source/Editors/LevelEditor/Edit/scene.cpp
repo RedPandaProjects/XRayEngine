@@ -639,6 +639,13 @@ void EScene::LoadSpawn(xr_vector<NET_Packet>& Ps)
     m_Spawn.swap(Ps);
 }
 
+IGameGraph* EScene::GetGameGraph()
+{
+    return &m_game_graph;
+}
+
+
+
 
 void EScene::BuildSpawn()
 {
@@ -686,29 +693,4 @@ bool EScene::GetSubstObjectName(const xr_string& _from, xr_string& _to) const
     }
 
     return (It!=It_e);
-}
-
-void* EScene::GetGraphEdges()
-{
-    return m_GraphBuilder.graph_edges();
-}
-
-void* EScene::GetGraphVertex()
-{
-    return m_GraphBuilder.graph_vertex();
-}
-
-void* EScene::GetGraphHeader()
-{
-    return m_GraphBuilder.graph_header();
-}
-
-void* EScene::GetCrossTableHeader()
-{
-    return const_cast<void*>( (const void*) & m_GraphBuilder.cross().header());
-}
-
-void* EScene::GetCrossTableVertex()
-{
-    return const_cast<void*>((const void*)&m_GraphBuilder.cross().vertex(0));
 }

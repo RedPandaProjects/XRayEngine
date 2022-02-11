@@ -16,6 +16,7 @@
 #include "../XrCore/FixedMap.h"
 #include "../XrEngine/XrEditorSceneInterface.h"
 #include "../AI/game_graph_builder.h"
+#include "../AI/level_graph_editor.h"
 //refs
 #ifndef _DEBUG
 #define USE_ARENA_ALLOCATOR
@@ -342,15 +343,11 @@ public:
 	void Stop();
 	virtual	void LoadCFrom(CObjectSpace* Space, CDB::build_callback cb);
 	virtual void LoadSpawn(xr_vector<NET_Packet>&Ps);
-	virtual struct NodeCompressed* GetAINodes();
-	virtual struct hdrNODES* GetAIHeader();
-	virtual void* GetGraphEdges();
-	virtual void* GetGraphVertex();
-	virtual void* GetGraphHeader();
-	virtual void* GetCrossTableHeader();
-	virtual void* GetCrossTableVertex();
+	virtual IGameGraph* GetGameGraph();
+	virtual ILevelGraph* GetLevelGraph();
 	void BuildSpawn();
 	void BuildAIMap();
+	void BuildGameGraph();
 protected:
     typedef std::pair<xr_string,xr_string>  TSubstPair;
     typedef xr_vector<TSubstPair>           TSubstPairs;
@@ -363,8 +360,8 @@ public:
     void            RegisterSubstObjectName  (const xr_string& from, const xr_string& to );
     bool            GetSubstObjectName       (const xr_string& from, xr_string& to) const;
 private:
-	xr_vector< NodeCompressed> m_AIMapNodes;
-	hdrNODES m_AIMapHeader;
+	CLevelGraphEditor m_level_graph;
+	CGameGraphEditor m_game_graph;
 	xr_vector<NET_Packet> m_Spawn;
 	CGameGraphBuilder m_GraphBuilder;
 };

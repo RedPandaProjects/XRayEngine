@@ -8,7 +8,7 @@
 
 #pragma once
 
-IC	CGraphEngine::CGraphEngine		(u32 max_vertex_count)
+IC	CGraphEngineEditor::CGraphEngineEditor		(u32 max_vertex_count)
 {
 	m_algorithm			= xr_new<CAlgorithm>				(max_vertex_count);
 	m_algorithm->data_storage().set_min_bucket_value		(_dist_type(0));
@@ -16,7 +16,7 @@ IC	CGraphEngine::CGraphEngine		(u32 max_vertex_count)
 
 }
 
-IC	CGraphEngine::~CGraphEngine			()
+IC	CGraphEngineEditor::~CGraphEngineEditor			()
 {
 	xr_delete			(m_algorithm);
 }
@@ -26,7 +26,7 @@ template <
 	typename _Graph,
 	typename _Parameters
 >
-IC	bool CGraphEngine::search		(
+IC	bool CGraphEngineEditor::search		(
 		const _Graph			&graph, 
 		const _index_type		&start_node, 
 		const _index_type		&dest_node, 
@@ -56,7 +56,7 @@ template <
 	typename _Graph,
 	typename _Parameters
 >
-IC	bool CGraphEngine::search			(
+IC	bool CGraphEngineEditor::search			(
 		const _Graph			&graph, 
 		const _index_type		&start_node, 
 		const _index_type		&dest_node, 
@@ -87,7 +87,7 @@ template <
 	typename _Parameters,
 	typename _PathManager
 >
-IC	bool CGraphEngine::search			(
+IC	bool CGraphEngineEditor::search			(
 		const _Graph			&graph, 
 		const _index_type		&start_node, 
 		const _index_type		&dest_node, 

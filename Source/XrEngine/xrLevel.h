@@ -109,7 +109,7 @@ public:
 		return			(*((u16*)(data + 3)));
 	}
 
-	friend class	CLevelGraph;
+	friend class	ILevelGraph;
 	friend struct	CNodePositionCompressor;
 	friend struct	CNodePositionConverter;
 };
@@ -196,7 +196,7 @@ public:
 #endif
 	}
 	
-	friend class	CLevelGraph;
+	friend class	ILevelGraph;
 	friend struct	CNodeCompressed;
 	friend class	CNodeRenumberer;
 	friend class	CRenumbererConverter;
@@ -224,7 +224,7 @@ public:
 		return			(*((u16*)(data + 3)));
 	}
 
-	friend class	CLevelGraph;
+	friend class	ILevelGraph;
 	friend struct	CNodePositionCompressor;
 	friend struct	CNodePositionConverter;
 };
@@ -309,7 +309,7 @@ public:
 #endif
 	}
 
-	friend class	CLevelGraph;
+	friend class	ILevelGraph;
 	friend struct	CNodeCompressed;
 	friend class	CNodeRenumberer;
 	friend class	CRenumbererConverter;

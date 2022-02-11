@@ -8,9 +8,9 @@
 
 #pragma once
 #ifndef XRSEFACTORY_EXPORTS
-class CGameGraph;
+class IGameGraph;
 class IGameLevelCrossTable;
-class CLevelGraph;
+class ILevelGraph;
 class CGraphEngine;
 class CEF_Storage;
 class CALifeSimulator;
@@ -35,8 +35,8 @@ private:
 
 private:
 #ifndef XRSEFACTORY_EXPORTS
-	CGameGraph							*m_game_graph;
-	CLevelGraph							*m_level_graph;
+	IGameGraph							*m_game_graph;
+	ILevelGraph							*m_level_graph;
 	CGraphEngine						*m_graph_engine;
 	CEF_Storage							*m_ef_storage;
 	CALifeSimulator						*m_alife_simulator;
@@ -57,7 +57,7 @@ private:
 			void						patrol_path_storage		(IReader &stream);
 			void						patrol_path_storage_from_editor();
 			void						set_alife				(CALifeSimulator *alife_simulator);
-			void						game_graph				(CGameGraph *game_graph);
+			void						game_graph				(IGameGraph *game_graph);
 #endif
 
 public:
@@ -66,10 +66,10 @@ public:
 			void						init					();		
 	IC		CScriptEngine				&script_engine			() const;
 #ifndef XRSEFACTORY_EXPORTS
-	IC		CGameGraph					&game_graph				() const;
-	IC		CGameGraph					*get_game_graph			() const;
-	IC		CLevelGraph					&level_graph			() const;
-	IC		const CLevelGraph			*get_level_graph		() const;
+	IC		IGameGraph					&game_graph				() const;
+	IC		IGameGraph					*get_game_graph			() const;
+	IC		ILevelGraph					&level_graph			() const;
+	IC		const ILevelGraph			*get_level_graph		() const;
 			const IGameLevelCrossTable	&cross_table			() const;
 			const IGameLevelCrossTable	*get_cross_table		() const;
 	IC		const CPatrolPathStorage	&patrol_paths			() const;

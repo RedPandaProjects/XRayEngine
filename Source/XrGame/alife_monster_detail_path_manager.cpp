@@ -128,7 +128,7 @@ void CALifeMonsterDetailPathManager::actualize				()
 	if (failed) {
 		Msg							("! %s couldn't build game path from",object().get_object().name_replace());
 		{
-			const CGameGraph::CVertex	*vertex = ai().game_graph().vertex(object().get_object().m_tGraphID);
+			const IGameGraph::CVertex	*vertex = ai().game_graph().vertex(object().get_object().m_tGraphID);
 			Msg						(
 				"! [%d][%s][%f][%f][%f]",
 				object().get_object().m_tGraphID,
@@ -141,7 +141,7 @@ void CALifeMonsterDetailPathManager::actualize				()
 		}
 		
 		{
-			const CGameGraph::CVertex	*vertex = ai().game_graph().vertex(m_destination.m_game_vertex_id);
+			const IGameGraph::CVertex	*vertex = ai().game_graph().vertex(m_destination.m_game_vertex_id);
 			Msg						(
 				"! [%d][%s][%f][%f][%f]",
 				m_destination.m_game_vertex_id,

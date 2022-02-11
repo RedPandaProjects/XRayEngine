@@ -8,7 +8,7 @@
 
 #pragma once
 
-IC	CLevelGraph	&CGameGraphBuilder::level_graph				() const
+IC	ILevelGraph	&CGameGraphBuilder::level_graph				() const
 {
 	VERIFY	(m_level_graph);
 	return	(*m_level_graph);

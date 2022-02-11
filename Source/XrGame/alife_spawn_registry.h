@@ -16,11 +16,11 @@
 #include "ai_debug.h"
 
 class CServerEntityWrapper;
-class CGameGraph;
+class IGameGraph;
 
 class CALifeSpawnRegistry : CRandom {
 public:
-	typedef CGameGraph::LEVEL_POINT_VECTOR											ARTEFACT_SPAWNS;
+	typedef IGameGraph::LEVEL_POINT_VECTOR											ARTEFACT_SPAWNS;
 	typedef CGraphAbstractSerialize<CServerEntityWrapper*,float,ALife::_SPAWN_ID>	SPAWN_GRAPH;
 
 public:
@@ -40,7 +40,7 @@ private:
 private:
 	IReader									*m_file;
 	IReader									*m_chunk;
-	CGameGraph								*m_game_graph;
+	IGameGraph								*m_game_graph;
 
 protected:
 			void							save_updates				(IWriter &stream);

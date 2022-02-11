@@ -7,22 +7,23 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-
-#include "../../XrEngine/xrLevel.h"
 #include "alife_space.h"
 #include "game_graph.h"
 #include "graph_vertex.h"
 #include "graph_edge.h"
 #include "graph_abstract.h"
+#include "game_graph_editor.h"
+#include "game_level_cross_table_editor.h"
 
 struct ISE_Abstract;
-class CLevelGraph;
-class CGameLevelCrossTable;
+class ILevelGraph;
+class IGameLevelCrossTable;
 
 template <
-	typename _data_type,
-	typename _edge_weight_type,
-	typename _vertex_id_type
+	typename _data_type = Loki::EmptyType,
+	typename _edge_weight_type = float,
+	typename _vertex_id_type = u32,
+	typename _edge_data_type = Loki::EmptyType
 >
 class CGraphAbstract;
 
@@ -33,7 +34,7 @@ namespace GameGraph
 
 class NET_Packet;
 
-class CGraphEngine;
+class CGraphEngineEditor;
 
 class CGameGraphBuilder 
 {
@@ -53,7 +54,7 @@ private:
 	shared_str				m_level_name;
 
 private:
-	CLevelGraph				*m_level_graph;
+	ILevelGraph				*m_level_graph;
 	graph_type				*m_graph;
 	xrGUID					m_graph_guid;
 	// cross table generation stuff
@@ -64,13 +65,10 @@ private:
 	xr_vector<u32>			m_next_fringe;
 	xr_vector<u32>			m_results;
 	// cross table itself
-	CGameLevelCrossTable	*m_cross_table;
+	IGameLevelCrossTable	*m_cross_table;
 	TRIPPLES				m_tripples;
 	xr_vector<u32>			m_path;
-	CGraphEngine			*m_graph_engine;
-	GameGraph::CHeader		m_graph_header;
-	GameGraph::CEdge		*m_edges;
-	GameGraph::CVertex*		m_vertexs;
+	CGraphEngineEditor			*m_graph_engine;
 
 private:
 			void		create_graph				();
@@ -97,15 +95,11 @@ private:
 			void		optimize_graph				();
 			void		build_game_graph			();
 
-private:
-	IC		CLevelGraph				&level_graph	() const;
-	IC		graph_type				&graph			() const;
 public:
-	IC		CGameLevelCrossTable& cross() const;
-			GameGraph::CEdge* graph_edges() const;
-			GameGraph::CVertex* graph_vertex() const;
-			GameGraph::CHeader* graph_header() const;
 
+	IC		ILevelGraph& level_graph() const;
+	IC		graph_type& graph() const;
+	IC		IGameLevelCrossTable& cross() const;
 
 						CGameGraphBuilder			();
 						~CGameGraphBuilder			();

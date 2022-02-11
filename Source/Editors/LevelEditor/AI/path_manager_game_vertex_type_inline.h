@@ -17,7 +17,7 @@
 	>
 
 #define CGameVertexTypePathManager CPathManager<\
-	CGameGraph,\
+	IGameGraph,\
 	_DataStorage,\
 	SVertexType<\
 		_dist_type,\

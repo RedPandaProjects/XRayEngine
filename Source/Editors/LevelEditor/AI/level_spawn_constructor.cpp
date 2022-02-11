@@ -10,7 +10,7 @@
 #include "level_spawn_constructor.h"
 #include "game_level_cross_table.h"
 #include "level_graph.h"
-#include "graph_engine.h"
+#include "graph_engine_editor.h"
 #include "..\xrServerEntities\xrMessages.h"
 #include "..\xrServerEntities\xrServer_Objects_ALife_All.h"
 #include "..\xrServerEntities\clsid_game.h"
@@ -18,7 +18,7 @@
 #include "game_spawn_constructor.h"
 #include "patrol_path_storage.h"
 #include "space_restrictor_wrapper.h"
-#include "..\xrServerEntities\object_broker.h"
+#include "..\xrEngine\object_broker.h"
 #include "..\xrServerEntities\restriction_space.h"
 #include "scene.h"
 #include "SpawnPoint.h"
@@ -38,7 +38,7 @@ CLevelSpawnConstructor::~CLevelSpawnConstructor					()
 	VERIFY					(!m_graph_engine);
 }
 
-IC	const CGameGraph &CLevelSpawnConstructor::game_graph		() const
+IC	const IGameGraph &CLevelSpawnConstructor::game_graph		() const
 {
 	return					(m_game_spawn_constructor->game_graph());
 }
@@ -53,27 +53,27 @@ IC	u32	CLevelSpawnConstructor::level_id						(shared_str level_name) const
 	return					(m_game_spawn_constructor->level_id(*level_name));
 }
 
-IC	const CLevelGraph &CLevelSpawnConstructor::level_graph			() const
+IC	const ILevelGraph &CLevelSpawnConstructor::level_graph			() const
 {
 	return					(*m_level_graph);
 }
 
-IC	const CGameLevelCrossTable &CLevelSpawnConstructor::cross_table	() const
+IC	const IGameLevelCrossTable &CLevelSpawnConstructor::cross_table	() const
 {
 	return					(*m_cross_table);
 }
 
-IC	CGraphEngine &CLevelSpawnConstructor::graph_engine			() const
+IC	CGraphEngineEditor &CLevelSpawnConstructor::graph_engine			() const
 {
 	return					(*m_graph_engine);
 }
 
 void CLevelSpawnConstructor::init								()
 {
-	m_level_graph = xr_new<CLevelGraph>();
+	//m_level_graph = xr_new<ILevelGraph>();
 	m_game_spawn_constructor->game_graph().set_current_level(game_graph().header().level(*m_level.name()).id());
 	m_cross_table = &game_graph().cross_table();
-	m_game_spawn_constructor->patrol_path_storage().load_editor(&level_graph(), &cross_table(), &game_graph());
+	//m_game_spawn_constructor->patrol_path_storage().load_editor(&level_graph(), &cross_table(), &game_graph());
 	/*// loading level graph
 	string_path				file_name;
 	FS.update_path			(file_name,"$game_levels$",*m_level.name());
@@ -384,10 +384,10 @@ void CLevelSpawnConstructor::correct_level_changers				()
 
 struct remove_too_far_predicate {
 	float				m_radius_sqr;
-	const CLevelGraph	*m_graph;
+	const ILevelGraph	*m_graph;
 	Fvector				m_position;
 
-	IC			remove_too_far_predicate	(const CLevelGraph *graph, const Fvector &position, float radius)
+	IC			remove_too_far_predicate	(const ILevelGraph *graph, const Fvector &position, float radius)
 	{
 		VERIFY			(graph);
 		m_graph			= graph;
@@ -440,7 +440,7 @@ void CLevelSpawnConstructor::generate_artefact_spawn_positions	()
 {
 	// create graph engine
 	VERIFY								(!m_graph_engine);
-	m_graph_engine						= xr_new<CGraphEngine>(m_level_graph->header().vertex_count());
+	m_graph_engine						= xr_new<CGraphEngineEditor>(m_level_graph->header().vertex_count());
 
 	xr_vector<u32>						l_tpaStack;
 	SPAWN_STORAGE						zones;
@@ -461,7 +461,7 @@ void CLevelSpawnConstructor::generate_artefact_spawn_positions	()
 		zone->m_tNodeID						= level_graph().vertex(zone->m_tNodeID,zone->o_Position);
 		if (!level_graph().valid_vertex_position(zone->o_Position) || !level_graph().inside(zone->m_tNodeID,zone->o_Position))
 			zone->m_tNodeID					= level_graph().vertex(u32(-1),zone->o_Position);
-		const CGameLevelCrossTable::CCell	&cell = cross_table().vertex(zone->m_tNodeID);
+		const IGameLevelCrossTable::CCell	&cell = cross_table().vertex(zone->m_tNodeID);
 		zone->m_tGraphID					= cell.game_vertex_id();
 		zone->m_fDistance					= cell.distance();
 

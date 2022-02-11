@@ -10,7 +10,13 @@
 
 namespace LevelGraph
 {
-	class CHeader : private hdrNODES 
+	class CHeader :
+#if DEV_MODE
+		public
+#else
+		private
+#endif
+		hdrNODES 
 	{
 	private:
 		friend class CRenumbererConverter;
@@ -26,12 +32,20 @@ namespace LevelGraph
 
 	typedef NodePosition	CPosition;
 
-	class CVertex : public NodeCompressed 
+	class CVertex : 
+		
+#if DEV_MODE
+		public
+#else
+		private
+#endif
+		NodeCompressed 
 	{
 	private:
 		friend class CRenumbererConverter;
 
 	public:
+		ICF	void			link(u8 link_index, u32 value) { NodeCompressed::link(link_index, value); }
 		ICF	u32				link					(int i) const;
 		ICF	u16				high_cover				(u8 index) const;
 		ICF	u16				low_cover				(u8 index) const;
@@ -40,7 +54,7 @@ namespace LevelGraph
 		ICF	bool			operator<				(const LevelGraph::CVertex &vertex) const;
 		ICF	bool			operator>				(const LevelGraph::CVertex &vertex) const;
 		ICF	bool			operator==				(const LevelGraph::CVertex &vertex) const;
-		friend class CLevelGraph;
+		friend class ILevelGraph;
 	};
 
 	struct SSegment 
