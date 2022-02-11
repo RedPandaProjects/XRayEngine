@@ -1007,10 +1007,10 @@ CApplication::CApplication()
 	pFontSystem					= NULL;
 
 	// Register us
-	EngineDevice->seqFrame.Add			(this, REG_PRIORITY_HIGH+1000);
+	Device->seqFrame.Add			(this, REG_PRIORITY_HIGH+1000);
 	
-	if (psDeviceFlags.test(mtSound))	EngineDevice->seqFrameMT.Add		(&SoundProcessor);
-	else								EngineDevice->seqFrame.Add			(&SoundProcessor);
+	if (psDeviceFlags.test(mtSound))	Device->seqFrameMT.Add		(&SoundProcessor);
+	else								Device->seqFrame.Add			(&SoundProcessor);
 
 	Console->Show				( );
 

@@ -24,25 +24,25 @@ bool	CScenePhyscs ::Simulating			()
 }
 
 
-BOOL  GetStaticCformData( const Fmatrix& parent,   CEditableMesh* mesh, CEditableObject* object, Fvector*  verts, int& vert_cnt, int& vert_it, CDB::TRI *faces , int& face_cnt,  int& face_it );
-BOOL GetStaticCformData( CSceneObject* obj,mesh_build_data &data, bool b_selected_only )
+BOOL  GetStaticCformData(const Fmatrix& parent, CEditableMesh* mesh, CEditableObject* object, Fvector* verts, int& vert_cnt, int& vert_it, CDB::TRI* faces, int& face_cnt, int& face_it, CSceneObject* obj);
+BOOL GetStaticCformData(CSceneObject* obj, mesh_build_data& data, bool b_selected_only)
 {
-	Fmatrix T 			= obj->_Transform();
-    CEditableObject *O = obj->GetReference();
+    Fmatrix T = obj->_Transform();
+    CEditableObject* O = obj->GetReference();
 
 
-     for(EditMeshIt M=O->FirstMesh();M!=O->LastMesh();M++){
-	  //	CSector* S = PortalUtils.FindSector(obj,*M);
-	  //  int sect_num = S?S->m_sector_num:m_iDefaultSectorNum;
-      //	if (!BuildMesh(T,O,*M,sect_num,l_verts,l_vert_cnt,l_vert_it,l_faces,l_face_cnt,l_face_it,l_smgroups,obj->_Transform()))
+    for (EditMeshIt M = O->FirstMesh(); M != O->LastMesh(); M++) {
+        //	CSector* S = PortalUtils.FindSector(obj,*M);
+        //  int sect_num = S?S->m_sector_num:m_iDefaultSectorNum;
+        //	if (!BuildMesh(T,O,*M,sect_num,l_verts,l_vert_cnt,l_vert_it,l_faces,l_face_cnt,l_face_it,l_smgroups,obj->_Transform()))
 
-      if(!::GetStaticCformData(T,*M,O,data.l_verts,data.l_vert_cnt,data.l_vert_it,data.l_faces,data.l_face_cnt,data.l_face_it) )
-        return FALSE;
-      }
+        if (!::GetStaticCformData(T, *M, O, data.l_verts, data.l_vert_cnt, data.l_vert_it, data.l_faces, data.l_face_cnt, data.l_face_it, obj))
+            return FALSE;
+    }
 
 
 
-	return FALSE;
+    return FALSE;
 }
 //BOOL GetMuStaticCformData( CSceneObject* obj,mesh_build_data &data, bool b_selected_only );
 BOOL GetStaticCformData   ( ObjectList& lst, mesh_build_data &data, bool b_selected_only )

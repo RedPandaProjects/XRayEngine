@@ -54,6 +54,7 @@ public:
 void	ISpatial_DB::q_frustum		(xr_vector<ISpatial*>& R, u32 _o, u32 _mask, const CFrustum& _frustum)	
 {
 	cs.Enter			();
+	if (!m_root)return;
 	q_result			= &R;
 	q_result->clear_not_free();
 	walker				W(this,_mask,&_frustum); W.walk(m_root,m_center,m_bounds,_frustum.getMask()); 

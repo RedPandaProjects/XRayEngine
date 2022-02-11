@@ -76,8 +76,8 @@ CObjectSpace* __stdcall create_object_space()
 CObjectSpace*	__stdcall	mesh_create_object_space(Fvector* verts, CDB::TRI* tris, const hdrCFORM &H, CDB::build_callback build_callback)
 {
 	CObjectSpace* os = xr_new<CObjectSpace>();
-	g_SpatialSpace				= xr_new<ISpatial_DB>	();
-	g_SpatialSpacePhysic		= xr_new<ISpatial_DB>	();
+//	g_SpatialSpace				= xr_new<ISpatial_DB>	();
+	//g_SpatialSpacePhysic		= xr_new<ISpatial_DB>	();
 	os->Create( verts, tris, H, build_callback );
 	return os;
 }

@@ -498,7 +498,8 @@ float CalcArea(const Fvector& v0, const Fvector& v1, const Fvector& v2)
 
 
 //const Fmatrix& parent,
-BOOL  GetStaticCformData( const Fmatrix& parent,   CEditableMesh* mesh, CEditableObject* object, Fvector*  verts, int& vert_cnt, int& vert_it, CDB::TRI *faces , int& face_cnt,  int& face_it )
+BOOL  GetStaticCformData( const Fmatrix& parent,   CEditableMesh* mesh, CEditableObject* object, Fvector*  verts, int& vert_cnt, int& vert_it, CDB::TRI *faces , int& face_cnt,  int& face_it,
+    CSceneObject* obj)
 {
 
 	if (object->IsDynamic())
@@ -516,9 +517,18 @@ BOOL  GetStaticCformData( const Fmatrix& parent,   CEditableMesh* mesh, CEditabl
     {
 		IntVec& face_lst = sp_it->second;
         CSurface* surf 		= sp_it->first;
+        for (size_t i = 0; i < mesh->Parent()->SurfaceCount(); i++)
+        {
+            if (mesh->Parent()->Surfaces()[i] == sp_it->first)
+            {
+                surf = obj->m_Surfaces[i];
+                break;
+            }
+        }
         if(surf->m_GameMtlName=="materials\\occ")
 			continue;
-
+        if (!EDevice->ShaderXRLC.Get(surf->_ShaderXRLCName())->flags.bCollision)
+            continue;
         u16 game_material_idx = GameMaterialLibrary-> GetMaterialIdx(surf->m_GameMtlName.c_str());
 
         for (IntIt f_it=face_lst.begin(); f_it!=face_lst.end(); ++f_it)
@@ -534,8 +544,8 @@ BOOL  GetStaticCformData( const Fmatrix& parent,   CEditableMesh* mesh, CEditabl
                  	{
 
                 first_face.material 		= (u16)game_material_idx;
-                
-                
+                first_face.sector = 0;
+               
                 for (int k=0; k<3; ++k)
                 {
                     st_FaceVert& fv = face.pv[k];
