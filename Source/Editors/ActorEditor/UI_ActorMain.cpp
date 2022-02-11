@@ -68,7 +68,7 @@ CCommandVar CActorTools::CommandSave(CCommandVar p1, CCommandVar p2)
 CCommandVar CActorTools::CommandImport(CCommandVar p1, CCommandVar p2)
 {
     xr_string		temp_fn			= p1.IsString()?xr_string(p1):xr_string("");
-    if(p1.IsString()||EFS.GetOpenName(EDevice.m_hWnd, _import_,temp_fn))
+    if(p1.IsString()||EFS.GetOpenName(EDevice->m_hWnd, _import_,temp_fn))
     {
         FS_Path* pp = FS.get_path(_import_);
 
@@ -198,7 +198,7 @@ CCommandVar CActorTools::CommandBatchConvert(CCommandVar p1, CCommandVar p2)
 {
 	CCommandVar res 				= FALSE;
     xr_string fn;
-    if (EFS.GetOpenName(EDevice.m_hWnd, "$import$",fn,false,0,6))
+    if (EFS.GetOpenName(EDevice->m_hWnd, "$import$",fn,false,0,6))
     {
         if (0!=(res=BatchConvert(fn.c_str())))	
         	ELog.Msg(mtInformation,"Convert complete.");
@@ -263,9 +263,9 @@ void CActorMain::OutCameraPos()
 	VERIFY(m_bReady);
     
    /* AnsiString s;
-	const Fvector& c 	= EDevice.m_Camera.GetPosition();
+	const Fvector& c 	= EDevice->m_Camera.GetPosition();
 	s.sprintf("C: %3.1f, %3.1f, %3.1f",c.x,c.y,c.z);
-//	const Fvector& hpb 	= EDevice.m_Camera.GetHPB();
+//	const Fvector& hpb 	= EDevice->m_Camera.GetHPB();
 //	s.sprintf(" Cam: %3.1f�, %3.1f�, %3.1f�",rad2deg(hpb.y),rad2deg(hpb.x),rad2deg(hpb.z));
     fraBottomBar->paCamera->Caption=s; fraBottomBar->paCamera->Repaint();*/
 }
@@ -431,7 +431,7 @@ CCommandVar CActorTools::CommandClear(CCommandVar p1, CCommandVar p2)
         return FALSE;
 
     m_LastFileName = "";
-    EDevice.m_Camera.Reset();
+    EDevice->m_Camera.Reset();
     Clear();
     ExecCommand(COMMAND_UPDATE_CAPTION);
     ExecCommand(COMMAND_UPDATE_PROPERTIES);
@@ -444,7 +444,7 @@ CCommandVar CActorTools::CommandLoad(CCommandVar p1, CCommandVar p2)
     xr_string temp_fn = p1.IsString() ? xr_string(p1) : xr_string("");
     if (!p1.IsString()) {
         temp_fn = EFS.ChangeFileExt(m_LastFileName.c_str(), "");
-        if (!EFS.GetOpenName(EDevice.m_hWnd,_objects_, temp_fn))
+        if (!EFS.GetOpenName(EDevice->m_hWnd,_objects_, temp_fn))
             return  	FALSE;
     }
     if (temp_fn.size()) {

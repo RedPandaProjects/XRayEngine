@@ -87,7 +87,7 @@ void CActorTools::OnExportImportRefsClick(ButtonValue* V, bool& bModif, bool& bS
         case 1:
         { // import
             xr_string 		fname;
-            if(EFS.GetOpenName(EDevice.m_hWnd, _import_, fname, false))
+            if(EFS.GetOpenName(EDevice->m_hWnd, _import_, fname, false))
             {
                 CInifile ini( fname.c_str(), TRUE, TRUE, FALSE);
                 m_pEditObject->m_SMotionRefs.clear();
@@ -116,7 +116,7 @@ void CActorTools::OnMotionEditClick(ButtonValue* V, bool& bModif, bool& bSafe)
     case 0:{ // append
         xr_string folder,nm,full_name;
         xr_string fnames;
-        if (EFS.GetOpenName(EDevice.m_hWnd, _smotion_,fnames,true)){
+        if (EFS.GetOpenName(EDevice->m_hWnd, _smotion_,fnames,true)){
             AStringVec lst;
             _SequenceToList(lst,fnames.c_str());
             bool bRes = false;
@@ -662,7 +662,7 @@ void  CActorTools::OnBoneFileClick(ButtonValue* V, bool& bModif, bool& bSafe)
     switch (V->btn_num){
     case 0:{ 
     	xr_string fn;
-    	if (EFS.GetOpenName(EDevice.m_hWnd, "$sbones$",fn)){
+    	if (EFS.GetOpenName(EDevice->m_hWnd, "$sbones$",fn)){
         	IReader* R = FS.r_open(fn.c_str());
 	    	if (m_pEditObject->LoadBoneData(*R))	ELog.DlgMsg(mtInformation,"Bone data succesfully loaded.");
             else                                    ELog.DlgMsg(mtError,"Failed to load bone data.");

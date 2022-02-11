@@ -12,6 +12,10 @@ CActorTools*	ATools=(CActorTools*)Tools;
 //------------------------------------------------------------------------------
 #define CHECK_SNAP(R,A,C){ R+=A; if(fabsf(R)>=C){ A=snapto(R,C); R=0; }else{A=0;}}
 
+ECORE_API void ShapeRotate(CBone& Bone, const Fvector& _amount);
+ECORE_API void ShapeMove(CBone& Bone, const Fvector& _amount);
+ECORE_API void BoneRotate(CBone& Bone, const Fvector& _axis, float angle);
+
 
 void EngineModel::DeleteVisual		()
 {
@@ -115,7 +119,7 @@ void PreviewModel::Update()
 {
     if (m_Flags.is(pmScroll))
     {
-        m_vPosition.z += m_fSpeed*EDevice.fTimeDelta;
+        m_vPosition.z += m_fSpeed*EDevice->fTimeDelta;
         if (m_vPosition.z>m_fSegment) m_vPosition.z-=m_fSegment;
     }
 }
@@ -184,7 +188,7 @@ void CActorTools::Render()
         m_RenderObject.OnRender();
         if (m_RenderObject.IsRenderable() && MainForm->GetLeftBarForm()->GetRenderMode() == UILeftBarForm::Render_Engine)
         {
-            ::Render->model_RenderSingle(m_RenderObject.m_pVisual, m_RenderObject.ObjectXFORM(), m_RenderObject.m_fLOD);
+            RImplementation.model_RenderSingle(m_RenderObject.m_pVisual, m_RenderObject.ObjectXFORM(), m_RenderObject.m_fLOD);
             RCache.set_xform_world(World);
             if (EPrefs->object_flags.is(epoDrawJoints))
             {
@@ -194,7 +198,7 @@ void CActorTools::Render()
                     u16 bcnt = K->LL_BoneCount();
                     for (u16 bidx = 0; bidx < bcnt; ++bidx)
                     {
-                        EDevice.SetShader(EDevice.m_WireShader);
+                        EDevice->SetShader(EDevice->m_WireShader);
 
                         Fmatrix M = Fmatrix().mul(m_RenderObject.ObjectXFORM(), K->LL_GetTransform(bidx));
 
@@ -423,7 +427,7 @@ void CActorTools::ZoomObject(BOOL bSelOnly)
         default:
             BB = m_pEditObject->GetBox();
         }
-        EDevice.m_Camera.ZoomExtents(BB);
+        EDevice->m_Camera.ZoomExtents(BB);
     }
 }
 
@@ -641,7 +645,7 @@ void  CActorTools::MouseMove(TShiftState Shift)
             {
                 if (Shift | ssCtrl) {
                     for (BoneIt b_it = lst.begin(); b_it != lst.end(); ++b_it)
-                        (*b_it)->ShapeMove(m_MovedAmount);
+                       ShapeMove(*(*b_it),m_MovedAmount);
 
                 }
                 else
@@ -682,7 +686,7 @@ void  CActorTools::MouseMove(TShiftState Shift)
                 if (Shift | ssCtrl)
                 {
                     for (BoneIt b_it = lst.begin(); b_it != lst.end(); ++b_it)
-                        (*b_it)->ShapeRotate(rot);
+                      ShapeRotate(*(*b_it),rot);
 
                 }
                 else
@@ -697,7 +701,7 @@ void  CActorTools::MouseMove(TShiftState Shift)
                     else
                     {
                         for (BoneIt b_it = lst.begin(); b_it != lst.end(); ++b_it)
-                            (*b_it)->BoneRotate(m_RotateVector, m_RotateAmount);
+                           BoneRotate(*(*b_it),m_RotateVector, m_RotateAmount);
 
                         RefreshSubProperties();
                     }
@@ -1177,10 +1181,8 @@ void CActorTools::CreatePhysicsWorld()
 {
     VERIFY(!os);
     VERIFY(!physics_world());
-    set_mtl_lib(&GMLib);
     os = create_object_space();
-    CRenderDeviceBase* rd = &EDevice;
-    create_physics_world(false, os, 0, rd);
+    create_physics_world(false, os, 0, Device);
 }
 
 void CActorTools::DestroyPhysicsWorld()
@@ -1238,31 +1240,31 @@ void CActorTools::PrepareLighting()
 
     L.diffuse.set(1, 1, 1, 1);
     L.direction.set(1, -1, 1); L.direction.normalize();
-    EDevice.SetLight(0, L);
-    EDevice.LightEnable(0, true);
+    EDevice->SetLight(0, L);
+    EDevice->LightEnable(0, true);
 
     L.diffuse.set(0.2, 0.2, 0.2, 1);
     L.direction.set(-1, -1, -1); L.direction.normalize();
-    EDevice.SetLight(1, L);
-    EDevice.LightEnable(1, true);
+    EDevice->SetLight(1, L);
+    EDevice->LightEnable(1, true);
 
     L.diffuse.set(0.2, 0.2, 0.2, 1);
     L.direction.set(1, -1, -1); L.direction.normalize();
-    EDevice.SetLight(2, L);
-    EDevice.LightEnable(2, true);
+    EDevice->SetLight(2, L);
+    EDevice->LightEnable(2, true);
 
     L.diffuse.set(0.2, 0.2, 0.2, 1);
     L.direction.set(-1, -1, 1); L.direction.normalize();
-    EDevice.SetLight(3, L);
-    EDevice.LightEnable(3, true);
+    EDevice->SetLight(3, L);
+    EDevice->LightEnable(3, true);
 
     L.diffuse.set(1.0, 0.4, 0.3, 1);
     L.direction.set(0, 1, 0); L.direction.normalize();
-    EDevice.SetLight(4, L);
-    EDevice.LightEnable(4, true);
+    EDevice->SetLight(4, L);
+    EDevice->LightEnable(4, true);
 
     L.diffuse.set(0.3, 1.0, 0.4, 1);
     L.direction.set(-1, -1, -1); L.direction.normalize();
-    EDevice.SetLight(5, L);
-    EDevice.LightEnable(5, true);
+    EDevice->SetLight(5, L);
+    EDevice->LightEnable(5, true);
 }

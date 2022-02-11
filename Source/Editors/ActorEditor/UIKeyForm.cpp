@@ -77,7 +77,7 @@ void UIKeyForm::Draw()
 			if (m_TimeFactor != LOD_TimeFactor[1])
 			{
 				m_TimeFactor = LOD_TimeFactor[1];
-				EDevice.time_factor(m_TimeFactor);
+				EDevice->time_factor(m_TimeFactor);
 			}
 
 			ImGui::PushID("left1");
