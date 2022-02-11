@@ -534,6 +534,16 @@
     <ClCompile Include="Engine\guid_generator.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\XrRender\Private\ResourceManager_Scripting.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XrEngine\ai_script_lua_debug.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XrEngine\ai_script_lua_extension.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaMemoryController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WildMagic\WmlMath.h">

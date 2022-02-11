@@ -169,6 +169,7 @@ void CTexture::Load		()
 	{
 		// Check for OGM
 		string_path			fn;
+#ifndef REDITOR
 		if (FS.exist(fn,"$game_textures$",*cName,".ogm"))
 		{
 			// AVI
@@ -205,7 +206,9 @@ void CTexture::Load		()
 
 			}
 		} 
-		else if (FS.exist(fn,"$game_textures$",*cName,".avi"))
+		else
+#endif
+			if (FS.exist(fn,"$game_textures$",*cName,".avi"))
 		{
 			// AVI
 			pAVI = xr_new<CAviPlayerCustom>();

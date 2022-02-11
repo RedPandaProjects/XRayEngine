@@ -43,13 +43,8 @@ BOOL	reclaim		(xr_vector<T*>& vec, const T* ptr)
 IBlender* CResourceManager::_GetBlender		(LPCSTR Name)
 {
 	R_ASSERT(Name && Name[0]);
-#ifdef REDITOR
-	if (strcmp(Name, "hud\\crosshair") == 0) Name = "hud\\set";
-	if (strcmp(Name, "hud\\font") == 0) Name = "font";
-#endif
 	map_Blender::iterator I = m_blenders.find	(Name);
 #ifdef REDITOR
-	
 	if (I == m_blenders.end()) { Msg("Shader '%s' not found in library.", Name); return 0;}
 #else
 //	TODO: DX10: When all shaders are ready switch to common path
@@ -312,11 +307,9 @@ Shader*		CResourceManager::Create	(LPCSTR s_shader,	LPCSTR s_textures,	LPCSTR s_
 			}
 		}
 #else	//	USE_DX10
-#ifndef REDITOR
 		if	(_lua_HasShader(s_shader))		
 			return	_lua_Create	(s_shader,s_textures);
-		else								
-#endif
+		else						
 			return	_cpp_Create	(s_shader,s_textures,s_constants,s_matrices);
 #endif	//	USE_DX10
 	}

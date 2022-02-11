@@ -88,8 +88,8 @@ void	CBlender_Model_EbB::Compile(CBlender_Compile& C)
 		}
 		else if (C.iElement == 1)
 		{
-			if (oBlend.value)	C.r_Pass("model_env_hq", "model_env_hq", TRUE, TRUE, FALSE, TRUE, D3DBLEND_SRCALPHA, D3DBLEND_INVSRCALPHA, TRUE, 0);
-			else				C.r_Pass("model_env_hq", "model_env_hq", TRUE);
+			if (oBlend.value)	C.r_Pass("model_env_hq", "model_env_hq", FALSE, TRUE, FALSE, TRUE, D3DBLEND_SRCALPHA, D3DBLEND_INVSRCALPHA, TRUE, 0);
+			else				C.r_Pass("model_env_hq", "model_env_hq", FALSE);
 			C.r_Sampler("s_base", C.L_textures[0]);
 			C.r_Sampler("s_env", oT2_Name, false, D3DTADDRESS_CLAMP);
 			C.r_End();

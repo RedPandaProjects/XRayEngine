@@ -28,6 +28,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\XrCPU_Pipe\xrSkin2W.cpp" />
+    <ClCompile Include="..\..\XrEngine\ai_script_lua_debug.cpp" />
+    <ClCompile Include="..\..\XrEngine\ai_script_lua_extension.cpp" />
     <ClCompile Include="..\..\XrRender\DX9\dx9r_constants_cache.cpp" />
     <ClCompile Include="..\..\XrRender\Private\Animation.cpp" />
     <ClCompile Include="..\..\XrRender\Private\blenders\Blender.cpp" />
@@ -81,6 +83,7 @@
     <ClCompile Include="..\..\XrRender\Private\ResourceManager_Loader.cpp" />
     <ClCompile Include="..\..\XrRender\Private\ResourceManager_Reset.cpp" />
     <ClCompile Include="..\..\XrRender\Private\ResourceManager_Resources.cpp" />
+    <ClCompile Include="..\..\XrRender\Private\ResourceManager_Scripting.cpp" />
     <ClCompile Include="..\..\XrRender\Private\R_Backend.cpp" />
     <ClCompile Include="..\..\XrRender\Private\R_Backend_DBG.cpp" />
     <ClCompile Include="..\..\XrRender\Private\R_Backend_hemi.cpp" />
@@ -188,6 +191,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Development|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="LuaMemoryController.cpp" />
     <ClCompile Include="StbImage.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -371,6 +375,9 @@
     <ProjectReference Include="..\..\BearBundle\BearGraphics\Platform\Desktop\BearGraphics.vcxproj">
       <Project>{3b75536d-008d-4495-9fe8-c7ae79ac6898}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\External\Luabind\Luabind.vcxproj">
+      <Project>{18c37994-f2f2-46c0-bd55-bc738e8b9d89}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\External\Ogg\Ogg.vcxproj">
       <Project>{490c4173-e321-4e03-8e09-0475d7b91307}</Project>
     </ProjectReference>
@@ -525,7 +532,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;vfw32.lib;Winmm.lib;dxguid.lib;dinput8.lib;Rpcrt4.lib;XrEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;vfw32.lib;Winmm.lib;dxguid.lib;dinput8.lib;Rpcrt4.lib;XrEngine.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -540,7 +547,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;vfw32.lib;Winmm.lib;dxguid.lib;dinput8.lib;Rpcrt4.lib;XrEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;vfw32.lib;Winmm.lib;dxguid.lib;dinput8.lib;Rpcrt4.lib;XrEngine.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -559,7 +566,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;vfw32.lib;Winmm.lib;dxguid.lib;dinput8.lib;Rpcrt4.lib;XrEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;vfw32.lib;Winmm.lib;dxguid.lib;dinput8.lib;Rpcrt4.lib;XrEngine.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">
@@ -578,7 +585,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;vfw32.lib;Winmm.lib;dxguid.lib;dinput8.lib;Rpcrt4.lib;XrEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;vfw32.lib;Winmm.lib;dxguid.lib;dinput8.lib;Rpcrt4.lib;XrEngine.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -597,7 +604,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;vfw32.lib;Winmm.lib;dxguid.lib;dinput8.lib;Rpcrt4.lib;XrEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;vfw32.lib;Winmm.lib;dxguid.lib;dinput8.lib;Rpcrt4.lib;XrEngine.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development|x64'">
@@ -616,7 +623,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;vfw32.lib;Winmm.lib;dxguid.lib;dinput8.lib;Rpcrt4.lib;XrEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;vfw32.lib;Winmm.lib;dxguid.lib;dinput8.lib;Rpcrt4.lib;XrEngine.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -27,6 +27,10 @@
 #define ENGINE_BUILD
 #endif	//	XRRENDER_R1_EXPORTS
 
+#ifdef XRECORE_EXPORTS
+#define ENGINE_BUILD
+#endif	//	XRRENDER_R1_EXPORTS
+
 #ifndef ENGINE_BUILD
 	#include "../../XrServerEntities/ai_space.h"
 #endif
