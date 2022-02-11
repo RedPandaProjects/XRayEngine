@@ -425,6 +425,7 @@ void CGameGraphBuilder::connectivity_check	()
 
 void CGameGraphBuilder::create_tripples		()
 {
+	m_tripples.erase(m_tripples.begin(), m_tripples.end());
 	graph_type::const_vertex_iterator	I = graph().vertices().begin();
 	graph_type::const_vertex_iterator	E = graph().vertices().end();
 	for ( ; I != E; ++I) {
