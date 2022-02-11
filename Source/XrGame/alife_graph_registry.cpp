@@ -24,10 +24,6 @@ CALifeGraphRegistry::~CALifeGraphRegistry	()
 	xr_delete						(m_level);
 }
 
-void CALifeGraphRegistry::load_from_editor()
-{
-
-}
 
 void CALifeGraphRegistry::on_load			()
 {
@@ -50,16 +46,7 @@ void CALifeGraphRegistry::on_load			()
 	}
 }
 
-void CALifeGraphRegistry::check_level()
-{
-	if (!m_level)
-	{
-		static const GameGraph::_LEVEL_ID level_id_null = 0;
-		m_level = xr_new<CALifeLevelRegistry>(level_id_null);
-		ai().load_from_editor();
-	}
 
-}
 
 void CALifeGraphRegistry::update			(CSE_ALifeDynamicObject *object)
 {
@@ -81,7 +68,6 @@ void CALifeGraphRegistry::update			(CSE_ALifeDynamicObject *object)
 
 void CALifeGraphRegistry::setup_current_level	()
 {
-	VERIFY(!Device->IsEditorMode());
 	m_level						= xr_new<CALifeLevelRegistry>(ai().game_graph().vertex(actor()->m_tGraphID)->level_id());
 	level().set_process_time	(m_process_time);
 	for (int i=0, n=ai().game_graph().header().vertex_count(); i<n; ++i)

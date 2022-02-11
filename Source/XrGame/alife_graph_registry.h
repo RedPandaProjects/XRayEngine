@@ -61,9 +61,7 @@ protected:
 public:
 										CALifeGraphRegistry		();
 	virtual								~CALifeGraphRegistry	();
-			void						load_from_editor		();
 			void						on_load					();
-			void						check_level				();
 			void						update					(CSE_ALifeDynamicObject		*object);
 			void						attach					(CSE_Abstract				&object,	CSE_ALifeInventoryItem	*item,			GameGraph::_GRAPH_ID	game_vertex_id,				bool alife_query = true, bool add_children = true);
 			void						detach					(CSE_Abstract				&object,	CSE_ALifeInventoryItem	*item,			GameGraph::_GRAPH_ID	game_vertex_id,				bool alife_query = true, bool remove_children = true);

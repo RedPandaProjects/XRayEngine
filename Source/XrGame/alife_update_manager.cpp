@@ -234,7 +234,7 @@ void CALifeUpdateManager::new_game_for_editor()
 	unload();
 	reload(m_section);
 	spawns().load_from_editor();
-	graph().load_from_editor();
+	graph().on_load();
 	server().PerformIDgen(0x0000);
 	time_manager().init(m_section);
 	VERIFY(can_register_objects());

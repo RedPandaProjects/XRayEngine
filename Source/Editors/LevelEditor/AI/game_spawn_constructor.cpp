@@ -8,11 +8,11 @@
 
 #include "stdafx.h"
 #include "game_spawn_constructor.h"
-#include "../../xrServerEntities/object_broker.h"
+#include "../../XrEngine/object_broker.h"
 #include "level_spawn_constructor.h"
 #include "../../xrServerEntities/xrServer_Objects_ALife_All.h"
 #include "server_entity_wrapper.h"
-#include "graph_engine.h"
+#include "graph_engine_editor.h"
 #include "patrol_path_storage.h"
 
 extern LPCSTR GAME_CONFIG;
@@ -31,12 +31,19 @@ CGameSpawnConstructor::CGameSpawnConstructor	(LPCSTR name, LPCSTR output, LPCSTR
 	save_spawn						(name,output);
 }
 
+CGameSpawnConstructor::CGameSpawnConstructor(LPCSTR name, CMemoryWriter& output, LPCSTR start, bool no_separator_check)
+{
+	load_spawns(name, no_separator_check);
+	process_spawns();
+	process_actor(start);
+	save_spawn(name, output);
+}
+
 CGameSpawnConstructor::~CGameSpawnConstructor	()
 {
 	delete_data						(m_level_spawns);
 	delete_data						(m_spawn_graph);
-	xr_delete						(m_game_graph);
-	xr_delete						(m_game_info);
+//	xr_delete						(m_game_graph);
 	xr_delete						(m_patrol_path_storage);
 }
 
@@ -67,8 +74,8 @@ void CGameSpawnConstructor::load_spawns	(LPCSTR name, bool no_separator_check)
 	m_spawn_graph						= xr_new<SPAWN_GRAPH>();
 	
 	// init ini file
-	m_game_info							= xr_new<CInifile>(INI_FILE);
-	R_ASSERT							(m_game_info->section_exist("levels"));
+//	m_game_info							= xr_new<CInifile>(INI_FILE);
+//	R_ASSERT							(m_game_info->section_exist("levels"));
 
 	// init patrol path storage
 	m_patrol_path_storage				= xr_new<CPatrolPathStorage>();
@@ -76,20 +83,22 @@ void CGameSpawnConstructor::load_spawns	(LPCSTR name, bool no_separator_check)
 	string4096							levels_string;
 	xr_strcpy							(levels_string,name);
 	strlwr								(levels_string);
-	fill_needed_levels					(levels_string,needed_levels);
+	//fill_needed_levels					(levels_string,needed_levels);
 
 	// fill level info
-	read_levels							(
+	/*read_levels(
 		&game_info(),
 		m_levels,
 		false,
 		&needed_levels
-	);
+	);*/
 
 	// init game graph
-	generate_temp_file_name				("game_graph","",m_game_graph_id);
-	xrMergeGraphs						(m_game_graph_id,name,false);
-	m_game_graph						= xr_new<IGameGraph>(m_game_graph_id);
+//	generate_temp_file_name				("game_graph","",m_game_graph_id);
+//	xrMergeGraphs						(m_game_graph_id,name,false);
+
+	m_levels.insert(CLevelInfo(0, Scene->m_LevelOp.m_FNLevelPath, Fvector().set(0, 0, 0), "zaton"));
+	m_game_graph = Scene->GetGameGraph();
 
 	// load levels
 	GameGraph::SLevel					level;
@@ -104,7 +113,7 @@ void CGameSpawnConstructor::load_spawns	(LPCSTR name, bool no_separator_check)
 	}
 
 	string256							temp;
-	xr_sprintf								(temp,"There are no valid levels (with AI-map and graph) in the section 'levels' in the '%s' to build spawn file from!",GAME_CONFIG);
+	xr_sprintf								(temp,"There are no valid levels (with AI-map and graph) in the section 'levels' in the '%s' to build spawn file from!","UwU");
 	R_ASSERT2							(!m_level_spawns.empty(),temp);
 }
 
@@ -200,6 +209,36 @@ void CGameSpawnConstructor::save_spawn				(LPCSTR name, LPCSTR output)
 	stream.close_chunk				();
 
 	stream.save_to					(*spawn_name(output));
+}
+
+void CGameSpawnConstructor::save_spawn(LPCSTR name, CMemoryWriter& stream)
+{
+	m_spawn_header.m_version = XRAI_CURRENT_VERSION;
+	m_spawn_header.m_guid = generate_guid();
+	m_spawn_header.m_graph_guid = game_graph().header().guid();
+	m_spawn_header.m_spawn_count = spawn_graph().vertex_count();
+	m_spawn_header.m_level_count = (u32)m_level_spawns.size();
+
+	stream.open_chunk(0);
+	stream.w_u32(m_spawn_header.m_version);
+	save_data(m_spawn_header.m_guid, stream);
+	save_data(m_spawn_header.m_graph_guid, stream);
+	stream.w_u32(m_spawn_header.m_spawn_count);
+	stream.w_u32(m_spawn_header.m_level_count);
+	stream.close_chunk();
+
+	stream.open_chunk(1);
+	save_data(spawn_graph(), stream);
+	stream.close_chunk();
+
+	stream.open_chunk(2);
+	save_data(m_level_points, stream);
+	stream.close_chunk();
+
+	stream.open_chunk(3);
+	save_data(m_patrol_path_storage, stream);
+	stream.close_chunk();
+
 }
 
 shared_str CGameSpawnConstructor::spawn_name	(LPCSTR output)

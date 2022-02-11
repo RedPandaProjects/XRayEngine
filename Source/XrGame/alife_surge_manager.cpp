@@ -63,10 +63,5 @@ void CALifeSurgeManager::spawn_new_objects			()
 	fill_spawned_objects			();
 	spawns().fill_new_spawns		(m_temp_spawns,time_manager().game_time(),m_temp_spawned_objects);
 	spawn_new_spawns				();
-	if (Device->IsEditorMode())
-	{
-		graph().check_level();
-		return;
-	}
 	VERIFY							(graph().actor());
 }

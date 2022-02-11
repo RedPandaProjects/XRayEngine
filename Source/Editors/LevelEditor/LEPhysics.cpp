@@ -236,10 +236,10 @@ void CScenePhyscs::DestroyObjectSpace	()
      }
      VERIFY(!m_object_space);
      hdrCFORM H;
-     H.vertcount = build_data.l_vert_cnt;
-     H.facecount = build_data.l_face_cnt;
+     H.vertcount = build_data.l_vert_it;
+     H.facecount = build_data.l_face_it;
      H.version = CFORM_CURRENT_VERSION;
-     GetBox(H.aabb, build_data.l_verts, build_data.l_vert_cnt);
+     GetBox(H.aabb, build_data.l_verts, build_data.l_vert_it);
      VERIFY(!m_object_space);
      To->Create(build_data.l_verts, build_data.l_faces, H, cb);
 

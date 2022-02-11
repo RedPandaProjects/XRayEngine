@@ -142,8 +142,10 @@ void CAI_Space::load				(LPCSTR level_name)
 #endif
 
 	const IGameGraph::SLevel &current_level = game_graph().header().level(level_name);
-
-	m_level_graph			= xr_new<CLevelGraph>();
+	if(Device->IsEditorMode())
+		m_level_graph = EditorScene->GetLevelGraph();
+	else
+		m_level_graph			= xr_new<CLevelGraph>();
 	game_graph().set_current_level(current_level.id());
 	R_ASSERT2				(cross_table().header().level_guid() == level_graph().header().guid(), "cross_table doesn't correspond to the AI-map");
 	R_ASSERT2				(cross_table().header().game_guid() == game_graph().header().guid(), "graph doesn't correspond to the cross table");

@@ -11,10 +11,6 @@
 #include "..\xrServerEntities\xrServer_Objects.h"
 #include "..\xrServerEntities\xrmessages.h"
 
-#ifdef AI_COMPILER
-#	include "factory_api.h"
-#endif
-
 struct ISE_Abstract;
 
 CServerEntityWrapper::~CServerEntityWrapper	()
@@ -52,6 +48,8 @@ void CServerEntityWrapper::save				(IWriter &stream)
 
 void CServerEntityWrapper::load				(IReader &stream)
 {
+	R_ASSERT(false);
+	/*
 	NET_Packet				net_packet;
 	u16						ID;
 	IReader					*chunk;
@@ -83,7 +81,7 @@ void CServerEntityWrapper::load				(IReader &stream)
 
 	net_packet.r_begin		(ID);
 	R_ASSERT2				(M_UPDATE == ID,"Invalid packet ID (!= M_UPDATE)!");
-	m_object->UPDATE_Read	(net_packet);
+	m_object->UPDATE_Read	(net_packet);*/
 }
 
 void CServerEntityWrapper::save_update		(IWriter &stream)

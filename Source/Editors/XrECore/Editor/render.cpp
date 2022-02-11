@@ -17,7 +17,6 @@ ECORE_API float	g_fSCREEN;
 CRender   			RImplementation;
 
 //---------------------
-IRenderFactory*	RenderFactory = NULL;
 //---------------------------------------------------------------------------
 CRender::CRender	()
 {
@@ -393,8 +392,29 @@ public:
  };
  IRender_Light* CRender::light_create() { return xr_new< RLight>(); }
  void CRender::light_destroy(IRender_Light* p_) {  }
- IRender_Glow* CRender::glow_create() { return nullptr; }
- void CRender::glow_destroy(IRender_Glow* p_) {}
+
+
+
+ class RGlow : public IRender_Glow
+ {
+ public:
+ public:
+	 RGlow() {}
+	 virtual	~RGlow() {}
+
+	 virtual void					set_active(bool) {}
+	 virtual bool					get_active() { return false; }
+	 virtual void					set_position(const Fvector& P) { return ; }
+	 virtual void					set_direction(const Fvector& P) { return ; }
+	 virtual void					set_radius(float			R) { return ; }
+	 virtual void					set_texture(LPCSTR			name) { return ; }
+	 virtual void					set_color(const Fcolor& C) { return ; }
+	 virtual void					set_color(float r, float g, float b) { return ; }
+	 virtual void					spatial_move() { return ; }
+ };
+
+ IRender_Glow* CRender::glow_create() { return xr_new< RGlow>(); }
+ void CRender::glow_destroy(IRender_Glow* p_) {  }
  void CRender::model_Logging(BOOL bEnable) {}
 void CRender::models_Prefetch() {}
 void CRender::models_Clear(BOOL b_complete) {}

@@ -10,7 +10,7 @@
 #include "Kinematics.h"
 #include "cl_intersect.h"
 
-#include "../xrServerEntities/object_broker.h"
+#include "object_broker.h"
 
 #ifdef _EDITOR
     #include "ui_toolscustom.h"

@@ -424,6 +424,20 @@ void CSpawnPoint::SSpawnData::PreExportSpawn(CSpawnPoint* owner)
     m_Data->set_name_replace(owner->GetName());
     m_Data->position().set(owner->GetPosition());
     m_Data->angle().set(owner->GetRotation());
+    // export cform (if needed)
+    ISE_Shape* cform = m_Data->shape();
+    // SHAPE
+    if (cform && !(owner->m_AttachedObject && (owner->m_AttachedObject->FClassID == OBJCLASS_SHAPE))) {
+        ELog.DlgMsg(mtError, "Spawn Point: '%s' must contain attached shape.", owner->GetName());
+        ;
+    }
+    if (cform) {
+        CEditShape* shape = dynamic_cast<CEditShape*>(owner->m_AttachedObject); R_ASSERT(shape);
+        shape->ApplyScale();
+        owner->SetScale(shape->GetScale());
+        cform->assign_shapes(&*shape->GetShapes().begin(), shape->GetShapes().size());
+    }
+    // end
 }
 
 void CSpawnPoint::SSpawnData::OnAnimControlClick(ButtonValue* value, bool& bModif, bool& bSafe)

@@ -47,40 +47,6 @@ BOOL CLevelEditor::net_Start(LPCSTR op_server, LPCSTR op_client)
 		return false;
 	}
 	Server->SLS_Default();
-	{
-		CSE_ALifeCreatureActor* _actor = 0;
-		xr_vector<NET_Packet>			Ps;
-		EditorScene->LoadSpawn(Ps);
-		for (NET_Packet& P : Ps)
-		{
-			u16				ID;
-			P.r_begin(ID);
-			R_ASSERT(M_SPAWN == ID);
-			ClientID clientID; clientID.set(0);
-			CSE_Abstract* entity = Server->Process_spawn(P, clientID);
-			CSE_ALifeCreatureActor* actor = smart_cast<CSE_ALifeCreatureActor*>(entity);
-			if (actor)
-				_actor = actor;
-		}
-		if(_actor==nullptr)
-		{
-			_actor = smart_cast<CSE_ALifeCreatureActor*>(Server->entity_Create("actor"));
-			_actor->o_Position = Fvector().set(0.f, 0.f, 0.f);
-			_actor->set_name_replace("designer");
-			_actor->s_flags.flags |= M_SPAWN_OBJECT_ASPLAYER;
-			NET_Packet				packet;
-			packet.w_begin(M_SPAWN);
-			_actor->Spawn_Write(packet, TRUE);
-
-			u16						id;
-			packet.r_begin(id);
-			R_ASSERT(id == M_SPAWN);
-			ClientID				clientID;
-			clientID.set(0);
-			Server->Process_spawn(packet, clientID);
-		}
-			
-	}
 	if (psNET_direct_connect)
 	{
 		Server->create_direct_client();

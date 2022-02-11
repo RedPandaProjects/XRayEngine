@@ -71,9 +71,10 @@ IC	CGraphEngineEditor &CLevelSpawnConstructor::graph_engine			() const
 void CLevelSpawnConstructor::init								()
 {
 	//m_level_graph = xr_new<ILevelGraph>();
+	m_level_graph = Scene->GetLevelGraph();
 	m_game_spawn_constructor->game_graph().set_current_level(game_graph().header().level(*m_level.name()).id());
 	m_cross_table = &game_graph().cross_table();
-	//m_game_spawn_constructor->patrol_path_storage().load_editor(&level_graph(), &cross_table(), &game_graph());
+	m_game_spawn_constructor->patrol_path_storage().load_editor(&level_graph(), &cross_table(), &game_graph());
 	/*// loading level graph
 	string_path				file_name;
 	FS.update_path			(file_name,"$game_levels$",*m_level.name());
@@ -96,6 +97,8 @@ void CLevelSpawnConstructor::init								()
 
 CSE_Abstract *CLevelSpawnConstructor::create_object						(IReader *chunk)
 {
+	R_ASSERT(false);
+	/*
 	NET_Packet				net_packet;
 	net_packet.B.count		= chunk->length();
 	chunk->r				(net_packet.B.data,net_packet.B.count);
@@ -113,7 +116,8 @@ CSE_Abstract *CLevelSpawnConstructor::create_object						(IReader *chunk)
 		R_ASSERT2			(abstract,temp);
 	}
 	abstract->Spawn_Read	(net_packet);
-	return					(abstract);
+	return					(abstract);*/
+	return 0;
 }
 
 void CLevelSpawnConstructor::add_graph_point					(CSE_Abstract			*abstract)
@@ -612,8 +616,9 @@ void CLevelSpawnConstructor::Execute							()
 	correct_level_changers				();
 	verify_space_restrictors			();
 	
-	xr_delete							(m_level_graph);
+	//xr_delete							(m_level_graph);
 	m_cross_table						= 0;
+	m_level_graph = 0;
 	xr_delete							(m_graph_engine);
 }
 

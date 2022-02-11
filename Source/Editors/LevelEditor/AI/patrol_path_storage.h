@@ -10,7 +10,7 @@
 
 class CPatrolPath;
 class ILevelGraph;
-class CGameLevelCrossTable;
+class IGameLevelCrossTable;
 class IGameGraph;
 
 #include "..\xrEngine\object_interfaces.h""
@@ -36,8 +36,8 @@ public:
 
 public:
 
-			void					load_editor			(const ILevelGraph* level_graph, const CGameLevelCrossTable* cross, const IGameGraph* game_graph);
-			void					load_raw			(const ILevelGraph *level_graph, const CGameLevelCrossTable *cross, const IGameGraph *game_graph, IReader &stream);
+			void					load_editor			(const ILevelGraph* level_graph, const IGameLevelCrossTable* cross, const IGameGraph* game_graph);
+			void					load_raw			(const ILevelGraph *level_graph, const IGameLevelCrossTable *cross, const IGameGraph *game_graph, IReader &stream);
 	IC		const CPatrolPath		*path				(shared_str patrol_name, bool no_assert = false) const;
 	IC		const PATROL_REGISTRY	&patrol_paths		() const;
 };

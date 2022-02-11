@@ -14,12 +14,12 @@ IC	IGameGraph &CGameSpawnConstructor::game_graph		() const
 {
 	return						(*m_game_graph);
 }
-
+/*
 IC	CInifile &CGameSpawnConstructor::game_info			()
 {
 	return						(*m_game_info);
 }
-
+*/
 IC	CGameSpawnConstructor::SPAWN_GRAPH &CGameSpawnConstructor::spawn_graph	()
 {
 	return						(*m_spawn_graph);
@@ -27,7 +27,8 @@ IC	CGameSpawnConstructor::SPAWN_GRAPH &CGameSpawnConstructor::spawn_graph	()
 
 IC	u32	CGameSpawnConstructor::level_id					(LPCSTR level_name)
 {
-	return						(dwfGetIDByLevelName(&game_info(),level_name));
+	if (strcmp(Scene->m_LevelOp.m_FNLevelPath.c_str(), level_name) == 0)return 0;
+	return					-1;//	(dwfGetIDByLevelName(&game_info(), level_name));
 }
 
 IC	ALife::_SPAWN_ID CGameSpawnConstructor::spawn_id	()

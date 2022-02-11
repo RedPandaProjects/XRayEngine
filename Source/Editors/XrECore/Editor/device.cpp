@@ -72,9 +72,16 @@ CEditorRenderDevice::~CEditorRenderDevice(){
 #include "../../../xrRender/Private/dxRenderFactory.h"
 #include "../../../xrRender/Private/dxUIRender.h"
 #include "../../../xrRender/Private/dxDebugRender.h"
+typedef void __cdecl ttapi_Done_func(void);
 void CEditorRenderDevice::Initialize()
 {
 //	m_Camera.Reset();
+	{
+		hPSGP = LoadLibrary("xrCPU_Pipe.dll");
+		R_ASSERT(hPSGP);
+		xrBinder* bindCPU = (xrBinder*)GetProcAddress(hPSGP, "xrBind_PSGP");	R_ASSERT(bindCPU);
+		bindCPU(&PSGP, CPU::ID.feature);
+	}
 
     m_DefaultMat.set(1,1,1);
 //	Surface_Init();
@@ -82,6 +89,7 @@ void CEditorRenderDevice::Initialize()
 	RenderFactory = &RenderFactoryImpl;
 	UIRender = &UIRenderImpl;
 	DRender = &DebugRenderImpl;
+
 	// game materials
 	//GameMaterialLibraryEditors->Load	();
 
@@ -122,6 +130,17 @@ void CEditorRenderDevice::ShutDown()
 	// destroy context
 	Destroy				();
 	xr_delete			(pSystemFont);
+
+	if (hPSGP)
+	{
+		ttapi_Done_func* ttapi_Done = (ttapi_Done_func*)GetProcAddress(hPSGP, "ttapi_Done");	R_ASSERT(ttapi_Done);
+		if (ttapi_Done)
+			ttapi_Done();
+
+		FreeLibrary(hPSGP);
+		hPSGP = 0;
+		ZeroMemory(&PSGP, sizeof(PSGP));
+	}
 	// destroy shaders
 //	PSLib.xrShutDown	();
 }

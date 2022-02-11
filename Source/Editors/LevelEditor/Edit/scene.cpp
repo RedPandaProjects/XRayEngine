@@ -634,10 +634,12 @@ void EScene::LoadCFrom(CObjectSpace* Space, CDB::build_callback cb)
     g_scene_physics.GenerateCFrom(Space,cb);
 }
 
-void EScene::LoadSpawn(xr_vector<NET_Packet>& Ps)
+IReader* EScene::LoadSpawn()
 {
-    m_Spawn.swap(Ps);
+    return xr_new<IReader>(m_Spawn.pointer(), m_Spawn.size());
 }
+
+
 
 IGameGraph* EScene::GetGameGraph()
 {
@@ -645,18 +647,17 @@ IGameGraph* EScene::GetGameGraph()
 }
 
 
-
-
-void EScene::BuildSpawn()
+ILevelGraph* EScene::GetLevelGraph()
 {
-    m_Spawn.clear_not_free();
-    bool bHasHOM = false;
-    ObjectList& lst = ListObj(OBJCLASS_SPAWNPOINT);
-    for (ObjectIt it = lst.begin(); it != lst.end(); it++)
-    {
-        (*it)->ExportSpawn(m_Spawn);
-    }
+    return &m_level_graph;
 }
+
+void EScene::BuildAIMap()
+{
+    m_level_graph.build();
+
+}
+
 void EScene::RegisterSubstObjectName(const xr_string& _from, const xr_string& _to)
 {
     xr_string _tmp;

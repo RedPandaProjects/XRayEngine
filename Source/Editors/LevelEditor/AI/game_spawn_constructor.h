@@ -79,7 +79,7 @@ private:
 	IGameGraph						*m_game_graph;
 	SPAWN_GRAPH						*m_spawn_graph;
 	CPatrolPathStorage				*m_patrol_path_storage;
-	CInifile						*m_game_info;
+	//CInifile						*m_game_info;
 	CSE_ALifeCreatureAbstract		*m_actor;
 
 private:
@@ -89,6 +89,7 @@ private:
 	IC		shared_str				actor_level_name		();
 	IC		shared_str				spawn_name				(LPCSTR output);
 			void					save_spawn				(LPCSTR name, LPCSTR output);
+			void					save_spawn				(LPCSTR name, CMemoryWriter& output);
 			void					verify_level_changers	();
 			void					verify_spawns			(ALife::_SPAWN_ID spawn_id);
 			void					verify_spawns			();
@@ -101,6 +102,7 @@ private:
 
 public:
 									CGameSpawnConstructor	(LPCSTR name, LPCSTR output, LPCSTR start, bool no_separator_check);
+									CGameSpawnConstructor	(LPCSTR name, CMemoryWriter& output, LPCSTR start, bool no_separator_check=true);
 	virtual							~CGameSpawnConstructor	();
 			void					add_story_object		(ALife::_STORY_ID id,CSE_ALifeDynamicObject *object, LPCSTR level_name);
 			void					add_object				(CSE_Abstract *object);
@@ -109,7 +111,7 @@ public:
 	IC		void					add_level_points		(const LEVEL_POINT_STORAGE &level_points);
 	IC		u32						level_id				(LPCSTR level_name);
 	IC		IGameGraph				&game_graph				() const;
-	IC		CInifile				&game_info				();
+//	IC		CInifile				&game_info				();
 	IC		void					add_edge				(ALife::_SPAWN_ID id0, ALife::_SPAWN_ID id1, float weight);
 	IC		u32						level_point_count		() const;
 	IC		LEVEL_CHANGER_STORAGE	&level_changers			();

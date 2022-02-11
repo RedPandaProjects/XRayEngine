@@ -355,7 +355,6 @@ void CGameGraphBuilder::fill_neighbours		(const u32 &game_vertex_id)
 float CGameGraphBuilder::path_distance		(const u32 &game_vertex_id0, const u32 &game_vertex_id1)
 {
 //	return					(graph().vertex(game_vertex_id0)->data().level_point().distance_to(graph().vertex(game_vertex_id1)->data().level_point()));
-	xr_delete				(m_graph_engine);
 
 	graph_type::CVertex		&vertex0 = *graph().vertex(game_vertex_id0);
 	graph_type::CVertex		&vertex1 = *graph().vertex(game_vertex_id1);
@@ -570,7 +569,7 @@ void CGameGraphBuilder::build_graph	()
 	IGameGraph::SLevel			level;
 	level.m_offset.set(0, 0, 0);
 	level.m_id = 0;
-	level.m_name = "editor";
+	level.m_name = Scene->m_LevelOp.m_FNLevelPath;
 	level.m_section = "";
 	level.m_guid = level_graph().header().guid();
 	GameGraphHeader.m_levels.clear();

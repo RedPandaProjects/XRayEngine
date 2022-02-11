@@ -24,7 +24,7 @@ class ECORE_API CEditorRenderDevice :
 {
     friend class 			CUI_Camera;
     friend class 			TUI;
-
+	HMODULE					hPSGP;
     float 					m_fNearer;
 
 	//u32						Timer_MM_Delta;

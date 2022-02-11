@@ -342,12 +342,11 @@ public:
 	bool IsSimulate();
 	void Stop();
 	virtual	void LoadCFrom(CObjectSpace* Space, CDB::build_callback cb);
-	virtual void LoadSpawn(xr_vector<NET_Packet>&Ps);
+	virtual IReader* LoadSpawn();
 	virtual IGameGraph* GetGameGraph();
 	virtual ILevelGraph* GetLevelGraph();
 	void BuildSpawn();
 	void BuildAIMap();
-	void BuildGameGraph();
 protected:
     typedef std::pair<xr_string,xr_string>  TSubstPair;
     typedef xr_vector<TSubstPair>           TSubstPairs;
@@ -362,7 +361,7 @@ public:
 private:
 	CLevelGraphEditor m_level_graph;
 	CGameGraphEditor m_game_graph;
-	xr_vector<NET_Packet> m_Spawn;
+	CMemoryWriter	m_Spawn;
 	CGameGraphBuilder m_GraphBuilder;
 };
 

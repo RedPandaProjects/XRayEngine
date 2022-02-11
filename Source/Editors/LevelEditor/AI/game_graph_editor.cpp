@@ -32,10 +32,13 @@ void CGameGraphEditor::realloc(const CHeader& new_header)
 	{
 		xr_free(m_edges);
 	}
+	m_current_level_some_vertex_id = _GRAPH_ID(-1);
+	m_enabled.assign(header().vertex_count(), true);
 }
 
 void CGameGraphEditor::set_cross_table(IGameLevelCrossTable* cross_table)
 {
 	xr_delete(m_current_level_cross_table);
+	m_current_level_some_vertex_id = 0;
 	m_current_level_cross_table = cross_table;
 }
