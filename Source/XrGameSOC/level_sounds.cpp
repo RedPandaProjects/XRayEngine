@@ -51,7 +51,7 @@ void SStaticSound::Update(u32 game_time, u32 global_time)
 				}
 			}
 		}else{
-			if (Device.dwTimeGlobal>=m_StopTime)
+			if (Device->dwTimeGlobal>=m_StopTime)
 				m_Source.stop_deffered();
 		}
 	}else{
@@ -158,11 +158,11 @@ void CLevelSoundManager::Unload()
 
 void CLevelSoundManager::Update()
 {
-	if (Device.Paused())				return;
-	if (Device.dwPrecacheFrame!=0)	return;
+	if (Device->Paused())				return;
+	if (Device->dwPrecacheFrame!=0)	return;
 	// static sounds
 	u32 game_time				= Level().GetGameDayTimeMS();
-	u32 engine_time				= Device.dwTimeGlobal;
+	u32 engine_time				= Device->dwTimeGlobal;
 	
 	for (u32 k=0; k<m_StaticSounds.size(); ++k){
 		SStaticSound& s			= m_StaticSounds[k];

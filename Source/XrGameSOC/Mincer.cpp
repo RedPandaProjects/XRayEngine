@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "alife_space.h"
+#include "..\xrEngine\alife_space.h"
 #include "hit.h"
 #include "PHDestroyable.h"
 #include "mincer.h"

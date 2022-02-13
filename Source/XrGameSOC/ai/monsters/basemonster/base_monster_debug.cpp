@@ -32,7 +32,7 @@ CBaseMonster::SDebugInfo CBaseMonster::show_debug_info()
 	DBG().text(this).clear	 ();
 	DBG().text(this).add_item("---------------------------------------", x, y+=delta_y, delimiter_color);
 
-	sprintf_s(text, "-- Monster : [%s]  Current Time = [%u]", *cName(), Device.dwTimeGlobal);
+	sprintf_s(text, "-- Monster : [%s]  Current Time = [%u]", *cName(), Device->dwTimeGlobal);
 	DBG().text(this).add_item(text, x, y+=delta_y, color);
 	DBG().text(this).add_item("-----------   PROPERTIES   ------------", x, y+=delta_y, delimiter_color);
 

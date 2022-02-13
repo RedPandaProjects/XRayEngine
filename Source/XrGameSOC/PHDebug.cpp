@@ -285,7 +285,7 @@ void DBG_OpenCashedDraw()
 void DBG_ClosedCashedDraw(u32 remove_time)
 {
 	dbg_ph_draw_mode			=dmSecondaryThread			;
-	cash_draw_remove_time	=remove_time+Device.dwTimeGlobal;
+	cash_draw_remove_time	=remove_time+Device->dwTimeGlobal;
 }
 
 IC void push( PHABS_DBG_V &v, SPHDBGDrawAbsract* a )
@@ -367,7 +367,7 @@ void DBG_PHAbstructRender()
 		{
 				(*i)->render();
 		}
-		if(cash_draw_remove_time<Device.dwTimeGlobal)
+		if(cash_draw_remove_time<Device->dwTimeGlobal)
 		{
 			clear_vector(dbg_draw_cashed);
 		}

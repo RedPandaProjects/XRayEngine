@@ -99,10 +99,10 @@ bool	CLevel::net_start_client4				()
 
 		// Send network to single or multithreaded mode
 		// *note: release version always has "mt_*" enabled
-		Device.seqFrameMT.Remove			(g_pNetProcessor);
-		Device.seqFrame.Remove				(g_pNetProcessor);
-		if (psDeviceFlags.test(mtNetwork))	Device.seqFrameMT.Add	(g_pNetProcessor,REG_PRIORITY_HIGH	+ 2);
-		else								Device.seqFrame.Add		(g_pNetProcessor,REG_PRIORITY_LOW	- 2);
+		Device->seqFrameMT.Remove			(g_pNetProcessor);
+		Device->seqFrame.Remove				(g_pNetProcessor);
+		if (psDeviceFlags.test(mtNetwork))	Device->seqFrameMT.Add	(g_pNetProcessor,REG_PRIORITY_HIGH	+ 2);
+		else								Device->seqFrame.Add		(g_pNetProcessor,REG_PRIORITY_LOW	- 2);
 
 		if(!psNET_direct_connect)
 		{
@@ -151,8 +151,8 @@ bool	CLevel::net_start_client5				()
 		{
 			HUD().Load							();
 			g_pGamePersistent->LoadTitle				("st_loading_textures");
-			Device.m_pRender->DeferredLoad		(FALSE);
-			Device.m_pRender->ResourcesDeferredUpload();
+			Device->m_pRender->DeferredLoad		(FALSE);
+			Device->m_pRender->ResourcesDeferredUpload();
 			LL_CheckTextures					();
 		}
 	}
@@ -168,7 +168,7 @@ bool	CLevel::net_start_client6				()
 
 
 		g_pGamePersistent->LoadTitle		("st_client_synchronising");
-		Device.PreCache						(30,true,true);
+		Device->PreCache						(30,true,true);
 		net_start_result_total				= TRUE;
 	}else{
 		net_start_result_total				= FALSE;

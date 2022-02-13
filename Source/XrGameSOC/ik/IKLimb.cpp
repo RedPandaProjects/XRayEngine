@@ -282,7 +282,7 @@ void CIKLimb::Destroy()
 }
 IC bool state_valide(const calculate_state &prev_state)
 {
-	return  (Device.dwFrame - prev_state.frame) == 1; //prev_state.state !=calculate_state::not_definite &&
+	return  (Device->dwFrame - prev_state.frame) == 1; //prev_state.state !=calculate_state::not_definite &&
 }
 
 
@@ -307,7 +307,7 @@ IC void	CIKLimb::GetPickDir(Fvector &v, const Fmatrix &gl_bone )
 	Fvector dir; dir.sub( p1, p0 );
 	if(dir.y > 0)
 			dir.y = -dir.y;
-	dir.mul( dir,0.01f/Device.fTimeDelta );
+	dir.mul( dir,0.01f/Device->fTimeDelta );
 	dir.add(Fvector().set(0,-0.05f,0));
 	dir.add(sv_state.pick);
 	
@@ -513,16 +513,16 @@ void	CIKLimb::SetNewGoal			( const SIKCollideData &cld, SCalculateData& cd )
 			if( sv_state.blending )
 					cl = sv_state.goal;
 			GetFootStepMatrix( sv_state.collide_pos, cl, cld, false ); // find where we can place the foot
-			sv_state.speed_blend_l =	l/Device.fTimeDelta;
-			sv_state.speed_blend_a =	a/Device.fTimeDelta;
+			sv_state.speed_blend_l =	l/Device->fTimeDelta;
+			sv_state.speed_blend_a =	a/Device->fTimeDelta;
 		} 
 		if( blending )
 		{
 			blend_to = sv_state.collide_pos;
-			sv_state.speed_blend_l	+= 1.f * Device.fTimeDelta;
-			sv_state.speed_blend_a	+= 5.f * Device.fTimeDelta;
-			l = sv_state.speed_blend_l * Device.fTimeDelta;
-			a = sv_state.speed_blend_a * Device.fTimeDelta;
+			sv_state.speed_blend_l	+= 1.f * Device->fTimeDelta;
+			sv_state.speed_blend_a	+= 5.f * Device->fTimeDelta;
+			l = sv_state.speed_blend_l * Device->fTimeDelta;
+			a = sv_state.speed_blend_a * Device->fTimeDelta;
 		}  else
 			cd.goal.mul_43( iobj, sv_state.goal );
 	} 
@@ -580,7 +580,7 @@ void	CIKLimb::SetNewGoal			( const SIKCollideData &cld, SCalculateData& cd )
 	sv_state.anim_pos.set( anim_local );
 	sv_state.goal.mul_43( obj, cd.goal );
 	sv_state.obj_pos.set( obj );
-	sv_state.frame = Device.dwFrame;
+	sv_state.frame = Device->dwFrame;
 	sv_state.blending = blending;
 }
 

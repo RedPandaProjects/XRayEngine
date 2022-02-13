@@ -77,7 +77,7 @@ void CMMSound::music_Play(){
 }
 
 void CMMSound::music_Update(){
-	if (Device.Paused()) return;
+	if (Device->Paused()) return;
 	if (0==m_music_l._feedback() || 0==m_music_r._feedback())
 		music_Play();
 }

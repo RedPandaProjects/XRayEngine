@@ -92,7 +92,7 @@ IC	void CSoundMemoryManager::update_sound_threshold			()
 		m_self_sound_factor*
 		m_sound_threshold*
 		exp(
-			float(Device.dwTimeGlobal - m_last_sound_time)/
+			float(Device->dwTimeGlobal - m_last_sound_time)/
 			float(m_sound_decrease_quant)*
 			log(m_decrease_factor)
 		),
@@ -142,7 +142,7 @@ void CSoundMemoryManager::feel_sound_new(CObject *object, int sound_type, CSound
 	CObject					*self = m_object;
 	VERIFY					(self);
 #ifndef SILENCE
-	Msg						("%s (%d) - sound type %x from %s at %d in (%.2f,%.2f,%.2f) with power %.2f",*self->cName(),Device.dwTimeGlobal,sound_type,object ? *object->cName() : "world",Device.dwTimeGlobal,position.x,position.y,position.z,sound_power);
+	Msg						("%s (%d) - sound type %x from %s at %d in (%.2f,%.2f,%.2f) with power %.2f",*self->cName(),Device->dwTimeGlobal,sound_type,object ? *object->cName() : "world",Device->dwTimeGlobal,position.x,position.y,position.z,sound_power);
 #endif
 
 	VERIFY					(_valid(m_sound_threshold));
@@ -196,7 +196,7 @@ void CSoundMemoryManager::feel_sound_new(CObject *object, int sound_type, CSound
 		}
 	}
 
-	m_last_sound_time		= Device.dwTimeGlobal;
+	m_last_sound_time		= Device->dwTimeGlobal;
 	VERIFY					(_valid(m_sound_threshold));
 	m_sound_threshold		= _max(m_sound_threshold,sound_power);
 	VERIFY					(_valid(m_sound_threshold));
@@ -279,7 +279,7 @@ void CSoundMemoryManager::add			(const CObject *object, int sound_type, const Fv
 		sound_object.m_first_game_time	= Level().GetGameTime();
 #endif
 #ifdef USE_FIRST_LEVEL_TIME
-		sound_object.m_first_level_time	= Device.dwTimeGlobal;
+		sound_object.m_first_level_time	= Device->dwTimeGlobal;
 #endif
 		add						(sound_object);
 	}
@@ -403,13 +403,13 @@ void CSoundMemoryManager::save	(NET_Packet &packet) const
 		packet.w_float			((*I).m_self_params.m_orientation.roll);
 #endif // USE_ORIENTATION
 #ifdef USE_LEVEL_TIME
-		packet.w_u32			((Device.dwTimeGlobal >= (*I).m_level_time) ? (Device.dwTimeGlobal - (*I).m_level_time) : 0);
+		packet.w_u32			((Device->dwTimeGlobal >= (*I).m_level_time) ? (Device->dwTimeGlobal - (*I).m_level_time) : 0);
 #endif // USE_LAST_LEVEL_TIME
 #ifdef USE_LEVEL_TIME
-		packet.w_u32			((Device.dwTimeGlobal >= (*I).m_level_time) ? (Device.dwTimeGlobal - (*I).m_last_level_time) : 0);
+		packet.w_u32			((Device->dwTimeGlobal >= (*I).m_level_time) ? (Device->dwTimeGlobal - (*I).m_last_level_time) : 0);
 #endif // USE_LAST_LEVEL_TIME
 #ifdef USE_FIRST_LEVEL_TIME
-		packet.w_u32			((Device.dwTimeGlobal >= (*I).m_level_time) ? (Device.dwTimeGlobal - (*I).m_first_level_time) : 0);
+		packet.w_u32			((Device->dwTimeGlobal >= (*I).m_level_time) ? (Device->dwTimeGlobal - (*I).m_first_level_time) : 0);
 #endif // USE_FIRST_LEVEL_TIME
 		packet.w_u32			((*I).m_sound_type);
 		packet.w_float			((*I).m_power);
@@ -449,19 +449,19 @@ void CSoundMemoryManager::load	(IReader &packet)
 		packet.r_float				(object.m_self_params.m_orientation.roll);
 #endif
 #ifdef USE_LEVEL_TIME
-		VERIFY						(Device.dwTimeGlobal >= object.m_level_time);
+		VERIFY						(Device->dwTimeGlobal >= object.m_level_time);
 		object.m_level_time			= packet.r_u32();
-		object.m_level_time			+= Device.dwTimeGlobal;
+		object.m_level_time			+= Device->dwTimeGlobal;
 #endif // USE_LEVEL_TIME
 #ifdef USE_LAST_LEVEL_TIME
-		VERIFY						(Device.dwTimeGlobal >= object.m_last_level_time);
+		VERIFY						(Device->dwTimeGlobal >= object.m_last_level_time);
 		object.m_last_level_time	= packet.r_u32();
-		object.m_last_level_time	+= Device.dwTimeGlobal;
+		object.m_last_level_time	+= Device->dwTimeGlobal;
 #endif // USE_LAST_LEVEL_TIME
 #ifdef USE_FIRST_LEVEL_TIME
-		VERIFY						(Device.dwTimeGlobal >= (*I).m_first_level_time);
+		VERIFY						(Device->dwTimeGlobal >= (*I).m_first_level_time);
 		object.m_first_level_time	= packet.r_u32();
-		object.m_first_level_time	+= Device.dwTimeGlobal;
+		object.m_first_level_time	+= Device->dwTimeGlobal;
 #endif // USE_FIRST_LEVEL_TIME
 		object.m_sound_type			= (ESoundTypes)packet.r_u32();
 		object.m_power				= packet.r_float();

@@ -100,12 +100,12 @@ sPoly2D* C2DFrustum::ClipPoly	(sPoly2D& S, sPoly2D& D) const
 
 void ui_core::OnDeviceReset()
 {
-	m_scale_.set		( float(Device.dwWidth)/UI_BASE_WIDTH, float(Device.dwHeight)/UI_BASE_HEIGHT );
+	m_scale_.set		( float(Device->dwWidth)/UI_BASE_WIDTH, float(Device->dwHeight)/UI_BASE_HEIGHT );
 
 	m_2DFrustum.CreateFromRect	(Frect().set(	0.0f,
 												0.0f,
-												float(Device.dwWidth),
-												float(Device.dwHeight)
+												float(Device->dwWidth),
+												float(Device->dwHeight)
 												));
 }
 
@@ -228,8 +228,8 @@ void ui_core::pp_start()
 	m_current_scale			= &m_pp_scale_;
 //.	g_current_font_scale	= m_pp_scale_;
 	
-	g_current_font_scale.set(	float(::Render->getTarget()->get_width())/float(Device.dwWidth),	
-								float(::Render->getTarget()->get_height())/float(Device.dwHeight) );
+	g_current_font_scale.set(	float(::Render->getTarget()->get_width())/float(Device->dwWidth),	
+								float(::Render->getTarget()->get_height())/float(Device->dwHeight) );
 
 }
 
@@ -248,7 +248,7 @@ void ui_core::RenderFont()
 
 bool ui_core::is_16_9_mode()
 {
-	return (Device.dwWidth)/float(Device.dwHeight) > (UI_BASE_WIDTH/UI_BASE_HEIGHT +0.01f);
+	return (Device->dwWidth)/float(Device->dwHeight) > (UI_BASE_WIDTH/UI_BASE_HEIGHT +0.01f);
 }
 
 shared_str	ui_core::get_xml_name(LPCSTR fn)

@@ -1,9 +1,9 @@
-// UISleepWnd.cpp:  окошко для выбора того, сколько спать
+// UISleepWnd.cpp:  пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
 #include "UISleepWnd.h"
-#include "../alife_space.h"
+#include "../../xrEngine/alife_space.h"
 #include "UIXmlInit.h"
 #include "UIButton.h"
 
@@ -93,15 +93,15 @@ void CUISleepWnd::SendMessage(CUIWindow *pWnd, s16 msg, void *pData)
 void CUISleepWnd::ModifyRestTime(s8 dHours, s8 dMinutes)
 {
 
-	// Проверка на влидный интервал
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	R_ASSERT(dMinutes < 61);
 
 	s8 oldMin = m_Minutes;
 
-	// Увеличиваем минуты
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	m_Minutes = m_Minutes + dMinutes;
 
-	// Проверяем выходы за пределы допуска
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if (m_Minutes > 59)
 	{
 		++m_Hours;
@@ -113,7 +113,7 @@ void CUISleepWnd::ModifyRestTime(s8 dHours, s8 dMinutes)
 		m_Minutes = m_Minutes + 60;
 	}
 
-	// Тоже самое и для часов
+	// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	m_Hours = m_Hours + dHours;
 	if (m_Hours > 99)
 	{

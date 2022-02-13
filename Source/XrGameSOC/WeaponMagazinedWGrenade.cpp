@@ -12,7 +12,7 @@
 #include "level.h"
 #include "../XrRender/Public/KinematicsAnimated.h"
 #include "../XrRender/Public/Kinematics.h"
-#include "object_broker.h"
+#include "../XrEngine/object_broker.h"
 #include "game_base_space.h"
 #include "MathUtils.h"
 #include "clsid_game.h"
@@ -183,14 +183,14 @@ void CWeaponMagazinedWGrenade::OnShot		()
 		
 		AddShotEffector		();
 		
-		//партиклы огня вылета гранаты из подствольника
+		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		StartFlameParticles2();
 	} 
 	else inherited::OnShot();
 }
-//переход в режим подствольника или выход из него
-//если мы в режиме стрельбы очередями, переключиться
-//на одиночные, а уже потом на подствольник
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ
+//пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 bool CWeaponMagazinedWGrenade::SwitchMode() 
 {
 	bool bUsefulStateToSwitch = ((eIdle==GetState())||(eHidden==GetState())||(eMisfire==GetState())||(eMagEmpty==GetState())) && (!IsPending());
@@ -270,7 +270,7 @@ void CWeaponMagazinedWGrenade::state_Fire(float dt)
 {
 	VERIFY(fTimeToFire>0.f);
 
-	//режим стрельбы подствольника
+	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if(m_bGrenadeMode)
 	{
 		fTime					-=dt;
@@ -318,7 +318,7 @@ void CWeaponMagazinedWGrenade::state_Fire(float dt)
 		UpdateSounds			();
 		if(m_iShotNum == m_iQueueSize) FireEnd();
 	} 
-	//режим стрельбы очередями
+	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	else inherited::state_Fire(dt);
 }
 
@@ -326,7 +326,7 @@ void CWeaponMagazinedWGrenade::SwitchState(u32 S)
 {
 	inherited::SwitchState(S);
 	
-	//стрельнуть из подствольника
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if(m_bGrenadeMode && GetState() == eIdle && S == eFire && getRocketCount() ) 
 	{
 		Fvector						p1, d; 
@@ -438,7 +438,7 @@ void CWeaponMagazinedWGrenade::ReloadMagazine()
 {
 	inherited::ReloadMagazine();
 
-	//перезарядка подствольного гранатомета
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if(iAmmoElapsed && !getRocketCount() && m_bGrenadeMode) 
 	{
 //.		shared_str fake_grenade_name = pSettings->r_string(*m_pAmmo->cNameSect(), "fake_grenade_name");
@@ -529,7 +529,7 @@ bool CWeaponMagazinedWGrenade::Attach(PIItem pIItem, bool b_send_event)
 
 		CRocketLauncher::m_fLaunchSpeed = pGrenadeLauncher->GetGrenadeVel();
 
- 		//уничтожить подствольник из инвентаря
+ 		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		if(b_send_event)
 		{
 //.			pIItem->Drop();
@@ -606,7 +606,7 @@ float	CWeaponMagazinedWGrenade::CurrentZoomFactor	()
 	return inherited::CurrentZoomFactor();
 }
 
-//виртуальные функции для проигрывания анимации HUD
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ HUD
 void CWeaponMagazinedWGrenade::PlayAnimShow()
 {
 	VERIFY(GetState()==eShowing);
@@ -671,7 +671,7 @@ void CWeaponMagazinedWGrenade::PlayAnimShoot()
 	VERIFY(GetState()==eFire || GetState()==eFire2);
 	if(this->m_bGrenadeMode)
 	{
-		//анимация стрельбы из подствольника
+		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		m_pHUD->animPlay(random_anim(mhud_shots_g),TRUE,this, GetState());
 	}
 	else

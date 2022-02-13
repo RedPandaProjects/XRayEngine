@@ -31,7 +31,7 @@ extern	float		phRigidBreakWeaponFactor						;
 extern	float		ph_tri_query_ex_aabb_rate						;
 extern	int			ph_tri_clear_disable_count						;
 
-struct SGameMtl;
+class SGameMtl;
 #define ERP_S(k_p,k_d,s)		((s*(k_p)) / (((s)*(k_p)) + (k_d)))
 #define CFM_S(k_p,k_d,s)		(1.f / (((s)*(k_p)) + (k_d)))
 #define SPRING_S(cfm,erp,s)		((erp)/(cfm)/s)

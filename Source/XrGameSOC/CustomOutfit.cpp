@@ -55,7 +55,6 @@ void CCustomOutfit::Load(LPCSTR section)
 	m_HitTypeProtection[ALife::eHitTypeChemicalBurn]= pSettings->r_float(section,"chemical_burn_protection");
 	m_HitTypeProtection[ALife::eHitTypeExplosion]	= pSettings->r_float(section,"explosion_protection");
 	m_HitTypeProtection[ALife::eHitTypeFireWound]	= pSettings->r_float(section,"fire_wound_protection");
-	m_HitTypeProtection[ALife::eHitTypePhysicStrike]= READ_IF_EXISTS(pSettings, r_float, section, "physic_strike_protection", 0.0f);
 
 	if (pSettings->line_exist(section, "actor_visual"))
 		m_ActorVisual = pSettings->r_string(section, "actor_visual");

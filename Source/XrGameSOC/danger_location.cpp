@@ -11,5 +11,5 @@
 
 bool CDangerLocation::useful	() const
 {
-	return		(!(Device.dwTimeGlobal > m_level_time + m_interval));
+	return		(!(Device->dwTimeGlobal > m_level_time + m_interval));
 }

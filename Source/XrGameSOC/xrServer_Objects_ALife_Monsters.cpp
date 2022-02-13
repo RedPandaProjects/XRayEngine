@@ -10,7 +10,7 @@
 #include "../XrCore/net_utils.h"
 #include "xrServer_Objects_ALife_Items.h"
 #include "xrServer_Objects_ALife_Monsters.h"
-#include "object_broker.h"
+#include "../XrEngine/object_broker.h"
 #include "alife_human_brain.h"
 
 #ifndef AI_COMPILER
@@ -99,8 +99,8 @@ void setup_location_types(GameGraph::TERRAIN_VECTOR &m_vertex_types, CInifile *i
 
 //////////////////////////////////////////////////////////////////////////
 
-//возможное отклонение от значения репутации
-//заданого в профиле и для конкретного персонажа
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 #define REPUTATION_DELTA	10
 #define RANK_DELTA			10
 
@@ -275,16 +275,16 @@ shared_str CSE_ALifeTraderAbstract::specific_character()
 	char_info.Load(character_profile());
 
 
-	//профиль задан индексом
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if(char_info.data()->m_CharacterId.size() )
 	{
 		set_specific_character(char_info.data()->m_CharacterId);
 		return m_SpecificCharacter;
 	}
-	//профиль задан шаблоном
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	//
-	//проверяем все информации о персонаже, запоминаем подходящие,
-	//а потом делаем случайный выбор
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ,
+	//пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	else
 	{	
 		m_CheckedCharacters.clear();
@@ -309,7 +309,7 @@ shared_str CSE_ALifeTraderAbstract::specific_character()
 			}
 			if(!char_info.data()->m_Class.size() || class_found)
 			{
-				//запомнить пподходящий персонаж с флажком m_bDefaultForCommunity
+				//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ m_bDefaultForCommunity
 				if(spec_char.data()->m_bDefaultForCommunity)
 					m_DefaultCharacters.push_back(id);
 
@@ -321,7 +321,7 @@ shared_str CSE_ALifeTraderAbstract::specific_character()
 						int* count = NULL;
 						if(ai().get_alife())
 							count = ai().alife().registry(specific_characters).object(id, true);
-						//если индекс еще не был использован
+						//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 						if(NULL == count)
 #endif
 							m_CheckedCharacters.push_back(id);
@@ -351,7 +351,7 @@ void CSE_ALifeTraderAbstract::set_specific_character	(shared_str new_spec_char)
 	R_ASSERT(new_spec_char.size());
 
 #ifdef XRGAME_EXPORTS
-	//убрать предыдущий номер из реестра
+	//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if ( m_SpecificCharacter.size() ) 
 	{
 		if(ai().get_alife())
@@ -364,7 +364,7 @@ void CSE_ALifeTraderAbstract::set_specific_character	(shared_str new_spec_char)
 #ifdef XRGAME_EXPORTS
 	if(ai().get_alife())
 	{
-		//запомнить, то что мы использовали индекс
+		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 		int a = 1;
 		ai().alife().registry(specific_characters).add(m_SpecificCharacter, a, true);
 	}
@@ -439,7 +439,7 @@ void CSE_ALifeTraderAbstract::set_specific_character	(shared_str new_spec_char)
 		if(min_m!=max_m)	m_dwMoney += ::Random.randI(max_m-min_m);
 	}
 #else
-	//в редакторе специфический профиль оставляем не заполненым
+	//пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	m_SpecificCharacter = NULL;
 #endif
 }
@@ -459,7 +459,7 @@ shared_str CSE_ALifeTraderAbstract::character_profile()
 
 #ifdef XRGAME_EXPORTS
 
-//для работы с relation system
+//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ relation system
 u16								CSE_ALifeTraderAbstract::object_id		() const
 {
 	return base()->ID;

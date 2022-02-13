@@ -85,7 +85,7 @@ void CEntity::Die(CObject* who)
 		Level().seniority_holder().team(g_Team()).squad(g_Squad()).group(g_Group()).unregister_member(this);
 }
 
-//обновление состояния
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 float CEntity::CalcCondition(float hit)
 {
 
@@ -149,7 +149,7 @@ void CEntity::Load		(LPCSTR section)
 #pragma todo("Jim to Dima: no specific figures or comments needed")	
 	m_fMorale			= 66.f;
 
-	//время убирания тела с уровня
+	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	m_dwBodyRemoveTime	= READ_IF_EXISTS(pSettings,r_u32,section,"body_remove_time",BODY_REMOVE_TIME);
 	//////////////////////////////////////
 }
@@ -207,7 +207,7 @@ BOOL CEntity::net_Spawn		(CSE_Abstract* DC)
 
 	if(!g_Alive())
 	{
-		m_level_death_time		= Device.dwTimeGlobal;
+		m_level_death_time		= Device->dwTimeGlobal;
 		m_game_death_time		= E->m_game_death_time;;
 	}
 
@@ -298,7 +298,7 @@ void CEntity::reload			(LPCSTR section)
 
 void CEntity::set_death_time	()
 {
-	m_level_death_time	= Device.dwTimeGlobal;
+	m_level_death_time	= Device->dwTimeGlobal;
 	m_game_death_time	= Level().GetGameTime();
 }
 
@@ -323,7 +323,7 @@ void CEntity::shedule_Update	(u32 dt)
 {
 	inherited::shedule_Update	(dt);
 	if (!getDestroy() && !g_Alive() && (m_killer_id != u16(-1))) {
-		if (Device.dwTimeGlobal > m_level_death_time + FORGET_KILLER_TIME) {
+		if (Device->dwTimeGlobal > m_level_death_time + FORGET_KILLER_TIME) {
 			m_killer_id			= u16(-1);
 			NET_Packet			P;
 			u_EventGen			(P,GE_ASSIGN_KILLER,ID());

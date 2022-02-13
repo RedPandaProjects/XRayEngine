@@ -15,7 +15,7 @@ class CHudItemObject :
 		public CInventoryItemObject,
 		public CHudItem
 {
-protected: //чтоб нельзя было вызвать на прямую
+protected: //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 						CHudItemObject		();
 	virtual				~CHudItemObject		();
 
@@ -45,6 +45,6 @@ public:
 
 	virtual bool			use_parent_ai_locations	() const
 	{
-		return				(Device.dwFrame != dwXF_Frame);
+		return				(Device->dwFrame != dwXF_Frame);
 	}
 };

@@ -208,13 +208,13 @@ void CUIStatsPlayerList::Update()
 {
 
 	static string512 teaminfo;
-	if (m_prev_upd_time > Device.dwTimeContinual - 100)
+	if (m_prev_upd_time > Device->dwTimeContinual - 100)
 		return;
 
 	DEFINE_VECTOR	(game_PlayerState*,ItemVec,ItemIt);
 	ItemVec			items;
 
-	m_prev_upd_time = Device.dwTimeContinual;
+	m_prev_upd_time = Device->dwTimeContinual;
 	game_cl_GameState::PLAYERS_MAP_IT I=Game().players.begin();
 	game_cl_GameState::PLAYERS_MAP_IT E=Game().players.end();
 

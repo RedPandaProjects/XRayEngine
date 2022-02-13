@@ -83,7 +83,7 @@ void CUIScrollBar::Init(float x, float y, float length, bool bIsHorizontal, LPCS
 }
 
 
-//корректировка размеров скроллера
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 void CUIScrollBar::SetWidth(float width)
 {
 	if(width<=0.0f) width = 1.0f;
@@ -127,7 +127,7 @@ void CUIScrollBar::Enable(bool b)
 void CUIScrollBar::UpdateScrollBar()
 {
 	if (IsShown()){
-		//уcтановить размер и положение каретки
+		//пїЅcпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		if(m_iMaxPos==m_iMinPos)	m_iMaxPos++;
 		float box_sz				= float(m_ScrollWorkArea)*float(m_iPageSize ? m_iPageSize : 1)/float(m_iMaxPos-m_iMinPos);
 		if(m_bIsHorizontal){	
@@ -159,7 +159,7 @@ u32 last_hold_time =0;
 
 bool CUIScrollBar::OnKeyboardHold(int dik)
 {
-	if(dik==MOUSE_1 && (last_hold_time+100)<Device.dwTimeContinual)
+	if(dik==MOUSE_1 && (last_hold_time+100)<Device->dwTimeContinual)
 	{
 		Fvector2 cursor_pos			= GetUICursor()->GetCursorPosition();
 		Frect	dec_rect;
@@ -170,13 +170,13 @@ bool CUIScrollBar::OnKeyboardHold(int dik)
 		if(dec_rect.in(cursor_pos))
 		{
 			TryScrollDec			();
-			last_hold_time			= Device.dwTimeContinual;
+			last_hold_time			= Device->dwTimeContinual;
 			return					true;
 		}else
 		if(inc_rect.in(cursor_pos))
 		{
 			TryScrollInc			();
-			last_hold_time			= Device.dwTimeContinual;
+			last_hold_time			= Device->dwTimeContinual;
 			return					true;
 		}
 	}
@@ -248,7 +248,7 @@ void CUIScrollBar::SendMessage(CUIWindow *pWnd, s16 msg, void *pData)
 		}
 	}else if(pWnd == m_ScrollBox){
 		if(msg == SCROLLBOX_MOVE){
-			//вычислить новое положение прокрутки
+			//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 			ClampByViewRect		();
 			if(m_bIsHorizontal)
 			{
@@ -320,7 +320,7 @@ void CUIScrollBar::Reset()
 
 void CUIScrollBar::Draw()
 {
-	//нарисовать фоновую подложку
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	Frect rect;
 	GetAbsoluteRect(rect);
 	if(m_bIsHorizontal){

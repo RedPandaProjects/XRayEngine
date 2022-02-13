@@ -445,7 +445,7 @@ void CUILevelMap::Update()
 
 	if(m_bCursorOverWindow){
 		VERIFY(m_dwFocusReceiveTime>=0);
-		if( Device.dwTimeGlobal>(m_dwFocusReceiveTime+500) ){
+		if( Device->dwTimeGlobal>(m_dwFocusReceiveTime+500) ){
 
 			if(fsimilar(MapWnd()->GlobalMap()->GetCurrentZoom(), MapWnd()->GlobalMap()->GetMinZoom(),EPS_L ))
 				MapWnd()->ShowHint(this, *MapName());

@@ -10,7 +10,7 @@
 
 CFontManager::CFontManager()
 {
-	Device.seqDeviceReset.Add(this,REG_PRIORITY_HIGH);
+	Device->seqDeviceReset.Add(this,REG_PRIORITY_HIGH);
 
 	m_all_fonts.push_back(&pFontMedium				);// used cpp
 	m_all_fonts.push_back(&pFontDI					);// used cpp
@@ -57,13 +57,13 @@ LPCSTR CFontManager::GetFontTexName (LPCSTR section)
 	int idx			= def_idx;
 
 #if 0
-	u32 w = Device.dwWidth;
+	u32 w = Device->dwWidth;
 
 	if(w<=800)		idx = 0;
 	else if(w<=1280)idx = 1;
 	else 			idx = 2;
 #else
-	u32 h = Device.dwHeight;
+	u32 h = Device->dwHeight;
 
 	if(h<=600)		idx = 0;
 	else if(h<=900)	idx = 1;
@@ -103,7 +103,7 @@ void CFontManager::InitializeFont(CGameFont*& F, LPCSTR section, u32 flags)
 
 CFontManager::~CFontManager()
 {
-	Device.seqDeviceReset.Remove(this);
+	Device->seqDeviceReset.Remove(this);
 	FONTS_VEC_IT it		= m_all_fonts.begin();
 	FONTS_VEC_IT it_e	= m_all_fonts.end();
 	for(;it!=it_e;++it)
@@ -199,7 +199,7 @@ void CHUDManager::Render_Last()
 }
 extern void draw_wnds_rects();
 extern ENGINE_API BOOL bShowPauseString;
-//отрисовка элементов интерфейса
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 #include "string_table.h"
 void  CHUDManager::RenderUI()
 {
@@ -218,7 +218,7 @@ void  CHUDManager::RenderUI()
 
 	draw_wnds_rects		();
 
-	if( Device.Paused() && bShowPauseString){
+	if( Device->Paused() && bShowPauseString){
 		CGameFont* pFont	= Font().pFontGraffiti50Russian;
 		pFont->SetColor		(0x80FF0000	);
 		LPCSTR _str			= CStringTable().translate("st_game_paused").c_str();
@@ -278,7 +278,7 @@ void CHUDManager::OnDisconnected()
 //.	if(!b_online)			return;
 	b_online				= false;
 	if(pUI)
-		Device.seqFrame.Remove	(pUI);
+		Device->seqFrame.Remove	(pUI);
 }
 
 void CHUDManager::OnConnected()
@@ -286,7 +286,7 @@ void CHUDManager::OnConnected()
 	if(b_online)			return;
 	b_online				= true;
 	if(pUI){
-		Device.seqFrame.Add	(pUI,REG_PRIORITY_LOW-1000);
+		Device->seqFrame.Add	(pUI,REG_PRIORITY_LOW-1000);
 	}
 }
 

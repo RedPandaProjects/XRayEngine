@@ -76,34 +76,34 @@ void CWeaponShotEffector::Update()
 //		VERIFY(_valid(relax_speed_l));
 		//-------------------------------------------------------
 		if (fAngleHorz>=0.f)
-			fAngleHorz		-= relax_speed*Device.fTimeDelta;
+			fAngleHorz		-= relax_speed*Device->fTimeDelta;
 		else
-			fAngleHorz		+= relax_speed*Device.fTimeDelta;
+			fAngleHorz		+= relax_speed*Device->fTimeDelta;
 
 		if (bSSActive)
 		{		
 			if (fLastDeltaHorz >= 0.f)
-				fLastDeltaHorz		-= relax_speed_l*Device.fTimeDelta;
+				fLastDeltaHorz		-= relax_speed_l*Device->fTimeDelta;
 			else
-				fLastDeltaHorz		+= relax_speed_l*Device.fTimeDelta;
+				fLastDeltaHorz		+= relax_speed_l*Device->fTimeDelta;
 		}
 //		VERIFY(_valid(fLastDeltaHorz));
 		//-------------------------------------------------------
 		if (fAngleVert>=0.f){
-			fAngleVert		-= fRelaxSpeed*Device.fTimeDelta;
+			fAngleVert		-= fRelaxSpeed*Device->fTimeDelta;
 			if (fAngleVert<0.f) bActive	= FALSE;
 		}else{
-			fAngleVert		+= fRelaxSpeed*Device.fTimeDelta;
+			fAngleVert		+= fRelaxSpeed*Device->fTimeDelta;
 			if (fAngleVert>0.f)	bActive	= FALSE;
 		}
 
 		if (bSSActive)
 		{
 			if (fLastDeltaVert>=0.f){
-				fLastDeltaVert		-= fRelaxSpeed*Device.fTimeDelta;
+				fLastDeltaVert		-= fRelaxSpeed*Device->fTimeDelta;
 				if (fLastDeltaVert<0.f) bSSActive	= FALSE;
 			}else{
-				fLastDeltaVert		+= fRelaxSpeed*Device.fTimeDelta;
+				fLastDeltaVert		+= fRelaxSpeed*Device->fTimeDelta;
 				if (fLastDeltaVert>0.f)	bSSActive	= FALSE;
 			}
 		};		

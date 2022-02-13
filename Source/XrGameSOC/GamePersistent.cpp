@@ -71,7 +71,7 @@ CGamePersistent::CGamePersistent(void)
 		R_ASSERT2			(fname[0],"Missing filename for 'demomode'");
 		Msg					("- playing in demo mode '%s'",fname);
 		pDemoFile			=	FS.r_open	(fname);
-		Device.seqFrame.Add	(this);
+		Device->seqFrame.Add	(this);
 		eDemoStart			=	Engine.Event.Handler_Attach("GAME:demo",this);	
 		uTime2Change		=	0;
 	} else {
@@ -89,7 +89,7 @@ CGamePersistent::~CGamePersistent(void)
 {	
 	CWeaponHUD::DestroySharedContainer();
 	FS.r_close					(pDemoFile);
-	Device.seqFrame.Remove		(this);
+	Device->seqFrame.Remove		(this);
 	Engine.Event.Handler_Detach	(eDemoStart,this);
 	Engine.Event.Handler_Detach	(eQuickLoad,this);
 }
@@ -100,15 +100,15 @@ void CGamePersistent::RegisterModel(IRenderVisual* V)
 	switch (V->getType()){
 	case MT_SKELETON_ANIM:
 	case MT_SKELETON_RIGID:{
-		u16 def_idx		= GMLib.GetMaterialIdx("default_object");
-		R_ASSERT2		(GMLib.GetMaterialByIdx(def_idx)->Flags.is(SGameMtl::flDynamic),"'default_object' - must be dynamic");
+		u16 def_idx		= GameMaterialLibrary->GetMaterialIdx("default_object");
+		R_ASSERT2		(GameMaterialLibrary->GetMaterialByIdx(def_idx)->Flags.is(SGameMtl::flDynamic),"'default_object' - must be dynamic");
 		IKinematics* K	= smart_cast<IKinematics*>(V); VERIFY(K);
 		int cnt = K->LL_BoneCount();
 		for (u16 k=0; k<cnt; k++){
 			CBoneData& bd	= K->LL_GetData(k); 
 			if (*(bd.game_mtl_name)){
-				bd.game_mtl_idx	= GMLib.GetMaterialIdx(*bd.game_mtl_name);
-				R_ASSERT2(GMLib.GetMaterialByIdx(bd.game_mtl_idx)->Flags.is(SGameMtl::flDynamic),"Required dynamic game material");
+				bd.game_mtl_idx	= GameMaterialLibrary->GetMaterialIdx(*bd.game_mtl_name);
+				R_ASSERT2(GameMaterialLibrary->GetMaterialByIdx(bd.game_mtl_idx)->Flags.is(SGameMtl::flDynamic),"Required dynamic game material");
 			}else{
 				bd.game_mtl_idx	= def_idx;
 			}
@@ -123,7 +123,7 @@ extern void init_game_globals	();
 void CGamePersistent::OnAppStart()
 {
 	// load game materials
-	GMLib.Load					();
+	GameMaterialLibrary->Load					();
 	init_game_globals			();
 	__super::OnAppStart			();
 	m_pUI_core					= xr_new<ui_core>();
@@ -143,7 +143,7 @@ void CGamePersistent::OnAppEnd	()
 
 	clean_game_globals			();
 
-	GMLib.Unload				();
+	GameMaterialLibrary->Unload				();
 
 }
 
@@ -222,37 +222,37 @@ void CGamePersistent::WeathersUpdate()
 		CEnvSOCAmbient* env_amb = static_cast<CEnvSOCAmbient*>(_env->env_ambient);
 		if (env_amb) {
 			// start sound
-			if (Device.dwTimeGlobal > ambient_sound_next_time) {
+			if (Device->dwTimeGlobal > ambient_sound_next_time) {
 				ref_sound* snd = env_amb->get_rnd_sound();
-				ambient_sound_next_time = Device.dwTimeGlobal + env_amb->get_rnd_sound_time();
+				ambient_sound_next_time = Device->dwTimeGlobal + env_amb->get_rnd_sound_time();
 				if (snd) {
 					Fvector	pos;
 					float	angle = ::Random.randF(PI_MUL_2);
 					pos.x = cosf(angle);
 					pos.y = 0;
 					pos.z = sinf(angle);
-					pos.normalize().mul(env_amb->get_rnd_sound_dist()).add(Device.vCameraPosition);
+					pos.normalize().mul(env_amb->get_rnd_sound_dist()).add(Device->vCameraPosition);
 					pos.y += 10.f;
 					snd->play_at_pos(0, pos);
 				}
 			}
 
 			// start effect
-			if ((FALSE == bIndoor) && (0 == ambient_particles) && Device.dwTimeGlobal > ambient_effect_next_time) {
+			if ((FALSE == bIndoor) && (0 == ambient_particles) && Device->dwTimeGlobal > ambient_effect_next_time) {
 				CEnvSOCAmbient::SEffect* eff = env_amb->get_rnd_effect();
 				if (eff) {
 					EnvironmentAsSOC()->wind_gust_factor = eff->wind_gust_factor;
-					ambient_effect_next_time = Device.dwTimeGlobal + env_amb->get_rnd_effect_time();
-					ambient_effect_stop_time = Device.dwTimeGlobal + eff->life_time;
+					ambient_effect_next_time = Device->dwTimeGlobal + env_amb->get_rnd_effect_time();
+					ambient_effect_stop_time = Device->dwTimeGlobal + eff->life_time;
 					ambient_particles = CParticlesObject::Create(eff->particles.c_str(), FALSE, false);
-					Fvector pos; pos.add(Device.vCameraPosition, eff->offset);
+					Fvector pos; pos.add(Device->vCameraPosition, eff->offset);
 					ambient_particles->play_at_pos(pos);
 					if (eff->sound._handle())		eff->sound.play_at_pos(0, pos);
 				}
 			}
 		}
 		// stop if time exceed or indoor
-		if (bIndoor || Device.dwTimeGlobal >= ambient_effect_stop_time) {
+		if (bIndoor || Device->dwTimeGlobal >= ambient_effect_stop_time) {
 			if (ambient_particles)					ambient_particles->Stop();
 			EnvironmentAsSOC()->wind_gust_factor = 0.f;
 		}
@@ -274,7 +274,7 @@ void CGamePersistent::start_logo_intro		()
 		return;
 	}
 #endif
-	if (Device.dwPrecacheFrame==0)
+	if (Device->dwPrecacheFrame==0)
 	{
 		m_intro_event.bind		(this,&CGamePersistent::update_logo_intro);
 		if (!g_dedicated_server && 0==xr_strlen(m_game_params.m_game_or_spawn) && NULL==g_pGameLevel)
@@ -303,13 +303,13 @@ void CGamePersistent::start_game_intro		()
 		return;
 	}
 #endif
-	if (g_pGameLevel && g_pGameLevel->bReady && Device.dwPrecacheFrame<=2){
+	if (g_pGameLevel && g_pGameLevel->bReady && Device->dwPrecacheFrame<=2){
 		m_intro_event.bind		(this,&CGamePersistent::update_game_intro);
 		if (0==stricmp(m_game_params.m_new_or_load,"new")){
 			VERIFY				(NULL==m_intro);
 			m_intro				= xr_new<CUISequencer>();
 			m_intro->Start		("intro_game");
-			Log("Intro start",Device.dwFrame);
+			Log("Intro start",Device->dwFrame);
 		}
 	}
 }
@@ -340,7 +340,7 @@ void CGamePersistent::OnFrame	()
 #endif
 	if (!g_dedicated_server && !m_intro_event.empty())	m_intro_event();
 
-	if (!g_dedicated_server && Device.dwPrecacheFrame == 0 && !m_intro && m_intro_event.empty())
+	if (!g_dedicated_server && Device->dwPrecacheFrame == 0 && !m_intro && m_intro_event.empty())
 		load_screen_renderer.stop();
 
 	if( !m_pMainMenu->IsActive() )
@@ -349,7 +349,7 @@ void CGamePersistent::OnFrame	()
 	if(!g_pGameLevel)			return;
 	if(!g_pGameLevel->bReady)	return;
 
-	if(Device.Paused()){
+	if(Device->Paused()){
 #ifndef MASTER_GOLD
 		if (Level().CurrentViewEntity()) {
 			if (!g_actor || (g_actor->ID() != Level().CurrentViewEntity()->ID())) {
@@ -388,15 +388,15 @@ void CGamePersistent::OnFrame	()
 	}
 	__super::OnFrame			();
 
-	if(!Device.Paused())
+	if(!Device->Paused())
 		Engine.Sheduler.Update		();
 
 	// update weathers ambient
-	if(!Device.Paused())
+	if(!Device->Paused())
 		WeathersUpdate				();
 
 	if	(0!=pDemoFile){
-		if	(Device.dwTimeGlobal>uTime2Change){
+		if	(Device->dwTimeGlobal>uTime2Change){
 			// Change level + play demo
 			if			(pDemoFile->elapsed()<3)	pDemoFile->seek(0);		// cycle
 
@@ -427,8 +427,8 @@ void CGamePersistent::OnEvent(EVENT E, u64 P1, u64 P2)
 {
 	if(E==eQuickLoad)
 	{
-		if (Device.Paused())
-			Device.Pause		(FALSE, TRUE, TRUE, "eQuickLoad");
+		if (Device->Paused())
+			Device->Pause		(FALSE, TRUE, TRUE, "eQuickLoad");
 		
 		LPSTR		saved_name	= (LPSTR)(P1);
 
@@ -446,7 +446,7 @@ void CGamePersistent::OnEvent(EVENT E, u64 P1, u64 P2)
 		sprintf_s				(cmd,"demo_play %s",demo);
 		Console->Execute	(cmd);
 		xr_free				(demo);
-		uTime2Change		= Device.TimerAsync() + u32(P2)*1000;
+		uTime2Change		= Device->TimerAsync() + u32(P2)*1000;
 	}
 }
 
@@ -462,7 +462,7 @@ void CGamePersistent::Statistics	(CGameFont* F)
 
 float CGamePersistent::MtlTransparent(u32 mtl_idx)
 {
-	return GMLib.GetMaterialByIdx((u16)mtl_idx)->fVisTransparencyFactor;
+	return GameMaterialLibrary->GetMaterialByIdx((u16)mtl_idx)->fVisTransparencyFactor;
 }
 static BOOL bRestorePause	= FALSE;
 static BOOL bEntryFlag		= TRUE;
@@ -470,14 +470,14 @@ static BOOL bEntryFlag		= TRUE;
 void CGamePersistent::OnAppActivate		()
 {
 	bool bIsMP = (g_pGameLevel && Level().game && GameID() != GAME_SINGLE);
-	bIsMP		&= !Device.Paused();
+	bIsMP		&= !Device->Paused();
 
 	if( !bIsMP )
 	{
-		Device.Pause			(FALSE, !bRestorePause, TRUE, "CGP::OnAppActivate");
+		Device->Pause			(FALSE, !bRestorePause, TRUE, "CGP::OnAppActivate");
 	}else
 	{
-		Device.Pause			(FALSE, TRUE, TRUE, "CGP::OnAppActivate MP");
+		Device->Pause			(FALSE, TRUE, TRUE, "CGP::OnAppActivate MP");
 	}
 
 	bEntryFlag = TRUE;
@@ -493,11 +493,11 @@ void CGamePersistent::OnAppDeactivate	()
 
 	if ( !bIsMP )
 	{
-		bRestorePause			= Device.Paused();
-		Device.Pause			(TRUE, TRUE, TRUE, "CGP::OnAppDeactivate");
+		bRestorePause			= Device->Paused();
+		Device->Pause			(TRUE, TRUE, TRUE, "CGP::OnAppDeactivate");
 	}else
 	{
-		Device.Pause			(TRUE, FALSE, TRUE, "CGP::OnAppDeactivate MP");
+		Device->Pause			(TRUE, FALSE, TRUE, "CGP::OnAppDeactivate MP");
 	}
 	bEntryFlag = FALSE;
 }

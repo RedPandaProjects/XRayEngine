@@ -200,7 +200,7 @@ void CGameObject::OnEvent		(NET_Packet& P, u16 type)
 				Msg("GE_DESTROY arrived, but H_Parent() exist. object[%d][%s] parent[%d][%s] [%d]", 
 					ID(), cName().c_str(),
 					H_Parent()->ID(), H_Parent()->cName().c_str(),
-					Device.dwFrame);
+					Device->dwFrame);
 			}
 			setDestroy		(TRUE);
 		}
@@ -214,7 +214,7 @@ BOOL CGameObject::net_Spawn		(CSE_Abstract*	DC)
 {
 	VERIFY							(!m_spawned);
 	m_spawned						= true;
-	m_spawn_time					= Device.dwFrame;
+	m_spawn_time					= Device->dwFrame;
 	CSE_Abstract					*E = (CSE_Abstract*)DC;
 	VERIFY							(E);
 
@@ -565,7 +565,7 @@ void CGameObject::validate_ai_locations			(bool decrement_reference)
 	u32								l_dwNewLevelVertexID = ai().level_graph().vertex(ai_location().level_vertex_id(),center);
 
 #ifdef _DEBUG
-//	Msg								("%6d Searching for node for object %s (%.5f seconds)",Device.dwTimeGlobal,*cName(),timer.GetElapsed_sec());
+//	Msg								("%6d Searching for node for object %s (%.5f seconds)",Device->dwTimeGlobal,*cName(),timer.GetElapsed_sec());
 #endif
 	VERIFY							(ai().level_graph().valid_vertex_id(l_dwNewLevelVertexID));
 
@@ -791,11 +791,11 @@ void CGameObject::DestroyObject()
 
 void CGameObject::shedule_Update	(u32 dt)
 {
-	//уничтожить
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if(!IsGameTypeSingle() && OnServer() && NeedToDestroyObject())
 	{
 #ifdef DEBUG
-		Msg("--NeedToDestroyObject for [%d][%d]", ID(), Device.dwFrame);
+		Msg("--NeedToDestroyObject for [%d][%d]", ID(), Device->dwFrame);
 #endif
 		DestroyObject			();
 
@@ -813,7 +813,7 @@ BOOL CGameObject::net_SaveRelevant	()
 	return	(CScriptBinder::net_SaveRelevant());
 }
 
-//игровое имя объекта
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 LPCSTR CGameObject::Name () const
 {
 	return	(*cName());

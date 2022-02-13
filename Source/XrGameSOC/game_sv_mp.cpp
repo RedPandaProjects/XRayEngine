@@ -68,12 +68,12 @@ void	game_sv_mp::Update	()
 		if (!pCorpseObj)
 		{
 			m_CorpseList.erase(m_CorpseList.begin() + i);
-			Msg("corpse [%d] not found [%d]",CorpseID, Device.dwFrame);
+			Msg("corpse [%d] not found [%d]",CorpseID, Device->dwFrame);
 			continue;
 		}
 		if (!pCorpseObj->children.empty())
 		{
-			Msg("corpse [%d] childern not empty [%d]",CorpseID, Device.dwFrame);
+			Msg("corpse [%d] childern not empty [%d]",CorpseID, Device->dwFrame);
 			i++;
 			continue;
 		}
@@ -83,7 +83,7 @@ void	game_sv_mp::Update	()
 		u_EventGen			(P,GE_DESTROY,CorpseID);
 		Level().Send		(P,net_flags(TRUE,TRUE));
 		m_CorpseList.erase	(m_CorpseList.begin() + i);
-		Msg("corpse [%d] send destroy [%d]",CorpseID, Device.dwFrame);
+		Msg("corpse [%d] send destroy [%d]",CorpseID, Device->dwFrame);
 	}
 
 	if (IsVotingEnabled() && IsVotingActive()) UpdateVote();
@@ -92,7 +92,7 @@ void	game_sv_mp::Update	()
 
 	if(g_sv_mp_iDumpStatsPeriod)
 	{
-		int curr_minutes = iFloor(Device.fTimeGlobal/60.0f);
+		int curr_minutes = iFloor(Device->fTimeGlobal/60.0f);
 		if(g_sv_mp_iDumpStats_last+g_sv_mp_iDumpStatsPeriod <= curr_minutes )
 		{
 			if(Phase()==GAME_PHASE_INPROGRESS)
@@ -399,7 +399,7 @@ void	game_sv_mp::SpawnPlayer(ClientID id, LPCSTR N)
 		if (!ps_who->RespawnTime)
 			OnPlayerEnteredGame(id);
 
-		ps_who->RespawnTime = Device.dwTimeGlobal;
+		ps_who->RespawnTime = Device->dwTimeGlobal;
 
 		Game().m_WeaponUsageStatistic->OnPlayerSpawned(ps_who);
 	}
@@ -475,13 +475,13 @@ void	game_sv_mp::SetSkin					(CSE_Abstract* E, u16 Team, u16 ID)
 	//-------------------------------------------
 	string256 SkinName;
 	std::strcpy(SkinName, pSettings->r_string("mp_skins_path", "skin_path"));
-	//загружены ли скины для этой комманды
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 	if (!TeamList.empty()	&&
 		TeamList.size() > Team	&&
 		!TeamList[Team].aSkins.empty())
 	{
-		//загружено ли достаточно скинов для этой комманды
+		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		if (TeamList[Team].aSkins.size() > ID)
 		{
 			std::strcat(SkinName, TeamList[Team].aSkins[ID].c_str());
@@ -491,7 +491,7 @@ void	game_sv_mp::SetSkin					(CSE_Abstract* E, u16 Team, u16 ID)
 	}
 	else
 	{
-		//скины для такой комманды не загружены
+		//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		switch (Team)
 		{
 		case 0:
@@ -571,7 +571,7 @@ void	game_sv_mp::SpawnWeapon4Actor		(u16 actorId,  LPCSTR N, u8 Addons)
 
 	E->s_flags.assign		(M_SPAWN_OBJECT_LOCAL);	// flags
 	/////////////////////////////////////////////////////////////////////////////////
-	//если это оружие - спавним его с полным магазином
+	//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	CSE_ALifeItemWeapon		*pWeapon	=	smart_cast<CSE_ALifeItemWeapon*>(E);
 	if (pWeapon)
 	{
@@ -1433,7 +1433,7 @@ void game_sv_mp::WritePlayerStats(CInifile& ini, LPCSTR sect, xrClientData* pCl)
 void game_sv_mp::WriteGameState(CInifile& ini, LPCSTR sect, bool bRoundResult)
 {
 	if(!bRoundResult)
-		ini.w_u32						(sect, "online_time_sec", Device.dwTimeGlobal/1000);
+		ini.w_u32						(sect, "online_time_sec", Device->dwTimeGlobal/1000);
 }
 
 void game_sv_mp::DumpRoundStatistics()

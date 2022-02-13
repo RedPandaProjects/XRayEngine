@@ -1,7 +1,7 @@
 #pragma once
 
-#include "alife_space.h"
-#include "object_interfaces.h"
+#include "..\xrEngine\alife_space.h"
+#include "../XrEngine/object_interfaces.h"
 
 struct INFO_DATA : public IPureSerializeObject<IReader,IWriter>
 {
@@ -12,7 +12,7 @@ struct INFO_DATA : public IPureSerializeObject<IReader,IWriter>
 	virtual void		save			(IWriter&);
 
 	shared_str			info_id;
-	//время получения нужно порции информации
+	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	ALife::_TIME_ID		receive_time;
 };
 

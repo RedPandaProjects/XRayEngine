@@ -4,7 +4,7 @@
 #include "PostprocessAnimator.h"
 #include "../XrEngine/effectorPP.h"
 #include "../XrEngine/ObjectAnimator.h"
-#include "object_broker.h"
+#include "../XrEngine/object_broker.h"
 #include "actor.h"
 
 void AddEffector		(CActor* A, int type, const shared_str& sect_name)
@@ -151,7 +151,7 @@ BOOL CAnimatorCamEffector::Process (Fvector &p, Fvector &d, Fvector &n, float& f
 	if(!inherited::ProcessCam(Args))	return FALSE;
 
 	const Fmatrix& m			= m_objectAnimator->XFORM();
-	m_objectAnimator->Update	(Device.fTimeDelta);
+	m_objectAnimator->Update	(Device->fTimeDelta);
 
 	if(!m_bAbsolutePositioning){
 		Fmatrix Mdef;
@@ -186,7 +186,7 @@ BOOL CAnimatorCamLerpEffector::Process(Fvector &p, Fvector &d, Fvector &n, float
 	if(!inherited::inherited::ProcessCam(Args))	return FALSE;
 
 	const Fmatrix& m			= m_objectAnimator->XFORM();
-	m_objectAnimator->Update	(Device.fTimeDelta);
+	m_objectAnimator->Update	(Device->fTimeDelta);
 
 	Fmatrix Mdef;
 	Mdef.identity				();
@@ -276,7 +276,7 @@ BOOL SndShockEffector::InWork()
 
 float SndShockEffector::GetFactor()
 {
-	float f				= (m_end_time-Device.fTimeGlobal)/m_life_time;
+	float f				= (m_end_time-Device->fTimeGlobal)/m_life_time;
 	
 	float ff =	f*m_life_time/8.0f;
 	return clampr(ff, 0.0f, 1.0f);
@@ -298,14 +298,14 @@ void SndShockEffector::Start(CActor* A, float snd_length, float power)
 	static float		xxx = 6.0f/1.50f; //6sec on max power(1.5)
 
 	m_life_time			= power*xxx;
-	m_end_time			= Device.fTimeGlobal + m_life_time;
+	m_end_time			= Device->fTimeGlobal + m_life_time;
 
 	AddEffector			(A, effHit,"snd_shock_effector", this);
 }
 
 void SndShockEffector::Update()
 {
-	m_cur_length		+= Device.dwTimeDelta;
+	m_cur_length		+= Device->dwTimeDelta;
 	float x				= float(m_cur_length)/m_snd_length;
 	float y				= 2.f*x-1;
 	if (y>0.f){
@@ -349,15 +349,15 @@ BOOL CControllerPsyHitCamEffector::Process(Fvector &p, Fvector &d, Fvector &n, f
 
 	//////////////////////////////////////////////////////////////////////////
 
-	if (angle_lerp(m_dangle_current.x, m_dangle_target.x, ANGLE_SPEED, Device.fTimeDelta)) {
+	if (angle_lerp(m_dangle_current.x, m_dangle_target.x, ANGLE_SPEED, Device->fTimeDelta)) {
 		m_dangle_target.x = angle_normalize(Random.randFs(DELTA_ANGLE_X));
 	}
 
-	if (angle_lerp(m_dangle_current.y, m_dangle_target.y, ANGLE_SPEED, Device.fTimeDelta)) {
+	if (angle_lerp(m_dangle_current.y, m_dangle_target.y, ANGLE_SPEED, Device->fTimeDelta)) {
 		m_dangle_target.y = angle_normalize(Random.randFs(DELTA_ANGLE_Y));
 	}
 
-	if (angle_lerp(m_dangle_current.z, m_dangle_target.z, ANGLE_SPEED, Device.fTimeDelta)) {
+	if (angle_lerp(m_dangle_current.z, m_dangle_target.z, ANGLE_SPEED, Device->fTimeDelta)) {
 		m_dangle_target.z = angle_normalize(Random.randFs(DELTA_ANGLE_Z));
 	}
 	
@@ -371,11 +371,11 @@ BOOL CControllerPsyHitCamEffector::Process(Fvector &p, Fvector &d, Fvector &n, f
 	Mdef.c.mad	(m_position_source, m_direction, cur_dist);
 	fFov = _base_fov - _max_fov_add*perc_past;
 
-	m_time_current	+= Device.fTimeDelta;
+	m_time_current	+= Device->fTimeDelta;
 	
 	//////////////////////////////////////////////////////////////////////////
 
-	// Установить углы смещения
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	Fmatrix		R;
 	if (m_time_current > m_time_total) 
 		R.identity	();

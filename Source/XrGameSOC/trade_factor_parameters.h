@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "associative_vector.h"
+#include "../XrEngine/associative_vector.h"
 #include "trade_factors.h"
 
 class CTradeFactorParameters {

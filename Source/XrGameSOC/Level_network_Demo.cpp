@@ -365,12 +365,12 @@ void						CLevel::Demo_Update				()
 			{
 			case DATA_FRAME:
 				{
-					Device.dwTimeDelta		= P->FrameTime.dwTimeDelta;
-					Device.dwTimeGlobal		= P->FrameTime.dwTimeGlobal;
+					Device->dwTimeDelta		= P->FrameTime.dwTimeDelta;
+					Device->dwTimeGlobal		= P->FrameTime.dwTimeGlobal;
 					//					CurFrameTime.dwTimeServer		= Level().timeServer();
 					//					CurFrameTime.dwTimeServer_Delta = Level().timeServer_Delta();
-					Device.fTimeDelta		= P->FrameTime.fTimeDelta;
-					Device.fTimeGlobal		= P->FrameTime.fTimeGlobal;
+					Device->fTimeDelta		= P->FrameTime.fTimeDelta;
+					Device->fTimeGlobal		= P->FrameTime.fTimeGlobal;
 
 				}break;
 			case DATA_CLIENT_PACKET:
@@ -436,12 +436,12 @@ void						CLevel::Demo_StartFrame			()
 	DemoCS.Enter();
 
 	DemoFrameTime CurFrameTime;
-	CurFrameTime.dwTimeDelta = Device.dwTimeDelta;
-	CurFrameTime.dwTimeGlobal = Device.dwTimeGlobal;
+	CurFrameTime.dwTimeDelta = Device->dwTimeDelta;
+	CurFrameTime.dwTimeGlobal = Device->dwTimeGlobal;
 	CurFrameTime.dwTimeServer = Level().timeServer();
 	CurFrameTime.dwTimeServer_Delta = Level().timeServer_Delta();
-	CurFrameTime.fTimeDelta = Device.fTimeDelta;
-	CurFrameTime.fTimeGlobal= Device.fTimeGlobal;
+	CurFrameTime.fTimeDelta = Device->fTimeDelta;
+	CurFrameTime.fTimeGlobal= Device->fTimeGlobal;
 
 	Demo_StoreData(&CurFrameTime, sizeof(CurFrameTime), DATA_FRAME);
 

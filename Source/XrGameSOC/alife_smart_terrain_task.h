@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "game_graph_space.h"
+#include "../XrEngine/game_graph_space.h"
 #include "script_export_space.h"
 
 class CPatrolPoint;

@@ -14,7 +14,7 @@
 #define MS_PLAYING	9
 
 struct dContact;
-struct SGameMtl;
+class SGameMtl;
 class CMissile : public CHudItemObject
 {
 	typedef CHudItemObject inherited;
@@ -64,18 +64,18 @@ protected:
 	void					UpdatePosition					(const Fmatrix& trans);
 	void					spawn_fake_missile				();
 
-	//инициализация если вещь в активном слоте или спрятана на OnH_B_Chield
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ OnH_B_Chield
 	virtual void			OnActiveItem		();
 	virtual void			OnHiddenItem		();
 
-	//для сети
+	//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 	virtual void			StartIdleAnim		();
 	virtual void			net_Relcase			(CObject* O );
 protected:
 
 	bool					m_throw;
 	
-	//время уничтожения
+	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	u32						m_dwDestroyTime;
 	u32						m_dwDestroyTimeMax;
 
@@ -84,21 +84,21 @@ protected:
 
 	CMissile				*m_fake_missile;
 
-	//параметры броска
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	
 	float m_fMinForce, m_fConstForce, m_fMaxForce, m_fForceGrowSpeed;
 //private:
 	bool					m_constpower;
 	float					m_fThrowForce;
 protected:
-	//относительная точка и направление вылета гранаты
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	Fvector					m_vThrowPoint;
 	Fvector					m_vThrowDir;
-	//для HUD
+	//пїЅпїЅпїЅ HUD
 	Fvector					m_vHudThrowPoint;
 	Fvector					m_vHudThrowDir;
 
-	//имена анимаций
+	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	shared_str				m_sAnimShow;
 	shared_str				m_sAnimHide;
 	shared_str				m_sAnimIdle;
@@ -108,7 +108,7 @@ protected:
 	shared_str				m_sAnimThrowAct;
 	shared_str				m_sAnimThrowEnd;
 
-	//звук анимации "играния"
+	//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ"
 	HUD_SOUND				sndPlaying;
 
 protected:
@@ -117,7 +117,7 @@ public:
 	virtual void			activate_physic_shell	();
 	virtual void			setup_physic_shell		();
 	virtual void			create_physic_shell		();
-	IC		void			set_destroy_time		(u32 delta_destroy_time) {m_dwDestroyTime = delta_destroy_time + Device.dwTimeGlobal;}
+	IC		void			set_destroy_time		(u32 delta_destroy_time) {m_dwDestroyTime = delta_destroy_time + Device->dwTimeGlobal;}
 
 protected:
 	u32						m_ef_weapon_type;

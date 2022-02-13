@@ -326,14 +326,14 @@ void CMemoryManager::make_object_visible_somewhen	(const CEntityAlive *enemy)
 	MemorySpace::CVisibleObject	*obj = visual().visible_object(enemy);
 //	if (obj) {
 //		Msg						("------------------------------------------------------");
-//		Msg						("[%6d] make_object_visible_somewhen [%s] = %x",Device.dwTimeGlobal,*enemy->cName(),obj->m_squad_mask.get());
+//		Msg						("[%6d] make_object_visible_somewhen [%s] = %x",Device->dwTimeGlobal,*enemy->cName(),obj->m_squad_mask.get());
 //	}
 //	LogStackTrace				("-------------make_object_visible_somewhen-------------");
 	bool						prev = obj ? obj->visible(mask) : false;
 	visual().add_visible_object	(enemy,.001f,true);
 	MemorySpace::CVisibleObject	*obj1 = object().memory().visual().visible_object(enemy);
 //	if (obj1)
-//		Msg						("[%6d] make_object_visible_somewhen [%s] = %x",Device.dwTimeGlobal,*enemy->cName(),obj1->m_squad_mask.get());
+//		Msg						("[%6d] make_object_visible_somewhen [%s] = %x",Device->dwTimeGlobal,*enemy->cName(),obj1->m_squad_mask.get());
 	obj1->visible				(mask,prev);
 }
 

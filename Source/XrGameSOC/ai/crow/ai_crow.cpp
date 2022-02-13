@@ -253,8 +253,8 @@ void CAI_Crow::Die				(CObject* who)
 };
 void CAI_Crow::UpdateWorkload	(float fdt)
 {
-	if (o_workload_frame	==	Device.dwFrame)	return;
-	o_workload_frame		=	Device.dwFrame	;
+	if (o_workload_frame	==	Device->dwFrame)	return;
+	o_workload_frame		=	Device->dwFrame	;
 	switch (st_current)		{
 	case eFlyIdle	:
 	case eFlyUp		:
@@ -275,9 +275,9 @@ void CAI_Crow::UpdateCL		()
 }
 void CAI_Crow::renderable_Render	()
 {
-	UpdateWorkload					(Device.fTimeDelta);
+	UpdateWorkload					(Device->fTimeDelta);
 	inherited::renderable_Render	();
-	o_workload_rframe				= Device.dwFrame	;
+	o_workload_rframe				= Device->dwFrame	;
 }
 void CAI_Crow::shedule_Update		(u32 DT)
 {
@@ -306,7 +306,7 @@ void CAI_Crow::shedule_Update		(u32 DT)
 		if(fGoalChangeTime<=0)	{
 			fGoalChangeTime += fGoalChangeDelta+fGoalChangeDelta*Random.randF(-0.5f,0.5f);
 			Fvector vP;
-			vP.set(Device.vCameraPosition.x,Device.vCameraPosition.y+fMinHeight,Device.vCameraPosition.z);
+			vP.set(Device->vCameraPosition.x,Device->vCameraPosition.y+fMinHeight,Device->vCameraPosition.z);
 			vGoalDir.x		= vP.x+vVarGoal.x*Random.randF(-0.5f,0.5f); 
 			vGoalDir.y		= vP.y+vVarGoal.y*Random.randF(-0.5f,0.5f);
 			vGoalDir.z		= vP.z+vVarGoal.z*Random.randF(-0.5f,0.5f);
@@ -323,7 +323,7 @@ void CAI_Crow::shedule_Update		(u32 DT)
 	m_Sounds.m_idle.SetPosition		(Position());
 
 	// work
-	if (o_workload_rframe	== (Device.dwFrame-1))	;
+	if (o_workload_rframe	== (Device->dwFrame-1))	;
 	else					UpdateWorkload			(fDT);
 }
 

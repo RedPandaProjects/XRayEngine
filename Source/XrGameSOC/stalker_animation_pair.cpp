@@ -78,7 +78,7 @@ void CStalkerAnimationPair::play			(IKinematicsAnimated *skeleton_animated, Play
 #if 0
 #	ifdef DEBUG
 		if (psAI_Flags.is(aiAnimation) && blend())
-			Msg				("%6d [%s][%s][%s][%f]",Device.dwTimeGlobal,m_object_name,m_animation_type_name,*animation()->name(),blend()->timeCurrent);
+			Msg				("%6d [%s][%s][%s][%f]",Device->dwTimeGlobal,m_object_name,m_animation_type_name,*animation()->name(),blend()->timeCurrent);
 #	endif
 #endif
 
@@ -131,7 +131,7 @@ void CStalkerAnimationPair::play			(IKinematicsAnimated *skeleton_animated, Play
 		CMotionDef			*motion = skeleton_animated->LL_GetMotionDef(animation());
 		VERIFY				(motion);
 		LPCSTR				name = skeleton_animated->LL_MotionDefName_dbg(animation()).first;
-		Msg					("%6d [%s][%s][%s][%d] - LOOPED: %d",Device.dwTimeGlobal,m_object_name,m_animation_type_name,name,motion->bone_or_part,! (motion->flags & esmStopAtEnd));
+		Msg					("%6d [%s][%s][%s][%d] - LOOPED: %d",Device->dwTimeGlobal,m_object_name,m_animation_type_name,name,motion->bone_or_part,! (motion->flags & esmStopAtEnd));
 	}
 #endif
 }

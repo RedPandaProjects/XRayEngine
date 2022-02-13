@@ -62,7 +62,7 @@ void CMovementManager::move_along_path	(CPHMovementControl *movement_control, Fv
 	float				precision = 0.5f;
 	
 	
-	// Если нет движения по пути
+	// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ
 	if (	!enabled() || 
 			!actual()  ||
 //			path_completed() || 
@@ -81,7 +81,7 @@ void CMovementManager::move_along_path	(CPHMovementControl *movement_control, Fv
 			movement_control->GetPosition(dest_position);
 		}
 
-		// проверка на хит
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ
 		apply_collision_hit(movement_control);
 		return;
 	}
@@ -102,19 +102,19 @@ void CMovementManager::move_along_path	(CPHMovementControl *movement_control, Fv
 	//#pragma todo("Dima to Kostia : Please change this piece of code to support paths with multiple desired velocities")
 	
 	
-	// Вычислить пройденную дистанцию, определить целевую позицию на маршруте, 
-	//			 изменить detail().m_current_travel_point
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, 
+	//			 пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ detail().m_current_travel_point
 	
-	float				desirable_speed		=	old_desirable_speed();				// желаемая скорость объекта
-	float				dist				=	desirable_speed * time_delta;		// пройденное расстояние в соостветствие с желаемой скоростью 
+	float				desirable_speed		=	old_desirable_speed();				// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	float				dist				=	desirable_speed * time_delta;		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 
 	float				desirable_dist		=	dist;
 
-	// определить целевую точку
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	Fvector				target;
 	
 	u32 prev_cur_point_index = detail().curr_travel_point_index();
 
-	// обновить detail().m_current_travel_point в соответствие с текущей позицией
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ detail().m_current_travel_point пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	while (detail().m_current_travel_point < detail().path().size() - 2) {
 
 		float pos_dist_to_cur_point			= dest_position.distance_to(detail().path()[detail().m_current_travel_point].position);
@@ -127,11 +127,11 @@ void CMovementManager::move_along_path	(CPHMovementControl *movement_control, Fv
 	}
 
 	target.set			(detail().path()[detail().curr_travel_point_index() + 1].position);
-	// определить направление к целевой точке
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	Fvector				dir_to_target;
 	dir_to_target.sub	(target, dest_position);
 
-	// дистанция до целевой точки
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	float				dist_to_target = dir_to_target.magnitude();
 	
 	while (dist > dist_to_target) {
@@ -158,14 +158,14 @@ void CMovementManager::move_along_path	(CPHMovementControl *movement_control, Fv
 		return;
 	}
 
-	// Физика устанавливает новую позицию
-	Device.Statistic->Physics.Begin	();
+	// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	Device->Statistic->Physics.Begin	();
 
-	// получить физ. объекты в радиусе
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	m_nearest_objects.clear_not_free	();
 	Level().ObjectSpace.GetNearest		(m_nearest_objects,dest_position,DISTANCE_PHISICS_ENABLE_CHARACTERS + (movement_control->IsCharacterEnabled() ? 0.5f : 0.f),&object()); 
 
-	// установить позицию
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	motion.mul			(dir_to_target, dist / dist_to_target);
 	dest_position.add	(motion);
 	Fvector velocity					=	dir_to_target;
@@ -174,18 +174,18 @@ void CMovementManager::move_along_path	(CPHMovementControl *movement_control, Fv
 		velocity.y=0.8f;
 	if(velocity.y<-0.9f)
 		velocity.y=-0.8f;
-	velocity.normalize_safe();							  //как не странно, mdir - не нормирован
+	velocity.normalize_safe();							  //пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, mdir - пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	velocity.mul						(desirable_speed);//*1.25f
 	if(!movement_control->PhyssicsOnlyMode())
 		movement_control->SetCharacterVelocity(velocity);
 
-	if (DBG_PH_MOVE_CONDITIONS(ph_dbg_draw_mask.test(phDbgNeverUseAiPhMove)||!ph_dbg_draw_mask.test(phDbgAlwaysUseAiPhMove)&&)!(m_nearest_objects.empty())) {  //  физ. объект
+	if (DBG_PH_MOVE_CONDITIONS(ph_dbg_draw_mask.test(phDbgNeverUseAiPhMove)||!ph_dbg_draw_mask.test(phDbgAlwaysUseAiPhMove)&&)!(m_nearest_objects.empty())) {  //  пїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅ
 		
 		if(DBG_PH_MOVE_CONDITIONS(!ph_dbg_draw_mask.test(phDbgNeverUseAiPhMove)&&) !movement_control->TryPosition(dest_position)) {
 			movement_control->GetPosition	(dest_position);
 			movement_control->Calculate		(detail().path(),desirable_speed,detail().m_current_travel_point,precision);
 
-			// проверка на хит
+			// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ
 			apply_collision_hit(movement_control);
 
 		} else {
@@ -203,24 +203,24 @@ void CMovementManager::move_along_path	(CPHMovementControl *movement_control, Fv
 
 	}
 	/*
-	} else { // есть физ. объекты
+	} else { // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 		movement_control->Calculate				(detail().path(), desirable_speed, detail().m_current_travel_point, precision);
 		movement_control->GetPosition			(dest_position);
 		
-		// проверка на хит
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ
 		apply_collision_hit						(movement_control);
 	}
 		*/
 
-	// установить скорость
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	float	real_motion	= motion.magnitude() + desirable_dist - dist;
 	float	real_speed	= real_motion / time_delta;
 	
 	m_speed				= 0.5f * desirable_speed + 0.5f * real_speed;
 	
 
-	// Физика устанавливает позицию в соответствии с нулевой скоростью 
+	// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 
 	if (detail().completed(dest_position,true)) {
 		if(!movement_control->PhyssicsOnlyMode()) {
 			Fvector velocity				= {0.f,0.f,0.f};
@@ -229,7 +229,7 @@ void CMovementManager::move_along_path	(CPHMovementControl *movement_control, Fv
 		}
 	}
 	
-	Device.Statistic->Physics.End	();
+	Device->Statistic->Physics.End	();
 
 	STOP_PROFILE
 }

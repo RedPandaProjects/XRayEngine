@@ -190,7 +190,7 @@ void CArtefact::UpdateCL		()
 	inherited::UpdateCL			();
 	
 	if (o_fastmode || m_activationObj)
-		UpdateWorkload			(Device.dwTimeDelta);	
+		UpdateWorkload			(Device->dwTimeDelta);	
 }
 
 void CArtefact::UpdateWorkload		(u32 dt) 
@@ -226,8 +226,8 @@ void CArtefact::shedule_Update		(u32 dt)
 	if (H_Parent())			o_switch_2_slow	();
 	else					{
 		Fvector	center;			Center(center);
-		BOOL	rendering		= (Device.dwFrame==o_render_frame);
-		float	cam_distance	= Device.vCameraPosition.distance_to(center)-Radius();
+		BOOL	rendering		= (Device->dwFrame==o_render_frame);
+		float	cam_distance	= Device->vCameraPosition.distance_to(center)-Radius();
 		if (rendering || (cam_distance < FASTMODE_DISTANCE))	o_switch_2_fast	();
 		else													o_switch_2_slow	();
 	}
@@ -247,7 +247,7 @@ void CArtefact::StartLights()
 	VERIFY(!ph_world->Processing());
 	if(!m_bLightsEnabled) return;
 
-	//включить световую подсветку от двигателя
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	m_pTrailLight->set_color(m_TrailLightColor.r, 
 		m_TrailLightColor.g, 
 		m_TrailLightColor.b);
@@ -305,9 +305,9 @@ void CArtefact::Show()
 #include "Entity_alive.h"
 void CArtefact::UpdateXForm()
 {
-	if (Device.dwFrame!=dwXF_Frame)
+	if (Device->dwFrame!=dwXF_Frame)
 	{
-		dwXF_Frame			= Device.dwFrame;
+		dwXF_Frame			= Device->dwFrame;
 
 		if (0==H_Parent())	return;
 
@@ -490,7 +490,7 @@ void SArtefactActivation::Start()
 void SArtefactActivation::UpdateActivation()
 {
 	VERIFY(!ph_world->Processing());
-	m_cur_state_time				+=	Device.fTimeDelta;
+	m_cur_state_time				+=	Device->fTimeDelta;
 	if(m_cur_state_time				>=	m_activation_states[int(m_cur_activation_state)].m_time){
 		m_cur_activation_state		=	(EActivationStates)(int)(m_cur_activation_state+1);
 		
@@ -602,7 +602,7 @@ void SArtefactActivation::SpawnAnomaly()
 		Level().Send				(P,net_flags(TRUE));
 		F_entity_Destroy			(object);
 //. #ifdef DEBUG
-		Msg("artefact [%s] spawned a zone [%s] at [%f]", *m_af->cName(), zone_sect, Device.fTimeGlobal);
+		Msg("artefact [%s] spawned a zone [%s] at [%f]", *m_af->cName(), zone_sect, Device->fTimeGlobal);
 //. #endif
 }
 

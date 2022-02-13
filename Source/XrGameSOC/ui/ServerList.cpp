@@ -78,7 +78,7 @@ void CServerList::Update()
 	
 //	if (m_GSBrowser) m_GSBrowser->Update();
 	
-	if (m_need_refresh_fr<Device.dwFrame+10)
+	if (m_need_refresh_fr<Device->dwFrame+10)
 		RefreshList_internal();
 
 	if (m_bAnimation)
@@ -595,7 +595,7 @@ void	CServerList::UpdateServerInList(ServerInfo* pServerInfo, CUIListItemServer*
 
 void	CServerList::RefreshList()
 {
-	m_need_refresh_fr	= Device.dwFrame;
+	m_need_refresh_fr	= Device->dwFrame;
 }
 
 void	CServerList::RefreshList_internal()

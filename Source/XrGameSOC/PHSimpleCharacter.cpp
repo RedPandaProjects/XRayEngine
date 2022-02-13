@@ -866,7 +866,7 @@ bool CPHSimpleCharacter::ValidateWalkOnMesh()
 	CDB::RESULT*    R_end          = XRC.r_end();
 	for (CDB::RESULT* Res=R_begin; Res!=R_end; ++Res)
 	{
-		SGameMtl* m =  GMLib.GetMaterialByIdx(Res->material);
+		SGameMtl* m =  GameMaterialLibrary->GetMaterialByIdx(Res->material);
 		if(m->Flags.test(SGameMtl::flPassable))continue;
 		//CDB::TRI* T = T_array + Res->id;
 		Point vertices[3]={Point((dReal*)&Res->verts[0]),Point((dReal*)&Res->verts[1]),Point((dReal*)&Res->verts[2])};
@@ -899,7 +899,7 @@ bool CPHSimpleCharacter::ValidateWalkOnMesh()
 	for (CDB::RESULT* Res=R_begin; Res!=R_end; ++Res)
 	{
 		//CDB::TRI* T = T_array + Res->id;
-		SGameMtl* m =  GMLib.GetMaterialByIdx(Res->material);
+		SGameMtl* m =  GameMaterialLibrary->GetMaterialByIdx(Res->material);
 		if(m->Flags.test(SGameMtl::flPassable))continue;
 		Point vertices[3]={Point((dReal*)&Res->verts[0]),Point((dReal*)&Res->verts[1]),Point((dReal*)&Res->verts[2])};
 		if(__aabb_tri(Point((float*)&center),Point((float*)&AABB),vertices)){
@@ -1409,10 +1409,10 @@ void CPHSimpleCharacter::InitContact(dContact* c,bool	&do_collide,u16 material_i
 	const dGeomID g2=c->geom.g2;
 	bool bo1=(g1==m_wheel)||g1==m_cap_transform||g1==m_shell_transform||g1==m_hat_transform;
 
-	//SGameMtl* tri_material=GMLib.GetMaterialByIdx((u16)c->surface.mode);
+	//SGameMtl* tri_material=GameMaterialLibrary->GetMaterialByIdx((u16)c->surface.mode);
 	
 	u16			contact_material=bo1	? material_idx_2:material_idx_1;
-	SGameMtl* tri_material=GMLib.GetMaterialByIdx(contact_material);
+	SGameMtl* tri_material=GameMaterialLibrary->GetMaterialByIdx(contact_material);
 
 	bool bClimable=!!tri_material->Flags.test(SGameMtl::flClimable);
 	if(is_control&&m_elevator_state.ClimbingState())
@@ -1442,7 +1442,7 @@ void CPHSimpleCharacter::InitContact(dContact* c,bool	&do_collide,u16 material_i
 	b_on_object=b_on_object||object;
 	
 	
-////////////////////////нужно сместить колижен!!
+////////////////////////пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ!!
 //////////////
 	FootProcess(c,do_collide,bo1);
 	if(!do_collide) return;
@@ -1744,11 +1744,10 @@ void CPHSimpleCharacter::GetSmothedVelocity(Fvector& vvel)
 }
 ALife::EHitType	CPHSimpleCharacter:: HitType	()const	
 {
-	if(GMLib.GetMaterialByIdx(LastMaterialIDX())->Flags.test(SGameMtl::flInjurious)&&IsGameTypeSingle())
+	if(GameMaterialLibrary->GetMaterialByIdx(LastMaterialIDX())->Flags.test(SGameMtl::flInjurious)&&IsGameTypeSingle())
 		return ALife::eHitTypeRadiation;
 	else									
-//		return ALife::eHitTypeStrike;
-	return (GameID() == GAME_SINGLE) ? ALife::eHitTypeStrike : ALife::eHitTypePhysicStrike;
+		return ALife::eHitTypeStrike;
 }//
 CElevatorState*	CPHSimpleCharacter::ElevatorState()
 {

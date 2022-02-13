@@ -149,7 +149,7 @@ void CUIMainIngameWnd::Init()
 
 	UIWeaponIcon.Enable			(false);
 
-	//индикаторы 
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 
 	UIZoneMap->Init				();
 	UIZoneMap->SetScale			(DEFAULT_MAP_SCALE);
 
@@ -160,19 +160,19 @@ void CUIMainIngameWnd::Init()
 	}
 
 
-	//Полоса прогресса здоровья
+	//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	UIStaticHealth.AttachChild	(&UIHealthBar);
 //.	xml_init.InitAutoStaticGroup(uiXml,"static_health", &UIStaticHealth);
 	xml_init.InitProgressBar	(uiXml, "progress_bar_health", 0, &UIHealthBar);
 
-	//Полоса прогресса армора
+	//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	UIStaticArmor.AttachChild	(&UIArmorBar);
 //.	xml_init.InitAutoStaticGroup(uiXml,"static_armor", &UIStaticArmor);
 	xml_init.InitProgressBar	(uiXml, "progress_bar_armor", 0, &UIArmorBar);
 
 	
 
-	// Подсказки, которые возникают при наведении прицела на объект
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	AttachChild					(&UIStaticQuickHelp);
 	xml_init.InitStatic			(uiXml, "quick_info", 0, &UIStaticQuickHelp);
 
@@ -182,7 +182,7 @@ void CUIMainIngameWnd::Init()
 	xml_init.InitScrollView		(uiXml, "icons_scroll_view", 0, m_UIIcons);
 	AttachChild					(m_UIIcons);
 
-	// Загружаем иконки 
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ 
 	if(IsGameTypeSingle())
 	{
 		xml_init.InitStatic		(uiXml, "starvation_static", 0, &UIStarvationIcon);
@@ -220,11 +220,11 @@ void CUIMainIngameWnd::Init()
 		"invincible"
 	};
 
-	// Загружаем пороговые значения для индикаторов
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	EWarningIcons j = ewiWeaponJammed;
 	while (j < ewiInvincible)
 	{
-		// Читаем данные порогов для каждого индикатора
+		// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		shared_str cfgRecord = pSettings->r_string("main_ingame_indicators_thresholds", *warningStrings[static_cast<int>(j) - 1]);
 		u32 count = _GetItemCount(*cfgRecord);
 
@@ -279,11 +279,11 @@ void CUIMainIngameWnd::Draw()
 #endif
 	// show IO icon
 	bool IOActive	= (FS.dwOpenCounter>0);
-	if	(IOActive)	UIStaticDiskIO_start_time = Device.fTimeGlobal;
+	if	(IOActive)	UIStaticDiskIO_start_time = Device->fTimeGlobal;
 
-	if ((UIStaticDiskIO_start_time+1.0f) < Device.fTimeGlobal)	UIStaticDiskIO.Show(false); 
+	if ((UIStaticDiskIO_start_time+1.0f) < Device->fTimeGlobal)	UIStaticDiskIO.Show(false); 
 	else {
-		u32		alpha			= clampr(iFloor(255.f*(1.f-(Device.fTimeGlobal-UIStaticDiskIO_start_time)/1.f)),0,255);
+		u32		alpha			= clampr(iFloor(255.f*(1.f-(Device->fTimeGlobal-UIStaticDiskIO_start_time)/1.f)),0,255);
 		UIStaticDiskIO.Show		( true  ); 
 		UIStaticDiskIO.SetColor	(color_rgba(255,255,255,alpha));
 	}
@@ -377,7 +377,7 @@ void CUIMainIngameWnd::Update()
 		return;
 	}
 
-	if( !(Device.dwFrame%30) && IsGameTypeSingle() )
+	if( !(Device->dwFrame%30) && IsGameTypeSingle() )
 	{
 			string256				text_str;
 			CPda* _pda	= m_pActor->GetPDA();
@@ -393,10 +393,10 @@ void CUIMainIngameWnd::Update()
 			}
 	};
 
-	if( !(Device.dwFrame%5) )
+	if( !(Device->dwFrame%5) )
 	{
 
-		if(!(Device.dwFrame%30))
+		if(!(Device->dwFrame%30))
 		{
 			bool b_God = (GodMode()||(!Game().local_player)) ? true : Game().local_player->testFlag(GAME_PLAYER_FLAG_INVINCIBLE);
 			if(b_God)
@@ -405,7 +405,7 @@ void CUIMainIngameWnd::Update()
 				SetWarningIconColor	(ewiInvincible,0x00ffffff);
 		}
 		// ewiArtefact
-		if( (GameID() == GAME_ARTEFACTHUNT) && !(Device.dwFrame%30) ){
+		if( (GameID() == GAME_ARTEFACTHUNT) && !(Device->dwFrame%30) ){
 			bool b_Artefact = (NULL != m_pActor->inventory().ItemFromSlot(ARTEFACT_SLOT));
 			if(b_Artefact)
 				SetWarningIconColor	(ewiArtefact,0xffffffff);
@@ -460,14 +460,14 @@ void CUIMainIngameWnd::Update()
 
 			xr_vector<float>::reverse_iterator	rit;
 
-			// Сначала проверяем на точное соответсвие
+			// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 			rit  = std::find(m_Thresholds[i].rbegin(), m_Thresholds[i].rend(), value);
 
-			// Если его нет, то берем последнее меньшее значение ()
+			// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ()
 			if (rit == m_Thresholds[i].rend())
 				rit = std::find_if(m_Thresholds[i].rbegin(), m_Thresholds[i].rend(), std::bind2nd(std::less<float>(), value));
 
-			// Минимальное и максимальное значения границы
+			// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 			float min = m_Thresholds[i].front();
 			float max = m_Thresholds[i].back();
 
@@ -487,9 +487,9 @@ void CUIMainIngameWnd::Update()
 	UIHealthBar.SetProgressPos		(m_pActor->GetfHealth()*100.0f);
 	UIMotionIcon.SetPower			(m_pActor->conditions().GetPower()*100.0f);
 
-	UIZoneMap->UpdateRadar			(Device.vCameraPosition);
+	UIZoneMap->UpdateRadar			(Device->vCameraPosition);
 	float h,p;
-	Device.vCameraDirection.getHP	(h,p);
+	Device->vCameraDirection.getHP	(h,p);
 	UIZoneMap->SetHeading			(-h);
 
 	UpdatePickUpItem				();
@@ -501,7 +501,7 @@ bool CUIMainIngameWnd::OnKeyboardPress(int dik)
 #if 0//def DEBUG
 	test_key(dik);
 #endif
-	// поддержка режима adjust hud mode
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ adjust hud mode
 	bool flag = false;
 	if (g_bHudAdjustMode)
 	{
@@ -960,7 +960,7 @@ void CUIMainIngameWnd::SetWarningIconColor(EWarningIcons icon, const u32 cl)
 {
 	bool bMagicFlag = true;
 
-	// Задаем цвет требуемой иконки
+	// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	switch(icon)
 	{
 	case ewiAll:
@@ -1001,7 +1001,7 @@ void CUIMainIngameWnd::TurnOffWarningIcon(EWarningIcons icon)
 
 void CUIMainIngameWnd::SetFlashIconState_(EFlashingIcons type, bool enable)
 {
-	// Включаем анимацию требуемой иконки
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	FlashingIcons_it icon = m_FlashingIcons.find(type);
 	R_ASSERT2(icon != m_FlashingIcons.end(), "Flashing icon with this type not existed");
 	icon->second->Show(enable);
@@ -1014,14 +1014,14 @@ void CUIMainIngameWnd::InitFlashingIcons(CUIXml* node)
 
 	CUIXmlInit xml_init;
 	CUIStatic *pIcon = NULL;
-	// Пробегаемся по всем нодам и инициализируем из них статики
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	for (int i = 0; i < staticsCount; ++i)
 	{
 		pIcon = xr_new<CUIStatic>();
 		xml_init.InitStatic(*node, flashingIconNodeName, i, pIcon);
 		shared_str iconType = node->ReadAttrib(flashingIconNodeName, i, "type", "none");
 
-		// Теперь запоминаем иконку и ее тип
+		// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ пїЅпїЅпїЅ
 		EFlashingIcons type = efiPdaTask;
 
 		if		(iconType == "pda")		type = efiPdaTask;

@@ -150,11 +150,11 @@ u32 get_time_minutes()
 	return			mins;
 }
 
-float cover_in_direction(u32 level_vertex_id, const Fvector &direction)
+float high_cover_in_direction(u32 level_vertex_id, const Fvector &direction)
 {
 	float			y,p;
 	direction.getHP	(y,p);
-	return			(ai().level_graph().cover_in_direction(y,level_vertex_id));
+	return			(ai().level_graph().high_cover_in_direction(y,level_vertex_id));
 }
 
 float rain_factor()
@@ -559,7 +559,7 @@ void CLevel::script_register(lua_State *L)
 		def("get_time_hours",					get_time_hours),
 		def("get_time_minutes",					get_time_minutes),
 
-		def("cover_in_direction",				cover_in_direction),
+		def("high_cover_in_direction",				high_cover_in_direction),
 		def("vertex_in_direction",				vertex_in_direction),
 		def("rain_factor",						rain_factor),
 		def("patrol_path_exists",				patrol_path_exists),

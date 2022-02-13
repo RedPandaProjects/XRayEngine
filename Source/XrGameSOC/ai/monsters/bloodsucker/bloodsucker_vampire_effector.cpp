@@ -72,12 +72,12 @@ CVampireCameraEffector::CVampireCameraEffector(float time, const Fvector &src, c
 
 BOOL CVampireCameraEffector::Process(Fvector &p, Fvector &d, Fvector &n, float& fFov, float& fFar, float& fAspect)
 {
-	fLifeTime -= Device.fTimeDelta; if(fLifeTime<0) return FALSE;
+	fLifeTime -= Device->fTimeDelta; if(fLifeTime<0) return FALSE;
 
-	// процент оставшегося времени
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	float time_left_perc = fLifeTime / m_time_total;
 
-	// Инициализация
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	Fmatrix	Mdef;
 	Mdef.identity		();
 	Mdef.j.set			(n);
@@ -101,28 +101,28 @@ BOOL CVampireCameraEffector::Process(Fvector &p, Fvector &d, Fvector &n, float& 
 		dangle_target.y = 0.f;
 		dangle_target.z = 0.f;
 
-		angle_lerp(dangle_current.x, dangle_target.x, _abs(dangle_current.x / fLifeTime + 0.001f), Device.fTimeDelta);
-		angle_lerp(dangle_current.y, dangle_target.y, _abs(dangle_current.y / fLifeTime + 0.001f), Device.fTimeDelta);
-		angle_lerp(dangle_current.z, dangle_target.z, _abs(dangle_current.z / fLifeTime + 0.001f), Device.fTimeDelta);
+		angle_lerp(dangle_current.x, dangle_target.x, _abs(dangle_current.x / fLifeTime + 0.001f), Device->fTimeDelta);
+		angle_lerp(dangle_current.y, dangle_target.y, _abs(dangle_current.y / fLifeTime + 0.001f), Device->fTimeDelta);
+		angle_lerp(dangle_current.z, dangle_target.z, _abs(dangle_current.z / fLifeTime + 0.001f), Device->fTimeDelta);
 
 	} else {
 		
-		if (angle_lerp(dangle_current.x, dangle_target.x, ANGLE_SPEED, Device.fTimeDelta)) {
+		if (angle_lerp(dangle_current.x, dangle_target.x, ANGLE_SPEED, Device->fTimeDelta)) {
 			dangle_target.x = Random.randFs(DELTA_ANGLE_X);
 		}
 
-		if (angle_lerp(dangle_current.y, dangle_target.y, ANGLE_SPEED, Device.fTimeDelta)) {
+		if (angle_lerp(dangle_current.y, dangle_target.y, ANGLE_SPEED, Device->fTimeDelta)) {
 			dangle_target.y = Random.randFs(DELTA_ANGLE_Y);
 		}
 
-		if (angle_lerp(dangle_current.z, dangle_target.z, ANGLE_SPEED, Device.fTimeDelta)) {
+		if (angle_lerp(dangle_current.z, dangle_target.z, ANGLE_SPEED, Device->fTimeDelta)) {
 			dangle_target.z = Random.randFs(DELTA_ANGLE_Z);
 		}
 	}
 
 	//////////////////////////////////////////////////////////////////////////
 
-	// Установить углы смещения
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	Fmatrix		R;
 	R.setHPB	(dangle_current.x,dangle_current.y,dangle_current.z);
 

@@ -20,7 +20,7 @@ void CStateBurerAttackRunAroundAbstract::initialize()
 {
 	inherited::initialize		();
 
-	time_started				= Device.dwTimeGlobal;
+	time_started				= Device->dwTimeGlobal;
 	dest_direction.set			(0.f,0.f,0.f);
 
 	// select point
@@ -33,13 +33,13 @@ void CStateBurerAttackRunAroundAbstract::initialize()
 
 	float dist = object->Position().distance_to(object->EnemyMan.get_enemy()->Position());
 
-	if (dist > 30.f) {							// бежать к врагу
+	if (dist > 30.f) {							// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ
 		selected_point.mad(object->Position(),dir_to_enemy,DIST_QUANT);
-	} else if ((dist < 20.f) && (dist > 4.f)) {	// убегать от врага
+	} else if ((dist < 20.f) && (dist > 4.f)) {	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 		selected_point.mad(object->Position(),dir_from_enemy,DIST_QUANT);
 		dest_direction.sub			(object->EnemyMan.get_enemy()->Position(),selected_point);
 		dest_direction.normalize	();
-	} else {											// выбрать случайную позицию
+	} else {											// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		selected_point = random_position(object->Position(), DIST_QUANT);
 		dest_direction.sub			(object->EnemyMan.get_enemy()->Position(),selected_point);
 		dest_direction.normalize	();
@@ -75,7 +75,7 @@ bool CStateBurerAttackRunAroundAbstract::check_start_conditions()
 TEMPLATE_SPECIALIZATION
 bool CStateBurerAttackRunAroundAbstract::check_completion()
 {
-	if ((time_started + TIME_RUN_AWAY < Device.dwTimeGlobal) || 
+	if ((time_started + TIME_RUN_AWAY < Device->dwTimeGlobal) || 
 		(object->control().path_builder().is_moving_on_path() && object->control().path_builder().is_path_end(2.f))) {
 
 		object->dir().face_target(object->EnemyMan.get_enemy());

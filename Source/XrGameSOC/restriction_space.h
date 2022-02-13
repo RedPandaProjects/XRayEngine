@@ -19,7 +19,7 @@ namespace RestrictionSpace {
 		template <typename T>
 		IC	void	_release		(T*object)
 		{
-			m_last_time_dec = Device.dwTimeGlobal;
+			m_last_time_dec = Device->dwTimeGlobal;
 		}
 	};
 

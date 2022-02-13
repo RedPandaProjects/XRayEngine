@@ -70,7 +70,7 @@ static bool RemovePred(CTelekineticObject *tele_object)
 
 void CTeleWhirlwind::clear_notrelevant()
 {
-	//убрать все объеты со старыми параметрами
+	//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	objects.erase	(
 		std::remove_if(
 			objects.begin(),
@@ -120,7 +120,7 @@ bool		CTeleWhirlwindObject::		init(CTelekinesis* tele,CPhysicsShellHolder *obj, 
 void		CTeleWhirlwindObject::		raise_update			()
 {
 	
-	//u32 time=Device.dwTimeGlobal;
+	//u32 time=Device->dwTimeGlobal;
 //	if (time_raise_started + 100000 < time) release();
 	
 }
@@ -135,7 +135,7 @@ void		CTeleWhirlwindObject::		release					()
 	float magnitude	= dir_inv.magnitude();
 	
 
-	// включить гравитацию 
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 
 	//Fvector zer;zer.set(0,0,0);
 	//object->m_pPhysicsShell->set_LinearVel(zer);
 	object->m_pPhysicsShell->set_ApplyByGravity(TRUE);

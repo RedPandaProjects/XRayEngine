@@ -172,14 +172,14 @@ void CTorch::UpdateSwitchNightVision   ()
 
 	/*if(m_bNightVisionOn)
 	{
-		m_NightVisionChargeTime			-= Device.fTimeDelta;
+		m_NightVisionChargeTime			-= Device->fTimeDelta;
 
 		if(m_NightVisionChargeTime<0.f)
 			SwitchNightVision(false);
 	}
 	else
 	{
-		m_NightVisionChargeTime			+= Device.fTimeDelta;
+		m_NightVisionChargeTime			+= Device->fTimeDelta;
 		clamp(m_NightVisionChargeTime, 0.f, m_NightVisionRechargeTime);
 	}*/
 }
@@ -256,7 +256,7 @@ BOOL CTorch::net_Spawn(CSE_Abstract* DC)
 	glow_render->set_color	(clr);
 	glow_render->set_radius	(pUserData->r_float					("torch_definition","glow_radius"));
 
-	//включить/выключить фонарик
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	Switch					(torch->m_active);
 	VERIFY					(!torch->m_active || (torch->ID_Parent != 0xffff));
 	
@@ -312,7 +312,7 @@ void CTorch::UpdateCL()
 		CActor*			actor = smart_cast<CActor*>(H_Parent());
 		if (actor)		smart_cast<IKinematics*>(H_Parent()->Visual())->CalculateBones_Invalidate	();
 
-		if (H_Parent()->XFORM().c.distance_to_sqr(Device.vCameraPosition)<_sqr(OPTIMIZATION_DISTANCE) || GameID() != GAME_SINGLE) {
+		if (H_Parent()->XFORM().c.distance_to_sqr(Device->vCameraPosition)<_sqr(OPTIMIZATION_DISTANCE) || GameID() != GAME_SINGLE) {
 			// near camera
 			smart_cast<IKinematics*>(H_Parent()->Visual())->CalculateBones	();
 			M.mul_43				(XFORM(),BI.mTransform);
@@ -325,8 +325,8 @@ void CTorch::UpdateCL()
 
 		if (actor) 
 		{
-			m_prev_hp.x		= angle_inertion_var(m_prev_hp.x,-actor->cam_FirstEye()->yaw,TORCH_INERTION_SPEED_MIN,TORCH_INERTION_SPEED_MAX,TORCH_INERTION_CLAMP,Device.fTimeDelta);
-			m_prev_hp.y		= angle_inertion_var(m_prev_hp.y,-actor->cam_FirstEye()->pitch,TORCH_INERTION_SPEED_MIN,TORCH_INERTION_SPEED_MAX,TORCH_INERTION_CLAMP,Device.fTimeDelta);
+			m_prev_hp.x		= angle_inertion_var(m_prev_hp.x,-actor->cam_FirstEye()->yaw,TORCH_INERTION_SPEED_MIN,TORCH_INERTION_SPEED_MAX,TORCH_INERTION_CLAMP,Device->fTimeDelta);
+			m_prev_hp.y		= angle_inertion_var(m_prev_hp.y,-actor->cam_FirstEye()->pitch,TORCH_INERTION_SPEED_MIN,TORCH_INERTION_SPEED_MAX,TORCH_INERTION_CLAMP,Device->fTimeDelta);
 
 			Fvector			dir,right,up;	
 			dir.setHP		(m_prev_hp.x+m_delta_h,m_prev_hp.y);
@@ -397,7 +397,7 @@ void CTorch::UpdateCL()
 //			glow_render->set_position	(M.c);
 //			glow_render->set_direction	(M.k);
 //
-//			time2hide					-= Device.fTimeDelta;
+//			time2hide					-= Device->fTimeDelta;
 //			if (time2hide<0)
 			{
 				m_switched_on			= false;
@@ -414,8 +414,8 @@ void CTorch::UpdateCL()
 	if (!lanim)							return;
 
 	int						frame;
-	// возвращает в формате BGR
-	u32 clr					= lanim->CalculateBGR(Device.fTimeGlobal,frame); 
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ BGR
+	u32 clr					= lanim->CalculateBGR(Device->fTimeGlobal,frame); 
 
 	Fcolor					fclr;
 	fclr.set				((float)color_get_B(clr),(float)color_get_G(clr),(float)color_get_R(clr),1.f);

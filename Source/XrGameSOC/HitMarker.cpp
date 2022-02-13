@@ -34,7 +34,7 @@ const static float fShowTime = 0.5f;
 void CHitMarker::Render()
 {
 	float h1,p1;
-	Device.vCameraDirection.getHP	(h1,p1);
+	Device->vCameraDirection.getHP	(h1,p1);
 
 	while( m_HitMarks.size() && !m_HitMarks.front()->IsActive() ){
 		xr_delete	( m_HitMarks.front() );
@@ -61,7 +61,7 @@ void CHitMarker::Hit(int id, const Fvector& dir){
 
 SHitMark::SHitMark		(const ui_shader& sh, const Fvector& dir)
 {
-	m_StartTime							= Device.fTimeGlobal;
+	m_StartTime							= Device->fTimeGlobal;
 	m_lanim								= LALib.FindItem("hud_hit_mark");
 	m_HitDirection						= dir.getH();
 	m_UIStaticItem						= xr_new<CUIStaticItem>();
@@ -73,7 +73,7 @@ SHitMark::SHitMark		(const ui_shader& sh, const Fvector& dir)
 void SHitMark::UpdateAnim	()
 {
 	int frame;
-	u32 clr			= m_lanim->CalculateRGB(Device.fTimeGlobal-m_StartTime,frame);
+	u32 clr			= m_lanim->CalculateRGB(Device->fTimeGlobal-m_StartTime,frame);
 	m_UIStaticItem->SetColor		(subst_alpha(m_UIStaticItem->GetColor(), color_get_A(clr)));
 }
 
@@ -84,7 +84,7 @@ SHitMark::~SHitMark		()
 
 bool	SHitMark::IsActive()
 {
-	return ((Device.fTimeGlobal-m_StartTime) < m_lanim->Length_sec());
+	return ((Device->fTimeGlobal-m_StartTime) < m_lanim->Length_sec());
 }
 
 void	SHitMark::Draw(float cam_dir)

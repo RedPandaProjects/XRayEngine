@@ -118,7 +118,7 @@ void CPHElement::			build	(){
 void CPHElement::RunSimulation()
 {
 	//if(push_untill)
-		//push_untill+=Device.dwTimeGlobal;
+		//push_untill+=Device->dwTimeGlobal;
 
 	if(m_group)
 		dSpaceAdd(m_shell->dSpace(),(dGeomID)m_group);
@@ -749,7 +749,7 @@ void CPHElement::StataticRootBonesCallBack(CBoneInstance* B)
 		VERIFY(_valid(B->mTransform));
 		VERIFY(!m_shell->dSpace()->lock_count);
 		mXFORM.set(B->mTransform);
-		//m_start_time=Device.fTimeGlobal;
+		//m_start_time=Device->fTimeGlobal;
 		Fmatrix global_transform;
 		//if(m_parent_element)
 		global_transform.mul_43(m_shell->mXFORM,mXFORM);
@@ -1413,7 +1413,7 @@ void CPHElement::PresetActive()
 
 	CBoneInstance& B=m_shell->PKinematics()->LL_GetBoneInstance(m_SelfID);
 	mXFORM.set(B.mTransform);
-	//m_start_time=Device.fTimeGlobal;
+	//m_start_time=Device->fTimeGlobal;
 	Fmatrix global_transform;
 	global_transform.mul_43(m_shell->mXFORM, mXFORM);
 	SetTransform(global_transform);

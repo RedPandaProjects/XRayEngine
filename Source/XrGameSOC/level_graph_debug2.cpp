@@ -81,13 +81,13 @@ void CLevelGraph::draw_nodes	()
 	DRender->SetShader(sh_debug);
 	F->SetColor			(color_rgba(255,255,255,255));
 
-	// если включён ai_dbg_frustum раскрасить ноды по light
-	// иначе раскрашивать по cover
+	// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ ai_dbg_frustum пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ light
+	// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ cover
 	bool			b_light = false;
 	
 	//////////////////////////////////////////////////////////////////////////
 	Fvector min_position,max_position;
-	max_position = min_position = Device.vCameraPosition;
+	max_position = min_position = Device->vCameraPosition;
 	min_position.sub(30.f);
 	max_position.add(30.f);
 	
@@ -114,13 +114,12 @@ void CLevelGraph::draw_nodes	()
 
 		u32 Nid			= vertex_id(I);
 
-		if (Device.vCameraPosition.distance_to(PC)>30) continue;
+		if (Device->vCameraPosition.distance_to(PC)>30) continue;
 
 		float			sr	= header().cell_size();
 		if (::Render->ViewBase.testSphere_dirty(PC,sr)) {
 			
-			u32	LL = ((b_light) ?	iFloor(float(N.light())/15.f*255.f) : 
-									iFloor(vertex_cover(I)/4*255.f));
+			u32	LL = 255;
 			
 			u32	CC		= color_xrgb(0,0,255);
 			u32	CT		= color_xrgb(LL,LL,LL);
@@ -158,7 +157,7 @@ void CLevelGraph::draw_nodes	()
 				Fvector		T;
 				Fvector4	S;
 				T.set		(PC); T.y+=0.3f;
-				Device.mFullTransform.transform	(S,T);
+				Device->mFullTransform.transform	(S,T);
 				if (S.z < 0 || S.z < 0)												continue;
 				if (S.x < -1.f || S.x > 1.f || S.y<-1.f || S.x>1.f)					continue;
 				F->SetHeightI	(0.05f/_sqrt(_abs(S.w)));
@@ -223,7 +222,7 @@ void CLevelGraph::draw_covers	()
 	float					half_size = ai().level_graph().header().cell_size()*.5f;
 	xr_vector<CCoverPoint*>	nearest;
 	nearest.reserve			(1000);
-	ai().cover_manager().covers().nearest(Device.vCameraPosition,5.f,nearest);
+	ai().cover_manager().covers().nearest(Device->vCameraPosition,5.f,nearest);
 	xr_vector<CCoverPoint*>::const_iterator	I = nearest.begin();
 	xr_vector<CCoverPoint*>::const_iterator	E = nearest.end();
 	for ( ; I != E; ++I) {
@@ -236,33 +235,33 @@ void CLevelGraph::draw_covers	()
 		float				best_value = -1.f;
 		u32 j = 0;
 		for (u32 i=0; i<36; ++i) {
-			float				value = cover_in_direction(float(10*i)/180.f*PI,v);
+			float				value = high_cover_in_direction(float(10*i)/180.f*PI,v);
 			direction.setHP		(float(10*i)/180.f*PI,0);
 			direction.normalize	();
 			direction.mul		(value*half_size);
 			direction.add		(position);
 			direction.y			= position.y;
 			Level().debug_renderer().draw_line(Fidentity,position,direction,color_xrgb(0,0,255));
-			value				= compute_square(float(10*i)/180.f*PI,PI/2.f,v);
+			value				= compute_high_square(float(10*i)/180.f*PI,PI/2.f,v);
 			if (value > best_value) {
 				best_value		= value;
 				j				= i;
 			}
 		}
 
-		direction.set		(position.x - half_size*float(v->cover(0))/15.f,position.y,position.z);
+		direction.set		(position.x - half_size*float(v->high_cover(0))/15.f,position.y,position.z);
 		Level().debug_renderer().draw_line(Fidentity,position,direction,color_xrgb(255,0,0));
 
-		direction.set		(position.x,position.y,position.z + half_size*float(v->cover(1))/15.f);
+		direction.set		(position.x,position.y,position.z + half_size*float(v->high_cover(1))/15.f);
 		Level().debug_renderer().draw_line(Fidentity,position,direction,color_xrgb(255,0,0));
 
-		direction.set		(position.x + half_size*float(v->cover(2))/15.f,position.y,position.z);
+		direction.set		(position.x + half_size*float(v->high_cover(2))/15.f,position.y,position.z);
 		Level().debug_renderer().draw_line(Fidentity,position,direction,color_xrgb(255,0,0));
 
-		direction.set		(position.x,position.y,position.z - half_size*float(v->cover(3))/15.f);
+		direction.set		(position.x,position.y,position.z - half_size*float(v->high_cover(3))/15.f);
 		Level().debug_renderer().draw_line(Fidentity,position,direction,color_xrgb(255,0,0));
 
-		float				value = cover_in_direction(float(10*j)/180.f*PI,v);
+		float				value = high_cover_in_direction(float(10*j)/180.f*PI,v);
 		direction.setHP		(float(10*j)/180.f*PI,0);
 		direction.normalize	();
 		direction.mul		(value*half_size);

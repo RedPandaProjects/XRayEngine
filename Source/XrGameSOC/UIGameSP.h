@@ -2,7 +2,7 @@
 #include "uigamecustom.h"
 #include "ui/UIDialogWnd.h"
 #include "../XrCore/net_utils.h"
-#include "game_graph_space.h"
+#include "../XrEngine/game_graph_space.h"
 
 class CUIInventoryWnd;
 class CUITradeWnd;			

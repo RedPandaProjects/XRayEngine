@@ -9,45 +9,45 @@
 class CUIAnimatedStatic: public CUIStatic
 {
 	typedef CUIStatic inherited;
-	// Количекство кадров анимации
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	u32		m_uFrameCount;
-	// Текущий фрейм
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	u32		m_uCurFrame;
-	// Размеры текстуры с анимацией в кадрах
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	u32		m_uAnimRows, m_uAnimCols;
-	// Размеры кадра на тектуре
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	u32		m_uFrameWidth, m_uFrameHeight;
-	// Время показа всей анимации в ms.
+	// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ ms.
 	u32		m_uAnimationDuration;
-	// Время прошедшее с начала анимации
+	// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	u32		m_uTimeElapsed;
-	// флаг-признак необходимости пересчета статичных параметров анимации
+	// пїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	bool	m_bParamsChanged;
-	// Признак проигрывания анимации
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	bool	m_bPlaying;
 
 	Fvector2 m_pos;
 
 	u32		m_prevTime;
 
-	// Инициализация первого кадра
-	// Params:	frameNum	- номер кадра: [0..m_uFrameCount)
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+	// Params:	frameNum	- пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ: [0..m_uFrameCount)
 	void SetFrame(const u32 frameNum);
 public:
 	CUIAnimatedStatic();
 	
-	// Устанавливаем параметры
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	void SetOffset(float x, float y)					{m_pos.set(x,y);};
 	void SetFramesCount(u32 frameCnt)					{ m_uFrameCount = frameCnt; m_bParamsChanged = true; }
 	void SetAnimCols(u32 animCols)						{ m_uAnimCols = animCols; m_bParamsChanged = true; }
 	void SetAnimationDuration(u32 animDur)				{ m_uAnimationDuration = animDur; m_bParamsChanged = true; }
 	void SetFrameDimentions(u32 frameW, u32 frameH)		{ m_uFrameHeight = frameH; m_uFrameWidth = frameW; m_bParamsChanged = true; }
-	// Управление
-	void Play()											{ m_bPlaying = true; m_prevTime = Device.dwTimeContinual;}
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	void Play()											{ m_bPlaying = true; m_prevTime = Device->dwTimeContinual;}
 	void Stop()											{ m_bPlaying = false; }
 	void Rewind(u32 delta = 0)							{ m_uCurFrame = 0xffffffff; m_uTimeElapsed = delta; }
 	void SetAnimPos(float pos);
-	// Флаг-признак циклического проигрывания
+	// пїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	bool m_bCyclic;
 
 	virtual void Update();

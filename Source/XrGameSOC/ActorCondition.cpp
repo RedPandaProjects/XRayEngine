@@ -14,7 +14,7 @@
 #include "game_object_space.h"
 #include "ui\UIVideoPlayerWnd.h"
 #include "script_callback_ex.h"
-#include "object_broker.h"
+#include "../XrEngine/object_broker.h"
 #include "weapon.h"
 
 #define MAX_SATIETY					1.0f
@@ -68,7 +68,7 @@ void CActorCondition::LoadCondition(LPCSTR entity_section)
 	m_fAccelK					= pSettings->r_float(section,"accel_k");
 	m_fSprintK					= pSettings->r_float(section,"sprint_k");
 
-	//порог силы и здоровья меньше которого актер начинает хромать
+	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	m_fLimpingHealthBegin		= pSettings->r_float(section,	"limping_health_begin");
 	m_fLimpingHealthEnd			= pSettings->r_float(section,	"limping_health_end");
 	R_ASSERT					(m_fLimpingHealthBegin<=m_fLimpingHealthEnd);
@@ -98,7 +98,7 @@ void CActorCondition::LoadCondition(LPCSTR entity_section)
 }
 
 
-//вычисление параметров с ходом времени
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 #include "UI.h"
 #include "HUDManager.h"
 
@@ -202,7 +202,7 @@ void CActorCondition::UpdateSatiety()
 
 	}
 		
-	//сытость увеличивает здоровье только если нет открытых ран
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
 	if(!m_bIsBleeding)
 	{
 		m_fDeltaHealth += CanBeHarmed() ? 
@@ -210,7 +210,7 @@ void CActorCondition::UpdateSatiety()
 					: 0;
 	}
 
-	//коэффициенты уменьшения восстановления силы от сытоти и радиации
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	float radiation_power_k		= 1.f;
 	float satiety_power_k		= 1.f;
 			
@@ -227,7 +227,7 @@ CWound* CActorCondition::ConditionHit(SHit* pHDS)
 	return inherited::ConditionHit(pHDS);
 }
 
-//weight - "удельный" вес от 0..1
+//weight - "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" пїЅпїЅпїЅ пїЅпїЅ 0..1
 void CActorCondition::ConditionJump(float weight)
 {
 	float power			=	m_fJumpPower;

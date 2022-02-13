@@ -8,7 +8,7 @@
 #include "UIDragDropListEx.h"
 #include "UIItemInfo.h"
 
-#include "../object_broker.h"
+#include "../../XrEngine/object_broker.h"
 
 LPCSTR _list_names[]= {
 		"lst_pistol",

@@ -22,7 +22,7 @@
 #include "UIStalkersRankingWnd.h"
 #include "UIActorInfo.h"
 #include "UIEventsWnd.h"
-#include "../object_broker.h"
+#include "../../XrEngine/object_broker.h"
 #include "UIMessagesWindow.h"
 #include "UIMainIngameWnd.h"
 #include "UITabButton.h"
@@ -77,7 +77,7 @@ void CUIPdaWnd::Init()
 	AttachChild				(UIMainPdaFrame);
 	xml_init.InitStatic		(uiXml, "background_static", 0, UIMainPdaFrame);
 
-	//Элементы автоматического добавления
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	xml_init.InitAutoStatic	(uiXml, "auto_static", this);
 
 	// Main buttons background
@@ -90,30 +90,30 @@ void CUIPdaWnd::Init()
 	UIMainPdaFrame->AttachChild(UITimerBackground);
 	xml_init.InitFrameLine	(uiXml, "timer_frame_line", 0, UITimerBackground);
 
-	// Oкно карты
+	// OпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	UIMapWnd				= xr_new<CUIMapWnd>();
 	UIMapWnd->Init			("pda_map.xml","map_wnd");
 
 	if( IsGameTypeSingle() )
 	{
-		// Oкно коммуникaции
+		// OпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅaпїЅпїЅпїЅ
 		UIPdaContactsWnd		= xr_new<CUIPdaContactsWnd>();
 		UIPdaContactsWnd->Init	();
 
 
-		// Oкно новостей
+		// OпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		UIDiaryWnd				= xr_new<CUIDiaryWnd>();
 		UIDiaryWnd->Init		();
 
-		// Окно энциклопедии
+		// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		UIEncyclopediaWnd		= xr_new<CUIEncyclopediaWnd>();
 		UIEncyclopediaWnd->Init	();
 
-		// Окно статистики о актере
+		// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 		UIActorInfo				= xr_new<CUIActorInfoWnd>();
 		UIActorInfo->Init		();
 
-		// Окно рейтинга сталкеров
+		// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		UIStalkersRanking		= xr_new<CUIStalkersRankingWnd>();
 		UIStalkersRanking->Init	();
 

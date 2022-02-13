@@ -16,7 +16,7 @@
 #include "../../artifact.h"
 #include "Xrserver.h"
 #include "../../relation_registry.h"
-#include "../../object_broker.h"
+#include "../../../XrEngine/object_broker.h"
 #include "../../sound_player.h"
 #include "../../level.h"
 #include "../../script_callback_ex.h"
@@ -122,7 +122,7 @@ BOOL CAI_Trader::net_Spawn			(CSE_Abstract* DC)
 	CSE_ALifeTrader			*l_tpTrader = smart_cast<CSE_ALifeTrader*>(e);
 	R_ASSERT				(l_tpTrader);
 
-	//проспавнить PDA у InventoryOwner
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ PDA пїЅ InventoryOwner
 	if (!CInventoryOwner::net_Spawn(DC))
 		return				(FALSE);
 
@@ -134,7 +134,7 @@ BOOL CAI_Trader::net_Spawn			(CSE_Abstract* DC)
 
 	set_money				( l_tpTrader->m_dwMoney, false );
 
-	// Установка callback на кости
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ callback пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	CBoneInstance			*bone_head =	&smart_cast<IKinematics*>(Visual())->LL_GetBoneInstance(smart_cast<IKinematics*>(Visual())->LL_BoneID("bip01_head"));
 	bone_head->set_callback	(bctCustom,BoneCallback,this);
 
@@ -278,7 +278,7 @@ void CAI_Trader::net_Destroy()
 void CAI_Trader::UpdateCL()
 { 
 	inherited::UpdateCL		();
-	sound().update			(Device.fTimeDelta);
+	sound().update			(Device->fTimeDelta);
 
 
 	if (!GetScriptControl() && !bfScriptAnimation()) 
@@ -334,13 +334,13 @@ void CAI_Trader::load (IReader &input_packet)
 }
 
 
-//проверяет список артефактов в заказах
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 u32 CAI_Trader::ArtefactPrice (CArtefact* pArtefact)
 {
 	return pArtefact->Cost();
 }
 
-//продажа артефакта, с последуещим изменением списка заказов (true - если артефакт был в списке)
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (true - пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ)
 bool CAI_Trader::BuyArtefact (CArtefact* pArtefact)
 {
 	VERIFY(pArtefact);

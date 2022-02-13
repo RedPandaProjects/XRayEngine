@@ -6,7 +6,7 @@
 #include "ui/UIMApWnd.h"
 #include "level.h"
 #include "../XrEngine/xr_object.h"
-#include "object_broker.h"
+#include "../XrEngine/object_broker.h"
 #include "ui/UITextureMaster.h"
 
 CMapSpot::CMapSpot(CMapLocation* ml)
@@ -39,7 +39,7 @@ void CMapSpot::Update()
 	inherited::Update();
 	if(m_bCursorOverWindow){
 		VERIFY(m_dwFocusReceiveTime>=0);
-		if( Device.dwTimeGlobal>(m_dwFocusReceiveTime+500) ){
+		if( Device->dwTimeGlobal>(m_dwFocusReceiveTime+500) ){
 			GetMessageTarget()->SendMessage(this, MAP_SHOW_HINT, NULL);
 		}
 	}
@@ -82,7 +82,7 @@ LPCSTR CMapSpotPointer::GetHint()
 	m_pointer_hint = "to: ";
 	m_pointer_hint += inherited::GetHint();
 	Fvector2 cam_pos;
-	cam_pos.set(Device.vCameraPosition.x,Device.vCameraPosition.z);
+	cam_pos.set(Device->vCameraPosition.x,Device->vCameraPosition.z);
 	float dist = MapLocation()->Position().distance_to(cam_pos);
 	string32 s;
 	sprintf_s(s," [%.2f]m.", dist);

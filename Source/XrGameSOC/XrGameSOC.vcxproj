@@ -1138,7 +1138,6 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <ClCompile Include="alife_smart_zone.cpp" />
-    <ClCompile Include="alife_space.cpp" />
     <ClCompile Include="alife_spawn_registry.cpp" />
     <ClCompile Include="alife_spawn_registry_header.cpp" />
     <ClCompile Include="alife_spawn_registry_spawn.cpp" />
@@ -1784,6 +1783,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <ClCompile Include="game_cl_teamdeathmatch.cpp" />
+    <ClCompile Include="game_graph.cpp" />
     <ClCompile Include="game_graph_script.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug_Priquel|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug_Priquel|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
@@ -1800,6 +1800,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
+    <ClCompile Include="game_level_cross_table.cpp" />
     <ClCompile Include="game_news.cpp" />
     <ClCompile Include="game_sv_artefacthunt.cpp" />
     <ClCompile Include="game_sv_artefacthunt_process_event.cpp" />
@@ -2159,7 +2160,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="LevelGameDef.cpp" />
     <ClCompile Include="Level_Bullet_Manager.cpp" />
     <ClCompile Include="Level_bullet_manager_firetrace.cpp" />
     <ClCompile Include="level_changer.cpp" />
@@ -2183,7 +2183,6 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="level_graph_vertex.cpp" />
     <ClCompile Include="Level_input.cpp" />
     <ClCompile Include="Level_load.cpp" />
     <ClCompile Include="level_map_locations.cpp">
@@ -2749,7 +2748,6 @@
     <ClCompile Include="profiler.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_Priquel|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="property_evaluator_script.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug_Priquel|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -3743,7 +3741,6 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release_Priquel|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release_Priquel|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">true</ExcludedFromBuild>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
@@ -4512,7 +4509,6 @@
     <ClCompile Include="ui\UIDebugFonts.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_Priquel|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="ui\UIDialogWnd.cpp" />
     <ClCompile Include="ui\UIDiaryWnd2.cpp" />

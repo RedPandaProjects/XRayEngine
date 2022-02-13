@@ -14,7 +14,7 @@
 #include "ui/UIXmlInit.h"
 #include "ui/UIMessageBoxEx.h"
 
-#include "object_broker.h"
+#include "../XrEngine/object_broker.h"
 
 #define MSGS_OFFS 510
 

@@ -9,7 +9,7 @@
 #include "stdafx.h"
 #include "agent_member_manager.h"
 #include "ai/stalker/ai_stalker.h"
-#include "object_broker.h"
+#include "../XrEngine/object_broker.h"
 #include "agent_manager.h"
 #include "agent_memory_manager.h"
 #include "explosive.h"
@@ -109,7 +109,7 @@ void CAgentMemberManager::register_in_combat	(const CAI_Stalker *object)
 #if 0//def DEBUG
 	Msg							(
 		"%6d registering stalker %s in combat: 0x%08x -> 0x%08x",
-		Device.dwTimeGlobal,
+		Device->dwTimeGlobal,
 		*object->cName(),
 		m_combat_mask,
 		m_combat_mask | mask(object)
@@ -131,7 +131,7 @@ void CAgentMemberManager::unregister_in_combat	(const CAI_Stalker *object)
 #if 0//def DEBUG
 	Msg							(
 		"%6d UNregistering stalker %s in combat: 0x%08x -> 0x%08x",
-		Device.dwTimeGlobal,
+		Device->dwTimeGlobal,
 		*object->cName(),
 		m_combat_mask,
 		(m_combat_mask & (squad_mask_type(-1) ^ mask(object)))

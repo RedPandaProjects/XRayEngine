@@ -14,13 +14,13 @@ CUICursor::CUICursor()
 	bVisible				= false;
 	vPos.set				(0.f,0.f);
 	InitInternal			();
-	Device.seqRender.Add	(this,2);
+	Device->seqRender.Add	(this,2);
 }
 //--------------------------------------------------------------------
 CUICursor::~CUICursor	()
 {
 	xr_delete				(m_static);
-	Device.seqRender.Remove	(this);
+	Device->seqRender.Remove	(this);
 }
 
 void CUICursor::InitInternal()
@@ -45,8 +45,8 @@ void CUICursor::OnRender	()
 {
 	if( !IsVisible() ) return;
 #ifdef DEBUG
-	VERIFY(last_render_frame != Device.dwFrame);
-	last_render_frame = Device.dwFrame;
+	VERIFY(last_render_frame != Device->dwFrame);
+	last_render_frame = Device->dwFrame;
 
 	if(bDebug)
 	{
@@ -88,8 +88,8 @@ void CUICursor::UpdateCursorPosition()
 
 	vPrevPos = vPos;
 
-	vPos.x			= (float)p.x * (UI_BASE_WIDTH/(float)Device.dwWidth);
-	vPos.y			= (float)p.y * (UI_BASE_HEIGHT/(float)Device.dwHeight);
+	vPos.x			= (float)p.x * (UI_BASE_WIDTH/(float)Device->dwWidth);
+	vPos.y			= (float)p.y * (UI_BASE_HEIGHT/(float)Device->dwHeight);
 	clamp			(vPos.x, 0.f, UI_BASE_WIDTH);
 	clamp			(vPos.y, 0.f, UI_BASE_HEIGHT);
 }
@@ -98,8 +98,8 @@ void CUICursor::SetUICursorPosition(Fvector2 pos)
 {
 	vPos		= pos;
 	POINT		p;
-	p.x			= iFloor(vPos.x / (UI_BASE_WIDTH/(float)Device.dwWidth));
-	p.y			= iFloor(vPos.y / (UI_BASE_HEIGHT/(float)Device.dwHeight));
+	p.x			= iFloor(vPos.x / (UI_BASE_WIDTH/(float)Device->dwWidth));
+	p.y			= iFloor(vPos.y / (UI_BASE_HEIGHT/(float)Device->dwHeight));
 
 	SetCursorPos(p.x, p.y);
 }

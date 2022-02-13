@@ -57,9 +57,9 @@ bool editor()
 }
 
 #ifdef XRGAME_EXPORTS
-CRenderDevice *get_device()
+XrDeviceInterface *get_device()
 {
-	return		(&Device);
+	return		(Device);
 }
 #endif
 
@@ -175,7 +175,7 @@ IC	profile_timer_script	operator+	(const profile_timer_script &portion0, const p
 //}
 
 #ifdef XRGAME_EXPORTS
-ICF	u32	script_time_global	()	{ return Device.dwTimeGlobal; }
+ICF	u32	script_time_global	()	{ return Device->dwTimeGlobal; }
 #else
 ICF	u32	script_time_global	()	{ return 0; }
 #endif

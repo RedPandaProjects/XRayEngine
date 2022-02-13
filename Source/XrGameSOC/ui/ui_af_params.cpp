@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "ui_af_params.h"
 #include "UIStatic.h"
-#include "../object_broker.h"
+#include "../../XrEngine/object_broker.h"
 #include "UIXmlInit.h"
 
 CUIArtefactParams::CUIArtefactParams()

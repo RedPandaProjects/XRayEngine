@@ -96,8 +96,8 @@ float CActor::CameraHeight()
 
 IC float viewport_near(float& w, float& h)
 {
-	w = 2.f*VIEWPORT_NEAR*tan(deg2rad(Device.fFOV)/2.f);
-	h = w*Device.fASPECT;
+	w = 2.f*VIEWPORT_NEAR*tan(deg2rad(Device->fFOV)/2.f);
+	h = w*Device->fASPECT;
 	float	c	= _sqrt					(w*w + h*h);
 	return	_max(_max(VIEWPORT_NEAR,_max(w,h)),c);
 }
@@ -119,7 +119,7 @@ ICF BOOL test_point(xrXRC& xrc, const Fmatrix& xform, const Fmatrix33& mat, cons
 	CDB::RESULT* end=xrc.r_end	();
 	for (; it!=end; it++)	{
 		CDB::RESULT&	O	= *it;
-		if (GMLib.GetMaterialByIdx(O.material)->Flags.is(SGameMtl::flPassable)) continue;
+		if (GameMaterialLibrary->GetMaterialByIdx(O.material)->Flags.is(SGameMtl::flPassable)) continue;
 		if (CDB::TestBBoxTri(mat,pt,ext,O.verts,FALSE))
 			return		TRUE;
 	}
@@ -310,7 +310,7 @@ void CActor::cam_Update(float dt, float fFOV)
 		Cameras().UpdateFromCamera(cameras[eacFirstEye]);
 	}
 
-	fCurAVelocity			= vPrevCamDir.sub(cameras[eacFirstEye]->vDirection).magnitude()/Device.fTimeDelta;
+	fCurAVelocity			= vPrevCamDir.sub(cameras[eacFirstEye]->vDirection).magnitude()/Device->fTimeDelta;
 	vPrevCamDir				= cameras[eacFirstEye]->vDirection;
 
 	if (Level().CurrentEntity() == this)

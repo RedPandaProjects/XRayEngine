@@ -18,7 +18,7 @@
 #include "alife_object_registry.h"
 #include "relation_registry.h"
 #include "InventoryOwner.h"
-#include "object_broker.h"
+#include "../XrEngine/object_broker.h"
 #include "string_table.h"
 #include "level_changer.h"
 #include "actor_memory.h"
@@ -90,7 +90,7 @@ void CMapLocation::LoadSpot(LPCSTR type, bool bReload)
 	m_ttl = g_uiSpotXml->ReadAttribInt(path_base, 0, "ttl", 0);
 	if(m_ttl>0){
 		m_flags.set( eTTL, TRUE);
-		m_actual_time = Device.dwTimeGlobal+m_ttl*1000;
+		m_actual_time = Device->dwTimeGlobal+m_ttl*1000;
 	}
 
 	s = g_uiSpotXml->ReadAttrib(path_base, 0, "pos_to_actor", NULL);
@@ -147,7 +147,7 @@ void CMapLocation::LoadSpot(LPCSTR type, bool bReload)
 
 Fvector2 CMapLocation::Position()
 {
-	if(m_cached.m_updatedFrame==Device.dwFrame) 
+	if(m_cached.m_updatedFrame==Device->dwFrame) 
 		return m_cached.m_Position;
 
 	Fvector2 pos;
@@ -183,14 +183,14 @@ Fvector2 CMapLocation::Position()
 
 Fvector2 CMapLocation::Direction()
 {
-	if(m_cached.m_updatedFrame==Device.dwFrame) 
+	if(m_cached.m_updatedFrame==Device->dwFrame) 
 		return m_cached.m_Direction;
 
 	Fvector2 res;
 	res.set(0.0f,0.0f);
 
 	if(Level().CurrentViewEntity()&&Level().CurrentViewEntity()->ID()==m_objectID ){
-		res.set(Device.vCameraDirection.x,Device.vCameraDirection.z);
+		res.set(Device->vCameraDirection.x,Device->vCameraDirection.z);
 	}else{
 		CObject* pObject =  Level().Objects.net_Find(m_objectID);
 		if(!pObject)
@@ -205,7 +205,7 @@ Fvector2 CMapLocation::Direction()
 		CObject* pObject =  Level().Objects.net_Find(m_objectID);
 		if(pObject){
 			Fvector2 dcp,obj_pos;
-			dcp.set(Device.vCameraPosition.x, Device.vCameraPosition.z);
+			dcp.set(Device->vCameraPosition.x, Device->vCameraPosition.z);
 			obj_pos.set(pObject->Position().x, pObject->Position().z);
 			res.sub(obj_pos, dcp);
 			res.normalize_safe();
@@ -219,7 +219,7 @@ Fvector2 CMapLocation::Direction()
 
 shared_str CMapLocation::LevelName()
 {
-	if(m_cached.m_updatedFrame==Device.dwFrame) 
+	if(m_cached.m_updatedFrame==Device->dwFrame) 
 		return m_cached.m_LevelName;
 
 	if(ai().get_alife() && ai().get_game_graph())		
@@ -246,13 +246,13 @@ shared_str CMapLocation::LevelName()
 
 bool CMapLocation::Update() //returns actual
 {
-	if(m_cached.m_updatedFrame==Device.dwFrame) 
+	if(m_cached.m_updatedFrame==Device->dwFrame) 
 		return m_cached.m_Actuality;
 		
 	if(	m_flags.test(eTTL) ){
-		if( m_actual_time < Device.dwTimeGlobal){
+		if( m_actual_time < Device->dwTimeGlobal){
 			m_cached.m_Actuality		= false;
-			m_cached.m_updatedFrame		= Device.dwFrame;
+			m_cached.m_updatedFrame		= Device->dwFrame;
 			return						m_cached.m_Actuality;
 		}
 	}
@@ -265,7 +265,7 @@ bool CMapLocation::Update() //returns actual
 			Position					();
 			Direction					();
 			LevelName					();
-			m_cached.m_updatedFrame		= Device.dwFrame;
+			m_cached.m_updatedFrame		= Device->dwFrame;
 			return						m_cached.m_Actuality;
 	}
 	
@@ -275,7 +275,7 @@ bool CMapLocation::Update() //returns actual
 			Position					();
 			Direction					();
 			LevelName					();
-			m_cached.m_updatedFrame		= Device.dwFrame;
+			m_cached.m_updatedFrame		= Device->dwFrame;
 			return						m_cached.m_Actuality;
 	}
 
@@ -287,12 +287,12 @@ bool CMapLocation::Update() //returns actual
 			Direction					();
 			LevelName					();
 		}
-		m_cached.m_updatedFrame			= Device.dwFrame;
+		m_cached.m_updatedFrame			= Device->dwFrame;
 		return							m_cached.m_Actuality;
 	}
 
 	m_cached.m_Actuality				= false;
-	m_cached.m_updatedFrame				= Device.dwFrame;
+	m_cached.m_updatedFrame				= Device->dwFrame;
 	return								m_cached.m_Actuality;
 }
 
@@ -477,7 +477,7 @@ u16	CMapLocation::AddRef()
 {
 	++m_refCount; 
 	if(	m_flags.test(eTTL) ){
-		m_actual_time = Device.dwTimeGlobal+m_ttl*1000;
+		m_actual_time = Device->dwTimeGlobal+m_ttl*1000;
 	}
 
 	return m_refCount;
@@ -665,7 +665,7 @@ void CUserDefinedMapLocation::InitExternal(const shared_str& level_name, const F
 	m_graph_id			= GameGraph::_GRAPH_ID(-1);
 
 	if(ai().get_alife()){
-	const CGameGraph::SLevel& level		= ai().game_graph().header().level(*level_name);
+	const IGameGraph::SLevel& level		= ai().game_graph().header().level(*level_name);
 		float min_dist					= flt_max;
 
 		GameGraph::_GRAPH_ID n			= ai().game_graph().header().vertex_count();

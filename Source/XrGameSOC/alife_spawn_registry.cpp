@@ -8,7 +8,7 @@
 
 #include "stdafx.h"
 #include "alife_spawn_registry.h"
-#include "object_broker.h"
+#include "../XrEngine/object_broker.h"
 #include "game_base.h"
 #include "ai_space.h"
 #include "game_graph.h"
@@ -160,7 +160,7 @@ void CALifeSpawnRegistry::load				(IReader &file_stream, xrGUID *save_guid)
 	R_ASSERT2					(m_chunk,"Spawn version mismatch - REBUILD SPAWN!");
 
 	VERIFY						(!m_game_graph);
-	m_game_graph				= xr_new<CGameGraph>(*m_chunk);
+	m_game_graph				= xr_new<IGameGraph>(*m_chunk);
 	ai().game_graph				(m_game_graph);
 #endif // PRIQUEL
 

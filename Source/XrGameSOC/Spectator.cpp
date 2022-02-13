@@ -106,12 +106,12 @@ void CSpectator::UpdateCL()
 					}
 				}
 			}
-			// не найден объект с таким индексом - сбросим на первый объект
+			// пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 			look_idx = 0;
-			// никого нет за кем смотреть - переключимся на 
+			// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ 
 			if (0==idx) cam_Set(eacFreeFly);
 		}
-		// по умолчанию eacFreeFly
+		// пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ eacFreeFly
 		cam_Update		(0);
 	}
 }
@@ -224,20 +224,20 @@ void CSpectator::IR_OnKeyboardHold(int cmd)
 		case kRIGHT:
 			if (eacFreeLook!=cam_active) cameras[cam_active]->Move(cmd); break;
 		case kFWD:			
-			vmove.mad( C->vDirection, Device.fTimeDelta*Accel_mul );
+			vmove.mad( C->vDirection, Device->fTimeDelta*Accel_mul );
 			break;
 		case kBACK:
-			vmove.mad( C->vDirection, -Device.fTimeDelta*Accel_mul );
+			vmove.mad( C->vDirection, -Device->fTimeDelta*Accel_mul );
 			break;
 		case kR_STRAFE:{
 			Fvector right;
 			right.crossproduct(C->vNormal,C->vDirection);
-			vmove.mad( right, Device.fTimeDelta*Accel_mul );
+			vmove.mad( right, Device->fTimeDelta*Accel_mul );
 			}break;
 		case kL_STRAFE:{
 			Fvector right;
 			right.crossproduct(C->vNormal,C->vDirection);
-			vmove.mad( right, -Device.fTimeDelta*Accel_mul );
+			vmove.mad( right, -Device->fTimeDelta*Accel_mul );
 			}break;
 		}
 		if (cam_active != eacFreeFly || (pMPGame->Is_Spectator_Camera_Allowed(eacFreeFly) || (PS && PS->testFlag(GAME_PLAYER_FLAG_SPECTATOR))))

@@ -619,7 +619,7 @@
     <ClInclude Include="alife_smart_terrain_registry_inline.h" />
     <ClInclude Include="alife_smart_terrain_task.h" />
     <ClInclude Include="alife_smart_terrain_task_inline.h" />
-    <ClInclude Include="alife_space.h" />
+    <ClInclude Include="..\xrEngine\alife_space.h" />
     <ClInclude Include="alife_spawn_registry.h" />
     <ClInclude Include="alife_spawn_registry_header.h" />
     <ClInclude Include="alife_spawn_registry_header_inline.h" />
@@ -640,7 +640,7 @@
     <ClInclude Include="animation_movement_controller.h" />
     <ClInclude Include="antirad.h" />
     <ClInclude Include="Artifact.h" />
-    <ClInclude Include="associative_vector.h" />
+    <ClInclude Include="../XrEngine/associative_vector.h" />
     <ClInclude Include="associative_vector_compare_predicate.h" />
     <ClInclude Include="associative_vector_compare_predicate_inline.h" />
     <ClInclude Include="associative_vector_inline.h" />
@@ -650,7 +650,7 @@
     <ClInclude Include="attachment_owner_inline.h" />
     <ClInclude Include="autosave_manager.h" />
     <ClInclude Include="autosave_manager_inline.h" />
-    <ClInclude Include="a_star.h" />
+    <ClInclude Include="../XrEngine/a_star.h" />
     <ClInclude Include="a_star_inline.h" />
     <ClInclude Include="base_client_classes.h" />
     <ClInclude Include="base_client_classes_wrappers.h" />
@@ -752,7 +752,7 @@
     <ClInclude Include="DynamicHeightMap.h" />
     <ClInclude Include="eatable_item.h" />
     <ClInclude Include="eatable_item_object.h" />
-    <ClInclude Include="edge_path.h" />
+    <ClInclude Include="../XrEngine/edge_path.h" />
     <ClInclude Include="edge_path_inline.h" />
     <ClInclude Include="EffectorBobbing.h" />
     <ClInclude Include="EffectorFall.h" />
@@ -829,7 +829,7 @@
     <ClInclude Include="game_cl_teamdeathmatch_snd_messages.h" />
     <ClInclude Include="game_graph.h" />
     <ClInclude Include="game_graph_inline.h" />
-    <ClInclude Include="game_graph_space.h" />
+    <ClInclude Include="../XrEngine/game_graph_space.h" />
     <ClInclude Include="game_level_cross_table.h" />
     <ClInclude Include="game_level_cross_table_inline.h" />
     <ClInclude Include="game_location_selector.h" />
@@ -850,7 +850,7 @@
     <ClInclude Include="game_sv_single.h" />
     <ClInclude Include="game_sv_teamdeathmatch.h" />
     <ClInclude Include="Geometry.h" />
-    <CustomBuild Include="graph_abstract.h" />
+    <CustomBuild Include="../XrEngine/graph_abstract.h" />
     <CustomBuild Include="graph_abstract_inline.h" />
     <ClInclude Include="graph_edge.h" />
     <ClInclude Include="graph_edge_inline.h" />
@@ -972,7 +972,7 @@
     <ClInclude Include="NoGravityZone.h" />
     <ClInclude Include="object_actions.h" />
     <ClInclude Include="object_actions_inline.h" />
-    <ClInclude Include="object_broker.h" />
+    <ClInclude Include="../XrEngine/object_broker.h" />
     <ClInclude Include="object_cloner.h" />
     <ClInclude Include="object_comparer.h" />
     <ClInclude Include="object_destroyer.h" />
@@ -986,7 +986,7 @@
     <ClInclude Include="object_handler_planner_impl.h" />
     <ClInclude Include="object_handler_planner_inline.h" />
     <ClInclude Include="object_handler_space.h" />
-    <ClInclude Include="object_interfaces.h" />
+    <ClInclude Include="../XrEngine/object_interfaces.h" />
     <ClInclude Include="object_item_abstract.h" />
     <ClInclude Include="object_item_abstract_inline.h" />
     <ClInclude Include="object_item_client_server.h" />

@@ -9,12 +9,12 @@
 #pragma once
 
 class CPatrolPath;
-class CLevelGraph;
-class CGameLevelCrossTable;
-class CGameGraph;
+class ILevelGraph;
+class IGameLevelCrossTable;
+class IGameGraph;
 
-#include "object_interfaces.h"
-#include "associative_vector.h"
+#include "../XrEngine/object_interfaces.h"
+#include "../XrEngine/associative_vector.h"
 
 class CPatrolPathStorage : public IPureSerializeObject<IReader,IWriter> {
 private:
@@ -35,7 +35,7 @@ public:
 	virtual	void					save				(IWriter &stream);
 
 public:
-			void					load_raw			(const CLevelGraph *level_graph, const CGameLevelCrossTable *cross, const CGameGraph *game_graph, IReader &stream);
+			void					load_raw			(const ILevelGraph *level_graph, const IGameLevelCrossTable *cross, const IGameGraph *game_graph, IReader &stream);
 	IC		const CPatrolPath		*path				(shared_str patrol_name, bool no_assert = false) const;
 	IC		const PATROL_REGISTRY	&patrol_paths		() const;
 };

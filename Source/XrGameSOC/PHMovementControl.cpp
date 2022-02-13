@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "../XrEngine/cl_intersect.h"
-#include "alife_space.h"
+#include "..\xrEngine\alife_space.h"
 #include "phmovementcontrol.h"
 #include "entity.h"
 #include "PHDynamicData.h"
@@ -158,10 +158,10 @@ void CPHMovementControl::Calculate(Fvector& vAccel,const Fvector& camDir,float /
 	}
 	if(m_character->LastMaterialIDX()!=u16(-1))
 	{
-		const SGameMtl *last_material=GMLib.GetMaterialByIdx(m_character->LastMaterialIDX());
+		const SGameMtl *last_material=GameMaterialLibrary->GetMaterialByIdx(m_character->LastMaterialIDX());
 		if(last_material->Flags.test(SGameMtl::flInjurious))
 		{
-			gcontact_HealthLost+=Device.fTimeDelta*last_material->fInjuriousSpeed;
+			gcontact_HealthLost+=Device->fTimeDelta*last_material->fInjuriousSpeed;
 		}
 	}
 
@@ -1098,12 +1098,12 @@ BOOL CPHMovementControl::BorderTraceCallback(collide::rq_result& result, LPVOID 
 	if(result.O){
 		return true;
 	}else{
-		//получить треугольник и узнать его материал
+		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		T				= Level().ObjectSpace.GetStaticTris()+result.element;
 		mtl_idx			= T->material;
 	}
 	VERIFY	(T);
-	SGameMtl* mtl		= GMLib.GetMaterialByIdx(mtl_idx);
+	SGameMtl* mtl		= GameMaterialLibrary->GetMaterialByIdx(mtl_idx);
 	if(mtl->Flags.test(SGameMtl::flInjurious))
 	{
 		Fvector tri_norm;
@@ -1144,7 +1144,7 @@ void	CPHMovementControl::				UpdateObjectBox(CPHCharacter *ach)
 	Fvector2 poses_dir;poses_dir.set(p.x-pa.x,p.z-pa.z);float plane_dist=poses_dir.magnitude(); 
 	if(plane_dist>2.f) return;
 	if(plane_dist>EPS_S)poses_dir.mul(1.f/plane_dist);
-	Fvector2 plane_cam;plane_cam.set(Device.vCameraDirection.x,Device.vCameraDirection.z);plane_cam.normalize_safe();
+	Fvector2 plane_cam;plane_cam.set(Device->vCameraDirection.x,Device->vCameraDirection.z);plane_cam.normalize_safe();
 	Fvector2 plane_i;plane_i.set(pObject->XFORM().i.x,pObject->XFORM().i.z);
 	Fvector2 plane_k;plane_k.set(pObject->XFORM().k.x,pObject->XFORM().k.z);
 	float R=_abs(poses_dir.dotproduct(plane_i)*cbox.x)+_abs(poses_dir.dotproduct(plane_k)*cbox.z);

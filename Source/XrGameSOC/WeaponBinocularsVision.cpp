@@ -7,7 +7,7 @@
 #include "actor.h"
 #include "actor_memory.h"
 #include "relation_registry.h"
-#include "object_broker.h"
+#include "../XrEngine/object_broker.h"
 
 #include "game_base_space.h"
 #include "Level.h"
@@ -71,7 +71,7 @@ void SBinocVisibleObj::Update()
 	Fbox		b		= m_object->Visual()->getVisData().box;
 
 	Fmatrix				xform;
-	xform.mul			(Device.mFullTransform,m_object->XFORM());
+	xform.mul			(Device->mFullTransform,m_object->XFORM());
 	Fvector2	mn		={flt_max,flt_max},mx={flt_min,flt_min};
 
 	for (u32 k=0; k<8; ++k){
@@ -102,10 +102,10 @@ void SBinocVisibleObj::Update()
 		cur_rect.lt.set	(mn);
 		cur_rect.rb.set	(mx);
 	}else{
-		cur_rect.lt.x	+= (mn.x-cur_rect.lt.x)*m_upd_speed*Device.fTimeDelta;
-		cur_rect.lt.y	+= (mn.y-cur_rect.lt.y)*m_upd_speed*Device.fTimeDelta;
-		cur_rect.rb.x	+= (mx.x-cur_rect.rb.x)*m_upd_speed*Device.fTimeDelta;
-		cur_rect.rb.y	+= (mx.y-cur_rect.rb.y)*m_upd_speed*Device.fTimeDelta;
+		cur_rect.lt.x	+= (mn.x-cur_rect.lt.x)*m_upd_speed*Device->fTimeDelta;
+		cur_rect.lt.y	+= (mn.y-cur_rect.lt.y)*m_upd_speed*Device->fTimeDelta;
+		cur_rect.rb.x	+= (mx.x-cur_rect.rb.x)*m_upd_speed*Device->fTimeDelta;
+		cur_rect.rb.y	+= (mx.y-cur_rect.rb.y)*m_upd_speed*Device->fTimeDelta;
 		if (mn.similar(cur_rect.lt,2.f)&&mx.similar(cur_rect.rb,2.f)){ 
 			// target locked
 			m_flags.set(flTargetLocked,TRUE);

@@ -11,7 +11,7 @@
 #include "script_export_space.h"
 #include "../XrEngine/StatGraph.h"
 #include "xrMessages.h"
-#include "alife_space.h"
+#include "..\xrEngine\alife_space.h"
 #include "../XrCore/xrDebug.h"
 #include "xrServer.h"
 #include "battleye_system.h"
@@ -290,17 +290,17 @@ public:
 	CLevel();
 	virtual ~CLevel();
 
-	//названияе текущего уровня
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	virtual shared_str			name				() const;
 	virtual void				GetLevelInfo		( CServerInfo* si );
 
 	//gets the time from the game simulation
 	
-	//возвращает время в милисекундах относительно начала игры
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 	ALife::_TIME_ID		GetGameTime				();
-	//возвращает время для энвайронмента в милисекундах относительно начала игры
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 	ALife::_TIME_ID		GetEnvironmentGameTime	();
-	//игровое время в отформатированном виде
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 	void				GetGameDateTime			(u32& year, u32& month, u32& day, u32& hours, u32& mins, u32& secs, u32& milisecs);
 
 	float				GetGameTimeFactor		();
@@ -323,7 +323,7 @@ public:
 	CMapManager&			MapManager					()	{return *m_map_manager;}
 //	CFogOfWarMngr&			FogOfWarMngr				()	{return *m_pFogOfWarMngr;}
 
-	//работа с пулями
+	//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 protected:	
 	CBulletManager*		m_pBulletManager;
 public:

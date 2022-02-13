@@ -2862,7 +2862,7 @@
     <ClInclude Include="alife_simulator_inline.h">
       <Filter>AI\ALife</Filter>
     </ClInclude>
-    <ClInclude Include="alife_space.h">
+    <ClInclude Include="..\xrEngine\alife_space.h">
       <Filter>AI\ALife</Filter>
     </ClInclude>
     <ClInclude Include="alife_interaction_manager.h">
@@ -4164,7 +4164,7 @@
     <ClInclude Include="game_graph_inline.h">
       <Filter>AI\ANavigation\GameGraph</Filter>
     </ClInclude>
-    <ClInclude Include="game_graph_space.h">
+    <ClInclude Include="../XrEngine/game_graph_space.h">
       <Filter>AI\ANavigation\GameGraph</Filter>
     </ClInclude>
     <ClInclude Include="game_level_cross_table.h">
@@ -4206,7 +4206,7 @@
     <ClInclude Include="ai_object_location_inline.h">
       <Filter>AI\ANavigation\ObjectLocation</Filter>
     </ClInclude>
-    <ClInclude Include="a_star.h">
+    <ClInclude Include="../XrEngine/a_star.h">
       <Filter>AI\ANavigation\Pathfinding\Algorithms\A%2a</Filter>
     </ClInclude>
     <ClInclude Include="a_star_inline.h">
@@ -4233,7 +4233,7 @@
     <ClInclude Include="manager_builder_allocator_constructor_inline.h">
       <Filter>AI\ANavigation\Pathfinding\DataStorages\constructors\manager_builder_allocator</Filter>
     </ClInclude>
-    <ClInclude Include="edge_path.h">
+    <ClInclude Include="../XrEngine/edge_path.h">
       <Filter>AI\ANavigation\Pathfinding\DataStorages\path_builders\edge_path</Filter>
     </ClInclude>
     <ClInclude Include="edge_path_inline.h">
@@ -5436,7 +5436,7 @@
     <ClInclude Include="xrMessages.h">
       <Filter>Core\Common\NET Shared</Filter>
     </ClInclude>
-    <ClInclude Include="object_broker.h">
+    <ClInclude Include="../XrEngine/object_broker.h">
       <Filter>Core\Common\ObjectBroker</Filter>
     </ClInclude>
     <ClInclude Include="object_cloner.h">
@@ -5448,7 +5448,7 @@
     <ClInclude Include="object_destroyer.h">
       <Filter>Core\Common\ObjectBroker</Filter>
     </ClInclude>
-    <ClInclude Include="object_interfaces.h">
+    <ClInclude Include="../XrEngine/object_interfaces.h">
       <Filter>Core\Common\ObjectBroker</Filter>
     </ClInclude>
     <ClInclude Include="object_loader.h">
@@ -5532,7 +5532,7 @@
     <ClInclude Include="string_table_defs.h">
       <Filter>Core\Common\StringTable</Filter>
     </ClInclude>
-    <ClInclude Include="associative_vector.h">
+    <ClInclude Include="../XrEngine/associative_vector.h">
       <Filter>Core\Common\associative_vector\vector</Filter>
     </ClInclude>
     <ClInclude Include="associative_vector_inline.h">
@@ -9712,7 +9712,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="graph_abstract.h">
+    <CustomBuild Include="../XrEngine/graph_abstract.h">
       <Filter>AI\ANavigation\GraphAbstract</Filter>
     </CustomBuild>
     <CustomBuild Include="graph_abstract_inline.h">

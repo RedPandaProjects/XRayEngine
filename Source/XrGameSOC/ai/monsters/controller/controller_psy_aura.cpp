@@ -11,7 +11,7 @@ CPPEffectorControllerAura::CPPEffectorControllerAura(const SPPInfo &ppi, u32 tim
 {
 	m_time_to_fade			= time_to_fade;
 	m_effector_state		= eStateFadeIn;
-	m_time_state_started	= Device.dwTimeGlobal;
+	m_time_state_started	= Device->dwTimeGlobal;
 
 	m_snd_left.clone		(snd_left,st_Effect,sg_SourceType);	
 	m_snd_right.clone		(snd_right,st_Effect,sg_SourceType);	
@@ -24,7 +24,7 @@ CPPEffectorControllerAura::CPPEffectorControllerAura(const SPPInfo &ppi, u32 tim
 void CPPEffectorControllerAura::switch_off()
 {
 	m_effector_state		= eStateFadeOut;		
-	m_time_state_started	= Device.dwTimeGlobal;
+	m_time_state_started	= Device->dwTimeGlobal;
 }
 
 
@@ -34,7 +34,7 @@ BOOL CPPEffectorControllerAura::update()
 	if (m_effector_state == eStatePermanent) {
 		m_factor = 1.f;
 	} else {
-		m_factor = float(Device.dwTimeGlobal - m_time_state_started) / float(m_time_to_fade);
+		m_factor = float(Device->dwTimeGlobal - m_time_state_started) / float(m_time_to_fade);
 		if (m_effector_state == eStateFadeOut) m_factor = 1 - m_factor;
 
 		if (m_factor > 1) {

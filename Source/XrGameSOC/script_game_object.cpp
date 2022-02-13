@@ -100,7 +100,7 @@ u32 CScriptGameObject::game_vertex_id		() const
 
 float CScriptGameObject::level_vertex_light	(const u32 &level_vertex_id) const
 {
-	return						((float)ai().level_graph().vertex(level_vertex_id)->light()/15.f);
+	return						((float)127.f/15.f);
 }
 
 CScriptIniFile *CScriptGameObject::spawn_ini			() const

@@ -1,6 +1,6 @@
-// WeaponHUD.cpp:	HUD для оружия и прочих предметов, которые
-//					могут держать в руках персонажи, также используется
-//					для синхронизации анимаций с видом от 3-го лица
+// WeaponHUD.cpp:	HUD пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//					пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//					пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ 3-пїЅпїЅ пїЅпїЅпїЅпїЅ
 //////////////////////////////////////////////////////////////////////
 #include "stdafx.h"
 #include "WeaponHUD.h"
@@ -143,7 +143,7 @@ void CWeaponHUD::animPlay			(MotionID M,	BOOL bMixIn, CHudItem* W, u32 state)
 	if (anim_time>0){
 		m_bStopAtEndAnimIsRunning	= true;
 		m_pCallbackItem				= W;
-		m_dwAnimEndTime				= Device.dwTimeGlobal + anim_time;
+		m_dwAnimEndTime				= Device->dwTimeGlobal + anim_time;
 	}else{
 		m_pCallbackItem				= NULL;
 	}
@@ -151,7 +151,7 @@ void CWeaponHUD::animPlay			(MotionID M,	BOOL bMixIn, CHudItem* W, u32 state)
 
 void CWeaponHUD::Update				()
 {
-	if(m_bStopAtEndAnimIsRunning && Device.dwTimeGlobal > m_dwAnimEndTime)
+	if(m_bStopAtEndAnimIsRunning && Device->dwTimeGlobal > m_dwAnimEndTime)
 		StopCurrentAnim				();
 	if(m_bVisible)
 		smart_cast<IKinematicsAnimated*>(Visual())->UpdateTracks		();

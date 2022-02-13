@@ -77,7 +77,7 @@ void CMissile::Load(LPCSTR section)
 	m_vHudThrowPoint	= pSettings->r_fvector3(*hud_sect,"throw_point");
 	m_vHudThrowDir		= pSettings->r_fvector3(*hud_sect,"throw_dir");
 
-	//загрузить анимации HUD-а
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ HUD-пїЅ
 	m_sAnimShow			= pSettings->r_string(*hud_sect, "anim_show");
 	m_sAnimHide			= pSettings->r_string(*hud_sect, "anim_hide");
 	m_sAnimIdle			= pSettings->r_string(*hud_sect, "anim_idle");
@@ -190,7 +190,7 @@ void CMissile::UpdateCL()
 		{
 			CActor	*actor = smart_cast<CActor*>(H_Parent());
 			if (actor) {				
-				m_fThrowForce		+= (m_fForceGrowSpeed * Device.dwTimeDelta) * .001f;
+				m_fThrowForce		+= (m_fForceGrowSpeed * Device->dwTimeDelta) * .001f;
 				clamp(m_fThrowForce, m_fMinForce, m_fMaxForce);
 			}
 		}
@@ -346,9 +346,9 @@ void CMissile::UpdatePosition(const Fmatrix& trans)
 
 void CMissile::UpdateXForm	()
 {
-	if (Device.dwFrame!=dwXF_Frame)
+	if (Device->dwFrame!=dwXF_Frame)
 	{
-		dwXF_Frame			= Device.dwFrame;
+		dwXF_Frame			= Device->dwFrame;
 
 		if (0==H_Parent())	return;
 
@@ -550,8 +550,8 @@ void  CMissile::UpdateFireDependencies_internal	()
 {
 	if (0==H_Parent())		return;
 
-    if (Device.dwFrame!=dwFP_Frame){
-		dwFP_Frame = Device.dwFrame;
+    if (Device->dwFrame!=dwFP_Frame){
+		dwFP_Frame = Device->dwFrame;
 
 		UpdateXForm			();
 		

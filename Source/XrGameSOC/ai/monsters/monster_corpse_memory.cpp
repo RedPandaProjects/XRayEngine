@@ -33,7 +33,7 @@ void CMonsterCorpseMemory::update()
 		}
 	}
 
-	// удалить устаревших врагов
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	remove_non_actual();
 }
 
@@ -42,27 +42,27 @@ void CMonsterCorpseMemory::add_corpse(const CEntityAlive *corpse)
 	SMonsterCorpse corpse_info;
 	corpse_info.position	= corpse->Position();
 	corpse_info.vertex		= corpse->ai_location().level_vertex_id();
-	corpse_info.time		= Device.dwTimeGlobal;
+	corpse_info.time		= Device->dwTimeGlobal;
 
 	CORPSE_MAP_IT it = m_objects.find(corpse);
 	if (it != m_objects.end()) {
-		// обновить данные о враге
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ
 		it->second = corpse_info;
 	} else {
-		// добавить врага в список объектов
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		m_objects.insert(mk_pair(corpse, corpse_info));
 	}
 }
 
 void CMonsterCorpseMemory::remove_non_actual() 
 {
-	TTime cur_time = Device.dwTimeGlobal;
+	TTime cur_time = Device->dwTimeGlobal;
 
-	// удалить 'старых' врагов и тех, расстояние до которых > 30м и др.
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ 'пїЅпїЅпїЅпїЅпїЅпїЅ' пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ > 30пїЅ пїЅ пїЅпїЅ.
 	for (CORPSE_MAP_IT it = m_objects.begin(), nit; it != m_objects.end(); it = nit)
 	{
 		nit = it; ++nit;
-		// проверить условия удаления
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		if (!it->first					|| 
 			it->first->g_Alive()		|| 
 			it->first->getDestroy()		||

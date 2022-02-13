@@ -8,10 +8,10 @@ void CControlPathBuilderBase::update_frame()
 {	
 	START_PROFILE("Base Monster/Path Builder Base/Frame Update");
 
-	// обновить состояние билдера
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	update_path_builder_state						();
 	
-	// обновить / установить целевую позицию
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ / пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	update_target_point								();
 
 	// set params
@@ -27,7 +27,7 @@ void CControlPathBuilderBase::update_target_point()
 	if (!m_enable)											return;
 	if (m_path_type != MovementManager::ePathTypeLevelPath) return;
 
-	// проверить условия, когда путь строить не нужно
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	if (!target_point_need_update())						return; 
 
 	STarget saved_target;
@@ -36,22 +36,22 @@ void CControlPathBuilderBase::update_target_point()
 	if (global_failed())
 		find_target_point_failed	();
 	else 
-		// выбрать ноду и позицию в соответствии с желаемыми нодой и позицией
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		find_target_point_set		();
 
 
 	//-----------------------------------------------------------------------
 	// postprocess target_point
 	if (m_target_found.node == saved_target.node) {
-		// level_path останется актуальным - сбросить актуальность
+		// level_path пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		m_reset_actuality = true;
 	}
 	//-----------------------------------------------------------------------
 
-	// сохранить текущее время 
-	m_last_time_target_set	= Device.dwTimeGlobal;
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ 
+	m_last_time_target_set	= Device->dwTimeGlobal;
 
-	// параметры установлены, включаем актуальность
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	m_target_actual			= true;
 }
 
@@ -81,16 +81,16 @@ void CControlPathBuilderBase::update_path_builder_state()
 	
 	m_state = eStatePathValid;
 
-	// нет пути
+	// пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 	if (m_man->path_builder().detail().path().empty()) {
 		m_state = eStateNoPath; 
 	} 
-	// проверка на конец пути
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 	else if (m_path_end) {
 		m_state = eStatePathEnd;
 	}
 
-	// ждать пока не будет построен путь (путь должен быть гарантированно построен)
+	// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
 	if ((m_last_time_target_set > m_time_path_updated_external) || 
 		(!m_man->path_builder().detail().actual() && (m_man->path_builder().detail().time_path_built() < m_last_time_target_set))) {
 		m_state |= eStateWaitNewPath;

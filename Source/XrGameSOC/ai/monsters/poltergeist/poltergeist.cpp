@@ -204,7 +204,7 @@ BOOL CPoltergeist::net_Spawn (CSE_Abstract* DC)
 {
 	if (!inherited::net_Spawn(DC)) return(FALSE);
 
-	// спаунится нивидимым
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	setVisible		(false);
 	ability()->on_hide();
 	
@@ -254,7 +254,7 @@ void CPoltergeist::UpdateHeight()
 {
 	if (!state_invisible) return;
 	
-	u32 cur_time = Device.dwTimeGlobal;
+	u32 cur_time = Device->dwTimeGlobal;
 	
 	if (time_height_updated < cur_time)	{
 		time_height_updated = cur_time + Random.randI(HEIGHT_CHANGE_MIN_TIME,HEIGHT_CHANGE_MAX_TIME);

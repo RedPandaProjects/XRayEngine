@@ -9,7 +9,7 @@
 #pragma once
 
 #include "space_restriction_holder.h"
-#include "alife_space.h"
+#include "..\xrEngine\alife_space.h"
 
 namespace RestrictionSpace {
 	struct CTimeIntrusiveBase;

@@ -10,7 +10,7 @@
 
 #include "GameObject.h"
 #include "../XrEngine/feel_touch.h"
-#include "game_graph_space.h"
+#include "../XrEngine/game_graph_space.h"
 
 class CLevelChanger : public CGameObject, public Feel::Touch {
 private:

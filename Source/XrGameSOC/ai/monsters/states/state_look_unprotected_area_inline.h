@@ -27,7 +27,7 @@ void CStateMonsterLookToUnprotectedAreaAbstract::initialize()
 	position = object->Position();
 	position.y += 0.3f;
 
-	float angle = ai().level_graph().vertex_cover_angle(object->ai_location().level_vertex_id(),PI_DIV_6,std::less<float>());
+	float angle = ai().level_graph().vertex_high_cover_angle(object->ai_location().level_vertex_id(),PI_DIV_6,std::less<float>());
 
 	Fvector dir;
 	dir.set(1.f,0.f,0.f);
@@ -57,7 +57,7 @@ TEMPLATE_SPECIALIZATION
 bool CStateMonsterLookToUnprotectedAreaAbstract::check_completion()
 {	
 	if (data.time_out !=0) {
-		if (time_state_started + data.time_out < Device.dwTimeGlobal) return true;
+		if (time_state_started + data.time_out < Device->dwTimeGlobal) return true;
 	} else 	if (!object->control().direction().is_turning()) return true;
 
 	return false;

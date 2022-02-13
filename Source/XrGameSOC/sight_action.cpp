@@ -18,7 +18,7 @@
 
 void CSightAction::initialize					()
 {
-	m_start_time	= Device.dwTimeGlobal;
+	m_start_time	= Device->dwTimeGlobal;
 	
 	if (SightManager::eSightTypeCoverLookOver == m_sight_type)
 		initialize_cover_look_over	();
@@ -95,7 +95,7 @@ void CSightAction::execute_current_direction	()
 {
 	object().movement().m_head.target	= object().movement().m_head.current;
 #ifdef SIGHT_TEST
-	Msg					("%6d eSightTypeCurrentDirection",Device.dwTimeGlobal);
+	Msg					("%6d eSightTypeCurrentDirection",Device->dwTimeGlobal);
 #endif
 }
 
@@ -103,7 +103,7 @@ void CSightAction::execute_path_direction		()
 {
 	object().sight().SetDirectionLook();
 #ifdef SIGHT_TEST
-	Msg					("%6d eSightTypePathDirection",Device.dwTimeGlobal);
+	Msg					("%6d eSightTypePathDirection",Device->dwTimeGlobal);
 #endif
 }
 
@@ -113,7 +113,7 @@ void CSightAction::execute_direction			()
 	object().movement().m_head.target.yaw		*= -1;
 	object().movement().m_head.target.pitch	*= -1;
 #ifdef SIGHT_TEST
-	Msg					("%6d eSightTypeDirection",Device.dwTimeGlobal);
+	Msg					("%6d eSightTypeDirection",Device->dwTimeGlobal);
 #endif
 }
 
@@ -124,7 +124,7 @@ void CSightAction::execute_position				()
 	else
 		object().sight().SetPointLookAngles		(m_vector3d,object().movement().m_head.target.yaw,object().movement().m_head.target.pitch);
 #ifdef SIGHT_TEST
-	Msg					("%6d %s",Device.dwTimeGlobal,m_torso_look ? "eSightTypeFirePosition" : "eSightTypePosition");
+	Msg					("%6d %s",Device->dwTimeGlobal,m_torso_look ? "eSightTypeFirePosition" : "eSightTypePosition");
 #endif
 }
 
@@ -150,7 +150,7 @@ void CSightAction::execute_object				()
 		object().movement().m_head.target.pitch	= 0.f;
 
 #ifdef SIGHT_TEST
-	Msg					("%6d %s",Device.dwTimeGlobal,m_torso_look ? "eSightTypeFireObject" : "eSightTypeObject");
+	Msg					("%6d %s",Device->dwTimeGlobal,m_torso_look ? "eSightTypeFireObject" : "eSightTypeObject");
 #endif
 }
 
@@ -161,7 +161,7 @@ void CSightAction::execute_cover				()
 	else
 		object().sight().SetLessCoverLook(m_object->ai_location().level_vertex(),m_path);
 #ifdef SIGHT_TEST
-	Msg					("%6d %s [%f] -> [%f]",Device.dwTimeGlobal,m_torso_look ? "eSightTypeFireCover" : "eSightTypeCover",object().movement().m_body.current.yaw,object().movement().m_body.target.yaw);
+	Msg					("%6d %s [%f] -> [%f]",Device->dwTimeGlobal,m_torso_look ? "eSightTypeFireCover" : "eSightTypeCover",object().movement().m_body.current.yaw,object().movement().m_body.target.yaw);
 #endif
 }
 
@@ -174,14 +174,14 @@ void CSightAction::execute_search				()
 		object().sight().SetLessCoverLook(m_object->ai_location().level_vertex(),m_path);
 	object().movement().m_head.target.pitch	= PI_DIV_4;
 #ifdef SIGHT_TEST
-	Msg					("%6d %s",Device.dwTimeGlobal,m_torso_look ? "eSightTypeFireSearch" : "eSightTypeSearch");
+	Msg					("%6d %s",Device->dwTimeGlobal,m_torso_look ? "eSightTypeFireSearch" : "eSightTypeSearch");
 #endif
 }
 
 void CSightAction::initialize_cover_look_over	()
 {
 	m_internal_state	= 2;
-	m_start_state_time	= Device.dwTimeGlobal;
+	m_start_state_time	= Device->dwTimeGlobal;
 	m_stop_state_time	= 3500;
 	execute_cover		();
 	m_cover_yaw			= object().movement().m_head.target.yaw;
@@ -192,8 +192,8 @@ void CSightAction::execute_cover_look_over		()
 	switch (m_internal_state) {
 		case 0 :
 		case 2 : {
-			if ((m_start_state_time + m_stop_state_time < Device.dwTimeGlobal) && target_reached()) {
-				m_start_state_time	= Device.dwTimeGlobal;
+			if ((m_start_state_time + m_stop_state_time < Device->dwTimeGlobal) && target_reached()) {
+				m_start_state_time	= Device->dwTimeGlobal;
 				m_stop_state_time	= 3500;
 				m_internal_state	= 1;
 				object().movement().m_head.target.yaw = m_cover_yaw + ::Random.randF(-PI_DIV_8,PI_DIV_8);
@@ -201,10 +201,10 @@ void CSightAction::execute_cover_look_over		()
 			break;
 		}
 		case 1 : {
-			if ((m_start_state_time + m_stop_state_time < Device.dwTimeGlobal) && target_reached()) {
+			if ((m_start_state_time + m_stop_state_time < Device->dwTimeGlobal) && target_reached()) {
 				execute_cover		();
 				m_internal_state	= 0;
-				m_start_state_time	= Device.dwTimeGlobal;
+				m_start_state_time	= Device->dwTimeGlobal;
 			}
 			break;
 		}

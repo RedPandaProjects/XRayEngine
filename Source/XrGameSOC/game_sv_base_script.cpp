@@ -14,7 +14,7 @@
 #include "../XrCore/net_utils.h"
 #include "UI/UIGameTutorial.h"
 #include "string_table.h"
-#include "object_broker.h"
+#include "../XrEngine/object_broker.h"
 
 using namespace luabind;
 

@@ -100,7 +100,7 @@ void CLevelDebug::draw_object_info()
 	// handle all of the objects
 	for (OBJECT_INFO_MAP_IT it = m_objects_info.begin(); it != m_objects_info.end(); ++it) {
 
-		// если объект невалидный - удалить информацию
+		// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		if (!it->first || it->first->getDestroy()) {
 			for (CLASS_INFO_MAP_IT it_class = it->second.begin(); it_class != it->second.end(); ++it_class){
 				xr_delete(it_class->second);
@@ -110,7 +110,7 @@ void CLevelDebug::draw_object_info()
 		}
 
 		Fmatrix		res;
-		res.mul		(Device.mFullTransform,it->first->XFORM());
+		res.mul		(Device->mFullTransform,it->first->XFORM());
 
 		Fvector4	v_res;
 
@@ -127,8 +127,8 @@ void CLevelDebug::draw_object_info()
 			if (v_res.x < -1.f || v_res.x > 1.f || v_res.y<-1.f || v_res.y>1.f) continue;
 
 			// get real (x,y)
-			float x = (1.f + v_res.x)/2.f * (Device.dwWidth);
-			float y = (1.f - v_res.y)/2.f * (Device.dwHeight) - delta_height;
+			float x = (1.f + v_res.x)/2.f * (Device->dwWidth);
+			float y = (1.f - v_res.y)/2.f * (Device->dwHeight) - delta_height;
 			float start_y = y;
 
 			// handle all of the text inside class
@@ -267,7 +267,7 @@ void CLevelDebug::on_destroy_object(CObject *obj)
 {
 	// handle all of the objects
 	for (OBJECT_INFO_MAP_IT it = m_objects_info.begin(); it != m_objects_info.end(); ++it) {
-		// если объект невалидный - удалить информацию
+		// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		if (it->first == obj) {
 			for (CLASS_INFO_MAP_IT it_class = it->second.begin(); it_class != it->second.end(); ++it_class){
 				xr_delete(it_class->second);

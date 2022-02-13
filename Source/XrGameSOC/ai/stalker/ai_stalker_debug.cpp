@@ -61,7 +61,7 @@ void try_change_current_entity()
 	g_debug_actor						= actor;
 
 	CFrustum							frustum;
-	frustum.CreateFromMatrix			(Device.mFullTransform,FRUSTUM_P_LRTB|FRUSTUM_P_FAR);
+	frustum.CreateFromMatrix			(Device->mFullTransform,FRUSTUM_P_LRTB|FRUSTUM_P_FAR);
 
 	typedef xr_vector<ISpatial*>		OBJECTS;
 	OBJECTS								ISpatialResult;
@@ -405,7 +405,7 @@ void CAI_Stalker::OnHUDDraw				(CCustomHUD *hud)
 	if (memory().danger().selected() && memory().danger().selected()->object()) {
 		HUD().Font().pFontStat->OutNext	("%s%sselected",indent,indent);
 		HUD().Font().pFontStat->OutNext	("%s%s%stype      : %s",indent,indent,indent,danger_type(memory().danger().selected()->type()));
-		HUD().Font().pFontStat->OutNext	("%s%s%stime      : %.3f (%.3f)",indent,indent,indent,float(memory().danger().selected()->time())/1000.f,float(Device.dwTimeGlobal - memory().danger().selected()->time())/1000.f);
+		HUD().Font().pFontStat->OutNext	("%s%s%stime      : %.3f (%.3f)",indent,indent,indent,float(memory().danger().selected()->time())/1000.f,float(Device->dwTimeGlobal - memory().danger().selected()->time())/1000.f);
 		HUD().Font().pFontStat->OutNext	("%s%s%sinitiator : %s",indent,indent,indent,*memory().danger().selected()->object()->cName());
 		if (g_Alive() && memory().danger().selected()->object())
 			HUD().Font().pFontStat->OutNext("%s%s%svisible   : %s",indent,indent,indent,memory().visual().visible_now(memory().danger().selected()->object()) ? "+" : "-");
@@ -690,7 +690,7 @@ void CAI_Stalker::OnHUDDraw				(CCustomHUD *hud)
 				indent,
 				indent,
 				indent,
-				(Device.dwTimeGlobal < (*I).m_start_time)
+				(Device->dwTimeGlobal < (*I).m_start_time)
 				?
 				"not yet started"
 				:
@@ -860,33 +860,33 @@ void CAI_Stalker::OnRender			()
 			float						best_value = -1.f;
 			u32 j = 0;
 			for (u32 i=0; i<36; ++i) {
-				float				value = ai().level_graph().cover_in_direction(float(10*i)/180.f*PI,v);
+				float				value = ai().level_graph().high_cover_in_direction(float(10*i)/180.f*PI,v);
 				direction.setHP		(float(10*i)/180.f*PI,0);
 				direction.normalize	();
 				direction.mul		(value*half_size);
 				direction.add		(position);
 				direction.y			= position.y;
 				Level().debug_renderer().draw_line	(Fidentity,position,direction,color_xrgb(0,0,255));
-				value				= ai().level_graph().compute_square(float(10*i)/180.f*PI,PI/2.f,v);
+				value				= ai().level_graph().compute_high_square(float(10*i)/180.f*PI,PI/2.f,v);
 				if (value > best_value) {
 					best_value		= value;
 					j				= i;
 				}
 			}
 
-			direction.set		(position.x - half_size*float(v->cover(0))/15.f,position.y,position.z);
+			direction.set		(position.x - half_size*float(v->high_cover(0))/15.f,position.y,position.z);
 			Level().debug_renderer().draw_line(Fidentity,position,direction,color_xrgb(255,0,0));
 
-			direction.set		(position.x,position.y,position.z + half_size*float(v->cover(1))/15.f);
+			direction.set		(position.x,position.y,position.z + half_size*float(v->high_cover(1))/15.f);
 			Level().debug_renderer().draw_line(Fidentity,position,direction,color_xrgb(255,0,0));
 
-			direction.set		(position.x + half_size*float(v->cover(2))/15.f,position.y,position.z);
+			direction.set		(position.x + half_size*float(v->high_cover(2))/15.f,position.y,position.z);
 			Level().debug_renderer().draw_line(Fidentity,position,direction,color_xrgb(255,0,0));
 
-			direction.set		(position.x,position.y,position.z - half_size*float(v->cover(3))/15.f);
+			direction.set		(position.x,position.y,position.z - half_size*float(v->high_cover(3))/15.f);
 			Level().debug_renderer().draw_line(Fidentity,position,direction,color_xrgb(255,0,0));
 
-			float				value = ai().level_graph().cover_in_direction(float(10*j)/180.f*PI,v);
+			float				value = ai().level_graph().high_cover_in_direction(float(10*j)/180.f*PI,v);
 			direction.setHP		(float(10*j)/180.f*PI,0);
 			direction.normalize	();
 			direction.mul		(value*half_size);
@@ -908,7 +908,7 @@ void CAI_Stalker::dbg_draw_vision	()
 	shift.set					(0.f,2.5f,0.f);
 
 	Fmatrix						res;
-	res.mul						(Device.mFullTransform,XFORM());
+	res.mul						(Device->mFullTransform,XFORM());
 
 	Fvector4					v_res;
 
@@ -920,8 +920,8 @@ void CAI_Stalker::dbg_draw_vision	()
 	if (v_res.x < -1.f || v_res.x > 1.f || v_res.y<-1.f || v_res.y>1.f)
 		return;
 
-	float						x = (1.f + v_res.x)/2.f * (Device.dwWidth);
-	float						y = (1.f - v_res.y)/2.f * (Device.dwHeight);
+	float						x = (1.f + v_res.x)/2.f * (Device->dwWidth);
+	float						y = (1.f - v_res.y)/2.f * (Device->dwHeight);
 
 	CNotYetVisibleObject		*object = memory().visual().not_yet_visible_object(smart_cast<CGameObject*>(Level().CurrentEntity()));
 	string64					out_text;

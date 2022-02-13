@@ -4,7 +4,7 @@
 
 
 #include "script_export_space.h"
-#include "object_interfaces.h"
+#include "../XrEngine/object_interfaces.h"
 // refs
 class CUI;
 class CTeamBaseZone;

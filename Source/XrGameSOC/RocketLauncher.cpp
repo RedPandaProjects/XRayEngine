@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////
-// RocketLauncher.cpp:	интерфейс для семейства объектов 
-//						стреляющих гранатами и ракетами
+// RocketLauncher.cpp:	пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 
+//						пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -105,7 +105,7 @@ void CRocketLauncher::LaunchRocket(const Fmatrix& xform,
 */
 	VERIFY2(_valid(xform),"CRocketLauncher::LaunchRocket. Invalid xform argument!");
 	getCurrentRocket()->SetLaunchParams(xform, vel, angular_vel);
-//	Msg("---------Launched rocket [%d] frame [%d]",getCurrentRocket()->ID(), Device.dwFrame);
+//	Msg("---------Launched rocket [%d] frame [%d]",getCurrentRocket()->ID(), Device->dwFrame);
 //	getCurrentRocket()->H_SetParent(NULL);
 	m_launched_rockets.push_back( getCurrentRocket() );
 	//m_rockets.pop_back();

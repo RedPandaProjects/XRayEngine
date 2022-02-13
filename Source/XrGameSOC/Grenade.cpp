@@ -33,7 +33,7 @@ void CGrenade::Load(LPCSTR section)
 	HUD_SOUND::LoadSound(section,"snd_checkout",sndCheckout,m_eSoundCheckout);
 
 	//////////////////////////////////////
-	//время убирания оружия с уровня
+	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	if(pSettings->line_exist(section,"grenade_remove_time"))
 		m_dwGrenadeRemoveTime = pSettings->r_u32(section,"grenade_remove_time");
 	else
@@ -112,7 +112,7 @@ void CGrenade::State(u32 state)
 				if (Local())
 				{
 					#ifdef DEBUG
-					Msg("Destroying local grenade[%d][%d]",ID(),Device.dwFrame);
+					Msg("Destroying local grenade[%d][%d]",ID(),Device->dwFrame);
 					#endif
 					DestroyObject		();
 				}
@@ -133,7 +133,7 @@ void CGrenade::Throw()
 	
 	if (pGrenade) {
 		pGrenade->set_destroy_time(m_dwDestroyTimeMax);
-		//установить ID того кто кинул гранату
+		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ID пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		pGrenade->SetInitiator( H_Parent()->ID() );
 	}
 	inherited::Throw			();
@@ -172,7 +172,7 @@ void CGrenade::PutNextToSlot()
 	if (OnClient()) return;
 	VERIFY									(!getDestroy());
 
-	//выкинуть гранату из инвентаря
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if (m_pCurrentInventory)
 	{
 		NET_Packet						P;
@@ -224,7 +224,7 @@ bool CGrenade::Action(s32 cmd, u32 flags)
 
 	switch(cmd) 
 	{
-	//переключение типа гранаты
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	case kWPN_NEXT:
 		{
             if(flags&CMD_START) 

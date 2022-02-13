@@ -109,7 +109,7 @@ BOOL CInventoryOwner::net_Spawn		(CSE_Abstract* DC)
 
 	m_trade_parameters			= xr_new<CTradeParameters>(trade_section());
 
-	//получить указатель на объект, InventoryOwner
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, InventoryOwner
 	//m_inventory->setSlotsBlocked(false);
 	CGameObject			*pThis = smart_cast<CGameObject*>(this);
 	if(!pThis) return FALSE;
@@ -123,7 +123,7 @@ BOOL CInventoryOwner::net_Spawn		(CSE_Abstract* DC)
 
 		R_ASSERT( pTrader->character_profile().size() );
 
-		//синхронизируем параметры персонажа с серверным объектом
+		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		CharacterInfo().Init(pTrader);
 
 		//-------------------------------------
@@ -180,7 +180,7 @@ void	CInventoryOwner::load	(IReader &input_packet)
 	if(active_slot == u8(-1))
 		inventory().SetActiveSlot(NO_ACTIVE_SLOT);
 	else
-		inventory().Activate_deffered(active_slot, Device.dwFrame);
+		inventory().Activate_deffered(active_slot, Device->dwFrame);
 
 	m_tmp_active_slot_num		 = active_slot;
 
@@ -197,14 +197,14 @@ void CInventoryOwner::UpdateInventoryOwner(u32 deltaT)
 
 	if(IsTalking())
 	{
-		//если наш собеседник перестал говорить с нами,
-		//то и нам нечего ждать.
+		//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ,
+		//пїЅпїЅ пїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.
 		if(!m_pTalkPartner->IsTalking())
 		{
 			StopTalk();
 		}
 
-		//если мы умерли, то тоже не говорить
+		//пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		CEntityAlive* pOurEntityAlive = smart_cast<CEntityAlive*>(this);
 		R_ASSERT(pOurEntityAlive);
 		if(!pOurEntityAlive->g_Alive()) StopTalk();
@@ -212,7 +212,7 @@ void CInventoryOwner::UpdateInventoryOwner(u32 deltaT)
 }
 
 
-//достать PDA из специального слота инвентаря
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ PDA пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 CPda* CInventoryOwner::GetPDA() const
 {
 	return (CPda*)(m_inventory->m_slots[PDA_SLOT].m_pIItem);
@@ -225,16 +225,16 @@ CTrade* CInventoryOwner::GetTrade()
 }
 
 
-//состояние диалога
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-//нам предлагают поговорить,
-//проверяем наше отношение 
-//и если не враг начинаем разговор
+//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ,
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 
+//пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 bool CInventoryOwner::OfferTalk(CInventoryOwner* talk_partner)
 {
 	if(!IsTalkEnabled()) return false;
 
-	//проверить отношение к собеседнику
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	CEntityAlive* pOurEntityAlive = smart_cast<CEntityAlive*>(this);
 	R_ASSERT(pOurEntityAlive);
 
@@ -257,7 +257,7 @@ void CInventoryOwner::StartTalk(CInventoryOwner* talk_partner, bool start_trade)
 	m_bTalking = true;
 	m_pTalkPartner = talk_partner;
 
-	//тут же включаем торговлю
+	//пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if(start_trade)
 		GetTrade()->StartTrade(talk_partner);
 }
@@ -305,13 +305,13 @@ void CInventoryOwner::OnItemTake			(CInventoryItem *inventory_item)
 	}
 }
 
-//возвращает текуший разброс стрельбы с учетом движения (в радианах)
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
 float CInventoryOwner::GetWeaponAccuracy	() const
 {
 	return 0.f;
 }
 
-//максимальный переносимы вес
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
 float  CInventoryOwner::MaxCarryWeight () const
 {
 	float ret =  inventory().GetMaxWeight();
@@ -345,7 +345,7 @@ void CInventoryOwner::spawn_supplies		()
 	}
 }
 
-//игровое имя 
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ 
 LPCSTR	CInventoryOwner::Name () const
 {
 //	return CharacterInfo().Name();
@@ -362,7 +362,7 @@ void CInventoryOwner::LostPdaContact	(CInventoryOwner* pInvOwner)
 }
 
 //////////////////////////////////////////////////////////////////////////
-//для работы с relation system
+//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ relation system
 u16 CInventoryOwner::object_id	()  const
 {
 	return smart_cast<const CGameObject*>(this)->ID();
@@ -370,7 +370,7 @@ u16 CInventoryOwner::object_id	()  const
 
 
 //////////////////////////////////////////////////////////////////////////
-//установка группировки на клиентском и серверном объкте
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
 void CInventoryOwner::SetCommunity	(CHARACTER_COMMUNITY_INDEX new_community)
 {

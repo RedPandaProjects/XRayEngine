@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////
-// UIPdaMsgListItem.cpp: элемент окна списка в основном 
-// экране для сообщений PDA
+// UIPdaMsgListItem.cpp: пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 
+// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ PDA
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -11,7 +11,7 @@
 #include "xrUIXmlParser.h"
 #include "UIXmlInit.h"
 #include "uicoloranimatorwrapper.h"
-#include "../object_broker.h"
+#include "../../XrEngine/object_broker.h"
 
 #define PDA_MSG_MAINGAME_CHAR "maingame_pda_msg.xml"
 

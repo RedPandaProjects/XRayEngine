@@ -6,7 +6,7 @@
 #include "UIGameAHunt.h"
 #include "clsid_game.h"
 #include "map_manager.h"
-#include "LevelGameDef.h"
+#include "..\XrEngine\LevelGameDef.h"
 #include "hit.h"
 #include "PHDestroyable.h"
 #include "actor.h"
@@ -33,7 +33,15 @@
 
 #include "game_cl_artefacthunt_snd_msg.h"
 #include "../XrEngine/IGame_Persistent.h"
-
+//old
+enum ERPGameType {		// [0..255]
+	rpgtGameAny = u8(0),
+	rpgtGameDeathmatch,
+	rpgtGameTeamDeathmatch,
+	rpgtGameArtefactHunt,
+	rpgtGameCaptureTheArtefact,
+	rpgtGameCount,
+};
 game_cl_ArtefactHunt::game_cl_ArtefactHunt()
 {
 	m_game_ui = NULL;
@@ -91,7 +99,7 @@ void game_cl_ArtefactHunt::Init ()
 				};
 				switch (RP_type)
 				{
-				case rptTeamBaseParticle:
+			/*	case rptTeamBaseParticle:
 					{
 						string256 ParticleStr;
 						sprintf_s(ParticleStr, "teambase_particle_%d", RP_team);
@@ -106,7 +114,7 @@ void game_cl_ArtefactHunt::Init ()
 							pStaticParticles->Play			();
 							Level().m_StaticParticles.push_back		(pStaticParticles);
 						};
-					}break;
+					}break;*/
 				};
 			};
 			O->close();

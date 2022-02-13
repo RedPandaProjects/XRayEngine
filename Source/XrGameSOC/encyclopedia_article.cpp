@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////
 // encyclopedia_article.cpp
-// структура, хранящая и загружающая статьи в энциклопедию
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 ///////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -8,7 +8,7 @@
 #include "ui/xrUIXmlParser.h"
 #include "ui/UIXmlInit.h"
 #include "ui/UIInventoryUtilities.h"
-#include "object_broker.h"
+#include "../XrEngine/object_broker.h"
 
 using namespace InventoryUtilities;
 
@@ -62,13 +62,13 @@ void CEncyclopediaArticle::load_shared	(LPCSTR)
 	XML_NODE* pNode = pXML->NavigateToNode(id_to_index::tag_name, item_data.pos_in_file);
 	THROW3(pNode, "encyclopedia article id=", *item_data.id);
 
-	//текст
+	//пїЅпїЅпїЅпїЅпїЅ
 	data()->text = pXML->Read(pNode, "text", 0, "");
-	//имя
+	//пїЅпїЅпїЅ
 	data()->name = pXML->ReadAttrib(pNode, "name", "");
-	//группа
+	//пїЅпїЅпїЅпїЅпїЅпїЅ
 	data()->group = pXML->ReadAttrib(pNode, "group", "");
-	//секция ltx, откуда читать данные
+	//пїЅпїЅпїЅпїЅпїЅпїЅ ltx, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	LPCSTR ltx = pXML->Read(pNode, "ltx", 0, NULL);
 
 
@@ -100,7 +100,7 @@ void CEncyclopediaArticle::load_shared	(LPCSTR)
 
 		const int minSize = 65;
 
-		// Сначала устанавливаем если надо минимально допустимые размеры иконки
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 		if (r.width() < minSize)
 		{
 			float dx = minSize - r.width();
@@ -118,7 +118,7 @@ void CEncyclopediaArticle::load_shared	(LPCSTR)
 		data()->image.SetWndRect(0, 0, r.width(), r.height());
 	};
 
-	// Тип статьи
+	// пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	xr_string atricle_type = pXML->ReadAttrib(pNode, "article_type", "encyclopedia");
 	if(0==stricmp(atricle_type.c_str(),"encyclopedia")){
 		data()->articleType = ARTICLE_DATA::eEncyclopediaArticle;

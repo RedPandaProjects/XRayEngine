@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////
-// HudItem.cpp: класс родитель для всех предметов имеющих
-//				собственный HUD (CWeapon, CMissile etc)
+// HudItem.cpp: пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//				пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ HUD (CWeapon, CMissile etc)
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -45,7 +45,7 @@ DLL_Pure *CHudItem::_construct	()
 
 void CHudItem::Load(LPCSTR section)
 {
-	//загрузить hud, если он нужен
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ hud, пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	if(pSettings->line_exist(section,"hud"))
 		hud_sect		= pSettings->r_string		(section,"hud");
 
@@ -56,7 +56,7 @@ void CHudItem::Load(LPCSTR section)
 			m_bInertionAllow = !!pSettings->r_bool(*hud_sect, "allow_inertion");
 	}else{
 		m_pHUD = NULL;
-		//если hud не задан, но задан слот, то ошибка
+		//пїЅпїЅпїЅпїЅ hud пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 		R_ASSERT2(item().GetSlot() == NO_ACTIVE_SLOT, "active slot is set, but hud for food item is not available");
 	}
 
@@ -228,7 +228,7 @@ void CHudItem::UpdateHudInertion		(Fmatrix& hud_trans)
 		}
 
 		// tend to forward
-		m_last_dir.mad	(diff_dir,TENDTO_SPEED*Device.fTimeDelta);
+		m_last_dir.mad	(diff_dir,TENDTO_SPEED*Device->fTimeDelta);
 		origin.mad		(diff_dir,ORIGIN_OFFSET);
 
 		// pitch compensation
@@ -243,7 +243,7 @@ void CHudItem::UpdateHudInertion		(Fmatrix& hud_trans)
 
 void CHudItem::UpdateCL()
 {
-	m_dwStateTime += Device.dwTimeDelta;
+	m_dwStateTime += Device->dwTimeDelta;
 
 	if(m_pHUD) m_pHUD->Update();
 	UpdateHudPosition	();

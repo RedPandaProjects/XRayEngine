@@ -8,9 +8,9 @@
 
 #include "stdafx.h"
 #include "alife_registry_container.h"
-#include "object_interfaces.h"
-#include "alife_space.h"
-#include "object_type_traits.h"
+#include "../XrEngine/object_interfaces.h"
+#include "..\xrEngine\alife_space.h"
+#include "..\xrEngine\object_type_traits.h"
 
 template <typename T1, typename _T2, typename Head>
 struct CRegistryHelperLoad {
@@ -29,7 +29,7 @@ struct CRegistryHelperLoad {
 
 	IC	static void process(T1 *self, T2 &p1)
 	{
-		do_load<object_type_traits::is_base_and_derived<IPureLîadableObject<T2>,Head>::value>(self,p1);
+		do_load<object_type_traits::is_base_and_derived<IPureLoadableObject<T2>,Head>::value>(self,p1);
 	}
 };
 

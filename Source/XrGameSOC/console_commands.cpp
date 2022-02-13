@@ -140,7 +140,7 @@ public:
 		int		_eco_smem		= (int)g_pSharedMemoryContainer->stat_economy	();
 		u32		m_base=0,c_base=0,m_lmaps=0,c_lmaps=0;
 		
-		//if (Device.Resources)	Device.Resources->_GetMemoryUsage	(m_base,c_base,m_lmaps,c_lmaps);
+		//if (Device->Resources)	Device->Resources->_GetMemoryUsage	(m_base,c_base,m_lmaps,c_lmaps);
 		
 		log_vminfo	();
 		
@@ -318,7 +318,7 @@ public:
 	{
 		float				time_factor = (float)atof(args);
 		clamp				(time_factor,.001f,1000.f);
-		Device.time_factor	(time_factor);
+		Device->time_factor	(time_factor);
 	}
 };
 #endif // MASTER_GOLD
@@ -450,7 +450,7 @@ public:
 		Msg						("Game save overhead  : %f milliseconds",timer.GetElapsed_sec()*1000.f);
 #endif
 		SDrawStaticStruct* _s		= HUD().GetUI()->UIGame()->AddCustomStatic("game_saved", true);
-		_s->m_endTime				= Device.fTimeGlobal+3.0f;// 3sec
+		_s->m_endTime				= Device->fTimeGlobal+3.0f;// 3sec
 		string_path					save_name;
 		strconcat					(sizeof(save_name),save_name,*CStringTable().translate("st_game_saved"),": ", S);
 		_s->wnd()->SetText			(save_name);
@@ -500,8 +500,8 @@ public:
 /*     moved to level_network_messages.cpp
 		CSavedGameWrapper			wrapper(args);
 		if (wrapper.level_id() == ai().level_graph().level_id()) {
-			if (Device.Paused())
-				Device.Pause		(FALSE, TRUE, TRUE, "CCC_ALifeLoadFrom");
+			if (Device->Paused())
+				Device->Pause		(FALSE, TRUE, TRUE, "CCC_ALifeLoadFrom");
 
 			Level().remove_objects	();
 
@@ -515,8 +515,8 @@ public:
 		if(MainMenu()->IsActive())
 			MainMenu()->Activate(false);
 
-		if (Device.Paused())
-			Device.Pause			(FALSE, TRUE, TRUE, "CCC_ALifeLoadFrom");
+		if (Device->Paused())
+			Device->Pause			(FALSE, TRUE, TRUE, "CCC_ALifeLoadFrom");
 
 		NET_Packet					net_packet;
 		net_packet.w_begin			(M_LOAD_GAME);
@@ -691,10 +691,10 @@ public:
 
 	virtual void Execute				(LPCSTR args)
 	{
-		if (!ai().get_level_graph())
+		if (!ai().get_level_graph() || !dynamic_cast<CLevelGraph*>(&ai().level_graph()))
 			return;
 
-		ai().level_graph().setup_current_level	(-1);
+		dynamic_cast<CLevelGraph*>(&ai().level_graph())->setup_current_level	(-1);
 	}
 };
 
@@ -707,10 +707,10 @@ public:
 
 	virtual void Execute					(LPCSTR args)
 	{
-		if (!ai().get_level_graph())
+		if (!ai().get_level_graph()||!dynamic_cast<CLevelGraph*>(&ai().level_graph()))
 			return;
 
-		ai().level_graph().setup_current_level	(
+		dynamic_cast<CLevelGraph*>(&ai().level_graph())->setup_current_level	(
 			ai().level_graph().level_id()
 		);
 	}
@@ -724,7 +724,7 @@ public:
 
 	virtual void Execute					(LPCSTR args)
 	{
-		if (!ai().get_level_graph())
+		if (!ai().get_level_graph() || !dynamic_cast<CLevelGraph*>(&ai().level_graph()))
 			return;
 
 		string256			S;
@@ -732,7 +732,7 @@ public:
 		sscanf				(args,"%s",S);
 
 		if (!*S) {
-			ai().level_graph().setup_current_level	(-1);
+			dynamic_cast<CLevelGraph*>(&ai().level_graph())->setup_current_level	(-1);
 			return;
 		}
 
@@ -742,7 +742,7 @@ public:
 			return;
 		}
 
-		ai().level_graph().setup_current_level	(level->id());
+		dynamic_cast<CLevelGraph*>(&ai().level_graph())->setup_current_level	(level->id());
 	}
 };
 

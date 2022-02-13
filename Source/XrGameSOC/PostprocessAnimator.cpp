@@ -180,18 +180,18 @@ BOOL CPostprocessAnimator::Process(SPPInfo &PPInfo)
 	CEffectorPP::Process		(PPInfo);
 	
 
-	if(m_start_time<0.0f)m_start_time=Device.fTimeGlobal;
-	if(m_bCyclic &&((Device.fTimeGlobal-m_start_time)>f_length)) m_start_time+=f_length;
+	if(m_start_time<0.0f)m_start_time=Device->fTimeGlobal;
+	if(m_bCyclic &&((Device->fTimeGlobal-m_start_time)>f_length)) m_start_time+=f_length;
 
-	Update					(Device.fTimeGlobal-m_start_time);
+	Update					(Device->fTimeGlobal-m_start_time);
 
 	VERIFY				(_valid(m_factor));
 	VERIFY				(_valid(m_factor_speed));
 	VERIFY				(_valid(m_dest_factor));
 	if(m_bStop)
-		m_factor			-=	Device.fTimeDelta*m_factor_speed;
+		m_factor			-=	Device->fTimeDelta*m_factor_speed;
 	else
-		m_factor			+= m_factor_speed*Device.fTimeDelta*(m_dest_factor-m_factor);
+		m_factor			+= m_factor_speed*Device->fTimeDelta*(m_dest_factor-m_factor);
 
 	clamp					(m_factor, 0.0001f, 1.0f);
 

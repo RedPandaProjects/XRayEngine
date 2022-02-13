@@ -72,7 +72,7 @@ CALifeUpdateManager::CALifeUpdateManager	(xrServer *server, LPCSTR section) :
 CALifeUpdateManager::~CALifeUpdateManager	()
 {
 	shedule_unregister		();
-	Device.remove_from_seq_parallel	(
+	Device->remove_from_seq_parallel	(
 		fastdelegate::FastDelegate0<>(
 			this,
 			&CALifeUpdateManager::update
@@ -118,7 +118,7 @@ void CALifeUpdateManager::shedule_Update	(u32 dt)
 		return;
 
 	if (!m_first_time && g_mt_config.test(mtALife)) {
-		Device.seqParallel.push_back(
+		Device->seqParallel.push_back(
 			fastdelegate::FastDelegate0<>(
 				this,
 				&CALifeUpdateManager::update
@@ -331,7 +331,7 @@ void CALifeUpdateManager::set_interactive		(ALife::_OBJECT_ID id, bool value)
 
 void CALifeUpdateManager::jump_to_level			(LPCSTR level_name) const
 {
-	const CGameGraph::SLevel			&level = ai().game_graph().header().level(level_name);
+	const IGameGraph::SLevel			&level = ai().game_graph().header().level(level_name);
 	GameGraph::_GRAPH_ID				dest = GameGraph::_GRAPH_ID(-1);
 	GraphEngineSpace::CGameLevelParams	evaluator(level.id());
 	bool								failed = !ai().graph_engine().search(ai().game_graph(),graph().actor()->m_tGraphID,GameGraph::_GRAPH_ID(-1),0,evaluator);

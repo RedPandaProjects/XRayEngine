@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "alife_space.h"
+#include "..\xrEngine\alife_space.h"
 #include "hit.h"
 #include "PHDestroyable.h"
 #include "CharacterPhysicsSupport.h"
@@ -143,7 +143,7 @@ void CCharacterPhysicsSupport::in_Load(LPCSTR section)
 	skel_ddelay						= pSettings->r_float(section,"ph_skeleton_ddelay");
 	skel_remain_time				= skel_ddelay;
 	skel_fatal_impulse_factor		= pSettings->r_float(section,"ph_skel_fatal_impulse_factor");
-	//gray_wolf>Читаем из ltx параметры для поддержки изменяющегося трения у персонажей во время смерти
+	//gray_wolf>пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ ltx пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	skeleton_skin_ddelay			= pSettings->r_float(section,"ph_skeleton_skin_ddelay");
 	skeleton_skin_remain_time		= skeleton_skin_ddelay;
 	skeleton_skin_friction_start	= pSettings->r_float(section,"ph_skeleton_skin_friction_start");
@@ -199,9 +199,9 @@ void CCharacterPhysicsSupport::in_NetSpawn(CSE_Abstract* e)
 	}else if( !m_EntityAlife.animation_movement_controlled( ) )
 	{
 	
-		ka->PlayCycle( "death_init" );///непонятно зачем это вообще надо запускать
-									  ///этот хак нужен, потому что некоторым монстрам 
-									  ///анимация после спона, может быть вообще не назначена
+		ka->PlayCycle( "death_init" );///пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+									  ///пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 
+									  ///пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	}
 	k->CalculateBones_Invalidate();
 	k->CalculateBones();
@@ -412,7 +412,7 @@ void CCharacterPhysicsSupport::in_Hit(float P,Fvector &dir, CObject *who,s16 ele
 	if(m_flags.test(fl_block_hit))
 	{
 		VERIFY(!m_EntityAlife.g_Alive());
-		if(Device.dwTimeGlobal-m_EntityAlife.GetLevelDeathTime()>=2000)
+		if(Device->dwTimeGlobal-m_EntityAlife.GetLevelDeathTime()>=2000)
 			m_flags.set(fl_block_hit,FALSE);
 		else return;
 	}
@@ -471,7 +471,7 @@ void CCharacterPhysicsSupport::in_UpdateCL( )
 	if( m_pPhysicsShell )
 	{
 		VERIFY( m_pPhysicsShell->isFullActive( ) );
-		m_pPhysicsShell->SetRagDoll( );//Теперь шела относиться к классу объектов cbClassRagDoll
+		m_pPhysicsShell->SetRagDoll( );//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ cbClassRagDoll
 		
 		if( !is_imotion(m_interactive_motion ) )//!m_flags.test(fl_use_death_motion)
 			m_pPhysicsShell->InterpolateGlobalTransform( &mXFORM );
@@ -625,7 +625,7 @@ void CCharacterPhysicsSupport::ActivateShell			( CObject* who )
 		anim_mov_blend = m_EntityAlife.animation_movement( )->ControlBlend( );
 		/*
 		VERIFY( anim_mov_blend->blend != CBlend::eFREE_SLOT );
-		anim_mov_blend->timeCurrent -= 2 * Device.fTimeDelta * anim_mov_blend->speed;
+		anim_mov_blend->timeCurrent -= 2 * Device->fTimeDelta * anim_mov_blend->speed;
 		blend_time = anim_mov_blend->timeCurrent;
 		anim_mov_blend->playing = true;
 
@@ -726,13 +726,13 @@ void CCharacterPhysicsSupport::ActivateShell			( CObject* who )
 	m_pPhysicsShell->set_CallbackData((void*)this);
 //
 
-	if(anim_mov_ctrl && anim_mov_blend && anim_mov_blend->blend_state() != CBlend::eFREE_SLOT &&  anim_mov_blend->timeCurrent + Device.fTimeDelta*anim_mov_blend->speed < anim_mov_blend->timeTotal-SAMPLE_SPF-EPS)//.
+	if(anim_mov_ctrl && anim_mov_blend && anim_mov_blend->blend_state() != CBlend::eFREE_SLOT &&  anim_mov_blend->timeCurrent + Device->fTimeDelta*anim_mov_blend->speed < anim_mov_blend->timeTotal-SAMPLE_SPF-EPS)//.
 	{
 		const Fmatrix sv_xform = mXFORM;
 		mXFORM.set( start_xform );
 		//anim_mov_blend->blendPower = 1;
-		anim_mov_blend->timeCurrent  += Device.fTimeDelta * anim_mov_blend->speed;
-		m_pPhysicsShell->AnimToVelocityState( Device.fTimeDelta, 2 * default_l_limit, 10.f * default_w_limit );
+		anim_mov_blend->timeCurrent  += Device->fTimeDelta * anim_mov_blend->speed;
+		m_pPhysicsShell->AnimToVelocityState( Device->fTimeDelta, 2 * default_l_limit, 10.f * default_w_limit );
 		mXFORM.set( sv_xform );
 	}
 
@@ -902,7 +902,7 @@ void CCharacterPhysicsSupport::TestForWounded()
 
 void CCharacterPhysicsSupport::UpdateFrictionAndJointResistanse()
 {
-	//Преобразование skel_ddelay из кадров в секунды и линейное нарастание сопротивления в джоинтах со временем от момента смерти 
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ skel_ddelay пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ 
 
 	if(skel_remain_time!=0)
 	{
@@ -964,9 +964,9 @@ void CCharacterPhysicsSupport::CalculateTimeDelta()
 	}
 	else
 	{
-		m_time_delta=Device.fTimeGlobal-m_Pred_Time;					
+		m_time_delta=Device->fTimeGlobal-m_Pred_Time;					
 	}
-	m_Pred_Time=Device.fTimeGlobal;
+	m_Pred_Time=Device->fTimeGlobal;
 };
 
 void CCharacterPhysicsSupport::on_create_anim_mov_ctrl	()

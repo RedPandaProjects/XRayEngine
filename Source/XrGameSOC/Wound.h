@@ -1,10 +1,10 @@
-// Wound.h: класс описания раны
+// Wound.h: пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 //
 //////////////////////////////////////////////////////////////////////
 
 #pragma once
 
-#include "alife_space.h"
+#include "..\xrEngine\alife_space.h"
 #include "hit_immunity_space.h"
 
 class NET_Packet;
@@ -25,7 +25,7 @@ public:
 
 	void	AddHit		(float hit_power, ALife::EHitType hit_type);
 	
-	//заживление раны
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 	void	Incarnation	(float percent, float min_wound_size);
 	u16		GetBoneNum	() {return m_iBoneNum;}
 	void 	SetBoneNum	(u16 bone_num) {m_iBoneNum = bone_num;}
@@ -39,19 +39,19 @@ public:
 	void  SetDestroy(bool destroy) {m_bToBeDestroy = destroy;}
 	bool  GetDestroy()			   {return m_bToBeDestroy;}
 
-	//время обновления (для капель крови)
+	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ)
 	float m_fDropTime;
 
 protected:
-	//косточка на которой появилась рана
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 	u16 m_iBoneNum;
 
-	//косточка, если на ране отыгрывается партикл
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	u16 m_iParticleBoneNum;
-	//имя этого партикла
+	//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	shared_str m_sParticleName;
 
-	//список составляющих раны 
+	//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ 
 	HitImmunity::HitTypeSVec m_Wounds;
 
 	bool		m_bToBeDestroy;

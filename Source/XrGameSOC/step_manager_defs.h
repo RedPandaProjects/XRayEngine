@@ -1,6 +1,6 @@
 #pragma once
 
-#include "associative_vector.h"
+#include "../XrEngine/associative_vector.h"
 
 #define MIN_LEGS_COUNT	1
 #define MAX_LEGS_COUNT	4 
@@ -22,8 +22,8 @@ typedef STEPS_MAP::iterator							STEPS_MAP_IT;
 
 struct SStepInfo {
 	struct {
-		bool			handled;		// обработан
-		u8				cycle;			// цикл в котором отработан
+		bool			handled;		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+		u8				cycle;			// пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	} activity[MAX_LEGS_COUNT];
 
 	SStepParam		params;

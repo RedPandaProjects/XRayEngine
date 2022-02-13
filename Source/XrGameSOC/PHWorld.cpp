@@ -79,7 +79,7 @@ void CPHWorld::SetStep(dReal s)
 	world_damping										=	1.0f*DAMPING(world_cfm,world_erp);
 	if(ph_world&&ph_world->Exist())
 	{
-		float	frame_time					=	Device.fTimeDelta;
+		float	frame_time					=	Device->fTimeDelta;
 		u32		it_number					=	iFloor	(frame_time /fixed_step);
 		frame_time							-=	it_number*fixed_step;
 		ph_world->m_previous_frame_time		=	frame_time;
@@ -90,8 +90,8 @@ void CPHWorld::Create()
 {
 	dWorldID phWorld=0;
 	
-	if (psDeviceFlags.test(mtPhysics))	Device.seqFrameMT.Add	(this,REG_PRIORITY_HIGH);
-	else								Device.seqFrame.Add		(this,REG_PRIORITY_LOW);
+	if (psDeviceFlags.test(mtPhysics))	Device->seqFrameMT.Add	(this,REG_PRIORITY_HIGH);
+	else								Device->seqFrame.Add		(this,REG_PRIORITY_LOW);
 	
 	m_commander							=xr_new<CPHCommander>();
 	//dVector3 extensions={2048,256,2048};
@@ -154,8 +154,8 @@ void CPHWorld::Destroy()
 	dCloseODE();
 	dCylinderClassUser=-1;
 	dRayMotionsClassUser=-1;
-	Device.seqFrameMT.Remove	(this);
-	Device.seqFrame.Remove		(this);
+	Device->seqFrameMT.Remove	(this);
+	Device->seqFrame.Remove		(this);
 	b_exist=false;
 }
 void CPHWorld::SetGravity(float g)
@@ -168,20 +168,20 @@ void CPHWorld::SetGravity(float g)
 
 void CPHWorld::OnFrame()
 {
-	// Msg									("------------- physics: %d / %d",u32(Device.dwFrame),u32(m_steps_num));
-	//просчитать полет пуль
+	// Msg									("------------- physics: %d / %d",u32(Device->dwFrame),u32(m_steps_num));
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 	/*
-	Device.Statistic->TEST0.Begin		();
+	Device->Statistic->TEST0.Begin		();
 	Level().BulletManager().Update		();
-	Device.Statistic->TEST0.End			();
+	Device->Statistic->TEST0.End			();
 	*/
 #ifdef DEBUG 
 	DBG_DrawFrameStart();
 	DBG_DrawStatBeforeFrameStep();
 #endif
-	Device.Statistic->Physics.Begin		();
-	FrameStep							(Device.fTimeDelta);
-	Device.Statistic->Physics.End		();
+	Device->Statistic->Physics.Begin		();
+	FrameStep							(Device->fTimeDelta);
+	Device->Statistic->Physics.End		();
 #ifdef DEBUG
 	DBG_DrawStatAfterFrameStep();
 
@@ -216,7 +216,7 @@ void CPHWorld::Step()
 	--disable_count;
 
 	++m_steps_num;
-	Device.Statistic->ph_collision.Begin	();
+	Device->Statistic->ph_collision.Begin	();
 
 	for(i_object=m_objects.begin();m_objects.end() != i_object;)
 	{
@@ -225,7 +225,7 @@ void CPHWorld::Step()
 
 		++i_object;
 	}
-	Device.Statistic->ph_collision.End	();
+	Device->Statistic->ph_collision.End	();
 
 #ifdef DEBUG
 	for(i_object=m_objects.begin();m_objects.end() != i_object;)
@@ -249,7 +249,7 @@ void CPHWorld::Step()
 		obj->PhTune(fixed_step);
 	}
 
-	Device.Statistic->ph_core.Begin		();
+	Device->Statistic->ph_core.Begin		();
 #ifdef DEBUG
 	dbg_bodies_num=0;
 	dbg_joints_num=0;
@@ -277,7 +277,7 @@ void CPHWorld::Step()
 		obj->IslandStep(fixed_step);
 	}
 
-	Device.Statistic->ph_core.End		();
+	Device->Statistic->ph_core.End		();
 
 
 	for(i_object=m_objects.begin();m_objects.end() != i_object;)
@@ -392,7 +392,7 @@ void CPHWorld::FrameStep(dReal step)
 	//for(UINT i=0;i<(m_reduce_delay+1);++i)
 	b_processing=true;
 
-	start_time = Device.dwTimeGlobal;// - u32(m_frame_time*1000);
+	start_time = Device->dwTimeGlobal;// - u32(m_frame_time*1000);
 	if(g_bDebugDumpPhysicsStep&&it_number>20)Msg("!!!TOO MANY PHYSICS STEPS PER FRAME = %d !!!",it_number);
 	for(UINT i=0; i<it_number;++i)	Step();
 	b_processing=false;

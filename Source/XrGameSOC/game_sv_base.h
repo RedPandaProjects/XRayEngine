@@ -1,7 +1,7 @@
 #pragma once
 
 #include "game_base.h"
-#include "alife_space.h"
+#include "..\xrEngine\alife_space.h"
 #include "script_export_space.h"
 #include "../XrCore/client_id.h"
 #include "game_sv_base_console_vars.h"
@@ -83,8 +83,8 @@ public:
 				void				GenerateGameMessage		(NET_Packet &P);
 	
 
-	virtual		void				OnRoundStart			();									// старт раунда
-	virtual		void				OnRoundEnd				();	//	round_end_reason			// конец раунда
+	virtual		void				OnRoundStart			();									// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+	virtual		void				OnRoundEnd				();	//	round_end_reason			// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
 	virtual		void				MapRotation_AddMap		(LPCSTR MapName);
 	virtual		void				MapRotation_ListMaps	();
@@ -147,8 +147,8 @@ public:
 	virtual		void				OnDetach				(u16 eid_who, u16 eid_target)	= 0;
 	virtual		void				OnDestroyObject			(u16 eid_who)							{};			
 
-	virtual		void				OnHit					(u16 id_hitter, u16 id_hitted, NET_Packet& P);	//кто-то получил Hit
-	virtual		void				OnPlayerHitPlayer		(u16 id_hitter, u16 id_hitted, NET_Packet& P){}; //игрок получил Hit
+	virtual		void				OnHit					(u16 id_hitter, u16 id_hitted, NET_Packet& P);	//пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ Hit
+	virtual		void				OnPlayerHitPlayer		(u16 id_hitter, u16 id_hitted, NET_Packet& P){}; //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ Hit
 
 	// Main
 	virtual		void				Create					(shared_str& options);

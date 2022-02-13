@@ -54,14 +54,14 @@ void CAgentExplosiveManager::register_explosive	(const CExplosive *explosive, co
 	}
 
 	m_explosives_to_remove.push_back	(game_object->ID());
-	m_explosives.push_back				(CDangerExplosive(explosive,game_object,0,Device.dwTimeGlobal));
+	m_explosives.push_back				(CDangerExplosive(explosive,game_object,0,Device->dwTimeGlobal));
 	
 	u32									interval = AFTER_GRENADE_DESTROYED_INTERVAL;
 	const CMissile						*missile = smart_cast<const CMissile*>(explosive);
-	if (missile && (missile->destroy_time() > Device.dwTimeGlobal))
-		interval						= missile->destroy_time() - Device.dwTimeGlobal + AFTER_GRENADE_DESTROYED_INTERVAL;
+	if (missile && (missile->destroy_time() > Device->dwTimeGlobal))
+		interval						= missile->destroy_time() - Device->dwTimeGlobal + AFTER_GRENADE_DESTROYED_INTERVAL;
 
-	object().location().add				(xr_new<CDangerObjectLocation>(game_object,Device.dwTimeGlobal,interval,GRENADE_RADIUS));
+	object().location().add				(xr_new<CDangerObjectLocation>(game_object,Device->dwTimeGlobal,interval,GRENADE_RADIUS));
 }
 
 bool CAgentExplosiveManager::process_explosive			(CMemberOrder &member)

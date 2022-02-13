@@ -67,7 +67,7 @@ float CAI_Stalker::GetWeaponAccuracy	() const
 {
 	float				base = PI/180.f;
 	
-	//влияние ранга на меткость
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	base				*= m_fRankDisperison;
 
 	if (!movement().path_completed()) {
@@ -192,7 +192,7 @@ void			CAI_Stalker::Hit					(SHit* pHDS)
 
 //	pHDS->power						*= .1f;
 
-	//хит может меняться в зависимости от ранга (новички получают больше хита, чем ветераны)
+	//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
 	SHit							HDS = *pHDS;
 	HDS.power						*= m_fRankImmunity;
 	if (m_boneHitProtection && HDS.hit_type == ALife::eHitTypeFireWound){
@@ -212,7 +212,7 @@ void			CAI_Stalker::Hit					(SHit* pHDS)
 		if (!already_critically_wounded) {
 			const CCoverPoint		*cover = agent_manager().member().member(this).cover();
 			if (cover && pHDS->initiator() && (pHDS->initiator()->ID() != ID()) && !fis_zero(pHDS->damage()) && brain().affect_cover())
-				agent_manager().location().add	(xr_new<CDangerCoverLocation>(cover,Device.dwTimeGlobal,DANGER_INTERVAL,DANGER_DISTANCE));
+				agent_manager().location().add	(xr_new<CDangerCoverLocation>(cover,Device->dwTimeGlobal,DANGER_INTERVAL,DANGER_DISTANCE));
 		}
 
 		const CEntityAlive	*entity_alive = smart_cast<const CEntityAlive*>(pHDS->initiator());
@@ -618,10 +618,10 @@ float CAI_Stalker::pick_distance		()
 
 void CAI_Stalker::update_can_kill_info	()
 {
-	if (m_pick_frame_id == Device.dwFrame)
+	if (m_pick_frame_id == Device->dwFrame)
 		return;
 
-	m_pick_frame_id			= Device.dwFrame;
+	m_pick_frame_id			= Device->dwFrame;
 	m_can_kill_member		= false;
 	m_can_kill_enemy		= false;
 
@@ -712,7 +712,7 @@ bool CAI_Stalker::fire_make_sense		()
 	if (last_time_seen == u32(-1))
 		return				(false);
 
-	if (Device.dwTimeGlobal > last_time_seen + FIRE_MAKE_SENSE_INTERVAL)
+	if (Device->dwTimeGlobal > last_time_seen + FIRE_MAKE_SENSE_INTERVAL)
 		return				(false);
 
 	// if we do not have a weapon
@@ -898,7 +898,7 @@ bool CAI_Stalker::critical_wound_external_conditions_suitable()
 	if (!agent_manager().member().registered_in_combat(this))
 		return						(false);
 
-//	Msg								("%6d executing critical hit",Device.dwTimeGlobal);
+//	Msg								("%6d executing critical hit",Device->dwTimeGlobal);
 	animation().global().make_inactual	();
 	return							(true);
 }

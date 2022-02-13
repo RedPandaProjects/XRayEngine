@@ -1,5 +1,5 @@
-// Level_Bullet_Manager.cpp:	для обеспечения полета пули по траектории
-//								все пули и осколки передаются сюда
+// Level_Bullet_Manager.cpp:	пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//								пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -176,7 +176,7 @@ void CBulletManager::AddBullet(const Fvector& position,
 	m_Bullets.push_back(SBullet());
 	SBullet& bullet		= m_Bullets.back();
 	bullet.Init			(position, direction, starting_speed, power, impulse, sender_id, sendersweapon_id, e_hit_type, maximum_distance, cartridge, SendHit);
-	bullet.frame_num	= Device.dwFrame;
+	bullet.frame_num	= Device->dwFrame;
 	bullet.flags.aim_bullet	=	AimBullet;
 	if (SendHit && GameID() != GAME_SINGLE)
 		Game().m_WeaponUsageStatistic->OnBullet_Fire(&bullet, cartridge);
@@ -186,7 +186,7 @@ void CBulletManager::AddBullet(const Fvector& position,
 void CBulletManager::UpdateWorkload()
 {
 	m_Lock.Enter		()	;
-	u32 delta_time		=	Device.dwTimeDelta + m_dwTimeRemainder;
+	u32 delta_time		=	Device->dwTimeDelta + m_dwTimeRemainder;
 	u32 step_num		=	delta_time/m_dwStepTime;
 	m_dwTimeRemainder	=	delta_time%m_dwStepTime;
 	
@@ -195,14 +195,14 @@ void CBulletManager::UpdateWorkload()
 
 	for(int k=m_Bullets.size()-1; k>=0; k--){
 		SBullet& bullet = m_Bullets[k];
-		//для пули пущенной на этом же кадре считаем только 1 шаг
-		//(хотя по теории вообще ничего считать на надо)
-		//который пропустим на следующем кадре, 
-		//это делается для того чтоб при скачках FPS не промазать
-		//с 2х метров
+		//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ 1 пїЅпїЅпїЅ
+		//(пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ)
+		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, 
+		//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ FPS пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+		//пїЅ 2пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 		u32 cur_step_num = step_num;
 
-		u32 frames_pass = Device.dwFrame - bullet.frame_num;
+		u32 frames_pass = Device->dwFrame - bullet.frame_num;
 		if(frames_pass == 0)						cur_step_num = 1;
 		else if (frames_pass == 1 && step_num>0)	cur_step_num -= 1;
 
@@ -233,9 +233,9 @@ bool CBulletManager::CalcBullet (collide::rq_results & rq_storage, xr_vector<ISp
 	if(range>max_range) 
 		range = max_range;
 
-	//запомнить текущую скорость пули, т.к. в
-	//RayQuery() она может поменяться из-за рикошетов
-	//и столкновений с объектами
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅ.пїЅ. пїЅ
+	//RayQuery() пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	//пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	Fvector cur_dir					= bullet->dir;
 	bullet_test_callback_data		bullet_data;
 	bullet_data.pBullet				= bullet;
@@ -254,10 +254,10 @@ bool CBulletManager::CalcBullet (collide::rq_results & rq_storage, xr_vector<ISp
 	}
 	range							= _max				(EPS_L,range);
 
-	bullet->flags.skipped_frame = (Device.dwFrame >= bullet->frame_num);
+	bullet->flags.skipped_frame = (Device->dwFrame >= bullet->frame_num);
 
 	if(!bullet->flags.ricochet_was)	{
-		//изменить положение пули
+		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 		bullet->pos.mad(bullet->pos, cur_dir, range);
 		bullet->fly_dist += range;
 
@@ -277,8 +277,8 @@ bool CBulletManager::CalcBullet (collide::rq_results & rq_storage, xr_vector<ISp
 			 (bullet->pos.z<=level_box.z2))	)
 			 return false;
 
-		//изменить скорость и направление ее полета
-		//с учетом гравитации
+		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+		//пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		bullet->dir.mul(bullet->speed);
 
 		Fvector air_resistance = bullet->dir;
@@ -294,8 +294,8 @@ bool CBulletManager::CalcBullet (collide::rq_results & rq_storage, xr_vector<ISp
 		bullet->speed = bullet->dir.magnitude();
 		VERIFY(_valid(bullet->speed));
 		VERIFY(!fis_zero(bullet->speed));
-		//вместо normalize(),	 чтоб не считать 2 раза magnitude()
-#pragma todo("а как насчет bullet->speed==0")
+		//пїЅпїЅпїЅпїЅпїЅпїЅ normalize(),	 пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ 2 пїЅпїЅпїЅпїЅ magnitude()
+#pragma todo("пїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ bullet->speed==0")
 		bullet->dir.x /= bullet->speed;
 		bullet->dir.y /= bullet->speed;
 		bullet->dir.z /= bullet->speed;
@@ -336,9 +336,9 @@ void CBulletManager::Render	()
 {
 	
 #ifdef DEBUG
-	//0-рикошет
-	//1-застрявание пули в материале
-	//2-пробивание материала
+	//0-пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	//1-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	//2-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if (g_bDrawBulletHit) {
 		extern FvectorVec g_hit[];
 		FvectorIt it;
@@ -371,7 +371,7 @@ void CBulletManager::Render	()
 			length = m_fTracerLengthMax;
 
 		float width = m_fTracerWidth;
-		float dist2segSqr = SqrDistancePointToSegment(Device.vCameraPosition, bullet->pos, Fvector().mul(bullet->dir, length));
+		float dist2segSqr = SqrDistancePointToSegment(Device->vCameraPosition, bullet->pos, Fvector().mul(bullet->dir, length));
 		//---------------------------------------------
 		float MaxDistSqr = 1.0f;
 		float MinDistSqr = 0.09f;
@@ -381,23 +381,23 @@ void CBulletManager::Render	()
 
 			width *= sqrtf(dist2segSqr / MaxDistSqr);//*MaxDistWidth/0.08f;			
 		}
-		if (Device.vCameraPosition.distance_to_sqr(bullet->pos) < (length * length))
+		if (Device->vCameraPosition.distance_to_sqr(bullet->pos) < (length * length))
 		{
-			length = Device.vCameraPosition.distance_to(bullet->pos) - 0.3f;
+			length = Device->vCameraPosition.distance_to(bullet->pos) - 0.3f;
 		}
 		/*
 		//---------------------------------------------
 		Fvector vT, v0, v1;
-		vT.mad(Device.vCameraPosition, Device.vCameraDirection, XrMath::sqrt(dist2segSqr));
-		v0.mad(vT, Device.vCameraTop, width*.5f);
-		v1.mad(vT, Device.vCameraTop, -width*.5f);
+		vT.mad(Device->vCameraPosition, Device->vCameraDirection, XrMath::sqrt(dist2segSqr));
+		v0.mad(vT, Device->vCameraTop, width*.5f);
+		v1.mad(vT, Device->vCameraTop, -width*.5f);
 		Fvector v0r, v1r;
-		Device.mFullTransform.transform(v0r, v0);
-		Device.mFullTransform.transform(v1r, v1);
+		Device->mFullTransform.transform(v0r, v0);
+		Device->mFullTransform.transform(v1r, v1);
 		float ViewWidth = v1r.distance_to(v0r);
 */
 //		float dist = XrMath::sqrt(dist2segSqr);
-//		Msg("dist - [%f]; ViewWidth - %f, [%f]", dist, ViewWidth, ViewWidth*float(Device.dwHeight));
+//		Msg("dist - [%f]; ViewWidth - %f, [%f]", dist, ViewWidth, ViewWidth*float(Device->dwHeight));
 //		Msg("dist - [%f]", dist);
 		//---------------------------------------------
 
@@ -424,7 +424,7 @@ void CBulletManager::CommitRenderSet		()	// @ the end of frame
 {
 	m_BulletsRendered	= m_Bullets			;
 	if (g_mt_config.test(mtBullets))		{
-		Device.seqParallel.push_back		(fastdelegate::FastDelegate0<>(this,&CBulletManager::UpdateWorkload));
+		Device->seqParallel.push_back		(fastdelegate::FastDelegate0<>(this,&CBulletManager::UpdateWorkload));
 	} else {
 		UpdateWorkload						();
 	}

@@ -38,7 +38,7 @@ void CLevel::remove_objects	()
 		psNET_Flags.set			(NETFLAG_MINIMIZEUPDATES,FALSE);
 		// ugly hack for checks that update is twice on frame
 		// we need it since we do updates for checking network messages
-		++(Device.dwFrame);
+		++(Device->dwFrame);
 		psDeviceFlags.set		(rsDisableObjectsAsCrows,TRUE);
 		ClientReceive			();
 		ProcessGameEvents		();
@@ -81,7 +81,7 @@ void CLevel::remove_objects	()
 
 	for (int i=0; i<6; i++)
 	{
-		++(Device.dwFrame);
+		++(Device->dwFrame);
 		Objects.Update(true);
 	}
 
@@ -182,9 +182,9 @@ void CLevel::ClientSend()
 
 		if (P.B.count>2)
 		{
-			Device.Statistic->TEST3.Begin();
+			Device->Statistic->TEST3.Begin();
 				Send	(P, net_flags(FALSE));
-			Device.Statistic->TEST3.End();
+			Device->Statistic->TEST3.End();
 		}else
 			break;
 	}
@@ -268,15 +268,15 @@ void CLevel::net_Update	()
 {
 	if(game_configured){
 		// If we have enought bandwidth - replicate client data on to server
-		Device.Statistic->netClient2.Begin	();
+		Device->Statistic->netClient2.Begin	();
 		ClientSend					();
-		Device.Statistic->netClient2.End		();
+		Device->Statistic->netClient2.End		();
 	}
 	// If server - perform server-update
 	if (Server && OnServer())	{
-		Device.Statistic->netServer.Begin();
+		Device->Statistic->netServer.Begin();
 		Server->Update					();
-		Device.Statistic->netServer.End	();
+		Device->Statistic->netServer.End	();
 	}
 }
 
@@ -284,7 +284,7 @@ struct _NetworkProcessor	: public pureFrame
 {
 	virtual void OnFrame	( )
 	{
-		if (g_pGameLevel && !Device.Paused() )	g_pGameLevel->net_Update();
+		if (g_pGameLevel && !Device->Paused() )	g_pGameLevel->net_Update();
 	}
 }	NET_processor;
 

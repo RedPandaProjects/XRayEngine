@@ -99,7 +99,7 @@ void CUICarBodyWnd::Init()
 	xml_init.InitDragDropListEx		(uiXml, "dragdrop_list_other", 0, m_pUIOthersBagList);
 
 
-	//информация о предмете
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	m_pUIDescWnd					= xr_new<CUIFrameWindow>(); m_pUIDescWnd->SetAutoDelete(true);
 	AttachChild						(m_pUIDescWnd);
 	xml_init.InitFrameWindow		(uiXml, "frame_window", 0, m_pUIDescWnd);
@@ -196,8 +196,8 @@ void CUICarBodyWnd::InitCarBody(CInventoryOwner* pOur, CInventoryOwner* pOthers)
 			NET_Packet		P;
 			CGameObject::u_EventGen		(P,GE_INFO_TRANSFER, our_id);
 			P.w_u16						(0);//not used
-			P.w_stringZ					((*it).info_id);			//сообщение
-			P.w_u8						(1);						//добавление сообщения
+			P.w_stringZ					((*it).info_id);			//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+			P.w_u8						(1);						//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 			CGameObject::u_EventSend	(P);
 		}
 		known_info.clear	();
@@ -232,7 +232,7 @@ void CUICarBodyWnd::UpdateLists()
 	m_pOurObject->inventory().AddAvailableItems	(ruck_list, true);
 	std::sort									(ruck_list.begin(),ruck_list.end(),InventoryUtilities::GreaterRoomInRuck);
 
-	//Наш рюкзак
+	//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	TIItemContainer::iterator it;
 	for(it =  ruck_list.begin(); ruck_list.end() != it; ++it) 
 	{
@@ -249,7 +249,7 @@ void CUICarBodyWnd::UpdateLists()
 
 	std::sort										(ruck_list.begin(),ruck_list.end(),InventoryUtilities::GreaterRoomInRuck);
 
-	//Чужой рюкзак
+	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	for(it =  ruck_list.begin(); ruck_list.end() != it; ++it) 
 	{
 		CUICellItem* itm							= create_cell_item(*it);
@@ -272,7 +272,7 @@ void CUICarBodyWnd::SendMessage(CUIWindow *pWnd, s16 msg, void *pData)
 		{
 			switch(m_pUIPropertiesBox->GetClickedItem()->GetTAG())
 			{
-			case INVENTORY_EAT_ACTION:	//съесть объект
+			case INVENTORY_EAT_ACTION:	//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 				EatItem();
 				break;
 			case INVENTORY_UNLOAD_MAGAZINE:
@@ -301,8 +301,8 @@ void CUICarBodyWnd::Draw()
 void CUICarBodyWnd::Update()
 {
 	if(	m_b_need_update||
-		m_pOurObject->inventory().ModifyFrame()==Device.dwFrame || 
-		(m_pOthersObject&&m_pOthersObject->inventory().ModifyFrame()==Device.dwFrame))
+		m_pOurObject->inventory().ModifyFrame()==Device->dwFrame || 
+		(m_pOthersObject&&m_pOthersObject->inventory().ModifyFrame()==Device->dwFrame))
 
 		UpdateLists		();
 
@@ -577,7 +577,7 @@ void move_item (u16 from_id, u16 to_id, u16 what_id)
 	P.w_u16									(what_id);
 	CGameObject::u_EventSend				(P);
 
-	//другому инвентарю - взять вещь 
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ 
 	CGameObject::u_EventGen					(	P,
 												GE_OWNERSHIP_TAKE,
 												to_id

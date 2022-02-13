@@ -10,8 +10,8 @@ class CUICursor;
 class CDeviceResetNotifier :public pureDeviceReset
 {
 public:
-						CDeviceResetNotifier					()	{Device.seqDeviceReset.Add(this,REG_PRIORITY_NORMAL);};
-	virtual				~CDeviceResetNotifier					()	{Device.seqDeviceReset.Remove(this);};
+						CDeviceResetNotifier					()	{Device->seqDeviceReset.Add(this,REG_PRIORITY_NORMAL);};
+	virtual				~CDeviceResetNotifier					()	{Device->seqDeviceReset.Remove(this);};
 	virtual void		OnDeviceReset							()	{};
 
 };

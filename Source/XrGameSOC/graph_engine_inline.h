@@ -47,7 +47,7 @@ IC	bool CGraphEngine::search		(
 	)
 {
 #ifndef AI_COMPILER
-	Device.Statistic->AI_Path.Begin();
+	Device->Statistic->AI_Path.Begin();
 	START_PROFILE("graph_engine")
 	START_PROFILE("graph_engine/search")
 #endif
@@ -67,7 +67,7 @@ IC	bool CGraphEngine::search		(
 	bool						successfull = m_algorithm->find(path_manager);
 
 #ifndef AI_COMPILER
-	Device.Statistic->AI_Path.End();
+	Device->Statistic->AI_Path.End();
 #endif
 	return						(successfull);
 #ifndef AI_COMPILER
@@ -89,7 +89,7 @@ IC	bool CGraphEngine::search			(
 	)
 {
 #ifndef AI_COMPILER
-	Device.Statistic->AI_Path.Begin();
+	Device->Statistic->AI_Path.Begin();
 	START_PROFILE("graph_engine")
 	START_PROFILE("graph_engine/search")
 #endif
@@ -109,7 +109,7 @@ IC	bool CGraphEngine::search			(
 	bool						successfull = m_algorithm->find(path_manager);
 
 #ifndef AI_COMPILER
-	Device.Statistic->AI_Path.End();
+	Device->Statistic->AI_Path.End();
 #endif
 	return						(successfull);
 #ifndef AI_COMPILER
@@ -133,7 +133,7 @@ IC	bool CGraphEngine::search			(
 	)
 {
 #ifndef AI_COMPILER
-	Device.Statistic->AI_Path.Begin();
+	Device->Statistic->AI_Path.Begin();
 	START_PROFILE("graph_engine")
 	START_PROFILE("graph_engine/search")
 #endif
@@ -149,7 +149,7 @@ IC	bool CGraphEngine::search			(
 	bool						successfull = m_algorithm->find(path_manager);
 
 #ifndef AI_COMPILER
-	Device.Statistic->AI_Path.End();
+	Device->Statistic->AI_Path.End();
 #endif
 	return						(successfull);
 #ifndef AI_COMPILER
@@ -188,7 +188,7 @@ IC	bool CGraphEngine::search(
 	)
 {
 #ifndef AI_COMPILER
-	Device.Statistic->AI_Path.Begin();
+	Device->Statistic->AI_Path.Begin();
 	START_PROFILE("graph_engine")
 	START_PROFILE("graph_engine/proble_solver")
 #endif
@@ -209,7 +209,7 @@ IC	bool CGraphEngine::search(
 	bool						successfull = m_solver_algorithm->find(path_manager);
 
 #ifndef AI_COMPILER
-	Device.Statistic->AI_Path.End();
+	Device->Statistic->AI_Path.End();
 #endif
 	return						(successfull);
 #ifndef AI_COMPILER

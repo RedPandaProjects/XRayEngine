@@ -8,8 +8,8 @@
 
 #pragma once
 
-#include "alife_space.h"
-#include "game_graph_space.h"
+#include "..\xrEngine\alife_space.h"
+#include "../XrEngine/game_graph_space.h"
 #include "script_export_space.h"
 
 class CSavedGameWrapper {

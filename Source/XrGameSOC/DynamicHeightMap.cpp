@@ -29,7 +29,7 @@ CHM_Static::CHM_Static()
 
 void CHM_Static::Update	()
 {
-	Fvector&	view	= Device.vCameraPosition;
+	Fvector&	view	= Device->vCameraPosition;
 	int			v_x		= iFloor(view.x/dhm_size);
 	int			v_z		= iFloor(view.z/dhm_size);
 	
@@ -179,9 +179,9 @@ float	CHM_Dynamic::Query	(float x, float z)
 //
 float	CHeightMap::Query	(float x, float z)
 {
-	if (dwFrame!=Device.dwFrame)
+	if (dwFrame!=Device->dwFrame)
 	{
-		dwFrame = Device.dwFrame;
+		dwFrame = Device->dwFrame;
 		hm_static.Update	();
 		hm_dynamic.Update	();
 	}

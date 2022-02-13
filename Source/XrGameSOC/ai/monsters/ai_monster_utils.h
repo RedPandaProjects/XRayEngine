@@ -1,11 +1,11 @@
 #pragma once
 
-// проверить, находится ли объект entity на ноде
-// возвращает позицию объекта, если он находится на ноде, или центр его ноды
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ entity пїЅпїЅ пїЅпїЅпїЅпїЅ
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 class CEntity;
 extern Fvector get_valid_position(const CEntity *entity, const Fvector &actual_position);
 
-// возвращает true, если объект entity находится на ноде
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ true, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ entity пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ
 extern bool object_position_valid(const CEntity *entity);
 
 IC Fvector random_position(const Fvector &center, float R) 
@@ -60,7 +60,7 @@ IC void def_lerp(float &_cur, float _target, float _vel, float _dt)
 
 IC u32	time() 
 {
-	return Device.dwTimeGlobal;
+	return Device->dwTimeGlobal;
 }
 
 //////////////////////////////////////////////////////////////////////////

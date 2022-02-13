@@ -29,7 +29,7 @@
 ////////////////////////////////////////////////////////////////////////////
 CSE_ALifeInventoryItem::CSE_ALifeInventoryItem(LPCSTR caSection)
 {
-	//текущее состояние вещи
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 	m_fCondition				= 1.0f;
 
 	m_fMass						= pSettings->r_float(caSection, "inv_weight");
@@ -248,7 +248,7 @@ void CSE_ALifeItem::UPDATE_Write			(NET_Packet &tNetPacket)
 	inherited2::UPDATE_Write	(tNetPacket);
 
 #ifdef XRGAME_EXPORTS
-	m_last_update_time			= Device.dwTimeGlobal;
+	m_last_update_time			= Device->dwTimeGlobal;
 #endif // XRGAME_EXPORTS
 };
 
@@ -275,7 +275,7 @@ BOOL CSE_ALifeItem::Net_Relevant			()
 		return					(true);
 
 #ifdef XRGAME_EXPORTS
-	if (Device.dwTimeGlobal < (m_last_update_time + update_rate()))
+	if (Device->dwTimeGlobal < (m_last_update_time + update_rate()))
 		return					(false);
 #endif // XRGAME_EXPORTS
 

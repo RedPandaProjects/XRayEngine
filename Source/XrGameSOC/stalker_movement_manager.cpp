@@ -375,7 +375,7 @@ void CStalkerMovementManager::parse_velocity_mask	()
 		if (mental_state() == eMentalStateFree) {
 			setup_body_orientation	();
 			object().sight().enable	(false);
-//			Msg						("%d FALSE",Device.dwTimeGlobal);
+//			Msg						("%d FALSE",Device->dwTimeGlobal);
 		}
 		if	(
 				(mental_state() != eMentalStateFree) ||
@@ -386,7 +386,7 @@ void CStalkerMovementManager::parse_velocity_mask	()
 		{
 			m_last_turn_index			= detail().curr_travel_point_index();
 			object().sight().enable(true);
-//			Msg						("%d TRUE",Device.dwTimeGlobal);
+//			Msg						("%d TRUE",Device->dwTimeGlobal);
 			if (detail().curr_travel_point_index() + 1 < path().size()) {
 				point				= path()[detail().curr_travel_point_index() + 1];
 				current_velocity	= detail().velocity(point.velocity);

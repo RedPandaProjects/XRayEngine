@@ -56,7 +56,7 @@ BOOL CAlienEffectorPP::Process(SPPInfo& pp)
 		target_factor = (target_factor > 0.5f) ? .3f : .6f;
 	}
 	
-	def_lerp			(factor,target_factor, PERIOD_SPEED, Device.fTimeDelta);
+	def_lerp			(factor,target_factor, PERIOD_SPEED, Device->fTimeDelta);
 	pp.lerp				(pp_identity,state,factor);
 
 	return TRUE;
@@ -122,7 +122,7 @@ CAlienEffector::CAlienEffector(ECamEffectorType type, CAI_Bloodsucker *obj) :
 
 BOOL CAlienEffector::Process(Fvector &p, Fvector &d, Fvector &n, float& fFov, float& fFar, float& fAspect)
 {
-	// Инициализация
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	Fmatrix	Mdef;
 	Mdef.identity		();
 	Mdef.j.set			(n);
@@ -132,15 +132,15 @@ BOOL CAlienEffector::Process(Fvector &p, Fvector &d, Fvector &n, float& fFov, fl
 
 
 	// set angle 
-	if (angle_lerp(dangle_current.x, dangle_target.x, ANGLE_SPEED, Device.fTimeDelta)) {
+	if (angle_lerp(dangle_current.x, dangle_target.x, ANGLE_SPEED, Device->fTimeDelta)) {
 		dangle_target.x = angle_normalize(Random.randFs(DELTA_ANGLE_X));
 	}
 
-	if (angle_lerp(dangle_current.y, dangle_target.y, ANGLE_SPEED, Device.fTimeDelta)) {
+	if (angle_lerp(dangle_current.y, dangle_target.y, ANGLE_SPEED, Device->fTimeDelta)) {
 		dangle_target.y = angle_normalize(Random.randFs(DELTA_ANGLE_Y));
 	}
 
-	if (angle_lerp(dangle_current.z, dangle_target.z, ANGLE_SPEED, Device.fTimeDelta)) {
+	if (angle_lerp(dangle_current.z, dangle_target.z, ANGLE_SPEED, Device->fTimeDelta)) {
 		dangle_target.z = angle_normalize(Random.randFs(DELTA_ANGLE_Z));
 	}
 
@@ -152,7 +152,7 @@ BOOL CAlienEffector::Process(Fvector &p, Fvector &d, Fvector &n, float& fFov, fl
 	float	rel_dist = m_prev_eye_matrix.c.distance_to(cur_matrix.c) / MAX_CAMERA_DIST;
 	clamp	(rel_dist, 0.f, 1.f);
 
-	def_lerp(m_inertion, 1 - rel_dist, rel_dist, Device.fTimeDelta);
+	def_lerp(m_inertion, 1 - rel_dist, rel_dist, Device->fTimeDelta);
 
 	// set pos and dir with inertion
 	m_prev_eye_matrix.c.inertion(cur_matrix.c, m_inertion);
@@ -167,12 +167,12 @@ BOOL CAlienEffector::Process(Fvector &p, Fvector &d, Fvector &n, float& fFov, fl
 	clamp	(rel_speed,0.f,1.f);
 
 	float	m_target_fov = MIN_FOV + (MAX_FOV-MIN_FOV) * rel_speed;
-	def_lerp(m_current_fov, m_target_fov, FOV_SPEED, Device.fTimeDelta);
+	def_lerp(m_current_fov, m_target_fov, FOV_SPEED, Device->fTimeDelta);
 	
 	fFov = m_current_fov;
 	//////////////////////////////////////////////////////////////////////////
 
-	// Установить углы смещения
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	Fmatrix		R;
 	R.setHPB	(dangle_current.x,dangle_current.y,dangle_current.z);
 

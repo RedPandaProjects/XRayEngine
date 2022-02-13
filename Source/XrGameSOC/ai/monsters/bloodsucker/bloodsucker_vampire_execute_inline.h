@@ -100,11 +100,11 @@ bool CStateBloodsuckerVampireExecuteAbstract::check_start_conditions()
 {
 	const CEntityAlive	*enemy = object->EnemyMan.get_enemy();
 	
-	// проверить дистанцию
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	float dist		= object->MeleeChecker.distance_to_enemy	(enemy);
 	if ((dist > VAMPIRE_MAX_DIST) || (dist < VAMPIRE_MIN_DIST))	return false;
 
-	// проверить направление на врага
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	if (!object->control().direction().is_face_target(enemy, PI_DIV_6)) return false;
 
 	return true;
@@ -122,7 +122,7 @@ TEMPLATE_SPECIALIZATION
 void CStateBloodsuckerVampireExecuteAbstract::execute_vampire_prepare()
 {
 	object->com_man().ta_activate		(object->anim_triple_vampire);
-	time_vampire_started				= Device.dwTimeGlobal;
+	time_vampire_started				= Device->dwTimeGlobal;
 	
 	object->sound().play(CAI_Bloodsucker::eVampireGrasp);
 }
@@ -138,8 +138,8 @@ void CStateBloodsuckerVampireExecuteAbstract::execute_vampire_continue()
 	
 	object->sound().play(CAI_Bloodsucker::eVampireSucking);
 
-	// проверить на грави удар
-	if (time_vampire_started + VAMPIRE_TIME_HOLD < Device.dwTimeGlobal) {
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+	if (time_vampire_started + VAMPIRE_TIME_HOLD < Device->dwTimeGlobal) {
 		m_action = eActionFire;
 	}
 }

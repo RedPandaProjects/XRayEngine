@@ -4,7 +4,7 @@
 #include "../XrEngine/Xr_input.h"
 #include "../HUDManager.h"
 #include "../level.h"
-#include "../object_broker.h"
+#include "../../XrEngine/object_broker.h"
 
 CUICellItem::CUICellItem()
 {
@@ -139,15 +139,15 @@ CUIDragItem::CUIDragItem(CUICellItem* parent)
 	m_back_list						= NULL;
 	m_pParent						= parent;
 	AttachChild						(&m_static);
-	Device.seqRender.Add			(this, REG_PRIORITY_LOW-5000);
-	Device.seqFrame.Add				(this, REG_PRIORITY_LOW-5000);
+	Device->seqRender.Add			(this, REG_PRIORITY_LOW-5000);
+	Device->seqFrame.Add				(this, REG_PRIORITY_LOW-5000);
 	VERIFY							(m_pParent->GetMessageTarget());
 }
 
 CUIDragItem::~CUIDragItem()
 {
-	Device.seqRender.Remove			(this);
-	Device.seqFrame.Remove			(this);
+	Device->seqRender.Remove			(this);
+	Device->seqFrame.Remove			(this);
 }
 
 void CUIDragItem::Init(const ui_shader& sh, const Frect& rect, const Frect& text_rect)

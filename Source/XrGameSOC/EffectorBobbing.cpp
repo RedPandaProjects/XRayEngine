@@ -45,12 +45,12 @@ void CEffectorBobbing::SetState(u32 mstate, bool limping, bool ZoomMode){
 
 BOOL CEffectorBobbing::Process		(Fvector &p, Fvector &d, Fvector &n, float& /**fFov/**/, float& /**fFar/**/, float& /**fAspect/**/)
 {
-	fTime			+= Device.fTimeDelta;
+	fTime			+= Device->fTimeDelta;
 	if (dwMState&ACTOR_DEFS::mcAnyMove){
-		if (fReminderFactor<1.f)	fReminderFactor += SPEED_REMINDER*Device.fTimeDelta;
+		if (fReminderFactor<1.f)	fReminderFactor += SPEED_REMINDER*Device->fTimeDelta;
 		else						fReminderFactor = 1.f;
 	}else{
-		if (fReminderFactor>0.f)	fReminderFactor -= SPEED_REMINDER*Device.fTimeDelta;
+		if (fReminderFactor>0.f)	fReminderFactor -= SPEED_REMINDER*Device->fTimeDelta;
 		else						fReminderFactor = 0.f;
 	}
 	if (!fsimilar(fReminderFactor,0)){

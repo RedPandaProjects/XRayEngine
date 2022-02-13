@@ -10,7 +10,7 @@
 
 #include "../inventory_item.h"
 #include "../PhysicsShellHolder.h"
-#include "../object_broker.h"
+#include "../../XrEngine/object_broker.h"
 #include <dinput.h>
 
 bool CUIMpTradeWnd::OnKeyboard(int dik, EUIMessages keyboard_action)
@@ -75,7 +75,7 @@ void CUIMpTradeWnd::UpdateMoneyIndicator()
 		}
 	}
 
-	if( !(Device.dwFrame%30) )
+	if( !(Device->dwFrame%30) )
 	{
 		u32 _cost						= 0;
 		string128						buff;

@@ -91,7 +91,7 @@ void CUICustomEdit::SendMessage(CUIWindow* pWnd, s16 msg, void* pData)
 {
 //	if(pWnd == GetParent())
 //	{
-		//кто-то другой захватил клавиатуру
+		//пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		if(msg == WINDOW_KEYBOARD_CAPTURE_LOST)
 		{
 			m_bInputFocus = false;
@@ -222,7 +222,7 @@ bool CUICustomEdit::KeyPressed(int dik)
 	default:
 		it = gs_DIK2CHR.find(dik);
 
-		//нажата клавиша с буквой 
+		//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ 
 		if (gs_DIK2CHR.end() != it){
 			AddLetter((*it).second);
 			bChanged = true;
@@ -316,8 +316,8 @@ void CUICustomEdit::AddLetter(char c)
 	AddChar(c);
 }
 
-//время для обеспечивания печатания
-//символа при удерживаемой кнопке
+//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 #define HOLD_WAIT_TIME 400
 #define HOLD_REPEAT_TIME 100
 
@@ -327,7 +327,7 @@ void CUICustomEdit::Update()
 	{	
 		static u32 last_time; 
 
-		u32 cur_time = Device.TimerAsync();
+		u32 cur_time = Device->TimerAsync();
 
 		if(m_iKeyPressAndHold)
 		{

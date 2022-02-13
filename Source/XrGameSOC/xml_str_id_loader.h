@@ -4,17 +4,17 @@
 #	include "ui/xrUIXmlParser.h"
 #else // XRGAME_EXPORTS
 #	include "xrUIXmlParser.h"
-#	include "object_broker.h"
+#	include "../XrEngine/object_broker.h"
 #endif // XRGAME_EXPORTS
 
 
-//T_ID    - уникальный текстовый идентификатор (аттрибут id в XML файле)
-//T_INDEX - уникальный числовой индекс 
-//T_INIT -  класс где определена статическая InitXmlIdToIndex
-//          функция инициализации file_str и tag_name
+//T_ID    - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ id пїЅ XML пїЅпїЅпїЅпїЅпїЅ)
+//T_INDEX - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ 
+//T_INIT -  пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ InitXmlIdToIndex
+//          пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ file_str пїЅ tag_name
 
-//структура хранит строковый id элемента 
-//файл и позицию, где этот элемент находится
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ id пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 
+//пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 struct ITEM_DATA
 {
 	shared_str		id;
@@ -38,10 +38,10 @@ private:
 	static	T_VECTOR*				m_pItemDataVector;
 
 protected:
-	//имена xml файлов (разделенных запятой) из которых 
-	//производить загрузку элементов
+	//пїЅпїЅпїЅпїЅпїЅ xml пїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ) пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ 
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	static LPCSTR					file_str;
-	//имена тегов
+	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	static LPCSTR					tag_name;
 public:
 									CXML_IdToIndex							();
@@ -65,7 +65,7 @@ public:
 
 	static const int		GetMaxIndex	()					 {return m_pItemDataVector->size()-1;}
 
-	//удаление статичекого массива
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	static void					DeleteIdToIndexData		();
 };
 
@@ -161,7 +161,7 @@ typename void	CSXML_IdToIndex::InitInternal ()
 		uiXml->Load(CONFIG_PATH, "gameplay", xml_file_full.c_str());
 		//R_ASSERT3				(xml_result, "error while parsing XML file", xml_file_full.c_str());
 
-		//общий список
+		//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 		int items_num			= uiXml->GetNodesNum(uiXml->GetRoot(), tag_name);
 
 		for(int i=0; i<items_num; ++i)
@@ -173,7 +173,7 @@ typename void	CSXML_IdToIndex::InitInternal ()
 			R_ASSERT2			(item_name, buf);
 
 
-			//проверетить ID на уникальность
+			//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ID пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 			T_VECTOR::iterator t_it = m_pItemDataVector->begin();
 			for(;m_pItemDataVector->end() != t_it; t_it++)
 			{

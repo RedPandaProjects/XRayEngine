@@ -230,8 +230,8 @@ void CPHActorCharacter::InitContact(dContact* c,bool &do_collide,u16 material_id
 	SFindPredicate fp(c,&b1);
 	RESTRICTOR_I r=std::find_if(begin(m_restrictors),end(m_restrictors),fp);
 	bool b_restrictor=(r!=end(m_restrictors));
-	SGameMtl*	material_1=GMLib.GetMaterialByIdx(material_idx_1);
-	SGameMtl*	material_2=GMLib.GetMaterialByIdx(material_idx_2);
+	SGameMtl*	material_1=GameMaterialLibrary->GetMaterialByIdx(material_idx_1);
+	SGameMtl*	material_2=GameMaterialLibrary->GetMaterialByIdx(material_idx_2);
 	if((material_1&&material_1->Flags.test(SGameMtl::flActorObstacle))||(material_2&&material_2->Flags.test(SGameMtl::flActorObstacle)))
 		do_collide=true;
 	if(IsGameTypeSingle())

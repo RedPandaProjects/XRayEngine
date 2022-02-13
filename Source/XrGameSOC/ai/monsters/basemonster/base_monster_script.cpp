@@ -123,7 +123,7 @@ bool CBaseMonster::bfAssignWatch(CScriptEntityAction *tpEntityAction)
 	if (!inherited::bfAssignWatch(tpEntityAction))
 		return		(false);
 	
-	// Инициализировать action
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ action
 	anim().m_tAction = ACT_STAND_IDLE;
 
 	CScriptWatchAction	&l_tWatchAction = tpEntityAction->m_tWatchAction;
@@ -247,33 +247,33 @@ void CBaseMonster::ProcessScripts()
 
 	//movement().Update_Initialize			();
 	
-	// Выполнить скриптовые actions
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ actions
 	m_script_state_must_execute					= false;
 	inherited::ProcessScripts					();
 
-	Device.dwTimeGlobal							= Device.dwTimeGlobal;
+	Device->dwTimeGlobal							= Device->dwTimeGlobal;
 
-	// обновить мир (память, враги, объекты)
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
 	UpdateMemory								();
 	
 	anim().accel_deactivate					();
 
-	// если из скрипта выбрано действие по универсальной схеме, выполнить его
+	// пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
 	if (m_script_state_must_execute) 	
 		StateMan->execute_script_state			();		
 	
 	TranslateActionToPathParams					();
 
-	// обновить путь
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 	//movement().Update_Execute			();
 
 	//anim().Update							();
 	
-	// установить текущую скорость
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	//movement().Update_Finalize			();
 
-	// Удалить все враги и объекты, которые были принудительно установлены
-	// во время выполнения скриптового действия
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	// пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if (m_script_state_must_execute) {
 		EnemyMan.unforce_enemy();
 		CorpseMan.unforce_corpse();

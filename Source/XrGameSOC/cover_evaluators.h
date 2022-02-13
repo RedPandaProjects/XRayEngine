@@ -9,7 +9,7 @@
 #pragma once
 
 #include "restricted_object.h"
-#include "game_graph_space.h"
+#include "../XrEngine/game_graph_space.h"
 
 //////////////////////////////////////////////////////////////////////////
 // CCoverEvaluatorBase
