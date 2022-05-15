@@ -317,6 +317,7 @@
     <ClInclude Include="Fmesh.h" />
     <ClInclude Include="GameFont.h" />
     <ClInclude Include="GameMtlLib.h" />
+    <ClInclude Include="gametype_chooser.h" />
     <ClInclude Include="game_graph.h" />
     <ClInclude Include="game_graph_inline.h" />
     <ClInclude Include="game_graph_space.h" />
@@ -406,7 +407,14 @@
     <ClInclude Include="XrGameMaterialLibraryInterface.h" />
     <ClInclude Include="xrHemisphere.h" />
     <ClInclude Include="xrImage_Resampler.h" />
-    <ClInclude Include="xrISEAbstract.h" />
+    <ClInclude Include="XrISEAbstract.h" />
+    <ClInclude Include="XrISEALifeAnomalousZone.h" />
+    <ClInclude Include="XrISEALifeCreatureActor.h" />
+    <ClInclude Include="XrISEALifeDynamicObject.h" />
+    <ClInclude Include="XrISEALifeGraphPoint.h" />
+    <ClInclude Include="XrISEALifeLevelChanger.h" />
+    <ClInclude Include="XrISEALifeObject.h" />
+    <ClInclude Include="XrISEALifeSpaceRestrictor.h" />
     <ClInclude Include="xrLevel.h" />
     <ClInclude Include="xrSASH.h" />
     <ClInclude Include="xrSheduler.h" />
@@ -511,6 +519,7 @@
     <ClCompile Include="fmesh.cpp" />
     <ClCompile Include="GameFont.cpp" />
     <ClCompile Include="GameMtlLib.cpp" />
+    <ClCompile Include="gametype_chooser.cpp" />
     <ClCompile Include="game_graph.cpp" />
     <ClCompile Include="game_level_cross_table.cpp" />
     <ClCompile Include="ICollidable.cpp" />
@@ -563,6 +572,7 @@
     <ClCompile Include="XrGameMaterialLibraryInterface.cpp" />
     <ClCompile Include="xrHemisphere.cpp" />
     <ClCompile Include="xrImage_Resampler.cpp" />
+    <ClCompile Include="XrISEAbstract.cpp" />
     <ClCompile Include="xrSASH.cpp" />
     <ClCompile Include="xrSheduler.cpp" />
     <ClCompile Include="xrTheora_Stream.cpp" />

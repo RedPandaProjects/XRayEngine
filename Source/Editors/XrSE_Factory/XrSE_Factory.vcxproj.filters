@@ -498,9 +498,6 @@
     <ClInclude Include="..\..\xrServerEntities\xrServer_script_macroses.h">
       <Filter>ServerStuff\ServerEntities</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\xrServerEntities\gametype_chooser.h">
-      <Filter>ServerStuff\ServerEntities</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\xrServerEntities\xrServer_Object_Base.h">
       <Filter>ServerStuff\ServerEntities\objects</Filter>
     </ClInclude>
@@ -705,9 +702,6 @@
       <Filter>ServerStuff\ServerFactory</Filter>
     </ClCompile>
     <ClCompile Include="..\..\xrServerEntities\xrServer_Objects_Abstract.cpp">
-      <Filter>ServerStuff\ServerEntities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\xrServerEntities\gametype_chooser.cpp">
       <Filter>ServerStuff\ServerEntities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\xrServerEntities\xrServer_Object_Base.cpp">

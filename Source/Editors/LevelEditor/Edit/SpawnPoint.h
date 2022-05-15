@@ -8,12 +8,11 @@
 #define SPAWNPOINT_VERSION   			0x0017
 
 #include "../../xrEngine/LevelGameDef.h"
-#include "../../xrServerEntities/xrServer_Objects_abstract.h"
 #include "CustomObject.h"
 #include "../XrEcore/editor/PhysicsShellHolderEditorBase.h"
 // refs
-class CSE_Visual;
-class CSE_Motion;
+class ISE_Visual;
+class ISE_Motion;
 class CObjectAnimator;
 
 class CLE_Visual :private pureDrawUI
@@ -21,7 +20,7 @@ class CLE_Visual :private pureDrawUI
     virtual void OnDrawUI();
 public:
     static bool     g_tmp_lock;
-    CSE_Visual* source;
+    ISE_Visual* source;
     IRenderVisual* visual;
     void 			OnChangeVisual();
     void			StopAllAnimations();
@@ -30,7 +29,7 @@ public:
     void 			PlayAnimationLastFrame();
     void 			PauseAnimation();
 public:
-    CLE_Visual(CSE_Visual* src);
+    CLE_Visual(ISE_Visual* src);
     virtual			~CLE_Visual();
 };
 class CSpawnPoint : public CCustomObject,
@@ -44,12 +43,12 @@ public:
     class CLE_Motion
     {
     public:
-    	CSE_Motion*		source;
+        ISE_Motion*		source;
         CObjectAnimator*animator;
         void 			OnChangeMotion	();
         void 			PlayMotion		();
     public:
-						CLE_Motion		(CSE_Motion* src);
+						CLE_Motion		(ISE_Motion* src);
         virtual			~CLE_Motion		();
     };
 	struct SSpawnData: public ISE_AbstractLEOwner

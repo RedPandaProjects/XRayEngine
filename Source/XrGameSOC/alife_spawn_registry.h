@@ -65,6 +65,7 @@ protected:
 public:
 											CALifeSpawnRegistry			(LPCSTR section);
 	virtual									~CALifeSpawnRegistry		();
+	void									load_from_editor			();
 	virtual void							load						(IReader &file_stream, xrGUID *save_guid = 0);
 	virtual void							save						(IWriter &memory_stream);
 			void							load						(IReader &file_stream, LPCSTR game_name);

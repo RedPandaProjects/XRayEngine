@@ -10,20 +10,20 @@
 
 #include "..\xrEngine\object_interfaces.h"
 
-class CSE_Abstract;
+class ISE_Abstract;
 
 class CServerEntityWrapper : public IPureSerializeObject<IReader,IWriter> {
 private:
-	CSE_Abstract			*m_object;
+	ISE_Abstract			*m_object;
 
 public:
-	IC						CServerEntityWrapper	(CSE_Abstract *object = 0);
+	IC						CServerEntityWrapper	(ISE_Abstract *object = 0);
 	virtual					~CServerEntityWrapper	();	
 	virtual	void			save					(IWriter &stream);
 	virtual	void			load					(IReader &stream);
 			void			save_update				(IWriter &stream);
 			void			load_update				(IReader &stream);
-	IC		CSE_Abstract	&object					() const;
+	IC		ISE_Abstract	&object					() const;
 };
 
 #include "server_entity_wrapper_inline.h"

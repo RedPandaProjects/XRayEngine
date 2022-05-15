@@ -133,14 +133,14 @@ SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeCustomZone)
 #define script_type_list save_type_list(CSE_ALifeCustomZone)
 
-SERVER_ENTITY_DECLARE_BEGIN(CSE_ALifeAnomalousZone,CSE_ALifeCustomZone)
+SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeAnomalousZone,CSE_ALifeCustomZone, ISE_ALifeAnomalousZone)
 	CSE_ALifeItemWeapon				*m_tpCurrentBestWeapon;
-	float							m_offline_interactive_radius;
-	u32								m_artefact_position_offset;
-	u16								m_artefact_spawn_count;
 
 									CSE_ALifeAnomalousZone	(LPCSTR caSection);
 	virtual							~CSE_ALifeAnomalousZone	();
+	virtual ISE_ALifeObject*	CastALifeObject				() { return this; }
+	virtual ISE_Abstract*		CastAbstract				() { return this; }
+	virtual ISE_ALifeAnomalousZone* CastALifeAnomalousZone	() { return this; }
 	virtual CSE_Abstract			*init					();
 	virtual CSE_Abstract			*base					();
 	virtual const CSE_Abstract		*base					() const;
@@ -165,7 +165,7 @@ add_to_type_list(CSE_ALifeAnomalousZone)
 SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeTorridZone,CSE_ALifeCustomZone,CSE_Motion)
 									CSE_ALifeTorridZone		(LPCSTR caSection);
 	virtual							~CSE_ALifeTorridZone	();
-	virtual CSE_Motion*		motion					();
+	virtual ISE_Motion*		motion					();
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeTorridZone)
 #define script_type_list save_type_list(CSE_ALifeTorridZone)
@@ -174,7 +174,7 @@ SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeZoneVisual,CSE_ALifeAnomalousZone,CSE_Visu
 shared_str attack_animation;
 CSE_ALifeZoneVisual	(LPCSTR caSection);
 virtual							~CSE_ALifeZoneVisual	();
-virtual CSE_Visual* 	visual					();
+virtual ISE_Visual* 	visual					();
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeZoneVisual)
 #define script_type_list save_type_list(CSE_ALifeZoneVisual)
@@ -322,7 +322,7 @@ SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeMonsterAbstract)
 #define script_type_list save_type_list(CSE_ALifeMonsterAbstract)
 
-SERVER_ENTITY_DECLARE_BEGIN3(CSE_ALifeCreatureActor,CSE_ALifeCreatureAbstract,CSE_ALifeTraderAbstract,CSE_PHSkeleton)
+SERVER_ENTITY_DECLARE_BEGIN4(CSE_ALifeCreatureActor,CSE_ALifeCreatureAbstract,CSE_ALifeTraderAbstract,CSE_PHSkeleton, ISE_ALifeCreatureActor)
 	
 	u16								mstate;
 	Fvector							accel;
@@ -360,6 +360,9 @@ SERVER_ENTITY_DECLARE_BEGIN3(CSE_ALifeCreatureActor,CSE_ALifeCreatureAbstract,CS
 #endif
 	virtual CSE_Abstract			*cast_abstract			() {return this;};
 	virtual CSE_ALifeTraderAbstract	*cast_trader_abstract	() {return this;};
+	virtual ISE_ALifeObject*		 CastALifeObject		() {return this;};
+	virtual ISE_Abstract*			 CastAbstract			() {return this;};
+	virtual ISE_ALifeCreatureActor*  CastALifeCreatureActor  () {return this;};
 public:
 	virtual BOOL					Net_Relevant			();
 SERVER_ENTITY_DECLARE_END

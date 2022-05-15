@@ -7,7 +7,6 @@
 #include "spawnpoint.h"
 #include "ESceneSpawnTools.h"
 #include "eshape.h"
-#include "../../xrServerEntities/xrServer_Objects_Abstract.h"
 #include "../XrECore/Editor/ui_main.h"
 #include "SkeletonAnimated.h"
 #include "ObjectAnimator.h"
@@ -44,20 +43,10 @@
 #define ENVMOD_SIZE 0.25f
 #define MAX_TEAM 6
 const u32 RP_COLORS[MAX_TEAM]={0xff0000,0x00ff00,0x0000ff,0xffff00,0x00ffff,0xff00ff};
-//----------------------------------------------------
-void CSE_Visual::set_visual	   	(LPCSTR name, bool load)
-{
-	string_path					tmp;
-    strcpy						(tmp,name);
-    if (strext(tmp))		 	*strext(tmp) = 0;
-	xr_strlwr					(tmp);
-	visual_name					= tmp;
-}
-
 //------------------------------------------------------------------------------
 // CLE_Visual
 //------------------------------------------------------------------------------
-CLE_Visual::CLE_Visual(CSE_Visual* src)
+CLE_Visual::CLE_Visual(ISE_Visual* src)
 {
 	source				= src;
     visual				= 0;
@@ -222,7 +211,7 @@ void CLE_Visual::PauseAnimation ()
 //------------------------------------------------------------------------------
 // CLE_Motion
 //------------------------------------------------------------------------------
-CSpawnPoint::CLE_Motion::CLE_Motion	(CSE_Motion* src)
+CSpawnPoint::CLE_Motion::CLE_Motion	(ISE_Motion* src)
 {
 	source			= src;
     animator		= 0;

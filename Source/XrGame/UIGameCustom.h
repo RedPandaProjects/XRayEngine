@@ -3,7 +3,7 @@
 #include "script_export_space.h"
 #include "../xrEngine/object_interfaces.h"
 #include "inventory_space.h"
-#include "gametype_chooser.h"
+#include "../xrEngine/gametype_chooser.h"
 #include "UIDialogHolder.h"
 #include "../xrEngine/CustomHUD.h"
 // refs

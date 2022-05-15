@@ -161,7 +161,7 @@ CSE_Abstract::~CSE_Abstract()
 	xr_delete(m_ini_file);
 }
 
-CSE_Visual* CSE_Abstract::visual()
+ISE_Visual* CSE_Abstract::visual()
 {
 	return						(0);
 }
@@ -171,7 +171,7 @@ ISE_Shape* CSE_Abstract::shape()
 	return						(0);
 }
 
-CSE_Motion* CSE_Abstract::motion()
+ISE_Motion* CSE_Abstract::motion()
 {
 	return						(0);
 }
@@ -436,7 +436,7 @@ xr_token game_types[] = {
 void CSE_Abstract::FillProps(LPCSTR pref, PropItemVec& items)
 {
 #ifdef XRSEFACTORY_EXPORTS
-	m_gameType.FillProp(pref, items);
+	//m_gameType.FillProp(pref, items);
 #endif // #ifdef XRSEFACTORY_EXPORTS
 	/*
 	#ifdef XRGAME_EXPORTS
@@ -475,3 +475,11 @@ void CSE_Abstract::load_update				(NET_Packet &tNetPacket)
 	tNetPacket.r				(&m_next_spawn_time,sizeof(m_next_spawn_time));
 }
 /**/
+
+void CSE_Abstract::UPDATE_Read(NET_Packet& tNetPacket)
+{
+}
+
+void CSE_Abstract::UPDATE_Write(NET_Packet& tNetPacket)
+{
+}

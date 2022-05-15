@@ -331,7 +331,7 @@ LPCSTR	CSE_AbstractVisual::getStartupAnimation()
 	return *startup_animation;
 }
 
-CSE_Visual* CSE_AbstractVisual::visual()
+ISE_Visual* CSE_AbstractVisual::visual()
 {
 	return this;
 }

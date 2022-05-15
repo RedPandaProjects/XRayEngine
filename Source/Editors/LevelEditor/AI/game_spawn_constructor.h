@@ -15,9 +15,9 @@
 #include "spawn_constructor_space.h"
 #include "server_entity_wrapper.h"
 #include "../../XrECore/Engine/guid_generator.h"
-class CSE_Abstract;
+class ISE_Abstract;
 class CLevelSpawnConstructor;
-class CSE_ALifeCreatureAbstract;
+class ISE_ALifeCreatureAbstract;
 class CPatrolPathStorage;
 
 struct CLevelInfo {
@@ -44,7 +44,7 @@ class CGameSpawnConstructor {
 	friend class CSpawnMerger;
 public:
 	typedef SpawnConstructorSpace::LEVEL_POINT_STORAGE								LEVEL_POINT_STORAGE;
-	typedef SpawnConstructorSpace::LEVEL_CHANGER_STORAGE							LEVEL_CHANGER_STORAGE;
+	typedef xr_vector<ISE_ALifeLevelChanger*>							LEVEL_CHANGER_STORAGE;
 	typedef CGraphAbstractSerialize<CServerEntityWrapper*,float,ALife::_SPAWN_ID>	SPAWN_GRAPH;
 	typedef xr_vector<CLevelSpawnConstructor*>										LEVEL_SPAWN_STORAGE;
 	typedef xr_set<CLevelInfo>														LEVEL_INFO_STORAGE;
@@ -63,7 +63,7 @@ private:
 	ALife::_SPAWN_ID				m_spawn_id;
 	CThreadManager					m_thread_manager;
 	CSpawnHeader					m_spawn_header;
-	ALife::STORY_P_MAP				m_story_objects;
+	xr_map<ALife::_STORY_ID, ISE_ALifeDynamicObject*> m_story_objects;
 	LEVEL_INFO_STORAGE				m_levels;
 	LEVEL_SPAWN_STORAGE				m_level_spawns;
 	LEVEL_CHANGER_STORAGE			m_level_changers;
@@ -80,7 +80,7 @@ private:
 	SPAWN_GRAPH						*m_spawn_graph;
 	CPatrolPathStorage				*m_patrol_path_storage;
 	//CInifile						*m_game_info;
-	CSE_ALifeCreatureAbstract		*m_actor;
+	ISE_ALifeCreatureActor *m_actor;
 
 private:
 	string_path						m_game_graph_id;
@@ -104,10 +104,10 @@ public:
 									CGameSpawnConstructor	(LPCSTR name, LPCSTR output, LPCSTR start, bool no_separator_check);
 									CGameSpawnConstructor	(LPCSTR name, CMemoryWriter& output, LPCSTR start, bool no_separator_check=true);
 	virtual							~CGameSpawnConstructor	();
-			void					add_story_object		(ALife::_STORY_ID id,CSE_ALifeDynamicObject *object, LPCSTR level_name);
-			void					add_object				(CSE_Abstract *object);
-			void					remove_object			(CSE_Abstract *object);
-	IC		void					add_level_changer		(CSE_ALifeLevelChanger *level_changer);
+			void					add_story_object		(ALife::_STORY_ID id,ISE_ALifeDynamicObject *object, LPCSTR level_name);
+			void					add_object				(ISE_Abstract *object);
+			void					remove_object			(ISE_Abstract *object);
+	IC		void					add_level_changer		(ISE_ALifeLevelChanger *level_changer);
 	IC		void					add_level_points		(const LEVEL_POINT_STORAGE &level_points);
 	IC		u32						level_id				(LPCSTR level_name);
 	IC		IGameGraph				&game_graph				() const;

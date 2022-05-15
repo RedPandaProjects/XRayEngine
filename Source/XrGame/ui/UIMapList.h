@@ -1,7 +1,7 @@
 #pragma once
 
 #include "UIWindow.h"
-#include "gametype_chooser.h"
+#include "../xrEngine/gametype_chooser.h"
 #include "..\uiGameCustom.h"
 
 class CUIListBox;

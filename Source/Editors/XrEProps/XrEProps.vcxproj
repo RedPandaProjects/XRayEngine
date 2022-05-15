@@ -30,6 +30,9 @@
     <ProjectReference Include="..\..\XrCore\XrCore.vcxproj">
       <Project>{da642d7c-4fff-43dc-98f8-3f96caf1e4ba}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\XrEngine\XrEngine.vcxproj">
+      <Project>{2820680f-79fe-4477-a14c-007f273a5fa8}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\XrEUI\XrEUI.vcxproj">
       <Project>{7e28883c-db86-4ee8-813a-991ba20c68c9}</Project>
     </ProjectReference>

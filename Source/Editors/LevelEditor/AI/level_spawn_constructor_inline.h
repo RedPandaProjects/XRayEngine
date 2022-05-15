@@ -21,7 +21,7 @@ IC	CLevelSpawnConstructor::CLevelSpawnConstructor			(const IGameGraph::SLevel &l
 	m_graph_engine				= 0;
 }
 
-IC	CSE_ALifeCreatureActor *CLevelSpawnConstructor::actor	() const
+IC	ISE_ALifeCreatureActor *CLevelSpawnConstructor::actor	() const
 {
 	return						(m_actor);
 }

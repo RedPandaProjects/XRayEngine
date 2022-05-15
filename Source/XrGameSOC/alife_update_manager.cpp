@@ -22,6 +22,7 @@
 #include "restriction_space.h"
 #include "profiler.h"
 #include "mt_config.h"
+#include "../xrEngine/igame_persistent.h"
 
 using namespace ALife;
 
@@ -539,4 +540,32 @@ void CALifeUpdateManager::remove_all_restrictions	(ALife::_OBJECT_ID id, const R
 		}
 		default : NODEFAULT;
 	}
+}
+void CALifeUpdateManager::new_game_for_editor()
+{
+	Msg("* Creating new game...");
+	unload();
+	reload(m_section);
+	spawns().load_from_editor();
+	graph().on_load();
+	server().PerformIDgen(0x0000);
+	time_manager().init(m_section);
+	VERIFY(can_register_objects());
+
+	can_register_objects(false);
+	spawn_new_objects();
+	can_register_objects(true);
+
+	CALifeObjectRegistry::OBJECT_REGISTRY::iterator	I = objects().objects().begin();
+	CALifeObjectRegistry::OBJECT_REGISTRY::iterator	E = objects().objects().end();
+	for (; I != E; ++I)
+		(*I).second->on_register();
+
+	Msg("* New game is successfully created!");
+
+}
+void CALifeUpdateManager::load_from_editor()
+{
+	xr_strcpy(g_last_saved_game, "editor");
+	new_game_for_editor();
 }

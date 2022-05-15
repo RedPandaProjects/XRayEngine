@@ -612,6 +612,7 @@ void EScene::Play()
     g_pGameLevel->net_Start("all/single/alife/new", "localhost");
     g_pGameLevel->IR_Capture();
     GetTool(OBJCLASS_SPAWNPOINT)->m_EditFlags.set(ESceneToolBase::flVisible, false);
+    ShowCursor(FALSE);
 }
 
 bool EScene::IsSimulate()
@@ -622,6 +623,7 @@ bool EScene::IsSimulate()
 void EScene::Stop()
 {
     if (!IsSimulate())return;
+    ShowCursor(TRUE);
     g_pGameLevel->IR_Release();
     g_pGameLevel->net_Stop();
     DEL_INSTANCE(g_pGameLevel);

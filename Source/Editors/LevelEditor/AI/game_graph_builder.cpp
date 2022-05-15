@@ -18,6 +18,7 @@
 #include "graph_engine_editor.h"
 #include "scene.h"
 #include "SpawnPoint.h"
+#include "..\XrAPI\xrGameManager.h"
 
 
 CGameGraphBuilder::CGameGraphBuilder		()
@@ -59,30 +60,30 @@ void CGameGraphBuilder::load_graph_point	(ISE_Abstract*entity)
 {
 
 
-	CSE_ALifeGraphPoint		*graph_point = smart_cast<CSE_ALifeGraphPoint*>(entity);
+	ISE_ALifeGraphPoint* graph_point = entity->CastALifeGraphPoint();
 	if (!graph_point) {
 		return;
 	}
 
 	vertex_type				vertex;
-	vertex.tLocalPoint		= graph_point->o_Position;
+	vertex.tLocalPoint		= entity->o_Position;
 	// check for duplicate graph point positions
 	{
 		graph_type::const_vertex_iterator	I = graph().vertices().begin();
 		graph_type::const_vertex_iterator	E = graph().vertices().end();
 		for ( ; I != E; ++I) {
 			if ((*I).second->data().tLocalPoint.distance_to_sqr(vertex.tLocalPoint) < EPS_L) {
-				Msg			("! removing graph point [%s][%f][%f][%f] because it is too close to the another graph point",entity->name_replace(),VPUSH(graph_point->o_Position));
+				Msg			("! removing graph point [%s][%f][%f][%f] because it is too close to the another graph point",entity->name_replace(),VPUSH(entity->o_Position));
 			
 				return;
 			}
 		}
 	}
 
-	vertex.tGlobalPoint		= graph_point->o_Position;
+	vertex.tGlobalPoint		= entity->o_Position;
 	vertex.tNodeID			= level_graph().valid_vertex_position(vertex.tLocalPoint) ? level_graph().vertex_id(vertex.tLocalPoint) : u32(-1);
 	if (!level_graph().valid_vertex_id(vertex.tNodeID)) {
-		Msg					("! removing graph point [%s][%f][%f][%f] because it is outside of the AI map",entity->name_replace(),VPUSH(graph_point->o_Position));
+		Msg					("! removing graph point [%s][%f][%f][%f] because it is outside of the AI map",entity->name_replace(),VPUSH(entity->o_Position));
 		
 		return;
 	}
@@ -92,7 +93,7 @@ void CGameGraphBuilder::load_graph_point	(ISE_Abstract*entity)
 		graph_type::const_vertex_iterator	E = graph().vertices().end();
 		for ( ; I != E; ++I) {
 			if ((*I).second->data().tNodeID == vertex.tNodeID) {
-				Msg			("! removing graph point [%s][%f][%f][%f] because it has the same AI node as another graph point",entity->name_replace(),VPUSH(graph_point->o_Position));
+				Msg			("! removing graph point [%s][%f][%f][%f] because it has the same AI node as another graph point",entity->name_replace(),VPUSH(entity->o_Position));
 			
 				return;
 			}
@@ -285,8 +286,15 @@ void CGameGraphBuilder::build_cross_table	()
 	iterate_distances		();
 
 	IGameLevelCrossTable::CHeader		tCrossTableHeader;
-
-	tCrossTableHeader.dwVersion = XRAI_CURRENT_VERSION;
+	switch (xrGameManager::GetGame())
+	{
+	case EGame::SHOC:
+		tCrossTableHeader.dwVersion = XRAI_SOC_CURRENT_VERSION;
+		break;
+	default:
+		tCrossTableHeader.dwVersion = XRAI_CURRENT_VERSION;
+		break;
+	}
 	tCrossTableHeader.dwNodeCount = level_graph().header().vertex_count();
 	tCrossTableHeader.dwGraphPointCount = graph().header().vertex_count();
 	tCrossTableHeader.m_level_guid = level_graph().header().guid();
@@ -559,7 +567,15 @@ void CGameGraphBuilder::build_graph	()
 
 
 	IGameGraph::CHeader GameGraphHeader;
-	GameGraphHeader.m_version			= XRAI_CURRENT_VERSION;
+	switch (xrGameManager::GetGame())
+	{
+	case EGame::SHOC:
+		GameGraphHeader.m_version = XRAI_SOC_CURRENT_VERSION;
+		break;
+	default:
+		GameGraphHeader.m_version = XRAI_CURRENT_VERSION;
+		break;
+	}
 	VERIFY						(graph().vertices().size() < (u32(1) << (8*sizeof(GameGraph::_GRAPH_ID))));
 	GameGraphHeader.m_vertex_count		= (GameGraph::_GRAPH_ID)graph().vertices().size();
 	VERIFY						(graph().edge_count() < (u32(1) << (8*sizeof(GameGraph::_GRAPH_ID))));

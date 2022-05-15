@@ -246,3 +246,54 @@ void CALifeSpawnRegistry::build_story_spawns()
 		m_spawn_story_ids.insert		(std::make_pair(object->m_spawn_story_id,(*I).first));
 	}
 }
+
+void CALifeSpawnRegistry::load_from_editor()
+{
+	Msg("* Loading spawn registry...");
+	ai().patrol_path_storage_from_editor();
+
+	IReader*F = EditorScene->LoadSpawn();
+	IReader* chunk;
+	chunk = F->open_chunk(0);
+	m_header.load(*chunk);
+	chunk->close();
+
+	chunk = F->open_chunk(1);
+	m_spawns.load(*chunk);
+	chunk->close();
+
+#if 0
+	SPAWN_GRAPH::vertex_iterator			I = m_spawns.vertices().begin();
+	SPAWN_GRAPH::vertex_iterator			E = m_spawns.vertices().end();
+	for (; I != E; ++I) {
+		luabind::wrap_base* base = smart_cast<luabind::wrap_base*>(&(*I).second->data()->object());
+		if (!base)
+			continue;
+
+		if (xr_strcmp((*I).second->data()->object().name_replace(), "rostok_stalker_outfit"))
+			continue;
+
+		dummy* _dummy = (dummy*)((void*)base->m_self.m_impl);
+		lua_State** _state = &_dummy->state;
+		Msg("0x%08x", *(int*)&_state);
+		break;
+	}
+#endif
+
+	chunk = F->open_chunk(2);
+	load_data(m_artefact_spawn_positions, *chunk);
+	chunk->close();
+
+	chunk = F->open_chunk(3);
+	R_ASSERT2(chunk, "Spawn version mismatch - REBUILD SPAWN!");
+	ai().patrol_path_storage(*chunk);
+	chunk->close();
+
+	xr_delete(F);
+
+	build_story_spawns();
+
+	build_root_spawns();
+
+	Msg("* %d spawn points are successfully loaded", m_spawns.vertex_count());
+}

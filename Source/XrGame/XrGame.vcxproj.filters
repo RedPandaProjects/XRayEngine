@@ -6582,9 +6582,6 @@
     <ClInclude Include="id_generator.h">
       <Filter>Core\Server\ID_Generator</Filter>
     </ClInclude>
-    <ClInclude Include="..\xrServerEntities\gametype_chooser.h">
-      <Filter>Core\Server\ServerEntities</Filter>
-    </ClInclude>
     <ClInclude Include="..\xrServerEntities\PropertiesListTypes.h">
       <Filter>Core\Server\ServerEntities</Filter>
     </ClInclude>
@@ -10091,9 +10088,6 @@
     </ClCompile>
     <ClCompile Include="gamespy\CdkeyDecode\cdkeydecode.c">
       <Filter>Core\Server\GameSpy\CdkeyDecode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\xrServerEntities\gametype_chooser.cpp">
-      <Filter>Core\Server\ServerEntities</Filter>
     </ClCompile>
     <ClCompile Include="..\xrServerEntities\xrServer_Factory.cpp">
       <Filter>Core\Server\ServerEntities</Filter>

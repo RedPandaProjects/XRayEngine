@@ -439,9 +439,6 @@
     <ClCompile Include="..\..\XrRender\Private\stats_manager.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\xrServerEntities\gametype_chooser.cpp">
-      <Filter>ServerEntities</Filter>
-    </ClCompile>
     <ClCompile Include="UI\Tools\UILightTool.cpp">
       <Filter>UI\Tools</Filter>
     </ClCompile>

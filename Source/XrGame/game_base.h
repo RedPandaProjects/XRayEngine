@@ -2,7 +2,7 @@
 
 #include "game_base_space.h"
 #include "../xrEngine/alife_space.h"
-#include "gametype_chooser.h"
+#include "../xrEngine/gametype_chooser.h"
 #include "player_account.h"
 
 #pragma pack(push,1)

@@ -129,7 +129,7 @@ bool ESceneObjectTool::ExportBreakableObjects(SExportStreams* F)
                 {
                     xr_string entity_ref		= "breakable_object";
                     ISE_Abstract*	m_Data		= g_SEFactoryManager->create_entity(entity_ref.c_str()); 	VERIFY(m_Data);
-                    CSE_Visual* m_Visual		= m_Data->visual();	VERIFY(m_Visual);
+                    ISE_Visual* m_Visual		= m_Data->visual();	VERIFY(m_Visual);
                     // set params
                     m_Data->set_name			(entity_ref.c_str());
                     m_Data->set_name_replace	(sn.c_str());
@@ -257,7 +257,7 @@ bool ESceneObjectTool::ExportClimableObjects(SExportStreams* F)
                     xr_string entity_ref		= "climable_object";
                     ISE_Abstract*	m_Data		= g_SEFactoryManager->create_entity(entity_ref.c_str()); 	VERIFY(m_Data);
                     ISE_Shape* m_Shape			= m_Data->shape();                      VERIFY(m_Shape);
-//					CSE_Visual* m_Visual		= m_Data->visual();	VERIFY(m_Visual);
+//					ISE_Visual* m_Visual		= m_Data->visual();	VERIFY(m_Visual);
                     // set params
                     m_Data->set_name			(entity_ref.c_str());
                     m_Data->set_name_replace	(sn.c_str());

@@ -22,7 +22,7 @@ CGameGraph::~CGameGraph()
 	xr_delete(m_current_level_cross_table);
 }
 
-void CGameGraph::set_current_level(u32 const level_id)
+void CGameGraph::set_current_level(u32  level_id)
 {
 	xr_delete(m_current_level_cross_table);
 	u32* current_cross_table = m_cross_tables;

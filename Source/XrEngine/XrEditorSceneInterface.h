@@ -11,5 +11,4 @@ public:
 	virtual	void LoadCFrom(CObjectSpace*Space, CDB::build_callback)=0;
 	virtual IGameGraph* GetGameGraph() = 0;
 	virtual ILevelGraph* GetLevelGraph() = 0;
-
 };

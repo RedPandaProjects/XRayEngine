@@ -62,44 +62,6 @@ private:
 	LPSTR							s_name_replace;
 
 public:
-	BOOL							net_Ready;
-	BOOL							net_Processed;	// Internal flag for connectivity-graph
-
-	u16								m_wVersion;
-	u16								m_script_version;
-	u16								RespawnTime;
-
-	u16								ID;				// internal ID
-	u16								ID_Parent;		// internal ParentID, 0xffff means no parent
-	u16								ID_Phantom;		// internal PhantomID, 0xffff means no phantom
-	xrClientData* owner;
-
-	// spawn data
-	shared_str						s_name;
-	//.	u8								s_gameid;
-	GameTypeChooser					m_gameType;
-	u8								s_RP;
-	Flags16							s_flags;		// state flags
-	xr_vector<u16>					children;
-
-	// update data
-	Fvector							o_Position;
-	Fvector							o_Angle;
-	CLASS_ID						m_tClassID;
-	int								m_script_clsid;
-	shared_str						m_ini_string;
-	CInifile* m_ini_file;
-
-	// for ALife control
-	bool							m_bALifeControl;
-	ALife::_SPAWN_ID				m_tSpawnID;
-
-	// ALife spawn params
-	// obsolete, just because we hope to uncomment all this stuff
-	Flags32							m_spawn_flags;
-
-	//client object custom data serialization
-	xr_vector<u8>					client_data;
 	virtual void					load(NET_Packet& tNetPacket);
 
 	//////////////////////////////////////////////////////////////////////////
@@ -129,9 +91,9 @@ public:
 	virtual Fvector& position();
 	virtual Fvector& angle();
 	virtual Flags16& flags();
-	virtual CSE_Visual* visual();
+	virtual ISE_Visual* visual();
 	virtual ISE_Shape* shape();
-	virtual CSE_Motion* motion();
+	virtual ISE_Motion* motion();
 	virtual bool			validate();
 	//
 
@@ -165,6 +127,8 @@ public:
 	virtual CSE_ALifeSmartZone* cast_smart_zone() { return 0; };
 	virtual CSE_ALifeOnlineOfflineGroup* cast_online_offline_group() { return 0; };
 	virtual CSE_ALifeItemPDA* cast_item_pda() { return 0; };
+	virtual void UPDATE_Read(NET_Packet& tNetPacket);
+	virtual void UPDATE_Write(NET_Packet& tNetPacket);
 };
 add_to_type_list(CSE_Abstract)
 #define script_type_list save_type_list(CSE_Abstract)

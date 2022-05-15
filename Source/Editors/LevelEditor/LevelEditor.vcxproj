@@ -33,7 +33,6 @@
     <ClCompile Include="..\..\XrRender\Private\DetailManager_soft.cpp" />
     <ClCompile Include="..\..\XrRender\Private\DetailManager_VS.cpp" />
     <ClCompile Include="..\..\XrRender\Private\stats_manager.cpp" />
-    <ClCompile Include="..\..\xrServerEntities\gametype_chooser.cpp" />
     <ClCompile Include="AI\game_graph_editor.cpp" />
     <ClCompile Include="AI\game_graph_builder.cpp" />
     <ClCompile Include="AI\game_spawn_constructor.cpp" />

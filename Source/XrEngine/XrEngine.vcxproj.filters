@@ -750,7 +750,7 @@
     <ClInclude Include="XrEditorSceneInterface.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="xrISEAbstract.h">
+    <ClInclude Include="XrISEAbstract.h">
       <Filter>Game API\Server</Filter>
     </ClInclude>
     <ClInclude Include="alife_space.h">
@@ -929,6 +929,30 @@
     </ClInclude>
     <ClInclude Include="object_type_traits.h">
       <Filter>Game API\Alife\Shared\object_broker</Filter>
+    </ClInclude>
+    <ClInclude Include="XrISEALifeObject.h">
+      <Filter>Game API\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="XrISEALifeCreatureActor.h">
+      <Filter>Game API\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="XrISEALifeDynamicObject.h">
+      <Filter>Game API\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="XrISEALifeLevelChanger.h">
+      <Filter>Game API\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="XrISEALifeSpaceRestrictor.h">
+      <Filter>Game API\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="XrISEALifeGraphPoint.h">
+      <Filter>Game API\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="XrISEALifeAnomalousZone.h">
+      <Filter>Game API\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="gametype_chooser.h">
+      <Filter>Game API\Server</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1312,6 +1336,12 @@
     </ClCompile>
     <ClCompile Include="LevelGameDef.cpp">
       <Filter>Game API</Filter>
+    </ClCompile>
+    <ClCompile Include="XrISEAbstract.cpp">
+      <Filter>Game API\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="gametype_chooser.cpp">
+      <Filter>Game API\Server</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

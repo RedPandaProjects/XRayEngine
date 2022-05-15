@@ -18,7 +18,7 @@ inline void not_implemented()
 #endif
 
 #include "..\XrEUI\stdafx.h"
-#include "..\..\xrServerEntities\gametype_chooser.h"
+#include "..\..\XrEngine\stdafx.h"
 #include "..\..\xrServerEntities\xrEProps.h"
 #include "..\..\XrCore\ChooseTypes.H"
 #include "FolderLib.h"

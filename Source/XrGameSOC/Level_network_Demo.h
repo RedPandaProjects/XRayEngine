@@ -1,4 +1,4 @@
-private:
+protected:
 	string_path					m_sDemoName;
 
 	//------------- Demo Play	---------------------------------------

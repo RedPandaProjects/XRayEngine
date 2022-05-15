@@ -9,8 +9,6 @@
 #pragma pack(push,4)
 #include "xrServer_Space.h"
 #	include "../xrCDB/xrCDB.h"
-#include "ShapeData.h"
-#include "gametype_chooser.h"
 
 class NET_Packet;
 class CDUInterface;

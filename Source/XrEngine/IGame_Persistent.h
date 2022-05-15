@@ -1,6 +1,6 @@
 #pragma once
 
-#include "..\xrServerEntities\gametype_chooser.h"
+#include "gametype_chooser.h"
 #include "Environment.h"
 #include "EnvironmentSOC.h"
 #include "IGame_ObjectPool.h"

@@ -674,22 +674,22 @@ CSE_ALifeDynamicObject::~CSE_ALifeDynamicObject()
 
 void CSE_ALifeDynamicObject::STATE_Write(NET_Packet& tNetPacket)
 {
-	inherited::STATE_Write(tNetPacket);
+	inherited1::STATE_Write(tNetPacket);
 }
 
 void CSE_ALifeDynamicObject::STATE_Read(NET_Packet& tNetPacket, u16 size)
 {
-	inherited::STATE_Read(tNetPacket, size);
+	inherited1::STATE_Read(tNetPacket, size);
 }
 
 void CSE_ALifeDynamicObject::UPDATE_Write(NET_Packet& tNetPacket)
 {
-	inherited::UPDATE_Write(tNetPacket);
+	inherited1::UPDATE_Write(tNetPacket);
 };
 
 void CSE_ALifeDynamicObject::UPDATE_Read(NET_Packet& tNetPacket)
 {
-	inherited::UPDATE_Read(tNetPacket);
+	inherited1::UPDATE_Read(tNetPacket);
 };
 
 #ifndef XRGAME_EXPORTS
@@ -712,7 +712,7 @@ CSE_ALifeDynamicObjectVisual::~CSE_ALifeDynamicObjectVisual()
 {
 }
 
-CSE_Visual* CSE_ALifeDynamicObjectVisual::visual()
+ISE_Visual* CSE_ALifeDynamicObjectVisual::visual()
 {
 	return						(this);
 }
@@ -910,7 +910,7 @@ CSE_ALifeLevelChanger::~CSE_ALifeLevelChanger()\
 
 void CSE_ALifeLevelChanger::STATE_Read(NET_Packet& tNetPacket, u16 size)
 {
-	inherited::STATE_Read(tNetPacket, size);
+	inherited1::STATE_Read(tNetPacket, size);
 	if (m_wVersion < 34) {
 		tNetPacket.r_u32();
 		tNetPacket.r_u32();
@@ -936,7 +936,7 @@ void CSE_ALifeLevelChanger::STATE_Read(NET_Packet& tNetPacket, u16 size)
 
 void CSE_ALifeLevelChanger::STATE_Write(NET_Packet& tNetPacket)
 {
-	inherited::STATE_Write(tNetPacket);
+	inherited1::STATE_Write(tNetPacket);
 	tNetPacket.w_u16(m_tNextGraphID);
 	tNetPacket.w_u32(m_dwNextNodeID);
 	tNetPacket.w_float(m_tNextPosition.x);
@@ -950,19 +950,19 @@ void CSE_ALifeLevelChanger::STATE_Write(NET_Packet& tNetPacket)
 
 void CSE_ALifeLevelChanger::UPDATE_Read(NET_Packet& tNetPacket)
 {
-	inherited::UPDATE_Read(tNetPacket);
+	inherited1::UPDATE_Read(tNetPacket);
 }
 
 void CSE_ALifeLevelChanger::UPDATE_Write(NET_Packet& tNetPacket)
 {
-	inherited::UPDATE_Write(tNetPacket);
+	inherited1::UPDATE_Write(tNetPacket);
 }
 
 #ifndef XRGAME_EXPORTS
 void CSE_ALifeLevelChanger::FillProps(LPCSTR pref, PropItemVec& items)
 {
 #	ifdef XRSEFACTORY_EXPORTS
-	inherited::FillProps(pref, items);
+	inherited1::FillProps(pref, items);
 
 	PHelper().CreateRList(items, PrepareKey(pref, *s_name, "Level to change"), &m_caLevelToChange, &*fp_data.level_ids.begin(), fp_data.level_ids.size());
 	PHelper().CreateRText(items, PrepareKey(pref, *s_name, "Level point to change"), &m_caLevelPointToChange);
@@ -1283,7 +1283,7 @@ void CSE_ALifeObjectPhysic::FillProps(LPCSTR pref, PropItemVec& values)
 	PHelper().CreateFlag8(values, PrepareKey(pref, *s_name, "Active"), &_flags, flActive);
 
 	// motions & bones
-	PHelper().CreateChoose(values, PrepareKey(pref, *s_name, "Model\\Fixed bones"), &fixed_bones, smSkeletonBones, 0, (void*)visual()->get_visual(), 8);
+	PHelper().CreateChoose(values, PrepareKey(pref, *s_name, "Model\\Fixed bones"), &fixed_bones, smSkeletonBones, 0, (void*)static_cast<CSE_Visual*>(visual())->get_visual(), 8);
 }
 #endif // #ifndef XRGAME_EXPORTS
 
@@ -1688,7 +1688,7 @@ CSE_ALifeHelicopter::~CSE_ALifeHelicopter()
 {
 }
 
-CSE_Motion* CSE_ALifeHelicopter::motion()
+ISE_Motion* CSE_ALifeHelicopter::motion()
 {
 	return						(this);
 }

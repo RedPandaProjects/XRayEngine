@@ -165,7 +165,7 @@
 //------------------------------------------------------------------------------
 #define SPAWN_VERSION	u16(128)
 
-SERVER_ENTITY_DECLARE_BEGIN2(CSE_Shape,ISE_Shape,CShapeData)
+SERVER_ENTITY_DECLARE_BEGIN(CSE_Shape,ISE_Shape)
 public:
 	void							cform_read		(NET_Packet& P);
 	void							cform_write		(NET_Packet& P);
@@ -225,7 +225,7 @@ SERVER_ENTITY_DECLARE_BEGIN2(CSE_AbstractVisual,CSE_Abstract,CSE_Visual)
 
 	CSE_AbstractVisual										(LPCSTR caSection);
 	virtual	~CSE_AbstractVisual								();
-	virtual CSE_Visual* 	visual					();
+	virtual ISE_Visual* 	visual					();
 	LPCSTR							getStartupAnimation		();
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_AbstractVisual)

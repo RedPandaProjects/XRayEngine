@@ -6,6 +6,7 @@
 #include "ESceneAIMapTools.h"
 #include "..\XrECore\Engine\guid_generator.h"
 
+#include "..\XrAPI\xrGameManager.h"
 const u32 UnkonnectedNode = 0xfffffff0;
 const WORD	InvalidSector = 0xff;
 const float	cover_distance = 30.f;
@@ -151,7 +152,16 @@ void CLevelGraphEditor::build()
 	};
 	hdrNODES*RealHeader = (hdrNODES*)&m_RealHeader;
 	AIMapTool->CalculateNodesBBox(RealHeader->aabb);
-	RealHeader->version = XRAI_CURRENT_VERSION;
+	switch (xrGameManager::GetGame())
+	{
+	case EGame::SHOC:
+		RealHeader->version = XRAI_SOC_CURRENT_VERSION;
+		break;
+	default:
+		RealHeader->version = XRAI_CURRENT_VERSION;
+		break;
+	}
+
 	RealHeader->count = AIMapTool->Nodes().size();
 	RealHeader->size = g_params.fPatchSize;
 	RealHeader->size_y = CalculateHeight(RealHeader->aabb);
