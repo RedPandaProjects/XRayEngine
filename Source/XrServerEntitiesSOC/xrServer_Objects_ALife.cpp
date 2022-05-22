@@ -81,7 +81,8 @@ struct SFillPropData{
 		for (int i=0; i<GameGraph::LOCATION_TYPE_COUNT; ++i){
             VERIFY				(locations[i].empty());
             string256			caSection, T;
-            strconcat			(caSection,SECTION_HEADER,itoa(i,T,10));
+            xr_strcpy			(caSection,SECTION_HEADER);
+			xr_strcat(caSection, itoa(i, T, 10));
             R_ASSERT			(Ini->section_exist(caSection));
             for (k = 0; Ini->r_line(caSection,k,&N,&V); ++k)
                 locations[i].push_back	(xr_rtoken(V,atoi(N)));
@@ -177,7 +178,7 @@ void CSE_ALifeTraderAbstract::FillProps	(LPCSTR pref, PropItemVec& items)
 ////////////////////////////////////////////////////////////////////////////
 CSE_ALifeGraphPoint::CSE_ALifeGraphPoint	(LPCSTR caSection) : CSE_Abstract(caSection)
 {
-	s_gameid					= GAME_DUMMY;
+	m_gameType.SetDefaults();// Game = GAME_DUMMY;
 	m_tLocations[0]				= 0;
 	m_tLocations[1]				= 0;
 	m_tLocations[2]				= 0;

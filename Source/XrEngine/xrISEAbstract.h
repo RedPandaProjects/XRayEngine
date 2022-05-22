@@ -54,6 +54,7 @@ public:
 		flVisualAnimationChange = u32(1 << 2),
 		flMotionChange = u32(1 << 3),
 		flVisualAnimationPauseChange = u32(1 << 4),
+		flSpawnDestroyOnSpawn = u32(1 << 5),
 	};
 	Flags32							m_editor_flags;
 	IC	void						set_editor_flag(u32 mask) { m_editor_flags.set(mask, TRUE); }

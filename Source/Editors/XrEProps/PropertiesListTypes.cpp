@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#include "../../xrServerEntities/PropertiesListTypes.h"
+#include "../Public/PropertiesListTypes.h"
 //------------------------------------------------------------------------------
             
 xr_string	ShortcutValue::GetDrawText		(TOnDrawTextEvent )

@@ -8,7 +8,7 @@
 
 #include "stdafx.h"
 #include "alife_artefact_order.h"
-#include "net_utils.h"
+#include "..\XrCore\net_utils.h"
 
 void SArtefactOrder::load	(NET_Packet &packet)
 {

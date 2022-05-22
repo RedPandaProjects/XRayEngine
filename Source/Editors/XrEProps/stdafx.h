@@ -19,7 +19,7 @@ inline void not_implemented()
 
 #include "..\XrEUI\stdafx.h"
 #include "..\..\XrEngine\stdafx.h"
-#include "..\..\xrServerEntities\xrEProps.h"
+#include "..\Public\xrEProps.h"
 #include "..\..\XrCore\ChooseTypes.H"
 #include "FolderLib.h"
 #include "ItemListHelper.h"

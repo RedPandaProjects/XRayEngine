@@ -282,18 +282,6 @@
     <ClInclude Include="..\..\xrServerEntitiesCS\smart_cast_impl2.h">
       <Filter>Common\SmartCast</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\xrServerEntitiesCS\associative_vector.h">
-      <Filter>Common\associative_vector</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\xrServerEntitiesCS\associative_vector_compare_predicate.h">
-      <Filter>Common\associative_vector</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\xrServerEntitiesCS\associative_vector_compare_predicate_inline.h">
-      <Filter>Common\associative_vector</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\xrServerEntitiesCS\associative_vector_inline.h">
-      <Filter>Common\associative_vector</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\xrServerEntitiesCS\script_export_macroses.h">
       <Filter>Scripts</Filter>
     </ClInclude>
@@ -680,9 +668,6 @@
     <ClCompile Include="..\..\xrServerEntitiesCS\lua_studio.cpp">
       <Filter>Scripts\lua_studio</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\xrServerEntitiesCS\alife_space.cpp">
-      <Filter>ServerStuff\Common\ALifeStuff</Filter>
-    </ClCompile>
     <ClCompile Include="alife_artefact_order.cpp">
       <Filter>ServerStuff\Common\ALifeStuff\artefact_order</Filter>
     </ClCompile>
@@ -711,9 +696,6 @@
       <Filter>ServerStuff\ServerFactory</Filter>
     </ClCompile>
     <ClCompile Include="..\..\xrServerEntitiesCS\xrServer_Objects_Abstract.cpp">
-      <Filter>ServerStuff\ServerEntities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\xrServerEntitiesCS\gametype_chooser.cpp">
       <Filter>ServerStuff\ServerEntities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\xrServerEntitiesCS\xrServer_Object_Base.cpp">

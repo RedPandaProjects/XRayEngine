@@ -11,7 +11,7 @@
 #include "ai_space.h"
 #include "script_engine.h"
 #include "object_factory.h"
-#include "xrEProps.h"
+#include "..\Public\xrEProps.h"
 #include "xrSE_Factory_import_export.h"
 #include "script_properties_list_helper.h"
 
@@ -68,6 +68,21 @@ extern "C" {
 		xr_delete(g_object_factory);
 	}
 };
+
+void _destroy_item_data_vector_cont(T_VECTOR* vec)
+{
+	T_VECTOR::iterator it = vec->begin();
+	T_VECTOR::iterator it_e = vec->end();
+
+	xr_vector<CUIXml*>			_tmp;
+	for (; it != it_e; ++it)
+	{
+		xr_vector<CUIXml*>::iterator it_f = std::find(_tmp.begin(), _tmp.end(), (*it)._xml);
+		if (it_f == _tmp.end())
+			_tmp.push_back((*it)._xml);
+	}
+	delete_data(_tmp);
+}
 
 
 /*

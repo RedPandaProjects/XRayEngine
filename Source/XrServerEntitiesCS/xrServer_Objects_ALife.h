@@ -10,8 +10,8 @@
 #define xrServer_Objects_ALifeH
 
 #include "xrServer_Objects.h"
-#include "alife_space.h"
-#include "game_graph_space.h"
+#include "../XrEngine/alife_space.h"
+#include "../XrEngine/game_graph_space.h"
 
 #pragma warning(push)
 #pragma warning(disable:4005)

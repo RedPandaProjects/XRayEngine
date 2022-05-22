@@ -81,7 +81,7 @@ CSE_Abstract::CSE_Abstract					(LPCSTR caSection)
 	ID_Parent					= 0xffff;
 	ID_Phantom					= 0xffff;
 	owner						= 0;
-	s_gameid					= 0;
+	m_gameType.SetDefaults();
 	s_RP						= 0xFE;			// Use supplied coords
 	s_flags.assign				(0);
 	s_name						= caSection;
@@ -177,6 +177,7 @@ void CSE_Abstract::Spawn_Write				(NET_Packet	&tNetPacket, BOOL bLocal)
 	tNetPacket.w_begin			(M_SPAWN);
 	tNetPacket.w_stringZ		(s_name			);
 	tNetPacket.w_stringZ		(s_name_replace ?	s_name_replace : "");
+	u8 s_gameid = 0;
 	tNetPacket.w_u8				(s_gameid		);
 	tNetPacket.w_u8				(s_RP			);
 	tNetPacket.w_vec3			(o_Position		);
@@ -195,7 +196,7 @@ void CSE_Abstract::Spawn_Write				(NET_Packet	&tNetPacket, BOOL bLocal)
 	tNetPacket.w_u16			(SPAWN_VERSION);
 	
 	tNetPacket.w_u16			(script_server_object_version());
-
+	tNetPacket.w_u16(m_gameType.m_GameType.flags);
 
 	//client object custom data serialization SAVE
 	u16 client_data_size		= (u16)client_data.size(); //не может быть больше 256 байт
@@ -239,6 +240,7 @@ BOOL CSE_Abstract::Spawn_Read				(NET_Packet	&tNetPacket)
 	string256					temp;
 	tNetPacket.r_stringZ		(temp);
 	set_name_replace			(temp);
+	u8 s_gameid;
 	tNetPacket.r_u8				(s_gameid		);
 	tNetPacket.r_u8				(s_RP			);
 	tNetPacket.r_vec3			(o_Position		);
@@ -263,6 +265,10 @@ BOOL CSE_Abstract::Spawn_Read				(NET_Packet	&tNetPacket)
 	if (m_wVersion > 69)
 		m_script_version		= tNetPacket.r_u16();
 
+	if (m_wVersion > 118)
+	{
+		tNetPacket.r_u16(m_gameType.m_GameType.flags);
+	}
 	// read specific data
 
 	//client object custom data serialization LOAD
@@ -429,3 +435,11 @@ void CSE_Abstract::load_update				(NET_Packet &tNetPacket)
 	tNetPacket.r				(&m_next_spawn_time,sizeof(m_next_spawn_time));
 }
 /**/
+
+void CSE_Abstract::UPDATE_Read(NET_Packet& tNetPacket)
+{
+}
+
+void CSE_Abstract::UPDATE_Write(NET_Packet& tNetPacket)
+{
+}

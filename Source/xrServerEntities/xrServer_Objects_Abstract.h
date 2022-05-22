@@ -19,7 +19,8 @@ class CDUInterface;
     #endif
 #endif
 
-#include "xrEProps.h"
+
+#include "..\Editors\Public\xrEProps.h"
 
 #ifndef XRGAME_EXPORTS
 	#include "DrawUtils.h"

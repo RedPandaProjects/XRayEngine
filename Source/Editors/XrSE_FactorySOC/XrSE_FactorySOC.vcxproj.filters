@@ -180,12 +180,6 @@
     <ClInclude Include="defines.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="ai_space.h">
-      <Filter>Common\ASpace</Filter>
-    </ClInclude>
-    <ClInclude Include="ai_space_inline.h">
-      <Filter>Common\ASpace</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\xrServerEntitiesSOC\object_broker.h">
       <Filter>Common\ObjectBroker</Filter>
     </ClInclude>
@@ -531,6 +525,12 @@
     <ClInclude Include="script_properties_list_helper.h">
       <Filter>ServerStuff\ServerEntities\scripts\script_properties_list_helper</Filter>
     </ClInclude>
+    <ClInclude Include="ai_space.h">
+      <Filter>Common\ASpace</Filter>
+    </ClInclude>
+    <ClInclude Include="ai_space_inline.h">
+      <Filter>Common\ASpace</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\xrServerEntitiesSOC\pch_script.cpp">
@@ -544,9 +544,6 @@
     </ClCompile>
     <ClCompile Include="xrSE_Factory.cpp">
       <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="ai_space.cpp">
-      <Filter>Common\ASpace</Filter>
     </ClCompile>
     <ClCompile Include="..\..\xrServerEntitiesSOC\object_factory.cpp">
       <Filter>Common\ObjectFactory</Filter>
@@ -727,6 +724,9 @@
     </ClCompile>
     <ClCompile Include="script_properties_list_helper.cpp">
       <Filter>ServerStuff\ServerEntities\scripts\script_properties_list_helper</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_space.cpp">
+      <Filter>Common\ASpace</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

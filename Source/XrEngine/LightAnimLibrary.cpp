@@ -1,7 +1,7 @@
 //---------------------------------------------------------------------------
 #include "stdafx.h"
 #pragma hdrstop
-#include "..\xrServerEntities\xrEProps.h"
+#include "..\Editors\Public\xrEProps.h"
 #include "LightAnimLibrary.h"
 //---------------------------------------------------------------------------
 #define LANIM_VERSION		0x0001

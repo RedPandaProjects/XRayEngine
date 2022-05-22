@@ -41,3 +41,4 @@ IC	xr_string string2xr_string(LPCSTR s) { return s ? s : ""; }
 #	define	THROW2					VERIFY2
 #	define	THROW3					VERIFY3
 #endif
+#include "..\XrEProps\stdafx.h"

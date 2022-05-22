@@ -150,10 +150,11 @@
 // 116 - CSE_ALifeCreatureAbstract		appended with property m_game_death_time
 // 117 - CSE_ALifeLevelChanger			appended with property m_bSilentMode
 // 118 - CALifeHumanBrain				removed property m_tpKnownCustomers, sad but true
+// 119 - CSE_Abstract					added GameTypeChoose
 //------------------------------------------------------------------------------
-#define SPAWN_VERSION	u16(118)
+#define SPAWN_VERSION	u16(119)
 
-SERVER_ENTITY_DECLARE_BEGIN2(CSE_Shape,ISE_Shape,CShapeData)
+SERVER_ENTITY_DECLARE_BEGIN(CSE_Shape,ISE_Shape)
 public:
 	void							cform_read		(NET_Packet& P);
 	void							cform_write		(NET_Packet& P);

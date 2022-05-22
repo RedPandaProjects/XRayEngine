@@ -254,10 +254,6 @@
     <ClInclude Include="..\..\xrServerEntitiesCS\alife_monster_brain_inline.h" />
     <ClInclude Include="..\..\xrServerEntitiesCS\alife_movement_manager_holder.h" />
     <ClInclude Include="..\..\xrServerEntitiesCS\alife_space.h" />
-    <ClInclude Include="..\..\xrServerEntitiesCS\associative_vector.h" />
-    <ClInclude Include="..\..\xrServerEntitiesCS\associative_vector_compare_predicate.h" />
-    <ClInclude Include="..\..\xrServerEntitiesCS\associative_vector_compare_predicate_inline.h" />
-    <ClInclude Include="..\..\xrServerEntitiesCS\associative_vector_inline.h" />
     <ClInclude Include="..\..\xrServerEntitiesCS\character_info.h" />
     <ClInclude Include="..\..\xrServerEntitiesCS\character_info_defs.h" />
     <ClInclude Include="..\..\xrServerEntitiesCS\clsid_game.h" />
@@ -383,9 +379,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\xrServerEntitiesCS\alife_human_brain.cpp" />
     <ClCompile Include="..\..\xrServerEntitiesCS\alife_monster_brain.cpp" />
-    <ClCompile Include="..\..\xrServerEntitiesCS\alife_space.cpp" />
     <ClCompile Include="..\..\xrServerEntitiesCS\character_info.cpp" />
-    <ClCompile Include="..\..\xrServerEntitiesCS\gametype_chooser.cpp" />
     <ClCompile Include="..\..\xrServerEntitiesCS\lua_studio.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
@@ -958,6 +952,9 @@
     </ProjectReference>
     <ProjectReference Include="..\..\XrCore\XrCore.vcxproj">
       <Project>{da642d7c-4fff-43dc-98f8-3f96caf1e4ba}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\XrEngine\XrEngine.vcxproj">
+      <Project>{2820680f-79fe-4477-a14c-007f273a5fa8}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\XrXMLParser\XrXMLParser.vcxproj">
       <Project>{39abb344-2136-46c3-814d-8e80bc59a08e}</Project>

@@ -1,9 +1,8 @@
 #pragma once
-#pragma pack(push,4)
 #include "xrServer_Space.h"
 #	include "../xrCDB/xrCDB.h"
-#include "ShapeData.h"
-#include "gametype_chooser.h"
+#include "../XrEngine/ShapeData.h"
+#include "../XrEngine/gametype_chooser.h"
 
 class NET_Packet;
 class CDUInterface;
@@ -14,7 +13,8 @@ class CDUInterface;
     #endif
 #endif
 
-#include "xrEProps.h"
+
+#include "..\Editors\Public\xrEProps.h"
 
 #ifndef XRGAME_EXPORTS
 	#include "..\..\xrRender/Public\DrawUtils.h"
@@ -23,7 +23,5 @@ class CDUInterface;
 #endif
 #pragma warning(push)
 #pragma warning(disable:4005)
-
 #include "..\XrServerEntities\xrServer_Objects_Abstract_Base.h"
 #pragma warning(pop)
-#pragma pack(push,4)

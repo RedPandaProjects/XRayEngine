@@ -8,11 +8,11 @@
 
 #pragma once
 
-#include "xrCDB.h"
+#include "..\XrCDB\xrCDB.h"
 #ifndef XRGAME_EXPORTS
-#	include "Sound.h"
+#	include "..\XrSound\Sound.h"
 #endif
-#include "xrEProps.h"
+#include "..\Editors\Public\xrEProps.h"
 #include "script_export_space.h"
 #include "script_space.h"
 #include "script_rtoken_list.h"

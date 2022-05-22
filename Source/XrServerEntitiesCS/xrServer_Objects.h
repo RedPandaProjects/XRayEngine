@@ -161,7 +161,7 @@
 //------------------------------------------------------------------------------
 #define SPAWN_VERSION	u16(124)
 
-SERVER_ENTITY_DECLARE_BEGIN2(CSE_Shape,ISE_Shape,CShapeData)
+SERVER_ENTITY_DECLARE_BEGIN(CSE_Shape,ISE_Shape)
 public:
 	void							cform_read		(NET_Packet& P);
 	void							cform_write		(NET_Packet& P);
