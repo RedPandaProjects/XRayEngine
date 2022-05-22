@@ -11,18 +11,18 @@
 #include "../corpse_cover.h"
 #include "../../../cover_manager.h"
 #include "../../../cover_point.h"
-#include "../../../ai_space.h"
+#include "ai_space.h"
 #include "../control_direction_base.h"
 
-// каждый монстр может по-разному реализвать эту функ (e.g. кровосос с поворотом головы и т.п.)
+// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ (e.g. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅ.пїЅ.)
 void CBaseMonster::LookPosition(Fvector to_point, float angular_speed)
 {
-	// по-умолчанию просто изменить movement().m_body.target.yaw
+	// пїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ movement().m_body.target.yaw
 	Fvector	d;
 	d.set(to_point);
 	d.sub(Position());	
 	
-	// установить текущий угол
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 	dir().set_heading(angle_normalize(-d.getH()));
 }
 

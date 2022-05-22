@@ -309,7 +309,7 @@ bool CInventoryItem::Detach(const char* item_section_name, bool b_spawn_item)
 		// Fill
 		D->s_name			=	item_section_name;
 		D->set_name_replace	("");
-		D->s_gameid			=	u8(GameID());
+		D->m_gameType.m_GameType.flags=	u16(GameID());
 		D->s_RP				=	0xff;
 		D->ID				=	0xffff;
 		if (GameID() == GAME_SINGLE)

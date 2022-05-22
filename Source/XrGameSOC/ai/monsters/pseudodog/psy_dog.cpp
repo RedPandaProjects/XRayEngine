@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "psy_dog.h"
 #include "../../../level_graph.h"
-#include "../../../ai_space.h"
+#include "ai_space.h"
 #include "../../../alife_simulator.h"
-#include "../../../XrServer_Object_Base.h"
+#include "ai_space.h"
 #include "../../../Xrserver.h"
 #include "../../../ai_object_location.h"
 #include "../../../level.h"
@@ -16,7 +16,7 @@
 #include "psy_dog_aura.h"
 #include "psy_dog_state_manager.h"
 #include "../../../alife_object_registry.h"
-#include "../../../XrServer_Objects_Alife_Monsters.h"
+#include "XrServer_Objects_ALife_Monsters.h"
 
 CPsyDog::CPsyDog()
 {
@@ -215,7 +215,7 @@ void CPsyDogPhantom::Think()
 	Fvector target;
 	target.mad(Position(),Direction(), 10.f);
 
-	// нода в прямой видимости?
+	// пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ?
 	control().path_builder().restrictions().add_border(Position(), target);
 	u32 node = ai().level_graph().check_position_in_direction(ai_location().level_vertex_id(),Position(),target);
 	control().path_builder().restrictions().remove_border();

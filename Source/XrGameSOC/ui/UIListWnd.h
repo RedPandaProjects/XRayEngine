@@ -3,7 +3,7 @@
 #include "uilistitem.h"
 #include "uiscrollbar.h"
 
-#include "../script_export_space.h"
+#include "script_export_space.h"
 
 #define DEFAULT_ITEM_HEIGHT 30
 
@@ -36,7 +36,7 @@ public:
 	virtual void	 DetachChild			(CUIWindow* pChild);
 			void	SetScrollBarProfile		(LPCSTR profile)		{m_scrollbar_profile=profile;};
 
-	// Добавление элементов в листбокс
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	template <class Element>
 	bool			 AddItem				(const char*  str, const float shift = 0.0f, void* pData = NULL,
 											int value = 0, int insertBeforeIdx = -1);
@@ -48,11 +48,11 @@ public:
 	
 	void 			RemoveItem				(int index);
 	void 			RemoveAll				();
-	//находит первый элемент с заданной pData, иначе -1
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ pData, пїЅпїЅпїЅпїЅпїЅ -1
 	int 			FindItem				(void* pData);
 	int 			FindItemWithValue		(int iValue);
 	CUIListItem*	GetItem					(int index);
-	// Получить индекс элемента по адресу. Либо -1 если нет такого
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅ -1 пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	int				GetItemPos				(CUIListItem *pItem);
 
 	void			SetItemWidth			(float iItemWidth);
@@ -68,7 +68,7 @@ public:
 
 	int				GetItemsCount			()							{return m_ItemList.size();}
 
-	//подготовить все элементы заново
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	void 			Reset					();
 
 	void 			EnableScrollBar			(bool enable);
@@ -87,14 +87,14 @@ public:
 	void			SetTextColor			(u32 color)						{m_dwFontColor = color;} 
 	u32				GetTextColor			()								{return m_dwFontColor;}
 
-	//делает активными (как кнопки) элементы списка
+	//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ) пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	void 			ActivateList			(bool activity);
 	bool 			IsListActive			()								{return m_bListActivity;}
 
 	void 			SetVertFlip				(bool vert_flip)				{m_bVertFlip = vert_flip;}
 	bool 			GetVertFlip				() {return m_bVertFlip;}
 
-	// Принудительная установка фокуса
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	void			SetFocusedItem			(int iNewFocusedItem);
 	int				GetFocusedItem			()								{ return m_iFocusedItem; }
 	int				GetSelectedItem			()								{ return m_iSelectedItem; }
@@ -112,24 +112,24 @@ protected:
 
 	CUIScrollBar*	m_ScrollBar;
 
-	//обновления елементов списка, вызвается
-	//если произошли изменения
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	void			UpdateList				();
 
-	//список элементов листа
+	//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	LIST_ITEM_LIST	m_ItemList; 
 
-	//размеры элемента списка
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	float		m_iItemHeight;
 	float		m_iItemWidth;
 
-	//количество рядов для элементов
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	int		m_iRowNum;
 	
-	//индекс первого показанного элемента
+	//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	int		m_iFirstShownIndex;
 
-	//элемент над которым курсор в данный момент или -1, если такого нет
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ -1, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
 	int		m_iFocusedItem;
 	int		m_iFocusedItemGroupID;
 	int     m_iSelectedItem;
@@ -139,23 +139,23 @@ protected:
 	bool	m_bAlwaysShowScroll_enable;
 	bool	m_bAlwaysShowScroll;
 	bool	m_bActiveBackground;
-	// Если хотим принудительно выставлять фокус, то поднять этот флаг
+	// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 	bool	m_bForceFocusedItem;
 
-	//подсветка активного элемента
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	CUIFrameLineWnd*	m_ActiveBackgroundFrame;
 
-	//текущий цвет текста
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	u32		m_dwFontColor;
 	bool	m_bListActivity;
 
-	//переворот списка по вертикали
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	bool	m_bVertFlip;
 	
-	// Признак того, что мышь подвинули
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	bool	m_bUpdateMouseMove;
 
-	// Текущий уникальный идентификатор
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	int		m_iLastUniqueID;
 
 	DECLARE_SCRIPT_REGISTER_FUNCTION

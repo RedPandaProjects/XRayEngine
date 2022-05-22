@@ -6,7 +6,7 @@
 #include "UIXmlInit.h"
 #include "MMsound.h"
 #include "../hudmanager.h"
-#include "../game_base_space.h"
+#include "game_base_space.h"
 #include "../level.h"
 #include "../../XrEngine/object_broker.h"
 #include <math.h>

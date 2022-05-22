@@ -43,7 +43,7 @@
 #include "../../agent_location_manager.h"
 #include "../../cover_point.h"
 #include "../../../xrengine/camerabase.h"
-#include "../../clsid_game.h"
+#include "clsid_game.h"
 #include "../../mt_config.h"
 #include "../../weaponmagazined.h"
 #include "../../object_handler_space.h"

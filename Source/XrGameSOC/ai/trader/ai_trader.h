@@ -13,7 +13,7 @@
 #include "../../script_entity.h"
 #include "../../sound_player.h"
 #include "../../AI_PhraseDialogManager.h"
-#include "../../script_export_space.h"
+#include "script_export_space.h"
 
 class CInventoryItem;
 class CArtefact;
@@ -91,7 +91,7 @@ public:
 	void			OnStartTrade			();
 	void			OnStopTrade				();
 
-	//игровое имя 
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ 
 	virtual LPCSTR			Name					() const {return CInventoryOwner::Name();}
 
 	virtual	bool			can_attach				(const CInventoryItem *inventory_item) const;
@@ -104,11 +104,11 @@ public:
 	virtual	ALife::ERelationType tfGetRelationType	(const CEntityAlive *tpEntityAlive) const;
 
 	//////////////////////////////////////////////////////////////////////////
-	//генерируемые задания
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 public:
-	//проверяет список артефактов в заказах
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	virtual	u32				ArtefactPrice			(CArtefact* pArtefact);
-	//продажа артефакта, с последуещим изменением списка заказов  (true - если артефакт был в списке)
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ  (true - пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ)
 	virtual	bool			BuyArtefact				(CArtefact* pArtefact);
 
 public:

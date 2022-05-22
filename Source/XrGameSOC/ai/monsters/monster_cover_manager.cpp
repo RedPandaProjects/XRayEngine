@@ -3,7 +3,7 @@
 #include "BaseMonster/base_monster.h"
 #include "../../cover_evaluators.h"
 #include "../../cover_point.h"
-#include "../../ai_space.h"
+#include "ai_space.h"
 #include "../../level_graph.h"
 #include "../../game_graph.h"
 #include "../../game_level_cross_table.h"
@@ -172,7 +172,7 @@ const CCoverPoint *CMonsterCoverManager::find_cover(const Fvector &position, flo
 	return				point;
 }
 
-// найти лучший ковер относительно "position"
+// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ "position"
 const CCoverPoint *CMonsterCoverManager::find_cover(const Fvector &src_pos, const Fvector &dest_pos, float min_pos_distance, float	max_pos_distance, float deviation)
 {
 	m_ce_best->setup	(m_object, dest_pos, min_pos_distance,max_pos_distance,deviation);

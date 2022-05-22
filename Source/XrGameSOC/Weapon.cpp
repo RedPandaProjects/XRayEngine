@@ -886,7 +886,7 @@ void CWeapon::SpawnAmmo(u32 boxCurr, LPCSTR ammoSect, u32 ParentID)
 		l_pA->m_boxSize				= (u16)pSettings->r_s32(ammoSect, "box_size");
 		D->s_name					= ammoSect;
 		D->set_name_replace			("");
-		D->s_gameid					= u8(GameID());
+		D->m_gameType.m_GameType.flags = u16(GameID());
 		D->s_RP						= 0xff;
 		D->ID						= 0xffff;
 		if (ParentID == 0xffffffff)	

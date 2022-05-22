@@ -2,13 +2,13 @@
 #include "ai_monster_utils.h"
 #include "../../entity.h"
 #include "../../ai_object_location.h"
-#include "../../ai_space.h"
+#include "ai_space.h"
 #include "../../level_graph.h"
 #include "Kinematics.h"
 #include "../../../xrEngine/bone.h"
 
-// проверить, находится ли объект entity на ноде
-// возвращает позицию объекта, если он находится на ноде, или центр его ноды
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ entity пїЅпїЅ пїЅпїЅпїЅпїЅ
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 Fvector get_valid_position(const CEntity *entity, const Fvector &actual_position) 
 {
 	if (
@@ -21,7 +21,7 @@ Fvector get_valid_position(const CEntity *entity, const Fvector &actual_position
 		return			(ai().level_graph().vertex_position(entity->ai_location().level_vertex()));
 }
 
-// возвращает true, если объект entity находится на ноде
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ true, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ entity пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ
 bool object_position_valid(const CEntity *entity)
 {
 	return				(

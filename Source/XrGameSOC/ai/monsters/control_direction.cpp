@@ -5,7 +5,7 @@
 
 #include "../../detail_path_manager.h"
 #include "../../level_graph.h"
-#include "../../ai_space.h"
+#include "ai_space.h"
 #include "../../ai_object_location.h"
 
 #include "../../detail_path_manager_space.h"
@@ -45,7 +45,7 @@ void CControlDirection::update_frame()
 
 	m_data.pitch.target_speed = m_pitch.current_speed = diff;
 
-	// поправка угловой скорости в соответствии с текущей и таргетовой линейной скоростями
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	// heading speed correction
 	if (!fis_zero(m_man->movement().velocity_current()) && !fis_zero(m_man->movement().velocity_target()) && m_data.linear_dependency)
 		m_heading.current_speed	= m_data.heading.target_speed * m_man->movement().velocity_current() / (m_man->movement().velocity_target() + EPS_L);
@@ -106,7 +106,7 @@ void CControlDirection::pitch_correction()
 		const DetailPathManager::STravelPathPoint	next_point	= m_object->movement().detail().path()[m_object->movement().detail().curr_travel_point_index()+1];
 		
 		if (cur_point.position.distance_to_sqr(next_point.position) > 1) {
-			// получаем искомый вектор направления
+			// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 			Fvector						target_dir;
 			target_dir.sub				(next_point.position,cur_point.position);
 			m_data.pitch.target_angle	= -target_dir.getP();
@@ -123,12 +123,12 @@ void CControlDirection::pitch_correction()
 	Fvector				position_on_plane;
 	P.project			(position_on_plane,m_object->Position());
 
-	// находим проекцию точки, лежащей на векторе текущего направления
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	Fvector				dir_point, proj_point;
 	dir_point.mad		(position_on_plane, m_object->Direction(), 1.f);
 	P.project			(proj_point,dir_point);
 
-	// получаем искомый вектор направления
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	Fvector				target_dir;
 	target_dir.sub		(proj_point,position_on_plane);
 

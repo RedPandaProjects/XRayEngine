@@ -1,7 +1,7 @@
 #pragma once
 
 #include "uiwindow.h"
-#include "../script_export_space.h"
+#include "script_export_space.h"
 #include "UIOptionsItem.h"
 
 class CUITabButton;
@@ -25,7 +25,7 @@ public:
 	virtual void		OnStaticFocusReceive		(CUIWindow* pWnd);
 	virtual void		OnStaticFocusLost			(CUIWindow* pWnd);
 
-	// Добавление кнопки-закладки в список закладок контрола
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	bool				AddItem						(const char *pItemName, const char *pTexName, float x, float y, float width, float height);
 	bool				AddItem						(CUITabButton *pButton);
 
@@ -39,7 +39,7 @@ public:
 			void		SetNewActiveTab				(const int iNewTab);	
 	const	int			GetTabsCount				() const						{ return m_TabsArr.size(); }
 	
-	// Режим клавилатурных акселераторов (вкл/выкл)
+	// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ/пїЅпїЅпїЅпїЅ)
 	IC bool				GetAcceleratorsMode			() const						{ return m_bAcceleratorsEnable; }
 	void				SetAcceleratorsMode			(bool bEnable)					{ m_bAcceleratorsEnable = bEnable; }
 
@@ -50,22 +50,22 @@ public:
 	CUIButton*			GetButtonByCommand			(const shared_str& n);
 			void		ResetTab					();
 protected:
-	// Список кнопок - переключателей закладок
+	// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	TABS_VECTOR			m_TabsArr;
 
-	// Текущая нажатая кнопка. -1 - ни одна, 0 - первая, 1 - вторая, и т.д.
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ. -1 - пїЅпїЅ пїЅпїЅпїЅпїЅ, 0 - пїЅпїЅпїЅпїЅпїЅпїЅ, 1 - пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅ пїЅ.пїЅ.
 	int					m_iPushedIndex;
 	int					m_iPrevPushedIndex;
 
-	// Цвет неактивных элементов
+	// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	u32					m_cGlobalTextColor;
 	u32					m_cGlobalButtonColor;
 
-	// Цвет надписи на активном элементе
+	// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	u32					m_cActiveTextColor;
 	u32					m_cActiveButtonColor;
 
-	// Разрешаем/запрещаем клавиатурные акселераторы
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	bool				m_bAcceleratorsEnable;
 	DECLARE_SCRIPT_REGISTER_FUNCTION
 };

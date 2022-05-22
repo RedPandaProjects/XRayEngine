@@ -572,7 +572,7 @@ CSE_Abstract*		game_sv_GameState::spawn_begin				(LPCSTR N)
 {
 	CSE_Abstract*	A	=   F_entity_Create(N);	R_ASSERT(A);	// create SE
 	A->s_name			=   N;							// ltx-def
-	A->s_gameid			=	u8(m_type);							// game-type
+	A->m_gameType.m_GameType.flags			=	u16(m_type);							// game-type
 	A->s_RP				=	0xFE;								// use supplied
 	A->ID				=	0xffff;								// server must generate ID
 	A->ID_Parent		=	0xffff;								// no-parent

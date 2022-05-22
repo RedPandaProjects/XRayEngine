@@ -12,7 +12,7 @@
 #include "../../../ActorEffector.h"
 #include "../ai_monster_effector.h"
 #include "../../../hudmanager.h"
-#include "../../../clsid_game.h"
+#include "clsid_game.h"
 #include "../../../../XrRender/Public/Kinematics.h"
 #include "../../../../XrRender/Public/KinematicsAnimated.h"
 #include "../../../sound_player.h"

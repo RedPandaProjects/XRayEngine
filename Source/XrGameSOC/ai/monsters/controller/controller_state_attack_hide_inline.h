@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../ai_space.h"
+#include "ai_space.h"
 #include "../monster_cover_manager.h"
 #include "../../../cover_point.h"
 #include "../../../level.h"

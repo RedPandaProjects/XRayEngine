@@ -87,7 +87,7 @@ void CPHDestroyable::InitServerObject(CSE_Abstract* D)
 	//	l_tpALifePhysicObject->startup_animation=m_startup_anim;
 	
 	D->set_name_replace	("");
-	D->s_gameid			=	u8(GameID());
+	D->m_gameType.m_GameType.flags = u16(GameID());
 	D->s_RP				=	0xff;
 	D->ID				=	0xffff;
 

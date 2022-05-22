@@ -23,7 +23,7 @@
 #endif
 
 #ifndef XRSE_FACTORY_EXPORTS
-#	include "xrEProps.h"
+#	include "..\Editors\Public\xrEProps.h"
 	
 	IPropHelper &PHelper()
 	{
@@ -389,7 +389,7 @@ xr_token game_types[]={
 
 void CSE_Abstract::FillProps				(LPCSTR pref, PropItemVec& items)
 {
-#ifdef XRGAME_EXPORTS
+#if 0
 #	ifdef DEBUG
 	PHelper().CreateToken8		(items,	PrepareKey(pref,"Game Type"),			&s_gameid,		game_types);
     PHelper().CreateU16			(items,	PrepareKey(pref, "Respawn Time (s)"),	&RespawnTime,	0,43200);

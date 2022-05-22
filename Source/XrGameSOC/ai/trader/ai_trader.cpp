@@ -21,7 +21,7 @@
 #include "../../level.h"
 #include "../../script_callback_ex.h"
 #include "../../game_object_space.h"
-#include "../../clsid_game.h"
+#include "clsid_game.h"
 #include "trader_animation.h"
 #include "../../../XrRender/Public/RenderVisual.h"
 #include "../../../XrRender/Public/Kinematics.h"

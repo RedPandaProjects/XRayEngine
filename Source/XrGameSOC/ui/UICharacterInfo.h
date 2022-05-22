@@ -5,7 +5,7 @@
 
 #include "uiwindow.h"
 #include "../../xrEngine/alife_space.h"
-#include "../character_info_defs.h"
+#include "character_info_defs.h"
 
 class CUIStatic;
 class CCharacterInfo;

@@ -16,14 +16,17 @@ CSE_Abstract* xrServer::Process_spawn(NET_Packet& P, ClientID sender, BOOL bSpaw
 	if (!E){
 		// read spawn information
 		string64			s_name;
-		P.r_stringZ			(s_name);
+		P.r_stringZ			(s_name);// GAME_ANY
 		// create entity
 		E = entity_Create	(s_name); R_ASSERT3(E,"Can't create entity.",s_name);
 		E->Spawn_Read		(P);
-		if	(
-				!((game->Type()==E->s_gameid)||(GAME_ANY==E->s_gameid)) ||
-				!E->match_configuration() || !game->OnPreCreate(E)
-			){
+		if (
+			//.				!( (game->Type()==E->s_gameid) || (GAME_ANY==E->s_gameid) ) ||
+
+			!E->m_gameType.MatchType((u16)game->Type()) ||
+			!E->match_configuration() ||
+			!game->OnPreCreate(E)
+			) {
 			// Msg			("- SERVER: Entity [%s] incompatible with current game type.",*E->s_name);
 			F_entity_Destroy(E);
 			return			NULL;

@@ -7,9 +7,6 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
-#pragma hdrstop
-#pragma pack(push,4)
-
 #include "../XrCore/net_utils.h"
 #include "xrServer_Objects_Abstract.h"
 #include "xrMessages.h"
@@ -71,7 +68,7 @@ void CSE_Visual::OnChangeAnim(PropValue* sender)
 	ISE_Abstract* abstract		= smart_cast<ISE_Abstract*>(this); VERIFY(abstract);
 	abstract->set_editor_flag	(ISE_Abstract::flVisualAnimationChange);
 }
-
+#ifndef XRGAME_EXPORTS
 void CSE_Visual::FillProps		(LPCSTR pref, PropItemVec &items)
 {
 	ISE_Abstract* abstract		= smart_cast<ISE_Abstract*>(this); VERIFY(abstract);
@@ -81,7 +78,7 @@ void CSE_Visual::FillProps		(LPCSTR pref, PropItemVec &items)
 	V->OnChangeEvent.bind		(this,&CSE_Visual::OnChangeAnim);
 	PHelper().CreateFlag8		(items, PrepareKey(pref,abstract->name(),"Model\\Obstacle"),	&flags,	flObstacle);
 }
-
+#endif
 ////////////////////////////////////////////////////////////////////////////
 // CSE_Animated
 ////////////////////////////////////////////////////////////////////////////
@@ -114,12 +111,11 @@ void CSE_Motion::OnChangeMotion	(PropValue* sender)
 	ISE_Abstract* abstract		= smart_cast<ISE_Abstract*>(this); VERIFY(abstract);
 	abstract->set_editor_flag	(ISE_Abstract::flMotionChange);
 }
-
+#ifndef XRGAME_EXPORTS
 void CSE_Motion::FillProps(		LPCSTR pref, PropItemVec &items)
 {
 	ISE_Abstract* abstract		= smart_cast<ISE_Abstract*>(this); VERIFY(abstract);
 	ChooseValue *V				= PHelper().CreateChoose(items, PrepareKey(pref,abstract->name(),"Motion"),&motion_name, smGameAnim);
 	V->OnChangeEvent.bind		(this,&CSE_Motion::OnChangeMotion);
 }
-
-#pragma pack(pop,4)
+#endif

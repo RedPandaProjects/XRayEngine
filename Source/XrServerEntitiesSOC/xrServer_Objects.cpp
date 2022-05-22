@@ -100,11 +100,12 @@ void CSE_Spectator::UPDATE_Write			(NET_Packet	&tNetPacket)
 {
 }
 
+#ifndef XRGAME_EXPORTS 
 void CSE_Spectator::FillProps				(LPCSTR pref, PropItemVec& items)
 {
   	inherited::FillProps			(pref,items);
 }
-
+#endif
 ////////////////////////////////////////////////////////////////////////////
 // CSE_Temporary
 ////////////////////////////////////////////////////////////////////////////
@@ -134,11 +135,11 @@ void CSE_Temporary::UPDATE_Read				(NET_Packet	&tNetPacket)
 void CSE_Temporary::UPDATE_Write			(NET_Packet	&tNetPacket)
 {
 };
-
+#ifndef XRGAME_EXPORTS 
 void CSE_Temporary::FillProps				(LPCSTR pref, PropItemVec& values)
 {
 };
-
+#endif
 /**
 ////////////////////////////////////////////////////////////////////////////
 // CSE_SpawnGroup
@@ -263,11 +264,12 @@ void CSE_PHSkeleton::UPDATE_Read(NET_Packet &tNetPacket)
 
 }
 
+#ifndef XRGAME_EXPORTS 
 void CSE_PHSkeleton::FillProps				(LPCSTR pref, PropItemVec& values)
 {
 
 }
-
+#endif
 CSE_AbstractVisual::CSE_AbstractVisual(LPCSTR section):inherited1(section),inherited2(section)
 {
 }
@@ -287,13 +289,13 @@ void CSE_AbstractVisual::STATE_Write	(NET_Packet	&tNetPacket)
 	visual_write				(tNetPacket);
 	tNetPacket.w_stringZ		(startup_animation);
 }
-
+#ifndef XRGAME_EXPORTS
 void CSE_AbstractVisual::FillProps		(LPCSTR pref, PropItemVec& values)
 {
 	inherited1::FillProps			(pref,values);
 	inherited2::FillProps			(pref,values);
 }
-
+#endif
 void CSE_AbstractVisual::UPDATE_Read	(NET_Packet	&tNetPacket)
 {
 }

@@ -2,7 +2,7 @@
 #include "control_path_builder_base.h"
 #include "BaseMonster/base_monster.h"
 #include "../../level_graph.h"
-#include "../../ai_space.h"
+#include "ai_space.h"
 
 //////////////////////////////////////////////////////////////////////////
 // Method: prepare_builder
@@ -36,13 +36,13 @@ void CControlPathBuilderBase::prepare_builder()
 //////////////////////////////////////////////////////////////////////////
 void CControlPathBuilderBase::set_target_point(const Fvector &position, u32 node)
 {
-	// обновить актуальность
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	m_target_actual = m_target_actual && (m_target_set.position.similar(position) && (m_target_set.node == node));
 
-	// установить позицию
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	m_target_set.set	(position,node);
 
-	// установить глобальные параметры передвижения
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	m_target_type		= eMoveToTarget;
 
 	set_level_path_type	();
@@ -55,13 +55,13 @@ void CControlPathBuilderBase::set_target_point(u32 node)
 
 void CControlPathBuilderBase::set_retreat_from_point(const Fvector &position)
 {
-	// обновить актуальность
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	m_target_actual = m_target_actual && (m_target_set.position.similar(position));
 
-	// установить позицию
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	m_target_set.set	(position,u32(-1));	
 
-	// установить глобальные параметры передвижения
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	m_target_type		= eRetreatFromTarget;
 
 	set_level_path_type	();

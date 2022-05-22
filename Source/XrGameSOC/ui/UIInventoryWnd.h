@@ -12,7 +12,7 @@ class CInventory;
 
 #include "UIOutfitInfo.h"
 #include "UIItemInfo.h"
-#include "../inventory_space.h"
+#include "inventory_space.h"
 
 class CArtefact;
 class CUI3tButton;

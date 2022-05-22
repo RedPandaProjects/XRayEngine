@@ -37,7 +37,7 @@ void CRocketLauncher::SpawnRocket(LPCSTR rocket_section, CGameObject* parent_roc
 	D->s_name			= rocket_section;
 	D->set_name_replace	("");
 	
-	D->s_gameid			=	u8(GameID());
+	D->m_gameType.m_GameType.flags = u16(GameID());
 	D->s_RP				=	0xff;
 	D->ID				=	0xffff;
 	D->ID_Parent		=	parent_rocket_launcher->ID();

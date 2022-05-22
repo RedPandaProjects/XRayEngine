@@ -3,7 +3,7 @@
 #include "../XrEngine/Xr_ioc_cmd.h"
 #include "UIOptConCom.h"
 #include "../Xrcore/xrCore.h"
-#include "../game_base_space.h"
+#include "game_base_space.h"
 #include "../RegistryFuncs.h"
 #include "../battleye.h"
 
