@@ -56,7 +56,7 @@ DEFINE_VECTOR(ListItem*, ListItemsVec, ListItemsIt);
 DEFINE_VECTOR		(xr_string,AStringVec,AStringIt);
 DEFINE_VECTOR		(xr_string*,LPAStringVec,LPAStringIt);
 
-#include "..\..\xrServerEntities\xrEProps.h"
+#include "..\Public\xrEProps.h"
 #include "..\..\xrCore\Log.h"
 #include "editor\ELog.h"
 #include "..\..\XrEngine\defines.h"

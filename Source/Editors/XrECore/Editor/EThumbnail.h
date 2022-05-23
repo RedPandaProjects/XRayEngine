@@ -2,7 +2,7 @@
 #define EThumbnailH
 
 #include "..\..\..\XrRender\Private\ETextureParams.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
+#include "../Public/PropertiesListHelper.h"
 
 //------------------------------------------------------------------------------
 // Custom class

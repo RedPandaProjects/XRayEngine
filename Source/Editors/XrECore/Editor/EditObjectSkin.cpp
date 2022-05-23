@@ -8,7 +8,7 @@
 #include "EditObject.h"
 #include "EditMesh.h"
 #include "d3dutils.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
+#include "../Public/PropertiesListHelper.h"
 
 const u32 color_bone_sel_color	=0xFFFFFFFF;
 const u32 color_bone_norm_color	=0xFFFFFF00;

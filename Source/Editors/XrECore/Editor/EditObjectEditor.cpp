@@ -10,7 +10,7 @@
 #include "d3dutils.h"
 #include "ui_main.h"
 #include "render.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
+#include "../Public/PropertiesListHelper.h"
 #include "ResourceManager.h"
 #include "ImageManager.h"
 
