@@ -10,7 +10,7 @@
 
 #include <boost/noncopyable.hpp>
 #include "smart_cover_detail.h"
-#include "graph_abstract.h"
+#include "../xrEngine/graph_abstract.h"
 #include "debug_make_final.hpp"
 
 namespace smart_cover {

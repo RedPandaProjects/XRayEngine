@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////
 // GraviArtifact.cpp
-// GraviArtefact - гравитационный артефакт, прыгает на месте
-// и неустойчиво парит над землей
+// GraviArtefact - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+// пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 ///////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -55,12 +55,12 @@ void CGraviArtefact::UpdateCLChild()
 			dir.set(0, -1.f, 0);
 			collide::rq_result RQ;
 			
-			//проверить высоту артифакта
+			//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 			if(Level().ObjectSpace.RayPick(Position(), dir, m_fJumpHeight, collide::rqtBoth, RQ, this)) 
 			{
 				dir.y = 1.f; 
 				m_pPhysicsShell->applyImpulse(dir, 
-											  30.f * Device.fTimeDelta * 
+											  30.f * Device->fTimeDelta * 
 											  m_pPhysicsShell->getMass());
 			}
 		}

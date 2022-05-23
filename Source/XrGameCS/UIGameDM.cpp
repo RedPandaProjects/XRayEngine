@@ -23,7 +23,7 @@
 #include "ui/UIVoteStatusWnd.h"
 #include "ui/UIActorMenu.h"
 
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 
 #include "UITeamPanels.h"
 

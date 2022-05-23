@@ -16,7 +16,7 @@
 #include "../../artefact.h"
 #include "../../xrserver.h"
 #include "../../relation_registry.h"
-#include "../../../XrServerEntitiesCS/object_broker.h"
+#include "../../../XrEngine/object_broker.h"
 #include "../../sound_player.h"
 #include "../../level.h"
 #include "../../script_callback_ex.h"
@@ -279,7 +279,7 @@ void CAI_Trader::net_Destroy()
 void CAI_Trader::UpdateCL()
 { 
 	inherited::UpdateCL		();
-	sound().update			(Device.fTimeDelta);
+	sound().update			(Device->fTimeDelta);
 
 
 	if (!GetScriptControl() && !bfScriptAnimation()) 

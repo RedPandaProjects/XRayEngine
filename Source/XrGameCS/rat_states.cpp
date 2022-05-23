@@ -488,7 +488,7 @@ void rat_state_eat_corpse::finalize		()
 
 void rat_state_no_way::initialize		()
 {
-	object().time_old_attack = Device.dwTimeGlobal;
+	object().time_old_attack = Device->dwTimeGlobal;
 }
 
 void rat_state_no_way::execute			()

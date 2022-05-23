@@ -118,7 +118,7 @@ void CUIArtefactDetectorElite::construct(CEliteDetector* p)
 	m_map_attach_offset.translate_over	(_map_attach_p);
 
 /*
-	float curr_ = (float)Device.dwWidth/(float)Device.dwHeight;
+	float curr_ = (float)Device->dwWidth/(float)Device->dwHeight;
 	float kx	= curr_/1.3333333f;
 	fix_ws_wnd_size						(this, kx);
 */
@@ -150,9 +150,9 @@ void CUIArtefactDetectorElite::Draw()
 
 	Fmatrix						M, Mc;
 	float h,p;
-	Device.vCameraDirection.getHP(h,p);
+	Device->vCameraDirection.getHP(h,p);
 	Mc.setHPB					(h,0,0);
-	Mc.c.set					(Device.vCameraPosition);
+	Mc.c.set					(Device->vCameraPosition);
 	M.invert					(Mc);
 
 	xr_vector<Fvector>::const_iterator it	 = m_af_to_draw.begin();

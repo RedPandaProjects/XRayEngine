@@ -47,6 +47,7 @@
 #include "file_transfer.h"
 #include "message_filter.h"
 
+#include "game_graph.h"
 #ifdef DEBUG
 #	include "level_debug.h"
 #	include "ai/stalker/ai_stalker.h"
@@ -71,7 +72,7 @@ u32			lvInterpSteps		= 0;
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-CLevel::CLevel():IPureClient	(Device.GetTimerGlobal())
+CLevel::CLevel():IPureClient	(Device->GetTimerGlobal())
 #ifdef PROFILE_CRITICAL_SECTIONS
 	,DemoCS(MUTEX_PROFILE_ID(DemoCS))
 #endif // PROFILE_CRITICAL_SECTIONS
@@ -401,7 +402,7 @@ void CLevel::cl_Process_Event				(u16 dest, u16 type, NET_Packet& P)
 // = GameObject.cpp (210)
 //				Msg( "! ERROR (Level): GE_DESTROY arrived to object[%d][%s], that has parent[%d][%s], frame[%d]",
 //					GO->ID(), GO->cNameSect().c_str(),
-//					GO->H_Parent()->ID(), GO->H_Parent()->cName().c_str(), Device.dwFrame );
+//					GO->H_Parent()->ID(), GO->H_Parent()->cName().c_str(), Device->dwFrame );
 //			}
 		}
 		GO->OnEvent		(P,type);
@@ -447,7 +448,7 @@ void CLevel::ProcessGameEvents		()
 
 		/*
 		if (!game_events->queue.empty())	
-			Msg("- d[%d],ts[%d] -- E[svT=%d],[evT=%d]",Device.dwTimeGlobal,timeServer(),svT,game_events->queue.begin()->timestamp);
+			Msg("- d[%d],ts[%d] -- E[svT=%d],[evT=%d]",Device->dwTimeGlobal,timeServer(),svT,game_events->queue.begin()->timestamp);
 		*/
 
 		while	(game_events->available(svT))
@@ -571,9 +572,9 @@ void CLevel::OnFrame	()
 	else								psDeviceFlags.set(rsDisableObjectsAsCrows,false);
 
 	// commit events from bullet manager from prev-frame
-	Device.Statistic->TEST0.Begin		();
+	Device->Statistic->TEST0.Begin		();
 	BulletManager().CommitEvents		();
-	Device.Statistic->TEST0.End			();
+	Device->Statistic->TEST0.End			();
 
 	// Client receive
 	if (net_isDisconnected())	
@@ -590,11 +591,11 @@ void CLevel::OnFrame	()
 		return;
 	} else {
 
-		Device.Statistic->netClient1.Begin();
+		Device->Statistic->netClient1.Begin();
 
 		ClientReceive					();
 
-		Device.Statistic->netClient1.End	();
+		Device->Statistic->netClient1.End	();
 	}
 
 	ProcessGameEvents	();
@@ -605,14 +606,14 @@ void CLevel::OnFrame	()
 	if(!g_dedicated_server )
 	{
 		if (g_mt_config.test(mtMap)) 
-			Device.seqParallel.push_back	(fastdelegate::FastDelegate0<>(m_map_manager,&CMapManager::Update));
+			Device->seqParallel.push_back	(fastdelegate::FastDelegate0<>(m_map_manager,&CMapManager::Update));
 		else								
 			MapManager().Update		();
 
-		if( IsGameTypeSingle() && Device.dwPrecacheFrame==0 )
+		if( IsGameTypeSingle() && Device->dwPrecacheFrame==0 )
 		{
 			if (g_mt_config.test(mtMap)) 
-				Device.seqParallel.push_back	(fastdelegate::FastDelegate0<>(m_game_task_manager,&CGameTaskManager::UpdateTasks));
+				Device->seqParallel.push_back	(fastdelegate::FastDelegate0<>(m_game_task_manager,&CGameTaskManager::UpdateTasks));
 			else								
 				GameTaskManager().UpdateTasks();
 		}
@@ -715,31 +716,31 @@ void CLevel::OnFrame	()
 //	g_pGamePersistent->Environment().SetGameTime	(GetGameDayTimeSec(),GetGameTimeFactor());
 	g_pGamePersistent->Environment().SetGameTime	(GetEnvironmentGameDayTimeSec(),game->GetEnvironmentGameTimeFactor());
 
-	//Device.Statistic->cripting.Begin	();
+	//Device->Statistic->cripting.Begin	();
 	if (!g_dedicated_server)
 		ai().script_engine().script_process	(ScriptEngine::eScriptProcessorLevel)->update();
-	//Device.Statistic->Scripting.End	();
+	//Device->Statistic->Scripting.End	();
 	m_ph_commander->update				();
 	m_ph_commander_scripts->update		();
 //	autosave_manager().update			();
 
-	//просчитать полет пуль
-	Device.Statistic->TEST0.Begin		();
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+	Device->Statistic->TEST0.Begin		();
 	BulletManager().CommitRenderSet		();
-	Device.Statistic->TEST0.End			();
+	Device->Statistic->TEST0.End			();
 
 	// update static sounds
 	if(!g_dedicated_server)
 	{
 		if (g_mt_config.test(mtLevelSounds)) 
-			Device.seqParallel.push_back	(fastdelegate::FastDelegate0<>(m_level_sound_manager,&CLevelSoundManager::Update));
+			Device->seqParallel.push_back	(fastdelegate::FastDelegate0<>(m_level_sound_manager,&CLevelSoundManager::Update));
 		else								
 			m_level_sound_manager->Update	();
 	}
 	// deffer LUA-GC-STEP
 	if (!g_dedicated_server)
 	{
-		if (g_mt_config.test(mtLUA_GC))	Device.seqParallel.push_back	(fastdelegate::FastDelegate0<>(this,&CLevel::script_gc));
+		if (g_mt_config.test(mtLUA_GC))	Device->seqParallel.push_back	(fastdelegate::FastDelegate0<>(this,&CLevel::script_gc));
 		else							script_gc	()	;
 	}
 	//-----------------------------------------------------
@@ -777,11 +778,11 @@ void CLevel::OnRender()
 		return;
 
 	Game().OnRender();
-	//отрисовать трассы пуль
-	//Device.Statistic->TEST1.Begin();
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+	//Device->Statistic->TEST1.Begin();
 	BulletManager().Render();
-	//Device.Statistic->TEST1.End();
-	//отрисовать интерфейc пользователя
+	//Device->Statistic->TEST1.End();
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅc пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	HUD().RenderUI();
 
 #ifdef DEBUG
@@ -791,7 +792,7 @@ void CLevel::OnRender()
 
 #ifdef DEBUG
 	if (ai().get_level_graph())
-		ai().level_graph().render();
+		static_cast<CLevelGraph*>(&ai().level_graph())->render();
 
 #ifdef DEBUG_PRECISE_PATH
 	test_precise_path		();
@@ -835,7 +836,7 @@ void CLevel::OnRender()
 				CGameObject* pGO = smart_cast<CGameObject*>	(_O);
 				if (pGO && pGO != Level().CurrentViewEntity() && !pGO->H_Parent())
 				{
-					if (pGO->Position().distance_to_sqr(Device.vCameraPosition) < 400.0f)
+					if (pGO->Position().distance_to_sqr(Device->vCameraPosition) < 400.0f)
 					{
 						pGO->dbg_DrawSkeleton();
 					}

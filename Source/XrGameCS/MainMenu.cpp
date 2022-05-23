@@ -22,7 +22,7 @@
 #pragma comment(lib, "shell32.lib")
 
 
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 
 //#define DEMO_BUILD
 
@@ -60,7 +60,7 @@ CMainMenu::CMainMenu	()
 	m_startDialog					= NULL;
 	m_screenshotFrame				= u32(-1);
 	g_pGamePersistent->m_pMainMenu	= this;
-	if (Device.b_is_Ready)			OnDeviceCreate();  	
+	if (Device->b_is_Ready)			OnDeviceCreate();  	
 	ReadTextureInfo					();
 	CUIXmlInit::InitColorDefs		();
 	g_btnHint						= NULL;
@@ -133,9 +133,9 @@ void CMainMenu::Activate	(bool bActivate)
 {
 	if (	!!m_Flags.test(flActive) == bActivate)		return;
 	if (	m_Flags.test(flGameSaveScreenshot)	)		return;
-	if (	(m_screenshotFrame == Device.dwFrame)	||
-		(m_screenshotFrame == Device.dwFrame-1) ||
-		(m_screenshotFrame == Device.dwFrame+1))	return;
+	if (	(m_screenshotFrame == Device->dwFrame)	||
+		(m_screenshotFrame == Device->dwFrame-1) ||
+		(m_screenshotFrame == Device->dwFrame+1))	return;
 
 	bool b_is_single				= IsGameTypeSingle();
 
@@ -144,7 +144,7 @@ void CMainMenu::Activate	(bool bActivate)
 	if(bActivate)
 	{
 		b_shniaganeed_pp			= true;
-		Device.Pause				(TRUE, FALSE, TRUE, "mm_activate1");
+		Device->Pause				(TRUE, FALSE, TRUE, "mm_activate1");
 		m_Flags.set					(flActive|flNeedChangeCapture,TRUE);
 
 		m_Flags.set					(flRestoreCursor,GetUICursor()->IsVisible());
@@ -153,7 +153,7 @@ void CMainMenu::Activate	(bool bActivate)
 
 		m_Flags.set					(flRestoreConsole,Console->bVisible);
 
-		if(b_is_single)	m_Flags.set	(flRestorePause,Device.Paused());
+		if(b_is_single)	m_Flags.set	(flRestorePause,Device->Paused());
 
 		Console->Hide				();
 
@@ -163,7 +163,7 @@ void CMainMenu::Activate	(bool bActivate)
 			m_Flags.set					(flRestorePauseStr, bShowPauseString);
 			bShowPauseString			= FALSE;
 			if(!m_Flags.test(flRestorePause))
-				Device.Pause			(TRUE, TRUE, FALSE, "mm_activate2");
+				Device->Pause			(TRUE, TRUE, FALSE, "mm_activate2");
 		}
 
 		//m_startDialog->m_bWorkInPause		= true;
@@ -172,19 +172,19 @@ void CMainMenu::Activate	(bool bActivate)
 		if(g_pGameLevel)
 		{
 			if(b_is_single){
-				Device.seqFrame.Remove		(g_pGameLevel);
+				Device->seqFrame.Remove		(g_pGameLevel);
 			}
-			Device.seqRender.Remove			(g_pGameLevel);
+			Device->seqRender.Remove			(g_pGameLevel);
 			CCameraManager::ResetPP			();
 		};
-		Device.seqRender.Add				(this, 4); // 1-console 2-cursor 3-tutorial
+		Device->seqRender.Add				(this, 4); // 1-console 2-cursor 3-tutorial
 
 	}else{
-		m_deactivated_frame					= Device.dwFrame;
+		m_deactivated_frame					= Device->dwFrame;
 		m_Flags.set							(flActive,				FALSE);
 		m_Flags.set							(flNeedChangeCapture,	TRUE);
 
-		Device.seqRender.Remove				(this);
+		Device->seqRender.Remove				(this);
 
 		bool b = !!Console->bVisible;
 		if(b){
@@ -201,10 +201,10 @@ void CMainMenu::Activate	(bool bActivate)
 		if(g_pGameLevel)
 		{
 			if(b_is_single){
-				Device.seqFrame.Add			(g_pGameLevel);
+				Device->seqFrame.Add			(g_pGameLevel);
 
 			}
-			Device.seqRender.Add			(g_pGameLevel);
+			Device->seqRender.Add			(g_pGameLevel);
 		};
 		if(m_Flags.test(flRestoreConsole))
 			Console->Show			();
@@ -212,7 +212,7 @@ void CMainMenu::Activate	(bool bActivate)
 		if(b_is_single)
 		{
 			if(!m_Flags.test(flRestorePause))
-				Device.Pause			(FALSE, TRUE, FALSE, "mm_deactivate1");
+				Device->Pause			(FALSE, TRUE, FALSE, "mm_deactivate1");
 
 			bShowPauseString			= m_Flags.test(flRestorePauseStr);
 		}	
@@ -220,7 +220,7 @@ void CMainMenu::Activate	(bool bActivate)
 		if(m_Flags.test(flRestoreCursor))
 			GetUICursor()->Show			();
 
-		Device.Pause					(FALSE, TRUE, TRUE, "mm_deactivate2");
+		Device->Pause					(FALSE, TRUE, TRUE, "mm_deactivate2");
 
 		if(m_Flags.test(flNeedVidRestart))
 		{
@@ -249,7 +249,7 @@ bool CMainMenu::ReloadUI()
 	m_startDialog->m_bWorkInPause= true;
 	StartStopMenu				(m_startDialog,true);
 
-	m_activatedScreenRatio		= (float)Device.dwWidth/(float)Device.dwHeight > (1024.0f/768.0f+0.01f);
+	m_activatedScreenRatio		= (float)Device->dwWidth/(float)Device->dwHeight > (1024.0f/768.0f+0.01f);
 	return true;
 }
 
@@ -422,15 +422,15 @@ void CMainMenu::OnFrame()
 
 
 	//screenshot stuff
-	if(m_Flags.test(flGameSaveScreenshot) && Device.dwFrame > m_screenshotFrame  )
+	if(m_Flags.test(flGameSaveScreenshot) && Device->dwFrame > m_screenshotFrame  )
 	{
 		m_Flags.set					(flGameSaveScreenshot,FALSE);
 		::Render->Screenshot		(IRender_interface::SM_FOR_GAMESAVE, m_screenshot_name);
 		
 		if(g_pGameLevel && m_Flags.test(flActive))
 		{
-			Device.seqFrame.Remove	(g_pGameLevel);
-			Device.seqRender.Remove	(g_pGameLevel);
+			Device->seqFrame.Remove	(g_pGameLevel);
+			Device->seqRender.Remove	(g_pGameLevel);
 		};
 
 		if(m_Flags.test(flRestoreConsole))
@@ -443,7 +443,7 @@ void CMainMenu::OnFrame()
 	if(IsActive())
 	{
 		CheckForErrorDlg();
-		bool b_is_16_9	= (float)Device.dwWidth/(float)Device.dwHeight > (1024.0f/768.0f+0.01f);
+		bool b_is_16_9	= (float)Device->dwWidth/(float)Device->dwHeight > (1024.0f/768.0f+0.01f);
 		if(b_is_16_9 !=m_activatedScreenRatio)
 		{
 			ReloadUI();
@@ -465,10 +465,10 @@ void CMainMenu::Screenshot(IRender_interface::ScreenshotMode mode, LPCSTR name)
 		m_Flags.set					(flGameSaveScreenshot, TRUE);
 		strcpy_s(m_screenshot_name,name);
 		if(g_pGameLevel && m_Flags.test(flActive)){
-			Device.seqFrame.Add		(g_pGameLevel);
-			Device.seqRender.Add	(g_pGameLevel);
+			Device->seqFrame.Add		(g_pGameLevel);
+			Device->seqRender.Add	(g_pGameLevel);
 		};
-		m_screenshotFrame			= Device.dwFrame+1;
+		m_screenshotFrame			= Device->dwFrame+1;
 		m_Flags.set					(flRestoreConsole,		Console->bVisible);
 		Console->Hide				();
 	}
@@ -511,7 +511,7 @@ void CMainMenu::SwitchToMultiplayerMenu()
 
 void CMainMenu::DestroyInternal(bool bForce)
 {
-	if(m_startDialog && ((m_deactivated_frame < Device.dwFrame+4)||bForce) )
+	if(m_startDialog && ((m_deactivated_frame < Device->dwFrame+4)||bForce) )
 		xr_delete		(m_startDialog);
 }
 
@@ -593,10 +593,10 @@ void	CMainMenu::OnDownloadPatchSuccess			()
 
 void	CMainMenu::OnSessionTerminate				(LPCSTR reason)
 {
-	if ( m_NeedErrDialog == SessionTerminate && (Device.dwTimeGlobal - m_start_time) < 8000 )
+	if ( m_NeedErrDialog == SessionTerminate && (Device->dwTimeGlobal - m_start_time) < 8000 )
 		return;
 
-	m_start_time = Device.dwTimeGlobal;
+	m_start_time = Device->dwTimeGlobal;
 	LPCSTR str = CStringTable().translate("ui_st_kicked_by_server").c_str();
 	LPSTR		text;
 

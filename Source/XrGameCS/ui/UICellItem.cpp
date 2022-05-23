@@ -6,7 +6,7 @@
 #include "../../xrEngine/xr_input.h"
 #include "../HUDManager.h"
 #include "../level.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "UIXmlInit.h"
 
 CUICellItem* CUICellItem::m_mouse_selected_item = NULL;
@@ -64,7 +64,7 @@ void CUICellItem::init()
 
 void CUICellItem::Draw()
 {	
-	m_drawn_frame		= Device.dwFrame;
+	m_drawn_frame		= Device->dwFrame;
 	
 	inherited::Draw();
 	if(m_custom_draw) 
@@ -277,15 +277,15 @@ CUIDragItem::CUIDragItem(CUICellItem* parent)
 	m_back_list						= NULL;
 	m_pParent						= parent;
 	AttachChild						(&m_static);
-	Device.seqRender.Add			(this, REG_PRIORITY_LOW-5000);
-	Device.seqFrame.Add				(this, REG_PRIORITY_LOW-5000);
+	Device->seqRender.Add			(this, REG_PRIORITY_LOW-5000);
+	Device->seqFrame.Add				(this, REG_PRIORITY_LOW-5000);
 	VERIFY							(m_pParent->GetMessageTarget());
 }
 
 CUIDragItem::~CUIDragItem()
 {
-	Device.seqRender.Remove			(this);
-	Device.seqFrame.Remove			(this);
+	Device->seqRender.Remove			(this);
+	Device->seqFrame.Remove			(this);
 }
 
 void CUIDragItem::Init(const ui_shader& sh, const Frect& rect, const Frect& text_rect)

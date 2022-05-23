@@ -124,7 +124,7 @@ CSE_Abstract *CALifeSimulatorBase::spawn_item	(LPCSTR section, const Fvector &po
 	CSE_ALifeDynamicObject		*dynamic_object = smart_cast<CSE_ALifeDynamicObject*>(abstract);
 	VERIFY						(dynamic_object);
 
-	//оружие спавним с полным магазинои
+	//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	CSE_ALifeItemWeapon* weapon = smart_cast<CSE_ALifeItemWeapon*>(dynamic_object);
 	if(weapon)
 		weapon->a_elapsed		= weapon->get_ammo_magsize();
@@ -322,7 +322,7 @@ void CALifeSimulatorBase::assign_death_position(CSE_ALifeCreatureAbstract *tpALi
 		}
 	}
 
-	CGameGraph::const_spawn_iterator		i, e;
+	IGameGraph::const_spawn_iterator		i, e;
 	ai().game_graph().begin_spawn			(tGraphID,i,e);
 	VERIFY									(e == i + ai().game_graph().vertex(tGraphID)->death_point_count());
 	i										+= (e != i) ? random().random(s32(e - i)) : 0;

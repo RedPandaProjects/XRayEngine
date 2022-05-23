@@ -10,7 +10,7 @@
 
 #include "restricted_object.h"
 #include "detail_path_manager_space.h"
-#include "associative_vector.h"
+#include "../xrEngine/associative_vector.h"
 
 using namespace DetailPathManager;
 
@@ -161,7 +161,7 @@ protected:
 	friend class CPoltergeisMovementManager;
 	friend class CDetailPathBuilder;
 #ifdef DEBUG
-	friend class CLevelGraph;
+	friend class ILevelGraph;
 	friend class CCustomMonster;
 #endif
 

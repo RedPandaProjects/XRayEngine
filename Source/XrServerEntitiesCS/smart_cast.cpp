@@ -11,7 +11,7 @@
 #ifndef PURE_DYNAMIC_CAST
 #	ifdef XRGAME_EXPORTS
 #		include "../XrRender/Public/rendervisual.h"
-#		include "alife_space.h"
+#		include "../XrEngine/alife_space.h"
 #		include "hit.h"
 #		include "actor.h"
 #		include "custommonster.h"

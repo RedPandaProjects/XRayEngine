@@ -50,7 +50,7 @@ public:
 			from_pos			= cp;
 			cur_pos				= cp;
 			target_pos			= tp;
-			time_last_update	= Device.dwTimeGlobal;
+			time_last_update	= Device->dwTimeGlobal;
 			enemy				= e;
 		}
 

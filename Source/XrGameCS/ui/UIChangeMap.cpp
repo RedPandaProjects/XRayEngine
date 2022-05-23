@@ -11,7 +11,7 @@
 #include "UIMapList.h"
 #include "CExtraContentFilter.h"
 
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "../UIGameCustom.h"
 #include "../UIDialogHolder.h"
 

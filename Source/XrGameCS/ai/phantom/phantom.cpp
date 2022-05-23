@@ -291,14 +291,14 @@ void CPhantom::UpdatePosition(const Fvector& tgt_pos)
 	tgt_dir.sub		(tgt_pos,Position());
 	tgt_dir.getHP	(tgt_h,tgt_p);
 
-	angle_lerp		(vHP.x,tgt_h,fASpeed,Device.fTimeDelta);
-	angle_lerp		(vHP.y,tgt_p,fASpeed,Device.fTimeDelta);
+	angle_lerp		(vHP.x,tgt_h,fASpeed,Device->fTimeDelta);
+	angle_lerp		(vHP.y,tgt_p,fASpeed,Device->fTimeDelta);
 
 	cur_dir.setHP	(vHP.x,vHP.y);
 
 	Fvector prev_pos=Position();
 	XFORM().rotateY (-vHP.x);
-	Position().mad	(prev_pos,cur_dir,fSpeed*Device.fTimeDelta);
+	Position().mad	(prev_pos,cur_dir,fSpeed*Device->fTimeDelta);
 }
 
 void CPhantom::PsyHit(const CObject *object, float value) 
@@ -341,7 +341,7 @@ void CPhantom::net_Export	(NET_Packet& P)					// export to server
 	P.w_u32				(0);
 	P.w_u32				(0);
 
-	P.w_u32				(Device.dwTimeGlobal);
+	P.w_u32				(Device->dwTimeGlobal);
 	P.w_u8				(flags);
 
 	float				yaw, pitch, bank;

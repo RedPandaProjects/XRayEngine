@@ -94,9 +94,10 @@ namespace ALife {
 		eHitTypeStrike,
 		eHitTypeExplosion,
 		eHitTypeWound_2,		//knife's alternative fire
-//		eHitTypePhysicStrike,
 		eHitTypeLightBurn,
 		eHitTypeMax,
+
+		eHitTypePhysicStrike = 0xFFFF,
 	};
 
 	enum EInfluenceType	{

@@ -85,7 +85,7 @@ public:
 #endif
 	}
 
-	friend class CLevelGraph;
+	friend class ILevelGraph;
 	friend struct CNodeCompressed;
 	friend class CNodeRenumberer;
 };									// 2+5+2+11 = 20b

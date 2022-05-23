@@ -20,7 +20,7 @@
 #include "string_table.h"
 #include "../xrRender/Public/Kinematics.h"
 #include "ai_object_location.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "../xrEngine/igame_persistent.h"
 
 
@@ -80,7 +80,7 @@ CInventoryItem::~CInventoryItem()
 				object().ID(),
 				p ? p->cName().c_str() : "none",
 				p ? p->ID() : -1,
-				Device.dwFrame);
+				Device->dwFrame);
 	}
 #endif // #ifndef MASTER_GOLD
 }
@@ -111,7 +111,7 @@ void CInventoryItem::Load(LPCSTR section)
 	m_flags.set(FIsQuestItem,	READ_IF_EXISTS(pSettings, r_bool, section, "quest_item",FALSE));
 
 
-	//время убирания объекта с уровня
+	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	m_dwItemRemoveTime			= READ_IF_EXISTS(pSettings, r_u32, section,"item_remove_time",	ITEM_REMOVE_TIME);
 
 	if ( m_slot != -1 )
@@ -217,11 +217,11 @@ void CInventoryItem::UpdateCL()
 	if(bDebug){
 		if (dbg_net_Draw_Flags.test(dbg_draw_invitem) )
 		{
-			Device.seqRender.Remove(this);
-			Device.seqRender.Add(this);
+			Device->seqRender.Remove(this);
+			Device->seqRender.Add(this);
 		}else
 		{
-			Device.seqRender.Remove(this);
+			Device->seqRender.Remove(this);
 		}
 	}
 
@@ -280,9 +280,9 @@ void CInventoryItem::OnEvent (NET_Packet& P, u16 type)
 	}
 }
 
-//процесс отсоединения вещи заключается в спауне новой вещи 
-//в инвентаре и установке соответствующих флагов в родительском
-//объекте, поэтому функция должна быть переопределена
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ 
+//пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 bool CInventoryItem::Detach(const char* item_section_name, bool b_spawn_item) 
 {
 	if (OnClient()) return true;
@@ -371,7 +371,7 @@ void CInventoryItem::net_Destroy		()
 		VERIFY(std::find(m_pInventory->m_all.begin(), m_pInventory->m_all.end(), this)==m_pInventory->m_all.end() );
 	}
 
-	//инвентарь которому мы принадлежали
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //.	m_pInventory = NULL;
 }
 
@@ -410,7 +410,7 @@ void CInventoryItem::net_Import			(NET_Packet& P)
 	}*/
 
 	net_update_IItem			N;
-	N.dwTimeStamp				= Device.dwTimeGlobal;
+	N.dwTimeStamp				= Device->dwTimeGlobal;
 
 	net_Import_PH_Params(P,N,num_items);
 	////////////////////////////////////////////
@@ -963,7 +963,7 @@ void CInventoryItem::CalculateInterpolationParams()
 		for (u32 k=0; k<3; k++)
 		{
 			P0[k] = c*(c*(c*p->SCoeff[k][0]+p->SCoeff[k][1])+p->SCoeff[k][2])+p->SCoeff[k][3];
-			P1[k] = (c*c*p->SCoeff[k][0]*3+c*p->SCoeff[k][1]*2+p->SCoeff[k][2])/3; // сокрость из формулы в 3 раза превышает скорость при расчете коэффициентов !!!!
+			P1[k] = (c*c*p->SCoeff[k][0]*3+c*p->SCoeff[k][1]*2+p->SCoeff[k][2])/3; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ 3 пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ !!!!
 		};
 		P0.set(p->IStartPos);
 		P1.add(p->IStartPos);
@@ -1166,7 +1166,7 @@ void CInventoryItem::Interpolate()
 float CInventoryItem::interpolate_states(net_update_IItem const & first, net_update_IItem const & last, SPHNetState & current)
 {
 	float ret_val = 0.f;
-	u32 CurTime = Device.dwTimeGlobal;
+	u32 CurTime = Device->dwTimeGlobal;
 	
 	if (CurTime == last.dwTimeStamp)
 		return 0.f;

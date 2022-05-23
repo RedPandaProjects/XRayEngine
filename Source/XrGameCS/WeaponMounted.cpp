@@ -57,11 +57,11 @@ void	CWeaponMounted::Load(LPCSTR section)
 
 	HUD_SOUND::LoadSound(section,"snd_shoot", sndShot, SOUND_TYPE_WEAPON_SHOOTING);
 
-	//тип используемых патронов
+	//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	m_sAmmoType = pSettings->r_string(section, "ammo_class");
 	m_CurrentAmmo.Load(*m_sAmmoType, 0);
 
-	//подбрасывание камеры во время отдачи
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	camMaxAngle			= pSettings->r_float		(section,"cam_max_angle"	); 
 	camMaxAngle			= deg2rad					(camMaxAngle);
 	camRelaxSpeed		= pSettings->r_float		(section,"cam_relax_speed"	); 
@@ -148,7 +148,7 @@ void	CWeaponMounted::UpdateCL()
 
 		if(OwnerActor() && OwnerActor()->IsMyCamera()) 
 		{
-			cam_Update(Device.fTimeDelta, g_fov);
+			cam_Update(Device->fTimeDelta, g_fov);
 			OwnerActor()->Cameras().UpdateFromCamera(Camera());
 			OwnerActor()->Cameras().ApplyDevice(VIEWPORT_NEAR);
 		}
@@ -162,7 +162,7 @@ void	CWeaponMounted::shedule_Update(u32 dt)
 
 void	CWeaponMounted::renderable_Render()
 {
-	//нарисовать подсветку
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	RenderLight();
 
 	inherited::renderable_Render	();
@@ -243,7 +243,7 @@ bool	CWeaponMounted::attach_Actor		(CGameObject* actor)
 	m_dAngle.set(0.0f,0.0f);
 	CHolderCustom::attach_Actor(actor);
 	IKinematics* K		= smart_cast<IKinematics*>(Visual());
-	// убрать оружие из рук	
+	// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ	
 	// disable shell callback
 	m_pPhysicsShell->EnabledCallbacks(FALSE);
 	// enable actor rotate callback
@@ -271,7 +271,7 @@ void	CWeaponMounted::detach_Actor		()
 	// enable shell callback
 	m_pPhysicsShell->EnabledCallbacks(TRUE);
 	
-	//закончить стрельбу
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	FireEnd();
 
 	processing_deactivate		();
@@ -322,7 +322,7 @@ void CWeaponMounted::OnShot		()
 	bool b_hud_mode = (Level().CurrentEntity() == smart_cast<CObject*>(Owner()));
 	HUD_SOUND::PlaySound(sndShot, fire_pos, Owner(), b_hud_mode);
 
-	//добавить эффектор стрельбы
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	AddShotEffector		();
 	m_dAngle.set(	::Random.randF(-fireDispersionBase,fireDispersionBase),
 					::Random.randF(-fireDispersionBase,fireDispersionBase));
@@ -330,7 +330,7 @@ void CWeaponMounted::OnShot		()
 
 void CWeaponMounted::UpdateFire()
 {
-	fTime -= Device.fTimeDelta;
+	fTime -= Device->fTimeDelta;
 	
 
 	CShootingObject::UpdateFlameParticles();
@@ -345,8 +345,8 @@ void CWeaponMounted::UpdateFire()
 		OnShot();
 		fTime += fTimeToFire;
 	}else{
-		angle_lerp		(m_dAngle.x,0.f,5.f,Device.fTimeDelta);
-		angle_lerp		(m_dAngle.y,0.f,5.f,Device.fTimeDelta);
+		angle_lerp		(m_dAngle.x,0.f,5.f,Device->fTimeDelta);
+		angle_lerp		(m_dAngle.y,0.f,5.f,Device->fTimeDelta);
 	}
 }
 

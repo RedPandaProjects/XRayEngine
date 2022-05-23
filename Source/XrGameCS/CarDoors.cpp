@@ -4,7 +4,7 @@
 #include "../xrEngine/StatGraph.h"
 #include "PHDebug.h"
 #endif
-#include "alife_space.h"
+#include "../xrEngine/alife_space.h"
 #include "hit.h"
 #include "PHDestroyable.h"
 #include "car.h"
@@ -254,7 +254,7 @@ void CCar::SDoor::Update()
 			if(pos_open*opened_angle<pos_open*GetAngle()) 
 			{
 				NeutralTorque(torque);
-				open_time=Device.dwTimeGlobal;
+				open_time=Device->dwTimeGlobal;
 				state=opened;
 			}
 			break;
@@ -262,7 +262,7 @@ void CCar::SDoor::Update()
 		}
 	case opened:
 		{
-			if(Device.dwTimeGlobal-open_time>1000) 
+			if(Device->dwTimeGlobal-open_time>1000) 
 			{
 				ApplyTorque(torque/5.f,a_vel);
 				RemoveFromUpdate();

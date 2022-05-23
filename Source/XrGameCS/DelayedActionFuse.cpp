@@ -16,7 +16,7 @@ void CDelayedActionFuse::SetTimer(float current_condition)
 	VERIFY(!fis_zero(m_fTime)||m_dafflags.test(flNoConditionChange));
 	if(!m_dafflags.test(flNoConditionChange))m_fSpeedChangeCondition/=m_fTime;
 	//Msg("to_expl moment %f",m_fTime);
-	m_fTime+=Device.fTimeGlobal;//+current_condition/m_fSpeedChangeCondition;
+	m_fTime+=Device->fTimeGlobal;//+current_condition/m_fSpeedChangeCondition;
 	//Msg("expl moment %f",m_fTime);
 	StartTimerEffects();
 
@@ -25,7 +25,7 @@ float CDelayedActionFuse::Time()
 {
 	VERIFY(isInitialized());
 	if(!isActive())	return m_fTime;
-	else			return m_fTime-Device.fTimeGlobal;
+	else			return m_fTime-Device->fTimeGlobal;
 }
 void CDelayedActionFuse::Initialize(float time,float critical_condition)
 {
@@ -49,7 +49,7 @@ bool CDelayedActionFuse::Update(float current_condition)
 	VERIFY(isActive());
 	
 	bool ret=false;
-	float l_time_to_explosion=m_fTime-Device.fTimeGlobal;
+	float l_time_to_explosion=m_fTime-Device->fTimeGlobal;
 
 	if(!m_dafflags.test(flNoConditionChange))
 	{

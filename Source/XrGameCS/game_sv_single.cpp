@@ -5,7 +5,7 @@
 #include "alife_object_registry.h"
 #include "alife_graph_registry.h"
 #include "alife_time_manager.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "gamepersistent.h"
 #include "xrServer.h"
 #include "../xrEngine/x_ray.h"
@@ -348,6 +348,6 @@ void game_sv_Single::restart_simulator			(LPCSTR saved_game_name)
 	pApp->LoadBegin			();
 	m_alife_simulator		= xr_new<CALifeSimulator>(&server(),&options);
 	g_pGamePersistent->LoadTitle		("st_client_synchronising");
-	Device.PreCache			(60,true,false);
+	Device->PreCache			(60,true,false);
 	pApp->LoadEnd			();
 }

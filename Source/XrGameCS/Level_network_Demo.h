@@ -20,8 +20,8 @@ public:
 
 	float						GetDemoPlayPos				() const;
 	//void						SetDemoPlayPos				(float const pos);
-	float						GetDemoPlaySpeed			() const;					//Device.time_factor()
-	void						SetDemoPlaySpeed			(float const time_factor);	//Device.time_factor(
+	float						GetDemoPlaySpeed			() const;					//Device->time_factor()
+	void						SetDemoPlaySpeed			(float const time_factor);	//Device->time_factor(
 	message_filter*				GetMessageFilter			();
 	
 

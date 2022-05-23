@@ -8,7 +8,7 @@
 #endif
 activating_character_delay::activating_character_delay(CCharacterPhysicsSupport *char_support_): 
 char_support(*char_support_),
-activate_time(Device.dwTimeGlobal + delay )
+activate_time(Device->dwTimeGlobal + delay )
 {
 	VERIFY(char_support_);
 	VERIFY(char_support.movement());
@@ -24,13 +24,13 @@ void activating_character_delay::update()
 	if(!active())
 		return;
 
-	if( Device.dwTimeGlobal < activate_time )
+	if( Device->dwTimeGlobal < activate_time )
 		return;
 
 	if( do_position_correct() )
 		char_support.CreateCharacter();
 
-	activate_time = Device.dwTimeGlobal + delay;
+	activate_time = Device->dwTimeGlobal + delay;
 }
 
 

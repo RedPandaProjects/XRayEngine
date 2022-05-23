@@ -19,7 +19,7 @@ void DestroyMarks(ShaderVec& lst)
 void DestroyPSs(PSVec& lst)
 {
 //	for (PSIt it=lst.begin(); lst.end() != it; ++it)
-//		Device.Resources->Delete(*it);
+//		Device->Resources->Delete(*it);
 }
 
 void CreateSounds(SoundVec& lst, LPCSTR buf)

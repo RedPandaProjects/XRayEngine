@@ -3,7 +3,7 @@
 //	Created by Roman E. Marchenko, vortex@gsc-game.kiev.ua
 //	Copyright 2004. GSC Game World
 //	---------------------------------------------------------------------------
-//  Статик для отображения анимированной иконки
+//  пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 //=============================================================================
 
 #include "stdafx.h"
@@ -36,10 +36,10 @@ void CUIAnimatedStatic::Update()
 
 	static u32 oneFrameDuration = 0;
 
-	// Пересчитаем пааметры анимации
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if (m_bParamsChanged && 0 != m_uFrameCount)
 	{
-		// Пересчитаем время одного кадра
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 		oneFrameDuration = iCeil(m_uAnimationDuration / static_cast<float>(m_uFrameCount));
 
 		SetFrame(0);
@@ -47,11 +47,11 @@ void CUIAnimatedStatic::Update()
 		m_bParamsChanged = false;
 	}
 
-	// Прибавляем время кадра
-	m_uTimeElapsed += Device.dwTimeContinual - m_prevTime;
-	m_prevTime = Device.dwTimeContinual;
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+	m_uTimeElapsed += Device->dwTimeContinual - m_prevTime;
+	m_prevTime = Device->dwTimeContinual;
 
-	// Если анимация закончилась
+	// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if (m_uTimeElapsed > m_uAnimationDuration)
 	{
 		Rewind(0);
@@ -59,7 +59,7 @@ void CUIAnimatedStatic::Update()
 			Stop();
 	}
 
-	// Теперь вычисляем кадры в зависимости от времени
+	// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	u32 curFrame = m_uTimeElapsed / oneFrameDuration;
 
 	if (curFrame != m_uCurFrame)

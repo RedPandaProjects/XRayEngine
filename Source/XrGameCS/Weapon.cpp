@@ -14,7 +14,7 @@
 #include "../xrRender/Public/Kinematics.h"
 #include "ai_object_location.h"
 #include "mathutils.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "player_hud.h"
 #include "gamepersistent.h"
 #include "effectorFall.h"
@@ -87,10 +87,10 @@ void CWeapon::Hit					(SHit* pHDS)
 
 void CWeapon::UpdateXForm	()
 {
-	if (Device.dwFrame == dwXF_Frame)
+	if (Device->dwFrame == dwXF_Frame)
 		return;
 
-	dwXF_Frame				= Device.dwFrame;
+	dwXF_Frame				= Device->dwFrame;
 
 	if (!H_Parent())
 		return;
@@ -154,9 +154,9 @@ void CWeapon::UpdateXForm	()
 
 void CWeapon::UpdateFireDependencies_internal()
 {
-	if (Device.dwFrame!=dwFP_Frame) 
+	if (Device->dwFrame!=dwFP_Frame) 
 	{
-		dwFP_Frame			= Device.dwFrame;
+		dwFP_Frame			= Device->dwFrame;
 
 		UpdateXForm			();
 
@@ -235,9 +235,9 @@ void CWeapon::Load		(LPCSTR section)
 	iMagazineSize		= pSettings->r_s32		(section,"ammo_mag_size"	);
 	
 	////////////////////////////////////////////////////
-	// дисперсия стрельбы
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-	//подбрасывание камеры во время отдачи
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	u8 rm = READ_IF_EXISTS( pSettings, r_u8, section, "cam_return", 1 );
 	cam_recoil.ReturnMode = (rm == 1);
 	
@@ -285,8 +285,8 @@ void CWeapon::Load		(LPCSTR section)
 	
 	cam_recoil.DispersionFrac	= _abs( READ_IF_EXISTS( pSettings, r_float, section, "cam_dispersion_frac", 0.7f ) );
 
-	//подбрасывание камеры во время отдачи в режиме zoom ==> ironsight or scope
-	//zoom_cam_recoil.Clone( cam_recoil ); ==== нельзя !!!!!!!!!!
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ zoom ==> ironsight or scope
+	//zoom_cam_recoil.Clone( cam_recoil ); ==== пїЅпїЅпїЅпїЅпїЅпїЅ !!!!!!!!!!
 	zoom_cam_recoil.RelaxSpeed		= cam_recoil.RelaxSpeed;
 	zoom_cam_recoil.RelaxSpeed_AI	= cam_recoil.RelaxSpeed_AI;
 	zoom_cam_recoil.DispersionFrac	= cam_recoil.DispersionFrac;
@@ -371,7 +371,7 @@ void CWeapon::Load		(LPCSTR section)
 	m_fMaxRadius		= pSettings->r_float		(section,"max_radius");
 
 
-	// информация о возможных апгрейдах и их визуализации в инвентаре
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	m_eScopeStatus			 = (ALife::EWeaponAddonStatus)pSettings->r_s32(section,"scope_status");
 	m_eSilencerStatus		 = (ALife::EWeaponAddonStatus)pSettings->r_s32(section,"silencer_status");
 	m_eGrenadeLauncherStatus = (ALife::EWeaponAddonStatus)pSettings->r_s32(section,"grenade_launcher_status");
@@ -499,7 +499,7 @@ void CWeapon::net_Destroy	()
 {
 	inherited::net_Destroy	();
 
-	//удалить объекты партиклов
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	StopFlameParticles	();
 	StopFlameParticles2	();
 	StopLight			();
@@ -697,7 +697,7 @@ void CWeapon::OnActiveItem ()
 //-
 
 	inherited::OnActiveItem		();
-	//если мы занружаемся и оружие было в руках
+	//пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ
 //.	SetState					(eIdle);
 //.	SetNextState				(eIdle);
 }
@@ -752,10 +752,10 @@ void CWeapon::UpdateCL		()
 {
 	inherited::UpdateCL		();
 	UpdateHUDAddonsVisibility();
-	//подсветка от выстрела
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	UpdateLight				();
 
-	//нарисовать партиклы
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	UpdateFlameParticles	();
 	UpdateFlameParticles2	();
 
@@ -769,7 +769,7 @@ void CWeapon::UpdateCL		()
 		{
 			if (hud_adj_mode==0 && 
 				GetState()==eIdle && 
-				(Device.dwTimeGlobal-m_dw_curr_substate_time>20000) && 
+				(Device->dwTimeGlobal-m_dw_curr_substate_time>20000) && 
 				!IsZoomed()&&
 				g_player_hud->attached_item(1)==NULL)
 			{
@@ -789,11 +789,11 @@ void CWeapon::renderable_Render		()
 {
 	UpdateXForm				();
 
-	//нарисовать подсветку
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 	RenderLight				();	
 
-	//если мы в режиме снайперки, то сам HUD рисовать не надо
+	//пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅ HUD пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ
 	if(IsZoomed() && !IsRotatingToZoom() && ZoomTexture())
 		RenderHud		(FALSE);
 	else
@@ -836,7 +836,7 @@ bool CWeapon::Action(s32 cmd, u32 flags)
 	{
 		case kWPN_FIRE: 
 			{
-				//если оружие чем-то занято, то ничего не делать
+				//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 				{				
 					if(IsPending())		
 						return				false;
@@ -996,11 +996,11 @@ int CWeapon::GetSuitableAmmoTotal(bool use_item_to_spawn) const
 	int l_count = iAmmoElapsed;
 	if(!m_pInventory) return l_count;
 
-	//чтоб не делать лишних пересчетов
+	//пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if(m_pInventory->ModifyFrame()<=m_dwAmmoCurrentCalcFrame)
 		return l_count + iAmmoCurrent;
 
- 	m_dwAmmoCurrentCalcFrame = Device.dwFrame;
+ 	m_dwAmmoCurrentCalcFrame = Device->dwFrame;
 	iAmmoCurrent = 0;
 
 	for(int i = 0; i < (int)m_ammoTypes.size(); ++i) 
@@ -1045,13 +1045,13 @@ int CWeapon::GetCurrentTypeAmmoTotal() const
 		return l_count;
 	}
 
-	//чтоб не делать лишних пересчетов
+	//пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if ( m_pInventory->ModifyFrame() <= m_dwAmmoCurrentCalcFrame )
 	{
 		return l_count + iAmmoCurrent;
 	}
 
-	m_dwAmmoCurrentCalcFrame = Device.dwFrame;
+	m_dwAmmoCurrentCalcFrame = Device->dwFrame;
 	iAmmoCurrent = 0;
 
 	VERIFY( 0 <= m_ammoType && m_ammoType < m_ammoTypes.size() );
@@ -1541,9 +1541,9 @@ void CWeapon::UpdateHudAdditonal		(Fmatrix& trans)
 		trans.mulB_43				(hud_rotation);
 
 		if(pActor->IsZoomAimingMode())
-			m_zoom_params.m_fZoomRotationFactor += Device.fTimeDelta/m_zoom_params.m_fZoomRotateTime;
+			m_zoom_params.m_fZoomRotationFactor += Device->fTimeDelta/m_zoom_params.m_fZoomRotateTime;
 		else
-			m_zoom_params.m_fZoomRotationFactor -= Device.fTimeDelta/m_zoom_params.m_fZoomRotateTime;
+			m_zoom_params.m_fZoomRotationFactor -= Device->fTimeDelta/m_zoom_params.m_fZoomRotateTime;
 
 		clamp(m_zoom_params.m_fZoomRotationFactor, 0.f, 1.f);
 	}

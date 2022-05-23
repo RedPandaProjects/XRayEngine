@@ -7,7 +7,7 @@
 #include "level.h"
 #include "ui/UIInventoryUtilities.h"
 #include "../xrEngine/xr_object.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "ui/UITextureMaster.h"
 #include "ui/UIHelper.h"
 
@@ -84,7 +84,7 @@ void CMapSpot::Update()
 	inherited::Update();
 	if ( m_bCursorOverWindow )
 	{
-		if ( Device.dwTimeGlobal > ( m_dwFocusReceiveTime + 500 ) )
+		if ( Device->dwTimeGlobal > ( m_dwFocusReceiveTime + 500 ) )
 		{
 			GetMessageTarget()->SendMessage(this, MAP_SHOW_HINT, NULL);
 		}
@@ -158,7 +158,7 @@ LPCSTR CMapSpotPointer::GetHint()
 	m_pointer_hint = "to: ";
 	m_pointer_hint += inherited::GetHint();
 	Fvector2 cam_pos;
-	cam_pos.set(Device.vCameraPosition.x,Device.vCameraPosition.z);
+	cam_pos.set(Device->vCameraPosition.x,Device->vCameraPosition.z);
 	float dist = MapLocation()->Position().distance_to(cam_pos);
 	string32 s;
 	sprintf_s(s," [%.2f]m.", dist);
@@ -350,7 +350,7 @@ void CComplexMapSpot::Update()
 {
 	inherited::Update();
 
-	m_last_delay += Device.dwTimeDelta;
+	m_last_delay += Device->dwTimeDelta;
 	if ( m_last_delay > 310 )
 	{
 		m_last_delay = 0;

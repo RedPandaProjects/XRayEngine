@@ -28,8 +28,8 @@
 IC bool CAI_Rat::bfCheckIfOutsideAIMap(Fvector &tTemp1)
 {
 	u32 dwNewNode = ai_location().level_vertex_id();
-	const CLevelGraph::CVertex *tpNewNode = ai_location().level_vertex();
-	CLevelGraph::CPosition	QueryPos;
+	const ILevelGraph::CVertex *tpNewNode = ai_location().level_vertex();
+	ILevelGraph::CPosition	QueryPos;
 	if (!ai().level_graph().valid_vertex_position(tTemp1))
 		return	(false);
 	ai().level_graph().vertex_position(QueryPos,tTemp1);
@@ -163,7 +163,7 @@ void CAI_Rat::make_turn()
 		return;
 	}
 
-//	Msg					("%6d : Rat %s, %f -> %f [%f]",Device.dwTimeGlobal,*cName(),movement().m_body.current.pitch,movement().m_body.target.pitch,get_custom_pitch_speed(0.f));
+//	Msg					("%6d : Rat %s, %f -> %f [%f]",Device->dwTimeGlobal,*cName(),movement().m_body.current.pitch,movement().m_body.target.pitch,get_custom_pitch_speed(0.f));
 
 	m_turning			= true;
 	movement().m_body.speed		= PI_MUL_2;
@@ -184,8 +184,8 @@ void CAI_Rat::set_firing(bool b_val)
 bool CAI_Rat::calc_node(Fvector const &next_position)
 {
 	u32 dwNewNode = ai_location().level_vertex_id();
-	const CLevelGraph::CVertex *tpNewNode = ai_location().level_vertex();
-	CLevelGraph::CPosition	QueryPos;
+	const ILevelGraph::CVertex *tpNewNode = ai_location().level_vertex();
+	ILevelGraph::CPosition	QueryPos;
 	bool					a = !ai().level_graph().valid_vertex_id(dwNewNode) || !ai().level_graph().valid_vertex_position(next_position);
 	if (!a) {
 		ai().level_graph().vertex_position	(QueryPos,next_position);
@@ -272,7 +272,7 @@ Fvector CAI_Rat::calc_position()
 
 
 	m_tHPB.x  +=  m_fDHeading;
-		CLevelGraph::SContour	contour;
+		ILevelGraph::SContour	contour;
 	ai().level_graph().contour(contour, ai_location().level_vertex_id());
 	
 	Fplane  P;
@@ -281,12 +281,12 @@ Fvector CAI_Rat::calc_position()
 	Fvector position_on_plane;
 	P.project(position_on_plane,Position());
 
-	// находим проекцию точки, лежащей на векторе текущего направления
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	Fvector dir_point, proj_point;
 	dir_point.mad(position_on_plane, Direction(), 1.f);
 	P.project(proj_point,dir_point);
 	
-	// получаем искомый вектор направления
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	Fvector target_dir;
 	target_dir.sub(proj_point,position_on_plane);
 
@@ -360,7 +360,7 @@ void CAI_Rat::move	(bool bCanAdjustSpeed, bool bStraightForward)
 		m_fDHeading		= fSavedDHeading;
 	}
 	if (m_bNoWay && (!m_turning || (angle_difference(movement().m_body.target.yaw, movement().m_body.current.yaw) < EPS_L))) {
-		if ((Device.dwTimeGlobal - m_previous_query_time > TIME_TO_RETURN) || (!m_previous_query_time)) {
+		if ((Device->dwTimeGlobal - m_previous_query_time > TIME_TO_RETURN) || (!m_previous_query_time)) {
 			movement().m_body.target.yaw = movement().m_body.current.yaw + PI;
 			movement().m_body.target.yaw = angle_normalize(movement().m_body.target.yaw);
 			Fvector tTemp;
@@ -372,7 +372,7 @@ void CAI_Rat::move	(bool bCanAdjustSpeed, bool bStraightForward)
 			
 			if (!m_walk_on_way) m_tGoalDir.add(Position(),tTemp);
 
-			m_previous_query_time = Device.dwTimeGlobal;
+			m_previous_query_time = Device->dwTimeGlobal;
 		}
 		if (!m_walk_on_way) make_turn		();
 	}
@@ -382,7 +382,7 @@ void CAI_Rat::move	(bool bCanAdjustSpeed, bool bStraightForward)
 void CAI_Rat::select_next_home_position	()
 {
 	GameGraph::_GRAPH_ID	tGraphID		= m_next_graph_point;
-	CGameGraph::const_iterator	i,e;
+	IGameGraph::const_iterator	i,e;
 	ai().game_graph().begin		(tGraphID,i,e);
 	int					iPointCount		= (int)movement().locations().vertex_types().size();
 	int					iBranches		= 0;
@@ -397,7 +397,7 @@ void CAI_Rat::select_next_home_position	()
 				if (ai().game_graph().mask(movement().locations().vertex_types()[j].tMask,ai().game_graph().vertex((*i).vertex_id())->vertex_type())) {
 					m_current_graph_point	= m_next_graph_point;
 					m_next_graph_point	= (*i).vertex_id();
-					m_time_to_change_graph_point	= Device.dwTimeGlobal + ::Random32.random(60000) + 60000;
+					m_time_to_change_graph_point	= Device->dwTimeGlobal + ::Random32.random(60000) + 60000;
 					return;
 				}
 		}
@@ -411,7 +411,7 @@ void CAI_Rat::select_next_home_position	()
 					if (iBranches == iChosenBranch) {
 						m_current_graph_point	= m_next_graph_point;
 						m_next_graph_point	= (*i).vertex_id();
-						m_time_to_change_graph_point	= Device.dwTimeGlobal + ::Random32.random(60000) + 60000;
+						m_time_to_change_graph_point	= Device->dwTimeGlobal + ::Random32.random(60000) + 60000;
 						return;
 					}
 					++iBranches;

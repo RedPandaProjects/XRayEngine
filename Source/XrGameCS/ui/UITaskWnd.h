@@ -1,7 +1,7 @@
 #pragma once
 #include "UIWindow.h"
 #include "UIWndCallback.h"
-#include "../../XrServerEntitiesCS/associative_vector.h"
+#include "../xrEngine/associative_vector.h"
 #include "../GameTaskDefs.h"
 
 class CUIMapWnd;

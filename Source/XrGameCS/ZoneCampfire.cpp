@@ -72,7 +72,7 @@ void CZoneCampfire::turn_on_script()
 {
 	if( psDeviceFlags.test(rsR2|rsR3) )
 	{
-		m_turn_time				= Device.dwTimeGlobal+OVL_TIME;
+		m_turn_time				= Device->dwTimeGlobal+OVL_TIME;
 		m_turned_on				= true;
 		GoEnabledState			();
 	}
@@ -82,7 +82,7 @@ void CZoneCampfire::turn_off_script()
 {
 	if( psDeviceFlags.test(rsR2|rsR3) )
 	{
-		m_turn_time				= Device.dwTimeGlobal+OVL_TIME;
+		m_turn_time				= Device->dwTimeGlobal+OVL_TIME;
 		m_turned_on				= false;
 		GoDisabledState			();
 	}
@@ -107,7 +107,7 @@ void CZoneCampfire::shedule_Update(u32	dt	)
 
 void CZoneCampfire::PlayIdleParticles(bool bIdleLight)
 {
-	if(m_turn_time==0 || m_turn_time-Device.dwTimeGlobal<(OVL_TIME-2000))
+	if(m_turn_time==0 || m_turn_time-Device->dwTimeGlobal<(OVL_TIME-2000))
 	{
 		inherited::PlayIdleParticles(bIdleLight);
 		if(m_pEnablingParticles)
@@ -120,7 +120,7 @@ void CZoneCampfire::PlayIdleParticles(bool bIdleLight)
 
 void CZoneCampfire::StopIdleParticles(bool bIdleLight)
 {
-	if(m_turn_time==0 || m_turn_time-Device.dwTimeGlobal<(OVL_TIME-500))
+	if(m_turn_time==0 || m_turn_time-Device->dwTimeGlobal<(OVL_TIME-500))
 		inherited::StopIdleParticles(bIdleLight);
 }
 
@@ -135,9 +135,9 @@ BOOL CZoneCampfire::AlwaysTheCrow()
 void CZoneCampfire::UpdateWorkload(u32 dt)
 {
 	inherited::UpdateWorkload(dt);
-	if(m_turn_time>Device.dwTimeGlobal)
+	if(m_turn_time>Device->dwTimeGlobal)
 	{
-		float k = float(m_turn_time-Device.dwTimeGlobal)/float(OVL_TIME);
+		float k = float(m_turn_time-Device->dwTimeGlobal)/float(OVL_TIME);
 
 		if(m_turned_on)
 		{
@@ -153,7 +153,7 @@ void CZoneCampfire::UpdateWorkload(u32 dt)
 		{
 			VERIFY(m_pIdleLAnim);
 			int frame = 0;
-			u32 clr		= m_pIdleLAnim->CalculateBGR(Device.fTimeGlobal,frame);
+			u32 clr		= m_pIdleLAnim->CalculateBGR(Device->fTimeGlobal,frame);
 			Fcolor		fclr;
 			fclr.set	(	((float)color_get_B(clr)/255.f)*k,
 							((float)color_get_G(clr)/255.f)*k,

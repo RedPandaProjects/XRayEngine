@@ -155,7 +155,7 @@ bool	CIKLimbsController::PredictObjectShift			(  const SCalculateData cd[max_siz
 	if( ret )
 	{
 		if( predict_time < EPS_S )
-			predict_time = Device.fTimeDelta;
+			predict_time = Device->fTimeDelta;
 		_object_shift.set_taget( predict_shift, predict_time );
 		/*
 		float leg_length_limit = LegLengthShiftLimit( cd );
@@ -182,7 +182,7 @@ void	CIKLimbsController::ObjectShift	( float static_shift, const SCalculateData 
 	CPhysicsShellHolder *sh = smart_cast<CPhysicsShellHolder*>(m_object);
 	VERIFY( sh );
 	//CCharacterPhysicsSupport *ch = sh->character_physics_support();	
-	_object_shift.freeze(  !!Device.Paused() );//ch->interactive_motion() ||
+	_object_shift.freeze(  !!Device->Paused() );//ch->interactive_motion() ||
 
 	if(  cnt_in_step != sz && PredictObjectShift( cd )  )//cnt_in_step > 0 &&
 		return;
@@ -301,7 +301,7 @@ void CIKLimbsController::Destroy(CGameObject* O)
 
 void  CIKLimbsController:: IKVisualCallback( IKinematics* K )
 {
-	//if (Device.Paused())
+	//if (Device->Paused())
 	//	return;
 
 #ifdef DEBUG
@@ -350,7 +350,7 @@ void	CIKLimbsController:: Update						( )
 
 	/*
 	Fmatrix predict;
-	_pose_extrapolation.extrapolate( predict, Device.fTimeGlobal  ); 
+	_pose_extrapolation.extrapolate( predict, Device->fTimeGlobal  ); 
 
 
 
@@ -358,7 +358,7 @@ void	CIKLimbsController:: Update						( )
 	DBG_DrawMatrix( m_object->XFORM(), 1 );
 	DBG_DrawMatrix( predict, 1 );
 	
-	_pose_extrapolation.extrapolate( predict, Device.fTimeGlobal + 1  ); 
+	_pose_extrapolation.extrapolate( predict, Device->fTimeGlobal + 1  ); 
 	DBG_DrawMatrix( predict, 1 );
 	*/
 }

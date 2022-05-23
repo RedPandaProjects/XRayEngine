@@ -5,7 +5,7 @@
 #include "../xrEngine/StatGraph.h"
 #include "PHDebug.h"
 #endif
-#include "alife_space.h"
+#include "../xrEngine/alife_space.h"
 #include "hit.h"
 #include "phdestroyable.h"
 #include "car.h"
@@ -170,19 +170,19 @@ void	CCar::OnKeyboardHold(int cmd)
 /*
 	case kFWD:		
 		if (ectFree==active_camera->tag)	active_camera->Move(kUP);
-		else								m_vCamDeltaHP.y += active_camera->rot_speed.y*Device.fTimeDelta;
+		else								m_vCamDeltaHP.y += active_camera->rot_speed.y*Device->fTimeDelta;
 		break;
 	case kBACK:		
 		if (ectFree==active_camera->tag)	active_camera->Move(kDOWN);
-		else								m_vCamDeltaHP.y -= active_camera->rot_speed.y*Device.fTimeDelta;
+		else								m_vCamDeltaHP.y -= active_camera->rot_speed.y*Device->fTimeDelta;
 		break;
 	case kL_STRAFE: 
 		if (ectFree==active_camera->tag)	active_camera->Move(kLEFT);
-		else								m_vCamDeltaHP.x -= active_camera->rot_speed.x*Device.fTimeDelta;
+		else								m_vCamDeltaHP.x -= active_camera->rot_speed.x*Device->fTimeDelta;
 		break;
 	case kR_STRAFE: 
 		if (ectFree==active_camera->tag)	active_camera->Move(kRIGHT);
-		else								m_vCamDeltaHP.x += active_camera->rot_speed.x*Device.fTimeDelta;
+		else								m_vCamDeltaHP.x += active_camera->rot_speed.x*Device->fTimeDelta;
 		break;
 */
 	}

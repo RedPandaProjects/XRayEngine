@@ -3,7 +3,7 @@
 #include "UIWindow.h"
 #include "UIStatic.h"
 #include "UIXmlInit.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "../../xrEngine/xr_input.h"
 #include "../xr_level_controller.h"
 #include "../../XrServerEntitiesCS/script_engine.h"
@@ -77,8 +77,8 @@ CUISequencer::CUISequencer()
 void CUISequencer::Start(LPCSTR tutor_name)
 {
 	VERIFY(m_items.size()==0);
-	Device.seqFrame.Add			(this, REG_PRIORITY_LOW-10000);
-	Device.seqRender.Add		(this, 3);
+	Device->seqFrame.Add			(this, REG_PRIORITY_LOW-10000);
+	Device->seqRender.Add		(this, 3);
 	
 	m_UIWindow					= xr_new<CUIWindow>();
 
@@ -112,8 +112,8 @@ void CUISequencer::Start(LPCSTR tutor_name)
 
 void CUISequencer::Destroy()
 {
-	Device.seqFrame.Remove		(this);
-	Device.seqRender.Remove		(this);
+	Device->seqFrame.Remove		(this);
+	Device->seqRender.Remove		(this);
 	delete_data					(m_items);
 	delete_data					(m_UIWindow);
 	IR_Release					();

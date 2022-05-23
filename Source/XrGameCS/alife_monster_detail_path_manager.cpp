@@ -42,7 +42,7 @@ void CALifeMonsterDetailPathManager::target					(const GameGraph::_GRAPH_ID &gam
 	m_destination.m_level_vertex_id	= level_vertex_id;
 	m_destination.m_position		= position;
 
-//	Msg								("[%6d][%s][%f][%f][%f]",Device.dwTimeGlobal,object().name_replace(),VPUSH(m_destination.m_position));
+//	Msg								("[%6d][%s][%f][%f][%f]",Device->dwTimeGlobal,object().name_replace(),VPUSH(m_destination.m_position));
 }
 
 void CALifeMonsterDetailPathManager::target					(const GameGraph::_GRAPH_ID &game_vertex_id)
@@ -58,7 +58,7 @@ void CALifeMonsterDetailPathManager::target					(const CALifeSmartTerrainTask &t
 
 void CALifeMonsterDetailPathManager::target					(const CALifeSmartTerrainTask *task)
 {
-//	Msg								("[%6d][%s][%s]",Device.dwTimeGlobal,object().name_replace(),*task->patrol_path_name());
+//	Msg								("[%6d][%s][%s]",Device->dwTimeGlobal,object().name_replace(),*task->patrol_path_name());
 	target							(*task);
 }
 
@@ -96,7 +96,7 @@ void CALifeMonsterDetailPathManager::update					()
 		return;
 
 //	if (ai().game_graph().vertex(object().m_tGraphID)->level_id() == ai().level_graph().level_id())
-//		Msg							("[detail::update][%6d][%s]",Device.dwTimeGlobal,object().name_replace());
+//		Msg							("[detail::update][%6d][%s]",Device->dwTimeGlobal,object().name_replace());
 
 	ALife::_TIME_ID					time_delta = current_time - m_last_update_time;
 	update							(time_delta);
@@ -123,7 +123,7 @@ void CALifeMonsterDetailPathManager::actualize				()
 	if (failed) {
 		Msg							("! %s couldn't build game path from",object().name_replace());
 		{
-			const CGameGraph::CVertex	*vertex = ai().game_graph().vertex(object().m_tGraphID);
+			const IGameGraph::CVertex	*vertex = ai().game_graph().vertex(object().m_tGraphID);
 			Msg						(
 				"! [%d][%s][%f][%f][%f]",
 				object().m_tGraphID,
@@ -134,7 +134,7 @@ void CALifeMonsterDetailPathManager::actualize				()
 			);
 		}
 		{
-			const CGameGraph::CVertex	*vertex = ai().game_graph().vertex(m_destination.m_game_vertex_id);
+			const IGameGraph::CVertex	*vertex = ai().game_graph().vertex(m_destination.m_game_vertex_id);
 			Msg						(
 				"! [%d][%s][%f][%f][%f]",
 				m_destination.m_game_vertex_id,
@@ -232,7 +232,7 @@ void CALifeMonsterDetailPathManager::follow_path				(const ALife::_TIME_ID &time
 
 		m_walked_distance				= 0.f;
 		m_path.pop_back					();
-//		Msg									("%6d %s changes graph point from %d to %d",Device.dwTimeGlobal,object().name_replace(),object().m_tGraphID,(GameGraph::_GRAPH_ID)m_path.back());
+//		Msg									("%6d %s changes graph point from %d to %d",Device->dwTimeGlobal,object().name_replace(),object().m_tGraphID,(GameGraph::_GRAPH_ID)m_path.back());
 		object().alife().graph().change		(&object(),object().m_tGraphID,(GameGraph::_GRAPH_ID)m_path.back());
 		VERIFY								(m_path.back() == object().m_tGraphID);
 		object().brain().on_location_change	();

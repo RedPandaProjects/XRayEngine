@@ -13,7 +13,7 @@
 #include "UIFrameWindow.h"
 #include "UIStatic.h"
 #include "UIXmlInit.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 
 #include "UIHelper.h"
 #include "ui_arrow.h"
@@ -127,7 +127,7 @@ void ui_actor_state_wnd::update_round_states( CActor* actor, ALife::EHitType hit
 
 void ui_actor_state_wnd::UpdateHitZone()
 {
-	CUIHudStatesWnd* wnd = HUD().GetUI()->UIMainIngameWnd->get_hud_states(); //некрасиво слишком
+	CUIHudStatesWnd* wnd = HUD().GetUI()->UIMainIngameWnd->get_hud_states(); //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	VERIFY( wnd );
 	if ( !wnd )
 	{

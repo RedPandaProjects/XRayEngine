@@ -46,12 +46,12 @@ void CHelicopter::OnEvent(	NET_Packet& P, u16 type)
 void CHelicopter::MGunUpdateFire()
 {
 
-	fShotTimeCounter -= Device.fTimeDelta;
+	fShotTimeCounter -= Device->fTimeDelta;
 	if (delta_t < 0){
-		delta_t = Device.fTimeGlobal;
+		delta_t = Device->fTimeGlobal;
 		flag_by_fire = 0;
 	}
-	float time_f = Device.fTimeGlobal - delta_t;
+	float time_f = Device->fTimeGlobal - delta_t;
 
 	float fire_time;
 	if(pSettings->line_exist(*cNameSect(),"fire_time"))
@@ -74,13 +74,13 @@ void CHelicopter::MGunUpdateFire()
 	}
 	if(no_fire_time > 0 && fire_time > 0) {
 		if (flag_by_fire==1 && time_f > fire_time){
-			delta_t = Device.fTimeGlobal;
-			time_f = Device.fTimeGlobal - delta_t;
+			delta_t = Device->fTimeGlobal;
+			time_f = Device->fTimeGlobal - delta_t;
 			flag_by_fire = 0;
 		}
 		if (time_f > no_fire_time && flag_by_fire ==0){
-			delta_t = Device.fTimeGlobal;
-			time_f = Device.fTimeGlobal - delta_t;
+			delta_t = Device->fTimeGlobal;
+			time_f = Device->fTimeGlobal - delta_t;
 			flag_by_fire = 1;
 		}
 		if(flag_by_fire ==0 && time_f < no_fire_time) return;
@@ -104,7 +104,7 @@ void CHelicopter::OnShot		()
 	if(m_enemy.bUseFireTrail){
 		Fvector enemy_pos = m_enemy.destEnemyPos;
 
-		float	dt		= Device.fTimeGlobal - m_enemy.fStartFireTime; VERIFY(dt>=0);
+		float	dt		= Device->fTimeGlobal - m_enemy.fStartFireTime; VERIFY(dt>=0);
 		float	dist	= m_enemy.fire_trail_length_curr - dt*fire_trail_speed;
 		if(dist<0)
 		{
@@ -155,7 +155,7 @@ void CHelicopter::MGunFireStart()
 
 	if(FALSE==IsWorking() && m_enemy.bUseFireTrail){
 		//start calc fire trail
-		m_enemy.fStartFireTime			= Device.fTimeGlobal;
+		m_enemy.fStartFireTime			= Device->fTimeGlobal;
 		Fvector fp = get_CurrentFirePoint();
 		Fvector ep = m_enemy.destEnemyPos;
 
@@ -196,8 +196,8 @@ void CHelicopter::UpdateWeapons		()
 	};
 
 	// lerp angle
-	angle_lerp	(m_cur_rot.x, m_tgt_rot.x, PI, Device.fTimeDelta);
-	angle_lerp	(m_cur_rot.y, m_tgt_rot.y, PI, Device.fTimeDelta);
+	angle_lerp	(m_cur_rot.x, m_tgt_rot.x, PI, Device->fTimeDelta);
+	angle_lerp	(m_cur_rot.y, m_tgt_rot.y, PI, Device->fTimeDelta);
 	
 
 	if( isOnAttack() ){
@@ -210,7 +210,7 @@ void CHelicopter::UpdateWeapons		()
 					MGunFireStart();
 			
 			if( between(d,m_min_rocket_dist,m_max_rocket_dist) &&
-				(Device.dwTimeGlobal-m_last_rocket_attack > m_time_between_rocket_attack) ) {
+				(Device->dwTimeGlobal-m_last_rocket_attack > m_time_between_rocket_attack) ) {
 				if(m_syncronize_rocket)	{
 					startRocket(1);
 					startRocket(2);
@@ -221,7 +221,7 @@ void CHelicopter::UpdateWeapons		()
 						startRocket(1);
 				}
 
-				m_last_rocket_attack = Device.dwTimeGlobal;
+				m_last_rocket_attack = Device->dwTimeGlobal;
 			}
 
 		}else{

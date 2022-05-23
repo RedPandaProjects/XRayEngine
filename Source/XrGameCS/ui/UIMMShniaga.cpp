@@ -8,7 +8,7 @@
 #include "../hudmanager.h"
 #include "game_base_space.h"
 #include "../level.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include <math.h>
 #include "../Actor.h"
 #include "../saved_game_wrapper.h"
@@ -219,17 +219,17 @@ void CUIMMShniaga::Draw()
 }
 
 void CUIMMShniaga::Update(){
-	if (m_start_time > Device.dwTimeContinual - m_run_time)
+	if (m_start_time > Device->dwTimeContinual - m_run_time)
 	{
 
 		Fvector2 pos = m_shniaga->GetWndPos();
-		pos.y = this->pos(m_origin, m_destination, Device.dwTimeContinual - m_start_time);
+		pos.y = this->pos(m_origin, m_destination, Device->dwTimeContinual - m_start_time);
 		m_shniaga->SetWndPos(pos);		
 	}
 	else
 		ProcessEvent(E_Stop);
 
-	if (m_start_time > Device.dwTimeContinual - m_run_time*10/100)
+	if (m_start_time > Device->dwTimeContinual - m_run_time*10/100)
 		ProcessEvent(E_Finilize);
 
 	ProcessEvent(E_Update);
@@ -338,7 +338,7 @@ void CUIMMShniaga::ProcessEvent(EVENT ev){
 				m_sound->whell_Play();
 
                 // calculate moving params
-				m_start_time = Device.dwTimeContinual;
+				m_start_time = Device->dwTimeContinual;
 				m_origin = m_shniaga->GetWndPos().y;
 				m_destination = m_selected->GetWndPos().y - m_magnifier->GetWndPos().y;
 				m_destination += m_offset;

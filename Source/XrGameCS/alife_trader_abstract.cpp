@@ -38,9 +38,9 @@ void CSE_ALifeTraderAbstract::spawn_supplies	()
 
 	if(m_SpecificCharacter.size())
 	{
-		//если в custom data объекта есть
-		//секция [dont_spawn_character_supplies]
-		//то не вызывать spawn из selected_char.SupplySpawn()
+		//пїЅпїЅпїЅпїЅ пїЅ custom data пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+		//пїЅпїЅпїЅпїЅпїЅпїЅ [dont_spawn_character_supplies]
+		//пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ spawn пїЅпїЅ selected_char.SupplySpawn()
 		bool specific_character_supply = true;	
 
 		if (xr_strlen(dynamic_object->m_ini_string))
@@ -179,8 +179,8 @@ void add_online_impl						(CSE_ALifeDynamicObject *object, const bool &update_re
 //			Msg					("[LSS] Spawning item [%s][%s][%d]",l_tpALifeInventoryItem->base()->name_replace(),*l_tpALifeInventoryItem->base()->s_name,l_tpALifeDynamicObject->ID);
 		Msg						(
 			"[LSS][%d] Going online [%d][%s][%d] with parent [%d][%s] on '%s'",
-			Device.dwFrame,
-			Device.dwTimeGlobal,
+			Device->dwFrame,
+			Device->dwTimeGlobal,
 			l_tpALifeInventoryItem->base()->name_replace(),
 			l_tpALifeInventoryItem->base()->ID,
 			object->ID,
@@ -226,8 +226,8 @@ void add_offline_impl						(CSE_ALifeDynamicObject *object, const xr_vector<ALif
 //			Msg					("[LSS] Destroying item [%s][%s][%d]",inventory_item->base()->name_replace(),*inventory_item->base()->s_name,inventory_item->base()->ID);
 		Msg						(
 			"[LSS][%d] Going offline [%d][%s][%d] with parent [%d][%s] on '%s'",
-			Device.dwFrame,
-			Device.dwTimeGlobal,
+			Device->dwFrame,
+			Device->dwTimeGlobal,
 			inventory_item->base()->name_replace(),
 			inventory_item->base()->ID,
 			object->ID,

@@ -50,7 +50,7 @@ void CActorMP::fill_state	(actor_mp_state &state)
 //	static test = false;
 //	if (test) {
 #if 0
-		Msg							("Frame [%d], object [%d]",Device.dwFrame,ID());
+		Msg							("Frame [%d], object [%d]",Device->dwFrame,ID());
 //		Msg							("quaternion   : [%f][%f][%f][%f]",State.quaternion.x,State.quaternion.y,State.quaternion.z,State.quaternion.w);
 //		Msg							("angular      : [%f][%f][%f]",State.angular_vel.x,State.angular_vel.y,State.angular_vel.z);
 		Msg							("linear       : [%f][%f][%f]",State.linear_vel.x,State.linear_vel.y,State.linear_vel.z);

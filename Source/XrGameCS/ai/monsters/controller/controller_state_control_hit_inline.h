@@ -69,7 +69,7 @@ bool CStateControllerControlHitAbstract::check_start_conditions()
 
 	if (!object->EnemyMan.see_enemy_now()) return false; 
 
-	// всё ок, можно начать атаку
+	// пїЅпїЅ пїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	return true;
 }
 
@@ -102,14 +102,14 @@ void CStateControllerControlHitAbstract::execute_hit_prepare()
 	object->com_man().ta_activate(object->anim_triple_control);
 	object->play_control_sound_start();
 
-	time_control_started = Device.dwTimeGlobal;
+	time_control_started = Device->dwTimeGlobal;
 }
 
 TEMPLATE_SPECIALIZATION
 void CStateControllerControlHitAbstract::execute_hit_continue()
 {
-	// проверить на грави удар
-	if (time_control_started + CONTROL_PREPARE_TIME < Device.dwTimeGlobal) {
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+	if (time_control_started + CONTROL_PREPARE_TIME < Device->dwTimeGlobal) {
 		m_action = eActionFire;
 	}
 }

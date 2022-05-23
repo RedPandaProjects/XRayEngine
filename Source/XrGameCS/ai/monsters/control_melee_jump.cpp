@@ -22,7 +22,7 @@ bool CControlMeleeJump::check_start_conditions()
 	if (m_man->is_captured_pure())	return false;
 
 	if (!m_object->EnemyMan.get_enemy())				return false;
-	if (m_time_next_melee_jump > Device.dwTimeGlobal)	return false;
+	if (m_time_next_melee_jump > Device->dwTimeGlobal)	return false;
 
 	Fvector				enemy_position;
 	enemy_position.set	(m_object->EnemyMan.get_enemy()->Position());
@@ -80,7 +80,7 @@ void CControlMeleeJump::on_release()
 	m_man->release_pure	(this);
 	m_man->unsubscribe	(this, ControlCom::eventAnimationEnd);
 
-	m_time_next_melee_jump = Device.dwTimeGlobal + Random.randI(ROTATION_JUMP_DELAY_MIN,ROTATION_JUMP_DELAY_MAX);
+	m_time_next_melee_jump = Device->dwTimeGlobal + Random.randI(ROTATION_JUMP_DELAY_MIN,ROTATION_JUMP_DELAY_MAX);
 }
 
 void CControlMeleeJump::on_event(ControlCom::EEventType type, ControlCom::IEventData *dat)

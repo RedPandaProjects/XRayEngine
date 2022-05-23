@@ -182,7 +182,7 @@ void CBurer::UpdateGraviObject()
 		return;
 	}
 
-	float dt = float(Device.dwTimeGlobal - m_gravi_object.time_last_update);
+	float dt = float(Device->dwTimeGlobal - m_gravi_object.time_last_update);
 	float dist = dt * float(m_gravi_speed)/1000.f;
 		
 	if (dist < m_gravi_step) return;
@@ -234,18 +234,18 @@ void CBurer::UpdateGraviObject()
 	}
 																								
 	m_gravi_object.cur_pos				= new_pos;
-	m_gravi_object.time_last_update		= Device.dwTimeGlobal;
+	m_gravi_object.time_last_update		= Device->dwTimeGlobal;
 
 	// ---------------------------------------------------------------------
 	// draw particle
 	CParticlesObject* ps = CParticlesObject::Create(particle_gravi_wave,TRUE);
 
-	// вычислить позицию и направленность партикла
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	Fmatrix pos; 
 	pos.identity();
 	pos.k.set(dir);
 	Fvector::generate_orthonormal_basis_normalized(pos.k,pos.j,pos.i);
-	// установить позицию
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	pos.translate_over(m_gravi_object.cur_pos);
 
 	ps->UpdateParent(pos, zero_vel);
@@ -266,7 +266,7 @@ void CBurer::UpdateGraviObject()
 		obj->m_pPhysicsShell->applyImpulse(dir,m_gravi_impulse_to_objects * obj->m_pPhysicsShell->getMass());
 	}
 
-	// играть звук
+	// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 	Fvector snd_pos = m_gravi_object.cur_pos;
 	snd_pos.y += 0.5f;
 	if (sound_gravi_wave._feedback())		{
@@ -277,7 +277,7 @@ void CBurer::UpdateGraviObject()
 void CBurer::UpdateCL()
 {
 	inherited::UpdateCL();
-	TScanner::frame_update(Device.dwTimeDelta);
+	TScanner::frame_update(Device->dwTimeDelta);
 
 	UpdateGraviObject();
 
@@ -321,14 +321,14 @@ void CBurer::StopTeleObjectParticle(CGameObject *pO)
 //void CBurer::Hit(float P,Fvector &dir,CObject*who,s16 element,Fvector p_in_object_space,float impulse, ALife::EHitType hit_type)
 void	CBurer::Hit								(SHit* pHDS)
 {
-	if (m_shield_active && (pHDS->hit_type == ALife::eHitTypeFireWound) && (Device.dwFrame != last_hit_frame)) {
+	if (m_shield_active && (pHDS->hit_type == ALife::eHitTypeFireWound) && (Device->dwFrame != last_hit_frame)) {
 
-		// вычислить позицию и направленность партикла
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		Fmatrix pos; 
 		//CParticlesPlayer::MakeXFORM(this,element,Fvector().set(0.f,0.f,1.f),p_in_object_space,pos);
 		CParticlesPlayer::MakeXFORM(this,pHDS->bone(),pHDS->dir,pHDS->p_in_bone_space,pos);
 
-		// установить particles
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ particles
 		CParticlesObject* ps = CParticlesObject::Create(particle_fire_shield,TRUE);
 		
 		ps->UpdateParent(pos,Fvector().set(0.f,0.f,0.f));
@@ -338,7 +338,7 @@ void	CBurer::Hit								(SHit* pHDS)
 //				inherited::Hit(P,dir,who,element,p_in_object_space,impulse,hit_type);
 				inherited::Hit(pHDS);
 
-	last_hit_frame = Device.dwFrame;
+	last_hit_frame = Device->dwFrame;
 }
 
 
@@ -353,7 +353,7 @@ void CBurer::Die(CObject* who)
 
 void CBurer::on_scanning()
 {
-	time_last_scan = Device.dwTimeGlobal;
+	time_last_scan = Device->dwTimeGlobal;
 }
 
 void CBurer::on_scan_success()

@@ -17,7 +17,7 @@ void CEnergyHolder::reinit()
 {
 	m_active					= true;
 	m_value						= 1.0f;
-	m_time_last_update			= Device.dwTimeGlobal;
+	m_time_last_update			= Device->dwTimeGlobal;
 }
 
 void CEnergyHolder::reload(LPCSTR section, LPCSTR prefix, LPCSTR suffix) 
@@ -49,8 +49,8 @@ void CEnergyHolder::schedule_update()
 {
 	if (!m_enable) return;
 	
-	// Обновить значение энергии
-	u32		cur_time	= Device.dwTimeGlobal;
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	u32		cur_time	= Device->dwTimeGlobal;
 	float	dt			= float(cur_time - m_time_last_update) / 1000.f;
 
 	if (!is_active()) 
@@ -60,10 +60,10 @@ void CEnergyHolder::schedule_update()
 
 	clamp(m_value, 0.f, 1.f);
 
-	// сохранить время последнего обновления
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	m_time_last_update = cur_time;
 
-	// проверка на автоматическое включение/выключение поля
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 	if (is_active() && should_deactivate() && m_auto_deactivate)	deactivate	();
 	if (!is_active() && can_activate() && m_auto_activate)			activate	();
 }
@@ -71,5 +71,5 @@ void CEnergyHolder::schedule_update()
 void CEnergyHolder::enable()
 {
 	m_enable			= true;
-	m_time_last_update	= Device.dwTimeGlobal;
+	m_time_last_update	= Device->dwTimeGlobal;
 }

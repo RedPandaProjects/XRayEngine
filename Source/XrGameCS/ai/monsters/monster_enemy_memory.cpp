@@ -57,10 +57,10 @@ void CMonsterEnemyMemory::update()
 		}
 	}
 	
-	// удалить устаревших врагов
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	remove_non_actual();
 
-	// обновить опасность 
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 
 	for (ENEMIES_MAP_IT it = m_objects.begin(); it != m_objects.end(); it++) {
 		u8		relation_value = u8(monster->tfGetRelationType(it->first));
 		float	dist = monster->Position().distance_to(it->second.position);
@@ -73,15 +73,15 @@ void CMonsterEnemyMemory::add_enemy(const CEntityAlive *enemy)
 	SMonsterEnemy enemy_info;
 	enemy_info.position = enemy->Position();
 	enemy_info.vertex   = enemy->ai_location().level_vertex_id();
-	enemy_info.time		= Device.dwTimeGlobal;
+	enemy_info.time		= Device->dwTimeGlobal;
 	enemy_info.danger	= 0.f;
 
 	ENEMIES_MAP_IT it = m_objects.find(enemy);
 	if (it != m_objects.end()) {
-		// обновить данные о враге
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ
 		it->second = enemy_info;
 	} else {
-		// добавить врага в список объектов
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		m_objects.insert(mk_pair(enemy, enemy_info));
 	}
 }
@@ -96,23 +96,23 @@ void CMonsterEnemyMemory::add_enemy(const CEntityAlive *enemy, const Fvector &po
 
 	ENEMIES_MAP_IT it = m_objects.find(enemy);
 	if (it != m_objects.end()) {
-		// обновить данные о враге
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ
 		if (it->second.time < enemy_info.time) it->second = enemy_info;
 	} else {
-		// добавить врага в список объектов
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		m_objects.insert(mk_pair(enemy, enemy_info));
 	}
 }
 
 void CMonsterEnemyMemory::remove_non_actual() 
 {
-	TTime cur_time = Device.dwTimeGlobal;
+	TTime cur_time = Device->dwTimeGlobal;
 
-	// удалить 'старых' врагов и тех, расстояние до которых > 30м и др.
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ 'пїЅпїЅпїЅпїЅпїЅпїЅ' пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ > 30пїЅ пїЅ пїЅпїЅ.
 	for (ENEMIES_MAP_IT it = m_objects.begin(), nit; it != m_objects.end(); it = nit)
 	{
 		nit = it; ++nit;
-		// проверить условия удаления
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		if (	!it->first					|| 
 			!it->first->g_Alive()		|| 
 			it->first->getDestroy()		||

@@ -4,10 +4,10 @@
 
 
 #include "script_export_space.h"
-#include "object_interfaces.h"
+#include "../xrEngine/object_interfaces.h"
 #include "inventory_space.h"
 #include "ui/KillMessageStruct.h"
-#include "gametype_chooser.h"
+#include "../xrEngine/gametype_chooser.h"
 // refs
 class CUI;
 class CTeamBaseZone;

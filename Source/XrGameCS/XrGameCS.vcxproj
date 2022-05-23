@@ -231,7 +231,6 @@
     <ClInclude Include="..\XrServerEntitiesCS\alife_human_brain_inline.h" />
     <ClInclude Include="..\XrServerEntitiesCS\alife_monster_brain.h" />
     <ClInclude Include="..\XrServerEntitiesCS\alife_monster_brain_inline.h" />
-    <ClInclude Include="..\XrServerEntitiesCS\alife_space.h" />
     <ClInclude Include="..\XrServerEntitiesCS\associative_vector.h" />
     <ClInclude Include="..\XrServerEntitiesCS\associative_vector_compare_predicate.h" />
     <ClInclude Include="..\XrServerEntitiesCS\associative_vector_compare_predicate_inline.h" />
@@ -242,13 +241,11 @@
     <ClInclude Include="..\XrServerEntitiesCS\doug_lea_memory_allocator.h" />
     <ClInclude Include="..\XrServerEntitiesCS\DrawUtils.h" />
     <ClInclude Include="..\XrServerEntitiesCS\FastDelegate.h" />
-    <ClInclude Include="..\XrServerEntitiesCS\gametype_chooser.h" />
     <ClInclude Include="..\XrServerEntitiesCS\game_base_space.h" />
     <ClInclude Include="..\XrServerEntitiesCS\game_graph_space.h" />
     <ClInclude Include="..\XrServerEntitiesCS\InfoPortionDefs.h" />
     <ClInclude Include="..\XrServerEntitiesCS\inventory_space.h" />
     <ClInclude Include="..\XrServerEntitiesCS\ItemListTypes.h" />
-    <ClInclude Include="..\XrServerEntitiesCS\LevelGameDef.h" />
     <ClInclude Include="..\XrServerEntitiesCS\lua_studio.h" />
     <ClInclude Include="..\XrServerEntitiesCS\mslotutils.h" />
     <ClInclude Include="..\XrServerEntitiesCS\object_broker.h" />
@@ -1109,9 +1106,6 @@
     <ClInclude Include="level_changer.h" />
     <ClInclude Include="level_debug.h" />
     <ClInclude Include="level_graph.h" />
-    <ClInclude Include="level_graph_inline.h" />
-    <ClInclude Include="level_graph_space.h" />
-    <ClInclude Include="level_graph_vertex_inline.h" />
     <ClInclude Include="level_location_selector.h" />
     <ClInclude Include="level_location_selector_inline.h" />
     <ClInclude Include="Level_network_Demo.h" />
@@ -1405,7 +1399,7 @@
     <ClInclude Include="script_particle_action_inline.h" />
     <ClInclude Include="script_property_evaluator_wrapper.h" />
     <ClInclude Include="script_property_evaluator_wrapper_inline.h" />
-    <ClInclude Include="script_render_device.h" />
+    <ClInclude Include="script_render_Device.h" />
     <ClInclude Include="script_sound.h" />
     <ClInclude Include="script_sound_action.h" />
     <ClInclude Include="script_sound_action_inline.h" />
@@ -1889,7 +1883,6 @@
     </ClCompile>
     <ClCompile Include="..\XrServerEntitiesCS\alife_human_brain.cpp" />
     <ClCompile Include="..\XrServerEntitiesCS\alife_monster_brain.cpp" />
-    <ClCompile Include="..\XrServerEntitiesCS\alife_space.cpp" />
     <ClCompile Include="..\XrServerEntitiesCS\character_info.cpp" />
     <ClCompile Include="..\XrServerEntitiesCS\doug_lea_memory_allocator.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -1913,8 +1906,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Development|x64'">
       </PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\XrServerEntitiesCS\gametype_chooser.cpp" />
-    <ClCompile Include="..\XrServerEntitiesCS\LevelGameDef.cpp" />
     <ClCompile Include="..\XrServerEntitiesCS\lua_studio.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
@@ -4031,6 +4022,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <ClCompile Include="game_cl_teamdeathmatch.cpp" />
+    <ClCompile Include="game_graph.cpp" />
     <ClCompile Include="game_graph_script.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
@@ -4045,6 +4037,7 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
+    <ClCompile Include="game_level_cross_table.cpp" />
     <ClCompile Include="game_news.cpp" />
     <ClCompile Include="game_sv_artefacthunt.cpp" />
     <ClCompile Include="game_sv_artefacthunt_process_event.cpp" />
@@ -4517,7 +4510,6 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
-    <ClCompile Include="level_graph_vertex.cpp" />
     <ClCompile Include="Level_input.cpp" />
     <ClCompile Include="Level_load.cpp" />
     <ClCompile Include="level_map_locations.cpp">

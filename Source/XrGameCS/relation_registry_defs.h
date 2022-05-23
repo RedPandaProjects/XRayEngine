@@ -1,14 +1,14 @@
 //////////////////////////////////////////////////////////////////////////
-// relation_registry_defs.h:	реестр для хранения данных об отношении персонажа к 
-//								другим персонажам
+// relation_registry_defs.h:	пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ 
+//								пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //////////////////////////////////////////////////////////////////////////
 
 #pragma once
 
-#include "object_interfaces.h"
+#include "../xrEngine/object_interfaces.h"
 
 
-//структура, описывающая отношение одного персонажа к другому или к группировке
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 struct SRelation
 {
 	SRelation();
@@ -16,7 +16,7 @@ struct SRelation
 	CHARACTER_GOODWILL		Goodwill		() const							{return m_iGoodwill;};
 	void					SetGoodwill		(CHARACTER_GOODWILL new_goodwill)	{m_iGoodwill = new_goodwill;};
 private:
-	//благосклонность
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	CHARACTER_GOODWILL m_iGoodwill;
 };
 
@@ -24,7 +24,7 @@ DEFINE_MAP(u16,							SRelation, PERSONAL_RELATION_MAP, PERSONAL_RELATION_MAP_IT
 DEFINE_MAP(CHARACTER_COMMUNITY_INDEX,	SRelation, COMMUNITY_RELATION_MAP, COMMUNITY_RELATION_MAP_IT);
 
 
-//структура, существует для каждого персонажа в игре
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ
 struct RELATION_DATA : public IPureSerializeObject<IReader,IWriter>
 {
 	virtual void clear();
@@ -32,8 +32,8 @@ struct RELATION_DATA : public IPureSerializeObject<IReader,IWriter>
 	virtual void load (IReader&);
 	virtual void save (IWriter&);
 
-	//личные отношения
+	//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	PERSONAL_RELATION_MAP personal; 
-	//отношения с группировками
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	COMMUNITY_RELATION_MAP communities;
 };

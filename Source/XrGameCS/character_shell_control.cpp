@@ -35,7 +35,7 @@ void	character_shell_control::Load( LPCSTR section )
 	skel_fatal_impulse_factor		= pSettings->r_float(section,"ph_skel_fatal_impulse_factor");
 	skeleton_skin_ddelay			= pSettings->r_float(section,"ph_skeleton_skin_ddelay");
 	skeleton_skin_remain_time		= skeleton_skin_ddelay;
-	//gray_wolf>Читаем из ltx параметры для поддержки изменяющегося трения у персонажей во время смерти
+	//gray_wolf>пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ ltx пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	//gray_wolf<
 	skeleton_skin_friction_start	= pSettings->r_float(section,"ph_skeleton_skin_friction_start");
 	skeleton_skin_friction_end		= pSettings->r_float(section,"ph_skeleton_skin_friction_end");
@@ -138,14 +138,14 @@ void character_shell_control::CalculateTimeDelta()
 	}
 	else
 	{
-		m_time_delta=Device.fTimeGlobal-m_Pred_Time;					
+		m_time_delta=Device->fTimeGlobal-m_Pred_Time;					
 	}
-	m_Pred_Time=Device.fTimeGlobal;
+	m_Pred_Time=Device->fTimeGlobal;
 };
 
 void character_shell_control::UpdateFrictionAndJointResistanse( CPhysicsShell	* sh )
 {
-	//Преобразование skel_ddelay из кадров в секунды и линейное нарастание сопротивления в джоинтах со временем от момента смерти 
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ skel_ddelay пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ 
 
 	if(skel_remain_time!=0)
 	{

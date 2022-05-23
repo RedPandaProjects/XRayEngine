@@ -2,7 +2,7 @@
 #define ELEVATOR_STAETE
 class CPHCharacter;
 struct dContact;
-struct SGameMtl;
+class SGameMtl;
 class CClimableObject;
 class CElevatorState
 {

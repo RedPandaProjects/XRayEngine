@@ -21,7 +21,7 @@ void CMonsterHitMemory::init_external(CBaseMonster *M, TTime mem_time)
 
 void CMonsterHitMemory::update()
 {
-	// удалить устаревшие hits
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ hits
 	remove_non_actual();
 }
 
@@ -34,7 +34,7 @@ void CMonsterHitMemory::add_hit(CObject *who, EHitSide side)
 {
 	SMonsterHit			new_hit_info;
 	new_hit_info.object		= who;
-	new_hit_info.time		= Device.dwTimeGlobal;
+	new_hit_info.time		= Device->dwTimeGlobal;
 	new_hit_info.side		= side;
 	new_hit_info.position	= monster->Position();
 
@@ -72,7 +72,7 @@ void CMonsterHitMemory::remove_non_actual()
 			m_hits.end(),
 			predicate_old_hit(
 				time_memory,
-				Device.dwTimeGlobal
+				Device->dwTimeGlobal
 			)
 		),
 		m_hits.end()
@@ -83,7 +83,7 @@ Fvector CMonsterHitMemory::get_last_hit_dir()
 {
 	Fvector			dir = monster->Direction();
 
-	// найти последний по времени хит
+	// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
 	SMonsterHit		last_hit;
 	last_hit.time	= 0;
 	last_hit.side	= eSideFront;
@@ -92,7 +92,7 @@ Fvector CMonsterHitMemory::get_last_hit_dir()
 		if (m_hits[i].time > last_hit.time)	last_hit = m_hits[i];
 	}
 
-	// если есть хит, вычислить направление
+	// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if (last_hit.time != 0) {
 
 		float h,p;

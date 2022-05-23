@@ -26,7 +26,7 @@ void CStateMonsterHitObjectAbstract::execute()
 	object->set_action				(ACT_STAND_IDLE);
 	object->anim().SetSpecParams	(ASP_CHECK_CORPSE);
 			
-	if (!m_hitted && (time_state_started + TIME_POINTBREAK < Device.dwTimeGlobal)) {
+	if (!m_hitted && (time_state_started + TIME_POINTBREAK < Device->dwTimeGlobal)) {
 		m_hitted		= true;
 		
 		Fvector			dir;
@@ -41,7 +41,7 @@ bool CStateMonsterHitObjectAbstract::check_start_conditions()
 {
 	target									= 0;
 	
-	// получить физ. объекты в радиусе
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	m_nearest_objects.clear_not_free		();
 	Level().ObjectSpace.GetNearest			(m_nearest_objects,object->Position(), object->Radius() - 0.5f, object()); 
 	
@@ -52,11 +52,11 @@ bool CStateMonsterHitObjectAbstract::check_start_conditions()
 		CPhysicsShellHolder  *obj = smart_cast<CPhysicsShellHolder *>(*I);
 		if (!obj || !obj->m_pPhysicsShell) continue;
 
-		// определить дистанцию до врага
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 		Fvector d;
 		d.sub(obj->Position(),object->Position());
 
-		// проверка на  Field-Of-Hit
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ  Field-Of-Hit
 		float my_h,my_p;
 		float h,p;
 
@@ -83,7 +83,7 @@ bool CStateMonsterHitObjectAbstract::check_start_conditions()
 TEMPLATE_SPECIALIZATION
 bool CStateMonsterHitObjectAbstract::check_completion()
 {
-	if (time_state_started + TIME_OUT_STATE < Device.dwTimeGlobal) return true;
+	if (time_state_started + TIME_OUT_STATE < Device->dwTimeGlobal) return true;
 	return false;
 }
 

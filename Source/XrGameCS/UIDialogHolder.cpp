@@ -37,14 +37,14 @@ CDialogHolder::CDialogHolder()
 	shedule.t_min			= 5;
 	shedule.t_max			= 20;
 	shedule_register		();
-	Device.seqFrame.Add		(this,REG_PRIORITY_LOW-1000);
+	Device->seqFrame.Add		(this,REG_PRIORITY_LOW-1000);
 	m_b_in_update			= false;
 }
 
 CDialogHolder::~CDialogHolder()
 {
 	shedule_unregister();
-	Device.seqFrame.Remove		(this);
+	Device->seqFrame.Remove		(this);
 }
 #include "HUDManager.h"
 

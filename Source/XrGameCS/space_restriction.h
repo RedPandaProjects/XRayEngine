@@ -26,7 +26,7 @@ private:
 
 	friend struct CRemoveMergedFreeInRestrictions;
 #ifdef DEBUG
-	friend class CLevelGraph;
+	friend class ILevelGraph;
 #endif
 private:
 	typedef SpaceRestrictionHolder::CBaseRestrictionPtr CBaseRestrictionPtr;
@@ -67,13 +67,14 @@ private:
 			void					merge_free_in_retrictions	();
 
 protected:
-	IC		bool					initialized					() const;
+	
 			bool					affect						(CBaseRestrictionPtr bridge, const Fsphere &sphere) const;
 			bool					affect						(CBaseRestrictionPtr bridge, u32 start_vertex_id, float radius) const;
 			bool					affect						(CBaseRestrictionPtr bridge, const Fvector &start_position, const Fvector &dest_position) const;
 			bool					affect						(CBaseRestrictionPtr bridge, u32 start_vertex_id, u32 dest_vertex_id) const;
 
 public:
+	IC		bool					initialized() const;
 									CSpaceRestriction			(CSpaceRestrictionManager *space_restriction_manager, shared_str out_restrictions, shared_str in_restrictions);
 			void					initialize					();
 			void					remove_border				();

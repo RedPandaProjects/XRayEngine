@@ -3,7 +3,7 @@
 
 class CEntityAlive;
 class CBlend;
-struct SGameMtlPair;
+class SGameMtlPair;
 class CStepManager {
 	u8				m_legs_count;
 

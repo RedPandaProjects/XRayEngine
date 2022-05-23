@@ -1460,9 +1460,9 @@ CSE_ALifeObjectPhysic::CSE_ALifeObjectPhysic(LPCSTR caSection) : CSE_ALifeDynami
 	m_flags.set					(flUsedAI_Locations,FALSE);
 	
 #ifdef XRGAME_EXPORTS
-	m_freeze_time				= Device.dwTimeGlobal;
+	m_freeze_time				= Device->dwTimeGlobal;
 #	ifdef DEBUG
-	m_last_update_time			= Device.dwTimeGlobal;
+	m_last_update_time			= Device->dwTimeGlobal;
 #	endif
 #else
 	m_freeze_time				= 0;
@@ -1542,7 +1542,7 @@ BOOL CSE_ALifeObjectPhysic::Net_Relevant()
 	{
 #ifdef XRGAME_EXPORTS
 #ifdef DEBUG	//this block of code is only for test
-		if (Device.dwTimeGlobal < (m_last_update_time + m_update_delta_time))
+		if (Device->dwTimeGlobal < (m_last_update_time + m_update_delta_time))
 			return FALSE;
 #endif
 #endif
@@ -1550,7 +1550,7 @@ BOOL CSE_ALifeObjectPhysic::Net_Relevant()
 	}
 
 #ifdef XRGAME_EXPORTS
-	if (Device.dwTimeGlobal >= (m_freeze_time + m_freeze_delta_time))
+	if (Device->dwTimeGlobal >= (m_freeze_time + m_freeze_delta_time))
 		return		FALSE;
 #endif
 	if (!prev_freezed)
@@ -1645,7 +1645,7 @@ void CSE_ALifeObjectPhysic::UPDATE_Read		(NET_Packet	&tNetPacket)
 	else {
 		if (!freezed)
 #ifdef XRGAME_EXPORTS
-			m_freeze_time	= Device.dwTimeGlobal;
+			m_freeze_time	= Device->dwTimeGlobal;
 #else
 			m_freeze_time	= 0;
 #endif
@@ -1713,7 +1713,7 @@ void CSE_ALifeObjectPhysic::UPDATE_Write	(NET_Packet	&tNetPacket)
 
 #ifdef XRGAME_EXPORTS
 #ifdef DEBUG
-	m_last_update_time			= Device.dwTimeGlobal;
+	m_last_update_time			= Device->dwTimeGlobal;
 #endif
 #endif
 }

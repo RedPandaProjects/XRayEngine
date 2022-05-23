@@ -2,7 +2,7 @@
 
 class CPhysicsShellHolder;
 struct dContact;
-struct SGameMtl;
+class SGameMtl;
 
 class CPHCollisionDamageReceiver
 {

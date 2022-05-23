@@ -10,7 +10,7 @@
 
 #include "random32.h"
 #include "ai_sounds.h"
-#include "associative_vector.h"
+#include "../xrEngine/associative_vector.h"
 
 class CSoundPlayer : public CRandom32 {
 public:
@@ -108,7 +108,7 @@ public:
 				(sound.m_synchro_mask & m_sound_mask) || 
 				(
 					!sound.m_sound->_feedback() && 
-					(sound.m_stop_time <= Device.dwTimeGlobal)
+					(sound.m_stop_time <= Device->dwTimeGlobal)
 				);
 			if (result)
 				sound.destroy					();

@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////
-//	Module 		: script_render_device.h
+//	Module 		: script_render_Device->h
 //	Created 	: 28.06.2004
 //  Modified 	: 28.06.2004
 //	Author		: Dmitriy Iassenev

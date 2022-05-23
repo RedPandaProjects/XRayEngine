@@ -219,7 +219,7 @@ void CGameObject::OnEvent		(NET_Packet& P, u16 type)
 			{
 				Msg( "! ERROR (GameObject): GE_DESTROY arrived to object[%d][%s], that has parent[%d][%s], frame[%d]",
 					ID(), cNameSect().c_str(),
-					H_Parent()->ID(), H_Parent()->cName().c_str(), Device.dwFrame );
+					H_Parent()->ID(), H_Parent()->cName().c_str(), Device->dwFrame );
 				
 				// This object will be destroy on call function <H_Parent::Destroy>
 				// or it will be call <H_Parent::Reject>  ==>  H_Parent = NULL
@@ -243,7 +243,7 @@ BOOL CGameObject::net_Spawn		(CSE_Abstract*	DC)
 {
 	VERIFY							(!m_spawned);
 	m_spawned						= true;
-	m_spawn_time					= Device.dwFrame;
+	m_spawn_time					= Device->dwFrame;
 	m_ai_obstacle					= xr_new<ai_obstacle>(this);
 
 	CSE_Abstract					*E = (CSE_Abstract*)DC;
@@ -808,11 +808,11 @@ void CGameObject::DestroyObject()
 
 void CGameObject::shedule_Update	(u32 dt)
 {
-	//уничтожить
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if(NeedToDestroyObject())
 	{
 #ifndef MASTER_GOLD
-		Msg("--NeedToDestroyObject for [%d][%d]", ID(), Device.dwFrame);
+		Msg("--NeedToDestroyObject for [%d][%d]", ID(), Device->dwFrame);
 #endif // #ifndef MASTER_GOLD
 		DestroyObject			();
 	}
@@ -829,7 +829,7 @@ BOOL CGameObject::net_SaveRelevant	()
 	return	(CScriptBinder::net_SaveRelevant());
 }
 
-//игровое имя объекта
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 LPCSTR CGameObject::Name () const
 {
 	return	(*cName());

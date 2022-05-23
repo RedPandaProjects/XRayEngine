@@ -75,7 +75,7 @@ void CControlPathBuilder::update_schedule()
 	if (m_data.enable) {
 		detail().set_path_type				(eDetailPathTypeSmooth);
 
-		// установить direction
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ direction
 		detail().set_use_dest_orientation	(m_data.use_dest_orientation);
 		if (m_data.use_dest_orientation)	detail().set_dest_direction	(m_data.dest_orientation);
 
@@ -133,7 +133,7 @@ bool CControlPathBuilder::build_special(const Fvector &target, u32 node, u32 vel
 	if (!accessible(target)) return false;
 	
 	if (node == u32(-1)) {
-		// нода в прямой видимости?
+		// пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ?
 		restrictions().add_border(object().Position(), target);
 		node = ai().level_graph().check_position_in_direction(object().ai_location().level_vertex_id(),object().Position(),target);
 		restrictions().remove_border();
@@ -159,7 +159,7 @@ bool CControlPathBuilder::build_special(const Fvector &target, u32 node, u32 vel
 	update_path							();	
 
 	// check if path built successfully
-	if (!path_completed() && (detail().time_path_built() >= Device.dwTimeGlobal))	return true;
+	if (!path_completed() && (detail().time_path_built() >= Device->dwTimeGlobal))	return true;
 
 	return false;
 }

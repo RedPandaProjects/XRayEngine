@@ -2,7 +2,7 @@
 #define UI_HUD_STATES_WND_H_INCLUDED
 
 #include "UIWindow.h"
-#include "..\..\XrServerEntitiesCS\alife_space.h"
+#include "../xrEngine/alife_space.h"
 #include "..\actor_defs.h"
 
 class CUIStatic;

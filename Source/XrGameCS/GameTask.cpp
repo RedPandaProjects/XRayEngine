@@ -16,7 +16,7 @@
 #include "alife_simulator.h"
 #include "alife_story_registry.h"
 #include "game_object_space.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "ui/uitexturemaster.h"
 
 

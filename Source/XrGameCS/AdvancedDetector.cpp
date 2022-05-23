@@ -66,10 +66,10 @@ void CAdvancedDetector::UpdateAf()
 
 	//direction
 	Fvector					dir_to_artefact;
-	dir_to_artefact.sub		(pCurrentAf->Position(), Device.vCameraPosition);
+	dir_to_artefact.sub		(pCurrentAf->Position(), Device->vCameraPosition);
 	dir_to_artefact.normalize();
 	float _ang_af			= dir_to_artefact.getH();
-	float _ang_cam			= Device.vCameraDirection.getH();
+	float _ang_cam			= Device->vCameraDirection.getH();
 	
 	float _diff				= angle_difference_signed(_ang_af, _ang_cam);
 
@@ -90,7 +90,7 @@ void CAdvancedDetector::UpdateAf()
 			item_type->detect_snds.m_activeSnd->snd.set_frequency(snd_freq);
 	} 
 	else 
-		af_info.snd_time += Device.fTimeDelta;
+		af_info.snd_time += Device->fTimeDelta;
 	
 	ui().SetValue(_diff,  dir_to_artefact );
 }
@@ -142,9 +142,9 @@ void CUIArtefactDetectorAdv::update()
 
 	a								*= 2.0f;
 
-	m_curr_ang_speed				= m_curr_ang_speed + a*Device.fTimeDelta;
+	m_curr_ang_speed				= m_curr_ang_speed + a*Device->fTimeDelta;
 	clamp							(m_curr_ang_speed,-2.0f,2.0f);
-	float _add						= m_curr_ang_speed*Device.fTimeDelta;
+	float _add						= m_curr_ang_speed*Device->fTimeDelta;
 
 	m_cur_y_rot						+= _add;
 */
@@ -153,7 +153,7 @@ void CUIArtefactDetectorAdv::update()
 															PI_DIV_4,
 															PI_MUL_4,
 															PI_MUL_2,
-															Device.fTimeDelta);
+															Device->fTimeDelta);
 
 }
 void CAdvancedDetector::on_a_hud_attach()

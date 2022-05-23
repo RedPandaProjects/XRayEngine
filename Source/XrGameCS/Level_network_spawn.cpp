@@ -24,7 +24,7 @@ void CLevel::cl_Process_Spawn(NET_Packet& P)
 	if (E->s_flags.is(M_SPAWN_UPDATE))
 		E->UPDATE_Read	(P);
 //-------------------------------------------------
-//.	Msg ("M_SPAWN - %s[%d][%x] - %d %d", *s_name,  E->ID, E,E->ID_Parent, Device.dwFrame);
+//.	Msg ("M_SPAWN - %s[%d][%x] - %d %d", *s_name,  E->ID, E,E->ID_Parent, Device->dwFrame);
 //-------------------------------------------------
 	//force object to be local for server client
 	if (OnServer())		{
@@ -201,7 +201,7 @@ CSE_Abstract *CLevel::spawn_item		(LPCSTR section, const Fvector &position, u32 
 			dynamic_object->m_tGraphID	= ai().cross_table().vertex(level_vertex_id).game_vertex_id();
 	}
 
-	//оружие спавним с полным магазинои
+	//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	CSE_ALifeItemWeapon* weapon = smart_cast<CSE_ALifeItemWeapon*>(abstract);
 	if(weapon)
 		weapon->a_elapsed	= weapon->get_ammo_magsize();

@@ -2,7 +2,7 @@
 
 #include "UIWindow.h"
 #include "UIDoubleProgressBar.h"
-#include "..\..\XrServerEntitiesCS\alife_space.h"
+#include "../xrEngine/alife_space.h"
 
 class CCustomOutfit;
 class CUIStatic;

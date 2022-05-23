@@ -16,7 +16,7 @@
 
 #include "UITeamPanels.h"
 
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 
 #define MSGS_OFFS 510
 

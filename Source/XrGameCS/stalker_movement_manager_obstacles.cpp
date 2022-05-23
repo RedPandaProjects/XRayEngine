@@ -65,7 +65,7 @@ bool stalker_movement_manager_obstacles::apply_border				(const obstacles_query 
 {
 	u32								start_vertex_id = object().ai_location().level_vertex_id();
 	u32								dest_vertex_id = level_path().dest_vertex_id();
-	CLevelGraph						&graph = ai().level_graph();
+	ILevelGraph						&graph = ai().level_graph();
 
 	restricted_object().CRestrictedObject::add_border(start_vertex_id,dest_vertex_id);
 
@@ -87,7 +87,7 @@ bool stalker_movement_manager_obstacles::apply_border				(const obstacles_query 
 void stalker_movement_manager_obstacles::remove_border				(const obstacles_query &query)
 {
 	restricted_object().CRestrictedObject::remove_border();
-	CLevelGraph						&graph = ai().level_graph();
+	ILevelGraph						&graph = ai().level_graph();
 	AREA::const_iterator			I = query.area().begin();
 	AREA::const_iterator			E = query.area().end();
 	for ( ; I != E; ++I)
@@ -164,7 +164,7 @@ void stalker_movement_manager_obstacles::move_along_path					(CPHMovementControl
 	}
 #endif // MASTER_GOLD
 
-	if (Device.dwTimeGlobal < (m_last_fail_time + fail_check_time)) {
+	if (Device->dwTimeGlobal < (m_last_fail_time + fail_check_time)) {
 		inherited::move_along_path	( movement_control, dest_position, time_delta);
 		return;
 	}

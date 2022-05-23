@@ -17,7 +17,7 @@
 #include "UIMapWnd.h"
 #include "UIFrameLineWnd.h"
 #include "UIActorInfo.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "UIMessagesWindow.h"
 #include "UIMainIngameWnd.h"
 #include "UITabButton.h"
@@ -168,7 +168,7 @@ void CUIPdaWnd::Update()
 	inherited::Update();
 	m_pActiveDialog->Update();
 
-	Device.seqParallel.push_back	(fastdelegate::FastDelegate0<>(pUILogsWnd,&CUILogsWnd::PerformWork));
+	Device->seqParallel.push_back	(fastdelegate::FastDelegate0<>(pUILogsWnd,&CUILogsWnd::PerformWork));
 }
 
 void CUIPdaWnd::SetActiveSubdialog(const shared_str& section)

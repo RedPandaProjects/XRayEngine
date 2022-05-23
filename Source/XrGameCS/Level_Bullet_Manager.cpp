@@ -1,5 +1,5 @@
-// Level_Bullet_Manager.cpp:	для обеспечения полета пули по траектории
-//								все пули и осколки передаются сюда
+// Level_Bullet_Manager.cpp:	пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//								пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -59,7 +59,7 @@ void SBullet::Init(const Fvector& position,
 
 	start_position			= position;
 	start_velocity.mul		(direction, starting_speed);
-	born_time				= Device.dwTimeGlobal;
+	born_time				= Device->dwTimeGlobal;
 	life_time				= 0.f;
 
 	VERIFY					(direction.magnitude() > 0.f);
@@ -91,7 +91,7 @@ void SBullet::Init(const Fvector& position,
 	flags.explosive			= !!cartridge.m_flags.test(CCartridge::cfExplosive);
 //	flags.skipped_frame		= 0;
 
-	init_frame_num			= Device.dwFrame;
+	init_frame_num			= Device->dwFrame;
 
 	targetID				= 0;	
 	density_mode			= 0;
@@ -201,7 +201,7 @@ void CBulletManager::AddBullet(const Fvector& position,
 	m_Bullets.push_back			(SBullet());
 	SBullet& bullet				= m_Bullets.back();
 	bullet.Init					(position, direction, starting_speed, power, power_critical, impulse, sender_id, sendersweapon_id, e_hit_type, maximum_distance, cartridge, SendHit);
-//	bullet.frame_num			= Device.dwFrame;
+//	bullet.frame_num			= Device->dwFrame;
 	bullet.flags.aim_bullet		= AimBullet;
 	if (SendHit && !IsGameTypeSingle())
 		Game().m_WeaponUsageStatistic->OnBullet_Fire(&bullet, cartridge);
@@ -216,7 +216,7 @@ void CBulletManager::UpdateWorkload()
 
 	rq_storage.r_clear			();
 
-	u32 const time_delta		= Device.dwTimeDelta;
+	u32 const time_delta		= Device->dwTimeDelta;
 	if (!time_delta)
 		return;
 
@@ -590,7 +590,7 @@ static void update_bullet_parabolic	(
 
 //	VERIFY						(data.collide_time <= data.high_time);
 //	VERIFY						(data.collide_time >= bullet.life_time);
-//	VERIFY						(data.collide_time <= bullet.life_time + Device.fTimeGlobal);
+//	VERIFY						(data.collide_time <= bullet.life_time + Device->fTimeGlobal);
 	clamp						(data.collide_time, bullet.life_time, data.high_time);
 
 	data.collide_position		= trajectory_position(bullet.start_position, bullet.start_velocity, gravity, air_resistance, data.collide_time);
@@ -623,7 +623,7 @@ static void update_bullet_gravitation	(
 
 //		VERIFY					(data.collide_time <= data.high_time);
 //		VERIFY					(data.collide_time >= bullet.life_time);
-//		VERIFY					(data.collide_time <= bullet.life_time + Device.fTimeGlobal);
+//		VERIFY					(data.collide_time <= bullet.life_time + Device->fTimeGlobal);
 		clamp					(data.collide_time, bullet.life_time, data.high_time);
 	}
 	else {
@@ -638,7 +638,7 @@ static void update_bullet_gravitation	(
 
 //		VERIFY					(data.collide_time <= data.high_time);
 //		VERIFY					(data.collide_time >= bullet.life_time);
-//		VERIFY					(data.collide_time <= bullet.life_time + Device.fTimeGlobal);
+//		VERIFY					(data.collide_time <= bullet.life_time + Device->fTimeGlobal);
 		clamp					(data.collide_time, bullet.life_time, data.high_time);
 	}
 
@@ -687,14 +687,14 @@ BOOL CBulletManager::firetrace_callback	(collide::rq_result& result, LPVOID para
 	if ( fis_zero(data.collide_time) )
 		return						(TRUE);
 
-	//статический объект
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	if (!result.O) {
 		CDB::TRI const& triangle	= *(Level().ObjectSpace.GetStaticTris() + result.element);
 		bullet_manager.RegisterEvent(EVENT_HIT, FALSE, &bullet, collide_position, result, triangle.material);
 		return						(FALSE);
 	}
 
-	//динамический объект
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	VERIFY							( !(result.O->ID() == bullet.parent_id &&  bullet.fly_dist < parent_ignore_distance) );
 	IKinematics* const kinematics	= smart_cast<IKinematics*>(result.O->Visual());
 	if (!kinematics)
@@ -915,9 +915,9 @@ void CBulletManager::Render	()
 	else
 		m_bullet_points.clear_not_free	();
 
-	//0-рикошет
-	//1-застрявание пули в материале
-	//2-пробивание материала
+	//0-пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	//1-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	//2-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if (g_bDrawBulletHit) {
 		extern FvectorVec g_hit[];
 		FvectorIt it;
@@ -957,7 +957,7 @@ void CBulletManager::Render	()
 			length			= m_fTracerLengthMax;
 
 		float width			= m_fTracerWidth;
-		float dist2segSqr	= SqrDistancePointToSegment(Device.vCameraPosition, bullet->bullet_pos, tracer);
+		float dist2segSqr	= SqrDistancePointToSegment(Device->vCameraPosition, bullet->bullet_pos, tracer);
 		//---------------------------------------------
 		float MaxDistSqr = 1.0f;
 		float MinDistSqr = 0.09f;
@@ -967,9 +967,9 @@ void CBulletManager::Render	()
 
 			width *= _sqrt(dist2segSqr/MaxDistSqr);
 		}
-		if (Device.vCameraPosition.distance_to_sqr(bullet->bullet_pos)<(length*length))
+		if (Device->vCameraPosition.distance_to_sqr(bullet->bullet_pos)<(length*length))
 		{
-			length = Device.vCameraPosition.distance_to(bullet->bullet_pos) - 0.3f;
+			length = Device->vCameraPosition.distance_to(bullet->bullet_pos) - 0.3f;
 		}
 
 		Fvector center;
@@ -993,7 +993,7 @@ void CBulletManager::CommitRenderSet		()	// @ the end of frame
 {
 	m_BulletsRendered	= m_Bullets			;
 	if (g_mt_config.test(mtBullets))		{
-		Device.seqParallel.push_back		(fastdelegate::FastDelegate0<>(this,&CBulletManager::UpdateWorkload));
+		Device->seqParallel.push_back		(fastdelegate::FastDelegate0<>(this,&CBulletManager::UpdateWorkload));
 	} else {
 		UpdateWorkload						();
 	}

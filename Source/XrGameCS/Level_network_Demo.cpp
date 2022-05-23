@@ -65,7 +65,7 @@ void CLevel::StartPlayDemo()
 
 	m_current_spectator	= NULL;
 	m_DemoPlayStarted	= TRUE;
-	m_StartGlobalTime	= Device.dwTimeGlobal;
+	m_StartGlobalTime	= Device->dwTimeGlobal;
 	Msg("! ------------- Demo Started ------------");
 
 	//if using some filter ...
@@ -109,7 +109,7 @@ void CLevel::StartSaveDemo(shared_str const & server_options)
 void CLevel::SaveDemoHeader(shared_str const & server_options)
 {
 	strncpy_s(m_demo_header.m_server_options, server_options.c_str(), server_options.size());
-	m_demo_header.m_time_global			= Device.dwTimeGlobal;
+	m_demo_header.m_time_global			= Device->dwTimeGlobal;
 	m_demo_header.m_time_server			= timeServer();
 	m_demo_header.m_time_delta			= timeServer_Delta();
 	m_demo_header.m_time_delta_user		= net_TimeDelta_User;
@@ -117,7 +117,7 @@ void CLevel::SaveDemoHeader(shared_str const & server_options)
 }
 void CLevel::SavePacket(NET_Packet& packet)
 {
-	m_writer->w_u32	(Device.dwTimeGlobal - m_demo_header.m_time_global);
+	m_writer->w_u32	(Device->dwTimeGlobal - m_demo_header.m_time_global);
 	m_writer->w_u32	(packet.timeReceive);
 	m_writer->w_u32	(packet.B.count);
 	m_writer->w		(packet.B.data, packet.B.count);
@@ -157,7 +157,7 @@ bool CLevel::LoadPacket		(NET_Packet & dest_packet, u32 global_time_delta)
 }
 void CLevel::SimulateServerUpdate()
 {
-	u32 tdelta = Device.dwTimeGlobal - m_StartGlobalTime;
+	u32 tdelta = Device->dwTimeGlobal - m_StartGlobalTime;
 	NET_Packet tmp_packet;
 	while (LoadPacket(tmp_packet, tdelta))
 	{
@@ -259,7 +259,7 @@ void CLevel::SetDemoPlayPos(float const pos)
 
 float CLevel::GetDemoPlaySpeed() const
 {
-	return Device.time_factor();
+	return Device->time_factor();
 }
 #define MAX_PLAY_SPEED 8.f
 void CLevel::SetDemoPlaySpeed(float const time_factor)
@@ -274,5 +274,5 @@ void CLevel::SetDemoPlaySpeed(float const time_factor)
 		Msg("! Sorry, maximum play speed is: %1.1f", MAX_PLAY_SPEED);
 		return;
 	}
-	Device.time_factor(time_factor);
+	Device->time_factor(time_factor);
 }

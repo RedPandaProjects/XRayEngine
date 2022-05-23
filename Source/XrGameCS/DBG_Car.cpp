@@ -4,7 +4,7 @@
 #include "ode_include.h"
 #include "../xrEngine/StatGraph.h"
 #include "PHDebug.h"
-#include "alife_space.h"
+#include "../xrEngine/alife_space.h"
 #include "hit.h"
 #include "PHDestroyable.h"
 #include "Car.h"

@@ -32,7 +32,7 @@ void CStateBurerAttackTeleAbstract::initialize()
 
 	time_started				= 0;
 
-	// запретить взятие скриптом
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	object->set_script_capture	(false);
 
 }
@@ -103,7 +103,7 @@ void CStateBurerAttackTeleAbstract::finalize()
 		}
 	}
 
-	// отменить запрет на взятие скриптом
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	object->set_script_capture			(true);
 }
 
@@ -125,7 +125,7 @@ void CStateBurerAttackTeleAbstract::critical_finalize()
 		}
 	}
 	
-	// отменить запрет на взятие скриптом
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	object->set_script_capture			(true);
 }
 
@@ -172,15 +172,15 @@ void CStateBurerAttackTeleAbstract::FindObjects	()
 	u32	res_size					= tele_objects.size		();
 	tele_objects.clear_and_reserve	();
 
-	// получить список объектов вокруг врага
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	m_nearest.clear_not_free		();
 	m_nearest.reserve				(res_size);
 	FindFreeObjects					(m_nearest, object->EnemyMan.get_enemy()->Position());
 
-	// получить список объектов вокруг монстра
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	FindFreeObjects					(m_nearest, object->Position());
 
-	// получить список объектов между монстром и врагом
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	float dist = object->EnemyMan.get_enemy()->Position().distance_to(object->Position());
 	Fvector dir;
 	dir.sub(object->EnemyMan.get_enemy()->Position(), object->Position());
@@ -191,7 +191,7 @@ void CStateBurerAttackTeleAbstract::FindObjects	()
 	FindFreeObjects					(m_nearest, pos);	
 	
 
-	// оставить уникальные объекты
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	tele_objects.erase				(
 		std::unique(
 			tele_objects.begin(),
@@ -205,7 +205,7 @@ TEMPLATE_SPECIALIZATION
 void CStateBurerAttackTeleAbstract::ExecuteTeleStart()
 {
 	object->com_man().ta_activate(object->anim_triple_tele);
-	time_started = Device.dwTimeGlobal;
+	time_started = Device->dwTimeGlobal;
 	object->ActivateShield();
 
 }
@@ -213,9 +213,9 @@ void CStateBurerAttackTeleAbstract::ExecuteTeleStart()
 TEMPLATE_SPECIALIZATION
 void CStateBurerAttackTeleAbstract::ExecuteTeleContinue()
 {
-	if (time_started + object->m_tele_time_to_hold > Device.dwTimeGlobal) return;
+	if (time_started + object->m_tele_time_to_hold > Device->dwTimeGlobal) return;
 
-	// найти объект для атаки
+	// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	bool object_found = false;
 	CTelekineticObject tele_object;
 
@@ -223,7 +223,7 @@ void CStateBurerAttackTeleAbstract::ExecuteTeleContinue()
 	while (i < object->CTelekinesis::get_objects_count()) {
 		tele_object = object->CTelekinesis::get_object_by_index(i);
 
-		if ((tele_object.get_state() == TS_Keep) && (tele_object.time_keep_started + 1500 < Device.dwTimeGlobal)) {
+		if ((tele_object.get_state() == TS_Keep) && (tele_object.time_keep_started + 1500 < Device->dwTimeGlobal)) {
 
 			object_found = true;
 			break;
@@ -236,7 +236,7 @@ void CStateBurerAttackTeleAbstract::ExecuteTeleContinue()
 		m_action		= ACTION_TELE_FIRE;
 		selected_object = tele_object.get_object();
 	} else {
-		if (!IsActiveObjects() || (time_started + MAX_TIME_CHECK_FAILURE < Device.dwTimeGlobal)) {
+		if (!IsActiveObjects() || (time_started + MAX_TIME_CHECK_FAILURE < Device->dwTimeGlobal)) {
 			object->com_man().ta_deactivate	();
 			m_action						= ACTION_COMPLETED;
 		} 
@@ -271,26 +271,26 @@ bool CStateBurerAttackTeleAbstract::CheckTeleStart()
 {
 	if (object->com_man().ta_is_active()) return false;
 	
-	// проверка на текущую активность 
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 
 	if (IsActiveObjects()) return false;
 
-	// проверить дистанцию до врага
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	float dist = object->Position().distance_to(object->EnemyMan.get_enemy()->Position());
 	if (dist < GOOD_DISTANCE_FOR_TELE) return false;
 
-	// найти телекинетические объекты
+	// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	FindObjects();
 
-	// если нет объектов
+	// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if (tele_objects.empty()) return false;
 
-	// всё ок можно начинать телекинез
+	// пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	return true;
 
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Выбор подходящих объектов для телекинеза
+// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //////////////////////////////////////////////////////////////////////////
 class best_object_predicate {
 	Fvector enemy_pos;
@@ -336,11 +336,11 @@ void CStateBurerAttackTeleAbstract::SelectObjects()
 {
 	std::sort(tele_objects.begin(),tele_objects.end(),best_object_predicate2(object->Position(), object->EnemyMan.get_enemy()->Position()));
 
-	// выбрать объект
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	for (u32 i=0; i<tele_objects.size(); i++) {
 		CPhysicsShellHolder *obj = tele_objects[i];
 
-		// применить телекинез на объект
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 		
 		float	height = (object->m_monster_type == CBaseMonster::eMonsterTypeIndoor) ? 1.3f : 2.f;
 		bool	rotate = (object->m_monster_type == CBaseMonster::eMonsterTypeIndoor) ? false : true;
@@ -350,7 +350,7 @@ void CStateBurerAttackTeleAbstract::SelectObjects()
 
 		object->StartTeleObjectParticle		(obj);
 
-		// удалить из списка
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 		tele_objects[i] = tele_objects[tele_objects.size()-1];
 		tele_objects.pop_back();
 

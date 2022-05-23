@@ -57,7 +57,7 @@ void CStalkerActionNoALife::initialize	()
 	object().movement().set_mental_state		(eMentalStateFree);
 	object().sight().setup						(CSightAction(SightManager::eSightTypeCover,false,true));
 	
-	m_stop_weapon_handling_time					= Device.dwTimeGlobal;
+	m_stop_weapon_handling_time					= Device->dwTimeGlobal;
 	if (object().inventory().ActiveItem() && object().best_weapon() && (object().inventory().ActiveItem()->object().ID() == object().best_weapon()->object().ID()))
 		m_stop_weapon_handling_time				+= ::Random32.random(30000) + 30000;
 
@@ -92,7 +92,7 @@ void CStalkerActionNoALife::execute		()
 	inherited::execute				();
 #ifndef STALKER_DEBUG_MODE
 	object().sound().play			(eStalkerSoundHumming,60000,10000);
-	if (Device.dwTimeGlobal >= m_stop_weapon_handling_time)
+	if (Device->dwTimeGlobal >= m_stop_weapon_handling_time)
 		if (!object().best_weapon())
 			object().CObjectHandler::set_goal	(eObjectActionIdle);
 		else

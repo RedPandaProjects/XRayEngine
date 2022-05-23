@@ -41,11 +41,11 @@ void CStateManagerBurer::execute()
 				case eStrong:	state = eStatePanic; break;
 				case eWeak:		state = eStateAttack; break;
 		}
-	} else if (object->HitMemory.is_hit() && (object->HitMemory.get_last_hit_time() + 10000 > Device.dwTimeGlobal)) 
+	} else if (object->HitMemory.is_hit() && (object->HitMemory.get_last_hit_time() + 10000 > Device->dwTimeGlobal)) 
 		state = eStateHitted;
 	else if (object->hear_dangerous_sound || object->hear_interesting_sound) {
 		state = eStateHearInterestingSound;
-	} else if (object->time_last_scan + SCAN_STATE_TIME > Device.dwTimeGlobal){
+	} else if (object->time_last_scan + SCAN_STATE_TIME > Device->dwTimeGlobal){
 		state = eStateBurerScanning;
 	} else if (can_eat()) {
 			state = eStateEat;
@@ -53,7 +53,7 @@ void CStateManagerBurer::execute()
 
 	select_state(state); 
 	
-	// выполнить текущее состояние
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	get_state_current()->execute();
 
 	prev_substate = current_substate;

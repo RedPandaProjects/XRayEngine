@@ -40,7 +40,7 @@ void CMonsterEnemyManager::update()
 		script_enemy();
 	}
 	if (forced) {
-		// проверить валидность force-объекта
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ force-пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		if (!enemy || enemy->getDestroy() || !enemy->g_Alive()) {
 			enemy = 0;
 			return;
@@ -64,7 +64,7 @@ void CMonsterEnemyManager::update()
 		return;
 	}
 	
-	// обновить информацию о враге в соответствии со звуковой информацией
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if (monster->SoundMemory.IsRememberSound()) {
 		SoundElem	sound_elem;		
 		if (monster->SoundMemory.get_sound_from_object	(enemy, sound_elem)) {
@@ -76,10 +76,10 @@ void CMonsterEnemyManager::update()
 		}
 	}
 
-	// проверить видимость
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	enemy_see_me = is_faced(enemy, monster);
 	
-	// обновить опасность врага
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	danger_type = eNone;
 
 	switch (dwfChooseAction(0, monster->panic_threshold(), 0.f, 0.f, 0.f, monster->g_Team(),monster->g_Squad(),monster->g_Group(),0,1,2,3,4, monster, 30.f)) {
@@ -90,10 +90,10 @@ void CMonsterEnemyManager::update()
 		case 0 : 	danger_type = eWeak;		break;
 	}
 
-	// обновить флаги
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	flags.zero();
 
-	if ((prev_enemy == enemy) && (time_last_seen != Device.dwTimeGlobal))	flags.or(FLAG_ENEMY_LOST_SIGHT);		
+	if ((prev_enemy == enemy) && (time_last_seen != Device->dwTimeGlobal))	flags.or(FLAG_ENEMY_LOST_SIGHT);		
 	if (prev_enemy && !prev_enemy->g_Alive())									flags.or(FLAG_ENEMY_DIE);
 	if (!enemy_see_me)															flags.or(FLAG_ENEMY_DOESNT_SEE_ME);
 	
@@ -116,7 +116,7 @@ void CMonsterEnemyManager::update()
 		if (flags.is(FLAG_ENEMY_STANDING) && flags.is(FLAG_ENEMY_DOESNT_SEE_ME)) flags.or(FLAG_ENEMY_DOESNT_KNOW_ABOUT_ME);
 	} else flags.or(FLAG_ENEMY_STATS_NOT_READY);
 
-	// сохранить текущего врага
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	prev_enemy			= enemy;
 	prev_enemy_position = position;
 
@@ -262,7 +262,7 @@ const Fvector&   CMonsterEnemyManager::get_enemy_position ()
 
 void CMonsterEnemyManager::transfer_enemy(CBaseMonster *friend_monster)
 {
-	// если у friend_monster нет врага
+	// пїЅпїЅпїЅпїЅ пїЅ friend_monster пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	if (!friend_monster->EnemyMan.get_enemy()) return;
 
 	monster->EnemyMemory.add_enemy(

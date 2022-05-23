@@ -14,7 +14,7 @@
 #include "../../../team_hierarchy_holder.h"
 #include "../../../squad_hierarchy_holder.h"
 #include "../../../group_hierarchy_holder.h"
-#include "../../../../XrServerEntitiesCS/game_graph_space.h"
+#include "../../../../XrEngine/game_graph_space.h"
 
 class CBlend;
 class CPatrolPath;

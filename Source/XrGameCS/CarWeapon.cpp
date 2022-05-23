@@ -4,7 +4,7 @@
 #include "PhysicsShellHolder.h"
 //#include "../xrRender/Public/Kinematics.h"
 #include "../xrRender/Public/Kinematics.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "ai_sounds.h"
 #include "weaponAmmo.h"
 #include "xr_level_controller.h"
@@ -96,7 +96,7 @@ void CCarWeapon::UpdateCL()
 
 void CCarWeapon::UpdateFire()
 {
-	fShotTimeCounter -= Device.fTimeDelta;
+	fShotTimeCounter -= Device->fTimeDelta;
 
 	inheritedShooting::UpdateFlameParticles();
 	inheritedShooting::UpdateLight();
@@ -176,14 +176,14 @@ void CCarWeapon::UpdateBarrelDir()
 		clamp			(m_tgt_y_rot,-m_lim_y_rot.y,-m_lim_y_rot.x);
 	}
 
-	m_cur_x_rot		= angle_inertion_var(m_cur_x_rot,m_tgt_x_rot,m_min_gun_speed,m_max_gun_speed,PI,Device.fTimeDelta);
-	m_cur_y_rot		= angle_inertion_var(m_cur_y_rot,m_tgt_y_rot,m_min_gun_speed,m_max_gun_speed,PI,Device.fTimeDelta);
+	m_cur_x_rot		= angle_inertion_var(m_cur_x_rot,m_tgt_x_rot,m_min_gun_speed,m_max_gun_speed,PI,Device->fTimeDelta);
+	m_cur_y_rot		= angle_inertion_var(m_cur_y_rot,m_tgt_y_rot,m_min_gun_speed,m_max_gun_speed,PI,Device->fTimeDelta);
 	static float dir_eps = deg2rad(5.0f);
 	if( !fsimilar(m_cur_x_rot,m_tgt_x_rot,dir_eps)|| !fsimilar(m_cur_y_rot,m_tgt_y_rot,dir_eps))
 		m_allow_fire=FALSE;
 
 #if (0)
-	if(Device.dwFrame%200==0){
+	if(Device->dwFrame%200==0){
 		Msg("m_cur_x_rot=[%f]",m_cur_x_rot);
 		Msg("m_cur_y_rot=[%f]",m_cur_y_rot);
 	}

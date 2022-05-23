@@ -46,7 +46,7 @@ void CLevel::IR_OnMouseWheel( int direction )
 	if(	g_bDisableAllInput	) return;
 
 	if (HUD().GetUI()->IR_OnMouseWheel(direction)) return;
-	if( Device.Paused()		) return;
+	if( Device->Paused()		) return;
 
 	if (game && Game().IR_OnMouseWheel(direction) ) return;
 
@@ -71,7 +71,7 @@ void CLevel::IR_OnMouseMove( int dx, int dy )
 {
 	if(g_bDisableAllInput)							return;
 	if (HUD().GetUI()->IR_OnMouseMove(dx,dy))		return;
-	if (Device.Paused() && !IsDemoPlay() )	return;
+	if (Device->Paused() && !IsDemoPlay() )	return;
 	if (CURRENT_ENTITY())		{
 		IInputReceiver*		IR	= smart_cast<IInputReceiver*>	(smart_cast<CGameObject*>(CURRENT_ENTITY()));
 		if (IR)				IR->IR_OnMouseMove					(dx,dy);
@@ -94,7 +94,7 @@ public:
 	}}
 }	vtune	;
 
-// Обработка нажатия клавиш
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 extern bool g_block_pause;
 
 // Lain: added TEMP!!!
@@ -107,11 +107,11 @@ extern float g_separate_radius;
 
 void CLevel::IR_OnKeyboardPress	(int key)
 {
-	if(Device.dwPrecacheFrame)
+	if(Device->dwPrecacheFrame)
 		return;
 
 #ifdef INGAME_EDITOR
-	if (Device.editor() && (pInput->iGetAsyncKeyState(DIK_LALT) || pInput->iGetAsyncKeyState(DIK_RALT)))
+	if (Device->WeatherEditor() && (pInput->iGetAsyncKeyState(DIK_LALT) || pInput->iGetAsyncKeyState(DIK_RALT)))
 		return;
 #endif // #ifdef INGAME_EDITOR
 
@@ -122,11 +122,11 @@ void CLevel::IR_OnKeyboardPress	(int key)
 	if(_curr==kPAUSE)
 	{
 		#ifdef INGAME_EDITOR
-			if (Device.editor())	return;
+			if (Device->WeatherEditor())	return;
 		#endif // INGAME_EDITOR
 
 		if (!g_block_pause && (IsGameTypeSingle() || IsDemoPlay()))
-			Device.Pause(!Device.Paused(), TRUE, TRUE, "li_pause_key");
+			Device->Pause(!Device->Paused(), TRUE, TRUE, "li_pause_key");
 		return;
 	}
 
@@ -166,7 +166,7 @@ void CLevel::IR_OnKeyboardPress	(int key)
 
 	if ( b_ui_exist && HUD().GetUI()->IR_OnKeyboardPress(key)) return;
 
-	if ( Device.Paused() && !IsDemoPlay() )	return;
+	if ( Device->Paused() && !IsDemoPlay() )	return;
 
 	if ( game && Game().IR_OnKeyboardPress(key) )	return;
 
@@ -436,7 +436,7 @@ void CLevel::IR_OnKeyboardRelease(int key)
 
 	if (!bReady || g_bDisableAllInput	) return;
 	if ( b_ui_exist && HUD().GetUI()->IR_OnKeyboardRelease(key)) return;
-	if (Device.Paused()		) return;
+	if (Device->Paused()		) return;
 	if (game && Game().OnKeyboardRelease(get_binded_action(key)) ) return;
 
 	if( b_ui_exist && HUD().GetUI()->MainInputReceiver() )return;
@@ -454,25 +454,25 @@ void CLevel::IR_OnKeyboardHold(int key)
 	// Lain: added
 	if ( key == DIK_UP )
 	{
-		static uint time = Device.dwTimeGlobal;
-		if ( Device.dwTimeGlobal - time > 20 )
+		static uint time = Device->dwTimeGlobal;
+		if ( Device->dwTimeGlobal - time > 20 )
 		{
 			if ( CBaseMonster* pBM = smart_cast<CBaseMonster*>(CurrentEntity()) )
 			{
 				DBG().debug_info_up();
-				time = Device.dwTimeGlobal;
+				time = Device->dwTimeGlobal;
 			}
 		}
 	}
 	else if ( key == DIK_DOWN )
 	{
-		static uint time = Device.dwTimeGlobal;
-		if ( Device.dwTimeGlobal - time > 20 )
+		static uint time = Device->dwTimeGlobal;
+		if ( Device->dwTimeGlobal - time > 20 )
 		{
 			if ( CBaseMonster* pBM = smart_cast<CBaseMonster*>(CurrentEntity()) )
 			{
 				DBG().debug_info_down();
-				time = Device.dwTimeGlobal;
+				time = Device->dwTimeGlobal;
 			}
 		}
 	}
@@ -483,7 +483,7 @@ void CLevel::IR_OnKeyboardHold(int key)
 
 	if (b_ui_exist && HUD().GetUI()->IR_OnKeyboardHold(key)) return;
 	if ( b_ui_exist && HUD().GetUI()->MainInputReceiver() )return;
-	if ( Device.Paused() && !Level().IsDemoPlay()) return;
+	if ( Device->Paused() && !Level().IsDemoPlay()) return;
 	if (CURRENT_ENTITY())		{
 		IInputReceiver*		IR	= smart_cast<IInputReceiver*>	(smart_cast<CGameObject*>(CURRENT_ENTITY()));
 		if (IR)				IR->IR_OnKeyboardHold				(get_binded_action(key));

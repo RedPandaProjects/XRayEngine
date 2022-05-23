@@ -31,7 +31,7 @@
 CUIRankingWnd::CUIRankingWnd()
 {
 	m_actor_ch_info = NULL;
-	m_previous_time = Device.dwTimeGlobal;
+	m_previous_time = Device->dwTimeGlobal;
 	m_delay			= 3000;
 }
 
@@ -60,9 +60,9 @@ void CUIRankingWnd::Update()
 	inherited::Update();
 	if ( IsShown() )
 	{
-		if ( Device.dwTimeGlobal - m_previous_time > m_delay )
+		if ( Device->dwTimeGlobal - m_previous_time > m_delay )
 		{
-			m_previous_time = Device.dwTimeGlobal;
+			m_previous_time = Device->dwTimeGlobal;
 			update_info();
 		}
 	}

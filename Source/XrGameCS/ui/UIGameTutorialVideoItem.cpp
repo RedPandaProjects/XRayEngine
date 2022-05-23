@@ -3,7 +3,7 @@
 #include "UIWindow.h"
 #include "UIStatic.h"
 #include "UIXmlInit.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "../../xrEngine/xr_input.h"
 #include "../xr_level_controller.h"
 
@@ -112,7 +112,7 @@ void CUISequenceVideoItem::Update()
 		GetUICursor()->Hide	();
 	}
 	// deferred start
-	if (Device.dwTimeContinual>=m_time_start){
+	if (Device->dwTimeContinual>=m_time_start){
 		if (m_flags.test(etiDelayed))
 		{
 			if(m_wnd_bg)
@@ -126,7 +126,7 @@ void CUISequenceVideoItem::Update()
 		}
 	}else return;
 
-	u32 sync_tm				= (0==m_sound._handle())?Device.dwTimeContinual:(m_sound._feedback()?m_sound._feedback()->play_time():m_sync_time);
+	u32 sync_tm				= (0==m_sound._handle())?Device->dwTimeContinual:(m_sound._feedback()?m_sound._feedback()->play_time():m_sync_time);
 	m_sync_time				= sync_tm;
 	// processing A&V
 	//if (m_texture){
@@ -162,24 +162,24 @@ void CUISequenceVideoItem::OnRender()
 void CUISequenceVideoItem::Start()
 {
 	inherited::Start			();
-	m_flags.set					(etiStoredPauseState, Device.Paused());
+	m_flags.set					(etiStoredPauseState, Device->Paused());
 
 	if(m_flags.test(etiNeedPauseOn) && !m_flags.test(etiStoredPauseState)){
-		Device.Pause			(TRUE, TRUE, TRUE, "videoitem_start");
+		Device->Pause			(TRUE, TRUE, TRUE, "videoitem_start");
 		bShowPauseString		= FALSE;
 	}
 
 	if(m_flags.test(etiNeedPauseOff) && m_flags.test(etiStoredPauseState))
-		Device.Pause			(FALSE, TRUE, TRUE, "videoitem_start");
+		Device->Pause			(FALSE, TRUE, TRUE, "videoitem_start");
 
 	if(m_flags.test(etiNeedPauseSound))
-		Device.Pause			(TRUE, FALSE, TRUE, "videoitem_start");
+		Device->Pause			(TRUE, FALSE, TRUE, "videoitem_start");
 
 	m_flags.set					(etiPlaying,TRUE);
 	m_flags.set					(etiNeedStart,TRUE);
 
 	m_sync_time					= 0;
-	m_time_start				= Device.dwTimeContinual+iFloor(m_delay*1000.f);
+	m_time_start				= Device->dwTimeContinual+iFloor(m_delay*1000.f);
 	m_flags.set					(etiDelayed,TRUE);
 
 	if (m_flags.test(etiBackVisible)){
@@ -206,13 +206,13 @@ bool CUISequenceVideoItem::Stop	(bool bForce)
 	m_texture->ResetTexture();
 
 	if(m_flags.test(etiNeedPauseOn) && !m_flags.test(etiStoredPauseState))
-		Device.Pause			(FALSE, TRUE, TRUE, "videoitem_stop");
+		Device->Pause			(FALSE, TRUE, TRUE, "videoitem_stop");
 
 	if(m_flags.test(etiNeedPauseOff) && m_flags.test(etiStoredPauseState))
-		Device.Pause			(TRUE, TRUE, TRUE, "videoitem_stop");
+		Device->Pause			(TRUE, TRUE, TRUE, "videoitem_stop");
 
 	if(m_flags.test(etiNeedPauseSound))
-		Device.Pause			(FALSE, FALSE, TRUE, "videoitem_stop");
+		Device->Pause			(FALSE, FALSE, TRUE, "videoitem_stop");
 
 	inherited::Stop				();
 	return true;

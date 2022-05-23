@@ -1,7 +1,7 @@
 #ifndef PH_CONTACT_BODY_EFFECTOR_H
 #define PH_CONTACT_BODY_EFFECTOR_H
 #include "PHBaseBodyEffector.h"
-struct SGameMtl;
+class SGameMtl;
 class CPHContactBodyEffector : public CPHBaseBodyEffector
 {
 dContact m_contact;

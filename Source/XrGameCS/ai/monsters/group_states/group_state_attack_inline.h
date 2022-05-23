@@ -186,7 +186,7 @@ void CStateGroupAttackAbstract::execute()
 	} 
 	else
 	{
-		// определить тип атаки
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 		bool b_melee = false; 
 
 		if ( prev_substate == eStateAttack_Melee )
@@ -201,7 +201,7 @@ void CStateGroupAttackAbstract::execute()
 			b_melee = true;
 		}
 
-		// установить целевое состояние
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		if ( b_melee )
 		{  
 			// check if enemy is behind me for a long time
@@ -261,7 +261,7 @@ void CStateGroupAttackAbstract::execute()
 
 							object->set_current_animation(6);
 							object->b_state_check = false;
-							m_time_start_drive_out = Device.dwTimeGlobal;
+							m_time_start_drive_out = Device->dwTimeGlobal;
 							select_state(eStateAttack_ControlFire);
 						} 
 						else 
@@ -275,14 +275,14 @@ void CStateGroupAttackAbstract::execute()
 						break;
 
 					case eStateAttack_ControlFire:
-						if ( object->Position().distance_to(enemy_pos) > 7.f + m_delta_distance || Device.dwTimeGlobal - m_time_start_drive_out > object->m_drive_out_time )
+						if ( object->Position().distance_to(enemy_pos) > 7.f + m_delta_distance || Device->dwTimeGlobal - m_time_start_drive_out > object->m_drive_out_time )
 						{
 							if ( object->get_custom_anim_state() ) 
 							{
 								object->anim_end_reinit();
 							}
 
-							if ( Device.dwTimeGlobal - m_time_start_drive_out > object->m_drive_out_time ) 
+							if ( Device->dwTimeGlobal - m_time_start_drive_out > object->m_drive_out_time ) 
 							{
 								m_drive_out = true;
 							}

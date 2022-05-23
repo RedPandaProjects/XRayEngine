@@ -87,7 +87,7 @@ void CBloodsuckerStateAttackAbstract::execute()
 	} 
 	else
 	{
-		// определить тип атаки
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 		bool b_melee = false; 
 
 		if ( prev_substate == eStateAttack_Melee )
@@ -107,7 +107,7 @@ void CBloodsuckerStateAttackAbstract::execute()
  			select_state(eStateAttack_Hide);
  		}
  		else
-		// установить целевое состояние
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		if ( b_melee ) 
 		{  
 			// check if enemy is behind me for a long time
@@ -156,12 +156,12 @@ void CBloodsuckerStateAttackAbstract::update_invisibility()
 		if ( current_substate == eStateAttack_Melee )
 		{
 			object->stop_invisible_predator	();
-			m_time_stop_invis = Device.dwTimeGlobal;		
+			m_time_stop_invis = Device->dwTimeGlobal;		
 		}
 	} 
 	else 
 	{
-		if ( Device.dwTimeGlobal > m_time_stop_invis + object->get_invisibility_activate_delay() )
+		if ( Device->dwTimeGlobal > m_time_stop_invis + object->get_invisibility_activate_delay() )
 		{
 			// check conditions to start invis
 			if ( current_substate == eStateAttack_Hide )
@@ -249,7 +249,7 @@ void   CStateMonsterBackstubEnemy<_Object>::initialize ()
 	object->path().prepare_builder();
 	m_last_health = object->conditions().GetHealth();
 	m_encircle = data.start_with_encircle;
-	m_encircle_end_tick = Device.dwTimeGlobal + detail::bloodsucker::encircle_time;
+	m_encircle_end_tick = Device->dwTimeGlobal + detail::bloodsucker::encircle_time;
 	m_next_change_behaviour_tick = 0;
 }
 
@@ -258,18 +258,18 @@ void   CStateMonsterBackstubEnemy<_Object>::execute ()
 {
 	// on hit, change behaviour
 	if ( object->conditions().GetHealth() < m_last_health-detail::bloodsucker::loose_health_diff &&
-		 Device.dwTimeGlobal > m_next_change_behaviour_tick )
+		 Device->dwTimeGlobal > m_next_change_behaviour_tick )
 	{
-		m_next_change_behaviour_tick = Device.dwTimeGlobal + detail::bloodsucker::change_behaviour_time;
+		m_next_change_behaviour_tick = Device->dwTimeGlobal + detail::bloodsucker::change_behaviour_time;
 		m_last_health = object->conditions().GetHealth();
 		m_encircle = !m_encircle;
 		if ( m_encircle )
 		{
-			m_encircle_end_tick = Device.dwTimeGlobal + detail::bloodsucker::encircle_time;
+			m_encircle_end_tick = Device->dwTimeGlobal + detail::bloodsucker::encircle_time;
 		}
 	}
 	
-	if ( Device.dwTimeGlobal > m_encircle_end_tick ) 
+	if ( Device->dwTimeGlobal > m_encircle_end_tick ) 
 	{
 		if ( object->EnemyMan.enemy_see_me_now() )
 		{

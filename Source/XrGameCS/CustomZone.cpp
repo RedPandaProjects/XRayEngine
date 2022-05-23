@@ -18,7 +18,7 @@
 #include "breakableobject.h"
 #include "GamePersistent.h"
 #include "..\XrEngine\xr_collide_form.h"
-#define WIND_RADIUS (4*Radius())	//расстояние до актера, когда появляется ветер 
+#define WIND_RADIUS (4*Radius())	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ 
 #define FASTMODE_DISTANCE (50.f)	//distance to camera from sphere, when zone switches to fast update sequence
 
 CCustomZone::CCustomZone(void) 
@@ -79,7 +79,7 @@ void CCustomZone::Load(LPCSTR section)
 	m_zone_flags.set(eIgnoreSmall,		pSettings->r_bool(section,	"ignore_small"));
 	m_zone_flags.set(eIgnoreArtefact,	pSettings->r_bool(section,	"ignore_artefacts"));
 
-	//загрузить времена для зоны
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 	m_StateTime[eZoneStateIdle]			= -1;
 	m_StateTime[eZoneStateAwaking]		= pSettings->r_s32(section, "awaking_time");
 	m_StateTime[eZoneStateBlowout]		= pSettings->r_s32(section, "blowout_time");
@@ -243,7 +243,7 @@ void CCustomZone::Load(LPCSTR section)
 		m_fBlowoutWindPowerMax = pSettings->r_float(section,"blowout_wind_power");
 	}
 
-	//загрузить параметры световой вспышки от взрыва
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	m_zone_flags.set(eBlowoutLight, pSettings->r_bool (section, "blowout_light"));
 	if(m_zone_flags.test(eBlowoutLight) ){
 		sscanf(pSettings->r_string(section,"light_color"), "%f,%f,%f", &m_LightColor.r, &m_LightColor.g, &m_LightColor.b);
@@ -254,7 +254,7 @@ void CCustomZone::Load(LPCSTR section)
 		m_fLightHeight		= pSettings->r_float(section,"light_height");
 	}
 
-	//загрузить параметры idle подсветки
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ idle пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	m_zone_flags.set(eIdleLight,	pSettings->r_bool (section, "idle_light"));
 	if( m_zone_flags.test(eIdleLight) )
 	{
@@ -286,17 +286,17 @@ BOOL CCustomZone::net_Spawn(CSE_Abstract* DC)
 	m_fAttenuation				= pSettings->r_float(cNameSect(),"attenuation");
 	m_owner_id					= Z->m_owner_id;
 	if(m_owner_id != u32(-1))
-		m_ttl					= Device.dwTimeGlobal + 40000;// 40 sec
+		m_ttl					= Device->dwTimeGlobal + 40000;// 40 sec
 	else
 		m_ttl					= u32(-1);
 
 	m_TimeToDisable				= Z->m_disabled_time*1000;
 	m_TimeToEnable				= Z->m_enabled_time*1000;
 	m_TimeShift					= Z->m_start_time_shift*1000;
-	m_StartTime					= Device.dwTimeGlobal;
+	m_StartTime					= Device->dwTimeGlobal;
 	m_zone_flags.set			(eUseOnOffTime,	(m_TimeToDisable!=0)&&(m_TimeToEnable!=0) );
 
-	//добавить источники света
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	bool br1 = (0==psDeviceFlags.test(rsR2|rsR3));
 	
 	
@@ -330,7 +330,7 @@ BOOL CCustomZone::net_Spawn(CSE_Abstract* DC)
 	m_eZoneState				= eZoneStateIdle;
 	m_iPreviousStateTime		= m_iStateTime = 0;
 
-	m_dwLastTimeMoved			= Device.dwTimeGlobal;
+	m_dwLastTimeMoved			= Device->dwTimeGlobal;
 	m_vPrevPos.set				(Position());
 
 
@@ -448,7 +448,7 @@ void CCustomZone::UpdateWorkload	(u32 dt)
 
 	if (Level().CurrentEntity()) 
 	{
-		Fvector P			= Device.vCameraPosition;
+		Fvector P			= Device->vCameraPosition;
 		P.y					-= 0.9f;
 		float radius		= 1.0f;
 		CalcDistanceTo		(P, m_fDistanceToCurEntity, radius);
@@ -468,7 +468,7 @@ void CCustomZone::UpdateCL		()
 {
 	inherited::UpdateCL			();
 	if (m_zone_flags.test(eFastMode))				
-		UpdateWorkload	(Device.dwTimeDelta);	
+		UpdateWorkload	(Device->dwTimeDelta);	
 }
 
 // called as usual
@@ -485,8 +485,8 @@ void CCustomZone::shedule_Update(u32 dt)
 		// update
 		feel_touch_update		(P,s.R);
 
-		//пройтись по всем объектам в зоне
-		//и проверить их состояние
+		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ
+		//пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		for(OBJECT_INFO_VEC_IT it = m_ObjectInfoMap.begin(); 
 			m_ObjectInfoMap.end() != it; ++it) 
 		{
@@ -509,8 +509,8 @@ void CCustomZone::shedule_Update(u32 dt)
 					StopObjectIdleParticles( pObject );
 			}
 
-			//если есть хотя бы один не дисабленый объект, то
-			//зона считается активной
+			//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ
+			//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 			if(info.zone_ignore == false) 
 				m_zone_flags.set(eZoneIsActive,TRUE);
 		}
@@ -521,7 +521,7 @@ void CCustomZone::shedule_Update(u32 dt)
 		inherited::shedule_Update(dt);
 
 		// check "fast-mode" border
-		float	cam_distance	= Device.vCameraPosition.distance_to(P)-s.R;
+		float	cam_distance	= Device->vCameraPosition.distance_to(P)-s.R;
 		if (cam_distance > FASTMODE_DISTANCE && !m_zone_flags.test(eAlwaysFastmode) )	
 			o_switch_2_slow	();
 		else									
@@ -536,7 +536,7 @@ void CCustomZone::shedule_Update(u32 dt)
 
 	if( !IsGameTypeSingle() && Local() )
 	{
-		if(Device.dwTimeGlobal > m_ttl)
+		if(Device->dwTimeGlobal > m_ttl)
 			DestroyObject ();
 	}
 }
@@ -698,7 +698,7 @@ void CCustomZone::UpdateIdleLight	()
 	VERIFY(m_pIdleLAnim);
 
 	int frame = 0;
-	u32 clr					= m_pIdleLAnim->CalculateBGR(Device.fTimeGlobal,frame); // возвращает в формате BGR
+	u32 clr					= m_pIdleLAnim->CalculateBGR(Device->fTimeGlobal,frame); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ BGR
 	Fcolor					fclr;
 	fclr.set				((float)color_get_B(clr)/255.f,(float)color_get_G(clr)/255.f,(float)color_get_R(clr)/255.f,1.f);
 	
@@ -778,7 +778,7 @@ void CCustomZone::PlayEntranceParticles(CGameObject* pObject)
 	else 
 		vel.set						(0,0,0);
 	
-	//выбрать случайную косточку на объекте
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	CParticlesPlayer* PP			= smart_cast<CParticlesPlayer*>(pObject);
 	if (PP)
 	{
@@ -890,7 +890,7 @@ void CCustomZone::PlayObjectIdleParticles(CGameObject* pObject)
 
 	shared_str particle_str = NULL;
 
-	//разные партиклы для объектов разного размера
+	//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if(pObject->Radius()<SMALL_OBJECT_RADIUS)
 	{
 		if(!m_sIdleObjectParticlesSmall) return;
@@ -903,7 +903,7 @@ void CCustomZone::PlayObjectIdleParticles(CGameObject* pObject)
 	}
 
 	
-	//запустить партиклы на объекте
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	//. new
 	PP->StopParticles (particle_str, BI_NONE, true);
 
@@ -926,7 +926,7 @@ void CCustomZone::StopObjectIdleParticles(CGameObject* pObject)
 	
 	
 	shared_str particle_str = NULL;
-	//разные партиклы для объектов разного размера
+	//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if(pObject->Radius()<SMALL_OBJECT_RADIUS)
 	{
 		if(!m_sIdleObjectParticlesSmall) return;
@@ -976,7 +976,7 @@ void CCustomZone::UpdateBlowoutLight	()
 {
 	if(m_fLightTimeLeft>0)
 	{
-		m_fLightTimeLeft -= Device.fTimeDelta;
+		m_fLightTimeLeft -= Device->fTimeDelta;
 		clamp(m_fLightTimeLeft,0.0f,m_fLightTime);
 
 		float scale		= m_fLightTimeLeft/m_fLightTime;
@@ -998,12 +998,12 @@ void CCustomZone::UpdateBlowoutLight	()
 
 void CCustomZone::AffectObjects()
 {
-	if(m_dwAffectFrameNum == Device.dwFrame)	
+	if(m_dwAffectFrameNum == Device->dwFrame)	
 		return;
 
-	m_dwAffectFrameNum	= Device.dwFrame;
+	m_dwAffectFrameNum	= Device->dwFrame;
 
-	if(Device.dwPrecacheFrame)					
+	if(Device->dwPrecacheFrame)					
 		return;
 
 
@@ -1047,13 +1047,13 @@ void  CCustomZone::OnMove()
 {
 	if(m_dwLastTimeMoved == 0)
 	{
-		m_dwLastTimeMoved = Device.dwTimeGlobal;
+		m_dwLastTimeMoved = Device->dwTimeGlobal;
 		m_vPrevPos.set(Position());
 	}
 	else
 	{
-		float time_delta	= float(Device.dwTimeGlobal - m_dwLastTimeMoved)/1000.f;
-		m_dwLastTimeMoved	= Device.dwTimeGlobal;
+		float time_delta	= float(Device->dwTimeGlobal - m_dwLastTimeMoved)/1000.f;
+		m_dwLastTimeMoved	= Device->dwTimeGlobal;
 
 		Fvector				vel;
 			
@@ -1313,7 +1313,7 @@ void CCustomZone::UpdateOnOffState()
 	if(!m_zone_flags.test(eUseOnOffTime)) return;
 	
 	bool dest_state;
-	u32 t = (Device.dwTimeGlobal-m_StartTime+m_TimeShift) % (m_TimeToEnable+m_TimeToDisable);
+	u32 t = (Device->dwTimeGlobal-m_StartTime+m_TimeShift) % (m_TimeToEnable+m_TimeToDisable);
 	if	(t < m_TimeToEnable)
 	{
 		dest_state=true;

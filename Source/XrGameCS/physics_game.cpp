@@ -70,7 +70,7 @@ public:
 	}
 	virtual void 			run								()
 	{
-		//добавить отметку на материале
+		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		::Render->add_StaticWallmark(pWallmarkShader,pos, 
 			0.09f, T,
 			Level().ObjectSpace.GetStaticVerts());
@@ -103,11 +103,11 @@ void  TContactShotMark(CDB::TRI* T,dContactGeom* c)
 	dBodyGetMass(b,&m);
 	dBodyGetPointVel(b,c->pos[0],c->pos[1],c->pos[2],vel);
 	dReal vel_cret=dFabs(dDOT(vel,c->normal))* _sqrt(m.mass);
-	Fvector to_camera;to_camera.sub(cast_fv(c->pos),Device.vCameraPosition);
+	Fvector to_camera;to_camera.sub(cast_fv(c->pos),Device->vCameraPosition);
 	float square_cam_dist=to_camera.square_magnitude();
 	if(data)
 	{
-		SGameMtlPair* mtl_pair		= GMLib.GetMaterialPair(T->material,data->material);
+		SGameMtlPair* mtl_pair		= GameMaterialLibrary->GetMaterialPair(T->material,data->material);
 		if(mtl_pair)
 		{
 			//if(vel_cret>Pars::vel_cret_wallmark && !mtl_pair->CollideMarks.empty())
@@ -122,7 +122,7 @@ void  TContactShotMark(CDB::TRI* T,dContactGeom* c)
 			if(square_cam_dist<SQUARE_SOUND_EFFECT_DIST)
 			{
 			
-				SGameMtl* static_mtl =  GMLib.GetMaterialByIdx(T->material);
+				SGameMtl* static_mtl =  GameMaterialLibrary->GetMaterialByIdx(T->material);
 				if(!static_mtl->Flags.test(SGameMtl::flPassable))
 				{
 					if(vel_cret>Pars::vel_cret_sound)
@@ -150,7 +150,7 @@ void  TContactShotMark(CDB::TRI* T,dContactGeom* c)
 				if(vel_cret>Pars::vel_cret_particles && !mtl_pair->CollideParticles.empty())
 				{
 					LPCSTR ps_name = *mtl_pair->CollideParticles[::Random.randI(0,mtl_pair->CollideParticles.size())];
-					//отыграть партиклы столкновения материалов
+					//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 					Level().ph_commander().add_call(xr_new<CPHOnesCondition>(),xr_new<CPHParticlesPlayCall>(*c,b_invert_normal,ps_name));
 				}
 			}

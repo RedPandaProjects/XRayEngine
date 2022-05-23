@@ -112,7 +112,7 @@ IC	bool CScriptEntityAction::CheckIfMonsterActionCompleted	() const
 
 IC	bool CScriptEntityAction::CheckIfTimeOver					()
 {
-	return((m_tActionCondition.m_tLifeTime >= 0) && ((m_tActionCondition.m_tStartTime + m_tActionCondition.m_tLifeTime) < Device.dwTimeGlobal));
+	return((m_tActionCondition.m_tLifeTime >= 0) && ((m_tActionCondition.m_tStartTime + m_tActionCondition.m_tLifeTime) < Device->dwTimeGlobal));
 }
 
 IC	bool CScriptEntityAction::CheckIfActionCompleted			()

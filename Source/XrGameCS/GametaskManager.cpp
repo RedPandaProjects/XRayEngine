@@ -124,7 +124,7 @@ CGameTask*	CGameTaskManager::GiveGameTaskToActor(CGameTask* t, u32 timeToComplet
 	}
 
 
-	//установить флажок необходимости прочтения тасков в PDA
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ PDA
 	if ( HUD().GetUI() )
 	{
 		HUD().GetUI()->UpdatePda();
@@ -222,7 +222,7 @@ void CGameTaskManager::UpdateActiveTask()
 	}
 
 	m_flags.set					(eChanged, FALSE);
-	m_actual_frame				= Device.dwFrame;
+	m_actual_frame				= Device->dwFrame;
 }
 
 CGameTask* CGameTaskManager::ActiveTask(ETaskType type)

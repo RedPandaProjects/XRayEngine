@@ -51,7 +51,7 @@ enum ESquadCommandType
 
 struct SSquadCommand
 {
-	ESquadCommandType	type;	// тип команды
+	ESquadCommandType	type;	// пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 	const CEntity		*entity;
 	Fvector				position;
@@ -72,10 +72,10 @@ private:
 	CEntity				*leader;
 	DEFINE_MAP		(CEntity*, SMemberGoal,		MEMBER_GOAL_MAP,	MEMBER_GOAL_MAP_IT);
 
-	// карта целей членов группы (обновляется со стороны объекта)
+	// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
 	MEMBER_GOAL_MAP		m_goals;
 
-	// карта комманд членов группы (обновляется со стороны squad manager)
+	// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ squad manager)
 	MEMBER_COMMAND_MAP	m_commands;
 
 	DEFINE_VECTOR	(u32, NODES_VECTOR, NODES_VECTOR_IT);
@@ -127,14 +127,14 @@ public:
 
 
 	///////////////////////////////////////////////////////////////////////////////////////
-	//  Общие данные
+	//  пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	//////////////////////////////////////////////////////////////////////////////////////
 	
 	DEFINE_VECTOR	(CEntity*, ENTITY_VEC,	ENTITY_VEC_IT);	
 	ENTITY_VEC		m_temp_entities;
 	
 	///////////////////////////////////////////////////////////////////////////////////////
-	//  Атака группой монстров
+	//  пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	//////////////////////////////////////////////////////////////////////////////////////
 	
 	DEFINE_MAP		(const CEntity*, ENTITY_VEC,	ENEMY_MAP, ENEMY_MAP_IT);
@@ -163,7 +163,7 @@ public:
 
 
 	///////////////////////////////////////////////////////////////////////////////////////
-	//  групповой idle
+	//  пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ idle
 	//////////////////////////////////////////////////////////////////////////////////////
 	ENTITY_VEC		front, back, left, right;
 	
@@ -192,8 +192,8 @@ public:
 
 	// Lain: added
 	MEMBER_COMMAND_MAP* get_commands   () { return &m_commands; }
-	bool            home_in_danger     () { return Device.dwTimeGlobal < m_home_danger_end_tick; }
-	void            set_home_in_danger () { m_home_danger_end_tick = Device.dwTimeGlobal + m_home_danger_mode_time; }
+	bool            home_in_danger     () { return Device->dwTimeGlobal < m_home_danger_end_tick; }
+	void            set_home_in_danger () { m_home_danger_end_tick = Device->dwTimeGlobal + m_home_danger_mode_time; }
 
 private:
 	// danger mode is turns on when monsters hear dangerous sound or get a hit

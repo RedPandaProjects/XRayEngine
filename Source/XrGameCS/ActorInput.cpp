@@ -165,7 +165,7 @@ void CActor::IR_OnKeyboardPress(int cmd)
 				{
 					inventory().Eat				(itm);
 					SDrawStaticStruct* _s		= HUD().GetUI()->UIGame()->AddCustomStatic("item_used", true);
-					_s->m_endTime				= Device.fTimeGlobal+3.0f;
+					_s->m_endTime				= Device->fTimeGlobal+3.0f;
 					string1024					str;
 					strconcat					(sizeof(str),str,*CStringTable().translate("st_item_used"),": ", itm->NameItem());
 					_s->wnd()->SetText			(str);
@@ -393,10 +393,10 @@ void CActor::ActorUse()
 					TryToTalk();
 				}else
 
-				//обыск трупа
+				//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 				if(!Level().IR_GetKeyState(DIK_LSHIFT))
 				{
-					//только если находимся в режиме single
+					//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ single
 					CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(HUD().GetUI()->UIGame());
 					if(pGameSP)
 						pGameSP->StartCarBody(this, m_pPersonWeLookingAt );

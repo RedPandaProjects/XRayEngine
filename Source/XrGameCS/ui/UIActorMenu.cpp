@@ -7,7 +7,7 @@
 #include "../inventory.h"
 #include "../inventory_item.h"
 #include "../InventoryBox.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "../ai/monsters/BaseMonster/base_monster.h"
 #include "UIInventoryUtilities.h"
 #include "game_cl_base.h"
@@ -26,7 +26,7 @@
 void CUIActorMenu::SetActor(CInventoryOwner* io)
 {
 	R_ASSERT			(!IsShown());
-	m_last_time			= Device.dwTimeGlobal;
+	m_last_time			= Device->dwTimeGlobal;
 	m_pActorInvOwner	= io;
 	
 	if ( IsGameTypeSingle() )
@@ -202,7 +202,7 @@ void CUIActorMenu::Draw()
 void CUIActorMenu::Update()
 {	
 	{ // all mode
-		m_last_time = Device.dwTimeGlobal;
+		m_last_time = Device->dwTimeGlobal;
 		m_ActorStateInfo->UpdateActorInfo( m_pActorInvOwner );
 	}
 
@@ -241,7 +241,7 @@ void CUIActorMenu::Update()
 	m_ItemInfo->Update();
 	m_hint_wnd->Update();
 }
-bool CUIActorMenu::StopAnyMove()  // true = актёр не идёт при открытом меню
+bool CUIActorMenu::StopAnyMove()  // true = пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 {
 	switch ( m_currMenuMode )
 	{
@@ -584,7 +584,7 @@ bool CUIActorMenu::OnItemFocusedUpdate(CUICellItem* itm)
 		itm->m_selected = true;
 	}
 	VERIFY( m_ItemInfo );
-	if ( Device.dwTimeGlobal < itm->FocusReceiveTime() + m_ItemInfo->delay )
+	if ( Device->dwTimeGlobal < itm->FocusReceiveTime() + m_ItemInfo->delay )
 	{
 		return true; //false
 	}

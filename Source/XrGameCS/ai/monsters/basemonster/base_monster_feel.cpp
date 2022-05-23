@@ -67,7 +67,7 @@ void CBaseMonster::feel_sound_new(CObject* who, int eType, CSound_UserDataPtr us
 	
 	// register in sound memory
 	if (power >= db().m_fSoundThreshold) {
-		SoundMemory.HearSound(who,eType,Position,power,Device.dwTimeGlobal);
+		SoundMemory.HearSound(who,eType,Position,power,Device->dwTimeGlobal);
  	}
 }
 #define MAX_LOCK_TIME 2.f
@@ -83,7 +83,7 @@ void CBaseMonster::HitEntity(const CEntity *pEntity, float fDamage, float impuls
 		Fvector position_in_bone_space;
 		position_in_bone_space.set(0.f,0.f,0.f);
 
-		// перевод из локальных координат в мировые вектора направления импульса
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		Fvector hit_dir;
 		XFORM().transform_dir	(hit_dir,dir);
 		hit_dir.normalize		();
@@ -108,10 +108,10 @@ void CBaseMonster::HitEntity(const CEntity *pEntity, float fDamage, float impuls
 		if (pEntityNC == Actor()) {
 			START_PROFILE("BaseMonster/Animation/HitEntity");
 			SDrawStaticStruct* s = HUD().GetUI()->UIGame()->AddCustomStatic("monster_claws", false);
-			s->m_endTime = Device.fTimeGlobal+3.0f;// 3sec
+			s->m_endTime = Device->fTimeGlobal+3.0f;// 3sec
 			
 			float h1,p1;
-			Device.vCameraDirection.getHP	(h1,p1);
+			Device->vCameraDirection.getHP	(h1,p1);
 
 			Fvector hd = hit_dir;
 			hd.mul(-1);
@@ -188,7 +188,7 @@ void CBaseMonster::HitEntity(const CEntity *pEntity, float fDamage, float impuls
 
 		Morale.on_attack_success();
 		
-		m_time_last_attack_success	= Device.dwTimeGlobal;
+		m_time_last_attack_success	= Device->dwTimeGlobal;
 	}
 }
 
@@ -200,14 +200,14 @@ BOOL  CBaseMonster::feel_vision_isRelevant(CObject* O)
 	
 	if ((O->spatial.type & STYPE_VISIBLEFORAI) != STYPE_VISIBLEFORAI) return FALSE;
 	
-	// если спит, то ничего не видит
+	// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	if (m_bSleep) return FALSE;
 	
-	// если не враг - не видит
+	// пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ - пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	CEntityAlive* entity = smart_cast<CEntityAlive*> (O);
 	if (entity && entity->g_Alive()) {
 		if (!EnemyMan.is_enemy(entity)) {
-			// если видит друга - проверить наличие у него врагов
+			// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 			CBaseMonster *monster = smart_cast<CBaseMonster *>(entity);
 			if (monster && !m_skip_transfer_enemy) EnemyMan.transfer_enemy(monster);
 			return FALSE;
@@ -226,7 +226,7 @@ void CBaseMonster::HitSignal(float amount, Fvector& vLocalDir, CObject* who, s16
 
 	if (element < 0) return;
 
-	// Определить направление хита (перед || зад || лево || право)
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅ || пїЅпїЅпїЅ || пїЅпїЅпїЅпїЅ || пїЅпїЅпїЅпїЅпїЅ)
 	float yaw,pitch;
 	vLocalDir.getHP(yaw,pitch);
 	
@@ -251,7 +251,7 @@ void CBaseMonster::HitSignal(float amount, Fvector& vLocalDir, CObject* who, s16
 		element
 	);
 
-	// если нейтрал - добавить как врага
+	// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	CEntityAlive	*obj = smart_cast<CEntityAlive*>(who);
 	if (obj && (tfGetRelationType(obj) == ALife::eRelationTypeNeutral)) EnemyMan.add_enemy(obj);
 }

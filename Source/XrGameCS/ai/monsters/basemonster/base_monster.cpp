@@ -136,12 +136,12 @@ void CBaseMonster::update_pos_by_grouping_behaviour ()
 
 	if ( !m_last_grouping_behaviour_update_tick )
 	{
-		m_last_grouping_behaviour_update_tick = Device.dwTimeGlobal;
+		m_last_grouping_behaviour_update_tick = Device->dwTimeGlobal;
 	}	
 
-	const float dt = 0.001f * (Device.dwTimeGlobal - m_last_grouping_behaviour_update_tick);
+	const float dt = 0.001f * (Device->dwTimeGlobal - m_last_grouping_behaviour_update_tick);
 	
-	m_last_grouping_behaviour_update_tick = Device.dwTimeGlobal;
+	m_last_grouping_behaviour_update_tick = Device->dwTimeGlobal;
 
 	const Fvector old_pos  = Position();
 	Fvector       offs     = acc*dt;

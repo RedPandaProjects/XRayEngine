@@ -69,13 +69,13 @@ TEMPLATE_SPECIALIZATION
 void CStateMonsterPanicAbstract::check_force_state()
 {
 	if ((current_substate == eStatePanic_FaceUnprotectedArea)){
-		// если видит врага
-		if (object->EnemyMan.get_enemy_time_last_seen() == Device.dwTimeGlobal) {
+		// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+		if (object->EnemyMan.get_enemy_time_last_seen() == Device->dwTimeGlobal) {
 			select_state(eStatePanic_Run);
 			return;
 		}
-		// если получил hit
-		if (object->HitMemory.get_last_hit_time() + 5000 > Device.dwTimeGlobal) {
+		// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ hit
+		if (object->HitMemory.get_last_hit_time() + 5000 > Device->dwTimeGlobal) {
 			select_state(eStatePanic_Run);
 			return;
 		}

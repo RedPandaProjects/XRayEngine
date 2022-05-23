@@ -10,7 +10,7 @@
 
 #include "ai_monster_space.h"
 #include "graph_engine_space.h"
-#include "game_graph_space.h"
+#include "../xrEngine/game_graph_space.h"
 #include <boost/noncopyable.hpp>
 
 namespace MovementManager {
@@ -61,8 +61,8 @@ class CEnemyLocationPredictor;
 class CPatrolPathManager;
 class CDetailPathManager;
 class CPHMovementControl;
-class CGameGraph;
-class CLevelGraph;
+class IGameGraph;
+class ILevelGraph;
 class CRestrictedObject;
 class CLocationManager;
 class CCustomMonster;
@@ -89,7 +89,7 @@ protected:
 	typedef GraphEngineSpace::CGameVertexParams	CGameVertexParams;
 
 	typedef CBaseLocationSelector<
-				CGameGraph,
+				IGameGraph,
 				SGameVertex<
 					float,
 					u32,
@@ -99,7 +99,7 @@ protected:
 			>		CGameLocationSelector;
 
 	typedef CBasePathManager<
-				CGameGraph,
+				IGameGraph,
 				SGameVertex<
 					float,
 					u32,
@@ -109,7 +109,7 @@ protected:
 				u32
 			>		CGamePathManager;
 	typedef CBasePathManager<
-				CLevelGraph,
+				ILevelGraph,
 				SBaseParameters<
 					float,
 					u32,

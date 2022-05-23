@@ -9,7 +9,7 @@
 #include "xrServer_Objects_ALife.h"
 #include "script_engine.h"
 #include "ui\uixmlinit.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 
 void INFO_DATA::load (IReader& stream) 
 {
@@ -63,7 +63,7 @@ void CInfoPortion::load_shared	(LPCSTR)
 	XML_NODE* pNode			= pXML->NavigateToNode(id_to_index::tag_name, item_data->pos_in_file);
 	THROW3					(pNode, "info_portion id=", *item_data->id);
 
-	//список названий диалогов
+	//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	int dialogs_num			= pXML->GetNodesNum(pNode, "dialog");
 	info_data()->m_DialogNames.clear();
 	for(int i=0; i<dialogs_num; ++i)
@@ -73,8 +73,8 @@ void CInfoPortion::load_shared	(LPCSTR)
 	}
 
 	
-	//список названий порций информации, которые деактивируются,
-	//после получения этой порции
+	//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ,
+	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	int disable_num = pXML->GetNodesNum(pNode, "disable");
 	info_data()->m_DisableInfo.clear();
 	for(int i=0; i<disable_num; ++i)
@@ -83,11 +83,11 @@ void CInfoPortion::load_shared	(LPCSTR)
 		info_data()->m_DisableInfo.push_back(info_id);
 	}
 
-	//имена скриптовых функций
+	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	info_data()->m_InfoScriptHelper.Load(pXML, pNode);
 
 
-	//индексы статей
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	info_data()->m_Articles.clear();
 	int articles_num	= pXML->GetNodesNum(pNode, "article");
 	for(int i=0; i<articles_num; ++i)

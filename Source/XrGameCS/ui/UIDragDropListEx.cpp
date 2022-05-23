@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "UIDragDropListEx.h"
 #include "UIScrollBar.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "UICellItem.h"
 
 #include "../xrRender/Public/UIRender.h"
@@ -880,7 +880,7 @@ void CUICellContainer::Draw()
 		UI_CELLS_VEC_IT it = m_cells_to_draw.begin();
 		for ( ; it != m_cells_to_draw.end(); ++it ) // all cells
 		{
-			if ( !(*it).Empty() && ((*it).m_item->m_drawn_frame != Device.dwFrame) )
+			if ( !(*it).Empty() && ((*it).m_item->m_drawn_frame != Device->dwFrame) )
 			{
 				(*it).m_item->Draw();
 			}

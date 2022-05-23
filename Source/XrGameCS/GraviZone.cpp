@@ -76,7 +76,7 @@ bool CBaseGraviZone ::IdleState()
 {
 	bool result = inherited::IdleState();
 
-	m_dwTeleTime += Device.dwTimeDelta;
+	m_dwTeleTime += Device->dwTimeDelta;
 
 	if(!result)
 	{
@@ -127,7 +127,7 @@ void CBaseGraviZone ::Affect(SZoneObjectInfo* O)
 
 
 	//////////////////////////////////////////////////////////////////////////
-	//	затягиваем объет по направлению к центру зоны
+	//	пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 
 	Fvector					throw_in_dir;
 	Fvector					zone_center;
@@ -153,9 +153,9 @@ void CBaseGraviZone ::Affect(SZoneObjectInfo* O)
 	else
 	{
 		//////////////////////////////////////////////////////////////////////////
-		// выброс аномалии
+		// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		
-		//если время выброса еще не пришло
+		//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 		if(m_dwBlowoutExplosionTime<(u32)m_iPreviousStateTime ||
 			m_dwBlowoutExplosionTime>=(u32)m_iStateTime)
 		{
@@ -226,7 +226,7 @@ void CBaseGraviZone::PlayTeleParticles(CGameObject* pObject)
 
 	shared_str particle_str = NULL;
 
-	//разные партиклы для объектов разного размера
+	//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if(pObject->Radius()<SMALL_OBJECT_RADIUS)
 	{
 		if(!m_sTeleParticlesSmall) return;
@@ -247,7 +247,7 @@ void CBaseGraviZone::StopTeleParticles(CGameObject* pObject)
 	if(!PP) return;
 	shared_str particle_str = NULL;
 
-	//разные партиклы для объектов разного размера
+	//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if(pObject->Radius()<SMALL_OBJECT_RADIUS)
 	{
 		if(!m_sTeleParticlesSmall) return;
@@ -259,7 +259,7 @@ void CBaseGraviZone::StopTeleParticles(CGameObject* pObject)
 		particle_str = m_sTeleParticlesBig;
 	}
 
-	//остановить партиклы
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	PP->StopParticles	(particle_str, BI_NONE, true);
 }
 

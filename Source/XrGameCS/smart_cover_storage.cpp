@@ -8,7 +8,7 @@
 #include "pch_script.h"
 #include "smart_cover_storage.h"
 #include "smart_cover_description.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 
 static u32 const time_to_delete		= 300000;
 
@@ -71,7 +71,7 @@ void storage::collect_garbage		()
 			if (object->m_ref_count)
 				return		(false);
  
-			if (Device.dwTimeGlobal < object->m_last_time_dec + time_to_delete)
+			if (Device->dwTimeGlobal < object->m_last_time_dec + time_to_delete)
 				return		(false);
 
 			::description*	temp = object;

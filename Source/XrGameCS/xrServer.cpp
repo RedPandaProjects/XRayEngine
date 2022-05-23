@@ -25,7 +25,7 @@
 #include <malloc.h>
 #pragma warning(pop)
 
-xrClientData::xrClientData	():IClient(Device.GetTimerGlobal())
+xrClientData::xrClientData	():IClient(Device->GetTimerGlobal())
 {
 	ps			= Level().Server->game->createPlayerState();
 	ps->clear	();
@@ -52,7 +52,7 @@ xrClientData::~xrClientData()
 }
 
 
-xrServer::xrServer():IPureServer(Device.GetTimerGlobal(), g_dedicated_server)
+xrServer::xrServer():IPureServer(Device->GetTimerGlobal(), g_dedicated_server)
 {
 	m_iCurUpdatePacket = 0;
 	m_file_transfers = NULL;
@@ -156,7 +156,7 @@ void		xrServer::client_Destroy	(IClient* C)
 		{
 			NET_Packet			P;
 			P.w_begin			(M_EVENT);
-			P.w_u32				(Level().timeServer());//Device.TimerAsync());
+			P.w_u32				(Level().timeServer());//Device->TimerAsync());
 			P.w_u16				(GE_DESTROY);
 			P.w_u16				(pS->ID);
 			SendBroadcast		(C->ID,P,net_flags(TRUE,TRUE));
@@ -186,7 +186,7 @@ void		xrServer::client_Destroy	(IClient* C)
 		}
 		else
 		{
-			alife_client->dwTime_LastUpdate = Device.dwTimeGlobal;
+			alife_client->dwTime_LastUpdate = Device->dwTimeGlobal;
 			static_cast<xrClientData*>(alife_client)->Clear();
 		};
 	}
@@ -230,7 +230,7 @@ void xrServer::Update	()
 	game->Update						();
 
 	// spawn queue
-	u32 svT								= Device.TimerAsync();
+	u32 svT								= Device->TimerAsync();
 	while (!(q_respawn.empty() || (svT<q_respawn.begin()->timestamp)))
 	{
 		// get
@@ -261,7 +261,7 @@ void xrServer::Update	()
 	{
 		static bool Searher(IClient* client)
 		{
-			if (client->dwTime_LastUpdate + (g_sv_Client_Reconnect_Time*60000) < Device.dwTimeGlobal)
+			if (client->dwTime_LastUpdate + (g_sv_Client_Reconnect_Time*60000) < Device->dwTimeGlobal)
 				return true;
 			return false;
 		}
@@ -280,7 +280,7 @@ void xrServer::Update	()
 
 	Flush_Clients_Buffers			();
 	
-	if( 0==(Device.dwFrame%100) )//once per 100 frames
+	if( 0==(Device->dwFrame%100) )//once per 100 frames
 	{
 		UpdateBannedList();
 	}
@@ -593,7 +593,7 @@ u32 xrServer::OnMessage	(NET_Packet& P, ClientID sender)			// Non-Zero means bro
 			if ( CL )	
 			{
 				CL->net_Ready	= TRUE;
-				CL->ps->DeathTime = Device.dwTimeGlobal;
+				CL->ps->DeathTime = Device->dwTimeGlobal;
 				game->OnPlayerConnectFinished(sender);
 				CL->ps->setName( CL->name.c_str() );
 				
@@ -715,7 +715,7 @@ u32 xrServer::OnMessage	(NET_Packet& P, ClientID sender)			// Non-Zero means bro
 				bool res = CheckAdminRights(user, pass, reason);
 				if(res){
 					CL->m_admin_rights.m_has_admin_rights	= TRUE;
-					CL->m_admin_rights.m_dwLoginTime		= Device.dwTimeGlobal;
+					CL->m_admin_rights.m_dwLoginTime		= Device->dwTimeGlobal;
 					Msg("# User [%s] logged as remote administrator.", user.c_str());
 				}else
 					Msg("# User [%s] tried to login as remote administrator. Access denied.", user.c_str());
@@ -848,7 +848,7 @@ if( dbg_net_Draw_Flags.test( dbg_destroy ) )
 #endif
 	R_ASSERT					(P);
 	entities.erase				(P->ID);
-	m_tID_Generator.vfFreeID	(P->ID,Device.TimerAsync());
+	m_tID_Generator.vfFreeID	(P->ID,Device->TimerAsync());
 
 	if(P->owner && P->owner->owner==P)
 		P->owner->owner		= NULL;
@@ -1069,10 +1069,10 @@ void xrServer::PerformCheckClientsForMaxPing()
 				return;
 
 			if(	ps->ping > g_sv_dwMaxClientPing && 
-				Client->m_ping_warn.m_dwLastMaxPingWarningTime+g_sv_time_for_ping_check < Device.dwTimeGlobal )
+				Client->m_ping_warn.m_dwLastMaxPingWarningTime+g_sv_time_for_ping_check < Device->dwTimeGlobal )
 			{
 				++Client->m_ping_warn.m_maxPingWarnings;
-				Client->m_ping_warn.m_dwLastMaxPingWarningTime	= Device.dwTimeGlobal;
+				Client->m_ping_warn.m_dwLastMaxPingWarningTime	= Device->dwTimeGlobal;
 				
 				if(Client->m_ping_warn.m_maxPingWarnings >= g_sv_maxPingWarningsCount)
 				{  //kick
@@ -1113,7 +1113,7 @@ void xrServer::GetServerInfo( CServerInfo* si )
 	string256 tmp256;
 
 	si->AddItem( "Server port", itoa( GetPort(), tmp, 10 ), RGB(128,128,255) );
-	LPCSTR time = InventoryUtilities::GetTimeAsString( Device.dwTimeGlobal, InventoryUtilities::etpTimeToSecondsAndDay ).c_str();
+	LPCSTR time = InventoryUtilities::GetTimeAsString( Device->dwTimeGlobal, InventoryUtilities::etpTimeToSecondsAndDay ).c_str();
 	si->AddItem( "Uptime", time, RGB(255,228,0) );
 
 //	strcpy_s( tmp256, get_token_name(game_types, game->Type() ) );

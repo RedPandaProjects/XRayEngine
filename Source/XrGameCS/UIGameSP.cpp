@@ -7,7 +7,7 @@
 #include "xr_level_controller.h"
 #include "actorcondition.h"
 #include "../xrEngine/xr_ioconsole.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "GameTaskManager.h"
 #include "GameTask.h"
 
@@ -66,7 +66,7 @@ bool CUIGameSP::IR_OnKeyboardPress(int dik)
 {
 	if(inherited::IR_OnKeyboardPress(dik)) return true;
 
-	if( Device.Paused()		) return false;
+	if( Device->Paused()		) return false;
 
 	CInventoryOwner* pInvOwner = smart_cast<CInventoryOwner*>( Level().CurrentEntity() );
 	if ( !pInvOwner )				return false;
@@ -280,13 +280,13 @@ void CChangeLevelWnd::Show()
 	
 
 	g_block_pause							= true;
-	Device.Pause							(TRUE, TRUE, TRUE, "CChangeLevelWnd_show");
+	Device->Pause							(TRUE, TRUE, TRUE, "CChangeLevelWnd_show");
 	bShowPauseString						= FALSE;
 }
 
 void CChangeLevelWnd::Hide()
 {
 	g_block_pause							= false;
-	Device.Pause							(FALSE, TRUE, TRUE, "CChangeLevelWnd_hide");
+	Device->Pause							(FALSE, TRUE, TRUE, "CChangeLevelWnd_hide");
 }
 

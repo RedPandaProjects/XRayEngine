@@ -89,7 +89,7 @@ void CStateManagerPoltergeist::execute()
 	
 	select_state(state_id); 
 
-	// выполнить текущее состояние
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	get_state_current()->execute();
 
 	prev_substate = current_substate;
@@ -99,7 +99,7 @@ void CStateManagerPoltergeist::execute()
 
 void CStateManagerPoltergeist::polter_attack()
 {
-	//u32 cur_time = Device.dwTimeGlobal;
+	//u32 cur_time = Device->dwTimeGlobal;
 	//const CEntityAlive* enemy	= object->EnemyMan.get_enemy();
 	//
 	//bool b_aggressive = object->conditions().GetHealth() < 0.5f;

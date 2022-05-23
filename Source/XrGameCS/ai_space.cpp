@@ -103,9 +103,9 @@ void CAI_Space::load				(LPCSTR level_name)
 	timer.Start				();
 #endif
 
-	const CGameGraph::SLevel &current_level = game_graph().header().level(level_name);
+	const IGameGraph::SLevel &current_level = game_graph().header().level(level_name);
 
-	m_level_graph			= xr_new<CLevelGraph>();
+	m_level_graph			= xr_new<ILevelGraph>();
 	game_graph().set_current_level(current_level.id());
 	R_ASSERT2				(cross_table().header().level_guid() == level_graph().header().guid(), "cross_table doesn't correspond to the AI-map");
 	R_ASSERT2				(cross_table().header().game_guid() == game_graph().header().guid(), "graph doesn't correspond to the cross table");
@@ -162,7 +162,7 @@ void CAI_Space::validate			(const u32 level_id) const
 		if (level_id != game_graph().vertex(i)->level_id())
 			continue;
 
-		CGameGraph::const_spawn_iterator	I, E;
+		IGameGraph::const_spawn_iterator	I, E;
 		game_graph().begin_spawn			(i,I,E);
 //		Msg									("vertex [%d] has %d death points",i,game_graph().vertex(i)->death_point_count());
 		for ( ; I != E; ++I) {
@@ -209,7 +209,7 @@ void CAI_Space::set_alife				(CALifeSimulator *alife_simulator)
 	xr_delete				(m_graph_engine);
 }
 
-void CAI_Space::game_graph				(CGameGraph *game_graph)
+void CAI_Space::game_graph				(IGameGraph *game_graph)
 {
 	VERIFY					(m_alife_simulator);
 	VERIFY					(game_graph);
@@ -221,12 +221,12 @@ void CAI_Space::game_graph				(CGameGraph *game_graph)
 	m_graph_engine			= xr_new<CGraphEngine>(this->game_graph().header().vertex_count());
 }
 
-const CGameLevelCrossTable &CAI_Space::cross_table		() const
+const IGameLevelCrossTable &CAI_Space::cross_table		() const
 {
 	return					(game_graph().cross_table());
 }
 
-const CGameLevelCrossTable *CAI_Space::get_cross_table	() const
+const IGameLevelCrossTable *CAI_Space::get_cross_table	() const
 {
 	return					(&game_graph().cross_table());
 }

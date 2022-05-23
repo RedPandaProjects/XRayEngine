@@ -20,7 +20,7 @@ IC	u32 CAutosaveManager::last_autosave_time	() const
 
 IC	void CAutosaveManager::update_autosave_time	()
 {
-	m_last_autosave_time	= Device.dwTimeGlobal;
+	m_last_autosave_time	= Device->dwTimeGlobal;
 }
 
 IC	void CAutosaveManager::delay_autosave		()

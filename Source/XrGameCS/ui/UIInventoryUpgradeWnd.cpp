@@ -6,7 +6,7 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #include "pch_script.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "UIInventoryUpgradeWnd.h"
 
 #include "xrUIXmlParser.h"
@@ -311,7 +311,7 @@ void CUIInventoryUpgradeWnd::set_info_cur_upgrade( Upgrade_type* upgrade )
 	UIUpgrade* uiu = FindUIUpgrade( upgrade );
 	if ( uiu )
 	{
-		if ( Device.dwTimeGlobal < uiu->FocusReceiveTime() + m_item_info->delay )
+		if ( Device->dwTimeGlobal < uiu->FocusReceiveTime() + m_item_info->delay )
 		{
 			upgrade = NULL; // visible = false
 		}

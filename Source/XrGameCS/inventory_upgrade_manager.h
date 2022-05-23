@@ -10,7 +10,7 @@
 #define INVENTORY_UPGRADE_MANAGER_H_INCLUDED
 
 #include <boost/noncopyable.hpp>
-#include "associative_vector.h"
+#include "../xrEngine/associative_vector.h"
 #include "inventory_item_object.h"
 
 #include "inventory_upgrade_base.h"

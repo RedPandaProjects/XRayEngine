@@ -13,7 +13,7 @@
 #include "../string_table.h"
 #include "CExtraContentFilter.h"
 
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "game_base.h"
 
 extern ENGINE_API string512		g_sLaunchOnExit_app;

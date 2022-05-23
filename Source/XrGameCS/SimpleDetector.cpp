@@ -64,7 +64,7 @@ void CSimpleDetector::UpdateAf()
 	float fRelPow			= (dist/m_fAfDetectRadius);
 	clamp					(fRelPow, 0.f, 1.f);
 
-	//определить текущую частоту срабатывания сигнала
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	af_info.cur_period = item_type->freq.x + 
 		(item_type->freq.y - item_type->freq.x) * (fRelPow*fRelPow);
 
@@ -82,7 +82,7 @@ void CSimpleDetector::UpdateAf()
 			item_type->detect_snds.m_activeSnd->snd.set_frequency(snd_freq);
 	} 
 	else 
-		af_info.snd_time += Device.fTimeDelta;
+		af_info.snd_time += Device->fTimeDelta;
 }
 
 void CUIArtefactDetectorSimple::construct(CSimpleDetector* p)
@@ -109,7 +109,7 @@ void CUIArtefactDetectorSimple::Flash(bool bOn, float fRelPower)
 	if(bOn)
 	{
 		K->LL_SetBoneVisible(m_flash_bone, TRUE, TRUE);
-		m_turn_off_flash_time = Device.dwTimeGlobal+iFloor(fRelPower*1000.0f);
+		m_turn_off_flash_time = Device->dwTimeGlobal+iFloor(fRelPower*1000.0f);
 	}else
 	{
 		K->LL_SetBoneVisible(m_flash_bone, FALSE, TRUE);
@@ -160,7 +160,7 @@ void CUIArtefactDetectorSimple::update()
 		if(m_flash_bone==BI_NONE)
 			setup_internals();
 
-		if(m_turn_off_flash_time && m_turn_off_flash_time<Device.dwTimeGlobal)
+		if(m_turn_off_flash_time && m_turn_off_flash_time<Device->dwTimeGlobal)
 			Flash (false, 0.0f);
 
 		firedeps		fd;
@@ -173,7 +173,7 @@ void CUIArtefactDetectorSimple::update()
 			m_on_off_light->set_active(true);
 
 		int frame = 0;
-		u32 clr					= m_pOnOfLAnim->CalculateRGB(Device.fTimeGlobal,frame);
+		u32 clr					= m_pOnOfLAnim->CalculateRGB(Device->fTimeGlobal,frame);
 		Fcolor					fclr;
 		fclr.set				(clr);
 		m_on_off_light->set_color(fclr);

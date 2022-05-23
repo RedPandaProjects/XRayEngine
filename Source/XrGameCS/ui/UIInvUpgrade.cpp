@@ -7,7 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #include "pch_script.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "../string_table.h"
 
 #include "UIInvUpgrade.h"
@@ -224,7 +224,7 @@ bool UIUpgrade::OnMouse( float x, float y, EUIMessages mouse_action )
 
 	if ( m_bCursorOverWindow )
 	{
-		//if( Device.dwTimeGlobal > ( m_dwFocusReceiveTime + 500 ) )
+		//if( Device->dwTimeGlobal > ( m_dwFocusReceiveTime + 500 ) )
 		highlight_relation( true );
 		if ( mouse_action == WINDOW_LBUTTON_DOWN )
 		{

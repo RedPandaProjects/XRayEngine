@@ -1,5 +1,5 @@
-// EffectorZoomInertion.cpp: инерция(покачивания) оружия в режиме
-//							 приближения
+// EffectorZoomInertion.cpp: пїЅпїЅпїЅпїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ) пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+//							 пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -15,7 +15,7 @@
 CEffectorZoomInertion::CEffectorZoomInertion	() : CEffectorCam(eCEZoom,100000.f)
 {
 	Load();
-	SetRndSeed		(Device.dwTimeContinual);
+	SetRndSeed		(Device->dwTimeContinual);
 	m_dwTimePassed	= 0;
 }
 
@@ -72,8 +72,8 @@ void CEffectorZoomInertion::SetParams	(float disp)
 	if(m_fFloatSpeed<m_fSpeedMin) 
 		m_fFloatSpeed = m_fSpeedMin;
 
-	//для того, чтоб сразу прошел пересчет направления
-	//движения прицела
+	//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if(!fis_zero(old_disp-m_fDispRadius,EPS))
 		m_fEpsilon = 2*m_fDispRadius;
 }
@@ -94,7 +94,7 @@ BOOL CEffectorZoomInertion::ProcessCam(SCamEffectorInfo& info)
 {
 	bool camera_moved = false;
 
-	//определяем двигал ли прицелом актер
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	if(!info.d.similar(m_vOldCameraDir, m_fCameraMoveEpsilon))
 		camera_moved = true;
 
@@ -125,7 +125,7 @@ BOOL CEffectorZoomInertion::ProcessCam(SCamEffectorInfo& info)
 	if(!camera_moved)
 		info.d.add(m_vCurrentPoint);
 
-	m_dwTimePassed += Device.dwTimeDelta;
+	m_dwTimePassed += Device->dwTimeDelta;
 
 	return TRUE;
 }

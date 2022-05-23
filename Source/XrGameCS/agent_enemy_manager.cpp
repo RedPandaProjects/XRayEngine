@@ -574,11 +574,11 @@ void CAgentEnemyManager::assign_wounded			()
 		assigned					|= mask;
 	}
 
-//	Msg								("[%6d] assigned = %x",Device.dwTimeGlobal,assigned);
+//	Msg								("[%6d] assigned = %x",Device->dwTimeGlobal,assigned);
 //	ENEMIES::iterator				I = m_enemies.begin();
 //	ENEMIES::iterator				E = m_enemies.end();
 //	for ( ; I != E; ++I)
-//		Msg							("[%6d] [%s] = %x",Device.dwTimeGlobal,*(*I).m_object->cName(),(*I).m_distribute_mask.get());
+//		Msg							("[%6d] [%s] = %x",Device->dwTimeGlobal,*(*I).m_object->cName(),(*I).m_distribute_mask.get());
 }
 
 void CAgentEnemyManager::distribute_enemies		()

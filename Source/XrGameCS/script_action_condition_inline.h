@@ -24,5 +24,5 @@ IC	CScriptActionCondition::CScriptActionCondition	(u32 dwFlags, double dTime)
 
 IC	void CScriptActionCondition::initialize			()
 {
-	m_tStartTime		= Device.dwTimeGlobal;
+	m_tStartTime		= Device->dwTimeGlobal;
 }

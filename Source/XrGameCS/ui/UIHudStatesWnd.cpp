@@ -18,7 +18,7 @@
 
 CUIHudStatesWnd::CUIHudStatesWnd()
 {
-	m_last_time = Device.dwTimeGlobal;
+	m_last_time = Device->dwTimeGlobal;
 	m_radia_self         = 0.0f;
 	m_radia_hit          = 0.0f;
 	m_lanim_name         = NULL;
@@ -192,9 +192,9 @@ void CUIHudStatesWnd::Update()
 	{
 		return;
 	}
-	/*if ( Device.dwTimeGlobal - m_last_time > 50 )
+	/*if ( Device->dwTimeGlobal - m_last_time > 50 )
 	{
-		m_last_time = Device.dwTimeGlobal;
+		m_last_time = Device->dwTimeGlobal;
 	}
 	*/
 	UpdateHealth( actor );
@@ -362,7 +362,7 @@ void CUIHudStatesWnd::UpdateZones()
 	}
 	m_radia_hit = m_zone_cur_power[ALife::infl_rad];
 
-/*	if ( Device.dwFrame % 20 == 0 )
+/*	if ( Device->dwFrame % 20 == 0 )
 	{
 		Msg(" self = %.2f   hit = %.2f", m_radia_self, m_radia_hit );
 	}*/
@@ -384,9 +384,9 @@ void CUIHudStatesWnd::UpdateZones()
 
 	for ( int i = 0; i < ALife::infl_max_count; ++i )
 	{
-		if ( Device.fTimeDelta < 1.0f )
+		if ( Device->fTimeDelta < 1.0f )
 		{
-			m_zone_cur_power[i] *= 0.9f * (1.0f - Device.fTimeDelta);
+			m_zone_cur_power[i] *= 0.9f * (1.0f - Device->fTimeDelta);
 		}
 		if ( m_zone_cur_power[i] < 0.01f )
 		{
@@ -395,7 +395,7 @@ void CUIHudStatesWnd::UpdateZones()
 	}
 
 	Fvector posf; 
-	posf.set( Device.vCameraPosition );
+	posf.set( Device->vCameraPosition );
 	Level().hud_zones_list->feel_touch_update( posf, m_zone_feel_radius_max );
 	
 	if ( Level().hud_zones_list->m_ItemInfos.size() == 0 )
@@ -419,7 +419,7 @@ void CUIHudStatesWnd::UpdateZones()
 		}
 */
 
-		Fvector P			= Device.vCameraPosition;
+		Fvector P			= Device->vCameraPosition;
 		P.y					-= 0.5f;
 		float dist_to_zone	= 0.0f;
 		float rad_zone		= 0.0f;
@@ -444,12 +444,12 @@ void CUIHudStatesWnd::UpdateZones()
 			if ( dist_to_zone < rad_zone )
 			{
 				fRelPow *= 0.3f;
-				fRelPow *= ( 2.5f - 2.0f * power ); // звук зависит от силы зоны
+				fRelPow *= ( 2.5f - 2.0f * power ); // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 			}
 		}
 		clamp( fRelPow, 0.0f, 1.0f );
 
-		//определить текущую частоту срабатывания сигнала
+		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		zone_info.cur_period = zone_type->freq.x + (zone_type->freq.y - zone_type->freq.x) * (fRelPow * fRelPow);
 		
 		//string256	buff_z;
@@ -462,7 +462,7 @@ void CUIHudStatesWnd::UpdateZones()
 		} 
 		else
 		{
-			zone_info.snd_time += Device.fTimeDelta;
+			zone_info.snd_time += Device->fTimeDelta;
 		}
 	} // for itb
 }

@@ -38,7 +38,7 @@ void CtaArtefactActivation::UpdateActivation()
 		return;
 
 	VERIFY(!ph_world->Processing());
-	m_cur_state_time				+=	Device.fTimeDelta;
+	m_cur_state_time				+=	Device->fTimeDelta;
 	if(m_cur_state_time				>=	m_activation_states[int(m_cur_activation_state)].m_time){
 		m_cur_activation_state		=	(EActivationStates)(int)(m_cur_activation_state+1);
 		

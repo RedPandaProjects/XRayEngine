@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////
 // ParticlesPlayer.cpp
-// интерфейс для проигрывания партиклов на объекте
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 ///////////////////////////////////////////////////////////////
 #include "stdafx.h"
 #include "ParticlesPlayer.h"
@@ -75,8 +75,8 @@ void CParticlesPlayer::LoadParticles(IKinematics* K)
 	m_Bones.clear();
 	
 
-	//считать список косточек и соответствующих
-	//офсетов  куда можно вешать партиклы
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ  пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	CInifile* ini		= K->LL_UserData();
 	if(ini&&ini->section_exist("particle_bones")){
 		bone_mask		= 0;
@@ -97,7 +97,7 @@ void CParticlesPlayer::LoadParticles(IKinematics* K)
 		m_Bones.push_back	(SBoneInfo(K->LL_GetBoneRoot(),Fvector().set(0,0,0)));
 	}
 }
-//уничтожение партиклов на net_Destroy
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ net_Destroy
 void	CParticlesPlayer::net_DestroyParticles	()
 {
 	VERIFY(m_self_object);
@@ -172,7 +172,7 @@ void CParticlesPlayer::StartParticles(const shared_str& ps_name, const Fmatrix& 
 
 		particles_info.life_time=auto_stop ? life_time : u32(-1);
 		xform.getHPB(particles_info.angles);
-		//начать играть партиклы
+		//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 		Fmatrix m;m.set(xform);
 		GetBonePos(object,it->index,it->offset,m.c);
@@ -216,7 +216,7 @@ void CParticlesPlayer::StopParticles(const shared_str& ps_name, u16 bone_id, boo
 	UpdateParticles();
 }
 
-//остановка партиклов, по истечении их времени жизни
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 void CParticlesPlayer::AutoStopParticles(const shared_str& ps_name, u16 bone_id,u32 life_time)
 {
 	if (BI_NONE==bone_id){
@@ -252,16 +252,16 @@ void CParticlesPlayer::UpdateParticles()
 		for (ParticlesInfoListIt p_it=b_info.particles.begin(); p_it!=b_info.particles.end(); p_it++){
 			SParticlesInfo& p_info	= *p_it;
 			if(!p_info.ps) continue;
-			//обновить позицию партиклов
+			//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 			Fmatrix xform;
 			xform.setHPB(p_info.angles.x,p_info.angles.y,p_info.angles.z);
 			GetBonePos(object,b_info.index,b_info.offset,xform.c);
 			p_info.ps->UpdateParent(xform, parent_vel);
 
-			//обновить время существования
+			//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 			if(p_info.life_time!=u32(-1))
 			{
-				if(p_info.life_time>Device.dwTimeDelta)	p_info.life_time-=Device.dwTimeDelta;
+				if(p_info.life_time>Device->dwTimeDelta)	p_info.life_time-=Device->dwTimeDelta;
 				else 
 				{
 					p_info.ps->Stop();

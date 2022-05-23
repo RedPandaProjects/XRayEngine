@@ -34,7 +34,7 @@ CUIFactionWarWnd::~CUIFactionWarWnd()
 
 void CUIFactionWarWnd::Reset()
 {
-	m_previous_time    = Device.dwTimeGlobal;
+	m_previous_time    = Device->dwTimeGlobal;
 	m_update_delay     = 3000;
 	m_max_member_count = 100;
 	m_max_resource     = 100;
@@ -220,9 +220,9 @@ void CUIFactionWarWnd::Update()
 	{
 		Reset();
 	}	
-	if ( Device.dwTimeGlobal - m_previous_time > m_update_delay )
+	if ( Device->dwTimeGlobal - m_previous_time > m_update_delay )
 	{
-		m_previous_time = Device.dwTimeGlobal;
+		m_previous_time = Device->dwTimeGlobal;
 		UpdateInfo();
 	}
 }

@@ -151,8 +151,8 @@ bool CScriptEntity::CheckObjectVisibility(const CGameObject *tpObject)
 	return				(m_monster->memory().visual().visible_now(tpObject));
 }
 
-//определяет видимость определенного типа объектов, 
-//заданного через section_name
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, 
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ section_name
 bool CScriptEntity::CheckTypeVisibility(const char* section_name)
 {
 	if (!m_monster)
@@ -242,7 +242,7 @@ void CScriptEntity::ProcessScripts()
 		VERIFY		(l_tpEntityAction);
 #ifdef _DEBUG
 //		if (!xr_strcmp("m_stalker_wounded",*object().cName()))
-//			Msg			("%6d Processing action : %s",Device.dwTimeGlobal,*l_tpEntityAction->m_tAnimationAction.m_caAnimationToPlay);
+//			Msg			("%6d Processing action : %s",Device->dwTimeGlobal,*l_tpEntityAction->m_tAnimationAction.m_caAnimationToPlay);
 #endif
 		
 		if (m_tpCurrentEntityAction != l_tpEntityAction)
@@ -255,7 +255,7 @@ void CScriptEntity::ProcessScripts()
 
 #ifdef _DEBUG
 //		if (!xr_strcmp("m_stalker_wounded",*object().cName()))
-//			Msg			("%6d Action completed : %s",Device.dwTimeGlobal,*l_tpEntityAction->m_tAnimationAction.m_caAnimationToPlay);
+//			Msg			("%6d Action completed : %s",Device->dwTimeGlobal,*l_tpEntityAction->m_tAnimationAction.m_caAnimationToPlay);
 #endif
 
 		vfFinishAction(l_tpEntityAction);
@@ -312,7 +312,7 @@ void CScriptEntity::ProcessScripts()
 		if (l_tpEntityAction->m_tMovementAction.m_bCompleted && !l_bCompleted)
 			object().callback(GameObject::eActionTypeMovement)(object().lua_game_object(),u32(eActionTypeMovement), -1);
 
-		// Установить выбранную анимацию
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		if (!l_tpEntityAction->m_tAnimationAction.m_bCompleted)
 			bfScriptAnimation	();
 
@@ -378,7 +378,7 @@ bool CScriptEntity::bfAssignSound(CScriptEntityAction *tpEntityAction)
 		if (!m_current_sound->_feedback())
 			if (!l_tSoundAction.m_bStartedToPlay) {
 #ifdef _DEBUG
-//				Msg									("%6d Starting sound %s",Device.dwTimeGlobal,*l_tSoundAction.m_caSoundToPlay);
+//				Msg									("%6d Starting sound %s",Device->dwTimeGlobal,*l_tSoundAction.m_caSoundToPlay);
 #endif
 				const Fmatrix	&l_tMatrix = GetUpdatedMatrix(l_tSoundAction.m_caBoneName,l_tSoundAction.m_tSoundPosition,l_tSoundAction.m_tSoundAngles);
 				m_current_sound->play_at_pos(m_object,l_tMatrix.c,l_tSoundAction.m_bLooped ? sm_Looped : 0);
@@ -455,7 +455,7 @@ bool CScriptEntity::bfAssignMovement(CScriptEntityAction *tpEntityAction)
 			R_ASSERT(l_tpGameObject);
 #endif
 			m_monster->movement().set_path_type(MovementManager::ePathTypeLevelPath);
-//			Msg			("%6d Object %s, position [%f][%f][%f]",Device.dwTimeGlobal,*l_tpGameObject->cName(),VPUSH(l_tpGameObject->Position()));
+//			Msg			("%6d Object %s, position [%f][%f][%f]",Device->dwTimeGlobal,*l_tpGameObject->cName(),VPUSH(l_tpGameObject->Position()));
 			m_monster->movement().detail().set_dest_position(l_tpGameObject->Position());
 			m_monster->movement().set_level_dest_vertex(l_tpGameObject->ai_location().level_vertex_id());
 			break;
@@ -587,7 +587,7 @@ bool CScriptEntity::bfScriptAnimation()
 
 #ifdef DEBUG
 			//if (!xr_strcmp("m_stalker_wounded",*object().cName()))
-			//	Msg				("%6d Playing animation : %s , Object %s",Device.dwTimeGlobal,*GetCurrentAction()->m_tAnimationAction.m_caAnimationToPlay, *object().cName());
+			//	Msg				("%6d Playing animation : %s , Object %s",Device->dwTimeGlobal,*GetCurrentAction()->m_tAnimationAction.m_caAnimationToPlay, *object().cName());
 #endif
 			m_tpScriptAnimation = m_tpNextAnimation;
 			IKinematicsAnimated	*skeleton_animated = smart_cast<IKinematicsAnimated*>(object().Visual());

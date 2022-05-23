@@ -73,9 +73,9 @@ void CControlledActor::update_turn()
 		speed	= SPEED_MIN + speed_factor * (SPEED_MAX - SPEED_MIN);
 	
 		if (from_right(cam_target_yaw,cam_current_yaw)) 
-			m_actor->cam_Active()->Move	(kLEFT,		speed * Device.fTimeDelta);
+			m_actor->cam_Active()->Move	(kLEFT,		speed * Device->fTimeDelta);
 		else 
-			m_actor->cam_Active()->Move	(kRIGHT,	speed * Device.fTimeDelta);
+			m_actor->cam_Active()->Move	(kRIGHT,	speed * Device->fTimeDelta);
 	
 	}
 
@@ -90,9 +90,9 @@ void CControlledActor::update_turn()
 		speed	= SPEED_MIN + speed_factor * (SPEED_MAX - SPEED_MIN);
 
 		if (from_right(cam_target_pitch,cam_current_pitch)) 
-			m_actor->cam_Active()->Move	(kDOWN,		speed * Device.fTimeDelta);
+			m_actor->cam_Active()->Move	(kDOWN,		speed * Device->fTimeDelta);
 		else 
-			m_actor->cam_Active()->Move	(kUP,		speed * Device.fTimeDelta);
+			m_actor->cam_Active()->Move	(kUP,		speed * Device->fTimeDelta);
 	}
 }
 

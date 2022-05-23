@@ -9,7 +9,7 @@ CPHGeometryOwner::CPHGeometryOwner()
 	m_mass_center.set(0,0,0);
 	contact_callback=ContactShotMark;
 	object_contact_callback=NULL;
-	ul_material=GMLib.GetMaterialIdx("objects\\small_box");
+	ul_material=GameMaterialLibrary->GetMaterialIdx("objects\\small_box");
 	m_group=NULL;
 	m_phys_ref_object=NULL;
 }

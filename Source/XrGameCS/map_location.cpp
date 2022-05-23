@@ -18,7 +18,7 @@
 #include "alife_object_registry.h"
 #include "relation_registry.h"
 #include "InventoryOwner.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "string_table.h"
 #include "level_changer.h"
 #include "actor_memory.h"
@@ -117,7 +117,7 @@ void CMapLocation::LoadSpot(LPCSTR type, bool bReload)
 	if ( m_ttl > 0 )
 	{
 		m_flags.set( eTTL, TRUE);
-		m_actual_time = Device.dwTimeGlobal+m_ttl*1000;
+		m_actual_time = Device->dwTimeGlobal+m_ttl*1000;
 	}
 
 	s = g_uiSpotXml->ReadAttrib(path_base, 0, "pos_to_actor", NULL);
@@ -253,12 +253,12 @@ void CMapLocation::CalcPosition()
 
 const Fvector2& CMapLocation::CalcDirection()
 {
-//.	if(m_cached.m_updatedFrame==Device.dwFrame) 
+//.	if(m_cached.m_updatedFrame==Device->dwFrame) 
 //.		return m_cached.m_Direction;
 
 	if(Level().CurrentViewEntity()&&Level().CurrentViewEntity()->ID()==m_objectID )
 	{
-		m_cached.m_Direction.set(Device.vCameraDirection.x,Device.vCameraDirection.z);
+		m_cached.m_Direction.set(Device->vCameraDirection.x,Device->vCameraDirection.z);
 	}else
 	{
 		CObject* pObject =  Level().Objects.net_Find(m_objectID);
@@ -274,7 +274,7 @@ const Fvector2& CMapLocation::CalcDirection()
 		CObject* pObject =  Level().Objects.net_Find(m_objectID);
 		if(pObject){
 			Fvector2 dcp,obj_pos;
-			dcp.set(Device.vCameraPosition.x, Device.vCameraPosition.z);
+			dcp.set(Device->vCameraPosition.x, Device->vCameraPosition.z);
 			obj_pos.set(pObject->Position().x, pObject->Position().z);
 			m_cached.m_Direction.sub(obj_pos, dcp);
 			m_cached.m_Direction.normalize_safe();
@@ -300,15 +300,15 @@ void CMapLocation::CalcLevelName()
 
 bool CMapLocation::Update() //returns actual
 {
-	R_ASSERT(m_cached.m_updatedFrame!=Device.dwFrame);
+	R_ASSERT(m_cached.m_updatedFrame!=Device->dwFrame);
 		
 
 	if(	m_flags.test(eTTL) )
 	{
-		if( m_actual_time < Device.dwTimeGlobal)
+		if( m_actual_time < Device->dwTimeGlobal)
 		{
 			m_cached.m_Actuality		= false;
-			m_cached.m_updatedFrame		= Device.dwFrame;
+			m_cached.m_updatedFrame		= Device->dwFrame;
 			return						m_cached.m_Actuality;
 		}
 	}
@@ -325,7 +325,7 @@ bool CMapLocation::Update() //returns actual
 	}else
 		m_cached.m_Actuality			= false;
 
-	m_cached.m_updatedFrame				= Device.dwFrame;
+	m_cached.m_updatedFrame				= Device->dwFrame;
 	return								m_cached.m_Actuality;
 }
 
@@ -565,7 +565,7 @@ u16	CMapLocation::AddRef()
 {
 	++m_refCount; 
 	if(	m_flags.test(eTTL) ){
-		m_actual_time = Device.dwTimeGlobal+m_ttl*1000;
+		m_actual_time = Device->dwTimeGlobal+m_ttl*1000;
 	}
 
 	return m_refCount;

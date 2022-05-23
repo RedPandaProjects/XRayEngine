@@ -225,7 +225,7 @@ void CUIStatic::Update()
 	if (m_lanim_clr.m_lanim)
 	{
 		if(m_lanim_clr.m_lanim_start_time<0.0f)		ResetClrAnimation	();
-		float t = Device.dwTimeContinual/1000.0f;
+		float t = Device->dwTimeContinual/1000.0f;
 
 		if (t < m_lanim_clr.m_lanim_start_time)	// consider animation delay
 			return;
@@ -255,7 +255,7 @@ void CUIStatic::Update()
 		if(m_lanim_xform.m_lanim_start_time<0.0f){
 			ResetXformAnimation();
 		}
-		float t = Device.dwTimeGlobal/1000.0f;
+		float t = Device->dwTimeGlobal/1000.0f;
 
 		if(	m_lanim_xform.m_lanimFlags.test(LA_CYCLIC) || 
 			t - m_lanim_xform.m_lanim_start_time < m_lanim_xform.m_lanim->Length_sec() )
@@ -282,12 +282,12 @@ void CUIStatic::Update()
 
 void CUIStatic::ResetXformAnimation()
 {
-	m_lanim_xform.m_lanim_start_time = Device.dwTimeGlobal/1000.0f;
+	m_lanim_xform.m_lanim_start_time = Device->dwTimeGlobal/1000.0f;
 }
 
 void CUIStatic::ResetClrAnimation()
 {
-	m_lanim_clr.m_lanim_start_time = Device.dwTimeContinual/1000.0f + m_lanim_clr.m_lanim_delay_time/1000.0f;
+	m_lanim_clr.m_lanim_start_time = Device->dwTimeContinual/1000.0f + m_lanim_clr.m_lanim_delay_time/1000.0f;
 }
 
 void CUIStatic::SetClrAnimDelay(float delay){
@@ -298,7 +298,7 @@ bool CUIStatic::IsClrAnimStoped(){
 	if (m_lanim_clr.m_lanimFlags.test(LA_CYCLIC) || m_lanim_clr.m_lanim_start_time<0.0f)
 		return false;
 	
-	float t = Device.dwTimeContinual/1000.0f;
+	float t = Device->dwTimeContinual/1000.0f;
 	if(t-m_lanim_clr.m_lanim_start_time < m_lanim_clr.m_lanim->Length_sec())
 		return false;
 	else 
@@ -344,7 +344,7 @@ void CUIStatic::TextureClipper(float offset_x, float offset_y, Frect* pClipRect,
 	Frect			out_rect;
 
 
-	//проверить попадает ли изображение в окно
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ
 	if(rect.left>parent_rect.right || rect.right<parent_rect.left ||
 		rect.top>parent_rect.bottom ||  rect.bottom<parent_rect.top)
 	{
@@ -359,9 +359,9 @@ void CUIStatic::TextureClipper(float offset_x, float offset_y, Frect* pClipRect,
 	out_x = rect.left;
 	out_y = rect.top;
 
-	// out_rect - прямоугольная область в которую будет выводиться
-	// изображение, вычисляется с учетом положения относительно родительского
-	// окна, а также размеров прямоугольника на текстуре с изображением.
+	// out_rect - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	// пїЅпїЅпїЅпїЅ, пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
 
 	out_rect.intersection(parent_rect,rect);
 	out_rect.left	-= out_x;

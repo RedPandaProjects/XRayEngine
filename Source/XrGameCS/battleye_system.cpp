@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include "battleye_system.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "MainMenu.h"
 
 #ifdef BATTLEYE

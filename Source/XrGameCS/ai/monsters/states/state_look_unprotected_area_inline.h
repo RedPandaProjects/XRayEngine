@@ -57,7 +57,7 @@ TEMPLATE_SPECIALIZATION
 bool CStateMonsterLookToUnprotectedAreaAbstract::check_completion()
 {	
 	if (data.time_out !=0) {
-		if (time_state_started + data.time_out < Device.dwTimeGlobal) return true;
+		if (time_state_started + data.time_out < Device->dwTimeGlobal) return true;
 	} else 	if (!object->control().direction().is_turning()) return true;
 
 	return false;

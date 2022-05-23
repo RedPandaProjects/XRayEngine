@@ -89,7 +89,7 @@ void CUIScrollBar::InitScrollBar(Fvector2 pos, float length, bool bIsHorizontal,
 }
 
 
-//корректировка размеров скроллера
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 void CUIScrollBar::SetWidth(float width)
 {
 	if(width<=0.0f) width = 1.0f;
@@ -134,7 +134,7 @@ void CUIScrollBar::UpdateScrollBar()
 {
 	if (IsShown())
 	{
-		//уcтановить размер и положение каретки
+		//пїЅcпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		if(m_iMaxPos==m_iMinPos)	m_iMaxPos++;
 		float box_sz				= float(m_ScrollWorkArea)*float(m_iPageSize ? m_iPageSize : 1)/float(m_iMaxPos-m_iMinPos);
 		if(IsRelevant())
@@ -178,11 +178,11 @@ u32 last_hold_time =0;
 
 bool CUIScrollBar::OnKeyboardHold(int dik)
 {
-	if ( dik == MOUSE_1 && (last_hold_time + m_hold_delay) < Device.dwTimeContinual)//100
+	if ( dik == MOUSE_1 && (last_hold_time + m_hold_delay) < Device->dwTimeContinual)//100
 	{
 		if ( OnMouseDownEx() )
 		{
-			last_hold_time = Device.dwTimeContinual;
+			last_hold_time = Device->dwTimeContinual;
 			return true;
 		}
 	}
@@ -336,7 +336,7 @@ void CUIScrollBar::SendMessage(CUIWindow *pWnd, s16 msg, void *pData)
 	{
 		if ( msg == SCROLLBOX_MOVE )
 		{
-			//вычислить новое положение прокрутки
+			//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 			ClampByViewRect();
 			if ( m_bIsHorizontal )
 			{
@@ -417,7 +417,7 @@ bool CUIScrollBar::IsRelevant()
 
 void CUIScrollBar::Draw()
 {
-	//нарисовать фоновую подложку
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	Frect rect;
 	GetAbsoluteRect(rect);
 	if(m_bIsHorizontal)

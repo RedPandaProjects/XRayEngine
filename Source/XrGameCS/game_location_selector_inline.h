@@ -13,7 +13,7 @@
 	typename _vertex_id_type\
 >
 
-#define CGameLocationSelector CBaseLocationSelector<CGameGraph,_VertexEvaluator,_vertex_id_type>
+#define CGameLocationSelector CBaseLocationSelector<IGameGraph,_VertexEvaluator,_vertex_id_type>
 
 TEMPLATE_SPECIALIZATION
 IC	CGameLocationSelector::CBaseLocationSelector	(CRestrictedObject *object, CLocationManager *location_manager) :
@@ -35,7 +35,7 @@ IC	void CGameLocationSelector::set_selection_type	(const ESelectionType selectio
 }
 
 TEMPLATE_SPECIALIZATION
-IC	void CGameLocationSelector::reinit			(const CGameGraph *graph)
+IC	void CGameLocationSelector::reinit			(const IGameGraph *graph)
 {
 	inherited::reinit				(graph);
 	m_selection_type				= eSelectionTypeRandomBranching;
@@ -84,11 +84,11 @@ IC	void CGameLocationSelector::select_random_location(const _vertex_id_type star
 	_Graph::const_iterator		i,e;
 	m_graph->begin				(start_vertex_id,i,e);
 	for ( ; i != e; ++i) {
-		// * не соответствует предыдещей вершине
+		// * пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		if ((*i).vertex_id() == m_previous_vertex_id)
 			continue;
 
-		// * вершина на текущем уровне?
+		// * пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ?
 		if ((m_graph->vertex((*i).vertex_id())->level_id() != ai().level_graph().level_id()))
 			continue;
 
@@ -98,7 +98,7 @@ IC	void CGameLocationSelector::select_random_location(const _vertex_id_type star
 
 		const u8				*curr_types = m_graph->vertex((*i).vertex_id())->vertex_type();
 
-		// * подходит по маске
+		// * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 		for (I = B; I != E; ++I)
 			if (m_graph->mask((*I).tMask,curr_types))
 				++branch_factor;
@@ -116,11 +116,11 @@ IC	void CGameLocationSelector::select_random_location(const _vertex_id_type star
 		bool					found = false;
 		m_graph->begin			(start_vertex_id,i,e);
 		for ( ; i != e; ++i) {
-			// * не соответствует предыдещей вершине
+			// * пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 			if ((*i).vertex_id() == m_previous_vertex_id)
 				continue;
 
-			// * вершина на текущем уровне?
+			// * пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ?
 			if ((m_graph->vertex((*i).vertex_id())->level_id() != ai().level_graph().level_id()))
 				continue;
 
@@ -130,7 +130,7 @@ IC	void CGameLocationSelector::select_random_location(const _vertex_id_type star
 
 			const u8			*curr_types = m_graph->vertex((*i).vertex_id())->vertex_type();
 
-			// * подходит по маске
+			// * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 			for (I = B; I != E; ++I)
 				if (m_graph->mask((*I).tMask,curr_types)) {
 					if (choice != branch_factor) {

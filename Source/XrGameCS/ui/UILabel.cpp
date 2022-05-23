@@ -53,9 +53,9 @@ void CUILabel::Update()
 	CUIFrameLineWnd::Update();
 	if (m_lanim)
 	{
-		if(m_lainm_start_time<0.0f) m_lainm_start_time = Device.fTimeGlobal; 
+		if(m_lainm_start_time<0.0f) m_lainm_start_time = Device->fTimeGlobal; 
 		int frame;
-		u32 clr					= m_lanim->CalculateRGB(Device.fTimeGlobal-m_lainm_start_time,frame);
+		u32 clr					= m_lanim->CalculateRGB(Device->fTimeGlobal-m_lainm_start_time,frame);
 		SetColor				(clr);
 		SetTextColor			(clr);
 	}

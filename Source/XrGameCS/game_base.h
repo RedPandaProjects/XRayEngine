@@ -2,8 +2,8 @@
 
 #include "game_base_space.h"
 #include "script_export_space.h"
-#include "alife_space.h"
-#include "gametype_chooser.h"
+#include "../xrEngine/alife_space.h"
+#include "../xrEngine/gametype_chooser.h"
 
 #pragma pack(push,1)
 

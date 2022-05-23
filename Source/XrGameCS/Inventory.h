@@ -70,15 +70,15 @@ public:
 	bool					Action				(s32 cmd, u32 flags);
 	void					ActiveWeapon		(u32 slot);
 	void					Update				();
-	// Ищет на поясе аналогичный IItem
+	// пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ IItem
 	PIItem					Same				(const PIItem pIItem, bool bSearchRuck) const;
-	// Ищет на поясе IItem для указанного слота
+	// пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ IItem пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	PIItem					SameSlot			(const u32 slot, PIItem pIItem, bool bSearchRuck) const;
-	// Ищет на поясе или в рюкзаке IItem с указанным именем (cName())
+	// пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ IItem пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (cName())
 	PIItem					Get					(const char *name, bool bSearchRuck) const;
-	// Ищет на поясе или в рюкзаке IItem с указанным именем (id)
+	// пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ IItem пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (id)
 	PIItem					Get					(const u16  id,	 bool bSearchRuck) const;
-	// Ищет на поясе или в рюкзаке IItem с указанным CLS_ID
+	// пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ IItem пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ CLS_ID
 	PIItem					Get					(CLASS_ID cls_id,  bool bSearchRuck) const;
 	PIItem					GetAny				(const char *name) const;//search both (ruck and belt)
 	PIItem					item				(CLASS_ID cls_id) const;
@@ -115,7 +115,7 @@ public:
 	TIItemContainer			m_activ_last_items;
 	TISlotArr				m_slots;
 
-	//возвращает все кроме PDA в слоте и болта
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ PDA пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ
 	void				AddAvailableItems			(TIItemContainer& items_container, bool for_trade) const;
 
 	float				GetMaxWeight				() const				{return m_fMaxWeight;}
@@ -130,15 +130,15 @@ public:
 
 
 	u32					ModifyFrame					() const					{ return m_dwModifyFrame; }
-	void				InvalidateState				()							{ m_dwModifyFrame = Device.dwFrame; }
+	void				InvalidateState				()							{ m_dwModifyFrame = Device->dwFrame; }
 	void				Items_SetCurrentEntityHud	(bool current_entity);
 	bool				isBeautifulForActiveSlot	(CInventoryItem *pIItem);
 protected:
 	void					UpdateDropTasks		();
 	void					UpdateDropItem		(PIItem pIItem);
 
-	// Активный слот и слот который станет активным после смены
-    //значения совпадают в обычном состоянии (нет смены слотов)
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ)
 	u32 				m_iActiveSlot;
 	u32 				m_iNextActiveSlot;
 	u32 				m_iPrevActiveSlot;
@@ -148,21 +148,21 @@ protected:
 
 	CInventoryOwner*	m_pOwner;
 
-	//флаг, показывающий наличие пояса в инвенторе
+	//пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	bool				m_bBeltUseful;
-	//флаг, допускающий использование слотов
+	//пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	bool				m_bSlotsUseful;
 
-	// максимальный вес инвентаря
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	float				m_fMaxWeight;
-	// текущий вес в инвентаре
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	float				m_fTotalWeight;
 
-	// Максимальное кол-во объектов
-	//на поясе
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	//пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 ///	u32					m_iMaxBelt;	= outfit->get_artefact_count();
 
-	//кадр на котором произошло последнее изменение в инвенторе
+	//пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	u32					m_dwModifyFrame;
 
 	bool				m_drop_last_frame;

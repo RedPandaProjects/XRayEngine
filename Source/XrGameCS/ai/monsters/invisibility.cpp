@@ -42,7 +42,7 @@ void CInvisibility::deactivate()
 void CInvisibility::start_blink()
 {
 	m_blink				= true;
-	m_time_start_blink	= Device.dwTimeGlobal;
+	m_time_start_blink	= Device->dwTimeGlobal;
 	m_time_last_blink	= 0;
 }
 
@@ -58,7 +58,7 @@ void CInvisibility::update_blink()
 {
 	if (!m_blink) return;
 	
-	u32 cur_time = Device.dwTimeGlobal;
+	u32 cur_time = Device->dwTimeGlobal;
 
 	// check for whole blink time
 	if (m_time_start_blink + timeBlink < cur_time) {
@@ -81,8 +81,8 @@ void CInvisibility::frame_update()
 	update_blink();
 
 	if (!m_manual) {
-		if (m_active)	m_energy -= m_speed * Device.fTimeDelta;
-		else			m_energy += m_speed * Device.fTimeDelta;
+		if (m_active)	m_energy -= m_speed * Device->fTimeDelta;
+		else			m_energy += m_speed * Device->fTimeDelta;
 		clamp			(m_energy,0.f,1.f);
 	}
 }

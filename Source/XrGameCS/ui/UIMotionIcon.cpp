@@ -130,9 +130,9 @@ void CUIMotionIcon::Update()
 		if(cur_pos!=m_luminosity){
 			float _diff = _abs(m_luminosity-cur_pos);
 			if(m_luminosity>cur_pos){
-				cur_pos				+= _min(len*Device.fTimeDelta, _diff);
+				cur_pos				+= _min(len*Device->fTimeDelta, _diff);
 			}else{
-				cur_pos				-= _min(len*Device.fTimeDelta, _diff);
+				cur_pos				-= _min(len*Device->fTimeDelta, _diff);
 			}
 			clamp(cur_pos, m_noise_progress.GetRange_min(), m_noise_progress.GetRange_max());
 			m_luminosity_progress.SetProgressPos(cur_pos);

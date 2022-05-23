@@ -27,7 +27,7 @@ void __cdecl callback_serverkey(int keyid, void* outbuf, void *userdata)
 	game_sv_TeamDeathmatch* gmTDM = smart_cast<game_sv_TeamDeathmatch*>(pServer->game);
 	game_sv_ArtefactHunt* gmAhunt = smart_cast<game_sv_ArtefactHunt*>(pServer->game);
 
-	LPCSTR time_str = InventoryUtilities::GetTimeAsString( Device.dwTimeGlobal, InventoryUtilities::etpTimeToSecondsAndDay ).c_str();
+	LPCSTR time_str = InventoryUtilities::GetTimeAsString( Device->dwTimeGlobal, InventoryUtilities::etpTimeToSecondsAndDay ).c_str();
 
 	string4096		game_version;
 

@@ -104,17 +104,17 @@ void CZombie::BoneCallback(CBoneInstance *B)
 	CZombie*	this_class = static_cast<CZombie*>(B->callback_param());
 
 	START_PROFILE("Zombie/Bones Update");
-	this_class->Bones.Update(B, Device.dwTimeGlobal);
+	this_class->Bones.Update(B, Device->dwTimeGlobal);
 	STOP_PROFILE("AI/Zombie/Bones Update");
 }
 
 
 void CZombie::vfAssignBones()
 {
-	// Установка callback на кости
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ callback пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	bone_spine =	&smart_cast<IKinematics*>(Visual())->LL_GetBoneInstance(smart_cast<IKinematics*>(Visual())->LL_BoneID("bip01_spine"));
 	bone_head =		&smart_cast<IKinematics*>(Visual())->LL_GetBoneInstance(smart_cast<IKinematics*>(Visual())->LL_BoneID("bip01_head"));
-	//if(!PPhysicsShell())//нельзя ставить колбеки, если создан физ шел - у него стоят свои колбеки!!!
+	//if(!PPhysicsShell())//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ - пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ!!!
 	//{
 		//bone_spine->set_callback(BoneCallback,this);
 		//bone_head->set_callback(BoneCallback,this);
@@ -147,13 +147,13 @@ void	CZombie::Hit								(SHit* pHDS)
 
 	if (!g_Alive()) return;
 	
-	if ((pHDS->hit_type == ALife::eHitTypeFireWound) && (Device.dwFrame != last_hit_frame)) {
-		if (!com_man().ta_is_active() && (time_resurrect + TIME_RESURRECT_RESTORE < Device.dwTimeGlobal) && (conditions().GetHealth() < health_death_threshold)) {
+	if ((pHDS->hit_type == ALife::eHitTypeFireWound) && (Device->dwFrame != last_hit_frame)) {
+		if (!com_man().ta_is_active() && (time_resurrect + TIME_RESURRECT_RESTORE < Device->dwTimeGlobal) && (conditions().GetHealth() < health_death_threshold)) {
 			if (conditions().GetHealth() < (health_death_threshold - float(fake_death_count - fake_death_left) * health_death_threshold / fake_death_count)) {
 				active_triple_idx			= u8(Random.randI(FAKE_DEATH_TYPES_COUNT));
 				com_man().ta_activate		(anim_triple_death[active_triple_idx]);
 				move().stop					();
-				time_dead_start				= Device.dwTimeGlobal;
+				time_dead_start				= Device->dwTimeGlobal;
 				
 				if (fake_death_left == 0)	fake_death_left = 1;
 				fake_death_left--;
@@ -161,7 +161,7 @@ void	CZombie::Hit								(SHit* pHDS)
 		} 
 	}
 
-	last_hit_frame = Device.dwFrame;
+	last_hit_frame = Device->dwFrame;
 }
 
 
@@ -170,12 +170,12 @@ void CZombie::shedule_Update(u32 dt)
 	inherited::shedule_Update(dt);
 
 	if (time_dead_start != 0) {
-		if (time_dead_start + TIME_FAKE_DEATH < Device.dwTimeGlobal) {
+		if (time_dead_start + TIME_FAKE_DEATH < Device->dwTimeGlobal) {
 			time_dead_start  = 0;
 
 			com_man().ta_pointbreak();	
 
-			time_resurrect = Device.dwTimeGlobal;
+			time_resurrect = Device->dwTimeGlobal;
 		}
 	}
 }

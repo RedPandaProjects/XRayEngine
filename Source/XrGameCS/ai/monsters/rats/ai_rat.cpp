@@ -27,7 +27,7 @@
 
 #include "../../../rat_state_manager.h"
 #include "../../../rat_states.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "../ai_monster_squad_manager.h"
 #include "../ai_monster_squad.h"
 #include "../../../patrol_path_storage.h"
@@ -266,7 +266,7 @@ BOOL CAI_Rat::net_Spawn	(CSE_Abstract* DC)
 	int								iPointCount	= (int)movement().locations().vertex_types().size();
 	for (int j=0; j<iPointCount; ++j)
 		if (ai().game_graph().mask(movement().locations().vertex_types()[j].tMask,ai().game_graph().vertex(ai_location().game_vertex_id())->vertex_type())) {
-			m_time_to_change_graph_point= Device.dwTimeGlobal + ::Random32.random(60000) + 60000;
+			m_time_to_change_graph_point= Device->dwTimeGlobal + ::Random32.random(60000) + 60000;
 			break;
 		}
 
@@ -482,7 +482,7 @@ void CAI_Rat::UpdateCL			()
 
 	if (!Useful()) {
 		inherited::UpdateCL		();
-		Exec_Look				(Device.fTimeDelta);
+		Exec_Look				(Device->fTimeDelta);
 
 		CMonsterSquad *squad	= monster_squad().get_squad(this);
 
@@ -514,7 +514,7 @@ void CAI_Rat::UpdatePositionAnimation()
 {
 
 	Fmatrix						l_tSavedTransform = XFORM();
-	m_fTimeUpdateDelta			= Device.fTimeDelta;
+	m_fTimeUpdateDelta			= Device->fTimeDelta;
 	move						(m_bCanAdjustSpeed,m_bStraightForward);
 	float						y,p,b;
 	XFORM().getHPB				(y,p,b);

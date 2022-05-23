@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "associative_vector.h"
+#include "../xrEngine/associative_vector.h"
 
 class CStalkerVelocityCollection;
 

@@ -14,7 +14,7 @@
 #include "ui/TeamInfo.h"
 #include <dinput.h>
 
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 
 #include "UITeamPanels.h"
 

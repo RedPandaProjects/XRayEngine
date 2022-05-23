@@ -14,7 +14,7 @@
 #include "level_graph.h"
 #include "../xrEngine/customhud.h"
 #include "ai_space.h"
-#include "hudmanager.h"
+#include "ui_base.h"
 #include "game_graph.h"
 #include "game_sv_single.h"
 #include "custommonster.h"
@@ -42,7 +42,8 @@
 #include "graph_engine.h"
 #include "debug_renderer.h"
 #include "smart_cover_object.h"
-
+#include "HUDManager.h"
+#include "..\XrEngine\level_graph_space.h"
 void CLevelGraph::draw_nodes	()
 {
 	CGameObject*	O	= smart_cast<CGameObject*> (Level().CurrentEntity());
@@ -57,7 +58,7 @@ void CLevelGraph::draw_nodes	()
 
 	u32 ID				= O->ai_location().level_vertex_id();
 
-	CGameFont* F		= HUD().Font().pFontDI;
+	CGameFont* F		= UI()->Font()->pFontDI;
 	F->SetHeightI		(.02f);
 	F->OutI				(0.f,0.5f,"%f,%f,%f",VPUSH(P));
 //	float				x,z;
@@ -86,7 +87,7 @@ void CLevelGraph::draw_nodes	()
 
 	//////////////////////////////////////////////////////////////////////////
 	Fvector min_position,max_position;
-	max_position = min_position = Device.vCameraPosition;
+	max_position = min_position = Device->vCameraPosition;
 	min_position.sub(30.f);
 	max_position.add(30.f);
 	
@@ -113,7 +114,7 @@ void CLevelGraph::draw_nodes	()
 
 		u32 Nid			= vertex_id(I);
 
-		if (Device.vCameraPosition.distance_to(PC)>30) continue;
+		if (Device->vCameraPosition.distance_to(PC)>30) continue;
 
 		float			sr	= header().cell_size();
 		if (::Render->ViewBase.testSphere_dirty(PC,sr)) {
@@ -158,7 +159,7 @@ void CLevelGraph::draw_nodes	()
 				Fvector		T;
 				Fvector4	S;
 				T.set		(PC); T.y+=0.3f;
-				Device.mFullTransform.transform	(S,T);
+				Device->mFullTransform.transform	(S,T);
 				if (S.z < 0 || S.z < 0)												continue;
 				if (S.x < -1.f || S.x > 1.f || S.y<-1.f || S.x>1.f)					continue;
 				F->SetHeightI	(0.05f/_sqrt(_abs(S.w)));
@@ -171,8 +172,8 @@ void CLevelGraph::draw_nodes	()
 
 void CLevelGraph::draw_restrictions	()
 {
-	CSpaceRestrictionManager::SPACE_RESTRICTIONS::const_iterator	I = Level().space_restriction_manager().restrictions().begin();
-	CSpaceRestrictionManager::SPACE_RESTRICTIONS::const_iterator	E = Level().space_restriction_manager().restrictions().end();
+	auto	I = Level().space_restriction_manager().restrictions().begin();
+	auto	E = Level().space_restriction_manager().restrictions().end();
 
 	CRandom R;
 
@@ -223,7 +224,7 @@ void CLevelGraph::draw_covers	()
 	float					half_size = ai().level_graph().header().cell_size()*.5f;
 	xr_vector<CCoverPoint*>	nearest;
 	nearest.reserve			(1000);
-	ai().cover_manager().covers().nearest(Device.vCameraPosition,5.f,nearest);
+	ai().cover_manager().covers().nearest(Device->vCameraPosition,5.f,nearest);
 	xr_vector<CCoverPoint*>::const_iterator	I = nearest.begin();
 	xr_vector<CCoverPoint*>::const_iterator	E = nearest.end();
 	for ( ; I != E; ++I) {

@@ -87,7 +87,7 @@ void CHelicopter::UpdateHeliParticles	()
 		if (m_lanim)
 		{
 			int frame;
-			u32 clr					= m_lanim->CalculateBGR(Device.fTimeGlobal,frame); // тючтЁр•рхЄ т ЇюЁьрЄх BGR
+			u32 clr					= m_lanim->CalculateBGR(Device->fTimeGlobal,frame); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ BGR
 			Fcolor					fclr;
 			fclr.set				((float)color_get_B(clr),(float)color_get_G(clr),(float)color_get_R(clr),1.f);
 			fclr.mul_rgb			(m_light_brightness/255.f);
@@ -162,8 +162,8 @@ float CHelicopter::GetMaxVelocity()
 //////////////////////Start By JoHnY///////////////////////
 void CHelicopter::SetLinearAcc(float LAcc_fw, float LAcc_bw)
 {
-	m_movement.LinearAcc_fw = LAcc_fw;	//ускорение разгона
-	m_movement.LinearAcc_bk = LAcc_bw;	//ускорение торможения
+	m_movement.LinearAcc_fw = LAcc_fw;	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	m_movement.LinearAcc_bk = LAcc_bw;	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 }
 //////////////////////End By JoHnY/////////////////////////
@@ -307,8 +307,8 @@ void CHelicopter::DieHelicopter()
 	Fvector prev_pos				= PositionStack.front().vPosition;
 	lin_vel.sub						(XFORM().c,prev_pos);
 
-	if(Device.dwTimeGlobal != PositionStack.front().dwTime)
-		lin_vel.div((Device.dwTimeGlobal-PositionStack.front().dwTime)/1000.0f);
+	if(Device->dwTimeGlobal != PositionStack.front().dwTime)
+		lin_vel.div((Device->dwTimeGlobal-PositionStack.front().dwTime)/1000.0f);
 	
 	lin_vel.mul						(m_death_lin_vel_k);
 	PPhysicsShell()->set_LinearVel	(lin_vel);

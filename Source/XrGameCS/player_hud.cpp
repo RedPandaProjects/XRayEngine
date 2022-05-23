@@ -133,7 +133,7 @@ void attachable_hud_item::set_bone_visible(const shared_str& bone_name, BOOL bVi
 
 void attachable_hud_item::update(bool bForce)
 {
-	if(!bForce && m_upd_firedeps_frame==Device.dwFrame)	return;
+	if(!bForce && m_upd_firedeps_frame==Device->dwFrame)	return;
 	bool is_16x9 = UI()->is_16_9_mode();
 	
 	if(!!m_measures.m_prop_flags.test(hud_item_measures::e_16x9_mode_now)!=is_16x9)
@@ -145,7 +145,7 @@ void attachable_hud_item::update(bool bForce)
 	m_attach_offset.translate_over	(m_measures.m_item_attach[0]);
 
 	m_parent->calc_transform		(m_attach_place_idx, m_attach_offset, m_item_transform);
-	m_upd_firedeps_frame			= Device.dwFrame;
+	m_upd_firedeps_frame			= Device->dwFrame;
 
 	IKinematicsAnimated* ka			=	m_model->dcast_PKinematicsAnimated();
 	if(ka)
@@ -638,7 +638,7 @@ void player_hud::update_inertion(Fmatrix& trans)
 		}
 
 		// tend to forward
-		st_last_dir.mad						(diff_dir,TENDTO_SPEED*Device.fTimeDelta);
+		st_last_dir.mad						(diff_dir,TENDTO_SPEED*Device->fTimeDelta);
 		origin.mad							(diff_dir,ORIGIN_OFFSET);
 
 		// pitch compensation

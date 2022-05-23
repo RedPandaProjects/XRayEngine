@@ -107,7 +107,7 @@ void CStateMonsterAttackAbstract::execute()
 	}
 	
 	if (!selected) {
-		// определить тип атаки
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 		bool b_melee = false; 
 
 		if (prev_substate == eStateAttack_Melee) {
@@ -118,7 +118,7 @@ void CStateMonsterAttackAbstract::execute()
 			b_melee = true;
 		}
 
-		// установить целевое состояние
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		if (b_melee) {  
 			// check if enemy is behind me for a long time
 			// [TODO] make specific state and replace run_away state (to avoid ratation jumps)
@@ -177,7 +177,7 @@ TEMPLATE_SPECIALIZATION
 bool CStateMonsterAttackAbstract::check_find_enemy_state()
 {
 	// check state find enemy
-	if (object->EnemyMan.get_enemy_time_last_seen() + FIND_ENEMY_DELAY < Device.dwTimeGlobal) return true;
+	if (object->EnemyMan.get_enemy_time_last_seen() + FIND_ENEMY_DELAY < Device->dwTimeGlobal) return true;
 	return false;
 }
 
@@ -188,8 +188,8 @@ bool CStateMonsterAttackAbstract::check_run_away_state()
 
 	if (prev_substate == eStateAttack_RunAway) {
 		if (!get_state(eStateAttack_RunAway)->check_completion()) return true;
-		else m_time_next_run_away = Device.dwTimeGlobal + 10000;
-	} else if ((object->EnemyMan.get_enemy() != Actor()) && object->Morale.is_despondent() && (m_time_next_run_away < Device.dwTimeGlobal)) {
+		else m_time_next_run_away = Device->dwTimeGlobal + 10000;
+	} else if ((object->EnemyMan.get_enemy() != Actor()) && object->Morale.is_despondent() && (m_time_next_run_away < Device->dwTimeGlobal)) {
 		return true;
 	}
 

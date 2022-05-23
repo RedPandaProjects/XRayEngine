@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "alife_space.h"
+#include "../xrEngine/alife_space.h"
 #include "hit.h"
 #include "PHDestroyable.h"
 #include "CharacterPhysicsSupport.h"
@@ -37,7 +37,7 @@
 extern	BOOL death_anim_debug;
 #endif // DEBUG
 
-#include "../xrEngine/device.h"
+#include "../xrEngine/Device.h"
 
 #define USE_SMART_HITS
 #define USE_IK
@@ -199,9 +199,9 @@ void CCharacterPhysicsSupport::in_NetSpawn( CSE_Abstract* e )
 			ka->PlayCycle( "death_init" );
 
 	}else if( !m_EntityAlife.animation_movement_controlled( ) )
-		ka->PlayCycle( "death_init" );///непонятно зачем это вообще надо запускать
-									  ///этот хак нужен, потому что некоторым монстрам 
-									  ///анимация после спона, может быть вообще не назначена
+		ka->PlayCycle( "death_init" );///пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+									  ///пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 
+									  ///пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	pK->CalculateBones_Invalidate( );
 	pK->CalculateBones( TRUE );
 	
@@ -462,14 +462,14 @@ const u32 hit_valide_time = 1000;
 void CCharacterPhysicsSupport::in_Hit( SHit &H, bool is_killing )
 {
 	m_sv_hit = H;
-	m_hit_valide_time = Device.dwTimeGlobal + hit_valide_time;
+	m_hit_valide_time = Device->dwTimeGlobal + hit_valide_time;
 	if( m_EntityAlife.use_simplified_visual	( ) || esRemoved == m_eState )
 		return;
 	if( m_flags.test( fl_block_hit ) )
 	{
 		VERIFY2( !m_EntityAlife.g_Alive( ),
 			make_string("entity [%s][%d] is dead", m_EntityAlife.Name(), m_EntityAlife.ID()).c_str());
-		if( Device.dwTimeGlobal - m_EntityAlife.GetLevelDeathTime( ) >= 2000 )
+		if( Device->dwTimeGlobal - m_EntityAlife.GetLevelDeathTime( ) >= 2000 )
 			m_flags.set(fl_block_hit,FALSE);
 		else return;
 	}
@@ -566,7 +566,7 @@ void CCharacterPhysicsSupport::in_UpdateCL( )
 	if( m_pPhysicsShell )
 	{
 		VERIFY( m_pPhysicsShell->isFullActive( ) );
-		m_pPhysicsShell->SetRagDoll( );//Теперь шела относиться к классу объектов cbClassRagDoll
+		m_pPhysicsShell->SetRagDoll( );//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ cbClassRagDoll
 		
 		if( !is_imotion(m_interactive_motion ) )//!m_flags.test(fl_use_death_motion)
 			m_pPhysicsShell->InterpolateGlobalTransform( &mXFORM );
@@ -766,7 +766,7 @@ void	CCharacterPhysicsSupport::	destroy_animation_collision		( )
 }
 void CCharacterPhysicsSupport::create_animation_collision		( )
 {
-	m_physics_shell_animated_time_destroy = Device.dwTimeGlobal + physics_shell_animated_destroy_delay;
+	m_physics_shell_animated_time_destroy = Device->dwTimeGlobal + physics_shell_animated_destroy_delay;
 	if( m_physics_shell_animated )
 		return;
 	m_physics_shell_animated = xr_new<physics_shell_animated>( &m_EntityAlife, true );
@@ -778,7 +778,7 @@ void CCharacterPhysicsSupport::update_animation_collision		( )
 	{
 			animation_collision( )->update( mXFORM );
 			//animation_collision( )->shell()->set_LinearVel( movement()->GetVelocity() );
-			if( Device.dwTimeGlobal > m_physics_shell_animated_time_destroy )
+			if( Device->dwTimeGlobal > m_physics_shell_animated_time_destroy )
 						destroy_animation_collision		( );
 	}
 }
@@ -1151,13 +1151,13 @@ if( dbg_draw_ragdoll_spawn )
 
 
 
-	//if( false &&  anim_mov_ctrl && anim_mov_blend && anim_mov_blend->blend != CBlend::eFREE_SLOT &&  anim_mov_blend->timeCurrent + Device.fTimeDelta*anim_mov_blend->speed < anim_mov_blend->timeTotal-SAMPLE_SPF-EPS)//.
+	//if( false &&  anim_mov_ctrl && anim_mov_blend && anim_mov_blend->blend != CBlend::eFREE_SLOT &&  anim_mov_blend->timeCurrent + Device->fTimeDelta*anim_mov_blend->speed < anim_mov_blend->timeTotal-SAMPLE_SPF-EPS)//.
 	//{
 	//	const Fmatrix sv_xform = mXFORM;
 	//	mXFORM.set( start_xform );
 	//	//anim_mov_blend->blendPower = 1;
-	//	anim_mov_blend->timeCurrent  += Device.fTimeDelta * anim_mov_blend->speed;
-	//	m_pPhysicsShell->AnimToVelocityState( Device.fTimeDelta, 2 * default_l_limit, 10.f * default_w_limit );
+	//	anim_mov_blend->timeCurrent  += Device->fTimeDelta * anim_mov_blend->speed;
+	//	m_pPhysicsShell->AnimToVelocityState( Device->fTimeDelta, 2 * default_l_limit, 10.f * default_w_limit );
 	//	mXFORM.set( sv_xform );
 	//}
 	IKinematics* K=smart_cast<IKinematics*>( m_EntityAlife.Visual( ) );
@@ -1361,7 +1361,7 @@ bool	CCharacterPhysicsSupport::	can_drop_active_weapon	( )
 
 void		CCharacterPhysicsSupport::in_Die( )
 {
-	if( m_hit_valide_time < Device.dwTimeGlobal || !m_sv_hit.is_valide() )
+	if( m_hit_valide_time < Device->dwTimeGlobal || !m_sv_hit.is_valide() )
 	{
 		if( m_EntityAlife.use_simplified_visual( ) )
 			return;

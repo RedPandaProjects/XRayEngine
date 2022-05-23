@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "graph_abstract.h"
+#include "../xrEngine/graph_abstract.h"
 #include "patrol_point.h"
 
 class CPatrolPath : public CGraphAbstractSerialize<CPatrolPoint,float,u32> {
@@ -31,7 +31,7 @@ public:
 public:
 							CPatrolPath		(shared_str name = "");
 	virtual					~CPatrolPath	();
-			CPatrolPath		&load_raw		(const CLevelGraph *level_graph, const CGameLevelCrossTable *cross, const CGameGraph *game_graph, IReader &stream);
+			CPatrolPath		&load_raw		(const class ILevelGraph *level_graph, const class  IGameLevelCrossTable *cross, const class IGameGraph *game_graph, IReader &stream);
 	IC		const CVertex	*point			(shared_str name) const;
 	template <typename T>
 	IC		const CVertex	*point			(const Fvector &position, const T &evaluator) const;

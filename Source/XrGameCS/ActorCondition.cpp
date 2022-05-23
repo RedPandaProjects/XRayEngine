@@ -14,7 +14,7 @@
 #include "game_object_space.h"
 #include "ui\UIVideoPlayerWnd.h"
 #include "script_callback_ex.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "weapon.h"
 
 #define MAX_SATIETY					1.0f
@@ -58,7 +58,7 @@ CActorCondition::CActorCondition(CActor *object) :
 	m_zone_danger[ALife::infl_acid]	= 0.0f;
 	m_zone_danger[ALife::infl_psi]	= 0.0f;
 	m_zone_danger[ALife::infl_electra]= 0.0f;
-	m_f_time_affected = Device.fTimeGlobal;
+	m_f_time_affected = Device->fTimeGlobal;
 }
 
 CActorCondition::~CActorCondition()
@@ -82,7 +82,7 @@ void CActorCondition::LoadCondition(LPCSTR entity_section)
 	m_fAccelK					= pSettings->r_float(section,"accel_k");
 	m_fSprintK					= pSettings->r_float(section,"sprint_k");
 
-	//порог силы и здоровья меньше которого актер начинает хромать
+	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	m_fLimpingHealthBegin		= pSettings->r_float(section,	"limping_health_begin");
 	m_fLimpingHealthEnd			= pSettings->r_float(section,	"limping_health_end");
 	R_ASSERT					(m_fLimpingHealthBegin<=m_fLimpingHealthEnd);
@@ -158,7 +158,7 @@ float CActorCondition::GetZoneMaxPower( ALife::EHitType hit_type ) const
 }
 
 
-//вычисление параметров с ходом времени
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 #include "UI.h"
 #include "HUDManager.h"
 
@@ -285,7 +285,7 @@ void CActorCondition::UpdateCondition()
 void CActorCondition::AffectDamage_InjuriousMaterial()
 {
 	float one = 0.1f;
-	float tg  = Device.fTimeGlobal;
+	float tg  = Device->fTimeGlobal;
 
 	float damage = GetInjuriousMaterialDamage();
 	if ( damage < EPS )
@@ -309,7 +309,7 @@ void CActorCondition::AffectDamage_InjuriousMaterial()
 		m_f_time_affected += one;
 
 		SHit HDS = SHit( damage, 0.0f, Fvector().set(0,1,0), NULL, BI_NONE, Fvector().set(0,0,0), 0.0f, ALife::eHitTypeRadiation );
-///		Msg( "_____ damage = %.4f     frame=%d", damage, Device.dwFrame );
+///		Msg( "_____ damage = %.4f     frame=%d", damage, Device->dwFrame );
 
 		HDS.GenHeader(GE_HIT, m_object->ID());
 
@@ -328,7 +328,7 @@ float CActorCondition::GetInjuriousMaterialDamage()
 
 	if(mat_injurios!=GAMEMTL_NONE_IDX)
 	{
-		const SGameMtl* mtl		= GMLib.GetMaterialByIdx(mat_injurios);
+		const SGameMtl* mtl		= GameMaterialLibrary->GetMaterialByIdx(mat_injurios);
 		return					mtl->fInjuriousSpeed;
 	}else
 		return 0.0f;
@@ -373,7 +373,7 @@ void CActorCondition::UpdateSatiety()
 
 	}
 		
-	//сытость увеличивает здоровье только если нет открытых ран
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
 	if(!m_bIsBleeding)
 	{
 		m_fDeltaHealth += CanBeHarmed() ? 
@@ -381,7 +381,7 @@ void CActorCondition::UpdateSatiety()
 					: 0;
 	}
 
-	//коэффициенты уменьшения восстановления силы от сытоти и радиации
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	float radiation_power_k		= 1.f;
 	float satiety_power_k		= 1.f;
 			
@@ -398,7 +398,7 @@ CWound* CActorCondition::ConditionHit(SHit* pHDS)
 	return inherited::ConditionHit(pHDS);
 }
 
-//weight - "удельный" вес от 0..1
+//weight - "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" пїЅпїЅпїЅ пїЅпїЅ 0..1
 void CActorCondition::ConditionJump(float weight)
 {
 	float power			=	m_fJumpPower;

@@ -3,11 +3,11 @@
 //	Created by Roman E. Marchenko, vortex@gsc-game.kiev.ua
 //	Copyright 2004. GSC Game World
 //	---------------------------------------------------------------------------
-//  Оберточка над LightAnimLibrary, в которой реализуется более удобная
-//	работа с анимацией, и прикручен апдейт времени специфичный для UI: так
-//	как UI апдейтится не на кажом кадре, то кормить функции интерполяции
-//	Device.fTimeDelta нельзя - анимация тормознутая получается. Приходится 
-//	постоянно считать время между апдейтами.
+//  пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ LightAnimLibrary, пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//	пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ UI: пїЅпїЅпїЅ
+//	пїЅпїЅпїЅ UI пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//	Device->fTimeDelta пїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 
+//	пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
 //=============================================================================
 
 #include "stdafx.h"
@@ -24,7 +24,7 @@ CUIColorAnimatorWrapper::CUIColorAnimatorWrapper()
 		reverse				(false),
 		kRev				(0.0f)
 {
-	prevGlobalTime	= Device.dwTimeContinual/1000.0f;
+	prevGlobalTime	= Device->dwTimeContinual/1000.0f;
 	currColor		= 0xffff0000;
 }
 
@@ -36,7 +36,7 @@ CUIColorAnimatorWrapper::CUIColorAnimatorWrapper(u32 *colorToModify)
 	reverse				(false),
 	kRev				(0.0f)
 {
-	prevGlobalTime	= Device.dwTimeContinual/1000.0f;
+	prevGlobalTime	= Device->dwTimeContinual/1000.0f;
 	color			= colorToModify;
 	currColor		= 0xffff0000;
 }
@@ -51,7 +51,7 @@ CUIColorAnimatorWrapper::CUIColorAnimatorWrapper(const shared_str &animationName
 		kRev				(0.0f)
 {
 	VERIFY(colorAnimation);
-	prevGlobalTime	= Device.dwTimeContinual/1000.0f;
+	prevGlobalTime	= Device->dwTimeContinual/1000.0f;
 	currColor		= 0xffff0000;
 }
 
@@ -88,21 +88,21 @@ void CUIColorAnimatorWrapper::Update()
 				currColor		= colorAnimation->CalculateBGR(std::abs(animationTime - kRev), currFrame);
 				//Msg("name: %s, color: %x, frame: %d", *colorAnimation->cName,currColor, currFrame);
 				currColor		= color_rgba(color_get_B(currColor), color_get_G(currColor), color_get_R(currColor), color_get_A(currColor));
-				// обновим время
-				animationTime	+= Device.dwTimeContinual/1000.0f - prevGlobalTime;
+				// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+				animationTime	+= Device->dwTimeContinual/1000.0f - prevGlobalTime;
 			}
 			else
 			{
-				// В любом случае (при любом ФПС) последним кадром должен быть последний кадр анимации
+				// пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ) пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 				currColor	= colorAnimation->CalculateBGR((colorAnimation->iFrameCount - 1) / colorAnimation->fFPS - kRev, currFrame);
 				currColor	= color_rgba(color_get_B(currColor), color_get_G(currColor), color_get_R(currColor), color_get_A(currColor));
-				// Индицируем конец анимации
+				// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 				isDone = true;
 			}
 		}
 		else
 		{
-			currColor	= colorAnimation->CalculateBGR(Device.dwTimeContinual/1000.0f, currFrame);
+			currColor	= colorAnimation->CalculateBGR(Device->dwTimeContinual/1000.0f, currFrame);
 			currColor	= color_rgba(color_get_B(currColor), color_get_G(currColor), color_get_R(currColor), color_get_A(currColor));
 		}
 
@@ -112,14 +112,14 @@ void CUIColorAnimatorWrapper::Update()
 		}
 	}
 
-	prevGlobalTime = Device.dwTimeContinual/1000.0f;
+	prevGlobalTime = Device->dwTimeContinual/1000.0f;
 }
 
 //////////////////////////////////////////////////////////////////////////
 
 void CUIColorAnimatorWrapper::Reset()
 {
-	prevGlobalTime	= Device.dwTimeContinual/1000.0f;
+	prevGlobalTime	= Device->dwTimeContinual/1000.0f;
 	animationTime	= 0;
 	isDone			= false;
 }
@@ -157,7 +157,7 @@ void CUIColorAnimatorWrapper::Reverese(bool value)
 }
 
 void CUIColorAnimatorWrapper::GoToEnd(){
-	prevGlobalTime	= Device.dwTimeContinual/1000.0f;
+	prevGlobalTime	= Device->dwTimeContinual/1000.0f;
 	this->currFrame = colorAnimation->iFrameCount;
 	animationTime = colorAnimation->iFrameCount / colorAnimation->fFPS;
 	this->isDone = false;

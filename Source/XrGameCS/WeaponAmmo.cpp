@@ -51,7 +51,7 @@ void CCartridge::Load(LPCSTR section, u8 LocalAmmoType)
 
 	m_flags.set			(cfExplosive, pSettings->r_bool(section, "explosive"));
 
-	bullet_material_idx		=  GMLib.GetMaterialIdx(WEAPON_MATERIAL_NAME);
+	bullet_material_idx		=  GameMaterialLibrary->GetMaterialIdx(WEAPON_MATERIAL_NAME);
 	VERIFY	(u16(-1)!=bullet_material_idx);
 	VERIFY	(param_s.fWallmarkSize>0);
 
@@ -131,14 +131,14 @@ void CWeaponAmmo::OnH_B_Independent(bool just_before_destroy)
 
 bool CWeaponAmmo::Useful() const
 {
-	// Если IItem еще не полностью использованый, вернуть true
+	// пїЅпїЅпїЅпїЅ IItem пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ true
 	return !!m_boxCurr;
 }
 /*
 s32 CWeaponAmmo::Sort(PIItem pIItem) 
 {
-	// Если нужно разместить IItem после this - вернуть 1, если
-	// перед - -1. Если пофиг то 0.
+	// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ IItem пїЅпїЅпїЅпїЅпїЅ this - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ 1, пїЅпїЅпїЅпїЅ
+	// пїЅпїЅпїЅпїЅпїЅ - -1. пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ 0.
 	CWeaponAmmo *l_pA = smart_cast<CWeaponAmmo*>(pIItem);
 	if(!l_pA) return 0;
 	if(xr_strcmp(cNameSect(), l_pA->cNameSect())) return 0;
@@ -154,7 +154,7 @@ bool CWeaponAmmo::Get(CCartridge &cartridge)
 	cartridge.param_s = cartridge_param;
 
 	cartridge.m_flags.set(CCartridge::cfTracer ,m_tracer);
-	cartridge.bullet_material_idx = GMLib.GetMaterialIdx(WEAPON_MATERIAL_NAME);
+	cartridge.bullet_material_idx = GameMaterialLibrary->GetMaterialIdx(WEAPON_MATERIAL_NAME);
 	cartridge.m_InvShortName = NameShort();
 	--m_boxCurr;
 	if(m_pInventory)m_pInventory->InvalidateState();

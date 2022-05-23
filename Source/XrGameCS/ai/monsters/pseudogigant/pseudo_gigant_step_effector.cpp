@@ -13,14 +13,14 @@ CPseudogigantStepEffector::CPseudogigantStepEffector(float time, float amp, floa
 
 BOOL CPseudogigantStepEffector::ProcessCam(SCamEffectorInfo& info)
 {
-	fLifeTime -= Device.fTimeDelta; 
+	fLifeTime -= Device->fTimeDelta; 
 	if(fLifeTime<0) 
 		return FALSE;
 
-	// процент оставшегося времени
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	float time_left_perc = fLifeTime / total;
 
-	// Инициализация
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	Fmatrix	Mdef;
 	Mdef.identity		();
 	Mdef.j.set			(info.n);
@@ -28,7 +28,7 @@ BOOL CPseudogigantStepEffector::ProcessCam(SCamEffectorInfo& info)
 	Mdef.i.crossproduct	(info.n, info.d);
 	Mdef.c.set			(info.p);
 
-	float period_all	= period_number * PI_MUL_2;		// макс. значение цикла
+	float period_all	= period_number * PI_MUL_2;		// пїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	float k				= 1 - time_left_perc + EPS_L + (1 - power);
 	float cur_amp		= max_amp * (PI / 180) / (10 * k * k);
 
@@ -37,7 +37,7 @@ BOOL CPseudogigantStepEffector::ProcessCam(SCamEffectorInfo& info)
 	dangle.y = cur_amp		* _cos(period_all/2 * (1.0f - time_left_perc));
 	dangle.z = cur_amp/4	* _sin(period_all/4	* (1.0f - time_left_perc));
 
-	// Установить углы смещения
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	Fmatrix		R;
 	R.setHPB	(dangle.x,dangle.y,dangle.z);
 

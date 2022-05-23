@@ -118,7 +118,7 @@ bool CActor::OnReceiveInfo(shared_str info_id) const
 
 	if(!HUD().GetUI())
 		return false;
-	//только если находимся в режиме single
+	//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ single
 	CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(HUD().GetUI()->UIGame());
 	if(!pGameSP) return false;
 
@@ -139,7 +139,7 @@ void CActor::OnDisableInfo(shared_str info_id) const
 	if(!HUD().GetUI())
 		return;
 
-	//только если находимся в режиме single
+	//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ single
 	CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(HUD().GetUI()->UIGame());
 	if(!pGameSP) return;
 
@@ -149,7 +149,7 @@ void CActor::OnDisableInfo(shared_str info_id) const
 
 void  CActor::ReceivePhrase		(DIALOG_SHARED_PTR& phrase_dialog)
 {
-	//только если находимся в режиме single
+	//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ single
 	CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(HUD().GetUI()->UIGame());
 	if(!pGameSP) return;
 
@@ -169,7 +169,7 @@ void   CActor::UpdateAvailableDialogs	(CPhraseDialogManager* partner)
 		for(KNOWN_INFO_VECTOR::const_iterator it = CInventoryOwner::m_known_info_registry->registry().objects_ptr()->begin();
 			CInventoryOwner::m_known_info_registry->registry().objects_ptr()->end() != it; ++it)
 		{
-			//подгрузить кусочек информации с которым мы работаем
+			//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 			CInfoPortion info_portion;
 			info_portion.Load((*it).info_id);
 
@@ -178,7 +178,7 @@ void   CActor::UpdateAvailableDialogs	(CPhraseDialogManager* partner)
 		}
 	}
 
-	//добавить актерский диалог собеседника
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	CInventoryOwner* pInvOwnerPartner = smart_cast<CInventoryOwner*>(partner); VERIFY(pInvOwnerPartner);
 	
 	for(u32 i = 0; i<pInvOwnerPartner->CharacterInfo().ActorDialogs().size(); i++)
@@ -197,11 +197,11 @@ void CActor::TryToTalk()
 
 void CActor::RunTalkDialog(CInventoryOwner* talk_partner, bool disable_break)
 {
-	//предложить поговорить с нами
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ
 	if(talk_partner->OfferTalk(this))
 	{	
 		StartTalk(talk_partner);
-		//только если находимся в режиме single
+		//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ single
 		CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(HUD().GetUI()->UIGame());
 		if(pGameSP)
 		{
@@ -248,7 +248,7 @@ void CActor::AddGameNews_deffered	 (GAME_NEWS_DATA& news_data, u32 delay)
 	//*d = news_data;
 	m_defferedMessages.push_back( SDefNewsMsg() );
 	m_defferedMessages.back().news_data = d;
-	m_defferedMessages.back().time = Device.dwTimeGlobal+delay;
+	m_defferedMessages.back().time = Device->dwTimeGlobal+delay;
 	std::sort(m_defferedMessages.begin(), m_defferedMessages.end() );
 }
 
@@ -257,7 +257,7 @@ void CActor::UpdateDefferedMessages()
 	while( m_defferedMessages.size() )
 	{
 		SDefNewsMsg& M = m_defferedMessages.back();
-		if(M.time <=Device.dwTimeGlobal)
+		if(M.time <=Device->dwTimeGlobal)
 		{
 			AddGameNews					(*M.news_data);		
 			xr_delete					(M.news_data);

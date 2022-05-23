@@ -5,7 +5,7 @@
 #include "hudmanager.h"
 #include "ui/UIMultiTextStatic.h"
 #include "ui/UIXmlInit.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "string_table.h"
 
 #include "InventoryOwner.h"
@@ -162,7 +162,7 @@ SDrawStaticStruct* CUIGameCustom::AddCustomStatic			(LPCSTR id, bool bSingleInst
 	xml_init.InitStatic				(*m_msgs_xml, id, 0, sss.m_static);
 	float ttl						= m_msgs_xml->ReadAttribFlt(id, 0, "ttl", -1);
 	if(ttl>0.0f)
-		sss.m_endTime				= Device.fTimeGlobal + ttl;
+		sss.m_endTime				= Device->fTimeGlobal + ttl;
 
 	return &sss;
 }
@@ -285,7 +285,7 @@ void SDrawStaticStruct::destroy()
 bool SDrawStaticStruct::IsActual()
 {
 	if(m_endTime<0) return true;
-	return Device.fTimeGlobal < m_endTime;
+	return Device->fTimeGlobal < m_endTime;
 }
 
 void SDrawStaticStruct::Draw()

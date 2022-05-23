@@ -8,7 +8,7 @@
 
 #include "../xrEngine/xr_object.h"
 #include "xrServer_Space.h"
-#include "alife_space.h"
+#include "../xrEngine/alife_space.h"
 #include "UsableScriptObject.h"
 #include "script_binder.h"
 #include "Hit.h"
@@ -60,7 +60,7 @@ class CGameObject :
 	ALife::_STORY_ID				m_story_id;
 	animation_movement_controller	*m_anim_mov_ctrl;
 protected:
-	//время удаления объекта
+	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	bool					m_bObjectRemoved;
 public:
 	CGameObject();
@@ -129,7 +129,7 @@ public:
 	virtual	BOOL			BonePassBullet		(int boneID) { return FALSE; }
 
 
-	//игровое имя объекта
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	virtual LPCSTR			Name                () const;
 	
 	//virtual void			OnH_A_Independent	();

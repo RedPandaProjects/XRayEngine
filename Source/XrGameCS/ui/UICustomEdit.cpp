@@ -106,7 +106,7 @@ void CUICustomEdit::SendMessage(CUIWindow* pWnd, s16 msg, void* pData)
 {
 //	if(pWnd == GetParent())
 //	{
-		//кто-то другой захватил клавиатуру
+		//пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		if ( msg == WINDOW_KEYBOARD_CAPTURE_LOST )
 		{
 			m_bInputFocus = false;
@@ -173,7 +173,7 @@ void CUICustomEdit::Update()
 
 	if ( !ec().get_key_state( text_editor::ks_force ) )
 	{
-		m_last_key_state_time = Device.dwTimeGlobal;
+		m_last_key_state_time = Device->dwTimeGlobal;
 	}
 	else
 	{

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "xrServer.h"
-#include "LevelGameDef.h"
+#include "../xrEngine/LevelGameDef.h"
 #include "script_process.h"
 #include "xrServer_Objects_ALife_Monsters.h"
 #include "script_engine.h"
@@ -635,7 +635,7 @@ void game_sv_GameState::GenerateGameMessage (NET_Packet &P)
 void game_sv_GameState::u_EventGen(NET_Packet& P, u16 type, u16 dest)
 {
 	P.w_begin	(M_EVENT);
-	P.w_u32		(Level().timeServer());//Device.TimerAsync());
+	P.w_u32		(Level().timeServer());//Device->TimerAsync());
 	P.w_u16		(type);
 	P.w_u16		(dest);
 }
@@ -1030,7 +1030,7 @@ void game_sv_GameState::OnRoundStart			()
 		}
 	};
 	rpointsBlocked.clear			();
-}// старт раунда
+}// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
 void game_sv_GameState::OnRoundEnd()
 { 
@@ -1048,7 +1048,7 @@ void game_sv_GameState::OnRoundEnd()
 	{
 		m_bFastRestart = true;
 	}
-}// конец раунда
+}// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
 void game_sv_GameState::SaveMapList				()
 {

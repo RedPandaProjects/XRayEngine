@@ -361,7 +361,7 @@ void transition::on_animation_end		()
 	m_planner->m_storage.set_property(m_state_from, false);
 	m_planner->m_storage.set_property(m_state_to, true);
 
-	m_planner->last_transition_time(Device.dwTimeGlobal);
+	m_planner->last_transition_time(Device->dwTimeGlobal);
 }
 
 //////////////////////////////////////////////////////////////////////////

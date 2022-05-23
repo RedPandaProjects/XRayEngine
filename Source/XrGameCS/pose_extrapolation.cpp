@@ -6,16 +6,16 @@ using namespace extrapolation;
 
 void	points::update( const Fmatrix &m )
 {
-	if( last_update == Device.dwTimeGlobal )
+	if( last_update == Device->dwTimeGlobal )
 		return;
-	m_points.push_back( point().set( pose().set( m ), Device.fTimeGlobal ) );
-	last_update = Device.dwTimeGlobal;
+	m_points.push_back( point().set( pose().set( m ), Device->fTimeGlobal ) );
+	last_update = Device->dwTimeGlobal;
 }
 
 void	points::init	( const Fmatrix &m )
 {
-	m_points.fill_in( point().set( pose().set( m ), Device.fTimeGlobal ) );
-	last_update = Device.dwTimeGlobal;
+	m_points.fill_in( point().set( pose().set( m ), Device->fTimeGlobal ) );
+	last_update = Device->dwTimeGlobal;
 }
 
 

@@ -10,7 +10,7 @@
 #define RAT_STATE_MANAGER_H_INCLUDED
 
 #include <boost/noncopyable.hpp>
-#include "associative_vector.h"
+#include "../xrEngine/associative_vector.h"
 
 class rat_state_base;
 class CAI_Rat;

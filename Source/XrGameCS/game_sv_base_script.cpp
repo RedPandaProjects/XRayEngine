@@ -13,7 +13,7 @@
 #include "xr_time.h"
 #include "UI/UIGameTutorial.h"
 #include "string_table.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 
 using namespace luabind;
 

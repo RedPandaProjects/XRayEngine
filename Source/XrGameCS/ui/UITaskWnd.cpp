@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "UITaskWnd.h"
 #include "UIMapWnd.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 #include "UIXmlInit.h"
 #include "UIStatic.h"
 #include "UI3tButton.h"
@@ -461,7 +461,7 @@ void CUITaskItem::Update()
 	inherited::Update();
 	if ( m_owner && m_bCursorOverWindow && show_hint_can )
 	{
-		if ( Device.dwTimeGlobal > ( m_dwFocusReceiveTime + m_hint_wt ) )
+		if ( Device->dwTimeGlobal > ( m_dwFocusReceiveTime + m_hint_wt ) )
 		{
 			show_hint = true;
 			return;

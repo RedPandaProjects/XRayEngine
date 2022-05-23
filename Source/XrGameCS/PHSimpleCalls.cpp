@@ -41,7 +41,7 @@ void CPHCallOnStepCondition::set_time_interval(u32 time)
 }
 void CPHCallOnStepCondition::set_global_time(float time)
 {
-	float time_interval=Device.fTimeGlobal-time;
+	float time_interval=Device->fTimeGlobal-time;
 	if(time_interval<0.f)set_step(ph_world->m_steps_num);
 	set_time_interval(time_interval);
 }

@@ -147,7 +147,7 @@ void CFlare::UpdateCL()
 
 		SetCondition			(1.0f - _c/m_work_time_sec);
 
-		u32 clr					= light_lanim->CalculateBGR(Device.fTimeGlobal,frame); 
+		u32 clr					= light_lanim->CalculateBGR(Device->fTimeGlobal,frame); 
 		
 		fclr.set				((float)color_get_B(clr),(float)color_get_G(clr),(float)color_get_R(clr),1.f);
 		fclr.mul_rgb			(fBrightness/255.f);

@@ -56,7 +56,7 @@ void CMonsterSoundMemory::HearSound(const SoundElem &s)
 	if (DOOR_OPENING			<= s.type) return;
 	if ((s.type == MONSTER_WALKING) && !s.who) return;
 
-	// поиск в массиве звука
+	// пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	xr_vector<SoundElem>::iterator it;
 
 	bool b_sound_replaced = false;
@@ -95,7 +95,7 @@ void CMonsterSoundMemory::GetSound(SoundElem &s, bool &bDangerous)
 {
 	VERIFY(!Sounds.empty());
 
-	// возврат самого опасного
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	s = GetSound();
 
 	if (s.type > WEAPON_EMPTY_CLICKING) bDangerous = false;
@@ -118,13 +118,13 @@ struct pred_remove_nonactual_sounds {
 
 	bool operator() (const SoundElem &x) {
 
-		// удалить звуки от объектов, перешедших в оффлайн	
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ	
 		if (x.who && x.who->getDestroy()) return true;
 
-		// удалить 'старые' звуки
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ 'пїЅпїЅпїЅпїЅпїЅпїЅ' пїЅпїЅпїЅпїЅпїЅ
 		if (x.time < new_time)	return true;
 
-		// удалить звуки от неживых объектов
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		if (x.who) {
 			const CEntityAlive *pE = smart_cast<const CEntityAlive*> (x.who);
 			if (pE && !pE->g_Alive()) return true;
@@ -137,20 +137,20 @@ struct pred_remove_nonactual_sounds {
 
 void CMonsterSoundMemory::UpdateHearing()
 {
-	// удаление устаревших звуков
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	Sounds.erase	(
 		std::remove_if(
 			Sounds.begin(),
 			Sounds.end(),
 			pred_remove_nonactual_sounds(
-				Device.dwTimeGlobal - time_memory
+				Device->dwTimeGlobal - time_memory
 			)
 		),
 		Sounds.end()
 	);
 
-	// пересчитать value
-	for (xr_vector<SoundElem>::iterator I = Sounds.begin(); I != Sounds.end(); ++I) I->CalcValue(Device.dwTimeGlobal, monster->Position());
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ value
+	for (xr_vector<SoundElem>::iterator I = Sounds.begin(); I != Sounds.end(); ++I) I->CalcValue(Device->dwTimeGlobal, monster->Position());
 
 	// update help sound
 	if (m_time_help_sound + time_help_sound_remember < time()) m_time_help_sound = 0;
@@ -188,7 +188,7 @@ struct pred_remove_relcase {
 
 void CMonsterSoundMemory::remove_links(CObject *O)
 {
-	// удаление устаревших звуков
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	Sounds.erase	(
 		std::remove_if(
 			Sounds.begin(),

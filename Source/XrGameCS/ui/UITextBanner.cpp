@@ -1,5 +1,5 @@
 //=============================================================================
-//  Красивый текстовый баннер с множеством стилей
+//  пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 //=============================================================================
 
 #include "stdafx.h"
@@ -40,12 +40,12 @@ void CUITextBanner::Update()
 {
 	StyleParams_it it = m_StyleParams.begin();
 
-	// Если анимация включена
+	// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if (m_bAnimate)
 	{
 		for (; it != m_StyleParams.end(); ++it)
 			if (it->second.bOn)
-				it->second.fTimePassed += Device.fTimeDelta;
+				it->second.fTimePassed += Device->fTimeDelta;
 	}
 }
 
@@ -57,7 +57,7 @@ void CUITextBanner::Out(float x, float y, const char *fmt, ...)
 
 	StyleParams_it it = m_StyleParams.begin();
 
-	// Применяем эффекты
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	for (; it != m_StyleParams.end(); ++it)
 	{
 		// Fade effect
@@ -99,10 +99,10 @@ void CUITextBanner::EffectFade()
 {
 	EffectParams	&fade = m_StyleParams[tbsFade];
 
-	// Проверям включена ли анимация
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if (!fade.bOn) return;
 
-	// Если пришло время сменить направление фейда
+	// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	if (fade.fTimePassed > fade.fPeriod)
 	{
 		if (!fade.bCyclic)
@@ -134,10 +134,10 @@ void CUITextBanner::EffectFlicker()
 {
 	EffectParams	&flicker = m_StyleParams[tbsFlicker];
 
-	// Проверям включена ли анимация
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if (!flicker.bOn) return;
 
-	// Если пришло время, показать/спрятать надпись
+	// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if (flicker.fTimePassed > flicker.fPeriod)
 	{
 		if (!flicker.bCyclic)

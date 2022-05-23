@@ -87,9 +87,9 @@ ICF static BOOL info_trace_callback(collide::rq_result& result, LPVOID params)
 			return			TRUE;
 		}
 	}else{
-		//получить треугольник и узнать его материал
+		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		CDB::TRI* T		= Level().ObjectSpace.GetStaticTris()+result.element;
-		if (GMLib.GetMaterialByIdx(T->material)->Flags.is(SGameMtl::flPassable)) 
+		if (GameMaterialLibrary->GetMaterialByIdx(T->material)->Flags.is(SGameMtl::flPassable)) 
 			return TRUE;
 	}	
 	bOverlaped			= TRUE;
@@ -122,7 +122,7 @@ void CActor::PickupModeUpdate()
 	if(!m_bPickupMode) return;
 	if (GameID() != eGameIDSingle) return;
 
-	//подбирание объекта
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if(	m_pObjectWeLookingAt									&& 
 		m_pObjectWeLookingAt->cast_inventory_item()				&& 
 		m_pObjectWeLookingAt->cast_inventory_item()->Useful()	&&
@@ -139,10 +139,10 @@ void CActor::PickupModeUpdate()
 	feel_touch_update	(Position(), m_fPickupInfoRadius);
 	
 	CFrustum frustum;
-	frustum.CreateFromMatrix(Device.mFullTransform,FRUSTUM_P_LRTB|FRUSTUM_P_FAR);
+	frustum.CreateFromMatrix(Device->mFullTransform,FRUSTUM_P_LRTB|FRUSTUM_P_FAR);
 	//. slow (ray-query test)
 	for(xr_vector<CObject*>::iterator it = feel_touch.begin(); it != feel_touch.end(); it++)
-		if (CanPickItem(frustum,Device.vCameraPosition,*it)) PickupInfoDraw(*it);
+		if (CanPickItem(frustum,Device->vCameraPosition,*it)) PickupInfoDraw(*it);
 }
 
 #include "../xrEngine/CameraBase.h"
@@ -158,7 +158,7 @@ void	CActor::PickupModeUpdate_COD	()
 	};
 	
 	CFrustum frustum;
-	frustum.CreateFromMatrix(Device.mFullTransform,FRUSTUM_P_LRTB|FRUSTUM_P_FAR);
+	frustum.CreateFromMatrix(Device->mFullTransform,FRUSTUM_P_LRTB|FRUSTUM_P_FAR);
 
 	//---------------------------------------------------------------------------
 	ISpatialResult.clear_not_free	();
@@ -209,8 +209,8 @@ void	CActor::PickupModeUpdate_COD	()
 	if(pNearestItem)
 	{
 		CFrustum					frustum;
-		frustum.CreateFromMatrix	(Device.mFullTransform,FRUSTUM_P_LRTB|FRUSTUM_P_FAR);
-		if (!CanPickItem(frustum,Device.vCameraPosition,&pNearestItem->object()))
+		frustum.CreateFromMatrix	(Device->mFullTransform,FRUSTUM_P_LRTB|FRUSTUM_P_FAR);
+		if (!CanPickItem(frustum,Device->vCameraPosition,&pNearestItem->object()))
 			pNearestItem = NULL;
 	}
 	if (pNearestItem && pNearestItem->cast_game_object())
@@ -228,7 +228,7 @@ void	CActor::PickupModeUpdate_COD	()
 
 	if (pNearestItem && m_bPickupMode)
 	{
-		//подбирание объекта
+		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		Game().SendPickUpEvent(ID(), pNearestItem->object().ID());
 		
 		PickupModeOff();
@@ -245,7 +245,7 @@ void CActor::PickupInfoDraw(CObject* object)
 	if(!item)		return;
 
 	Fmatrix			res;
-	res.mul			(Device.mFullTransform,object->XFORM());
+	res.mul			(Device->mFullTransform,object->XFORM());
 	Fvector4		v_res;
 	Fvector			shift;
 
@@ -257,8 +257,8 @@ void CActor::PickupInfoDraw(CObject* object)
 	if (v_res.z < 0 || v_res.w < 0)	return;
 	if (v_res.x < -1.f || v_res.x > 1.f || v_res.y<-1.f || v_res.y>1.f) return;
 
-	float x = (1.f + v_res.x)/2.f * (Device.dwWidth);
-	float y = (1.f - v_res.y)/2.f * (Device.dwHeight);
+	float x = (1.f + v_res.x)/2.f * (Device->dwWidth);
+	float y = (1.f - v_res.y)/2.f * (Device->dwHeight);
 
 	HUD().Font().pFontLetterica16Russian->SetAligment	(CGameFont::alCenter);
 	HUD().Font().pFontLetterica16Russian->SetColor		(PICKUP_INFO_COLOR);

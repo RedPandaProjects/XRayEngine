@@ -36,7 +36,7 @@ void CStateAbstract::reinit()
 TEMPLATE_SPECIALIZATION
 void CStateAbstract::initialize() 
 {
-	time_state_started	= Device.dwTimeGlobal;
+	time_state_started	= Device->dwTimeGlobal;
 
 	current_substate	= u32(-1); // means need reselect state
 	prev_substate		= u32(-1);
@@ -46,10 +46,10 @@ TEMPLATE_SPECIALIZATION
 void CStateAbstract::execute() 
 { 
 	VERIFY(object->g_Alive());
-	// проверить внешние условия изменения состояния
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	check_force_state();
 
-	// если состояние не выбрано, перевыбрать
+	// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if (current_substate == u32(-1)) {
 		reselect_state();
 		
@@ -69,14 +69,14 @@ void CStateAbstract::execute()
 		#endif
 	}
 
-	// выполнить текущее состояние
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	CSState *state = get_state(current_substate);
 	state->execute();
 
-	// сохранить текущее состояние
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	prev_substate = current_substate;
 
-	// проверить на завершение текущего состояния
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if (state->check_completion()) {
 		state->finalize();
 		current_substate = u32(-1);
@@ -110,16 +110,16 @@ void CStateAbstract::select_state(u32 new_state_id)
 	if (current_substate == new_state_id) return;	
 	CSState *state;
 
-	// если предыдущее состояние активно, завершить его
+	// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
 	if (current_substate != u32(-1)) {
 		state = get_state(current_substate);
 		state->critical_finalize();
 	}
 
-	// установить новое состояние
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	state = get_state(current_substate = new_state_id);
 	
-	// инициализировать новое состояние
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	setup_substates();
 
 	state->initialize();

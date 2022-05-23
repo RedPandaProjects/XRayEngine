@@ -98,7 +98,7 @@ LPCSTR get_weather	()
 void set_weather	(LPCSTR weather_name, bool forced)
 {
 #ifdef INGAME_EDITOR
-	if (!Device.editor())
+	if (!Device->WeatherEditor())
 #endif // #ifdef INGAME_EDITOR
 		g_pGamePersistent->Environment().SetWeather(weather_name,forced);
 }
@@ -106,7 +106,7 @@ void set_weather	(LPCSTR weather_name, bool forced)
 bool set_weather_fx	(LPCSTR weather_name)
 {
 #ifdef INGAME_EDITOR
-	if (!Device.editor())
+	if (!Device->WeatherEditor())
 #endif // #ifdef INGAME_EDITOR
 		return		(g_pGamePersistent->Environment().SetWeatherFX(weather_name));
 	
@@ -126,7 +126,7 @@ void set_time_factor(float time_factor)
 		return;
 
 #ifdef INGAME_EDITOR
-	if (Device.editor())
+	if (Device->WeatherEditor())
 		return;
 #endif // #ifdef INGAME_EDITOR
 

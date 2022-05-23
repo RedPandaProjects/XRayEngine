@@ -47,7 +47,7 @@ bool CCoverEvaluatorBase::inertia						(float radius)
 //	m_actuality				= m_actuality && fsimilar(m_last_radius,radius);
 //	m_actuality				= m_actuality && ((m_last_radius + EPS_L) >= radius);
 	bool					radius_criteria = ((m_last_radius + EPS_L) >= radius);
-	bool					time_criteria = (Device.dwTimeGlobal < m_last_update + m_inertia_time);
+	bool					time_criteria = (Device->dwTimeGlobal < m_last_update + m_inertia_time);
 
 	m_last_radius			= radius;
 
@@ -68,7 +68,7 @@ IC	void CCoverEvaluatorBase::initialize				(const Fvector &start_position, bool 
 	m_best_value			= 1000.f;
 	m_loophole				= 0;
 	if (!fake_call)
-		m_last_update		= Device.dwTimeGlobal;
+		m_last_update		= Device->dwTimeGlobal;
 }
 
 IC	void CCoverEvaluatorBase::finalize					()

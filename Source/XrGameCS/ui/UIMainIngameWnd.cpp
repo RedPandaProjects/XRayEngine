@@ -239,11 +239,11 @@ void CUIMainIngameWnd::Draw()
 #endif
 	// show IO icon
 	bool IOActive	= (FS.dwOpenCounter>0);
-	if	(IOActive)	UIStaticDiskIO_start_time = Device.fTimeGlobal;
+	if	(IOActive)	UIStaticDiskIO_start_time = Device->fTimeGlobal;
 
-	if ((UIStaticDiskIO_start_time+1.0f) < Device.fTimeGlobal)	UIStaticDiskIO.Show(false); 
+	if ((UIStaticDiskIO_start_time+1.0f) < Device->fTimeGlobal)	UIStaticDiskIO.Show(false); 
 	else {
-		u32		alpha			= clampr(iFloor(255.f*(1.f-(Device.fTimeGlobal-UIStaticDiskIO_start_time)/1.f)),0,255);
+		u32		alpha			= clampr(iFloor(255.f*(1.f-(Device->fTimeGlobal-UIStaticDiskIO_start_time)/1.f)),0,255);
 		UIStaticDiskIO.Show		( true  ); 
 		UIStaticDiskIO.SetColor	(color_rgba(255,255,255,alpha));
 	}
@@ -307,7 +307,7 @@ void CUIMainIngameWnd::Update()
 	
 	UpdatePickUpItem			();
 
-	if( Device.dwFrame % 10 )
+	if( Device->dwFrame % 10 )
 	{
 		return;
 	}

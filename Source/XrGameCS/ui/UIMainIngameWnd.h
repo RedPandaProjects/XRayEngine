@@ -8,7 +8,7 @@
 #include "UIZoneMap.h"
 
 #include "../hudsound.h"
-#include "../../XrServerEntitiesCS/alife_space.h"
+#include "../xrEngine/alife_space.h"
 
 class	CUIPdaMsgListItem;
 class	CLAItem;

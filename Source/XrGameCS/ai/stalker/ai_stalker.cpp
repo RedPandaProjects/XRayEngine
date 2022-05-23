@@ -470,7 +470,7 @@ void CAI_Stalker::net_Destroy()
 	CInventoryOwner::net_Destroy		();
 	m_pPhysics_support->in_NetDestroy	();
 
-	Device.remove_from_seq_parallel	(
+	Device->remove_from_seq_parallel	(
 		fastdelegate::FastDelegate0<>(
 			this,
 			&CAI_Stalker::update_object_handler
@@ -480,8 +480,8 @@ void CAI_Stalker::net_Destroy()
 #ifdef DEBUG
 	fastdelegate::FastDelegate0<>	f = fastdelegate::FastDelegate0<>(this,&CAI_Stalker::update_object_handler);
 	xr_vector<fastdelegate::FastDelegate0<> >::const_iterator	I;
-	I	= std::find(Device.seqParallel.begin(),Device.seqParallel.end(),f);
-	VERIFY							(I == Device.seqParallel.end());
+	I	= std::find(Device->seqParallel.begin(),Device->seqParallel.end(),f);
+	VERIFY							(I == Device->seqParallel.end());
 #endif // DEBUG
 
 	xr_delete						(m_ce_close);
@@ -658,10 +658,10 @@ void CAI_Stalker::UpdateCL()
 			fastdelegate::FastDelegate0<>								f = fastdelegate::FastDelegate0<>(this,&CAI_Stalker::update_object_handler);
 #ifdef DEBUG
 			xr_vector<fastdelegate::FastDelegate0<> >::const_iterator	I;
-			I	= std::find(Device.seqParallel.begin(),Device.seqParallel.end(),f);
-			VERIFY							(I == Device.seqParallel.end());
+			I	= std::find(Device->seqParallel.begin(),Device->seqParallel.end(),f);
+			VERIFY							(I == Device->seqParallel.end());
 #endif
-			Device.seqParallel.push_back	(fastdelegate::FastDelegate0<>(this,&CAI_Stalker::update_object_handler));
+			Device->seqParallel.push_back	(fastdelegate::FastDelegate0<>(this,&CAI_Stalker::update_object_handler));
 		}
 		else {
 			START_PROFILE("stalker/client_update/object_handler")
@@ -751,7 +751,7 @@ void CAI_Stalker::shedule_Update		( u32 DT )
 		STOP_PROFILE
 	}
 //	if (Position().distance_to(Level().CurrentEntity()->Position()) <= 50.f)
-//		Msg				("[%6d][SH][%s]",Device.dwTimeGlobal,*cName());
+//		Msg				("[%6d][SH][%s]",Device->dwTimeGlobal,*cName());
 	// Queue shrink
 	VERIFY				(_valid(Position()));
 	u32	dwTimeCL		= Level().timeServer()-NET_Latency;
@@ -775,7 +775,7 @@ void CAI_Stalker::shedule_Update		( u32 DT )
 		memory().visual().check_visibles();
 #endif
 		if (g_mt_config.test(mtAiVision))
-			Device.seqParallel.push_back(fastdelegate::FastDelegate0<>(this,&CCustomMonster::Exec_Visibility));
+			Device->seqParallel.push_back(fastdelegate::FastDelegate0<>(this,&CCustomMonster::Exec_Visibility));
 		else {
 			START_PROFILE("stalker/schedule_update/vision")
 			Exec_Visibility				();
@@ -804,16 +804,16 @@ void CAI_Stalker::shedule_Update		( u32 DT )
 		// here is monster AI call
 		VERIFY							(_valid(Position()));
 		m_fTimeUpdateDelta				= dt;
-		Device.Statistic->AI_Think.Begin	();
+		Device->Statistic->AI_Think.Begin	();
 		if (GetScriptControl())
 			ProcessScripts				();
 		else
 #ifdef DEBUG
-			if (Device.dwFrame > (spawn_time() + g_AI_inactive_time))
+			if (Device->dwFrame > (spawn_time() + g_AI_inactive_time))
 #endif
 				Think					();
-		m_dwLastUpdateTime				= Device.dwTimeGlobal;
-		Device.Statistic->AI_Think.End	();
+		m_dwLastUpdateTime				= Device->dwTimeGlobal;
+		Device->Statistic->AI_Think.End	();
 		VERIFY							(_valid(Position()));
 
 		// Look and action streams
@@ -887,7 +887,7 @@ void CAI_Stalker::spawn_supplies	()
 void CAI_Stalker::Think			()
 {
 	START_PROFILE("stalker/schedule_update/think")
-	u32							update_delta = Device.dwTimeGlobal - m_dwLastUpdateTime;
+	u32							update_delta = Device->dwTimeGlobal - m_dwLastUpdateTime;
 	
 	START_PROFILE("stalker/schedule_update/think/brain")
 //	try {
@@ -952,7 +952,7 @@ void CAI_Stalker::Think			()
 
 void CAI_Stalker::SelectAnimation(const Fvector &view, const Fvector &move, float speed)
 {
-	if (!Device.Paused())
+	if (!Device->Paused())
 		animation().update();
 }
 

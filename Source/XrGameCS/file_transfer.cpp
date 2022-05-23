@@ -76,7 +76,7 @@ filetransfer_node::~filetransfer_node()
 
 void filetransfer_node::calculate_chunk_size(u32 peak_throughput, u32 current_throughput)
 {
-	if ((Device.dwTimeGlobal - m_last_chunksize_update_time) < 1000)
+	if ((Device->dwTimeGlobal - m_last_chunksize_update_time) < 1000)
 		return;
 
 	if (m_last_peak_throughput < peak_throughput)		//peak throughput is increasing, so we can increase upload size :)
@@ -92,7 +92,7 @@ void filetransfer_node::calculate_chunk_size(u32 peak_throughput, u32 current_th
 			m_chunk_size = data_max_chunk_size;
 			return;
 		}
-		if ((Device.dwTimeGlobal - m_last_chunksize_update_time) < 3000)
+		if ((Device->dwTimeGlobal - m_last_chunksize_update_time) < 3000)
 			return;
 
 		m_chunk_size = static_cast<u32>(
@@ -104,7 +104,7 @@ void filetransfer_node::calculate_chunk_size(u32 peak_throughput, u32 current_th
 	}
 	clamp(m_chunk_size, data_min_chunk_size, data_max_chunk_size);
 	m_last_peak_throughput			= peak_throughput;
-	m_last_chunksize_update_time	= Device.dwTimeGlobal;
+	m_last_chunksize_update_time	= Device->dwTimeGlobal;
 }
 
 bool filetransfer_node::make_data_packet(NET_Packet & packet)
@@ -219,7 +219,7 @@ bool filereceiver_node::receive_packet(NET_Packet & packet)
 	u32 size_to_write = packet.B.count - packet.r_tell();
 	void* pointer = static_cast<void*>(packet.B.data + packet.r_tell());
 	m_writer->w(pointer, size_to_write);
-	m_last_read_time = Device.dwTimeGlobal;
+	m_last_read_time = Device->dwTimeGlobal;
 	return (m_writer->tell() == m_data_size_to_receive);
 }
 
@@ -383,7 +383,7 @@ void server_site::on_message(NET_Packet* packet, ClientID const & sender)
 
 void server_site::stop_obsolete_receivers()
 {
-	u32 current_time = Device.dwTimeGlobal;
+	u32 current_time = Device->dwTimeGlobal;
 	buffer_vector<ClientID>	to_stop_receivers(
 		_alloca(m_receivers.size() * sizeof(ClientID)),
 		m_receivers.size());
@@ -778,7 +778,7 @@ void client_site::stop_receiving_sessions	(buffer_vector<ClientID> const & rsess
 
 void client_site::stop_obsolete_receivers()
 {
-	u32 current_time = Device.dwTimeGlobal;
+	u32 current_time = Device->dwTimeGlobal;
 	buffer_vector<ClientID>	to_stop_receivers(
 		_alloca(m_receivers.size() * sizeof(ClientID)),
 		m_receivers.size());

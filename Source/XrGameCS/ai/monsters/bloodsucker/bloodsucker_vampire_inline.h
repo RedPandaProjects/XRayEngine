@@ -86,7 +86,7 @@ void CStateBloodsuckerVampireAbstract::finalize()
 	inherited::finalize();
 
 	object->stop_invisible_predator	();
-	m_time_last_vampire				= Device.dwTimeGlobal;
+	m_time_last_vampire				= Device->dwTimeGlobal;
 }
 
 TEMPLATE_SPECIALIZATION
@@ -95,7 +95,7 @@ void CStateBloodsuckerVampireAbstract::critical_finalize()
 	inherited::critical_finalize	();
 	
 	object->stop_invisible_predator	();
-	m_time_last_vampire				= Device.dwTimeGlobal;
+	m_time_last_vampire				= Device->dwTimeGlobal;
 }
 
 TEMPLATE_SPECIALIZATION
@@ -104,7 +104,7 @@ bool CStateBloodsuckerVampireAbstract::check_start_conditions()
 	if (!object->WantVampire()) return false;
 	if (object->berserk_always) return false;
 	
-	// является ли враг актером
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	const CEntityAlive *enemy = object->EnemyMan.get_enemy();
 	if (!smart_cast<CActor const*>(enemy))			return false;
 	if (!object->EnemyMan.see_enemy_now())			return false;
@@ -114,7 +114,7 @@ bool CStateBloodsuckerVampireAbstract::check_start_conditions()
 	VERIFY(actor);
 	if (actor->input_external_handler_installed()) return false;
 
-	if (m_time_last_vampire + object->m_vampire_min_delay > Device.dwTimeGlobal) return false;
+	if (m_time_last_vampire + object->m_vampire_min_delay > Device->dwTimeGlobal) return false;
 
 	return true;
 }
@@ -122,14 +122,14 @@ bool CStateBloodsuckerVampireAbstract::check_start_conditions()
 TEMPLATE_SPECIALIZATION
 bool CStateBloodsuckerVampireAbstract::check_completion()
 {
-	// если убежал
+	// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	if ((current_substate == eStateVampire_Hide) && 
 		get_state_current()->check_completion())	return true;
 
-	// если враг изменился
+	// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if (enemy != object->EnemyMan.get_enemy())		return true;
 	
-	// если актера уже контролит другой кровосос
+	// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if ((current_substate != eStateVampire_Execute) && 
 		object->CControlledActor::is_controlling())	return true;
 

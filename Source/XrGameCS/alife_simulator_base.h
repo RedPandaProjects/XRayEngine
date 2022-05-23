@@ -9,9 +9,9 @@
 #pragma once
 
 #include "random32.h"
-#include "alife_space.h"
-#include "game_graph_space.h"
-#include "object_interfaces.h"
+#include "../xrEngine/alife_space.h"
+#include "../xrEngine/game_graph_space.h"
+#include "../xrEngine/object_interfaces.h"
 
 class xrServer;
 class CALifeSimulatorHeader;

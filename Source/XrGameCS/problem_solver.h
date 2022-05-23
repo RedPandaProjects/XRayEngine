@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "associative_vector.h"
+#include "../xrEngine/associative_vector.h"
 
 template <
 	typename _operator_condition,
@@ -143,6 +143,6 @@ public:
 #endif
 
 #include "graph_engine.h"
-#include "object_broker.h"
+#include "../xrEngine/object_broker.h"
 
 #include "problem_solver_inline.h"

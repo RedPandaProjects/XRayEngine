@@ -30,9 +30,9 @@ bool  CRadioactiveZone::BlowoutState	()
 void CRadioactiveZone::Affect(SZoneObjectInfo* O) 
 {
 	float one				= 0.1f;
-	float tg				= Device.fTimeGlobal;
+	float tg				= Device->fTimeGlobal;
 
-	if(!O->object || O->f_time_affected+one > Device.fTimeGlobal) 
+	if(!O->object || O->f_time_affected+one > Device->fTimeGlobal) 
 		return;
 
 	clamp					(O->f_time_affected, tg-(one*3), tg);
@@ -70,9 +70,9 @@ void CRadioactiveZone::Affect(SZoneObjectInfo* O)
 						cName().c_str(), 
 						O->object->cName().c_str(), 
 						send_power, 
-						Device.dwFrame, 
+						Device->dwFrame, 
 						tg);*/
-///		Msg( "Zone hit ___   damage = %.4f    Frame=%d ", send_power, Device.dwFrame );
+///		Msg( "Zone hit ___   damage = %.4f    Frame=%d ", send_power, Device->dwFrame );
 #endif
 		O->f_time_affected += one;
 	}//while
