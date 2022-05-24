@@ -8,11 +8,12 @@
 #include "../xrRender/Public/DebugRender.h"
 #include "../xrRender/Public/UIRender.h"
 
-#if 1
-poolSS< _12b, 128>	ui_allocator;
-#else
+#ifdef _WIN64
 poolSS< _24b, 128>	ui_allocator;
+#else
+poolSS< _12b, 128>	ui_allocator;
 #endif
+
 #ifdef LOG_ALL_WNDS
 int ListWndCount = 0;
 struct DBGList {

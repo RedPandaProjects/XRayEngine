@@ -129,11 +129,12 @@ SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeCustomZone)
 #define script_type_list save_type_list(CSE_ALifeCustomZone)
 
-SERVER_ENTITY_DECLARE_BEGIN(CSE_ALifeAnomalousZone,CSE_ALifeCustomZone)
+SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeAnomalousZone,CSE_ALifeCustomZone, ISE_ALifeAnomalousZone)
 	CSE_ALifeItemWeapon				*m_tpCurrentBestWeapon;
-	float							m_offline_interactive_radius;
-	u32								m_artefact_position_offset;
-	u16								m_artefact_spawn_count;
+
+	virtual ISE_ALifeObject* CastALifeObject() { return this; }
+	virtual ISE_Abstract* CastAbstract() { return this; }
+	virtual ISE_ALifeAnomalousZone* CastALifeAnomalousZone() { return this; }
 
 									CSE_ALifeAnomalousZone	(LPCSTR caSection);
 	virtual							~CSE_ALifeAnomalousZone	();
@@ -302,7 +303,7 @@ SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeMonsterAbstract)
 #define script_type_list save_type_list(CSE_ALifeMonsterAbstract)
 
-SERVER_ENTITY_DECLARE_BEGIN3(CSE_ALifeCreatureActor,CSE_ALifeCreatureAbstract,CSE_ALifeTraderAbstract,CSE_PHSkeleton)
+SERVER_ENTITY_DECLARE_BEGIN4(CSE_ALifeCreatureActor,CSE_ALifeCreatureAbstract,CSE_ALifeTraderAbstract,CSE_PHSkeleton, ISE_ALifeCreatureActor)
 	
 	u16								mstate;
 	Fvector							accel;
@@ -340,6 +341,11 @@ SERVER_ENTITY_DECLARE_BEGIN3(CSE_ALifeCreatureActor,CSE_ALifeCreatureAbstract,CS
 #endif
 	virtual CSE_Abstract			*cast_abstract			() {return this;};
 	virtual CSE_ALifeTraderAbstract	*cast_trader_abstract	() {return this;};
+
+	virtual ISE_ALifeObject* CastALifeObject() { return this; };
+	virtual ISE_Abstract* CastAbstract() { return this; };
+	virtual ISE_ALifeCreatureActor* CastALifeCreatureActor() { return this; };
+
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeCreatureActor)
 #define script_type_list save_type_list(CSE_ALifeCreatureActor)

@@ -673,7 +673,7 @@ bool xrServer::CheckAdminRights(const shared_str& user, const shared_str& pass, 
 
 void xrServer::SendTo_LL			(ClientID ID, void* data, u32 size, u32 dwFlags, u32 dwTimeout)
 {
-	if (SV_Client && SV_Client->ID==ID)
+	if ((SV_Client && SV_Client->ID==ID )|| (psNET_direct_connect))
 	{
 		// optimize local traffic
 		Level().OnMessage			(data,size);

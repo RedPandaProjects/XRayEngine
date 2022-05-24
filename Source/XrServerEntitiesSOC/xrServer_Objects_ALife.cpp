@@ -389,7 +389,7 @@ void CSE_ALifeObject::UPDATE_Read			(NET_Packet &tNetPacket)
 #ifndef XRGAME_EXPORTS 
 void CSE_ALifeObject::FillProps				(LPCSTR pref, PropItemVec& items)
 {
-	inherited::FillProps		(pref, 	items);
+	inherited1::FillProps		(pref, 	items);
 	PHelper().CreateRText		(items,	PrepareKey(pref,*s_name,"Custom data"),&m_ini_string);
 	if (m_flags.is(flUseSwitches)) {
 		PHelper().CreateFlag32	(items,	PrepareKey(pref,*s_name,"ALife\\Can switch online"),	&m_flags,			flSwitchOnline);
@@ -550,28 +550,28 @@ CSE_ALifeDynamicObject::~CSE_ALifeDynamicObject()
 
 void CSE_ALifeDynamicObject::STATE_Write	(NET_Packet &tNetPacket)
 {
-	inherited::STATE_Write		(tNetPacket);
+	inherited1::STATE_Write		(tNetPacket);
 }
 
 void CSE_ALifeDynamicObject::STATE_Read		(NET_Packet &tNetPacket, u16 size)
 {
-	inherited::STATE_Read		(tNetPacket, size);
+	inherited1::STATE_Read		(tNetPacket, size);
 }
 
 void CSE_ALifeDynamicObject::UPDATE_Write	(NET_Packet &tNetPacket)
 {
-	inherited::UPDATE_Write		(tNetPacket);
+	inherited1::UPDATE_Write		(tNetPacket);
 };
 
 void CSE_ALifeDynamicObject::UPDATE_Read	(NET_Packet &tNetPacket)
 {
-	inherited::UPDATE_Read		(tNetPacket);
+	inherited1::UPDATE_Read		(tNetPacket);
 };
 
 #ifndef XRGAME_EXPORTS 
 void CSE_ALifeDynamicObject::FillProps	(LPCSTR pref, PropItemVec& values)
 {
-	inherited::FillProps			(pref,values);
+	inherited1::FillProps			(pref,values);
 }
 #endif
 ////////////////////////////////////////////////////////////////////////////
@@ -782,7 +782,7 @@ CSE_ALifeLevelChanger::~CSE_ALifeLevelChanger()
 
 void CSE_ALifeLevelChanger::STATE_Read		(NET_Packet	&tNetPacket, u16 size)
 {
-	inherited::STATE_Read		(tNetPacket,size);
+	inherited1::STATE_Read		(tNetPacket,size);
 	if (m_wVersion < 34) {
 		tNetPacket.r_u32		();
 		tNetPacket.r_u32		();
@@ -808,7 +808,7 @@ void CSE_ALifeLevelChanger::STATE_Read		(NET_Packet	&tNetPacket, u16 size)
 
 void CSE_ALifeLevelChanger::STATE_Write	(NET_Packet	&tNetPacket)
 {
-	inherited::STATE_Write		(tNetPacket);
+	inherited1::STATE_Write		(tNetPacket);
 	tNetPacket.w				(&m_tNextGraphID,sizeof(m_tNextGraphID));
 	tNetPacket.w_u32			(m_dwNextNodeID);
 	tNetPacket.w_float			(m_tNextPosition.x);
@@ -822,18 +822,18 @@ void CSE_ALifeLevelChanger::STATE_Write	(NET_Packet	&tNetPacket)
 
 void CSE_ALifeLevelChanger::UPDATE_Read	(NET_Packet	&tNetPacket)
 {
-	inherited::UPDATE_Read		(tNetPacket);
+	inherited1::UPDATE_Read		(tNetPacket);
 }
 
 void CSE_ALifeLevelChanger::UPDATE_Write	(NET_Packet	&tNetPacket)
 {
-	inherited::UPDATE_Write		(tNetPacket);
+	inherited1::UPDATE_Write		(tNetPacket);
 }
 
 #ifndef XRGAME_EXPORTS 
 void CSE_ALifeLevelChanger::FillProps		(LPCSTR pref, PropItemVec& items)
 {
-	inherited::FillProps		(pref,items);
+	inherited1::FillProps		(pref,items);
 	
 #ifdef XRSE_FACTORY_EXPORTS
 	PHelper().CreateRList		(items,PrepareKey(pref,*s_name,"Level to change"),		&m_caLevelToChange,		&*fp_data.level_ids.begin(), fp_data.level_ids.size());

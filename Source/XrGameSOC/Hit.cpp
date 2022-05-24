@@ -47,7 +47,7 @@ void SHit::invalidate()
 	p_in_bone_space		.set(-dInfinity,-dInfinity,-dInfinity)	;
 
 	impulse					=-dInfinity								;
-	hit_type				=ALife::eHitTypeMax						;
+	hit_type				=ALife::eHitTypeMaxSOC						;
 
 	ap						= 0.0f;	
 	BulletID				= 0;
@@ -57,7 +57,7 @@ void SHit::invalidate()
 
 bool SHit::is_valide() const
 {
-	return hit_type!=ALife::eHitTypeMax;
+	return hit_type!=ALife::eHitTypeMaxSOC;
 }
 
 void	SHit::GenHeader				(u16 PacketType, u16 ID)

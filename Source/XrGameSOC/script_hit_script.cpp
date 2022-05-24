@@ -29,7 +29,7 @@ void CScriptHit::script_register(lua_State *L)
 				value("chemical_burn",			int(ALife::eHitTypeChemicalBurn)),
 				value("explosion",				int(ALife::eHitTypeExplosion)),
 				value("fire_wound",				int(ALife::eHitTypeFireWound)),
-				value("dummy",					int(ALife::eHitTypeMax))
+				value("dummy",					int(ALife::eHitTypeMaxSOC))
 			]
 			.def_readwrite("power",				&CScriptHit::m_fPower)
 			.def_readwrite("direction",			&CScriptHit::m_tDirection)

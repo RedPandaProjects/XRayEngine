@@ -124,6 +124,6 @@ void CSE_ALifeAnomalousZone::spawn_artefacts				()
 
 void CSE_ALifeAnomalousZone::on_spawn						()
 {
-	inherited::on_spawn		();
+	inherited1::on_spawn		();
 	spawn_artefacts			();
 }

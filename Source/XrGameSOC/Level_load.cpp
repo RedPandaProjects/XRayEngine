@@ -38,7 +38,7 @@ BOOL CLevel::Load_GameSpecific_After()
 {
 	// loading static particles
 	string_path		fn_game;
-	if (FS.exist(fn_game, "$level$", "level.ps_static")) {
+	if (FS.exist(fn_game, "$level$", "level.ps_static") && !Device->IsEditorMode()) {
 		IReader *F = FS.r_open	(fn_game);
 		CParticlesObject* pStaticParticles;
 		u32				chunk = 0;
@@ -56,7 +56,7 @@ BOOL CLevel::Load_GameSpecific_After()
 		FS.r_close		(F);
 	}
 	
-	if	(!g_dedicated_server)
+	if	(!g_dedicated_server&&!Device->IsEditorMode())
 	{
 		// loading static sounds
 		VERIFY								(m_level_sound_manager);

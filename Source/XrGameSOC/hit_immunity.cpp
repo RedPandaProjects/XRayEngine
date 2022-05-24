@@ -8,8 +8,8 @@
 
 CHitImmunity::CHitImmunity()
 {
-	m_HitTypeK.resize(ALife::eHitTypeMax);
-	for(int i=0; i<ALife::eHitTypeMax; i++)
+	m_HitTypeK.resize(ALife::eHitTypeMaxSOC);
+	for(int i=0; i<ALife::eHitTypeMaxSOC; i++)
 		m_HitTypeK[i] = 1.0f;
 }
 

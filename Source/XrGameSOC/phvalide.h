@@ -38,7 +38,7 @@ IC BOOL dBodyStateValide(const dBodyID body)
 		;
 }
 
-#ifdef DEBUG
+#if 0
 #define	VERIFY_BOUNDARIES2(pos,bounds,obj,msg)\
 {\
 	if(!valid_pos(pos,bounds))\
@@ -46,8 +46,10 @@ IC BOOL dBodyStateValide(const dBodyID body)
 	Msg(" %s	\n", msg);\
 	Msg(" pos: %f,%f,%f, seems to be invalid", pos.x,pos.y,pos.z);\
 	Msg("Level box: %f,%f,%f-%f,%f,%f,",bounds.x1,bounds.y1,bounds.z1,bounds.x2,bounds.y2,bounds.z2);\
+if(obj)\
 	Msg("Object: %s",*(obj->Name()));\
-	Msg("Visual: %s",*(obj->cNameVisual()));\
+if(obj)\
+	Msg("Visual: %s",*(obj->cNameVisual().c_str()));\
 	VERIFY(0);\
 }\
 }

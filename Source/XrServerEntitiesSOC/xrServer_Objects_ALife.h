@@ -61,52 +61,31 @@ SERVER_ENTITY_DECLARE_BEGIN(CSE_ALifeSchedulable,IPureSchedulableObject)
 add_to_type_list(CSE_ALifeSchedulable)
 #define script_type_list save_type_list(CSE_ALifeSchedulable)
 
-SERVER_ENTITY_DECLARE_BEGIN(CSE_ALifeGraphPoint,CSE_Abstract)
+SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeGraphPoint, ISE_ALifeGraphPoint,CSE_Abstract)
 public:
 	shared_str						m_caConnectionLevelName;
 	shared_str						m_caConnectionPointName;
-	u8								m_tLocations[GameGraph::LOCATION_TYPE_COUNT];
 
 									CSE_ALifeGraphPoint(LPCSTR caSection);
 	virtual							~CSE_ALifeGraphPoint();
+
+	virtual  ISE_Abstract* CastAbstract() { return this; }
+	virtual ISE_ALifeGraphPoint* CastALifeGraphPoint() { return this; }
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeGraphPoint)
 #define script_type_list save_type_list(CSE_ALifeGraphPoint)
 
-SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeObject,CSE_Abstract,CRandom)
-	enum {
-		flUseSwitches		= u32(1) << 0,
-		flSwitchOnline		= u32(1) << 1,
-		flSwitchOffline		= u32(1) << 2,
-		flInteractive		= u32(1) << 3,
-		flVisibleForAI		= u32(1) << 4,
-		flUsefulForAI		= u32(1) << 5,
-		flOfflineNoMove		= u32(1) << 6,
-		flUsedAI_Locations	= u32(1) << 7,
-		flGroupBehaviour	= u32(1) << 8,
-		flCanSave			= u32(1) << 9,
-		flVisibleForMap		= u32(1) << 10,
-		flUseSmartTerrains	= u32(1) << 11,
-		flCheckForSeparator	= u32(1) << 12,
-	};
-
+SERVER_ENTITY_DECLARE_BEGIN3(CSE_ALifeObject,CSE_Abstract,CRandom, ISE_ALifeObject)
 public:
-	typedef CSE_Abstract inherited;
-	GameGraph::_GRAPH_ID			m_tGraphID;
-	float							m_fDistance;
-	bool							m_bOnline;
-	bool							m_bDirectControl;
-	u32								m_tNodeID;
-	flags32							m_flags;
-	ALife::_STORY_ID				m_story_id;
-	ALife::_SPAWN_STORY_ID			m_spawn_story_id;
-
 #ifdef XRGAME_EXPORTS
 	CALifeSimulator					*m_alife_simulator;
 #endif
 
 									CSE_ALifeObject		(LPCSTR caSection);
 	virtual							~CSE_ALifeObject	();
+
+	virtual ISE_Abstract* CastAbstract() { return this; }
+
 	virtual bool					used_ai_locations	() const;
 	virtual bool					can_save			() const;
 	virtual bool					can_switch_online	() const;
@@ -262,12 +241,17 @@ public:
 #endif
 };
 
-SERVER_ENTITY_DECLARE_BEGIN(CSE_ALifeDynamicObject,CSE_ALifeObject)
+SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeDynamicObject,CSE_ALifeObject, ISE_ALifeDynamicObject)
 	ALife::_TIME_ID					m_tTimeID;
 	u64								m_switch_counter;
 	
 									CSE_ALifeDynamicObject	(LPCSTR caSection);
 	virtual							~CSE_ALifeDynamicObject	();
+
+	virtual ISE_ALifeObject* CastALifeObject() { return this; }
+	virtual ISE_Abstract* CastAbstract() { return this; }
+	virtual ISE_ALifeDynamicObject* CastALifeDynamicObject() { return this; }
+
 #ifdef XRGAME_EXPORTS
 	virtual void					on_spawn				();
 	virtual void					on_before_register		();
@@ -309,29 +293,28 @@ SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifePHSkeletonObject)
 #define script_type_list save_type_list(CSE_ALifePHSkeletonObject)
 
-SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeSpaceRestrictor,CSE_ALifeDynamicObject,CSE_Shape)
-	u8								m_space_restrictor_type;
-
+SERVER_ENTITY_DECLARE_BEGIN3(CSE_ALifeSpaceRestrictor,CSE_ALifeDynamicObject,CSE_Shape, ISE_ALifeSpaceRestrictor)
 									CSE_ALifeSpaceRestrictor	(LPCSTR caSection);
 	virtual							~CSE_ALifeSpaceRestrictor	();
 	virtual ISE_Shape*  	shape						();
 	virtual bool					can_switch_offline			() const;
 	virtual bool					used_ai_locations			() const;
+
+	virtual  ISE_ALifeObject* CastALifeObject() { return this; };
+	virtual  ISE_Abstract* CastAbstract() { return this; };
+	virtual ISE_ALifeSpaceRestrictor* CastALifeSpaceRestricto() { return this; };
+
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeSpaceRestrictor)
 #define script_type_list save_type_list(CSE_ALifeSpaceRestrictor)
 
-SERVER_ENTITY_DECLARE_BEGIN(CSE_ALifeLevelChanger,CSE_ALifeSpaceRestrictor)
-	GameGraph::_GRAPH_ID			m_tNextGraphID;
-	u32								m_dwNextNodeID;
-	Fvector							m_tNextPosition;
-	Fvector							m_tAngles;
-	shared_str						m_caLevelToChange;
-	shared_str						m_caLevelPointToChange;
-	BOOL							m_bSilentMode;
+SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeLevelChanger,CSE_ALifeSpaceRestrictor, ISE_ALifeLevelChanger)
 
 									CSE_ALifeLevelChanger		(LPCSTR caSection);
 	virtual							~CSE_ALifeLevelChanger		();
+	virtual  ISE_ALifeObject* CastALifeObject() { return this; };
+	virtual  ISE_Abstract* CastAbstract() { return this; };
+	virtual ISE_ALifeLevelChanger* CastALifeLevelChanger() { return this; }
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeLevelChanger)
 #define script_type_list save_type_list(CSE_ALifeLevelChanger)

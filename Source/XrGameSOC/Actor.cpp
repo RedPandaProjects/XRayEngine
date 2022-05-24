@@ -348,7 +348,7 @@ void CActor::Load	(LPCSTR section )
 if(!g_dedicated_server)
 {
 	LPCSTR hit_snd_sect = pSettings->r_string(section,"hit_sounds");
-	for(int hit_type=0; hit_type<(int)ALife::eHitTypeMax; ++hit_type)
+	for(int hit_type=0; hit_type<(int)ALife::eHitTypeMaxSOC; ++hit_type)
 	{
 		LPCSTR hit_name = ALife::g_cafHitType2String((ALife::EHitType)hit_type);
 		LPCSTR hit_snds = READ_IF_EXISTS(pSettings, r_string, hit_snd_sect, hit_name, "");
@@ -430,7 +430,7 @@ void	CActor::Hit							(SHit* pHDS)
 	pHDS->aim_bullet = false;
 
 	SHit HDS = *pHDS;
-	if( HDS.hit_type<ALife::eHitTypeBurn || HDS.hit_type >= ALife::eHitTypeMax )
+	if( HDS.hit_type<ALife::eHitTypeBurn || HDS.hit_type >= ALife::eHitTypeMaxSOC )
 	{
 		string256	err;
 		sprintf_s		(err, "Unknown/unregistered hit type [%d]", HDS.hit_type);

@@ -307,7 +307,7 @@ void CALifeCombatManager::vfPerformAttackAction(int iCombatGroupIndex)
 	SCHEDULE_P_IT			I = l_tCombatGroup.begin();
 	SCHEDULE_P_IT			E = l_tCombatGroup.end();
 	for ( ; I != E; ++I) {
-		EHitType			l_tHitType = eHitTypeMax;
+		EHitType			l_tHitType = eHitTypeMaxSOC;
 		float				l_fHitPower = 0.f;
 		if (!(*I)->m_tpCurrentBestWeapon) {
 			CSE_ALifeItemWeapon	*l_tpALifeItemWeapon = (*I)->tpfGetBestWeapon(l_tHitType,l_fHitPower);

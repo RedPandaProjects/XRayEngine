@@ -54,7 +54,6 @@ BOOL CLevelEditor::net_Start(LPCSTR op_server, LPCSTR op_client)
 	
 	if ((Server->Connect(m_caServerOptions)) != xrServer::ErrNoError)
 	{
-		net_start_result_total = false;
 		Msg("! Failed to start server.");
 		return false;
 	}
@@ -69,7 +68,9 @@ BOOL CLevelEditor::net_Start(LPCSTR op_server, LPCSTR op_client)
 
 	connected_to_server = Connect2Server(*m_caClientOptions);
 
-	if (connected_to_server)
+	if (!connected_to_server)
+		return FALSE;
+
 	{
 		LPCSTR					level_name = NULL;
 		LPCSTR					level_ver = NULL;
@@ -90,7 +91,7 @@ BOOL CLevelEditor::net_Start(LPCSTR op_server, LPCSTR op_client)
 		Msg("--- net_start_client3: level_id [%d], level_name[%s], level_version[%s]", 0, level_name, level_ver);
 #endif // #ifdef DEBUG
 		// Begin spawn
-		g_pGamePersistent->LoadTitle("st_client_spawning");
+
 
 		// Send physics to single or multithreaded mode
 		LoadPhysicsGameParams();
@@ -112,6 +113,19 @@ BOOL CLevelEditor::net_Start(LPCSTR op_server, LPCSTR op_client)
 			Msg("* connection sync: %d ms", timer_sync.GetElapsed_ms());
 			while (!net_isCompleted_Sync()) { ClientReceive(); Sleep(5); }
 		}
+		{
+			IReader F(nullptr, 0, 0);
+			pLevel = xr_new<CInifile>(&F);
+		}
+		{
+			Device->seqRender.Add(this);
+			Device->seqFrame.Add(this);
+			R_ASSERT(Load_GameSpecific_Before());
+			Objects.Load();
+			EditorScene->LoadCFrom(&ObjectSpace, build_callback);
+			R_ASSERT(Load_GameSpecific_After());
+			bReady = true;
+		}
 
 		while (!game_configured)
 		{
@@ -120,15 +134,11 @@ BOOL CLevelEditor::net_Start(LPCSTR op_server, LPCSTR op_client)
 				Server->Update();
 			Sleep(5);
 		}
+	
 
-		EditorScene->LoadCFrom(&ObjectSpace, build_callback);
-		bReady = true;
 		if (!g_dedicated_server)
 		{
 			HUD().Load();
-			Device->m_pRender->DeferredLoad(FALSE);
-			Device->m_pRender->ResourcesDeferredUpload();
-			LL_CheckTextures();
 		}
 		// Sync
 		if (g_hud)
@@ -136,14 +146,9 @@ BOOL CLevelEditor::net_Start(LPCSTR op_server, LPCSTR op_client)
 
 
 		g_pGamePersistent->LoadTitle("st_client_synchronising");
-		Device->PreCache(30, true, true);
-		net_start_result_total = TRUE;
+		//Device->PreCache(30, true, true);
+		
 	}
-	else
-	{
-		return false;
-	}
-	if (net_start_result_total)
 	{
 		NET_Packet		NP;
 		NP.w_begin(M_CLIENTREADY);
@@ -162,7 +167,7 @@ BOOL CLevelEditor::net_Start(LPCSTR op_server, LPCSTR op_client)
 	BulletManager().Load();
 
 
-	if (net_start_result_total)
+
 	{
 		if (strstr(Core.Params, "-$"))
 		{

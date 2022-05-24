@@ -61,6 +61,13 @@ public:
 private:
 	LPSTR							s_name_replace;
 public:
+
+#ifndef XRGAME_EXPORTS
+	virtual	visual_data* visual_collection() const { return 0; }
+	virtual	u32				visual_collection_size() const { return 0; }
+	virtual	void			set_additional_info(void* info) {};
+#endif
+
 	virtual void					load			(NET_Packet	&tNetPacket);
 
 	//////////////////////////////////////////////////////////////////////////
@@ -80,6 +87,7 @@ public:
 	{
 		s_name		= s;
 	};
+
 	virtual void			set_name_replace(LPCSTR s) {xr_free(s_name_replace); s_name_replace = xr_strdup(s);};
 	virtual Fvector&		position		();
 	virtual Fvector&		angle			();
