@@ -16,6 +16,7 @@
 #include "SoundManager_LE.h"
 #include "LevelPreferences.h"
 #include "UI\UIObjectList.h"
+#include "..\..\XrAPI\xrGameManager.h"
 
 #ifdef _LEVEL_EDITOR
 //.    if (m_Cursor->GetVisible()) RedrawScene();
@@ -272,14 +273,20 @@ CCommandVar CommandSave(CCommandVar p1, CCommandVar p2)
             if (temp_fn.empty())
             {
                 return 			ExecCommand(COMMAND_SAVE,temp_fn,1);
-            }else
+            }
+            else
             {
-                xr_strlwr		(temp_fn);
+                xr_strlwr(temp_fn);
 
-                UI->SetStatus	("Level saving...");
-
-                Scene->SaveLTX	(temp_fn.c_str(), false, (p2==66));
-
+                UI->SetStatus("Level saving...");
+                if (xrGameManager::GetGame() == EGame::SHOC)
+                {
+                    Scene->Save(temp_fn.c_str(), true, (p2 == 66));
+                }
+                else
+                {
+                    Scene->SaveLTX(temp_fn.c_str(), false, (p2 == 66));
+                }
                 UI->ResetStatus	();
                 // set new name
                 if (0!=xr_strcmp(Tools->m_LastFileName.c_str(),temp_fn.c_str()))

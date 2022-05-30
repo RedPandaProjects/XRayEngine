@@ -221,7 +221,7 @@ BOOL EScene::LoadLevelPartLTX(ESceneToolBase* M, LPCSTR mn)
     strcpy(map_name, mn);
     
 	if(!M->can_use_inifile())
-    	return LoadLevelPart(M, map_name);
+    	return LoadLevelPartStream(M, map_name);
 
     int fnidx=0;
     while(FS.exist(map_name))
@@ -234,7 +234,7 @@ BOOL EScene::LoadLevelPartLTX(ESceneToolBase* M, LPCSTR mn)
         FS.r_close		(R);
 
         if(!b_is_inifile)
-            return LoadLevelPart(M, map_name);
+            return LoadLevelPartStream(M, map_name);
 
         M->m_EditFlags.set(ESceneToolBase::flReadonly,FALSE);
 
@@ -263,40 +263,46 @@ BOOL EScene::LoadLevelPart(ESceneToolBase* M, LPCSTR map_name)
 {
 	if(M->can_use_inifile())
 	    return LoadLevelPartLTX(M, map_name);
-        
-	if (FS.exist(map_name))
+    return LoadLevelPartStream(M, map_name);
+	
+}
+
+BOOL EScene::LoadLevelPartStream(ESceneToolBase* M, LPCSTR map_name)
+{
+    if (FS.exist(map_name))
     {
-		// check locking
-        M->m_EditFlags.set(ESceneToolBase::flReadonly,FALSE);
+        // check locking
+        M->m_EditFlags.set(ESceneToolBase::flReadonly, FALSE);
 
-        IReader* R		= FS.r_open	(map_name);
-        VERIFY			(R);
-    	// check level part GUID
-        R_ASSERT		(R->find_chunk	(CHUNK_TOOLS_GUID));
+        IReader* R = FS.r_open(map_name);
+        VERIFY(R);
+        // check level part GUID
+        R_ASSERT(R->find_chunk(CHUNK_TOOLS_GUID));
         xrGUID			guid;
-        R->r			(&guid,sizeof(guid));
+        R->r(&guid, sizeof(guid));
 
-        if (guid!=m_GUID)
+        if (guid != m_GUID)
         {
-            ELog.DlgMsg		(mtError,"Skipping invalid version of level part: '%s\\%s.part'",EFS.ExtractFileName(map_name).c_str(),M->ClassName());
-        	FS.r_close		(R);
+            ELog.DlgMsg(mtError, "Skipping invalid version of level part: '%s\\%s.part'", EFS.ExtractFileName(map_name).c_str(), M->ClassName());
+            FS.r_close(R);
             return 			FALSE;
         }
         // read data
-        IReader* chunk 	= R->open_chunk	(CHUNK_TOOLS_DATA+M->FClassID);
-        if(chunk!=NULL)
+        IReader* chunk = R->open_chunk(CHUNK_TOOLS_DATA + M->FClassID);
+        if (chunk != NULL)
         {
-            M->LoadStream	(*chunk);
-            chunk->close	();
-        }else
+            M->LoadStream(*chunk);
+            chunk->close();
+        }
+        else
         {
-            ELog.DlgMsg		(mtError,"Skipping corrupted version of level part: '%s\\%s.part'",EFS.ExtractFileName(map_name).c_str(),M->ClassName());
-            FS.r_close		(R);
+            ELog.DlgMsg(mtError, "Skipping corrupted version of level part: '%s\\%s.part'", EFS.ExtractFileName(map_name).c_str(), M->ClassName());
+            FS.r_close(R);
             return 			FALSE;
         }
         //success
-        FS.r_close			(R);
-	    return 				TRUE;
+        FS.r_close(R);
+        return 				TRUE;
     }
     return 					TRUE;
 }

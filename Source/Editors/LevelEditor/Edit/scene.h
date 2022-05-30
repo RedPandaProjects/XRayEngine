@@ -178,6 +178,7 @@ public:
     xr_string		LevelPartName		(LPCSTR map_name, ObjClassID cls);
 
     BOOL			LoadLevelPart		(ESceneToolBase* M, LPCSTR map_name);
+	BOOL			LoadLevelPartStream (ESceneToolBase* M, LPCSTR map_name);
     BOOL			LoadLevelPartLTX	(ESceneToolBase* M, LPCSTR map_name);
 
     BOOL			LoadLevelPart		(LPCSTR map_name, ObjClassID cls);

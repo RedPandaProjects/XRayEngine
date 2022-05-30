@@ -245,7 +245,7 @@ bool ESoundSource::LoadStream(IReader& F)
     	if (m_Flags.is(flPlaying)) 		Play(); 
 //.    	if (m_Flags.is(flSimulating)) 	Simulate(); 
     break;
-    default: THROW;
+    default: return false;
     }
     return true;
 }
