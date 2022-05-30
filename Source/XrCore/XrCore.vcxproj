@@ -441,9 +441,6 @@
     <ProjectReference Include="..\BearBundle\BearCore\Platform\Desktop\BearCore.vcxproj">
       <Project>{86b65138-c85e-4c26-967b-9a21eb954216}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\External\BugTrap\BugTrap.vcxproj">
-      <Project>{e8cf1ada-264a-4127-86c2-fd7057d3792c}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\XrAPI\XrAPI.vcxproj">
       <Project>{ff16ef0a-8a51-4c36-9213-4aa87cb4b317}</Project>
     </ProjectReference>
