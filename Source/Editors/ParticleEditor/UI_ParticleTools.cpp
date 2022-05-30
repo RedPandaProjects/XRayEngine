@@ -317,10 +317,10 @@ bool CParticleTool::Save(bool bAsXR)
 	bool bRes			= false;
 	if(bAsXR)
     {
-        bRes 			= ::Render->PSLibrary.Save();
+        bRes 			= RImplementation.PSLibrary.Save();
     }else
     {
-        bRes 			= ::Render->PSLibrary.Save2();
+        bRes 			= RImplementation.PSLibrary.Save2();
     }
 
     if (bRes)		m_bModified = false;
@@ -332,7 +332,7 @@ void CParticleTool::Reload()
 {
 	VERIFY(m_bReady);
     ResetCurrent	();
-	::Render->PSLibrary.Reload();
+	RImplementation.PSLibrary.Reload();
     // visual part
     m_ItemProps->ClearProperties();
     UpdateProperties(true);
@@ -344,17 +344,17 @@ void CheckEffect(const xr_string& group_path, const shared_str& eff_full_name, x
 
     if(0!=stricmp(res_name.c_str(),eff_full_name.c_str()))
     {
-        PS::CPEDef* old_ped			= ::Render->PSLibrary.FindPED(eff_full_name.c_str());
-        PS::CPEDef* new_ped			= ::Render->PSLibrary.FindPED(res_name.c_str());
+        PS::CPEDef* old_ped			= RImplementation.PSLibrary.FindPED(eff_full_name.c_str());
+        PS::CPEDef* new_ped			= RImplementation.PSLibrary.FindPED(res_name.c_str());
         if(bRenameOnly)
         {
-       		::Render->PSLibrary.Remove	(res_name.c_str());
+       		RImplementation.PSLibrary.Remove	(res_name.c_str());
             new_ped					= NULL;
         }
 
         if(!new_ped)
         {
-            new_ped					= (bRenameOnly)? old_ped : ::Render->PSLibrary.AppendPED(old_ped);
+            new_ped					= (bRenameOnly)? old_ped : RImplementation.PSLibrary.AppendPED(old_ped);
         	new_ped->m_Name			= res_name.c_str();
             if(bRenameOnly)
         		Msg						("rename effect [%s]->[%s]", eff_full_name.c_str(), res_name.c_str());
@@ -413,7 +413,7 @@ CCommandVar CParticleTool::Compact(CCommandVar p1, CCommandVar p2)
         return false;
     }
     
-    for (PS::PGDIt g_it= ::Render->PSLibrary.FirstPGD(); g_it!=::Render->PSLibrary.LastPGD(); ++g_it)
+    for (PS::PGDIt g_it= RImplementation.PSLibrary.FirstPGD(); g_it!=RImplementation.PSLibrary.LastPGD(); ++g_it)
     {
     	PS::CPGDef*	pg 		= (*g_it);
         shared_str& group_name	= pg->m_Name;
@@ -457,15 +457,15 @@ CCommandVar CParticleTool::Compact(CCommandVar p1, CCommandVar p2)
 bool CParticleTool::Validate(bool bMsg)
 {
     if (bMsg)		ELog.Msg	(mtInformation,"Begin validation...");
-    PS::PEDIt _eI 	= ::Render->PSLibrary.FirstPED();
-    PS::PEDIt _eE 	= ::Render->PSLibrary.LastPED();
+    PS::PEDIt _eI 	= RImplementation.PSLibrary.FirstPED();
+    PS::PEDIt _eE 	= RImplementation.PSLibrary.LastPED();
     u32 error_cnt	= 0;
     for (; _eI!=_eE; ++_eI)
     {
     	if (!(*_eI)->Validate(bMsg)) 
         	error_cnt++;
     }
-    for (PS::PGDIt g_it= ::Render->PSLibrary.FirstPGD(); g_it!=::Render->PSLibrary.LastPGD(); ++g_it)
+    for (PS::PGDIt g_it= RImplementation.PSLibrary.FirstPGD(); g_it!=RImplementation.PSLibrary.LastPGD(); ++g_it)
     {
     	PS::CPGDef*	pg 		= (*g_it);
     	if (!pg->Validate(bMsg)) 
@@ -490,15 +490,15 @@ void CParticleTool::Rename(LPCSTR old_full_name, LPCSTR new_full_name)
 {
 	VERIFY(m_bReady);
     // is effect
-	PS::CPEDef* E = ::Render->PSLibrary.FindPED(old_full_name);
+	PS::CPEDef* E = RImplementation.PSLibrary.FindPED(old_full_name);
     if (E){
-        ::Render->PSLibrary.RenamePED(E,new_full_name);
+        RImplementation.PSLibrary.RenamePED(E,new_full_name);
     	return;
     }
     // is group
-	PS::CPGDef* G = ::Render->PSLibrary.FindPGD(old_full_name);
+	PS::CPGDef* G = RImplementation.PSLibrary.FindPGD(old_full_name);
     if (G){
-        ::Render->PSLibrary.RenamePGD(G,new_full_name);
+        RImplementation.PSLibrary.RenamePGD(G,new_full_name);
     	return;
     }
 }
@@ -506,7 +506,7 @@ void CParticleTool::Rename(LPCSTR old_full_name, LPCSTR new_full_name)
 void CParticleTool::Remove(LPCSTR name)
 {
 
-    if (::Render->PSLibrary.FindPED(name) == m_LibPED || ::Render->PSLibrary.FindPGD(name) == m_LibPGD)
+    if (RImplementation.PSLibrary.FindPED(name) == m_LibPED || RImplementation.PSLibrary.FindPGD(name) == m_LibPGD)
     {
         m_ItemProps->ClearProperties();
     }
@@ -514,7 +514,7 @@ void CParticleTool::Remove(LPCSTR name)
 	VERIFY(m_bReady);
     SetCurrentPE(0);
     SetCurrentPG(0);
-	::Render->PSLibrary.Remove	(name);
+	RImplementation.PSLibrary.Remove	(name);
 }
 
 void CParticleTool::RemoveCurrent()
@@ -584,8 +584,8 @@ void CParticleTool::DrawReferenceList()
     {
         if (m_EditPE->GetDefinition())
         {
-            PS::PGDIt G = ::Render->PSLibrary.FirstPGD();
-            PS::PGDIt G_e = ::Render->PSLibrary.LastPGD();
+            PS::PGDIt G = RImplementation.PSLibrary.FirstPGD();
+            PS::PGDIt G_e = RImplementation.PSLibrary.LastPGD();
             for (; G != G_e; ++G)
             {
                 PS::CPGDef* def = (*G);
@@ -625,12 +625,12 @@ void CParticleTool::CommandJumpToItem()
 
 PS::CPEDef*	CParticleTool::FindPE(LPCSTR name)
 {
-	return ::Render->PSLibrary.FindPED(name);
+	return RImplementation.PSLibrary.FindPED(name);
 }
 
 PS::CPGDef*	CParticleTool::FindPG(LPCSTR name)
 {
-	return ::Render->PSLibrary.FindPGD(name);
+	return RImplementation.PSLibrary.FindPGD(name);
 }
 
 void CParticleTool::PlayCurrent(int idx)
@@ -784,7 +784,7 @@ void CParticleTool::SelectListItem(LPCSTR pref, LPCSTR name, bool bVal, bool bLe
 PS::CPEDef* CParticleTool::AppendPE(PS::CPEDef* src, const char* path)
 {
     VERIFY(m_bReady);
-    PS::CPEDef* S = ::Render->PSLibrary.AppendPED(src);
+    PS::CPEDef* S = RImplementation.PSLibrary.AppendPED(src);
     S->m_Name = path;
     ExecCommand(COMMAND_UPDATE_PROPERTIES, true);
     SelectListItem(0, path, true, false, true);
@@ -794,7 +794,7 @@ PS::CPEDef* CParticleTool::AppendPE(PS::CPEDef* src, const char* path)
 PS::CPGDef*	CParticleTool::AppendPG(PS::CPGDef* src, const char* path)
 {
 	VERIFY(m_bReady);
-	PS::CPGDef* S 		= ::Render->PSLibrary.AppendPGD(src);
+	PS::CPGDef* S 		= RImplementation.PSLibrary.AppendPGD(src);
     S->m_Name			= path;
 
     ExecCommand			(COMMAND_UPDATE_PROPERTIES,true);

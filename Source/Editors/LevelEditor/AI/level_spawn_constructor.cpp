@@ -20,8 +20,6 @@
 #include "space_restrictor_wrapper.h"
 #include "..\xrEngine\object_broker.h"
 #include "..\xrServerEntities\restriction_space.h"
-#include "scene.h"
-#include "SpawnPoint.h"
 
 #define IGNORE_ZERO_SPAWN_POSITIONS
 

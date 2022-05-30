@@ -44,113 +44,112 @@
     <ClCompile Include="AI\server_entity_wrapper.cpp" />
     <ClCompile Include="AI\space_restrictor_wrapper.cpp" />
     <ClCompile Include="AI\xrThread.cpp" />
-    <ClCompile Include="Edit\Builder.cpp" />
-    <ClCompile Include="Edit\BuilderCF.cpp" />
-    <ClCompile Include="Edit\BuilderCore.cpp" />
-    <ClCompile Include="Edit\BuilderGame.cpp" />
-    <ClCompile Include="Edit\BuilderLODs.cpp" />
-    <ClCompile Include="Edit\BuilderLTX.cpp" />
-    <ClCompile Include="Edit\BuilderOGF.cpp" />
-    <ClCompile Include="Edit\BuilderRemote.cpp" />
-    <ClCompile Include="Edit\Cursor3D.cpp" />
-    <ClCompile Include="Edit\Custom2DProjector.cpp" />
-    <ClCompile Include="Edit\CustomObject.cpp" />
-    <ClCompile Include="Edit\CustomObjectAnimation.cpp" />
-    <ClCompile Include="Edit\CustomObjectLE.cpp" />
-    <ClCompile Include="Edit\EditObjectExportLWO.cpp" />
-    <ClCompile Include="Edit\ELight.cpp" />
-    <ClCompile Include="Edit\ELight_IO.cpp" />
-    <ClCompile Include="Edit\ELight_props.cpp" />
-    <ClCompile Include="Edit\EParticlesObject.cpp" />
-    <ClCompile Include="Edit\ESceneAIMapControls.cpp" />
-    <ClCompile Include="Edit\ESceneAIMapTools.cpp" />
-    <ClCompile Include="Edit\ESceneAIMapTools_Controls.cpp" />
-    <ClCompile Include="Edit\ESceneAIMapTools_Export.cpp" />
-    <ClCompile Include="Edit\ESceneAIMapTools_Generate.cpp" />
-    <ClCompile Include="Edit\ESceneAIMapTools_MotionSimulator.cpp" />
-    <ClCompile Include="Edit\ESceneAIMapTools_Pick.cpp" />
-    <ClCompile Include="Edit\ESceneAIMapTools_Render.cpp" />
-    <ClCompile Include="Edit\ESceneControlsCustom.cpp" />
-    <ClCompile Include="Edit\ESceneCustomMTools.cpp" />
-    <ClCompile Include="Edit\ESceneCustomMToolsControls.cpp" />
-    <ClCompile Include="Edit\ESceneCustomOTools.cpp" />
-    <ClCompile Include="Edit\ESceneCustomOToolsFactory.cpp" />
-    <ClCompile Include="Edit\ESceneCustomOToolsIO.cpp" />
-    <ClCompile Include="Edit\ESceneDOTools.cpp" />
-    <ClCompile Include="Edit\ESceneDOTools_Controls.cpp" />
-    <ClCompile Include="Edit\ESceneDOTools_Generate.cpp" />
-    <ClCompile Include="Edit\ESceneDOTools_Pick.cpp" />
-    <ClCompile Include="Edit\ESceneDummyTools.cpp" />
-    <ClCompile Include="Edit\ESceneFogVolumeTools.cpp" />
-    <ClCompile Include="Edit\ESceneGlowTools.cpp" />
-    <ClCompile Include="Edit\ESceneGlowToolsIO.cpp" />
-    <ClCompile Include="Edit\ESceneGroupControls.cpp" />
-    <ClCompile Include="Edit\ESceneGroupTools.cpp" />
-    <ClCompile Include="Edit\ESceneGroupToolsIO.cpp" />
-    <ClCompile Include="Edit\ESceneLightTools.cpp" />
-    <ClCompile Include="Edit\ESceneLightToolsIO.cpp" />
-    <ClCompile Include="Edit\ESceneObjectControls.cpp" />
-    <ClCompile Include="Edit\ESceneObjectTools.cpp" />
-    <ClCompile Include="Edit\ESceneObjectToolsExportBreakable.cpp" />
-    <ClCompile Include="Edit\ESceneObjectToolsIO.cpp" />
-    <ClCompile Include="Edit\EScenePortalControls.cpp" />
-    <ClCompile Include="Edit\EScenePortalTools.cpp" />
-    <ClCompile Include="Edit\EScenePortalToolsIO.cpp" />
-    <ClCompile Include="Edit\EScenePSControls.cpp" />
-    <ClCompile Include="Edit\EScenePSTools.cpp" />
-    <ClCompile Include="Edit\EScenePSToolsIO.cpp" />
-    <ClCompile Include="Edit\ESceneSectorControls.cpp" />
-    <ClCompile Include="Edit\ESceneSectorTools.cpp" />
-    <ClCompile Include="Edit\ESceneSectorToolsIO.cpp" />
-    <ClCompile Include="Edit\ESceneShapeControls.cpp" />
-    <ClCompile Include="Edit\ESceneShapeTools.cpp" />
-    <ClCompile Include="Edit\ESceneShapeToolsIO.cpp" />
-    <ClCompile Include="Edit\ESceneSoundEnvTools.cpp" />
-    <ClCompile Include="Edit\ESceneSoundEnvToolsIO.cpp" />
-    <ClCompile Include="Edit\ESceneSoundSrcTools.cpp" />
-    <ClCompile Include="Edit\ESceneSoundSrcToolsIO.cpp" />
-    <ClCompile Include="Edit\ESceneSpawnControls.cpp" />
-    <ClCompile Include="Edit\ESceneSpawnTools.cpp" />
-    <ClCompile Include="Edit\ESceneSpawnToolsIO.cpp" />
-    <ClCompile Include="Edit\ESceneWallmarkControls.cpp" />
-    <ClCompile Include="Edit\ESceneWallmarkTools.cpp" />
-    <ClCompile Include="Edit\ESceneWayControls.cpp" />
-    <ClCompile Include="Edit\ESceneWayTools.cpp" />
-    <ClCompile Include="Edit\ESceneWayToolsIO.cpp" />
-    <ClCompile Include="Edit\EShape.cpp" />
-    <ClCompile Include="Edit\ESound_Environment.cpp" />
-    <ClCompile Include="Edit\ESound_Source.cpp" />
-    <ClCompile Include="Edit\FS2.cpp" />
-    <ClCompile Include="Edit\GeometryPartExtractor.cpp" />
-    <ClCompile Include="Edit\glow.cpp" />
-    <ClCompile Include="Edit\GroupObject.cpp" />
-    <ClCompile Include="Edit\GroupObjectUtils.cpp" />
-    <ClCompile Include="Edit\LevelPreferences.cpp" />
-    <ClCompile Include="Edit\portal.cpp" />
-    <ClCompile Include="Edit\portalutils.cpp" />
-    <ClCompile Include="Edit\scene.cpp" />
-    <ClCompile Include="Edit\SceneIO.cpp" />
-    <ClCompile Include="Edit\SceneObject.cpp" />
-    <ClCompile Include="Edit\SceneObjectIO.cpp" />
-    <ClCompile Include="Edit\ScenePick.cpp" />
-    <ClCompile Include="Edit\SceneRender.cpp" />
-    <ClCompile Include="Edit\SceneSelection.cpp" />
-    <ClCompile Include="Edit\SceneSnap.cpp" />
-    <ClCompile Include="Edit\SceneSummaryInfo.cpp" />
-    <ClCompile Include="Edit\SceneUndo.cpp" />
-    <ClCompile Include="Edit\SceneUtil.cpp" />
-    <ClCompile Include="Edit\scene_spawn.cpp" />
-    <ClCompile Include="Edit\Scene_Tools.cpp" />
-    <ClCompile Include="Edit\sector.cpp" />
-    <ClCompile Include="Edit\SoundManager_LE.cpp" />
-    <ClCompile Include="Edit\SpawnPoint.cpp" />
-    <ClCompile Include="Edit\UI_LevelMain.cpp" />
-    <ClCompile Include="Edit\UI_LevelTools.cpp" />
-    <ClCompile Include="Edit\WayPoint.cpp" />
+    <ClCompile Include="Editor\Builder\Builder.cpp" />
+    <ClCompile Include="Editor\Builder\BuilderCore.cpp" />
+    <ClCompile Include="Editor\Builder\BuilderGame.cpp" />
+    <ClCompile Include="Editor\Builder\BuilderLODs.cpp" />
+    <ClCompile Include="Editor\Builder\BuilderLTX.cpp" />
+    <ClCompile Include="Editor\Builder\BuilderOGF.cpp" />
+    <ClCompile Include="Editor\Builder\BuilderRemote.cpp" />
+    <ClCompile Include="Editor\Entry\CustomObject.cpp" />
+    <ClCompile Include="Editor\Entry\CustomObjectAnimation.cpp" />
+    <ClCompile Include="Editor\Entry\CustomObjectLE.cpp" />
+    <ClCompile Include="Editor\Entry\EditObjectExportLWO.cpp" />
+    <ClCompile Include="Editor\Entry\Glow\glow.cpp" />
+    <ClCompile Include="Editor\Entry\Group\GroupObject.cpp" />
+    <ClCompile Include="Editor\Entry\Group\GroupObjectUtils.cpp" />
+    <ClCompile Include="Editor\Entry\Light\ELight.cpp" />
+    <ClCompile Include="Editor\Entry\Light\ELight_IO.cpp" />
+    <ClCompile Include="Editor\Entry\Light\ELight_props.cpp" />
+    <ClCompile Include="Editor\Entry\Particles\EParticlesObject.cpp" />
+    <ClCompile Include="Editor\Entry\Portal\portal.cpp" />
+    <ClCompile Include="Editor\Entry\Sector\sector.cpp" />
+    <ClCompile Include="Editor\Entry\Shape\EShape.cpp" />
+    <ClCompile Include="Editor\Entry\Sound\ESound_Environment.cpp" />
+    <ClCompile Include="Editor\Entry\Sound\ESound_Source.cpp" />
+    <ClCompile Include="Editor\Entry\Spawn\SpawnPoint.cpp" />
+    <ClCompile Include="Editor\Entry\StaticObject\SceneObject.cpp" />
+    <ClCompile Include="Editor\Entry\StaticObject\SceneObjectIO.cpp" />
+    <ClCompile Include="Editor\Entry\WayPoint\WayPoint.cpp" />
+    <ClCompile Include="Editor\Scene\LEPhysics.cpp" />
+    <ClCompile Include="Editor\Scene\scene.cpp" />
+    <ClCompile Include="Editor\Scene\SceneIO.cpp" />
+    <ClCompile Include="Editor\Scene\ScenePick.cpp" />
+    <ClCompile Include="Editor\Scene\SceneRender.cpp" />
+    <ClCompile Include="Editor\Scene\SceneSelection.cpp" />
+    <ClCompile Include="Editor\Scene\SceneSnap.cpp" />
+    <ClCompile Include="Editor\Scene\SceneSummaryInfo.cpp" />
+    <ClCompile Include="Editor\Scene\SceneUndo.cpp" />
+    <ClCompile Include="Editor\Scene\SceneUtil.cpp" />
+    <ClCompile Include="Editor\Scene\scene_spawn.cpp" />
+    <ClCompile Include="Editor\Scene\Scene_Tools.cpp" />
+    <ClCompile Include="Editor\Tools\AIMap\ESceneAIMapControls.cpp" />
+    <ClCompile Include="Editor\Tools\AIMap\ESceneAIMapTools.cpp" />
+    <ClCompile Include="Editor\Tools\AIMap\ESceneAIMapTools_Controls.cpp" />
+    <ClCompile Include="Editor\Tools\AIMap\ESceneAIMapTools_Export.cpp" />
+    <ClCompile Include="Editor\Tools\AIMap\ESceneAIMapTools_Generate.cpp" />
+    <ClCompile Include="Editor\Tools\AIMap\ESceneAIMapTools_MotionSimulator.cpp" />
+    <ClCompile Include="Editor\Tools\AIMap\ESceneAIMapTools_Pick.cpp" />
+    <ClCompile Include="Editor\Tools\AIMap\ESceneAIMapTools_Render.cpp" />
+    <ClCompile Include="Editor\Tools\Base\ESceneControlsCustom.cpp" />
+    <ClCompile Include="Editor\Tools\Base\ESceneCustomMTools.cpp" />
+    <ClCompile Include="Editor\Tools\Base\ESceneCustomMToolsControls.cpp" />
+    <ClCompile Include="Editor\Tools\Base\ESceneCustomOTools.cpp" />
+    <ClCompile Include="Editor\Tools\Base\ESceneCustomOToolsIO.cpp" />
+    <ClCompile Include="Editor\Tools\Base\ESceneDummyTools.cpp" />
+    <ClCompile Include="Editor\Tools\Details\ESceneDOTools.cpp" />
+    <ClCompile Include="Editor\Tools\Details\ESceneDOTools_Controls.cpp" />
+    <ClCompile Include="Editor\Tools\Details\ESceneDOTools_Generate.cpp" />
+    <ClCompile Include="Editor\Tools\Details\ESceneDOTools_Pick.cpp" />
+    <ClCompile Include="Editor\Tools\FogVolume\ESceneFogVolumeTools.cpp" />
+    <ClCompile Include="Editor\Tools\Glow\ESceneGlowTools.cpp" />
+    <ClCompile Include="Editor\Tools\Glow\ESceneGlowToolsIO.cpp" />
+    <ClCompile Include="Editor\Tools\Glow\ESceneGroupToolsIO.cpp" />
+    <ClCompile Include="Editor\Tools\Group\ESceneGroupControls.cpp" />
+    <ClCompile Include="Editor\Tools\Group\ESceneGroupTools.cpp" />
+    <ClCompile Include="Editor\Tools\Light\ESceneLightTools.cpp" />
+    <ClCompile Include="Editor\Tools\Light\ESceneLightToolsIO.cpp" />
+    <ClCompile Include="Editor\Tools\Particles\EScenePSControls.cpp" />
+    <ClCompile Include="Editor\Tools\Particles\EScenePSTools.cpp" />
+    <ClCompile Include="Editor\Tools\Particles\EScenePSToolsIO.cpp" />
+    <ClCompile Include="Editor\Tools\Portal\EScenePortalControls.cpp" />
+    <ClCompile Include="Editor\Tools\Portal\EScenePortalTools.cpp" />
+    <ClCompile Include="Editor\Tools\Portal\EScenePortalToolsIO.cpp" />
+    <ClCompile Include="Editor\Tools\Sector\ESceneSectorControls.cpp" />
+    <ClCompile Include="Editor\Tools\Sector\ESceneSectorTools.cpp" />
+    <ClCompile Include="Editor\Tools\Sector\ESceneSectorToolsIO.cpp" />
+    <ClCompile Include="Editor\Tools\Shape\ESceneShapeControls.cpp" />
+    <ClCompile Include="Editor\Tools\Shape\ESceneShapeTools.cpp" />
+    <ClCompile Include="Editor\Tools\Shape\ESceneShapeToolsIO.cpp" />
+    <ClCompile Include="Editor\Tools\Sound\ESceneSoundEnvTools.cpp" />
+    <ClCompile Include="Editor\Tools\Sound\ESceneSoundEnvToolsIO.cpp" />
+    <ClCompile Include="Editor\Tools\Sound\ESceneSoundSrcTools.cpp" />
+    <ClCompile Include="Editor\Tools\Sound\ESceneSoundSrcToolsIO.cpp" />
+    <ClCompile Include="Editor\Tools\Spawn\ESceneSpawnControls.cpp" />
+    <ClCompile Include="Editor\Tools\Spawn\ESceneSpawnTools.cpp" />
+    <ClCompile Include="Editor\Tools\Spawn\ESceneSpawnToolsIO.cpp" />
+    <ClCompile Include="Editor\Tools\StaticObject\ESceneObjectControls.cpp" />
+    <ClCompile Include="Editor\Tools\StaticObject\ESceneObjectTools.cpp" />
+    <ClCompile Include="Editor\Tools\StaticObject\ESceneObjectToolsExportBreakable.cpp" />
+    <ClCompile Include="Editor\Tools\StaticObject\ESceneObjectToolsIO.cpp" />
+    <ClCompile Include="Editor\Tools\Wallmark\ESceneWallmarkControls.cpp" />
+    <ClCompile Include="Editor\Tools\Wallmark\ESceneWallmarkTools.cpp" />
+    <ClCompile Include="Editor\Tools\WayPoint\ESceneWayControls.cpp" />
+    <ClCompile Include="Editor\Tools\WayPoint\ESceneWayTools.cpp" />
+    <ClCompile Include="Editor\Tools\WayPoint\ESceneWayToolsIO.cpp" />
+    <ClCompile Include="Editor\UI_LevelMain.cpp" />
+    <ClCompile Include="Editor\UI_LevelTools.cpp" />
+    <ClCompile Include="Editor\Utils\Cursor3D.cpp" />
+    <ClCompile Include="Editor\Utils\Custom2DProjector.cpp" />
+    <ClCompile Include="Editor\Utils\FS2.cpp" />
+    <ClCompile Include="Editor\Utils\GeometryPartExtractor.cpp" />
+    <ClCompile Include="Editor\Utils\iniStreamImpl.cpp" />
+    <ClCompile Include="Editor\Utils\LevelPreferences.cpp" />
+    <ClCompile Include="Editor\Utils\portalutils.cpp" />
+    <ClCompile Include="Editor\Utils\SoundManager_LE.cpp" />
+    <ClCompile Include="Editor\Utils\XrSEFactoryManager.cpp" />
     <ClCompile Include="Engine\XRayEditor.cpp" />
     <ClCompile Include="Engine\XrGameManager.cpp" />
-    <ClCompile Include="iniStreamImpl.cpp" />
-    <ClCompile Include="LEPhysics.cpp" />
     <ClCompile Include="LevelEditor.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">Create</PrecompiledHeader>
@@ -181,7 +180,6 @@
     <ClCompile Include="UI\UIObjectList.cpp" />
     <ClCompile Include="UI\UIPropertiesModal.cpp" />
     <ClCompile Include="UI\UITopBarForm.cpp" />
-    <ClCompile Include="XrSEFactoryManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\XrRender\Private\DetailManager.h" />
@@ -232,71 +230,71 @@
     <ClInclude Include="AI\space_restrictor_wrapper.h" />
     <ClInclude Include="AI\space_restrictor_wrapper_inline.h" />
     <ClInclude Include="AI\xrThread.h" />
-    <ClInclude Include="Edit\Builder.h" />
-    <ClInclude Include="Edit\Cursor3D.h" />
-    <ClInclude Include="Edit\Custom2DProjector.h" />
-    <ClInclude Include="Edit\CustomObject.h" />
-    <ClInclude Include="Edit\ELight.h" />
-    <ClInclude Include="Edit\ELight_def.h" />
-    <ClInclude Include="Edit\EParticlesObject.h" />
-    <ClInclude Include="Edit\ESceneAIMapControls.h" />
-    <ClInclude Include="Edit\ESceneAIMapTools.h" />
-    <ClInclude Include="Edit\ESceneAIMapTools_Export.h" />
-    <ClInclude Include="Edit\ESceneClassList.h" />
-    <ClInclude Include="Edit\ESceneControlsCustom.h" />
-    <ClInclude Include="Edit\ESceneCustomMTools.h" />
-    <ClInclude Include="Edit\ESceneCustomOTools.h" />
-    <ClInclude Include="Edit\ESceneDOTools.h" />
-    <ClInclude Include="Edit\ESceneDummyTools.h" />
-    <ClInclude Include="Edit\ESceneFogVolumeTools.h" />
-    <ClInclude Include="Edit\ESceneGlowTools.h" />
-    <ClInclude Include="Edit\ESceneGroupControls.h" />
-    <ClInclude Include="Edit\ESceneGroupTools.h" />
-    <ClInclude Include="Edit\ESceneLightTools.h" />
-    <ClInclude Include="Edit\ESceneObjectControls.h" />
-    <ClInclude Include="Edit\ESceneObjectTools.h" />
-    <ClInclude Include="Edit\EScenePortalControls.h" />
-    <ClInclude Include="Edit\EScenePortalTools.h" />
-    <ClInclude Include="Edit\EScenePSControls.h" />
-    <ClInclude Include="Edit\EScenePSTools.h" />
-    <ClInclude Include="Edit\ESceneSectorControls.h" />
-    <ClInclude Include="Edit\ESceneSectorTools.h" />
-    <ClInclude Include="Edit\ESceneShapeControls.h" />
-    <ClInclude Include="Edit\ESceneShapeTools.h" />
-    <ClInclude Include="Edit\ESceneSoundEnvTools.h" />
-    <ClInclude Include="Edit\ESceneSoundSrcTools.h" />
-    <ClInclude Include="Edit\ESceneSpawnControls.h" />
-    <ClInclude Include="Edit\ESceneSpawnTools.h" />
-    <ClInclude Include="Edit\ESceneWallmarkControls.h" />
-    <ClInclude Include="Edit\ESceneWallmarkTools.h" />
-    <ClInclude Include="Edit\ESceneWayControls.h" />
-    <ClInclude Include="Edit\ESceneWayTools.h" />
-    <ClInclude Include="Edit\EShape.h" />
-    <ClInclude Include="Edit\ESound_Environment.h" />
-    <ClInclude Include="Edit\ESound_Source.h" />
-    <ClInclude Include="Edit\FS2.h" />
-    <ClInclude Include="Edit\GeometryPartExtractor.h" />
-    <ClInclude Include="Edit\glow.h" />
-    <ClInclude Include="Edit\GroupObject.h" />
-    <ClInclude Include="Edit\LevelPreferences.h" />
-    <ClInclude Include="Edit\lwchunks.h" />
-    <ClInclude Include="Edit\portal.h" />
-    <ClInclude Include="Edit\portalutils.h" />
-    <ClInclude Include="Edit\scene.h" />
-    <ClInclude Include="Edit\SceneGraph.h" />
-    <ClInclude Include="Edit\SceneObject.h" />
-    <ClInclude Include="Edit\SceneSummaryInfo.h" />
-    <ClInclude Include="Edit\sector.h" />
-    <ClInclude Include="Edit\SoundManager_LE.h" />
-    <ClInclude Include="Edit\SpawnPoint.h" />
-    <ClInclude Include="Edit\UI_LevelMain.h" />
-    <ClInclude Include="Edit\UI_LevelTools.h" />
-    <ClInclude Include="Edit\WayPoint.h" />
+    <ClInclude Include="Editor\Builder\Builder.h" />
+    <ClInclude Include="Editor\Entry\CustomObject.h" />
+    <ClInclude Include="Editor\Entry\Glow\glow.h" />
+    <ClInclude Include="Editor\Entry\Group\GroupObject.h" />
+    <ClInclude Include="Editor\Entry\Light\ELight.h" />
+    <ClInclude Include="Editor\Entry\Particles\EParticlesObject.h" />
+    <ClInclude Include="Editor\Entry\Portal\portal.h" />
+    <ClInclude Include="Editor\Entry\Sector\sector.h" />
+    <ClInclude Include="Editor\Entry\Shape\EShape.h" />
+    <ClInclude Include="Editor\Entry\Sound\ESound_Environment.h" />
+    <ClInclude Include="Editor\Entry\Sound\ESound_Source.h" />
+    <ClInclude Include="Editor\Entry\Spawn\SpawnPoint.h" />
+    <ClInclude Include="Editor\Entry\StaticObject\SceneObject.h" />
+    <ClInclude Include="Editor\Entry\WayPoint\WayPoint.h" />
+    <ClInclude Include="Editor\Scene\LEPhysics.h" />
+    <ClInclude Include="Editor\Scene\mesh_data.h" />
+    <ClInclude Include="Editor\Scene\scene.h" />
+    <ClInclude Include="Editor\Scene\SceneGraph.h" />
+    <ClInclude Include="Editor\Scene\SceneSummaryInfo.h" />
+    <ClInclude Include="Editor\Tools\AIMap\ESceneAIMapControls.h" />
+    <ClInclude Include="Editor\Tools\AIMap\ESceneAIMapTools.h" />
+    <ClInclude Include="Editor\Tools\AIMap\ESceneAIMapTools_Export.h" />
+    <ClInclude Include="Editor\Tools\Base\ESceneControlsCustom.h" />
+    <ClInclude Include="Editor\Tools\Base\ESceneCustomMTools.h" />
+    <ClInclude Include="Editor\Tools\Base\ESceneCustomOTools.h" />
+    <ClInclude Include="Editor\Tools\Base\ESceneDummyTools.h" />
+    <ClInclude Include="Editor\Tools\Details\ESceneDOTools.h" />
+    <ClInclude Include="Editor\Tools\ESceneClassList.h" />
+    <ClInclude Include="Editor\Tools\FogVolume\ESceneFogVolumeTools.h" />
+    <ClInclude Include="Editor\Tools\Glow\ESceneGlowTools.h" />
+    <ClInclude Include="Editor\Tools\Group\ESceneGroupControls.h" />
+    <ClInclude Include="Editor\Tools\Group\ESceneGroupTools.h" />
+    <ClInclude Include="Editor\Tools\Light\ESceneLightTools.h" />
+    <ClInclude Include="Editor\Tools\Particles\EScenePSControls.h" />
+    <ClInclude Include="Editor\Tools\Particles\EScenePSTools.h" />
+    <ClInclude Include="Editor\Tools\Portal\EScenePortalControls.h" />
+    <ClInclude Include="Editor\Tools\Portal\EScenePortalTools.h" />
+    <ClInclude Include="Editor\Tools\Sector\ESceneSectorControls.h" />
+    <ClInclude Include="Editor\Tools\Sector\ESceneSectorTools.h" />
+    <ClInclude Include="Editor\Tools\Shape\ESceneShapeControls.h" />
+    <ClInclude Include="Editor\Tools\Shape\ESceneShapeTools.h" />
+    <ClInclude Include="Editor\Tools\Sound\ESceneSoundEnvTools.h" />
+    <ClInclude Include="Editor\Tools\Sound\ESceneSoundSrcTools.h" />
+    <ClInclude Include="Editor\Tools\Spawn\ESceneSpawnControls.h" />
+    <ClInclude Include="Editor\Tools\Spawn\ESceneSpawnTools.h" />
+    <ClInclude Include="Editor\Tools\StaticObject\ESceneObjectControls.h" />
+    <ClInclude Include="Editor\Tools\StaticObject\ESceneObjectTools.h" />
+    <ClInclude Include="Editor\Tools\Wallmark\ESceneWallmarkControls.h" />
+    <ClInclude Include="Editor\Tools\Wallmark\ESceneWallmarkTools.h" />
+    <ClInclude Include="Editor\Tools\WayPoint\ESceneWayControls.h" />
+    <ClInclude Include="Editor\Tools\WayPoint\ESceneWayTools.h" />
+    <ClInclude Include="Editor\UI_LevelMain.h" />
+    <ClInclude Include="Editor\UI_LevelTools.h" />
+    <ClInclude Include="Editor\Utils\Cursor3D.h" />
+    <ClInclude Include="Editor\Utils\Custom2DProjector.h" />
+    <ClInclude Include="Editor\Utils\FS2.h" />
+    <ClInclude Include="Editor\Utils\GeometryPartExtractor.h" />
+    <ClInclude Include="Editor\Utils\iniStreamImpl.h" />
+    <ClInclude Include="Editor\Utils\LevelPreferences.h" />
+    <ClInclude Include="Editor\Utils\lwchunks.h" />
+    <ClInclude Include="Editor\Utils\portalutils.h" />
+    <ClInclude Include="Editor\Utils\SoundManager_LE.h" />
+    <ClInclude Include="Editor\Utils\XrSEFactoryManager.h" />
     <ClInclude Include="Engine\XRayEditor.h" />
     <ClInclude Include="Engine\XrGameManager.h" />
-    <ClInclude Include="iniStreamImpl.h" />
-    <ClInclude Include="LEPhysics.h" />
-    <ClInclude Include="mesh_data.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="UI\Tools\UIAIMapTool.h" />
     <ClInclude Include="UI\Tools\UIDOTool.h" />
@@ -321,7 +319,6 @@
     <ClInclude Include="UI\UIPropertiesModal.h" />
     <ClInclude Include="UI\UITopBarForm.h" />
     <ClInclude Include="UI\UITopBarForm_ButtonList.h" />
-    <ClInclude Include="XrSEFactoryManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\XrAPI\XrAPI.vcxproj">
@@ -464,7 +461,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PreprocessorDefinitions>;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.;..\..\XrEngine\;..\..\XrRender\Public;..\..\XrRender\Private;Edit\;Engine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;..\..\XrEngine\;..\..\XrRender\Public;..\..\XrRender\Private;Engine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
@@ -477,7 +474,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PreprocessorDefinitions>;WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.;..\..\XrEngine\;..\..\XrRender\Public;..\..\XrRender\Private;Edit\;Engine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;..\..\XrEngine\;..\..\XrRender\Public;..\..\XrRender\Private;Engine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
@@ -492,7 +489,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>;_EDITORWIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.;..\..\XrEngine\;..\..\XrRender\Public;..\..\XrRender\Private;Edit\;Engine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;..\..\XrEngine\;..\..\XrRender\Public;..\..\XrRender\Private;Engine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
@@ -509,7 +506,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>;_WINDOWS;DEBUG;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.;..\..\XrEngine\;..\..\XrRender\Public;..\..\XrRender\Private;Edit\;Engine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;..\..\XrEngine\;..\..\XrRender\Public;..\..\XrRender\Private;Engine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
@@ -526,7 +523,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.;..\..\XrEngine\;..\..\XrRender\Public;..\..\XrRender\Private;Edit\;Engine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;..\..\XrEngine\;..\..\XrRender\Public;..\..\XrRender\Private;Engine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
@@ -543,7 +540,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>;_WINDOWS;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.;..\..\XrEngine\;..\..\XrRender\Public;..\..\XrRender\Private;Edit\;Engine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;..\..\XrEngine\;..\..\XrRender\Public;..\..\XrRender\Private;Engine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>

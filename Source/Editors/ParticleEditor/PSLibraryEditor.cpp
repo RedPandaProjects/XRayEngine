@@ -6,10 +6,7 @@
 #include "..\..\XrRender\Private\ParticleGroup.h"
 //------------------------------------------------------------------------------
 
-void  CPSLibrary::FindByName(LPCSTR new_name, bool& res)
-{
-	res = (FindPED(new_name)||FindPGD(new_name));
-}
+
 
 PS::CPEDef* CPSLibrary::AppendPED(PS::CPEDef* src)
 {

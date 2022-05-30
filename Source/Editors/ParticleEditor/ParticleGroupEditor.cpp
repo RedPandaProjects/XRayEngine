@@ -3,7 +3,7 @@
 #pragma hdrstop
 
 #include "..\..\XrRender\Private\ParticleGroup.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
+#include "../Public/PropertiesListHelper.h"
 #include "ui_particletools.h"
 
 BOOL PS::CPGDef::SEffect::Equal(const SEffect& src)
@@ -36,7 +36,7 @@ bool PS::CPGDef::Validate(bool bMsg)
     for(;pe_it!=pe_it_e;++pe_it)
     {	
         PS::CPGDef::SEffect* Eff		= (*pe_it);
-        PS::CPEDef* ped				= ::Render->PSLibrary.FindPED(Eff->m_EffectName.c_str());
+        PS::CPEDef* ped				= RImplementation.PSLibrary.FindPED(Eff->m_EffectName.c_str());
         if(!ped)
         {
             failed = failed||true;

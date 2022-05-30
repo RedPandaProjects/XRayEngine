@@ -1,8 +1,5 @@
 #include "stdafx.h"
-#include "UIParticlesTool.h"
-#include "..\..\xrRender\Private\PSLibrary.h"
-#include "Scene.h"
-#include "EParticlesObject.h"
+
 UIParticlesTool::UIParticlesTool()
 {
     m_Current = nullptr;

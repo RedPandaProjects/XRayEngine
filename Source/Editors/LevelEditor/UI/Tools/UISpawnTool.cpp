@@ -1,6 +1,5 @@
 #include "stdafx.h"
-#include "UISpawnTool.h"
-#include "SpawnPoint.h"
+
 UISpawnTool::UISpawnTool()
 {
     m_selPercent = 100;

@@ -121,16 +121,16 @@ void CParticleTool::RealUpdateProperties()
 
 	ListItemsVec items;
     {
-        PS::PEDIt Pe = ::Render->PSLibrary.FirstPED();
-        PS::PEDIt Ee = ::Render->PSLibrary.LastPED();
+        PS::PEDIt Pe = RImplementation.PSLibrary.FirstPED();
+        PS::PEDIt Ee = RImplementation.PSLibrary.LastPED();
         for (; Pe!=Ee; Pe++){
             ListItem* I=LHelper().CreateItem(items,*(*Pe)->m_Name,emEffect,0,*Pe);
             I->SetIcon(1);
         }
 	}
     {
-        PS::PGDIt Pg = ::Render->PSLibrary.FirstPGD();
-        PS::PGDIt Eg = ::Render->PSLibrary.LastPGD();
+        PS::PGDIt Pg = RImplementation.PSLibrary.FirstPGD();
+        PS::PGDIt Eg = RImplementation.PSLibrary.LastPGD();
         for (; Pg!=Eg; Pg++){
             ListItem* I=LHelper().CreateItem(items,*(*Pg)->m_Name,emGroup,0,*Pg);
             I->SetIcon(2);

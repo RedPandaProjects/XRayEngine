@@ -1,8 +1,4 @@
 #include "stdafx.h"
-#include "UIPortalTool.h"
-#include "Edit\portal.h"
-#include "Edit\portalutils.h"
-#include "Edit\EScenePortalTools.h"
 UIPortalTool::UIPortalTool()
 {
 }

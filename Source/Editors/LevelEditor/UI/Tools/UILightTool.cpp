@@ -1,6 +1,4 @@
 #include "stdafx.h"
-#include "UILightTool.h"
-#include "ELight.h"
 
 UILightTool::UILightTool()
 {

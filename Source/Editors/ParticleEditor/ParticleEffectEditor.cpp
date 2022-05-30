@@ -6,7 +6,7 @@
 
 #include "..\..\xrRender\Private\ParticleEffect.h"
 #include "..\XrEcore\Editor\ParticleEffectActions.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
+#include "../Public/PropertiesListHelper.h"
 #include "ui_particletools.h"
 #include "../xrEProps/FolderLib.h"
              
@@ -221,7 +221,7 @@ xr_string _item_to_select_after_edit;
 
 bool  PS::CPEDef::NameOnAfterEdit(PropValue* sender, shared_str& edit_val)
 {
-    for (PS::PGDIt g_it= ::Render->PSLibrary.FirstPGD(); g_it!=::Render->PSLibrary.LastPGD(); ++g_it)
+    for (PS::PGDIt g_it= RImplementation.PSLibrary.FirstPGD(); g_it!=RImplementation.PSLibrary.LastPGD(); ++g_it)
     {
     	PS::CPGDef*	pg 	= (*g_it);
         xr_vector<PS::CPGDef::SEffect*>::const_iterator pe_it 		= pg->m_Effects.begin();

@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "..\Edit\CustomObject.h"
+
 UILeftBarForm::UILeftBarForm()
 {
 	m_UseSnapList = false;

@@ -2,7 +2,7 @@
 #include "stdafx.h"
 
 #include "SHGameMtlTools.h"
-#include "../../xrServerEntities/PropertiesListHelper.h"
+#include "../Public/PropertiesListHelper.h"
 #include "ui_shadermain.h"
 #include "../xrEProps/folderlib.h"
 #include "UI_ShaderTools.h"

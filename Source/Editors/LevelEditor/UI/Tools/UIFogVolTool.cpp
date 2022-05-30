@@ -1,6 +1,4 @@
 #include "stdafx.h"
-#include "UIFogVolTool.h"
-#include "ESceneFogVolumeTools.h"
 UIFogVolTool::UIFogVolTool()
 {
 }

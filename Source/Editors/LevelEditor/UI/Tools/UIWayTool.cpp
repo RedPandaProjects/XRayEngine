@@ -1,6 +1,5 @@
 #include "stdafx.h"
-#include "UIWayTool.h"
-#include "WayPoint.h"
+
 UIWayTool::UIWayTool()
 {
 	m_WayMode = true;

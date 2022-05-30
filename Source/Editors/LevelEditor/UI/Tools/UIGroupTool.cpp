@@ -1,7 +1,5 @@
 #include "stdafx.h"
 #include "UIGroupTool.h"
-#include "GroupObject.h"
-#include "Edit\ESceneGroupTools.h"
 UIGroupTool::UIGroupTool()
 {
 	m_ChooseGroup = false;
@@ -11,7 +9,6 @@ UIGroupTool::UIGroupTool()
 UIGroupTool::~UIGroupTool()
 {
 }
-#include "UI_LevelTools.h"
 void UIGroupTool::Draw()
 {
 	ImGui::Separator();

@@ -5,8 +5,6 @@
 #include "cl_intersect.h"
 
 #ifdef REDITOR
-#	include "scene.h"
-#	include "sceneobject.h"
 #	include "../../Editors/XrETools/ETools.h"
 #endif
 

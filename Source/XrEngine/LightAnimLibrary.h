@@ -4,7 +4,8 @@
 #define LightAnimLibraryH
 //---------------------------------------------------------------------------
 enum EItemType;
-class ENGINE_API CLAItem				{
+class ENGINE_API CLAItem			
+{
 public:
     shared_str		cName;
     float   		fFPS;

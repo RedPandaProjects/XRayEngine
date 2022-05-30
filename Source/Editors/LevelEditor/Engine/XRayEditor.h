@@ -1,5 +1,5 @@
 #pragma once
-#include "..\XrEngine\x_ray.h"
+
 class XRayEditor :public CApplication
 {
 public:

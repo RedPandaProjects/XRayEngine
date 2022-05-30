@@ -1,7 +1,5 @@
 #include "stdafx.h"
-#include "UIShapeTool.h"
-#include "EShape.h"
-#include "ESceneShapeTools.h"
+
 UIShapeTool::UIShapeTool()
 {
     Tool = nullptr;
