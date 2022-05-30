@@ -1167,7 +1167,8 @@ bool CLevelMain::SelectionFrustum(CFrustum& frustum)
 void CLevelMain::RealUpdateScene()
 {
 	inherited::RealUpdateScene	();
-	if (GetEState()==esEditScene){
+	if (GetEState()==esEditScene)
+    {
 	    Scene->OnObjectsUpdate	();
     	LTools->OnObjectsUpdate	(); // �������� ��� ��� ���-�� ������� � ���������
 	    RedrawScene				();

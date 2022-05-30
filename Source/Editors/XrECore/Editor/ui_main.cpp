@@ -188,8 +188,6 @@ void TUI::MouseMove(TShiftState Shift, int X, int Y)
 void TUI::IR_OnMouseMove(int x, int y)
 {
 	if (!m_bReady) return;
-    bool bRayUpdated = false;
-
 	if (!EDevice->m_Camera.Process(m_ShiftState,x,y))
     {
         if( m_MouseCaptured || m_MouseMultiClickCaptured )
@@ -209,13 +207,11 @@ void TUI::IR_OnMouseMove(int x, int y)
                 Tools->MouseMove(m_ShiftState);
             }
 		    RedrawScene();
-            bRayUpdated = true;
         }
     }
-    if (!bRayUpdated)
     {
         m_CurrentCp = GetRenderMousePosition();
-        EDevice->m_Camera.MouseRayFromPoint(m_CurrentRStart,m_CurrentRDir,m_CurrentCp);
+        EDevice->m_Camera.MouseRayFromPoint(m_CurrentRStart, m_CurrentRDir, m_CurrentCp);
     }
     // Out cursor pos
     OutUICursorPos	();

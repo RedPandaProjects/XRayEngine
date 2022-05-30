@@ -190,6 +190,9 @@
     <Filter Include="Editor\Utils">
       <UniqueIdentifier>{1e4a5268-1a87-461a-8d57-cb323e0072e8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Editor\Utils\Gimzo">
+      <UniqueIdentifier>{8a2b9cb2-c4cf-4fa0-bee9-357e694c6e12}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -629,6 +632,9 @@
     <ClCompile Include="Editor\Utils\XrSEFactoryManager.cpp">
       <Filter>Editor\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Editor\Utils\Gimzo\MoveGimzo.cpp">
+      <Filter>Editor\Utils\Gimzo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -1036,6 +1042,9 @@
     </ClInclude>
     <ClInclude Include="Editor\Utils\XrSEFactoryManager.h">
       <Filter>Editor\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Utils\Gimzo\MoveGimzo.h">
+      <Filter>Editor\Utils\Gimzo</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

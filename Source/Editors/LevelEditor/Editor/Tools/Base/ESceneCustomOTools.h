@@ -88,4 +88,6 @@ public:
     virtual int			MultiRenameObjects		();
 	void				OnSelected				(CCustomObject* object);
 	virtual const CCustomObject* LastSelected			() const;
+
+    virtual class ESceneCustomOTool* CastObjectTool() {return this;}
 };

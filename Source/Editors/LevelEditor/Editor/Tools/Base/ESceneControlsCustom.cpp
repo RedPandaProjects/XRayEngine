@@ -137,7 +137,8 @@ bool  TUI_CustomControl::SelectStart(TShiftState Shift)
 
     int cnt 		= Scene->RaySelect((Shift & ssCtrl)?-1:(Shift & ssAlt)?0:1,parent_tool->FClassID);
     bBoxSelection    = ((0!=cnt) && ((Shift & ssCtrl)||(Shift & ssAlt))) || (0==cnt);
-    if( bBoxSelection ){
+    if( bBoxSelection )
+    {
         UI->EnableSelectionRect( true );
         UI->UpdateSelectionRect(UI->m_StartCp,UI->m_CurrentCp);
         return true;

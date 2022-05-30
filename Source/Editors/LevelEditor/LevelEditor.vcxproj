@@ -143,6 +143,7 @@
     <ClCompile Include="Editor\Utils\Custom2DProjector.cpp" />
     <ClCompile Include="Editor\Utils\FS2.cpp" />
     <ClCompile Include="Editor\Utils\GeometryPartExtractor.cpp" />
+    <ClCompile Include="Editor\Utils\Gimzo\MoveGimzo.cpp" />
     <ClCompile Include="Editor\Utils\iniStreamImpl.cpp" />
     <ClCompile Include="Editor\Utils\LevelPreferences.cpp" />
     <ClCompile Include="Editor\Utils\portalutils.cpp" />
@@ -287,6 +288,7 @@
     <ClInclude Include="Editor\Utils\Custom2DProjector.h" />
     <ClInclude Include="Editor\Utils\FS2.h" />
     <ClInclude Include="Editor\Utils\GeometryPartExtractor.h" />
+    <ClInclude Include="Editor\Utils\Gimzo\MoveGimzo.h" />
     <ClInclude Include="Editor\Utils\iniStreamImpl.h" />
     <ClInclude Include="Editor\Utils\LevelPreferences.h" />
     <ClInclude Include="Editor\Utils\lwchunks.h" />
@@ -369,6 +371,7 @@
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
     <CLRSupport>false</CLRSupport>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -392,6 +395,7 @@
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
     <CLRSupport>false</CLRSupport>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -463,6 +467,8 @@
       <PreprocessorDefinitions>;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.;..\..\XrEngine\;..\..\XrRender\Public;..\..\XrRender\Private;Engine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -476,6 +482,8 @@
       <PreprocessorDefinitions>;WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.;..\..\XrEngine\;..\..\XrRender\Public;..\..\XrRender\Private;Engine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

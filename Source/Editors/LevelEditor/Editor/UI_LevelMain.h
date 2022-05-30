@@ -109,5 +109,6 @@ public:
     virtual Ivector2 GetRenderMousePosition()const;
     virtual void OnDrawUI();
     bool  KeyDown(WORD Key, TShiftState Shift);
+private:
 };    
 extern CLevelMain*	LUI;
