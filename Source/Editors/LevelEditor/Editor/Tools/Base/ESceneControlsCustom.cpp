@@ -43,7 +43,7 @@ void TUI_CustomControl::Move   (TShiftState _Shift)
 bool TUI_CustomControl::HiddenMode()
 {
 	switch(action){
-	case etaSelect:	return false;
+	case etaSelect:	return LTools->GetGimzo()->IsFixed();
 	case etaAdd: 	return false;
 	case etaMove: 	return true;
 	case etaRotate:	return true;
@@ -131,6 +131,25 @@ bool  TUI_CustomControl::SelectStart(TShiftState Shift)
 {
 	ObjClassID cls = LTools->CurrentClassID();
 
+    if (LTools->GetGimzo()->GetStatus() != MoveGimzo::EStatus::None)
+    {
+        LTools->GetGimzo()->Fixed();
+        if (LTools->GetGimzo()->GetStatus() == MoveGimzo::EStatus::SelectedY) 
+        {
+            m_MovingXVector.set(0, 0, 0);
+            m_MovingYVector.set(0, 1, 0);
+        }
+        else
+        {
+            m_MovingXVector.set(EDevice->m_Camera.GetRight());
+            m_MovingXVector.y = 0;
+            m_MovingYVector.set(EDevice->m_Camera.GetDirection());
+            m_MovingYVector.y = 0;
+            m_MovingXVector.normalize_safe();
+            m_MovingYVector.normalize_safe();
+        }
+        return true;
+    }
 	if (CheckSnapList(Shift)) return false;
     if (Shift==ssRBOnly){ ExecCommand(COMMAND_SHOWCONTEXTMENU,parent_tool->FClassID); return false;}
     if (!((Shift&ssCtrl)||(Shift&ssAlt))) Scene->SelectObjects( false, cls);
@@ -146,12 +165,28 @@ bool  TUI_CustomControl::SelectStart(TShiftState Shift)
     return false;
 }
 
-void  TUI_CustomControl::SelectProcess(TShiftState _Shift){
+void  TUI_CustomControl::SelectProcess(TShiftState _Shift)
+{
+    if (LTools->GetGimzo()->IsFixed())
+    {
+        Fvector amount;
+        if (DefaultMovingProcess(_Shift, amount))
+        {
+            ObjectList lst;
+            if (Scene->GetQueryObjects(lst, LTools->CurrentClassID(), 1, 1, 0))
+                for (ObjectIt _F = lst.begin(); _F != lst.end(); _F++) (*_F)->Move(amount);
+        }
+    }
+
     if (bBoxSelection) UI->UpdateSelectionRect(UI->m_StartCp,UI->m_CurrentCp);
 }
 
 bool  TUI_CustomControl::SelectEnd(TShiftState _Shift)
 {
+    if (LTools->GetGimzo()->IsFixed())
+    {
+        LTools->GetGimzo()->Clear();
+    }
     if (bBoxSelection){
         UI->EnableSelectionRect( false );
         bBoxSelection = false;
@@ -221,9 +256,9 @@ bool  TUI_CustomControl::DefaultMovingProcess(TShiftState Shift, Fvector& amount
         	CHECK_SNAP(m_MovingReminder.z,amount.z,Tools->m_MoveSnap);
         }
 
-        if (!(etAxisX==Tools->GetAxis())&&!(etAxisZX==Tools->GetAxis())) 	amount.x = 0.f;
-        if (!(etAxisZ==Tools->GetAxis())&&!(etAxisZX==Tools->GetAxis())) 	amount.z = 0.f;
-        if (!(etAxisY==Tools->GetAxis())) 									amount.y = 0.f;
+        if (LTools->GetGimzo()->GetStatus() != MoveGimzo::EStatus::SelectedX) 	amount.x = 0.f;
+        if (LTools->GetGimzo()->GetStatus() != MoveGimzo::EStatus::SelectedZ) 	amount.z = 0.f;
+        if (LTools->GetGimzo()->GetStatus() != MoveGimzo::EStatus::SelectedY) 									amount.y = 0.f;
 
         return (amount.square_magnitude()>EPS_S);
 	}

@@ -53,6 +53,7 @@ public:
                     	CLevelTool			();
     virtual         	~CLevelTool		();
 
+    IC MoveGimzo* GetGimzo() { return m_Gimzo; }
     IC UIToolCustom*            GetToolForm         ()const{ return m_ToolForm; }
     IC UIPropertiesForm*GetProperties       ()const { return m_Props; }
     IC ObjClassID		GetTarget   		(){return target;}

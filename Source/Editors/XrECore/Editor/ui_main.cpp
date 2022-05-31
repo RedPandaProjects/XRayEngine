@@ -132,18 +132,23 @@ void TUI::MousePress(TShiftState Shift, int X, int Y)
     if(!EDevice->m_Camera.MoveStart(m_ShiftState)){
     	if (Tools->Pick(Shift)) return;
         if( !m_MouseCaptured ){
-            if( Tools->HiddenMode() ){
-				IR_GetMousePosScreen(m_StartCpH);
-                m_DeltaCpH.set(0,0);
-            }else{
+            if(! Tools->HiddenMode() )
+            {
                 m_CurrentCp = GetRenderMousePosition();
                 m_StartCp = m_CurrentCp;
                 EDevice->m_Camera.MouseRayFromPoint(m_CurrentRStart, m_CurrentRDir, m_CurrentCp );
             }
-
-            if(Tools->MouseStart(m_ShiftState)){
+           
+            if(Tools->MouseStart(m_ShiftState))
+            {
                 if(Tools->HiddenMode()) ShowCursor( FALSE );
                 m_MouseCaptured = true;
+            }
+
+            if (Tools->HiddenMode())
+            {
+                IR_GetMousePosScreen(m_StartCpH);
+                m_DeltaCpH.set(0, 0);
             }
         }
     }
@@ -165,8 +170,9 @@ void TUI::MouseRelease(TShiftState Shift, int X, int Y)
                 m_CurrentCp = GetRenderMousePosition();
                 EDevice->m_Camera.MouseRayFromPoint(m_CurrentRStart,m_CurrentRDir,m_CurrentCp );
             }
+            bool bIsHiddenMode = Tools->HiddenMode();
             if( Tools->MouseEnd(m_ShiftState) ){
-                if( Tools->HiddenMode() ){
+                if(bIsHiddenMode){
                     SetCursorPos(m_StartCpH.x,m_StartCpH.y);
                     ShowCursor( TRUE );
                 }

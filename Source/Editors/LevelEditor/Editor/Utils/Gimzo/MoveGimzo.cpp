@@ -3,6 +3,7 @@
 
 MoveGimzo::MoveGimzo()
 {
+    m_bFixed = false;
     m_bVisible = false;
     m_CurrentStatus = EStatus::None;
 }
@@ -34,7 +35,6 @@ void MoveGimzo::Render()
 
 void MoveGimzo::OnFrame()
 {
-
     Fbox Box; Box.invalidate();
     size_t SelectedCount = 0;
 
@@ -86,9 +86,11 @@ void MoveGimzo::OnFrame()
     {
         Box.getcenter(m_Position);
     }
+
+    if (m_bFixed)return;
     m_bVisible = SelectedCount > 0;
     m_CurrentStatus = EStatus::None;
-
+    Fcylinder cyl;
     if (!m_bVisible)return;
 
     Fbox XBox;
@@ -107,4 +109,15 @@ void MoveGimzo::OnFrame()
         m_CurrentStatus = EStatus::SelectedY;
     else  if (ZBox.Pick(UI->m_CurrentRStart, UI->m_CurrentRDir))
         m_CurrentStatus = EStatus::SelectedZ;
+}
+
+void MoveGimzo::Clear()
+{
+    m_CurrentStatus = EStatus::None;
+    m_bFixed = false;
+}
+
+void MoveGimzo::Fixed()
+{
+    m_bFixed = true;
 }
