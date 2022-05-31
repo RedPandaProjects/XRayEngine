@@ -323,7 +323,7 @@ public:
 		}
 		else if (N->IsFloder())
 		{
-			if (N->Selected)ImGui::SetNextTreeNodeOpen(true);
+			if (N->Selected)ImGui::SetNextItemOpen(true);
 			ImGui::AlignTextToFramePadding();
 			ImGuiTreeNodeFlags FloderFlags = ImGuiTreeNodeFlags_OpenOnArrow;
 			if (IsFloderBullet(N))FloderFlags |= ImGuiTreeNodeFlags_Bullet;

@@ -105,7 +105,4 @@ namespace ImGui
     void MyFunction(const char* name, const MyMatrix44& v);
 }
 */
-#define IMGUI_API XREUI_API
-#define IMGUI_IMPL_API
-using ImTextureID = IDirect3DBaseTexture9*;
-#define ImTextureID ImTextureID 
+#include "stdafx.h"

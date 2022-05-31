@@ -452,7 +452,7 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 				text[i] = 0;
 				ImGui::Text(text);
 			}
-			if (ImGui::OpenPopupOnItemClick("EditText", 0))
+			if (ImGui::OpenPopupOnItemClick2("EditText", 0))
 			{
 				if (m_EditTextValueData)xr_delete(m_EditTextValueData);
 				m_EditTextValueData = xr_strdup(V->GetValue());
@@ -487,7 +487,7 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 				text[i] = 0;
 				ImGui::Text(text);
 			}
-			if (ImGui::OpenPopupOnItemClick("EditText", 0))
+			if (ImGui::OpenPopupOnItemClick2("EditText", 0))
 			{
 				if (m_EditTextValueData)xr_delete(m_EditTextValueData);
 				m_EditTextValueData = xr_strdup(V->GetValue().c_str()? V->GetValue().c_str():"");
@@ -523,7 +523,7 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 				text[i] = 0;
 				ImGui::Text(text);
 			}
-			if (ImGui::OpenPopupOnItemClick("EditText", 0))
+			if (ImGui::OpenPopupOnItemClick2("EditText", 0))
 			{
 				if (m_EditTextValueData)xr_delete(m_EditTextValueData);
 				m_EditTextValueData = xr_strdup(V->GetValue().c_str());
@@ -543,7 +543,7 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 			ImGui::Text(node->GetDrawText().c_str());
 			m_EditGameTypeChooser = V->GetValue();
 			node->BeforeEdit<GameTypeValue, GameTypeChooser>(m_EditGameTypeChooser);
-			if (ImGui::OpenPopupOnItemClick("EditGameType", 0))
+			if (ImGui::OpenPopupOnItemClick2("EditGameType", 0))
 			{
 				m_EditGameTypeValue = node;
 			}
