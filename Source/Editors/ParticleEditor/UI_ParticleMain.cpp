@@ -44,8 +44,8 @@ CCommandVar CParticleTool::CommandLoadXR(CCommandVar p1, CCommandVar p2)
 	xr_string temp_fn;
     if (EFS.GetOpenName				(EDevice.m_hWnd, "$game_data$", temp_fn, false, NULL, 0))
 	{
-        ::Render->PSLibrary.OnDestroy	();
-        ::Render->PSLibrary.Load		(temp_fn.c_str());
+        RImplementation.PSLibrary.OnDestroy	();
+        RImplementation.PSLibrary.Load		(temp_fn.c_str());
 		ResetCurrent();
         ExecCommand(COMMAND_UPDATE_PROPERTIES);
         ExecCommand(COMMAND_UPDATE_CAPTION);

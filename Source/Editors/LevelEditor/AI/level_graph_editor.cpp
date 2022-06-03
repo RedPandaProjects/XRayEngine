@@ -1,12 +1,8 @@
 #include "stdafx.h"
 #include "level_graph_editor.h"
 
-#include "Scene.h"
-#include "..\XrGame\xrLevel.h"
-#include "ESceneAIMapTools.h"
-#include "..\XrECore\Engine\guid_generator.h"
-
 #include "..\XrAPI\xrGameManager.h"
+
 const u32 UnkonnectedNode = 0xfffffff0;
 const WORD	InvalidSector = 0xff;
 const float	cover_distance = 30.f;

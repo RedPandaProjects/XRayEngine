@@ -16,8 +16,6 @@
 #include "../../xrServerEntities/xrServer_Objects_Abstract.h"
 #include "../../xrServerEntities/xrServer_Objects_ALife.h"
 #include "graph_engine_editor.h"
-#include "scene.h"
-#include "SpawnPoint.h"
 #include "..\XrAPI\xrGameManager.h"
 
 

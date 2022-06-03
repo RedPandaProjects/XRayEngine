@@ -96,7 +96,6 @@ BOOL CLevelEditor::net_Start(LPCSTR op_server, LPCSTR op_client)
 		// Send physics to single or multithreaded mode
 		LoadPhysicsGameParams();
 		ph_world = xr_new<CPHWorld>();
-		ph_world->Create();
 
 		// Send network to single or multithreaded mode
 		// *note: release version always has "mt_*" enabled
@@ -123,6 +122,7 @@ BOOL CLevelEditor::net_Start(LPCSTR op_server, LPCSTR op_client)
 			R_ASSERT(Load_GameSpecific_Before());
 			Objects.Load();
 			EditorScene->LoadCFrom(&ObjectSpace, build_callback);
+			ph_world->Create();
 			R_ASSERT(Load_GameSpecific_After());
 			bReady = true;
 		}

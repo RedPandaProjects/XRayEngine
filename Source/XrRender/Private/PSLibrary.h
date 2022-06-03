@@ -18,12 +18,9 @@ class ECORE_API CPSLibrary : public particles_systems::library_interface {
 	PS::PEDVec			m_PEDs;
     PS::PGDVec			m_PGDs;
 
-#ifdef _EDITOR    
     xr_string			m_CurrentParticles;
 public:
 	void 	 	FindByName		(LPCSTR new_name, bool& res);
-#endif
-
 public:
     bool 				Load			(LPCSTR nm);
     bool				Save			(LPCSTR nm);

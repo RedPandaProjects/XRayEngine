@@ -1,7 +1,4 @@
 #include "stdafx.h"
-#include "Edit\ESceneDOTools.h"
-#include "UIDOShuffle.h"
-#include "UIDOOneColor.h"
 
 UIDOShuffle* UIDOShuffle::Form = nullptr;
 UIDOShuffle::UIDOShuffle()

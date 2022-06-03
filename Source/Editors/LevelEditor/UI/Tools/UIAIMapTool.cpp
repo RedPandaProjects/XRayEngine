@@ -1,6 +1,4 @@
 #include "stdafx.h"
-#include "Edit\ESceneAIMapTools.h"
-#include "UIAIMapTool.h"
 
 UIAIMapTool::UIAIMapTool()
 {
@@ -138,7 +136,7 @@ void UIAIMapTool::Draw()
 	}
 }
 
-//---------------------------------------------------------------------------
+
 
 static const int idx[5][4] = {
 	{0,1,2,3},
@@ -186,7 +184,7 @@ void UIAIMapTool::SideClick(int tag)
 	Scene->UndoSave();
 	UI->RedrawScene();
 }
-//---------------------------------------------------------------------------
+
 void UIAIMapTool::OnDrawUI()
 {
 	if (m_ChooseIgnoreMaterials)

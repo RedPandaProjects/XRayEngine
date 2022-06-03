@@ -1,5 +1,5 @@
 #pragma once
-#include "..\..\XrEngine\EngineAPI.h"
+
 class XrGameManager
 {
 public:
@@ -14,4 +14,5 @@ private:
 	Factory_Destroy*	m_pDestroy;
 	ISE_Abstract* (__cdecl* m_pCreateFromSection)(LPCSTR);
 };
+
 extern XrGameManager* g_XrGameManager;

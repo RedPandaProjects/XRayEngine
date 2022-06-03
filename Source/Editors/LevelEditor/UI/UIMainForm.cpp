@@ -1,8 +1,6 @@
 #include "stdafx.h"
-#include "../XrECore/Editor/EditorPreferences.h"
-#include "Edit\LevelPreferences.h"
-#include "../XrECore/Editor/EditorChooseEvents.h"
-#include "UI\UIObjectList.h"
+#include "..\XrECore\Editor\EditorChooseEvents.h"
+
 UIMainForm* MainForm = nullptr;
 UIMainForm::UIMainForm()
 {

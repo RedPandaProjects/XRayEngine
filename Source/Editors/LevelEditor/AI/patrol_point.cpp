@@ -18,7 +18,7 @@
 #ifdef DEBUG
 #	include "patrol_path.h"
 #endif
-#include "WayPoint.h"
+
 CPatrolPoint::CPatrolPoint									(const CPatrolPath *path)
 {
 #ifdef DEBUG
