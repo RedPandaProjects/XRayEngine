@@ -274,7 +274,7 @@ CCustomObject* ESceneCustomOTool::FindObjectByName(LPCSTR name, CCustomObject* p
     {
     	CCustomObject* CO = (*_I);
     	LPCSTR _name = CO->GetName();
-        R_ASSERT	(_name);
+        R_ASSERT3(_name, "Invalid object name, position:", (std::to_string(CO->GetPosition().x) + ", " + std::to_string(CO->GetPosition().y) + ", " + std::to_string(CO->GetPosition().z)).c_str());
     	if((pass!=*_I) && (0==strcmp(_name,name)) ) 
         	return (*_I);
     }
