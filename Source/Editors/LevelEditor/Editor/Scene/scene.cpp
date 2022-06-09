@@ -629,6 +629,11 @@ void EScene::BuildAIMap()
 
 }
 
+bool EScene::RayPick(const Fvector& start, const Fvector& dir, float& dis ,Fvector* pt, Fvector* n)
+{
+    return Tools->RayPick(start, dir, dis, pt, n);
+}
+
 void EScene::RegisterSubstObjectName(const xr_string& _from, const xr_string& _to)
 {
     xr_string _tmp;

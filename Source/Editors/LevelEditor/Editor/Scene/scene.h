@@ -328,6 +328,8 @@ public:
 	virtual ILevelGraph* GetLevelGraph();
 	void BuildSpawn();
 	void BuildAIMap();
+
+	virtual bool RayPick(const Fvector& start, const Fvector& dir, float& dist, Fvector* pt = 0, Fvector* n = 0);
 protected:
     typedef std::pair<xr_string,xr_string>  TSubstPair;
     typedef xr_vector<TSubstPair>           TSubstPairs;

@@ -78,16 +78,12 @@ void IGame_Persistent::OnAppDeactivate		()
 
 void IGame_Persistent::OnAppStart	()
 {
-#ifndef _EDITOR
-	Environment().load				();
-#endif    
+	Environment().load();
 }
 
 void IGame_Persistent::OnAppEnd		()
 {
-#ifndef _EDITOR
-	Environment().unload			 ();
-#endif    
+	Environment().unload();
 	OnGameEnd						();
 
 #ifndef _EDITOR

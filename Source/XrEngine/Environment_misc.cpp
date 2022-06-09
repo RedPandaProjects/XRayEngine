@@ -592,7 +592,7 @@ void CEnvironment::load_weathers		()
 		return;
 
 	typedef xr_vector<LPSTR>		file_list_type;
-	file_list_type*					file_list = FS.file_list_open("$game_weathers$","");
+	file_list_type*					file_list = FS.file_list_open("$game_weathers$","", FS_ListFiles);
 	VERIFY							(file_list);
 
 	file_list_type::const_iterator	i = file_list->begin();
@@ -733,7 +733,6 @@ void CEnvironment::load		()
 	if (!eff_Rain)    		eff_Rain 		= xr_new<CEffect_Rain>();
 	if (!eff_LensFlare)		eff_LensFlare 	= xr_new<CLensFlare>();
 	if (!eff_Thunderbolt)	eff_Thunderbolt	= xr_new<CEffect_Thunderbolt>();
-	return;
 	load_weathers			();
 	load_weather_effects	();
 }

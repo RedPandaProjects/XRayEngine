@@ -473,25 +473,7 @@ void CEnvironment::lerp		(float& current_weight)
 
 void CEnvironment::OnFrame()
 {
-	return;
-#ifdef _EDITOR
-	SetGameTime				(fGameTime+Device->fTimeDelta*fTimeFactor,fTimeFactor);
-    if (fsimilar(ed_to_time,DAY_LENGTH)&&fsimilar(ed_from_time,0.f)){
-	    if (fGameTime>DAY_LENGTH)	fGameTime-=DAY_LENGTH;
-    }else{
-	    if (fGameTime>ed_to_time){	
-        	fGameTime=fGameTime-ed_to_time+ed_from_time;
-            Current[0]=Current[1]=0;
-        }
-    	if (fGameTime<ed_from_time){	
-        	fGameTime=ed_from_time;
-            Current[0]=Current[1]=0;
-        }
-    }
-	if (!psDeviceFlags.is(rsEnvironment))		return;
-#else
-	if (!g_pGameLevel)		return;
-#endif
+	if (!g_pGameLevel&&!Device->IsEditorMode())		return;
 
 //	if (pInput->iGetAsyncKeyState(DIK_O))		SetWeatherFX("surge_day"); 
 	float					current_weight;

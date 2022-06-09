@@ -285,6 +285,30 @@ void UIMainMenuForm::Draw()
                     UI->RedrawScene();
                 }
             }
+            {
+                if (ImGui::BeginMenu("Environment"))
+                {
+                    bool selected = !psDeviceFlags.test(rsEnvironment);
+                    if (ImGui::MenuItem("None", "", &selected))
+                    {
+                        psDeviceFlags.set(rsEnvironment, false);
+                        UI->RedrawScene();
+                    }
+                    ImGui::Separator();
+                    for (auto& i : g_pGamePersistent->Environment().WeatherCycles)
+                    {
+                        selected = psDeviceFlags.test(rsEnvironment) && i.first == g_pGamePersistent->Environment().CurrentCycleName;
+                        if (ImGui::MenuItem(i.first.c_str(), "", &selected))
+                        {
+                            psDeviceFlags.set(rsEnvironment, true);
+                            g_pGamePersistent->Environment().SetWeather(i.first.c_str(),true);
+                            UI->RedrawScene();
+                        }
+                    }
+                   
+                    ImGui::EndMenu();
+                }
+            }
             ImGui::Separator();
             {
                 bool selected = psDeviceFlags.test(rsLighting);;

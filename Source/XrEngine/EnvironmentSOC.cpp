@@ -287,7 +287,7 @@ void CEnvironmentSOC::OnFrame()
     }
 	if (!psDeviceFlags.is(rsEnvironment))		return;
 #else
-	if (!g_pGameLevel)		return;
+	if (!g_pGameLevel&&!Device->IsEditorMode())		return;
 #endif
 
 //	if (pInput->iGetAsyncKeyState(DIK_O))		SetWeatherFX("surge_day"); 
