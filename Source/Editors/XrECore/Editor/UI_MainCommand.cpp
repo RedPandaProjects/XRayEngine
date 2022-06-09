@@ -340,12 +340,7 @@ CCommandVar 	CommandChangeAction(CCommandVar p1, CCommandVar p2)
 {
      Tools->SetAction	(ETAction(u32(p1)));
     return				TRUE;
-}             
-CCommandVar 	CommandChangeAxis(CCommandVar p1, CCommandVar p2)
-{
-    Tools->SetAxis	(ETAxis(u32(p1)));
-    return				TRUE;
-}
+}       
 
 CCommandVar 	CommandSimulate(CCommandVar p1, CCommandVar p2)
 {
@@ -680,15 +675,6 @@ void TUI::RegisterCommands()
 	REGISTER_SUB_CMD_SE	(COMMAND_CHANGE_ACTION,  		"Change Action",      	CommandChangeAction,false);
 	   	APPEND_SUB_CMD	("Select",						etaSelect,	0);
     	APPEND_SUB_CMD	("Add",							etaAdd,		0);
-    	APPEND_SUB_CMD	("Move",						etaMove,	0);
-    	APPEND_SUB_CMD	("Rotate",						etaRotate,	0);
-    	APPEND_SUB_CMD	("Scale",						etaScale,	0);
-    REGISTER_SUB_CMD_END;
-	REGISTER_SUB_CMD_SE	(COMMAND_CHANGE_AXIS,    		"Change Axis",			CommandChangeAxis,	false);
-        APPEND_SUB_CMD	("X",					        etAxisX,	0);
-        APPEND_SUB_CMD	("Y",					        etAxisY,	0);
-        APPEND_SUB_CMD	("Z",					        etAxisZ,	0);
-        APPEND_SUB_CMD	("ZX",					        etAxisZX,	0);
     REGISTER_SUB_CMD_END;
 	REGISTER_CMD_S	    (COMMAND_SET_SETTINGS,			CommandSetSettings);
 	REGISTER_CMD_S	    (COMMAND_SOUND_EDITOR,   		CommandSoundEditor);

@@ -32,10 +32,13 @@ bool TUI_ControlWallmarkAdd::End(TShiftState _Shift)
 	return true;
 }
 
-// WM Move
-TUI_ControlWallmarkMove::TUI_ControlWallmarkMove(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent)
+TUI_ControlWallmarkSelect::TUI_ControlWallmarkSelect(int st, int act, ESceneToolBase* parent) :TUI_CustomControl(st, act, parent)
 {
+
 }
+/*
+// WM Move
+
 bool TUI_ControlWallmarkMove::Start(TShiftState Shift)
 {
     if ((Shift&ssCtrl)){
@@ -53,5 +56,5 @@ void  TUI_ControlWallmarkMove::Move(TShiftState _Shift)
 bool  TUI_ControlWallmarkMove::End(TShiftState _Shift)
 {
 	return false;
-}
+}*/
 

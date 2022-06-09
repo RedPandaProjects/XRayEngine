@@ -874,7 +874,7 @@ void ESceneWallmarkTool::CreateControls()
 	inherited::CreateDefaultControls(estDefault);
 	// node tools
     AddControl(xr_new<TUI_ControlWallmarkAdd>		(0,		etaAdd, 	this));
-    AddControl(xr_new<TUI_ControlWallmarkMove>		(0,		etaMove,	this));
+    AddControl(xr_new<TUI_ControlWallmarkSelect>		(0,		etaSelect,	this));
 }
 
  

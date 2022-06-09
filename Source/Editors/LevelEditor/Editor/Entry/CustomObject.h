@@ -38,9 +38,12 @@ class  CCustomObject:private pureDrawUI
 	
     shared_str		EName;
     // orientation
-    Fvector 		EPosition;
-    Fvector 		EScale;
-    Fvector 		ERotation;
+	Fvector 		EPosition;
+	Fvector 		EPositionSaved;
+	Fvector 		EScale;
+	Fvector 		EScaleSaved;
+	Fvector 		ERotation;
+	Fvector 		ERotateSaved;
 	SAnimParams*	m_MotionParams;
     COMotion*		m_Motion;
 
@@ -220,6 +223,12 @@ public:
     IC const Fvector& _Position				(){return FPosition;}
     IC const Fvector& _Rotation				(){return FRotation;}
     IC const Fvector& _Scale				(){return FScale;}
+	IC void ScaleSave                       (){EScaleSaved = FScale;}
+	IC const Fvector& GetSaveScale          (){return EScaleSaved;}
+	IC void RotateSave                      (){ERotateSaved = FRotation;}
+	IC const Fvector& GetSaveRotate         (){return ERotateSaved;}
+	IC void           PositionSave          () { EPositionSaved = FPosition; }
+	IC const Fvector& GetSavePosition       () { return EPositionSaved; }
 
     ObjClassID		FClassID;
     ESceneCustomOTool* FParentTools;

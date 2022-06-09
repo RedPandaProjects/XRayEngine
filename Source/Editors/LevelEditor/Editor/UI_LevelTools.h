@@ -16,7 +16,7 @@ class CLevelTool: public CToolCustom
     ObjClassID		target;
 
     Flags32			m_Flags;
-    MoveGimzo*      m_Gimzo;
+    Gizmo*      m_Gizmo;
 
     enum{
     	flChangeAction		= (1<<0),
@@ -53,7 +53,7 @@ public:
                     	CLevelTool			();
     virtual         	~CLevelTool		();
 
-    IC MoveGimzo* GetGimzo() { return m_Gimzo; }
+    IC Gizmo* GetGimzo() { return m_Gizmo; }
     IC UIToolCustom*            GetToolForm         ()const{ return m_ToolForm; }
     IC UIPropertiesForm*GetProperties       ()const { return m_Props; }
     IC ObjClassID		GetTarget   		(){return target;}

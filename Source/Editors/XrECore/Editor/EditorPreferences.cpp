@@ -54,9 +54,6 @@ CCustomPreferences::~CCustomPreferences()
 
 void CCustomPreferences::ApplyValues()
 {
-	Tools->m_MoveSnap		= snap_move;
-	Tools->m_MoveSnapTo		= snap_moveto;
-	Tools->m_RotateSnapAngle= snap_angle;
 
     EDevice->m_Camera.SetViewport(view_np, view_fp, rad2deg(view_fov));
     Tools->SetFog	(fog_color,fog_fogness);

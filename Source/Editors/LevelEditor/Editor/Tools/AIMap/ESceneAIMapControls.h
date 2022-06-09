@@ -14,18 +14,13 @@ public:
 	virtual void Move   (TShiftState _Shift);
 };
 
-class TUI_ControlAIMapNodeMove: public TUI_CustomControl{
+class TUI_ControlAIMapNodeSelect : public TUI_CustomControl
+{
 public:
-    TUI_ControlAIMapNodeMove(int st, int act, ESceneToolBase* parent);
-	virtual bool Start  (TShiftState _Shift);
-	virtual bool End    (TShiftState _Shift);
-	virtual void Move   (TShiftState _Shift);
-};
+	TUI_ControlAIMapNodeSelect(int st, int act, ESceneToolBase* parent);
+	virtual void MoveStart();
 
-class TUI_ControlAIMapNodeRotate: public TUI_CustomControl{
-public:
-    TUI_ControlAIMapNodeRotate(int st, int act, ESceneToolBase* parent);
-	virtual bool Start  (TShiftState _Shift);
-	virtual bool End    (TShiftState _Shift);
-	virtual void Move   (TShiftState _Shift);
+	virtual void MoveProcess(Fvector Delta, Fvector Vector);
+	virtual void RotateProcess(float Delta);
+	virtual bool IsSupportScale() { return false; }
 };

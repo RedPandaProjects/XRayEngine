@@ -964,27 +964,24 @@ void RetrieveSceneObjPointAndNormal( Fvector& hitpoint, Fvector* hitnormal, cons
         	*hitnormal = pinf.visual_inf.normal;
        return;
     }
-	if ( Tools->GetSettings(etfVSnap) && bSnap )
+    if (Tools->GetSettings(etfVSnap) && bSnap)
     {
-    	Fvector pn;
+        Fvector pn;
         float u = pinf.inf.u;
         float v = pinf.inf.v;
-        float w = 1-(u+v);
+        float w = 1 - (u + v);
         Fvector verts[3];
-        pinf.e_obj->GetFaceWorld( pinf.s_obj->_Transform(), pinf.e_mesh, pinf.inf.id, verts );
-        
-        if ((w>u) && (w>v))
-        	pn.set(verts[0]);
-        else if ((u>w) && (u>v))
-        	pn.set(verts[1]);
+        pinf.e_obj->GetFaceWorld(pinf.s_obj->_Transform(), pinf.e_mesh, pinf.inf.id, verts);
+
+        if ((w > u) && (w > v))
+            pn.set(verts[0]);
+        else if ((u > w) && (u > v))
+            pn.set(verts[1]);
         else
-        	pn.set(verts[2]);
-            
-        if (pn.distance_to(pinf.pt) < LTools->m_MoveSnap)
-        	hitpoint.set(pn);
-        else
-        	hitpoint.set(pinf.pt);
-            
+            pn.set(verts[2]);
+
+        hitpoint.set(pinf.pt);
+
     }
     else
     {
@@ -1087,10 +1084,10 @@ bool PickGrid(  Fvector& hitpoint,  const Fvector& start, const Fvector& directi
 	hitpoint.y = start.y + direction.y * alpha;
 	hitpoint.z = start.z + direction.z * alpha;
 
-    if (Tools->GetSettings(etfGSnap) && bSnap)
+    if (LTools->GetGimzo()->IsStepEnable(Gizmo::EType::Move) && bSnap)
     {
-        hitpoint.x = snapto( hitpoint.x, LTools->m_MoveSnap );
-        hitpoint.z = snapto( hitpoint.z, LTools->m_MoveSnap );
+        hitpoint.x = snapto( hitpoint.x, LTools->GetGimzo()->GetStep(Gizmo::EType::Move));
+        hitpoint.z = snapto( hitpoint.z, LTools->GetGimzo()->GetStep(Gizmo::EType::Move));
         hitpoint.y = 0.f;
     }
     

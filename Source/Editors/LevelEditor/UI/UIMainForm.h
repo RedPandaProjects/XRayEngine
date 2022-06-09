@@ -18,5 +18,22 @@ private:
 	UILPropertiesFrom* m_Properties;
 private:
 	void DrawContextMenu();
+	void DrawRenderToolBar(ImVec2 Size);
+private:
+	ref_texture m_tMenu;
+
+	ref_texture m_tSelect;
+	ref_texture m_tAdd;
+	ref_texture m_tMove;
+	ref_texture m_tRotate;
+	ref_texture m_tScale;
+
+	ref_texture m_tNSnap;
+	ref_texture m_tZoomSel;
+
+	ref_texture m_tGrid;
+	ref_texture m_tScaleGrid;
+	ref_texture m_tAngle;
+
 };
 extern UIMainForm* MainForm;

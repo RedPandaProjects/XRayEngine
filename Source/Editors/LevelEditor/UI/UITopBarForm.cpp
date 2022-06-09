@@ -81,34 +81,14 @@ ImGui::PopID();
 	ImGui::PopStyleVar(5);
 }
 void UITopBarForm::RefreshBar()
-{
+{/*
 	{
 		m_bSelect = false;
 		m_bAdd = false;
-		m_bMove = false;
-		m_bRotate = false;
-		m_bScale = false;
 
 		switch (Tools->GetAction()) {
 		case etaSelect: 	m_bSelect = true; 	break;
 		case etaAdd:    m_bAdd = true; 		break;
-		case etaMove:   	m_bMove = true;  		break;
-		case etaRotate: 	m_bRotate = true;  	break;
-		case etaScale:		m_bScale = true;  			break;
-		default: THROW;
-		}
-	}
-	{
-		m_bX = false;
-		m_bY = false;
-		m_bZ = false;
-		m_bZX = false;
-		// axis
-		switch (Tools->GetAxis()) {
-		case etAxisX: 		m_bX = true; 	break;
-		case etAxisY: 		m_bY = true; 	 	break;
-		case etAxisZ: 		m_bZ = true; 	 	break;
-		case etAxisZX: 		m_bZX = true; 	 	break;
 		default: THROW;
 		}
 	}
@@ -121,7 +101,7 @@ void UITopBarForm::RefreshBar()
 	m_bMoveToSnap = Tools->GetSettings(etfMTSnap);
 	m_bVSnap = Tools->GetSettings(etfVSnap);
 	m_bASnap = Tools->GetSettings(etfASnap);
-	m_bMSnap = Tools->GetSettings(etfMSnap);
+	m_bMSnap = Tools->GetSettings(etfMSnap);*/
 }
 
 void UITopBarForm::ClickUndo()
@@ -133,6 +113,17 @@ void UITopBarForm::ClickRedo()
 {
 	ExecCommand(COMMAND_REDO);
 }
+void  UITopBarForm::ClickLevelPlay()
+{
+	Scene->Play();
+}
+void  UITopBarForm::ClickLevelSimulate()
+{
+	Scene->Play();
+}
+
+
+/*
 void UITopBarForm::ClickZoom()
 {
 	ExecCommand(COMMAND_ZOOM_EXTENTS, FALSE);
@@ -147,86 +138,12 @@ void  UITopBarForm::ClickSelect()
 	ExecCommand(COMMAND_CHANGE_ACTION, etaSelect);
 	m_bSelect = true;
 	m_bAdd = false;
-	m_bMove = false;
-	m_bRotate = false;
-	m_bScale = false;
 }
 void  UITopBarForm::ClickAdd()
 {
 	ExecCommand(COMMAND_CHANGE_ACTION, etaAdd);
 	m_bSelect = false;
 	m_bAdd = true;
-	m_bMove = false;
-	m_bRotate = false;
-	m_bScale = false;
-}
-void  UITopBarForm::ClickMove()
-{
-	ExecCommand(COMMAND_CHANGE_ACTION, etaMove);
-	m_bSelect = false;
-	m_bAdd = false;
-	m_bMove = true;
-	m_bRotate = false;
-	m_bScale = false;
-}
-void  UITopBarForm::ClickRotate()
-{
-	ExecCommand(COMMAND_CHANGE_ACTION, etaRotate);
-	m_bSelect = false;
-	m_bAdd = false;
-	m_bMove = false;
-	m_bRotate = true;
-	m_bScale = false;
-}
-void  UITopBarForm::ClickScale()
-{
-	ExecCommand(COMMAND_CHANGE_ACTION, etaScale);
-	m_bSelect = false;
-	m_bAdd = false;
-	m_bMove = false;
-	m_bRotate = false;
-	m_bScale = true;
-}
-void  UITopBarForm::ClickX()
-{
-	ExecCommand(COMMAND_CHANGE_AXIS, etAxisX);
-	m_bX = true;
-	m_bY = false;
-	m_bZ = false;
-	m_bZX = false;
-}
-void  UITopBarForm::ClickY()
-{
-	ExecCommand(COMMAND_CHANGE_AXIS, etAxisY);
-	m_bX = false;
-	m_bY = true;
-	m_bZ = false;
-	m_bZX = false;
-}
-void  UITopBarForm::ClickZ()
-{
-	ExecCommand(COMMAND_CHANGE_AXIS, etAxisZ);
-	m_bX = false;
-	m_bY = false;
-	m_bZ = true;
-	m_bZX = false;
-
-}
-void  UITopBarForm::ClickZX()
-{
-	ExecCommand(COMMAND_CHANGE_AXIS, etAxisZX);
-	m_bX = false;
-	m_bY = false;
-	m_bZ = false;
-	m_bZX = true;
-}
-void  UITopBarForm::ClickLevelPlay()
-{
-	Scene->Play();
-}
-void  UITopBarForm::ClickLevelSimulate()
-{
-	Scene->Play();
 }
 
 void  UITopBarForm::ClickCsLocal(){ ExecCommand(COMMAND_SET_SETTINGS, etfCSParent, m_bCsLocal); }
@@ -249,4 +166,4 @@ void  UITopBarForm::ClickViewF() { EDevice->m_Camera.ViewFront(); UI->RedrawScen
 void  UITopBarForm::ClickViewL() { EDevice->m_Camera.ViewLeft();UI->RedrawScene(); }
 void  UITopBarForm::ClickViewR() { EDevice->m_Camera.ViewRight(); UI->RedrawScene();}
 void  UITopBarForm::ClickViewT() { EDevice->m_Camera.ViewTop();UI->RedrawScene(); }
-void  UITopBarForm::ClickViewX() { EDevice->m_Camera.ViewReset(); UI->RedrawScene();}
+void  UITopBarForm::ClickViewX() { EDevice->m_Camera.ViewReset(); UI->RedrawScene();}*/

@@ -632,7 +632,7 @@
     <ClCompile Include="Editor\Utils\XrSEFactoryManager.cpp">
       <Filter>Editor\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Editor\Utils\Gimzo\MoveGimzo.cpp">
+    <ClCompile Include="Editor\Utils\Gimzo\Gizmo.cpp">
       <Filter>Editor\Utils\Gimzo</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1043,7 +1043,7 @@
     <ClInclude Include="Editor\Utils\XrSEFactoryManager.h">
       <Filter>Editor\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Editor\Utils\Gimzo\MoveGimzo.h">
+    <ClInclude Include="Editor\Utils\Gimzo\Gizmo.h">
       <Filter>Editor\Utils\Gimzo</Filter>
     </ClInclude>
   </ItemGroup>

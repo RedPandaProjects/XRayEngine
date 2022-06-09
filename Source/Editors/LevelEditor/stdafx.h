@@ -87,7 +87,7 @@
 
 #include "Editor/Tools/ESceneClassList.h"
 
-#include "Editor/Utils/Gimzo/MoveGimzo.h"
+#include "Editor/Utils/Gimzo/Gizmo.h"
 
 #include "Editor/UI_LevelMain.h"
 #include "Editor/UI_LevelTools.h"

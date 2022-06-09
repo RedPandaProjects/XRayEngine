@@ -36,7 +36,7 @@ bool CLevelTool::OnCreate()
     ExecCommand(COMMAND_CHANGE_TARGET, OBJCLASS_SCENEOBJECT);
     m_Props = xr_new < UIPropertiesForm>();
     m_Props->SetModifiedEvent(TOnCloseEvent(this, &CLevelTool::OnPropsModified));
-    m_Gimzo = xr_new<MoveGimzo>();
+    m_Gizmo = xr_new<Gizmo>();
   /*
     ssRBOnly << ssRight;
     paParent 		= fraLeftBar->paFrames;   VERIFY(paParent);
@@ -67,7 +67,7 @@ void CLevelTool::OnDestroy()
     if (pCurTool)
     	pCurTool->OnDeactivate();
 	Scene->OnDestroy		();
-    xr_delete(m_Gimzo);
+    xr_delete(m_Gizmo);
 }
 
 void CLevelTool::Reset()
@@ -399,7 +399,7 @@ void  CLevelTool::OnFrame()
         if (m_Flags.is(flUpdateObjectList)) 	RealUpdateObjectList();
         //TfrmEditLightAnim::OnIdle();
     }
-    m_Gimzo->OnFrame();
+    m_Gizmo->OnFrame();
 }
 
 
@@ -437,7 +437,7 @@ void  CLevelTool::Render()
     }
     // draw cursor
     LUI->m_Cursor->Render();
-    m_Gimzo->Render();
+    m_Gizmo->Render();
     inherited::Render		();
 }
 

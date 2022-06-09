@@ -29,24 +29,20 @@ protected:
     bool AddStart		(TShiftState _Shift);
     void AddProcess		(TShiftState _Shift);
     bool AddEnd			(TShiftState _Shift);
-// move
-	Fvector m_MovingXVector;
-	Fvector m_MovingYVector;
-	Fvector m_MovingReminder;
-    bool 				MovingStart		(TShiftState _Shift);
-    void 				MovingProcess	(TShiftState _Shift);
-    bool 				MovingEnd		(TShiftState _Shift);
-// scale
-    bool 				ScaleStart		(TShiftState _Shift);
-    void				ScaleProcess	(TShiftState _Shift);
-    bool 				ScaleEnd		(TShiftState _Shift);
-// rotate
+    // rotate
+	Fvector m_GizmoXVector;
+	Fvector m_GizmoYVector;
+	Fvector m_GizmoReminder;
 	Fvector 			m_RotateVector;
     float 				m_fRotateSnapAngle;
-    
-    bool 				RotateStart		(TShiftState _Shift);
-    void 				RotateProcess	(TShiftState _Shift);
-    bool 				RotateEnd		(TShiftState _Shift);
+
+	virtual void MoveStart();
+	virtual void ScaleStart();
+	virtual void RotateStart();
+	virtual void MoveProcess(Fvector Delta, Fvector Vector);
+	virtual void ScaleProcess(Fvector Delta, Fvector Vector);
+	virtual void RotateProcess(float Delta);
+
 protected:
 	bool				CheckSnapList 	(TShiftState Shift);
 
@@ -68,4 +64,8 @@ public:
     virtual void 	OnExit				(){;}
 
     int 			Action				(){return action;}
+
+	virtual bool IsSupportMove() { return action == etaSelect; }
+	virtual bool IsSupportRotate() { return action == etaSelect; }
+	virtual bool IsSupportScale() { return action == etaSelect; }
 };

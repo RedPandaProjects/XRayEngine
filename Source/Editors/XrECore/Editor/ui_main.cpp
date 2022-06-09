@@ -137,6 +137,8 @@ void TUI::MousePress(TShiftState Shift, int X, int Y)
                 m_CurrentCp = GetRenderMousePosition();
                 m_StartCp = m_CurrentCp;
                 EDevice->m_Camera.MouseRayFromPoint(m_CurrentRStart, m_CurrentRDir, m_CurrentCp );
+                m_StartRStart = m_CurrentRStart;
+                m_StartRDir = m_CurrentRDir;
             }
            
             if(Tools->MouseStart(m_ShiftState))

@@ -89,11 +89,11 @@ void ESceneLightTool::BeforeRender()
             EDevice->LightEnable(frame_light.size(),TRUE);
         }
 		// ambient
-//        if (psDeviceFlags.is(rsEnvironment)){
-//	        Fvector& V		= g_pGamePersistent->Environment().CurrentEnv->ambient;
-//            Fcolor C;		C.set(V.x,V.y,V.z,1.f);
-//            EDevice->SetRS	(D3DRS_AMBIENT,C.get());
-//        }else				
+     /* if (psDeviceFlags.is(rsEnvironment)) {
+	        Fvector& V		= g_pGamePersistent->Environment().CurrentEnv->ambient;
+           Fcolor C;		C.set(V.x,V.y,V.z,1.f);
+           EDevice->SetRS	(D3DRS_AMBIENT,C.get());
+       }else	*/			
         	EDevice->SetRS(D3DRS_AMBIENT,0x00000000);
         
         EDevice->EStatistic->dwTotalLight 	= l_cnt;

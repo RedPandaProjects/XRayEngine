@@ -90,6 +90,10 @@ public:
 	Fvector m_CurrentRStart;
 	Fvector m_CurrentRDir;
 
+
+	Fvector m_StartRStart;
+	Fvector m_StartRDir;
+
 	// hidden ops
 	Ivector2 m_StartCpH;
 	Ivector2 m_DeltaCpH;
