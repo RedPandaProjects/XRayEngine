@@ -27,62 +27,24 @@ CObjectOGFCollectorPacked::CObjectOGFCollectorPacked(const Fbox &bb, int apx_ver
     m_Verts.reserve	(apx_vertices);
     m_Faces.reserve	(apx_faces);
 
-    int		_size	= (clpOGFMX+1)*(clpOGFMY+1)*(clpOGFMZ+1);
+   /*int		_size = (clpOGFMX + 1) * (clpOGFMY + 1) * (clpOGFMZ + 1);
     int		_average= (apx_vertices/_size)/2;
     for (int ix=0; ix<clpOGFMX+1; ++ix)
         for (int iy=0; iy<clpOGFMY+1; ++iy)
             for (int iz=0; iz<clpOGFMZ+1; ++iz)
-                m_VM[ix][iy][iz].reserve	(_average);
+                m_VM[ix][iy][iz].reserve	(_average);*/
 }
 
 u16 CObjectOGFCollectorPacked::VPack(SOGFVert& V)
 {
     u32 P 	= 0xffffffff;
 
-    u32 ix,iy,iz;
-    ix = iFloor(float(V.P.x-m_VMmin.x)/m_VMscale.x*clpOGFMX);
-    iy = iFloor(float(V.P.y-m_VMmin.y)/m_VMscale.y*clpOGFMY);
-    iz = iFloor(float(V.P.z-m_VMmin.z)/m_VMscale.z*clpOGFMZ);
-    R_ASSERT(ix<=clpOGFMX && iy<=clpOGFMY && iz<=clpOGFMZ);
-
-	int similar_pos=-1;
+    P = m_Verts.size();
+    if (P >= 0xFFFF)
     {
-        U32Vec& vl=m_VM[ix][iy][iz];
-        for(U32It it=vl.begin();it!=vl.end(); it++){
-        	SOGFVert& src=m_Verts[*it];
-        	if(src.similar_pos(V)){
-	            if(src.similar(V)){
-                    P = *it;
-                    break;
-            	}
-                similar_pos=*it;
-            }
-        }
+        return 0xffff;
     }
-    if (0xffffffff==P)
-    {
-    	if (similar_pos>=0) V.P.set(m_Verts[similar_pos].P);
-        P = m_Verts.size();
-    	if (P>=0xFFFF) return 0xffff;
-        m_Verts.push_back(V);
-
-        m_VM[ix][iy][iz].push_back(P);
-
-        u32 ixE,iyE,izE;
-        ixE = iFloor(float(V.P.x+m_VMeps.x-m_VMmin.x)/m_VMscale.x*clpOGFMX);
-        iyE = iFloor(float(V.P.y+m_VMeps.y-m_VMmin.y)/m_VMscale.y*clpOGFMY);
-        izE = iFloor(float(V.P.z+m_VMeps.z-m_VMmin.z)/m_VMscale.z*clpOGFMZ);
-
-        R_ASSERT(ixE<=clpOGFMX && iyE<=clpOGFMY && izE<=clpOGFMZ);
-
-        if (ixE!=ix)							m_VM[ixE][iy][iz].push_back	(P);
-        if (iyE!=iy)							m_VM[ix][iyE][iz].push_back	(P);
-        if (izE!=iz)							m_VM[ix][iy][izE].push_back	(P);
-        if ((ixE!=ix)&&(iyE!=iy))				m_VM[ixE][iyE][iz].push_back(P);
-        if ((ixE!=ix)&&(izE!=iz))				m_VM[ixE][iy][izE].push_back(P);
-        if ((iyE!=iy)&&(izE!=iz))				m_VM[ix][iyE][izE].push_back(P);
-        if ((ixE!=ix)&&(iyE!=iy)&&(izE!=iz))	m_VM[ixE][iyE][izE].push_back(P);
-    }
+    m_Verts.push_back(V);
     VERIFY(P<u16(-1));
     return (u16)P;
 }
@@ -184,6 +146,8 @@ void CExportObjectOGF::SSplit::Save(IWriter& F, int& chunk_id)
 
 void CObjectOGFCollectorPacked::MakeProgressive()
 {
+    return;
+    /*
 	VIPM_Init	();
 
     for (OGFVertIt vert_it=m_Verts.begin(); vert_it!=m_Verts.end(); ++vert_it)
@@ -221,7 +185,7 @@ void CObjectOGFCollectorPacked::MakeProgressive()
     }
     
     // cleanup
-    VIPM_Destroy		();
+    VIPM_Destroy		();*/
 }
 
 void CObjectOGFCollectorPacked:: OptimizeTextureCoordinates()
