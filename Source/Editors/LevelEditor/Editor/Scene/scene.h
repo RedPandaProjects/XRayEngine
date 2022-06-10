@@ -319,6 +319,7 @@ public:
     shared_str 		LevelPrefix		(){return m_LevelOp.m_LevelPrefix; }
 
 	void 			FillProp		(LPCSTR pref, PropItemVec& items, ObjClassID cls_id);
+	void 			FillPropObjects (LPCSTR pref, PropItemVec& items, ObjClassID cls_id);
 	void Play();
 	bool IsSimulate();
 	void Stop();

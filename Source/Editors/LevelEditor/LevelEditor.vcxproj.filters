@@ -635,6 +635,9 @@
     <ClCompile Include="Editor\Utils\Gimzo\Gizmo.cpp">
       <Filter>Editor\Utils\Gimzo</Filter>
     </ClCompile>
+    <ClCompile Include="UI\UIWorldPropertiesFrom.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -1045,6 +1048,9 @@
     </ClInclude>
     <ClInclude Include="Editor\Utils\Gimzo\Gizmo.h">
       <Filter>Editor\Utils\Gimzo</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UIWorldPropertiesFrom.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

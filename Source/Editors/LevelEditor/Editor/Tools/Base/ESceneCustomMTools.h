@@ -138,6 +138,8 @@ public:
     // properties
     virtual void		FillProp          		(LPCSTR pref, PropItemVec& items)=0;
 
+	virtual void		FillPropObjects          (LPCSTR pref, PropItemVec& items)=0;
+
     // utils
 	virtual bool 		GetSummaryInfo			(SSceneSummary* inf)=0;
 	virtual void 		HighlightTexture		(LPCSTR tex_name, bool allow_ratio, u32 t_width, u32 t_height, BOOL mark){}

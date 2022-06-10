@@ -181,6 +181,7 @@
     <ClCompile Include="UI\UIObjectList.cpp" />
     <ClCompile Include="UI\UIPropertiesModal.cpp" />
     <ClCompile Include="UI\UITopBarForm.cpp" />
+    <ClCompile Include="UI\UIWorldPropertiesFrom.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\XrRender\Private\DetailManager.h" />
@@ -321,6 +322,7 @@
     <ClInclude Include="UI\UIPropertiesModal.h" />
     <ClInclude Include="UI\UITopBarForm.h" />
     <ClInclude Include="UI\UITopBarForm_ButtonList.h" />
+    <ClInclude Include="UI\UIWorldPropertiesFrom.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\XrAPI\XrAPI.vcxproj">

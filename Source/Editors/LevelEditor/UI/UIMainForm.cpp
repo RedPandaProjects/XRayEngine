@@ -18,6 +18,7 @@ UIMainForm::UIMainForm()
     m_MainMenu = xr_new<UIMainMenuForm>();
     m_LeftBar = xr_new<UILeftBarForm>();
     m_Properties = xr_new<UILPropertiesFrom>();
+    m_WorldProperties = xr_new<UIWorldPropertiesFrom>();
     m_Render->SetContextMenuEvent(TOnRenderContextMenu(this, &UIMainForm::DrawContextMenu));
     m_Render->SetToolBarEvent(TOnRenderToolBar(this, &UIMainForm::DrawRenderToolBar));
     if (dynamic_cast<CLevelPreferences*>(EPrefs)->OpenObjectList)
@@ -28,6 +29,10 @@ UIMainForm::UIMainForm()
     {
         m_Properties->Close();
     }
+	if (!dynamic_cast<CLevelPreferences*>(EPrefs)->OpenWorldProperties)
+	{
+        m_WorldProperties->Close();
+	}
 
     m_tMenu = EDevice->Resources->_CreateTexture("ed\\bar\\menu");
     m_tSelect = EDevice->Resources->_CreateTexture("ed\\bar\\select");
@@ -54,9 +59,11 @@ UIMainForm::UIMainForm()
 
 UIMainForm::~UIMainForm()
 {
-    dynamic_cast<CLevelPreferences*>(EPrefs)->OpenProperties = !m_Properties->IsClosed();
+	dynamic_cast<CLevelPreferences*>(EPrefs)->OpenProperties = !m_Properties->IsClosed();
+	dynamic_cast<CLevelPreferences*>(EPrefs)->OpenWorldProperties = !m_WorldProperties->IsClosed();
     dynamic_cast<CLevelPreferences*>(EPrefs)->OpenObjectList = UIObjectList::IsOpen();
     ClearChooseEvents();
+    xr_delete(m_WorldProperties);
     xr_delete(m_Properties);
     xr_delete(m_LeftBar);
     xr_delete(m_MainMenu);
@@ -83,7 +90,8 @@ void UIMainForm::Draw()
     m_MainMenu->Draw();
     m_TopBar->Draw();
     m_LeftBar->Draw();
-    m_Properties->Draw();
+	m_Properties->Draw();
+	m_WorldProperties->Draw();
     ImGui::ShowDemoWindow(&bOpen);
     m_Render->Draw();
 }

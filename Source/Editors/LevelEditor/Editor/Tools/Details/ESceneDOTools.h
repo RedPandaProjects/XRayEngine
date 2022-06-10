@@ -134,7 +134,9 @@ public:
     virtual bool		Export          		(LPCSTR fn);
 
 	// properties
-    virtual void		FillProp          		(LPCSTR pref, PropItemVec& items);
+
+    virtual void		FillPropObjects(LPCSTR pref, PropItemVec& items) {}
+	virtual void		FillProp                (LPCSTR pref, PropItemVec& items);
 
     // utils
 	virtual bool 		GetSummaryInfo			(SSceneSummary* inf);

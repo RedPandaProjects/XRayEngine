@@ -128,7 +128,9 @@ public:
 	virtual bool 		GetSummaryInfo			(SSceneSummary* inf){return false;} 
 
 	// properties
-    virtual void		FillProp          		(LPCSTR pref, PropItemVec& items);
+
+	virtual void		FillPropObjects(LPCSTR pref, PropItemVec& items);
+	virtual void		FillProp(LPCSTR pref, PropItemVec& items) {}
 
     // utils
     virtual void		GetBBox 				(Fbox& bb, bool bSelOnly);

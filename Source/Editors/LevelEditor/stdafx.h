@@ -160,6 +160,7 @@
 #include "UI/UIDOShuffle.h"
 #include "UI/UILeftBarForm.h"
 #include "UI/UILPropertiesFrom.h"
+#include "UI/UIWorldPropertiesFrom.h"
 #include "UI/UIObjectList.h"
 #include "UI/UIPropertiesModal.h"
 #include "UI/UITopBarForm.h"

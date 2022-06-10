@@ -38,8 +38,9 @@ class CLevelTool: public CToolCustom
 
     void  	RealSetAction   	(ETAction act);
     void  	RealSetTarget   	(ObjClassID tgt,int sub_tgt, bool bForced);//=false);
-
-    UIPropertiesForm* 		m_Props;
+    
+	UIPropertiesForm* m_Props;
+	UIPropertiesForm* m_WorldProps;
     void   	OnPropsModified		();
     void   	OnPropsClose		();
 
@@ -56,6 +57,7 @@ public:
     IC Gizmo* GetGimzo() { return m_Gizmo; }
     IC UIToolCustom*            GetToolForm         ()const{ return m_ToolForm; }
     IC UIPropertiesForm*GetProperties       ()const { return m_Props; }
+    IC UIPropertiesForm*GetWorldProperties  ()const { return m_WorldProps; }
     IC ObjClassID		GetTarget   		(){return target;}
     IC int          	GetSubTarget   		(){return sub_target;}
     virtual void		SetAction			(ETAction act);

@@ -352,6 +352,10 @@ void UIMainMenuForm::Draw()
                 bool selected = !MainForm->GetPropertiesFrom()->IsClosed();
                 if (ImGui::MenuItem("Properties", "", &selected)) { if (selected)MainForm->GetPropertiesFrom()->Open(); else MainForm->GetPropertiesFrom()->Close(); }
             }
+			{
+				bool selected = !MainForm->GetWorldPropertiesFrom()->IsClosed();
+				if (ImGui::MenuItem("World Properties", "", &selected)) { if (selected)MainForm->GetWorldPropertiesFrom()->Open(); else MainForm->GetWorldPropertiesFrom()->Close(); }
+			}
             {
                 bool selected = AllowLogCommands();
 

@@ -89,11 +89,10 @@ void UIPropertiesForm::Draw()
 	}
 
 	static ImGuiTableFlags flags = ImGuiTableFlags_BordersV | ImGuiTableFlags_BordersOuterH | ImGuiTableFlags_Resizable | ImGuiTableFlags_RowBg | ImGuiTableFlags_NoBordersInBody;
-	const float TEXT_BASE_WIDTH = ImGui::CalcTextSize("A").x;
 	if (ImGui::BeginTable("3ways", 2, flags))
 	{
 		ImGui::TableSetupColumn("Name", ImGuiTableColumnFlags_NoHide);
-		ImGui::TableSetupColumn("Prop", ImGuiTableColumnFlags_WidthFixed, TEXT_BASE_WIDTH * 6.0f);
+		ImGui::TableSetupColumn("Prop", ImGuiTableColumnFlags_WidthFixed);
 		ImGui::TableHeadersRow();
 		m_Root.DrawRoot();
 		ImGui::EndTable();

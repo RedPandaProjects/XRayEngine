@@ -35,7 +35,9 @@ bool CLevelTool::OnCreate()
     Scene->OnCreate();
     ExecCommand(COMMAND_CHANGE_TARGET, OBJCLASS_SCENEOBJECT);
     m_Props = xr_new < UIPropertiesForm>();
-    m_Props->SetModifiedEvent(TOnCloseEvent(this, &CLevelTool::OnPropsModified));
+	m_Props->SetModifiedEvent(TOnCloseEvent(this, &CLevelTool::OnPropsModified));
+	m_WorldProps = xr_new < UIPropertiesForm>();
+    m_WorldProps->SetModifiedEvent(TOnCloseEvent(this, &CLevelTool::OnPropsModified));
     m_Gizmo = xr_new<Gizmo>();
   /*
     ssRBOnly << ssRight;
@@ -60,7 +62,8 @@ bool CLevelTool::OnCreate()
 void CLevelTool::OnDestroy()
 {
 	inherited::OnDestroy();
-    xr_delete(m_Props);
+	xr_delete(m_Props);
+	xr_delete(m_WorldProps);
     /*TfrmObjectList::DestroyForm(pObjectListForm);
 	TProperties::DestroyForm(m_Props);*/
     // scene destroing
@@ -292,18 +295,24 @@ void CLevelTool::ShowProperties(LPCSTR focus_to_item)
 
 void CLevelTool::RealUpdateProperties()
 {
+    m_WorldProps->ClearProperties();
     m_Props->ClearProperties();
 	if (/*m_Props->Visible*/1)
     {
-		if (m_Props->IsModified()) Scene->UndoSave();
+		if (m_WorldProps->IsModified()) Scene->UndoSave();
         
-        ObjectList lst;
         PropItemVec items;
 
         // scene common props
         Scene->FillProp				("",items,CurrentClassID());
 
-		m_Props->AssignItems		(items);
+		m_WorldProps->AssignItems		(items);
+    }
+    {
+        if (m_Props->IsModified()) Scene->UndoSave();
+		PropItemVec items;
+		Scene->FillPropObjects("", items, CurrentClassID());
+		m_Props->AssignItems(items);
     }
 	m_Flags.set(flUpdateProperties,FALSE);
 }
