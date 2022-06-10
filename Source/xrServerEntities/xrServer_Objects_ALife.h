@@ -104,7 +104,7 @@ public:
 		add_to_type_list(CSE_ALifeGraphPoint)
 #define script_type_list save_type_list(CSE_ALifeGraphPoint)
 
-		SERVER_ENTITY_DECLARE_BEGIN3(CSE_ALifeObject, ISE_ALifeObject, CSE_Abstract, CRandom)
+SERVER_ENTITY_DECLARE_BEGIN3(CSE_ALifeObject, ISE_ALifeObject, CSE_Abstract, CRandom)
 		
 
 public:
