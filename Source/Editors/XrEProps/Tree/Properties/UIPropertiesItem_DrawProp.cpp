@@ -441,26 +441,17 @@ void UIPropertiesItem::DrawProp()
 		{
 			CTextValue* V = dynamic_cast<CTextValue*>(PItem->GetFrontValue()); R_ASSERT(V);
 			{
-				char text[20];
-				xr_string str = PItem->GetDrawText();
-				int i = 0;
-				for (int a = 0; i < std::min(size_t(16), str.size()); i++, a++)
+				string128 Str;
+				xr_string Source = PItem->GetDrawText();
+				strncpy_s(Str, Source.c_str(), sizeof(string128) - 4);
+				if (Source.size()>128&& strrchr(Str, '\n'))
 				{
-					if (str[a] == '\n')
-						a++;
-					if (str[a] == '\t')
-						a++;
-					if (str[a] == '\r')
-						a++;
-					text[i] = str[a];
+					strrchr(Str, '\n')[0] = 0;
 				}
-				if(str.size()>16||str.size()==0)
-				for (; i < std::min(size_t(16), str.size()) + 3; i++)
+				xr_strcat(Str, "...");
+				if (ImGui::Button(Str, ImVec2(-1, 0)))
 				{
-					text[i] = '.';
 				}
-				text[i] = 0;
-				ImGui::Text(text);
 			}
 			if (ImGui::OpenPopupOnItemClick2("EditText", 0))
 			{
@@ -479,26 +470,17 @@ void UIPropertiesItem::DrawProp()
 		{
 			RTextValue* V = dynamic_cast<RTextValue*>(PItem->GetFrontValue()); R_ASSERT(V);
 			{
-				char text[20];
-				xr_string str = PItem->GetDrawText();
-				int i = 0;
-				for (int a = 0; i < std::min(size_t(16), str.size()); i++, a++)
+				string128 Str;
+				xr_string Source = PItem->GetDrawText();
+				strncpy_s(Str, Source.c_str(), sizeof(string128) - 4);
+				if (Source.size() > 128 && strrchr(Str, '\n'))
 				{
-					if (str[a] == '\n')
-						a++;
-					if (str[a] == '\t')
-						a++;
-					if (str[a] == '\r')
-						a++;
-					text[i] = str[a];
+					strrchr(Str, '\n')[0] = 0;
 				}
-				if (str.size() > 16 || str.size() == 0)
-				for (; i < std::min(size_t(16), str.size()) + 3; i++)
+				xr_strcat(Str, "...");
+				if (ImGui::Button(Str, ImVec2(-1, 0)))
 				{
-					text[i] = '.';
 				}
-				text[i] = 0;
-				ImGui::Text(text);
 			}
 			if (ImGui::OpenPopupOnItemClick2("EditText", 0))
 			{
@@ -515,26 +497,17 @@ void UIPropertiesItem::DrawProp()
 		{
 			STextValue* V = dynamic_cast<STextValue*>(PItem->GetFrontValue()); R_ASSERT(V);
 			{
-				char text[20];
-				xr_string str = PItem->GetDrawText();
-				int i = 0;
-				for (int a = 0; i < std::min(size_t(16), str.size()); i++, a++)
+				string128 Str;
+				xr_string Source = PItem->GetDrawText();
+				strncpy_s(Str, Source.c_str(), sizeof(string128) - 4);
+				if (Source.size() > 128 && strrchr(Str, '\n'))
 				{
-					if (str[a] == '\n')
-						a++;
-					if (str[a] == '\t')
-						a++;
-					if (str[a] == '\r')
-						a++;
-					text[i] = str[a];
+					strrchr(Str, '\n')[0] = 0;
 				}
-				if (str.size() > 16 || str.size() == 0)
-				for (; i < std::min(size_t(16), str.size()) + 3; i++)
+				xr_strcat(Str, "...");
+				if (ImGui::Button(Str, ImVec2(-1, 0)))
 				{
-					text[i] = '.';
 				}
-				text[i] = 0;
-				ImGui::Text(text);
 			}
 			if (ImGui::OpenPopupOnItemClick2("EditText", 0))
 			{

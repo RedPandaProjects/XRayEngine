@@ -156,7 +156,6 @@ void UIPropertiesForm::DrawEditText()
 	if (ImGui::BeginPopupContextItem("EditText", 0))
 	{
 		R_ASSERT(m_EditTextValueData);
-		ImGui::PopStyleVar(3);
 
 		ImGui::BeginGroup();
 		if (ImGui::Button("Ok"))
@@ -299,13 +298,10 @@ void UIPropertiesForm::DrawEditText()
 		if (ImGui::Button("Clear")) { m_EditTextValueData[0] = 0; }
 		ImGui::EndGroup();
 		if(m_EditTextValueData)
-		ImGui::InputTextMultiline("", m_EditTextValueData, m_EditTextValueDataSize, ImVec2(500, 200) ,ImGuiInputTextFlags_CallbackResize, [](ImGuiInputTextCallbackData* data)->int {return reinterpret_cast<UIPropertiesForm*>(data->UserData)->DrawEditText_Callback(data); }, reinterpret_cast<void*>(this));
+		ImGui::InputTextMultiline("##text", m_EditTextValueData, m_EditTextValueDataSize, ImVec2(500, 200) ,ImGuiInputTextFlags_CallbackResize, [](ImGuiInputTextCallbackData* data)->int {return reinterpret_cast<UIPropertiesForm*>(data->UserData)->DrawEditText_Callback(data); }, reinterpret_cast<void*>(this));
 
 		
 		ImGui::EndPopup();
-		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
-		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 1));
-		ImGui::PushStyleVar(ImGuiStyleVar_IndentSpacing, 5);
 	}
 }
 
@@ -324,7 +320,6 @@ void UIPropertiesForm::DrawEditGameType()
 		R_ASSERT(m_EditGameTypeValue);
 
 		bool test = false;
-		ImGui::PopStyleVar(3);
 		{
 			ImGui::BeginGroup();
 			{
@@ -383,9 +378,6 @@ void UIPropertiesForm::DrawEditGameType()
 			ImGui::EndGroup();
 		}
 		ImGui::EndPopup();
-		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
-		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 1));
-		ImGui::PushStyleVar(ImGuiStyleVar_IndentSpacing, 5);
 	}
 }
 
