@@ -131,54 +131,58 @@ BOOL FlagOnEdit(PropItem* prop, bool& change)
 	}
 	return TRUE;
 }
-void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
+void UIPropertiesItem::DrawProp()
 {
-	EPropType type = node->Type();
+	EPropType type = PItem->Type();
 	switch (type)
 	{
 	case PROP_NUMERIC:
 	{
 		bool change = false;
-		if (!DrawNumeric<u32>(node, change, m_Flags.test(plReadOnly)))
-			if (!DrawNumeric<float>(node, change, m_Flags.test(plReadOnly)))
-				if (!DrawNumeric<u8>(node, change, m_Flags.test(plReadOnly)))
-					if (!DrawNumeric<s8>(node, change, m_Flags.test(plReadOnly)))
-						if (!DrawNumeric<s16>(node, change, m_Flags.test(plReadOnly)))
-							if (!DrawNumeric<u16>(node, change, m_Flags.test(plReadOnly)))
-								if (!DrawNumeric<s32>(node, change, m_Flags.test(plReadOnly)))
+		if (!DrawNumeric<u32>(PItem, change, PropertiesFrom->IsReadOnly()))
+			if (!DrawNumeric<float>(PItem, change, PropertiesFrom->IsReadOnly()))
+				if (!DrawNumeric<u8>(PItem, change, PropertiesFrom->IsReadOnly()))
+					if (!DrawNumeric<s8>(PItem, change, PropertiesFrom->IsReadOnly()))
+						if (!DrawNumeric<s16>(PItem, change, PropertiesFrom->IsReadOnly()))
+							if (!DrawNumeric<u16>(PItem, change, PropertiesFrom->IsReadOnly()))
+								if (!DrawNumeric<s32>(PItem, change, PropertiesFrom->IsReadOnly()))
 									R_ASSERT(false);
-		if (change)Modified();
+		if (change)
+		{
+			PropertiesFrom->Modified();
+		}
 	}
 	break;
 	case PROP_SHORTCUT:
 	{
-		ShortcutValue* V = dynamic_cast<ShortcutValue*>(node->GetFrontValue()); R_ASSERT(V);
+		ShortcutValue* V = dynamic_cast<ShortcutValue*>(PItem->GetFrontValue()); R_ASSERT(V);
 		if (ImGui::Button(V->GetDrawText(0).c_str(), ImVec2(-30, 0)))
 		{
 			UIKeyPressForm::Show();
-			m_EditShortcutValue = node;
-		}ImGui::SameLine();
+			PropertiesFrom->m_EditShortcutValue = PItem;
+		}
+		ImGui::SameLine();
 
 		if (ImGui::Button("X", ImVec2(-1, 0)))
 		{
 			xr_shortcut val;
-			if (V->ApplyValue(val))Modified();
+			if (V->ApplyValue(val))PropertiesFrom->Modified();
 		}
 	}
 	break;
 	case PROP_BOOLEAN:
 	{
-		BOOLValue* V = dynamic_cast<BOOLValue*>(node->GetFrontValue()); VERIFY(V);
+		BOOLValue* V = dynamic_cast<BOOLValue*>(PItem->GetFrontValue()); VERIFY(V);
 		BOOL new_val_as_BOOL = V->GetValue();
-		node->BeforeEdit<BOOLValue, BOOL>(new_val_as_BOOL);
+		PItem->BeforeEdit<BOOLValue, BOOL>(new_val_as_BOOL);
 		bool new_val = new_val_as_BOOL;
 		if (ImGui::Checkbox("##value", &new_val))
 		{
 			new_val_as_BOOL = new_val;
-			if (node->AfterEdit<BOOLValue, BOOL>(new_val_as_BOOL))
-				if (node->ApplyValue<BOOLValue, BOOL>(new_val_as_BOOL))
+			if (PItem->AfterEdit<BOOLValue, BOOL>(new_val_as_BOOL))
+				if (PItem->ApplyValue<BOOLValue, BOOL>(new_val_as_BOOL))
 				{
-					Modified();
+					PropertiesFrom->Modified();
 				}
 		}
 
@@ -187,19 +191,19 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 	case PROP_FLAG:
 	{
 		bool change = false;
-		if (!FlagOnEdit<u8>(node, change))
-			if (!FlagOnEdit<u16>(node, change))
-				if (!FlagOnEdit<u32>(node, change))
+		if (!FlagOnEdit<u8>(PItem, change))
+			if (!FlagOnEdit<u16>(PItem, change))
+				if (!FlagOnEdit<u32>(PItem, change))
 					R_ASSERT(false);
-		if (change)Modified();
+		if (change)PropertiesFrom->Modified();
 	}
 	break;
 	case PROP_VECTOR:
 	{
-		VectorValue* V = dynamic_cast<VectorValue*>(node->GetFrontValue()); R_ASSERT(V);
+		VectorValue* V = dynamic_cast<VectorValue*>(PItem->GetFrontValue()); R_ASSERT(V);
 		Fvector edit_val = V->GetValue();
 
-		node->BeforeEdit<VectorValue, Fvector>(edit_val);
+		PItem->BeforeEdit<VectorValue, Fvector>(edit_val);
 		float vector[3] = { edit_val.x,edit_val.y,edit_val.z };
 		if (ImGui::InputFloat3("##value", vector, V->dec))
 		{
@@ -215,10 +219,10 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 				}
 				edit_val[i] = vector[i];
 			}
-			if (node->AfterEdit<VectorValue, Fvector>(edit_val))
-				if (node->ApplyValue<VectorValue, Fvector>(edit_val))
+			if (PItem->AfterEdit<VectorValue, Fvector>(edit_val))
+				if (PItem->ApplyValue<VectorValue, Fvector>(edit_val))
 				{
-					Modified();
+					PropertiesFrom->Modified();
 				}
 		}
 
@@ -226,19 +230,19 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 	break;
 	case PROP_COLOR:
 	{
-		U32Value* V = dynamic_cast<U32Value*>(node->GetFrontValue()); R_ASSERT(V);
+		U32Value* V = dynamic_cast<U32Value*>(PItem->GetFrontValue()); R_ASSERT(V);
 		u32 edit_val = V->GetValue();
 
-		node->BeforeEdit<U32Value, u32>(edit_val);
+		PItem->BeforeEdit<U32Value, u32>(edit_val);
 		u32 a = color_get_A(edit_val);
 		float color[3] = { color_get_B(edit_val) / 255.f, color_get_G(edit_val) / 255.f, color_get_R(edit_val) / 255.f };
 		if (ImGui::ColorEdit3("##value", color))
 		{
 			edit_val = color_rgba_f(color[2], color[1], color[0], 1.f);
 			edit_val = subst_alpha(edit_val, a);
-			if (node->AfterEdit<U32Value, u32>(edit_val))
-				if (node->ApplyValue<U32Value, u32>(edit_val)) {
-					Modified();
+			if (PItem->AfterEdit<U32Value, u32>(edit_val))
+				if (PItem->ApplyValue<U32Value, u32>(edit_val)) {
+					PropertiesFrom->Modified();
 				}
 		}
 	}
@@ -246,10 +250,10 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 
 	case PROP_FCOLOR:
 	{
-		ColorValue* V = dynamic_cast<ColorValue*>(node->GetFrontValue()); R_ASSERT(V);
+		ColorValue* V = dynamic_cast<ColorValue*>(PItem->GetFrontValue()); R_ASSERT(V);
 		Fcolor edit_val = V->GetValue();
 
-		node->BeforeEdit<ColorValue, Fcolor>(edit_val);
+		PItem->BeforeEdit<ColorValue, Fcolor>(edit_val);
 		float a = edit_val.a;
 		float color[3] = { edit_val.r,edit_val.b,edit_val.b };
 		if (ImGui::ColorEdit3("##value", color))
@@ -258,29 +262,29 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 			edit_val.g = color[1];
 			edit_val.b = color[2];
 			edit_val.a = a;
-			if (node->AfterEdit<ColorValue, Fcolor>(edit_val))
-				if (node->ApplyValue<ColorValue, Fcolor>(edit_val)) {
-					Modified();
+			if (PItem->AfterEdit<ColorValue, Fcolor>(edit_val))
+				if (PItem->ApplyValue<ColorValue, Fcolor>(edit_val)) {
+					PropertiesFrom->Modified();
 				}
 		}
 	}
 	break;
 	case PROP_VCOLOR:
 	{
-		VectorValue* V = dynamic_cast<VectorValue*>(node->GetFrontValue()); R_ASSERT(V);
+		VectorValue* V = dynamic_cast<VectorValue*>(PItem->GetFrontValue()); R_ASSERT(V);
 		Fvector edit_val = V->GetValue();
 
-		node->BeforeEdit<VectorValue, Fvector>(edit_val);
+		PItem->BeforeEdit<VectorValue, Fvector>(edit_val);
 		float color[3] = { edit_val[0],edit_val[0],edit_val[0] };
 		if (ImGui::ColorEdit3("##value", color))
 		{
 			edit_val[0] = color[0];
 			edit_val[0] = color[1];
 			edit_val[0] = color[2];
-			if (node->AfterEdit<VectorValue, Fvector>(edit_val))
-				if (node->ApplyValue<VectorValue, Fvector>(edit_val))
+			if (PItem->AfterEdit<VectorValue, Fvector>(edit_val))
+				if (PItem->ApplyValue<VectorValue, Fvector>(edit_val))
 				{
-					Modified();
+					PropertiesFrom->Modified();
 				}
 		}
 	}
@@ -288,11 +292,11 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 	case PROP_CHOOSE:
 	{
 
-		xr_string text = node->GetDrawText().c_str();
+		xr_string text = PItem->GetDrawText().c_str();
 		if (!text[0])text = "<none>";
 		if (ImGui::Button(text.c_str(),ImVec2(-1,0)))
 		{
-			PropItem* prop = node;
+			PropItem* prop = PItem;
 
 			ChooseValue* V = dynamic_cast<ChooseValue*>(prop->GetFrontValue()); VERIFY(V);
 			shared_str	edit_val = V->GetValue();
@@ -306,7 +310,7 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 				V->OnChooseFillEvent(V);
 			}
 			UIChooseForm::SelectItem(V->m_ChooseID, V->subitem, edit_val.c_str(), 0, V->m_FillParam, 0, items.size() ? &items : 0, V->m_ChooseFlags);
-			m_EditChooseValue = prop;
+			PropertiesFrom->m_EditChooseValue = prop;
 
 		}
 
@@ -315,11 +319,14 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 	case PROP_TOKEN:
 	{
 		bool change = false;
-		if (!TokenOnEdit<u8>(node, change))
-			if (!TokenOnEdit<u16>(node, change))
-				if (!TokenOnEdit<u32>(node, change))
+		if (!TokenOnEdit<u8>(PItem, change))
+			if (!TokenOnEdit<u16>(PItem, change))
+				if (!TokenOnEdit<u32>(PItem, change))
 					R_ASSERT(false);
-		if (change)Modified();
+		if (change)
+		{
+			PropertiesFrom->Modified();
+		}
 
 	}
 	break;
@@ -327,18 +334,21 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 	case PROP_RTOKEN:
 	{
 		bool change = false;
-		if (!RTokenOnEdit<u8>(node, change))
-			if (!RTokenOnEdit<u16>(node, change))
-				if (!RTokenOnEdit<u32>(node, change))
+		if (!RTokenOnEdit<u8>(PItem, change))
+			if (!RTokenOnEdit<u16>(PItem, change))
+				if (!RTokenOnEdit<u32>(PItem, change))
 					R_ASSERT(false);
-		if (change)Modified();
+		if (change)
+		{
+			PropertiesFrom->Modified();
+		}
 	}
 	break;
 	case PROP_SH_TOKEN:
 	{
-		TokenValueSH* V = dynamic_cast<TokenValueSH*>(node->GetFrontValue()); R_ASSERT(V);
+		TokenValueSH* V = dynamic_cast<TokenValueSH*>(PItem->GetFrontValue()); R_ASSERT(V);
 		u32 edit_value = V->GetValue();
-		node->BeforeEdit<TokenValueSH, u32>(edit_value);
+		PItem->BeforeEdit<TokenValueSH, u32>(edit_value);
 		int index = edit_value;
 		const char* InTokens[256];
 		int i = 0;
@@ -349,16 +359,16 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 		if (ImGui::Combo("##value", &index, InTokens, i))
 		{
 			u32 new_val = index;
-			if (node->AfterEdit<TokenValueSH, u32>(new_val))
-				if (node->ApplyValue<TokenValueSH, u32>(new_val))Modified();
+			if (PItem->AfterEdit<TokenValueSH, u32>(new_val))
+				if (PItem->ApplyValue<TokenValueSH, u32>(new_val))PropertiesFrom->Modified();
 		}
 	}
 	break;
 	case PROP_TEXTURE2:
 	{
-		CTextValue* T = dynamic_cast<CTextValue*>(node->GetFrontValue()); R_ASSERT(T);
+		CTextValue* T = dynamic_cast<CTextValue*>(PItem->GetFrontValue()); R_ASSERT(T);
 		xr_string edit_val = T->GetValue();
-		node->BeforeEdit<CTextValue, xr_string>(edit_val);
+		PItem->BeforeEdit<CTextValue, xr_string>(edit_val);
 		int index = 0; int cnt = TSTRING_COUNT ;
 		LPCSTR List[TSTRING_COUNT+1] = { TEXTUREString[0],TEXTUREString[1],TEXTUREString[2],TEXTUREString[3],TEXTUREString[4],TEXTUREString[5],TEXTUREString[6],TEXTUREString[7],TEXTUREString[8],TEXTUREString[9],0 };
 		if(edit_val == List[1])index = 1;
@@ -370,16 +380,16 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 			if (index == 0)
 			{
 				UIChooseForm::SelectItem(smTexture, 8, edit_val.c_str(),0,0,0,0,0);
-				m_EditTextureValue = node;
+				PropertiesFrom->m_EditTextureValue = PItem;
 			}
 			else
 			{
 				edit_val = List[index];
-				if (node->AfterEdit<CTextValue, xr_string>(edit_val)) 
+				if (PItem->AfterEdit<CTextValue, xr_string>(edit_val)) 
 				{
-					if (node->ApplyValue<CTextValue, LPCSTR>(edit_val.c_str()))
+					if (PItem->ApplyValue<CTextValue, LPCSTR>(edit_val.c_str()))
 					{
-						Modified();
+						PropertiesFrom->Modified();
 					}
 				}
 			}
@@ -388,7 +398,7 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 	break;
 	case PROP_CLIST:
 	{
-		CListValue* V = dynamic_cast<CListValue*>(node->GetFrontValue()); R_ASSERT(V);
+		CListValue* V = dynamic_cast<CListValue*>(PItem->GetFrontValue()); R_ASSERT(V);
 		LPCSTR edit_value = V->value;
 		int index = 0;
 		int i = 0;
@@ -401,14 +411,14 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 		}
 		if (ImGui::Combo("##value", &index, [](void* data, int idx, const char** out_text)->bool {*out_text = reinterpret_cast<xr_string*>(data)[idx].c_str(); return true; }, reinterpret_cast<void*>(V->items), i))
 		{
-			if (node->AfterEdit<CListValue, xr_string>(V->items[index]))
-				if (node->ApplyValue<CListValue, LPCSTR>(V->items[index].c_str()))Modified();
+			if (PItem->AfterEdit<CListValue, xr_string>(V->items[index]))
+				if (PItem->ApplyValue<CListValue, LPCSTR>(V->items[index].c_str()))PropertiesFrom->Modified();
 		}
 	}
 	break;
 	case PROP_RLIST:
 	{
-		RListValue* V = dynamic_cast<RListValue*>(node->GetFrontValue()); R_ASSERT(V);
+		RListValue* V = dynamic_cast<RListValue*>(PItem->GetFrontValue()); R_ASSERT(V);
 		LPCSTR edit_value = V->value? V->value->c_str():0;
 		int index = 0;
 		int i = 0;
@@ -421,18 +431,18 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 		}
 		if (ImGui::Combo("##value", &index, [](void* data, int idx, const char** out_text)->bool {*out_text = reinterpret_cast<shared_str*>(data)[idx].c_str(); return true; }, reinterpret_cast<void*>(V->items), i))
 		{
-			if (node->AfterEdit<RListValue, shared_str>(V->items[index]))
-				if (node->ApplyValue<RListValue, shared_str>(V->items[index]))Modified();
+			if (PItem->AfterEdit<RListValue, shared_str>(V->items[index]))
+				if (PItem->ApplyValue<RListValue, shared_str>(V->items[index]))PropertiesFrom->Modified();
 		}
 	}
 	break;
 	
 		case PROP_CTEXT:
 		{
-			CTextValue* V = dynamic_cast<CTextValue*>(node->GetFrontValue()); R_ASSERT(V);
+			CTextValue* V = dynamic_cast<CTextValue*>(PItem->GetFrontValue()); R_ASSERT(V);
 			{
 				char text[20];
-				xr_string str = node->GetDrawText();
+				xr_string str = PItem->GetDrawText();
 				int i = 0;
 				for (int a = 0; i < std::min(size_t(16), str.size()); i++, a++)
 				{
@@ -454,20 +464,23 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 			}
 			if (ImGui::OpenPopupOnItemClick2("EditText", 0))
 			{
-				if (m_EditTextValueData)xr_delete(m_EditTextValueData);
-				m_EditTextValueData = xr_strdup(V->GetValue());
-				m_EditTextValueDataSize = xr_strlen(m_EditTextValueData)+1;
-				m_EditTextValue = node;
+				if (PropertiesFrom->m_EditTextValueData)
+				{
+					xr_delete(PropertiesFrom->m_EditTextValueData);
+				}
+				PropertiesFrom->m_EditTextValueData = xr_strdup(V->GetValue());
+				PropertiesFrom->m_EditTextValueDataSize = xr_strlen(PropertiesFrom->m_EditTextValueData)+1;
+				PropertiesFrom->m_EditTextValue = PItem;
 			}
-			DrawEditText();
+			PropertiesFrom->DrawEditText();
 		}
 			break;
 		case PROP_RTEXT:
 		{
-			RTextValue* V = dynamic_cast<RTextValue*>(node->GetFrontValue()); R_ASSERT(V);
+			RTextValue* V = dynamic_cast<RTextValue*>(PItem->GetFrontValue()); R_ASSERT(V);
 			{
 				char text[20];
-				xr_string str = node->GetDrawText();
+				xr_string str = PItem->GetDrawText();
 				int i = 0;
 				for (int a = 0; i < std::min(size_t(16), str.size()); i++, a++)
 				{
@@ -489,21 +502,21 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 			}
 			if (ImGui::OpenPopupOnItemClick2("EditText", 0))
 			{
-				if (m_EditTextValueData)xr_delete(m_EditTextValueData);
-				m_EditTextValueData = xr_strdup(V->GetValue().c_str()? V->GetValue().c_str():"");
-				m_EditTextValueDataSize = xr_strlen(m_EditTextValueData) + 1;
-				m_EditTextValue = node;
+				if (PropertiesFrom->m_EditTextValueData)xr_delete(PropertiesFrom->m_EditTextValueData);
+				PropertiesFrom->m_EditTextValueData = xr_strdup(V->GetValue().c_str()? V->GetValue().c_str():"");
+				PropertiesFrom->m_EditTextValueDataSize = xr_strlen(PropertiesFrom->m_EditTextValueData) + 1;
+				PropertiesFrom->m_EditTextValue = PItem;
 			}
-			DrawEditText();
+			PropertiesFrom->DrawEditText();
 		}
 			break;
 		
 		case PROP_STEXT:
 		{
-			STextValue* V = dynamic_cast<STextValue*>(node->GetFrontValue()); R_ASSERT(V);
+			STextValue* V = dynamic_cast<STextValue*>(PItem->GetFrontValue()); R_ASSERT(V);
 			{
 				char text[20];
-				xr_string str = node->GetDrawText();
+				xr_string str = PItem->GetDrawText();
 				int i = 0;
 				for (int a = 0; i < std::min(size_t(16), str.size()); i++, a++)
 				{
@@ -525,12 +538,12 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 			}
 			if (ImGui::OpenPopupOnItemClick2("EditText", 0))
 			{
-				if (m_EditTextValueData)xr_delete(m_EditTextValueData);
-				m_EditTextValueData = xr_strdup(V->GetValue().c_str());
-				m_EditTextValueDataSize = xr_strlen(m_EditTextValueData) + 1;
-				m_EditTextValue = node;
+				if (PropertiesFrom->m_EditTextValueData)xr_delete(PropertiesFrom->m_EditTextValueData);
+				PropertiesFrom->m_EditTextValueData = xr_strdup(V->GetValue().c_str());
+				PropertiesFrom->m_EditTextValueDataSize = xr_strlen(PropertiesFrom->m_EditTextValueData) + 1;
+				PropertiesFrom->m_EditTextValue = PItem;
 			}
-			DrawEditText();
+			PropertiesFrom->DrawEditText();
 		}
 			break;
 			/*case PROP_TIME:
@@ -539,19 +552,18 @@ void UIPropertiesForm::DrawItem(const char* name, PropItem* node)
 		
 		case PROP_GAMETYPE:
 		{
-			GameTypeValue* V = dynamic_cast<GameTypeValue*>(node->GetFrontValue()); R_ASSERT(V);
-			ImGui::Text(node->GetDrawText().c_str());
-			m_EditGameTypeChooser = V->GetValue();
-			node->BeforeEdit<GameTypeValue, GameTypeChooser>(m_EditGameTypeChooser);
+			GameTypeValue* V = dynamic_cast<GameTypeValue*>(PItem->GetFrontValue()); R_ASSERT(V);
+			ImGui::Text(PItem->GetDrawText().c_str());
+			PropertiesFrom->m_EditGameTypeChooser = V->GetValue();
+			PItem->BeforeEdit<GameTypeValue, GameTypeChooser>(PropertiesFrom->m_EditGameTypeChooser);
 			if (ImGui::OpenPopupOnItemClick2("EditGameType", 0))
 			{
-				m_EditGameTypeValue = node;
+				PropertiesFrom->m_EditGameTypeValue = PItem;
 			}
-			DrawEditGameType();
+			PropertiesFrom->DrawEditGameType();
 		}
 			break;
 	default:
-		//not_implemented();
 		ImGui::Text("");
 		break;
 	}

@@ -1,8 +1,8 @@
 #pragma once
-class XREPROPS_API UIPropertiesForm :public XrUI, private FolderHelper<PropItem,true>
+class XREPROPS_API UIPropertiesForm :public XrUI
 {
+	friend class UIPropertiesItem;
 public:
-	void SetModifiedEvent(TOnModifiedEvent modif = 0) { OnModifiedEvent = modif; }
 	UIPropertiesForm();
 	virtual ~UIPropertiesForm();
 	virtual void Draw();
@@ -13,26 +13,20 @@ public:
 	IC void SetReadOnly(bool enable) { m_Flags.set(plReadOnly, enable); }
 	IC bool IsModified() { return m_bModified;}
 	IC bool Empty() { return m_Items.size() == 0; }
+	void SetModifiedEvent(TOnModifiedEvent modif = 0) { OnModifiedEvent = modif; }
 public:
 	enum {
 		plReadOnly = (1 << 0),
 	};
 	Flags32 m_Flags;
-private:
-	virtual void DrawItem(Node* Node);
-	virtual void DrawItem(const char*name,PropItem* Node);
-	virtual bool IsDrawFloder(Node* Node);
-	virtual void DrawAfterFloderNode(bool is_open, Node* Node = 0);
+	IC bool IsReadOnly()const { return m_Flags.is(plReadOnly); }
 private:
 	PropItemVec m_Items;
-	Node m_GeneralNode;
 	PropItem* m_EditChooseValue;
 	PropItem* m_EditTextureValue;
 	PropItem* m_EditShortcutValue;
 private:
 	TOnModifiedEvent 	OnModifiedEvent;
-	bool m_bModified;
-	void Modified() { m_bModified = true; if (!OnModifiedEvent.empty()) OnModifiedEvent(); }
 private:
 	PropItem* m_EditTextValue;
 	char* m_EditTextValueData;
@@ -43,7 +37,22 @@ private:
 	GameTypeChooser m_EditGameTypeChooser;
 	PropItem* m_EditGameTypeValue;
 	void DrawEditGameType();
+	bool m_bModified;
+	void Modified() { m_bModified = true; if (!OnModifiedEvent.empty()) OnModifiedEvent(); }
 private:
-	void RemoveMixed(Node* Node);
+	UIPropertiesItem m_Root;
+
+/*	virtual void DrawNode(Node* pNode);
+	virtual void DrawItem(Node* pNode);
+	virtual void DrawItem(const char*name,PropItem* Node);
+	virtual bool IsDrawFloder(Node* Node);
+	virtual void DrawAfterFloderNode(bool is_open, Node* Node = 0);
+private:
+	
+	Node m_GeneralNode;
+
+
+private:
+	void RemoveMixed(Node* Node);*/
 };
 

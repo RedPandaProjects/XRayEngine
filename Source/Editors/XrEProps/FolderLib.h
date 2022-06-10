@@ -302,7 +302,7 @@ public:
 		}
 		return true;
 	}
-	inline void DrawNode(Node* N)
+	virtual void DrawNode(Node* N)
 	{
 		if (N->Type == FNT_Root)
 		{
