@@ -160,6 +160,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="UI\ObjectList\UIObjectList.cpp" />
+    <ClCompile Include="UI\ObjectList\UIObjectListItem.cpp" />
     <ClCompile Include="UI\Tools\UIAIMapTool.cpp" />
     <ClCompile Include="UI\Tools\UIDOTool.cpp" />
     <ClCompile Include="UI\Tools\UIFogVolTool.cpp" />
@@ -178,7 +180,6 @@
     <ClCompile Include="UI\UIMainForm.cpp" />
     <ClCompile Include="UI\UIMainMenuForm.cpp" />
     <ClCompile Include="UI\UILPropertiesFrom.cpp" />
-    <ClCompile Include="UI\UIObjectList.cpp" />
     <ClCompile Include="UI\UIPropertiesModal.cpp" />
     <ClCompile Include="UI\UITopBarForm.cpp" />
     <ClCompile Include="UI\UIWorldPropertiesFrom.cpp" />
@@ -299,6 +300,8 @@
     <ClInclude Include="Engine\XRayEditor.h" />
     <ClInclude Include="Engine\XrGameManager.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="UI\ObjectList\UIObjectList.h" />
+    <ClInclude Include="UI\ObjectList\UIObjectListItem.h" />
     <ClInclude Include="UI\Tools\UIAIMapTool.h" />
     <ClInclude Include="UI\Tools\UIDOTool.h" />
     <ClInclude Include="UI\Tools\UIFogVolTool.h" />
@@ -318,7 +321,6 @@
     <ClInclude Include="UI\UIMainForm.h" />
     <ClInclude Include="UI\UIMainMenuForm.h" />
     <ClInclude Include="UI\UILPropertiesFrom.h" />
-    <ClInclude Include="UI\UIObjectList.h" />
     <ClInclude Include="UI\UIPropertiesModal.h" />
     <ClInclude Include="UI\UITopBarForm.h" />
     <ClInclude Include="UI\UITopBarForm_ButtonList.h" />

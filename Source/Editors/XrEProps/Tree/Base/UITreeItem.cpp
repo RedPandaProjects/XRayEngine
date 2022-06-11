@@ -2,6 +2,7 @@
 
 UITreeItem::UITreeItem(shared_str NewName):Name(NewName)
 {
+	Owner = nullptr;
 }
 
 UITreeItem::~UITreeItem()
@@ -12,21 +13,22 @@ UITreeItem::~UITreeItem()
 	}
 }
 
-UITreeItem* UITreeItem::AppendItem(const char* Path)
+UITreeItem* UITreeItem::AppendItem(const char* Path, char PathChar )
 {
 	VERIFY(Path && *Path);
-	if (strchr(Path, '\\'))
+	if (PathChar&&strchr(Path, PathChar))
 	{
 		string_path Name;
 		xr_strcpy(Name, Path);
-		strchr(Name, '\\')[0] = 0;
+		strchr(Name, PathChar)[0] = 0;
 		UITreeItem* Item = FindItem(Name);
 		if (!Item)
 		{
 			Items.push_back(CreateItem(Name));
 			Item = Items.back();
+			Item->Owner = this;
 		}
-		return Item->AppendItem(strchr(Path, '\\') + 1);
+		return Item->AppendItem(strchr(Path, PathChar) + 1);
 	}
 	else
 	{
@@ -35,22 +37,23 @@ UITreeItem* UITreeItem::AppendItem(const char* Path)
 		{
 			Items.push_back(CreateItem(Path));
 			Item = Items.back();
+			Item->Owner = this;
 		}
 		return Item;
 	}
 }
 
-UITreeItem* UITreeItem::FindItem(const char* Path)
+UITreeItem* UITreeItem::FindItem(const char* Path, char PathChar )
 {
-	if (strchr(Path, '\\'))
+	if (PathChar&&strchr(Path, PathChar))
 	{
 		string_path Name;
 		xr_strcpy(Name, Path);
-		strchr(Name, '\\')[0] = 0;
+		strchr(Name, PathChar)[0] = 0;
 		UITreeItem* Item = FindItem(Name);
 		if (Item)
 		{
-			return Item->FindItem(strchr(Path, '\\') + 1);
+			return Item->FindItem(strchr(Path, PathChar) + 1);
 		}
 	}
 	else

@@ -89,7 +89,7 @@ void UIPropertiesForm::Draw()
 	}
 
 	static ImGuiTableFlags flags = ImGuiTableFlags_BordersV | ImGuiTableFlags_BordersOuterH | ImGuiTableFlags_Resizable | ImGuiTableFlags_RowBg | ImGuiTableFlags_NoBordersInBody;
-	if (ImGui::BeginTable("3ways", 2, flags))
+	if (ImGui::BeginTable("props", 2, flags))
 	{
 		ImGui::TableSetupColumn("Name", ImGuiTableColumnFlags_NoHide);
 		ImGui::TableSetupColumn("Prop", ImGuiTableColumnFlags_WidthFixed);

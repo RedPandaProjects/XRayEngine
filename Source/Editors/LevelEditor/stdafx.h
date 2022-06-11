@@ -161,7 +161,8 @@
 #include "UI/UILeftBarForm.h"
 #include "UI/UILPropertiesFrom.h"
 #include "UI/UIWorldPropertiesFrom.h"
-#include "UI/UIObjectList.h"
+#include "UI/ObjectList/UIObjectListItem.h"
+#include "UI/ObjectList/UIObjectList.h"
 #include "UI/UIPropertiesModal.h"
 #include "UI/UITopBarForm.h"
 
