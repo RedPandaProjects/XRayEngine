@@ -74,24 +74,10 @@ void CCustomObject::OnAttach(CCustomObject* owner)
     FParentTools->SetChanged(TRUE);
 }
 
-void CCustomObject::Move(Fvector& amount)
+void CCustomObject::Move(Fvector& Position)
 {
     UI->UpdateScene();
-    Fvector v=GetPosition();
-    Fvector r=FRotation;
-    if (Tools->GetSettings(etfMTSnap)){
-        BOOL bVis	= Visible();
-        BOOL bSel	= Selected();
-        Show		(FALSE);
-        Select		(FALSE);
-    	SnapMove	(v,r,FTransformRP,amount);
-        Show		(bVis);
-        Select		(bSel);
-    }else{
-	    v.add(amount);
-    }
-    SetPosition(v);
-    FRotation = r;
+    SetPosition(Position);
 }
 
 void CCustomObject::MoveTo(const Fvector& pos, const Fvector& up)
@@ -142,7 +128,7 @@ void CCustomObject::ScalePivot( const Fmatrix& prev_inv, const Fmatrix& current,
 {
     UI->UpdateScene();
     Fvector p	= GetPosition();
-    Fvector s = GetScale();;
+    Fvector s = GetSaveScale();;
 	s.add(amount);
 	if (s.x<EPS) s.x=EPS;
 	if (s.y<EPS) s.y=EPS;
@@ -156,11 +142,10 @@ void CCustomObject::ScalePivot( const Fmatrix& prev_inv, const Fmatrix& current,
     SetPosition( p);
 }
 
-void CCustomObject::Scale( Fvector& amount )
+void CCustomObject::Scale( Fvector& Scale )
 {
     UI->UpdateScene();
-    Fvector s	= GetScale();
-	s.add(amount);
+    Fvector s = Scale;
     if (s.x<EPS) s.x=EPS;
     if (s.y<EPS) s.y=EPS;
     if (s.z<EPS) s.z=EPS;

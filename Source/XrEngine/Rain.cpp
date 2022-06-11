@@ -4,6 +4,7 @@
 #include "Rain.h"
 #include "igame_persistent.h"
 #include "environment.h"
+#include "XrEditorSceneInterface.h"
 
 #ifdef _EDITOR
     #include "ui_toolscustom.h"
@@ -95,14 +96,15 @@ void	CEffect_Rain::Born		(Item& dest, float radius)
 BOOL CEffect_Rain::RayPick(const Fvector& s, const Fvector& d, float& range, collide::rq_target tgt)
 {
 	BOOL bRes 			= TRUE;
-#ifdef _EDITOR
-    Tools->RayPick		(s,d,range);
-#else
+	if (Device->IsEditorMode())
+	{
+		EditorScene->RayPick(s, d, range);
+			return true;
+	}
 	collide::rq_result	RQ;
 	CObject* E 			= g_pGameLevel->CurrentViewEntity();
 	bRes 				= g_pGameLevel->ObjectSpace.RayPick( s,d,range,tgt,RQ,E);	
     if (bRes) range 	= RQ.range;
-#endif
     return bRes;
 }
 
@@ -123,7 +125,7 @@ void CEffect_Rain::RenewItem(Item& dest, float height, BOOL bHit)
 void	CEffect_Rain::OnFrame	()
 {
 #ifndef _EDITOR
-	if (!g_pGameLevel)			return;
+	if (!g_pGameLevel&&!Device->IsEditorMode())			return;
 #endif
 
 #ifdef DEDICATED_SERVER
@@ -134,21 +136,28 @@ void	CEffect_Rain::OnFrame	()
 	float	factor				= g_pGamePersistent->Environment().CurrentEnv->rain_density;
 	static float hemi_factor	= 0.f;
 #ifndef _EDITOR
-	CObject* E 					= g_pGameLevel->CurrentViewEntity();
-	if (E&&E->renderable_ROS())
+	if (g_pGameLevel)
 	{
-//		hemi_factor				= 1.f-2.0f*(0.3f-_min(_min(1.f,E->renderable_ROS()->get_luminocity_hemi()),0.3f));
-		float* hemi_cube		= E->renderable_ROS()->get_luminocity_hemi_cube();
-		float hemi_val			= _max(hemi_cube[0],hemi_cube[1]);
-		hemi_val				= _max(hemi_val, hemi_cube[2]);
-		hemi_val				= _max(hemi_val, hemi_cube[3]);
-		hemi_val				= _max(hemi_val, hemi_cube[5]);
-		
-//		float f					= 0.9f*hemi_factor + 0.1f*hemi_val;
-		float f					= hemi_val;
-		float t					= Device->fTimeDelta;
-		clamp					(t, 0.001f, 1.0f);
-		hemi_factor				= hemi_factor*(1.0f-t) + f*t;
+		CObject* E = g_pGameLevel->CurrentViewEntity();
+		if (E && E->renderable_ROS())
+		{
+			//		hemi_factor				= 1.f-2.0f*(0.3f-_min(_min(1.f,E->renderable_ROS()->get_luminocity_hemi()),0.3f));
+			float* hemi_cube = E->renderable_ROS()->get_luminocity_hemi_cube();
+			float hemi_val = _max(hemi_cube[0], hemi_cube[1]);
+			hemi_val = _max(hemi_val, hemi_cube[2]);
+			hemi_val = _max(hemi_val, hemi_cube[3]);
+			hemi_val = _max(hemi_val, hemi_cube[5]);
+
+			//		float f					= 0.9f*hemi_factor + 0.1f*hemi_val;
+			float f = hemi_val;
+			float t = Device->fTimeDelta;
+			clamp(t, 0.001f, 1.0f);
+			hemi_factor = hemi_factor * (1.0f - t) + f * t;
+		}
+	}
+	else
+	{
+		hemi_factor = 1;
 	}
 #endif
 
@@ -184,7 +193,7 @@ void	CEffect_Rain::OnFrame	()
 void	CEffect_Rain::Render	()
 {
 #ifndef _EDITOR
-	if (!g_pGameLevel)			return;
+	if (!g_pGameLevel&&!Device->IsEditorMode())			return;
 #endif
 
 	m_pRender->Render(*this);

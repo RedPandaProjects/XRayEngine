@@ -283,6 +283,7 @@ void EScene::Modified()
 	m_RTFlags.set(flRT_Modified|flRT_Unsaved,TRUE);
     g_scene_physics.OnSceneModified();
     ExecCommand(COMMAND_UPDATE_CAPTION);
+    UIObjectList::Refresh();
 }
 
 bool EScene::IsUnsaved()
@@ -548,7 +549,6 @@ void EScene::FillProp(LPCSTR pref, PropItemVec& items, ObjClassID cls_id)
     V=PHelper().CreateToken32	(items,PrepareKey(pref,"Scene\\Build options\\Lighting\\Jitter samples"),			&m_LevelOp.m_BuildParams.m_lm_jitter_samples, 			js_token);	V->Owner()->Enable(enabled);
     
     // tools options
-    if (OBJCLASS_DUMMY==cls_id)
     {
         SceneToolsMapPairIt _I 			= FirstTool();
         SceneToolsMapPairIt _E			= LastTool();
@@ -560,13 +560,31 @@ void EScene::FillProp(LPCSTR pref, PropItemVec& items, ObjClassID cls_id)
                 mt->FillProp			(mt->ClassDesc(), items);
             }
         }
-    }else{
-        ESceneToolBase* mt				= GetTool	(cls_id);
-        if(mt)
-        {
-            mt->FillProp				(mt->ClassDesc(), items);
-        }
     }
+}
+
+void EScene::FillPropObjects(LPCSTR pref, PropItemVec& items, ObjClassID cls_id)
+{
+	if (OBJCLASS_DUMMY == cls_id)
+	{
+		SceneToolsMapPairIt _I = FirstTool();
+		SceneToolsMapPairIt _E = LastTool();
+		for (; _I != _E; _I++)
+		{
+			ESceneToolBase* mt = _I->second;
+			if ((_I->first != OBJCLASS_DUMMY) && mt)
+			{
+				mt->FillPropObjects(mt->ClassDesc(), items);
+			}
+		}
+	}
+	else {
+		ESceneToolBase* mt = GetTool(cls_id);
+		if (mt)
+		{
+			mt->FillPropObjects("", items);
+		}
+	}
 }
 
 void EScene::Play()
@@ -627,6 +645,11 @@ void EScene::BuildAIMap()
 {
     m_level_graph.build();
 
+}
+
+bool EScene::RayPick(const Fvector& start, const Fvector& dir, float& dis ,Fvector* pt, Fvector* n)
+{
+    return Tools->RayPick(start, dir, dis, pt, n);
 }
 
 void EScene::RegisterSubstObjectName(const xr_string& _from, const xr_string& _to)

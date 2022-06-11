@@ -33,6 +33,9 @@ public:
 	virtual bool Start  (TShiftState _Shift);
 	virtual bool End    (TShiftState _Shift);
 	virtual void Move   (TShiftState _Shift);
+	virtual bool IsSupportMove() { return false; }
+	virtual bool IsSupportRotate() { return false; }
+	virtual bool IsSupportScale() { return false; }
     virtual void OnEnter();
     virtual void OnExit ();
 };

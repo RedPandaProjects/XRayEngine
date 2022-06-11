@@ -58,16 +58,15 @@ BOOL MixedRToken(PropItem* prop, bool& change)
 		change = prop->ApplyValue<RTokenValue<T>, T>(edit_value);
 	return TRUE;
 }
-void UIPropertiesForm::RemoveMixed(Node* N)
+void UIPropertiesItem::RemoveMixed()
 {
-	EPropType type = N->Object->Type();
-	PropItem* node = N->Object;
+	EPropType type = PItem->Type();
 	bool change = false;
 	switch (type)
 	{
 	case PROP_SHORTCUT:
 	{
-		ShortcutValue* V = dynamic_cast<ShortcutValue*>(node->GetFrontValue()); R_ASSERT(V);
+		ShortcutValue* V = dynamic_cast<ShortcutValue*>(PItem->GetFrontValue()); R_ASSERT(V);
 		xr_shortcut val = *V->value;
 		if (V->ApplyValue(val))change = true;
 	}
@@ -75,12 +74,12 @@ void UIPropertiesForm::RemoveMixed(Node* N)
 	case PROP_CHOOSE:
 	{
 
-		ChooseValue* V = dynamic_cast<ChooseValue*>(node->GetFrontValue()); VERIFY(V);
+		ChooseValue* V = dynamic_cast<ChooseValue*>(PItem->GetFrontValue()); VERIFY(V);
 		shared_str	edit_val = V->GetValue();
 		if (!edit_val.size()) 	edit_val = V->m_StartPath;
-		node->BeforeEdit<ChooseValue, shared_str>(edit_val);
-		if (node->AfterEdit<ChooseValue, shared_str>(edit_val))
-			if (node->ApplyValue<ChooseValue, shared_str>(edit_val))
+		PItem->BeforeEdit<ChooseValue, shared_str>(edit_val);
+		if (PItem->AfterEdit<ChooseValue, shared_str>(edit_val))
+			if (PItem->ApplyValue<ChooseValue, shared_str>(edit_val))
 			{
 				change = true;
 			}
@@ -88,24 +87,24 @@ void UIPropertiesForm::RemoveMixed(Node* N)
 	break;
 	case PROP_NUMERIC:
 	{
-		if (!MixedNumeric<u32>(node, change))
-			if (!MixedNumeric<float>(node, change))
-				if (!MixedNumeric<u8>(node, change))
-					if (!MixedNumeric<s8>(node, change))
-						if (!MixedNumeric<u16>(node, change))
-							if (!MixedNumeric<u16>(node, change))
-								if (!MixedNumeric<s32>(node, change))
+		if (!MixedNumeric<u32>(PItem, change))
+			if (!MixedNumeric<float>(PItem, change))
+				if (!MixedNumeric<u8>(PItem, change))
+					if (!MixedNumeric<s8>(PItem, change))
+						if (!MixedNumeric<u16>(PItem, change))
+							if (!MixedNumeric<u16>(PItem, change))
+								if (!MixedNumeric<s32>(PItem, change))
 									R_ASSERT(false);
 	}
 	break;
 	case PROP_BOOLEAN:
 	{
-		BOOLValue* V = dynamic_cast<BOOLValue*>(node->GetFrontValue()); VERIFY(V);
+		BOOLValue* V = dynamic_cast<BOOLValue*>(PItem->GetFrontValue()); VERIFY(V);
 		BOOL val = V->GetValue();
-		node->BeforeEdit<BOOLValue, BOOL>(val);
+		PItem->BeforeEdit<BOOLValue, BOOL>(val);
 
-		if (node->AfterEdit<BOOLValue, BOOL>(val))
-			if (node->ApplyValue<BOOLValue, BOOL>(val))
+		if (PItem->AfterEdit<BOOLValue, BOOL>(val))
+			if (PItem->ApplyValue<BOOLValue, BOOL>(val))
 			{
 				change = true;
 			}
@@ -113,20 +112,20 @@ void UIPropertiesForm::RemoveMixed(Node* N)
 	break;
 	case PROP_FLAG:
 	{
-		if (!MixedFlag<u8>(node, change))
-			if (!MixedFlag<u16>(node, change))
-				if (!MixedFlag<u32>(node, change))
+		if (!MixedFlag<u8>(PItem, change))
+			if (!MixedFlag<u16>(PItem, change))
+				if (!MixedFlag<u32>(PItem, change))
 					R_ASSERT(false);
 	}
 	break;
 	case PROP_VECTOR:
 	{
-		VectorValue* V = dynamic_cast<VectorValue*>(node->GetFrontValue()); R_ASSERT(V);
+		VectorValue* V = dynamic_cast<VectorValue*>(PItem->GetFrontValue()); R_ASSERT(V);
 		Fvector edit_val = V->GetValue();
 
-		node->BeforeEdit<VectorValue, Fvector>(edit_val);
-		if (node->AfterEdit<VectorValue, Fvector>(edit_val))
-			if (node->ApplyValue<VectorValue, Fvector>(edit_val))
+		PItem->BeforeEdit<VectorValue, Fvector>(edit_val);
+		if (PItem->AfterEdit<VectorValue, Fvector>(edit_val))
+			if (PItem->ApplyValue<VectorValue, Fvector>(edit_val))
 			{
 				change = true;
 			}
@@ -134,23 +133,23 @@ void UIPropertiesForm::RemoveMixed(Node* N)
 	break;
 	case PROP_TOKEN:
 	{
-		if (!MixedToken<u8>(node, change))
-			if (!MixedToken<u16>(node, change))
-				if (!MixedToken<u32>(node, change))
+		if (!MixedToken<u8>(PItem, change))
+			if (!MixedToken<u16>(PItem, change))
+				if (!MixedToken<u32>(PItem, change))
 					R_ASSERT(false);
 	}
 	break;
 	case PROP_RTOKEN:
 	{
-		if (!MixedRToken<u8>(node, change))
-			if (!MixedRToken<u16>(node, change))
-				if (!MixedRToken<u32>(node, change))
+		if (!MixedRToken<u8>(PItem, change))
+			if (!MixedRToken<u16>(PItem, change))
+				if (!MixedRToken<u32>(PItem, change))
 					R_ASSERT(false);
 	}
 		break;
 	case PROP_RLIST:
 	{
-		RListValue* V = dynamic_cast<RListValue*>(node->GetFrontValue()); R_ASSERT(V);
+		RListValue* V = dynamic_cast<RListValue*>(PItem->GetFrontValue()); R_ASSERT(V);
 		LPCSTR edit_value = V->value ? V->value->c_str() : 0;
 		int index = 0;
 		const char* InTokens[256];
@@ -162,18 +161,18 @@ void UIPropertiesForm::RemoveMixed(Node* N)
 				index = i;
 			}
 		}
-		if (node->AfterEdit<RListValue, shared_str>(V->items[index]))
-			if (node->ApplyValue<RListValue, shared_str>(V->items[index]))change = true;
+		if (PItem->AfterEdit<RListValue, shared_str>(V->items[index]))
+			if (PItem->ApplyValue<RListValue, shared_str>(V->items[index]))change = true;
 	}
 		break;
 	case PROP_COLOR:
 	{
-		U32Value* V = dynamic_cast<U32Value*>(node->GetFrontValue()); R_ASSERT(V);
+		U32Value* V = dynamic_cast<U32Value*>(PItem->GetFrontValue()); R_ASSERT(V);
 		u32 edit_val = V->GetValue();
 
-		node->BeforeEdit<U32Value, u32>(edit_val);
-		if (node->AfterEdit<U32Value, u32>(edit_val))
-			if (node->ApplyValue<U32Value, u32>(edit_val))
+		PItem->BeforeEdit<U32Value, u32>(edit_val);
+		if (PItem->AfterEdit<U32Value, u32>(edit_val))
+			if (PItem->ApplyValue<U32Value, u32>(edit_val))
 			{
 				change = true;
 				
@@ -182,24 +181,24 @@ void UIPropertiesForm::RemoveMixed(Node* N)
 	break;
 	case PROP_FCOLOR:
 	{
-		ColorValue* V = dynamic_cast<ColorValue*>(node->GetFrontValue()); R_ASSERT(V);
+		ColorValue* V = dynamic_cast<ColorValue*>(PItem->GetFrontValue()); R_ASSERT(V);
 		Fcolor edit_val = V->GetValue();
 
-		node->BeforeEdit<ColorValue, Fcolor>(edit_val);
-			if (node->AfterEdit<ColorValue, Fcolor>(edit_val))
-				if (node->ApplyValue<ColorValue, Fcolor>(edit_val)) {
+		PItem->BeforeEdit<ColorValue, Fcolor>(edit_val);
+			if (PItem->AfterEdit<ColorValue, Fcolor>(edit_val))
+				if (PItem->ApplyValue<ColorValue, Fcolor>(edit_val)) {
 					change = true;
 				}
 	}
 		break;
 	case PROP_VCOLOR:
 	{
-		VectorValue* V = dynamic_cast<VectorValue*>(node->GetFrontValue()); R_ASSERT(V);
+		VectorValue* V = dynamic_cast<VectorValue*>(PItem->GetFrontValue()); R_ASSERT(V);
 		Fvector edit_val = V->GetValue();
 
-		node->BeforeEdit<VectorValue, Fvector>(edit_val);
-			if (node->AfterEdit<VectorValue, Fvector>(edit_val))
-				if (node->ApplyValue<VectorValue, Fvector>(edit_val))
+		PItem->BeforeEdit<VectorValue, Fvector>(edit_val);
+			if (PItem->AfterEdit<VectorValue, Fvector>(edit_val))
+				if (PItem->ApplyValue<VectorValue, Fvector>(edit_val))
 				{
 					change = true;
 				}
@@ -209,13 +208,13 @@ void UIPropertiesForm::RemoveMixed(Node* N)
 	case PROP_STEXT:
 	case PROP_CTEXT:
 	{
-		CTextValue* V1 = dynamic_cast<CTextValue*>(m_EditTextValue->GetFrontValue());
+		CTextValue* V1 = dynamic_cast<CTextValue*>(PropertiesFrom->m_EditTextValue->GetFrontValue());
 		if (V1)
 		{
-			xr_string out = node->GetDrawText();
-			if (m_EditTextValue->AfterEdit<CTextValue, xr_string>(out))
+			xr_string out = PItem->GetDrawText();
+			if (PropertiesFrom->m_EditTextValue->AfterEdit<CTextValue, xr_string>(out))
 			{
-				if (m_EditTextValue->ApplyValue<CTextValue, LPCSTR>(out.c_str()))
+				if (PropertiesFrom->m_EditTextValue->ApplyValue<CTextValue, LPCSTR>(out.c_str()))
 				{
 					change = true;
 				}
@@ -223,13 +222,13 @@ void UIPropertiesForm::RemoveMixed(Node* N)
 		}
 		else
 		{
-			RTextValue* V2 = dynamic_cast<RTextValue*>(m_EditTextValue->GetFrontValue());
+			RTextValue* V2 = dynamic_cast<RTextValue*>(PropertiesFrom->m_EditTextValue->GetFrontValue());
 			if (V2)
 			{
-				shared_str out = node->GetDrawText().c_str();
-				if (m_EditTextValue->AfterEdit<RTextValue, shared_str>(out))
+				shared_str out = PItem->GetDrawText().c_str();
+				if (PropertiesFrom->m_EditTextValue->AfterEdit<RTextValue, shared_str>(out))
 				{
-					if (m_EditTextValue->ApplyValue<RTextValue, shared_str>(out))
+					if (PropertiesFrom->m_EditTextValue->ApplyValue<RTextValue, shared_str>(out))
 					{
 						change = true;
 					}
@@ -237,13 +236,13 @@ void UIPropertiesForm::RemoveMixed(Node* N)
 			}
 			else
 			{
-				STextValue* V3 = dynamic_cast<STextValue*>(m_EditTextValue->GetFrontValue());
+				STextValue* V3 = dynamic_cast<STextValue*>(PropertiesFrom->m_EditTextValue->GetFrontValue());
 				if (V3)
 				{
-					xr_string out = node->GetDrawText();;
-					if (m_EditTextValue->AfterEdit<STextValue, xr_string>(out))
+					xr_string out = PItem->GetDrawText();;
+					if (PropertiesFrom->m_EditTextValue->AfterEdit<STextValue, xr_string>(out))
 					{
-						if (m_EditTextValue->ApplyValue<STextValue, xr_string>(out))
+						if (PropertiesFrom->m_EditTextValue->ApplyValue<STextValue, xr_string>(out))
 						{
 							change = true;
 						}
@@ -259,7 +258,7 @@ void UIPropertiesForm::RemoveMixed(Node* N)
 		break;
 	case PROP_CLIST:
 	{
-		CListValue* V = dynamic_cast<CListValue*>(node->GetFrontValue()); R_ASSERT(V);
+		CListValue* V = dynamic_cast<CListValue*>(PItem->GetFrontValue()); R_ASSERT(V);
 		LPCSTR edit_value = V->value;
 		int index = 0;
 		int i = 0;
@@ -270,17 +269,17 @@ void UIPropertiesForm::RemoveMixed(Node* N)
 				index = i;
 			}
 		}
-		if (node->AfterEdit<CListValue, xr_string>(V->items[index]))
-			if (node->ApplyValue<CListValue, LPCSTR>(V->items[index].c_str()))change = true;
+		if (PItem->AfterEdit<CListValue, xr_string>(V->items[index]))
+			if (PItem->ApplyValue<CListValue, LPCSTR>(V->items[index].c_str()))change = true;
 	}
 		break;
 	case PROP_SH_TOKEN:
 	{
-		TokenValueSH* V = dynamic_cast<TokenValueSH*>(node->GetFrontValue()); R_ASSERT(V);
+		TokenValueSH* V = dynamic_cast<TokenValueSH*>(PItem->GetFrontValue()); R_ASSERT(V);
 		u32 edit_value = V->GetValue();
-		node->BeforeEdit<TokenValueSH, u32>(edit_value);
-		if (node->AfterEdit<TokenValueSH, u32>(edit_value))
-			if (node->ApplyValue<TokenValueSH, u32>(edit_value))
+		PItem->BeforeEdit<TokenValueSH, u32>(edit_value);
+		if (PItem->AfterEdit<TokenValueSH, u32>(edit_value))
+			if (PItem->ApplyValue<TokenValueSH, u32>(edit_value))
 			{
 				change = true;
 			}
@@ -288,13 +287,13 @@ void UIPropertiesForm::RemoveMixed(Node* N)
 		break;
 	case PROP_TEXTURE2:
 	{
-		CTextValue* T = dynamic_cast<CTextValue*>(node->GetFrontValue()); R_ASSERT(T);
+		CTextValue* T = dynamic_cast<CTextValue*>(PItem->GetFrontValue()); R_ASSERT(T);
 		xr_string edit_val = T->GetValue();
-		node->BeforeEdit<CTextValue, xr_string>(edit_val);
+		PItem->BeforeEdit<CTextValue, xr_string>(edit_val);
 
-		if (node->AfterEdit<CTextValue, xr_string>(edit_val))
+		if (PItem->AfterEdit<CTextValue, xr_string>(edit_val))
 		{
-			if (node->ApplyValue<CTextValue, LPCSTR>(edit_val.c_str()))
+			if (PItem->ApplyValue<CTextValue, LPCSTR>(edit_val.c_str()))
 			{
 				change = true;
 			}
@@ -303,13 +302,13 @@ void UIPropertiesForm::RemoveMixed(Node* N)
 		break;
 	case PROP_GAMETYPE:
 	{
-		GameTypeValue* V = dynamic_cast<GameTypeValue*>(node->GetFrontValue()); R_ASSERT(V);
-		ImGui::Text(node->GetDrawText().c_str());
+		GameTypeValue* V = dynamic_cast<GameTypeValue*>(PItem->GetFrontValue()); R_ASSERT(V);
+		ImGui::Text(PItem->GetDrawText().c_str());
 		auto value = V->GetValue();
-		node->BeforeEdit<GameTypeValue, GameTypeChooser>(value);
-		if (node->AfterEdit<GameTypeValue, GameTypeChooser>(value))
+		PItem->BeforeEdit<GameTypeValue, GameTypeChooser>(value);
+		if (PItem->AfterEdit<GameTypeValue, GameTypeChooser>(value))
 		{
-			if (node->ApplyValue<GameTypeValue, GameTypeChooser>(value))
+			if (PItem->ApplyValue<GameTypeValue, GameTypeChooser>(value))
 			{
 				change = true;
 			}
@@ -322,12 +321,12 @@ void UIPropertiesForm::RemoveMixed(Node* N)
 	}
 	if (change)
 	{
-		Modified();
+		PropertiesFrom->Modified();
 	}
 	else
 	{
-		Modified();
-		N->Object->m_Flags.set(PropItem::flIgnoreMixed, 1);
+		PropertiesFrom->Modified();
+		PItem->m_Flags.set(PropItem::flIgnoreMixed, 1);
 	}
 }
 

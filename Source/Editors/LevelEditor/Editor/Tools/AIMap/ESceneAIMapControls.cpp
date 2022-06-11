@@ -36,81 +36,53 @@ bool TUI_ControlAIMapNodeAdd::End(TShiftState _Shift)
 	return true;
 }
 
-TUI_ControlAIMapNodeMove::TUI_ControlAIMapNodeMove(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent)
+
+TUI_ControlAIMapNodeSelect::TUI_ControlAIMapNodeSelect(int st, int act, ESceneToolBase* parent) :TUI_CustomControl(st, act, parent)
 {
 }
-bool TUI_ControlAIMapNodeMove::Start(TShiftState Shift)
-{
-    if(parent_tool->SelectionCount(true)==0) return false;
 
-    if (etAxisY==Tools->GetAxis()){
-        m_MovingXVector.set(0,0,0);
-        m_MovingYVector.set(0,1,0);
-    }else{
-        m_MovingXVector.set(0,0,0);
-        m_MovingYVector.set(0,0,0);
-    }
-    m_MovingReminder.set(0,0,0);
-    return true;
+void TUI_ControlAIMapNodeSelect::MoveStart()
+{
+	AINodeVec& lst = ((ESceneAIMapTool*)parent_tool)->Nodes();
+	for (AINodeIt _F = lst.begin(); _F != lst.end(); _F++)
+	{
+		if ((*_F)->flags.is(SAINode::flSelected))
+		{
+			(*_F)->SavePos = (*_F)->Pos;
+		}
+	}
+	
 }
 
-void  TUI_ControlAIMapNodeMove::Move(TShiftState _Shift)
+
+void TUI_ControlAIMapNodeSelect::MoveProcess(Fvector Delta, Fvector Vector)
 {
-	Fvector amount;
-	if (DefaultMovingProcess(_Shift,amount)){
-       	AINodeVec& lst = ((ESceneAIMapTool*)parent_tool)->Nodes();
-        for(AINodeIt _F = lst.begin();_F!=lst.end();_F++)
-            if((*_F)->flags.is(SAINode::flSelected)){ 
-            	(*_F)->Pos.add(amount);
-            	(*_F)->Plane.build((*_F)->Pos,(*_F)->Plane.n);
-            }
-    }
+	AINodeVec& lst = ((ESceneAIMapTool*)parent_tool)->Nodes();
+	for (AINodeIt _F = lst.begin(); _F != lst.end(); _F++)
+		if ((*_F)->flags.is(SAINode::flSelected)) {
+            (*_F)->Pos = (*_F)->SavePos;
+            (*_F)->Pos.mad(Delta, Vector);
+			if (LTools->GetGimzo()->IsStepEnable(Gizmo::EType::Move) && abs(Vector.y) > EPS)
+			{
+				(*_F)->Pos.y = snapto((*_F)->Pos.y, LTools->GetGimzo()->GetStep(Gizmo::EType::Move));
+			}
+			(*_F)->Plane.build((*_F)->Pos, (*_F)->Plane.n);
+		}
 }
 
-bool  TUI_ControlAIMapNodeMove::End(TShiftState _Shift)
+void TUI_ControlAIMapNodeSelect::RotateProcess(float Delta)
 {
-	return MovingEnd(_Shift);
+	Fmatrix R;
+	if (fis_zero(m_RotateVector.x)) 	R.rotateZ(Delta);
+	else								R.rotateX(-Delta);
+
+	AINodeVec& lst = ((ESceneAIMapTool*)parent_tool)->Nodes();
+	for (AINodeIt _F = lst.begin(); _F != lst.end(); _F++)
+		if ((*_F)->flags.is(SAINode::flSelected)) {
+			Fvector 	new_n;
+			R.transform_dir(new_n, (*_F)->Plane.n);
+			if (Fvector().set(0, 1, 0).dotproduct(new_n) > 0.02f) {
+				(*_F)->Plane.build((*_F)->Pos, new_n);
+			}
+		}
 }
-
-TUI_ControlAIMapNodeRotate::TUI_ControlAIMapNodeRotate(int st, int act, ESceneToolBase* parent):TUI_CustomControl(st,act,parent)
-{
-}                                           
-bool  TUI_ControlAIMapNodeRotate::Start(TShiftState Shift)
-{
-    if(parent_tool->SelectionCount(true)==0) return false;
-
-    m_RotateVector.set(0,0,0);
-    if (etAxisX==Tools->GetAxis()) m_RotateVector.set(1,0,0);
-    else if (etAxisY==Tools->GetAxis()) m_RotateVector.set(0,0,0);
-    else if (etAxisZ==Tools->GetAxis()) m_RotateVector.set(0,0,1);
-	m_fRotateSnapAngle = 0;
-    return true;
-}
-
-void  TUI_ControlAIMapNodeRotate::Move(TShiftState _Shift)
-{
-    if (_Shift&ssLeft){
-        float amount = -UI->m_DeltaCpH.x * UI->m_MouseSR;
-
-        if( Tools->GetSettings(etfASnap) ) CHECK_SNAP(m_fRotateSnapAngle,amount,Tools->m_RotateSnapAngle);
-
-        Fmatrix R;
-        if 	(fis_zero(m_RotateVector.x)) 	R.rotateZ(amount);
-        else								R.rotateX(amount);
-        
-       	AINodeVec& lst 		= ((ESceneAIMapTool*)parent_tool)->Nodes();
-        for(AINodeIt _F = lst.begin();_F!=lst.end();_F++)
-            if((*_F)->flags.is(SAINode::flSelected)){
-            	Fvector 	new_n;
-            	R.transform_dir(new_n,(*_F)->Plane.n);
-                if (Fvector().set(0,1,0).dotproduct(new_n)>0.02f){
-	            	(*_F)->Plane.build((*_F)->Pos,new_n);           	
-                }
-            }
-    }
-}
-bool  TUI_ControlAIMapNodeRotate::End(TShiftState _Shift)
-{
-	return RotateEnd(_Shift);
-}
-

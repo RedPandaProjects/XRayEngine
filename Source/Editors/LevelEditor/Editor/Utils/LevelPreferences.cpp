@@ -11,6 +11,10 @@ void CLevelPreferences::Load(CInifile* I)
         OpenProperties = R_BOOL_SAFE("windows", "properties", true);
       
     }
+	{
+		OpenWorldProperties = R_BOOL_SAFE("windows", "world_properties", true);
+
+	}
     SceneToolsMapPairIt _I 	= Scene->FirstTool();
     SceneToolsMapPairIt _E 	= Scene->LastTool();
     for (; _I!=_E; _I++)
@@ -22,7 +26,8 @@ void CLevelPreferences::Save(CInifile* I)
 {
 	inherited::Save		(I);
     I->w_bool("windows", "object_list", OpenObjectList);
-    I->w_bool("windows", "properties", OpenProperties);
+	I->w_bool("windows", "properties", OpenProperties);
+	I->w_bool("windows", "world_properties", OpenWorldProperties);
     SceneToolsMapPairIt _I 	= Scene->FirstTool();
     SceneToolsMapPairIt _E 	= Scene->LastTool();
     for (; _I!=_E; _I++)

@@ -20,7 +20,7 @@ public:
     IC LPCSTR			ClassDesc				(){return "Glow";}
     IC int				RenderPriority			(){return 20;}
 
-    void 				FillProp				(LPCSTR pref, PropItemVec& items);
+    void 				FillProp         (LPCSTR pref, PropItemVec& items);
 
     virtual void		Clear					(bool bSpecific=false){inherited::Clear(bSpecific); m_Flags.zero();};
     // IO

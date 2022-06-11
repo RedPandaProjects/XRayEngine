@@ -12,4 +12,5 @@ public:
     virtual void	FillProp          	(PropItemVec& items);
 	bool OpenObjectList;
 	bool OpenProperties;
+	bool OpenWorldProperties;
 };

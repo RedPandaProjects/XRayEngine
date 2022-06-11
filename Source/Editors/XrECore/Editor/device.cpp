@@ -336,7 +336,7 @@ bool CEditorRenderDevice::Begin	()
 	VERIFY(b_is_Ready);
 	mFullTransform_saved = mFullTransform;
 	mProject_saved = mProject;
-	mView = mView_saved;
+	mView_saved = mView;
 	vCameraPosition_saved = vCameraPosition;
 	HW.Validate		();
 	HRESULT	_hr		= HW.pDevice->TestCooperativeLevel();

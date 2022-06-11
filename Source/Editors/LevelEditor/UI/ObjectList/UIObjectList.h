@@ -2,6 +2,7 @@
 class CCustomObject;
 class UIObjectList:public XrUI
 {
+	friend class UIObjectListItem;
 public:
 	UIObjectList();
 	virtual ~UIObjectList();
@@ -10,6 +11,7 @@ public:
 	static void Show();
 	static void Close();
 	static IC bool IsOpen()  { return Form; }
+	static void Refresh();
 private:
 	static UIObjectList* Form;
 private:
@@ -24,6 +26,7 @@ private:
 		M_Inbvisible
 	};
 	EMode m_Mode;
-	CCustomObject* m_SelectedObject;
 	string_path m_Filter;
+	UIObjectListItem m_Root;
+	UIObjectListItem* m_LastSelected;
 };

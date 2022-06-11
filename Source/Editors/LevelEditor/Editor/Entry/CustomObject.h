@@ -38,9 +38,12 @@ class  CCustomObject:private pureDrawUI
 	
     shared_str		EName;
     // orientation
-    Fvector 		EPosition;
-    Fvector 		EScale;
-    Fvector 		ERotation;
+	Fvector 		EPosition;
+	Fvector 		EPositionSaved;
+	Fvector 		EScale;
+	Fvector 		EScaleSaved;
+	Fvector 		ERotation;
+	Fvector 		ERotateSaved;
 	SAnimParams*	m_MotionParams;
     COMotion*		m_Motion;
 
@@ -186,11 +189,11 @@ public:
 	virtual void 	NumSetRotation	(const Fvector& rot)	{ SetRotation(rot);	}
     virtual void 	NumSetScale		(const Fvector& scale)	{ SetScale(scale);	}
 	virtual void 	MoveTo			(const Fvector& pos, const Fvector& up);
-	virtual void 	Move			(Fvector& amount);
+	virtual void 	Move			(Fvector& Position);
 	virtual void 	RotateParent	(Fvector& axis, float angle );
 	virtual void 	RotateLocal		(Fvector& axis, float angle );
 	virtual void 	RotatePivot		(const Fmatrix& prev_inv, const Fmatrix& current);
-	virtual void 	Scale			(Fvector& amount);
+	virtual void 	Scale			(Fvector& NewScale);
 	virtual void 	ScalePivot		(const Fmatrix& prev_inv, const Fmatrix& current, Fvector& amount);
 
 	virtual bool 	LoadStream		(IReader&);
@@ -220,6 +223,12 @@ public:
     IC const Fvector& _Position				(){return FPosition;}
     IC const Fvector& _Rotation				(){return FRotation;}
     IC const Fvector& _Scale				(){return FScale;}
+	IC void ScaleSave                       (){EScaleSaved = FScale;}
+	IC const Fvector& GetSaveScale          (){return EScaleSaved;}
+	IC void RotateSave                      (){ERotateSaved = FRotation;}
+	IC const Fvector& GetSaveRotate         (){return ERotateSaved;}
+    virtual void           PositionSave          () { EPositionSaved = FPosition; }
+	IC const Fvector& GetSavePosition       () { return EPositionSaved; }
 
     ObjClassID		FClassID;
     ESceneCustomOTool* FParentTools;

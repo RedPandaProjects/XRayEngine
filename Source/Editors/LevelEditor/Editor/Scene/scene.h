@@ -319,6 +319,7 @@ public:
     shared_str 		LevelPrefix		(){return m_LevelOp.m_LevelPrefix; }
 
 	void 			FillProp		(LPCSTR pref, PropItemVec& items, ObjClassID cls_id);
+	void 			FillPropObjects (LPCSTR pref, PropItemVec& items, ObjClassID cls_id);
 	void Play();
 	bool IsSimulate();
 	void Stop();
@@ -328,6 +329,8 @@ public:
 	virtual ILevelGraph* GetLevelGraph();
 	void BuildSpawn();
 	void BuildAIMap();
+
+	virtual bool RayPick(const Fvector& start, const Fvector& dir, float& dist, Fvector* pt = 0, Fvector* n = 0);
 protected:
     typedef std::pair<xr_string,xr_string>  TSubstPair;
     typedef xr_vector<TSubstPair>           TSubstPairs;

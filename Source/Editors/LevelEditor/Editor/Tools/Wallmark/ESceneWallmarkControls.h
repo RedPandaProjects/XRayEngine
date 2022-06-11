@@ -13,11 +13,11 @@ public:
 };
 
 
-class TUI_ControlWallmarkMove: public TUI_CustomControl{
-	u32 wm_cnt;
+class TUI_ControlWallmarkSelect: public TUI_CustomControl
+{
 public:
-    TUI_ControlWallmarkMove(int st, int act, ESceneToolBase* parent);
-	virtual bool Start  (TShiftState _Shift);
-	virtual bool End    (TShiftState _Shift);
-	virtual void Move   (TShiftState _Shift);
+	TUI_ControlWallmarkSelect(int st, int act, ESceneToolBase* parent);	
+	virtual bool IsSupportMove() { return false; }
+	virtual bool IsSupportRotate() { return false; }
+	virtual bool IsSupportScale() { return false; }
 };

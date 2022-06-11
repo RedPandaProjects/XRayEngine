@@ -42,13 +42,14 @@ public:
 	// frame & Controls
     TUI_CustomControl* 	pCurControl;
     UIToolCustom*       pForm;
+	TUI_CustomControl* FindControl(int subtarget, int action);
 protected:
     void            	AddControl				(TUI_CustomControl* c);
-    TUI_CustomControl* 	FindControl				(int subtarget, int action);
     void            	UpdateControl			();
 public:
     void            	SetAction   			(int action);
-    void            	SetSubTarget			(int target);
+	void            	SetSubTarget(int target);
+    IC int            	GetSubTarget(int target) const { return sub_target; }
     void            	ResetSubTarget			();
 protected:
     void				CreateDefaultControls	(u32 sub_target_id);
@@ -137,6 +138,8 @@ public:
 
     // properties
     virtual void		FillProp          		(LPCSTR pref, PropItemVec& items)=0;
+
+	virtual void		FillPropObjects          (LPCSTR pref, PropItemVec& items)=0;
 
     // utils
 	virtual bool 		GetSummaryInfo			(SSceneSummary* inf)=0;

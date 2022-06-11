@@ -1,5 +1,4 @@
 #include "stdafx.h"
-#include "UI\UIObjectList.h"
 UIMainMenuForm::UIMainMenuForm()
 {
 }
@@ -285,6 +284,30 @@ void UIMainMenuForm::Draw()
                     UI->RedrawScene();
                 }
             }
+            {
+                if (ImGui::BeginMenu("Environment"))
+                {
+                    bool selected = !psDeviceFlags.test(rsEnvironment);
+                    if (ImGui::MenuItem("None", "", &selected))
+                    {
+                        psDeviceFlags.set(rsEnvironment, false);
+                        UI->RedrawScene();
+                    }
+                    ImGui::Separator();
+                    for (auto& i : g_pGamePersistent->Environment().WeatherCycles)
+                    {
+                        selected = psDeviceFlags.test(rsEnvironment) && i.first == g_pGamePersistent->Environment().CurrentCycleName;
+                        if (ImGui::MenuItem(i.first.c_str(), "", &selected))
+                        {
+                            psDeviceFlags.set(rsEnvironment, true);
+                            g_pGamePersistent->Environment().SetWeather(i.first.c_str(),true);
+                            UI->RedrawScene();
+                        }
+                    }
+                   
+                    ImGui::EndMenu();
+                }
+            }
             ImGui::Separator();
             {
                 bool selected = psDeviceFlags.test(rsLighting);;
@@ -328,6 +351,10 @@ void UIMainMenuForm::Draw()
                 bool selected = !MainForm->GetPropertiesFrom()->IsClosed();
                 if (ImGui::MenuItem("Properties", "", &selected)) { if (selected)MainForm->GetPropertiesFrom()->Open(); else MainForm->GetPropertiesFrom()->Close(); }
             }
+			{
+				bool selected = !MainForm->GetWorldPropertiesFrom()->IsClosed();
+				if (ImGui::MenuItem("World Properties", "", &selected)) { if (selected)MainForm->GetWorldPropertiesFrom()->Open(); else MainForm->GetWorldPropertiesFrom()->Close(); }
+			}
             {
                 bool selected = AllowLogCommands();
 

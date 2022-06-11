@@ -57,7 +57,22 @@ void UIRenderForm::Draw()
 		}
 
 		bool curent_shiftstate_down = m_shiftstate_down;
-		if (ImGui::IsWindowFocused())
+
+
+		if (canvas_size.x < 32.0f) canvas_size.x = 32.0f;
+		if (canvas_size.y < 32.0f) canvas_size.y = 32.0f;
+		UI->RTSize.set(canvas_size.x, canvas_size.y);
+
+		ImGui::SetCursorScreenPos(canvas_pos);
+		draw_list->AddImage(UI->RT->pSurface, canvas_pos, ImVec2(canvas_pos.x + canvas_size.x, canvas_pos.y + canvas_size.y));
+
+		if(m_OnToolBar)
+			m_OnToolBar(canvas_size);
+
+		ImGui::SetCursorScreenPos(canvas_pos);
+		ImGui::InvisibleButton("canvas", canvas_size);
+
+		if (ImGui::IsItemFocused())
 		{
 
 			if ((ImGui::IsMouseDown(ImGuiMouseButton_Left) || ImGui::IsMouseDown(ImGuiMouseButton_Right)) && !m_mouse_down&& cursor_in_zone)
@@ -96,11 +111,6 @@ void UIRenderForm::Draw()
 		m_mouse_position.set(mouse_pos.x - canvas_pos.x, mouse_pos.y - canvas_pos.y);
 
 
-		if (canvas_size.x < 32.0f) canvas_size.x = 32.0f;
-		if (canvas_size.y < 32.0f) canvas_size.y = 32.0f;
-		UI->RTSize.set(canvas_size.x, canvas_size.y);
-		
-		ImGui::InvisibleButton("canvas", canvas_size);
 		if (!m_OnContextMenu.empty()&& !curent_shiftstate_down)
 		{
 			if (ImGui::BeginPopupContextItem("Menu"))
@@ -110,7 +120,6 @@ void UIRenderForm::Draw()
 			}
 		}
 
-		draw_list->AddImage(UI->RT->pSurface, canvas_pos, ImVec2(canvas_pos.x + canvas_size.x, canvas_pos.y + canvas_size.y));
 
 	}
 	ImGui::End();

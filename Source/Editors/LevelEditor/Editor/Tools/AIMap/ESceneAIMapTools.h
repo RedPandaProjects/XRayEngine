@@ -19,7 +19,8 @@ struct SAINode					// definition of "patch" or "node"
 		SAINode*		n[4];
 	};
 	Fplane		Plane;			// plane of patch										
-	Fvector		Pos;			// position of patch center								
+	Fvector		Pos;			// position of patch center							
+	Fvector		SavePos;			// position of patch center									
 
     enum{
     	flSelected 	= (1<<0),
@@ -191,7 +192,8 @@ public:
     virtual void		GetBBox 				(Fbox& bb, bool bSelOnly);
 
 	// properties
-    virtual void		FillProp          		(LPCSTR pref, PropItemVec& items);
+	virtual void		FillPropObjects(LPCSTR pref, PropItemVec& items) {};
+    virtual void		FillProp(LPCSTR pref, PropItemVec& items);
 
     // other
     int					AddNode					(const Fvector& pos, bool bIgnoreConstraints, bool bAutoLink, int cnt);

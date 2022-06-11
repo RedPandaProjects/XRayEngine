@@ -60,7 +60,7 @@ public:
 	virtual void 		SaveStream		(IWriter&);
   	virtual void 		SaveLTX			(CInifile& ini, LPCSTR sect_name);
 
-	virtual void		FillProp		(LPCSTR pref, PropItemVec& values);
+	virtual void		FillPropObjects		(LPCSTR pref, PropItemVec& values);
 	virtual bool 		GetSummaryInfo	(SSceneSummary* inf);
 	virtual void 		OnSceneUpdate	();
 protected:

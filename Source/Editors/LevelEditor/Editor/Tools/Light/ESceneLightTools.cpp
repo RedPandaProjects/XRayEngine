@@ -89,11 +89,11 @@ void ESceneLightTool::BeforeRender()
             EDevice->LightEnable(frame_light.size(),TRUE);
         }
 		// ambient
-//        if (psDeviceFlags.is(rsEnvironment)){
-//	        Fvector& V		= g_pGamePersistent->Environment().CurrentEnv->ambient;
-//            Fcolor C;		C.set(V.x,V.y,V.z,1.f);
-//            EDevice->SetRS	(D3DRS_AMBIENT,C.get());
-//        }else				
+     /* if (psDeviceFlags.is(rsEnvironment)) {
+	        Fvector& V		= g_pGamePersistent->Environment().CurrentEnv->ambient;
+           Fcolor C;		C.set(V.x,V.y,V.z,1.f);
+           EDevice->SetRS	(D3DRS_AMBIENT,C.get());
+       }else	*/			
         	EDevice->SetRS(D3DRS_AMBIENT,0x00000000);
         
         EDevice->EStatistic->dwTotalLight 	= l_cnt;
@@ -242,10 +242,17 @@ bool ESceneLightTool::Validate(bool full_test)
     }
     return bRes;
 }
-
+class TUI_ControlLightToolsSelect : public TUI_CustomControl
+{
+public:
+    TUI_ControlLightToolsSelect(int st, int act, ESceneToolBase* parent) :TUI_CustomControl(st, act, parent) {}
+	virtual bool IsSupportRotate() { return false; }
+	virtual bool IsSupportScale() { return false; }
+};
 void ESceneLightTool::CreateControls()
 {
 	inherited::CreateDefaultControls(estDefault);
+	AddControl(xr_new<TUI_ControlLightToolsSelect>(estDefault, etaSelect, this));
 	// frame
     pForm = xr_new<UILightTool>();
    // pFrame 			= xr_new<TfraLight>((TComponent*)0);

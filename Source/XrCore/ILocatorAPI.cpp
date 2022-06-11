@@ -38,7 +38,11 @@ xr_vector<LPSTR>* ILocatorAPI::file_list_open(LPCSTR initial, LPCSTR folder, u32
 	if(flags & FS_ListFiles)
 	{
 		BearVector<BearString> Files;
-		BearFileManager::FindFiles(Files, path, "*",!(flags& FS_RootOnly),false);
+		if (path[xr_strlen(path) - 1] = '\\')
+		{
+			path[xr_strlen(path) - 1] = 0;
+		}
+		BearFileManager::FindFiles(Files, path, "*",false, !(flags & FS_RootOnly));
 		for (BearString& str : Files)
 		{
 			string_path fname;

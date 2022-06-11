@@ -260,7 +260,7 @@ void EFogVolume::OnChangeEnvs	(PropValue* prop)
     LTools->UpdateProperties(FALSE);
 }
 
-void EFogVolume::FillProp(LPCSTR pref, PropItemVec& values)
+void EFogVolume::FillPropObjects(LPCSTR pref, PropItemVec& values)
 {
 	inherited::FillProp			(pref, values);
 

@@ -788,7 +788,7 @@ BOOL ESceneWallmarkTool::MoveSelectedWallmarkTo(const Fvector& start, const Fvec
     return FALSE;
 }
 
-void ESceneWallmarkTool::FillProp(LPCSTR pref, PropItemVec& items)
+void ESceneWallmarkTool::FillPropObjects(LPCSTR pref, PropItemVec& items)
 {
     PHelper().CreateFlag32		(items, PrepareKey(pref,"Common\\Draw Wallmarks"),	&m_Flags, 		flDrawWallmark);
     PHelper().CreateFlag32		(items,	PrepareKey(pref,"Common\\Alignment"),		&m_Flags, 		flAxisAlign, "By Camera", "By World Axis");
@@ -874,7 +874,7 @@ void ESceneWallmarkTool::CreateControls()
 	inherited::CreateDefaultControls(estDefault);
 	// node tools
     AddControl(xr_new<TUI_ControlWallmarkAdd>		(0,		etaAdd, 	this));
-    AddControl(xr_new<TUI_ControlWallmarkMove>		(0,		etaMove,	this));
+    AddControl(xr_new<TUI_ControlWallmarkSelect>		(0,		etaSelect,	this));
 }
 
  

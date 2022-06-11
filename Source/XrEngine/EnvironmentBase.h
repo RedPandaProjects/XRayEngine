@@ -196,4 +196,6 @@ public:
 	virtual void					OnDeviceCreate() = 0;
 	virtual void					OnDeviceDestroy() = 0;
 
+	IC float GetGameTime()const {	return fGameTime;}
+
 };

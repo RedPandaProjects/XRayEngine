@@ -519,7 +519,14 @@ void CGamePersistent::OnFrame	()
 	if( !m_pMainMenu->IsActive() )
 		m_pMainMenu->DestroyInternal(false);
 
-	if(!g_pGameLevel)			return;
+	if(!g_pGameLevel)		
+	{
+		if (Device->IsEditorMode())
+		{
+			__super::OnFrame();
+		}
+		return;
+	}
 	if(!g_pGameLevel->bReady)	return;
 
 	if(Device->Paused())

@@ -143,7 +143,7 @@
     <ClCompile Include="Editor\Utils\Custom2DProjector.cpp" />
     <ClCompile Include="Editor\Utils\FS2.cpp" />
     <ClCompile Include="Editor\Utils\GeometryPartExtractor.cpp" />
-    <ClCompile Include="Editor\Utils\Gimzo\MoveGimzo.cpp" />
+    <ClCompile Include="Editor\Utils\Gimzo\Gizmo.cpp" />
     <ClCompile Include="Editor\Utils\iniStreamImpl.cpp" />
     <ClCompile Include="Editor\Utils\LevelPreferences.cpp" />
     <ClCompile Include="Editor\Utils\portalutils.cpp" />
@@ -160,6 +160,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="UI\ObjectList\UIObjectList.cpp" />
+    <ClCompile Include="UI\ObjectList\UIObjectListItem.cpp" />
     <ClCompile Include="UI\Tools\UIAIMapTool.cpp" />
     <ClCompile Include="UI\Tools\UIDOTool.cpp" />
     <ClCompile Include="UI\Tools\UIFogVolTool.cpp" />
@@ -178,9 +180,9 @@
     <ClCompile Include="UI\UIMainForm.cpp" />
     <ClCompile Include="UI\UIMainMenuForm.cpp" />
     <ClCompile Include="UI\UILPropertiesFrom.cpp" />
-    <ClCompile Include="UI\UIObjectList.cpp" />
     <ClCompile Include="UI\UIPropertiesModal.cpp" />
     <ClCompile Include="UI\UITopBarForm.cpp" />
+    <ClCompile Include="UI\UIWorldPropertiesFrom.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\XrRender\Private\DetailManager.h" />
@@ -288,7 +290,7 @@
     <ClInclude Include="Editor\Utils\Custom2DProjector.h" />
     <ClInclude Include="Editor\Utils\FS2.h" />
     <ClInclude Include="Editor\Utils\GeometryPartExtractor.h" />
-    <ClInclude Include="Editor\Utils\Gimzo\MoveGimzo.h" />
+    <ClInclude Include="Editor\Utils\Gimzo\Gizmo.h" />
     <ClInclude Include="Editor\Utils\iniStreamImpl.h" />
     <ClInclude Include="Editor\Utils\LevelPreferences.h" />
     <ClInclude Include="Editor\Utils\lwchunks.h" />
@@ -298,6 +300,8 @@
     <ClInclude Include="Engine\XRayEditor.h" />
     <ClInclude Include="Engine\XrGameManager.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="UI\ObjectList\UIObjectList.h" />
+    <ClInclude Include="UI\ObjectList\UIObjectListItem.h" />
     <ClInclude Include="UI\Tools\UIAIMapTool.h" />
     <ClInclude Include="UI\Tools\UIDOTool.h" />
     <ClInclude Include="UI\Tools\UIFogVolTool.h" />
@@ -317,10 +321,10 @@
     <ClInclude Include="UI\UIMainForm.h" />
     <ClInclude Include="UI\UIMainMenuForm.h" />
     <ClInclude Include="UI\UILPropertiesFrom.h" />
-    <ClInclude Include="UI\UIObjectList.h" />
     <ClInclude Include="UI\UIPropertiesModal.h" />
     <ClInclude Include="UI\UITopBarForm.h" />
     <ClInclude Include="UI\UITopBarForm_ButtonList.h" />
+    <ClInclude Include="UI\UIWorldPropertiesFrom.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\XrAPI\XrAPI.vcxproj">
@@ -372,6 +376,7 @@
     <CharacterSet>MultiByte</CharacterSet>
     <CLRSupport>false</CLRSupport>
     <WholeProgramOptimization>true</WholeProgramOptimization>
+    <VCToolsVersion>14.29.30133</VCToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -396,6 +401,7 @@
     <CharacterSet>MultiByte</CharacterSet>
     <CLRSupport>false</CLRSupport>
     <WholeProgramOptimization>true</WholeProgramOptimization>
+    <VCToolsVersion>14.29.30133</VCToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -468,12 +474,13 @@
       <AdditionalIncludeDirectories>.;..\..\XrEngine\;..\..\XrRender\Public;..\..\XrRender\Private;Engine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>XrEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -483,12 +490,13 @@
       <AdditionalIncludeDirectories>.;..\..\XrEngine\;..\..\XrRender\Public;..\..\XrRender\Private;Engine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>XrEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

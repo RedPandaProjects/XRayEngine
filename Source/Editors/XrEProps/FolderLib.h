@@ -302,7 +302,7 @@ public:
 		}
 		return true;
 	}
-	inline void DrawNode(Node* N)
+	virtual void DrawNode(Node* N)
 	{
 		if (N->Type == FNT_Root)
 		{
@@ -323,7 +323,7 @@ public:
 		}
 		else if (N->IsFloder())
 		{
-			if (N->Selected)ImGui::SetNextTreeNodeOpen(true);
+			if (N->Selected)ImGui::SetNextItemOpen(true);
 			ImGui::AlignTextToFramePadding();
 			ImGuiTreeNodeFlags FloderFlags = ImGuiTreeNodeFlags_OpenOnArrow;
 			if (IsFloderBullet(N))FloderFlags |= ImGuiTreeNodeFlags_Bullet;

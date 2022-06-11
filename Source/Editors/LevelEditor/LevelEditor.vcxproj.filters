@@ -193,6 +193,9 @@
     <Filter Include="Editor\Utils\Gimzo">
       <UniqueIdentifier>{8a2b9cb2-c4cf-4fa0-bee9-357e694c6e12}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI\ObjectList">
+      <UniqueIdentifier>{f0688181-e4ba-409f-a053-c01eaf476c27}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -273,9 +276,6 @@
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="UI\UIDOOneColor.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\UIObjectList.cpp">
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="Engine\XrGameManager.cpp">
@@ -632,8 +632,17 @@
     <ClCompile Include="Editor\Utils\XrSEFactoryManager.cpp">
       <Filter>Editor\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Editor\Utils\Gimzo\MoveGimzo.cpp">
+    <ClCompile Include="Editor\Utils\Gimzo\Gizmo.cpp">
       <Filter>Editor\Utils\Gimzo</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UIWorldPropertiesFrom.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ObjectList\UIObjectListItem.cpp">
+      <Filter>UI\ObjectList</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ObjectList\UIObjectList.cpp">
+      <Filter>UI\ObjectList</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -705,9 +714,6 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="UI\UIDOOneColor.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\UIObjectList.h">
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="Engine\XRayEditor.h">
@@ -1043,8 +1049,17 @@
     <ClInclude Include="Editor\Utils\XrSEFactoryManager.h">
       <Filter>Editor\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Editor\Utils\Gimzo\MoveGimzo.h">
+    <ClInclude Include="Editor\Utils\Gimzo\Gizmo.h">
       <Filter>Editor\Utils\Gimzo</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UIWorldPropertiesFrom.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ObjectList\UIObjectList.h">
+      <Filter>UI\ObjectList</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ObjectList\UIObjectListItem.h">
+      <Filter>UI\ObjectList</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

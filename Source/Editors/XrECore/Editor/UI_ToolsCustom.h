@@ -15,19 +15,9 @@ class CBlend;
 enum ETAction{
     etaSelect=0,
     etaAdd,
-    etaMove,
-    etaRotate,
-    etaScale,
     etaMaxActions
 };
 
-enum ETAxis{
-	etAxisY,
-    etAxisX,
-    etAxisZ,
-    etAxisZX,
-	etAxisUndefined,
-};
 
 enum ETFlags{
 	etfCSParent    	= (1<<0),
@@ -48,7 +38,6 @@ protected:
     bool				m_bReady;
 
     ETAction			m_Action;
-    ETAxis				m_Axis;
     Flags32				m_Settings;
 
     bool				m_bHiddenMode;
@@ -65,10 +54,6 @@ protected:
     Fvector				m_RotateVector;
     float				m_fRotateSnapValue;
     float				m_RotateAmount;
-public:
-    float				m_MoveSnap;
-    float				m_MoveSnapTo;
-    float				m_RotateSnapAngle;
 public:
     float 				fFogness;
     u32					dwFogColor;
@@ -164,10 +149,8 @@ public:
     virtual 			~CToolCustom		();
 
     ETAction			GetAction			()						{return m_Action;}
-    ETAxis				GetAxis				()						{return m_Axis;}
     BOOL				GetSettings			(u32 mask)				{return m_Settings.is(mask);}
     virtual void		SetAction			(ETAction act);
-    virtual void		SetAxis				(ETAxis axis);
     virtual void		SetSettings			(u32 mask, BOOL val);
 
     virtual void		Simulate			(){};
@@ -220,7 +203,6 @@ public:
 
     const xr_string&	GetEditFileName		()	{ return m_LastFileName; }
 
-    CEditableObject*	m_pAxisMoveObject;
 	Fmatrix				m_axis_xform;
     
     virtual bool		GetSelectionPosition	(Fmatrix& result) =0;

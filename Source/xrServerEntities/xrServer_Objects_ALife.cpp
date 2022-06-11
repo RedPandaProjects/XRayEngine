@@ -695,7 +695,7 @@ void CSE_ALifeDynamicObject::UPDATE_Read(NET_Packet& tNetPacket)
 #ifndef XRGAME_EXPORTS
 void CSE_ALifeDynamicObject::FillProps(LPCSTR pref, PropItemVec& values)
 {
-	inherited::FillProps(pref, values);
+	inherited1::FillProps(pref, values);
 }
 #endif // #ifndef XRGAME_EXPORTS
 

@@ -87,7 +87,7 @@
 
 #include "Editor/Tools/ESceneClassList.h"
 
-#include "Editor/Utils/Gimzo/MoveGimzo.h"
+#include "Editor/Utils/Gimzo/Gizmo.h"
 
 #include "Editor/UI_LevelMain.h"
 #include "Editor/UI_LevelTools.h"
@@ -160,7 +160,9 @@
 #include "UI/UIDOShuffle.h"
 #include "UI/UILeftBarForm.h"
 #include "UI/UILPropertiesFrom.h"
-#include "UI/UIObjectList.h"
+#include "UI/UIWorldPropertiesFrom.h"
+#include "UI/ObjectList/UIObjectListItem.h"
+#include "UI/ObjectList/UIObjectList.h"
 #include "UI/UIPropertiesModal.h"
 #include "UI/UITopBarForm.h"
 

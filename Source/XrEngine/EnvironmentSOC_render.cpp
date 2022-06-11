@@ -240,7 +240,6 @@ void CEnvironmentSOC::OnDeviceCreate()
 
 
 	Invalidate	();
-	OnFrame		();
 }
 
 void CEnvironmentSOC::OnDeviceDestroy()

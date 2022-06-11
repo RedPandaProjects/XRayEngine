@@ -165,7 +165,7 @@ void UIChooseForm::Draw()
         {
             ImGui::Text("Find:");
             ImGui::SameLine();
-            m_Filter.Draw("",-1);
+            m_Filter.Draw("##Find",-1);
             if (ImGui::BeginChild("Left", ImVec2(0, 0),false,ImGuiWindowFlags_HorizontalScrollbar))
             {
                 DrawNode(&m_GeneralNode);

@@ -332,7 +332,7 @@ static bool ImGui_ImplWin32_UpdateMouseCursor()
 #ifndef DBT_DEVNODES_CHANGED
 #define DBT_DEVNODES_CHANGED 0x0007
 #endif
-
+IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 LRESULT XrUIManager::WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     switch (msg)
