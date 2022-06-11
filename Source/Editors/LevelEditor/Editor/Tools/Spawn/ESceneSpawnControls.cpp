@@ -27,7 +27,7 @@ bool  TUI_ControlSpawnAdd::Start(TShiftState Shift)
     UISpawnTool* F = (UISpawnTool*)parent_tool->pForm;
 	if (F->IsAttachObject()){
 		CCustomObject* from = Scene->RayPickObject(UI->ZFar(), UI->m_CurrentRStart, UI->m_CurrentRDir, OBJCLASS_DUMMY, 0, 0);
-        if (from->FClassID!=OBJCLASS_SPAWNPOINT){
+        if (from&&from->FClassID!=OBJCLASS_SPAWNPOINT){
             ObjectList 	lst;
             int cnt 	= Scene->GetQueryObjects(lst,OBJCLASS_SPAWNPOINT,1,1,0);
             if (1!=cnt)	ELog.DlgMsg(mtError,"Select one shape.");
