@@ -48,7 +48,8 @@ protected:
     void            	UpdateControl			();
 public:
     void            	SetAction   			(int action);
-    void            	SetSubTarget			(int target);
+	void            	SetSubTarget(int target);
+    IC int            	GetSubTarget(int target) const { return sub_target; }
     void            	ResetSubTarget			();
 protected:
     void				CreateDefaultControls	(u32 sub_target_id);

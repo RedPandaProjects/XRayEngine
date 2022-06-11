@@ -15,12 +15,14 @@ DEFINE_VECTOR(SWPLink*,WPLVec,WPLIt);
 class CWayPoint
 {
 
+	friend class Gizmo;
     friend class CPatrolPoint;
     friend class CPatrolPath;
     friend class CWayObject;
     friend class TfrmPropertiesWayPoint;
     shared_str		m_Name;
-    Fvector		m_vPosition;
+	Fvector		m_vPosition;
+	Fvector		m_vSavePosition;
     Flags32		m_Flags;
     BOOL		m_bSelected;
     WPLVec		m_Links;
@@ -53,7 +55,8 @@ class CWayObject: public CCustomObject
 protected:
     friend class TfrmPropertiesWayPoint;
     friend class CPatrolPath;
-    friend class CPatrolPoint;
+	friend class CPatrolPoint;
+	friend class Gizmo;
 	EWayType		m_Type;
     WPVec			m_WayPoints;
     typedef CCustomObject inherited;
@@ -110,4 +113,6 @@ public:
 
     virtual const Fvector& GetPosition	()	const { return m_WayPoints.front()->m_vPosition; 	}
     virtual void 	SetPosition		(const Fvector& pos)	{ MoveTo(pos, Fvector().set(0,1,0) );	UpdateTransform();}
+
+    virtual void           PositionSave();
 };

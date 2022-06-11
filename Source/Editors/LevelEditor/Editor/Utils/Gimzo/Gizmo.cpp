@@ -107,6 +107,7 @@ void Gizmo::OnFrame()
     }
     Fbox Box; Box.invalidate(); 
     size_t SelectedCount = 0;
+    bool bIsPointMode = LTools->GetSubTarget() == estWayModePoint;
     if (OBJCLASS_AIMAP == LTools->CurrentClassID())
     {
 		if (m_Type == EType::Scale)
@@ -162,14 +163,35 @@ void Gizmo::OnFrame()
                 for (auto& Object : ObjectTool->GetObjects())
                 {
                     if (!Object->Selected())continue;
-                    m_Position = Object->GetPosition();
-                    m_RotateMatrix.setXYZ(Object->GetRotation());
-                    Fbox ObjectBox;
-                    if (Object->GetBox(ObjectBox))
+                    if (bIsPointMode&& Object->FClassID == OBJCLASS_WAY)
                     {
-                        Box.merge(ObjectBox);
+                        CWayObject* Way = (CWayObject*)Object;
+                        for (WPIt it = Way->m_WayPoints.begin(); it != Way->m_WayPoints.end(); it++)
+                        {
+                            if ((*it)->m_bSelected) 
+                            {
+                                m_Position = (*it)->m_vPosition;
+                                m_RotateMatrix.identity();
+								Fbox ObjectBox;
+                                (*it)->GetBox(ObjectBox);
+                                Box.merge(ObjectBox);
+								SelectedCount++;
+                            }
+                        }
+							
                     }
-                    SelectedCount++;
+                    else
+                    {
+						m_Position = Object->GetPosition();
+						m_RotateMatrix.setXYZ(Object->GetRotation());
+						Fbox ObjectBox;
+						if (Object->GetBox(ObjectBox))
+						{
+							Box.merge(ObjectBox);
+						}
+						SelectedCount++;
+                    }
+                 
                 }
             }
         }

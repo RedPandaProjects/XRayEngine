@@ -137,7 +137,7 @@ void TUI_CustomControl::MoveProcess(Fvector Delta, Fvector Vector)
             {
                 Pos.z = snapto(Pos.z, LTools->GetGimzo()->GetStep(Gizmo::EType::Move));
             }
-            Obj->SetPosition(Pos);
+            Obj->Move(Pos);
             Tools->UpdateProperties();
         }
     }
@@ -151,6 +151,22 @@ void TUI_CustomControl::ScaleProcess(Fvector Delta, Fvector Vector)
         for (CCustomObject* Obj : lst)
         {
             Fvector Pos = Obj->GetSaveScale();
+            if (Obj->FClassID == OBJCLASS_GLOW)
+            {
+                if (LTools->GetGimzo()->GetStatus() == Gizmo::EStatus::SelectedX)
+				{
+					Delta.set(Delta.x, Delta.x, Delta.x);
+                }
+				if (LTools->GetGimzo()->GetStatus() == Gizmo::EStatus::SelectedY)
+				{
+					Delta.set(Delta.y, Delta.y, Delta.y);
+				}
+				if (LTools->GetGimzo()->GetStatus() == Gizmo::EStatus::SelectedZ)
+				{
+					Delta.set(Delta.z, Delta.z, Delta.z);
+				}
+                Vector.set(1, 1, 1);
+            }
             Pos.mad(Delta, Vector);
             if (LTools->GetGimzo()->IsStepEnable(Gizmo::EType::Scale) && abs(Vector.x) > EPS)
             {
@@ -176,7 +192,7 @@ void TUI_CustomControl::ScaleProcess(Fvector Delta, Fvector Vector)
 			{
 				Pos.z = EPS;
 			}
-            Obj->SetScale(Pos);
+            Obj->Scale(Pos);
             Tools->UpdateProperties();
         }
     }
@@ -435,7 +451,7 @@ void  TUI_CustomControl::SelectProcess(TShiftState _Shift)
 						Fvector Delta;
                         Delta.set(1, 1, 1).mul(((Position.x - StartPosition.x) + (Position.y - StartPosition.y) + (Position.z - StartPosition.z)) * 0.7f);
 
-						ScaleProcess(Delta, Fvector().set(0, 1, 0));
+						ScaleProcess(Delta, Fvector().set(1, 1, 1));
 					}
                 }
                 /*   else

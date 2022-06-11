@@ -607,9 +607,6 @@ void CSpawnPoint::Select(int  flag)
 void  CSpawnPoint::Move( Fvector& amount )
 {
 	inherited::Move( amount );
-	const float  f_drag_factor = 200.f;
-    if(m_physics_shell)
-     	 ApplyDragForce( Fvector().mul(amount,f_drag_factor) );
 }
 
 void CSpawnPoint::SetPosition(const Fvector& pos)

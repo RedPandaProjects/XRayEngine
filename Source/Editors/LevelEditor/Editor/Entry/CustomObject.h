@@ -189,11 +189,11 @@ public:
 	virtual void 	NumSetRotation	(const Fvector& rot)	{ SetRotation(rot);	}
     virtual void 	NumSetScale		(const Fvector& scale)	{ SetScale(scale);	}
 	virtual void 	MoveTo			(const Fvector& pos, const Fvector& up);
-	virtual void 	Move			(Fvector& amount);
+	virtual void 	Move			(Fvector& Position);
 	virtual void 	RotateParent	(Fvector& axis, float angle );
 	virtual void 	RotateLocal		(Fvector& axis, float angle );
 	virtual void 	RotatePivot		(const Fmatrix& prev_inv, const Fmatrix& current);
-	virtual void 	Scale			(Fvector& amount);
+	virtual void 	Scale			(Fvector& NewScale);
 	virtual void 	ScalePivot		(const Fmatrix& prev_inv, const Fmatrix& current, Fvector& amount);
 
 	virtual bool 	LoadStream		(IReader&);
@@ -227,7 +227,7 @@ public:
 	IC const Fvector& GetSaveScale          (){return EScaleSaved;}
 	IC void RotateSave                      (){ERotateSaved = FRotation;}
 	IC const Fvector& GetSaveRotate         (){return ERotateSaved;}
-	IC void           PositionSave          () { EPositionSaved = FPosition; }
+    virtual void           PositionSave          () { EPositionSaved = FPosition; }
 	IC const Fvector& GetSavePosition       () { return EPositionSaved; }
 
     ObjClassID		FClassID;

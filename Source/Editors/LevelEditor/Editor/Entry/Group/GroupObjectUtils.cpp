@@ -226,9 +226,11 @@ void CGroupObject::RotateLocal(Fvector& axis, float angle )
     }
 }
 
-void CGroupObject::Scale(Fvector& amount )
+void CGroupObject::Scale(Fvector& scale )
 {
-	inherited::Scale(amount);
+	inherited::Scale(scale);
+    Fvector amount;
+    amount.sub(scale, GetSaveScale());
     Fmatrix  m_old;
     m_old.invert(FTransform);
 	UpdateTransform(true);
