@@ -3,7 +3,7 @@
 #include "../xrCore/xrCore.h"
 #include "../../xrAPI/xrAPI.h"
 
-#ifdef DEBUG
+#ifndef MASTER_GOLD
 #define INGAME_EDITOR
 #endif
 

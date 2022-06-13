@@ -7,7 +7,7 @@
 #define DEBUG
 #endif 
 
-#ifndef DEBUG
+#ifdef SHIPPING
 #	define MASTER_GOLD
 #endif // DEBUG
 

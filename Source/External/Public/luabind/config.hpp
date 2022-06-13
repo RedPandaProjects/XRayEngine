@@ -78,7 +78,7 @@ namespace std
 	#define LUABIND_MAX_BASES 1
 #endif
 
-#ifdef NDEBUG
+#ifndef DEBUG
 
 
 #	ifndef LUABIND_NO_ERROR_CHECKING

@@ -159,8 +159,8 @@ public:
 	void	clear				()									{ clear_not_free	();			}
 #endif
 
-	const_reference operator[]	(size_type _Pos) const				{ {VERIFY2(_Pos<size(),make_string("index is out of range: index requested[%d], size of container[%d]", _Pos, size()).c_str());} return (*(begin() + _Pos)); }
-	reference operator[]		(size_type _Pos)					{ {VERIFY2(_Pos<size(),make_string("index is out of range: index requested[%d], size of container[%d]", _Pos, size()).c_str());} return (*(begin() + _Pos)); }
+	/*const_reference operator[]	(size_type _Pos) const { {VERIFY2(_Pos<size(), make_string("index is out of range: index requested[%d], size of container[%d]", _Pos, size()).c_str()); } return (*(begin() + _Pos)); }
+	reference operator[]		(size_type _Pos)					{ {VERIFY2(_Pos<size(),make_string("index is out of range: index requested[%d], size of container[%d]", _Pos, size()).c_str());} return (*(begin() + _Pos)); }*/
 };
 
 // vector<bool>

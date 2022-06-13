@@ -9,11 +9,6 @@
 #ifndef LUABIND_MEMORY_H_INCLUDED
 #define LUABIND_MEMORY_H_INCLUDED
 
-#ifdef DEBUG
-#	ifdef NDEBUG
-		STATIC_CHECK(false,Do_not_define_NDEBUG_macros_in_DEBUG_configuration_since_luabind_classes_are_sensisitve_to_it)
-#	endif // #ifdef NDEBUG
-#endif // #ifdef DEBUG
 
 #include "luabind_types.h"
 #include <boost/type_traits/is_polymorphic.hpp>

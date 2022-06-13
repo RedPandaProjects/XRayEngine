@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\..\XrAPI\xrGameManager.h"
 #include "Utils\Cursor3D.h"
+#include "..\xrengine\GameFont.h"
 
 #ifdef _LEVEL_EDITOR
 //.    if (m_Cursor->GetVisible()) RedrawScene();
@@ -1292,6 +1293,18 @@ bool CLevelMain::KeyDown(WORD Key, TShiftState Shift)
         return true;
     }
     return TUI::KeyDown(Key, Shift);
+}
+
+void CLevelMain::OnStats(CGameFont* font)
+{
+    float Height = font->GetHeight();
+    font->SetColor(color_rgba(255, 0, 0, 255));
+    font->SetHeight(14);
+	font->OutNext("NEED REBUILD CFORM");
+	font->OutNext("NEED REBUILD AIMAP");
+	font->OutNext("NEED REBUILD GAME GRAPH");
+	font->OutNext("NEED REBUILD SPACE RESTRICTOR");
+	font->SetHeight(Height);
 }
 
 

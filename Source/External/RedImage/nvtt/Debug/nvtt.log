@@ -1,0 +1,151 @@
+﻿  zoh.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  zohone.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  zohtwo.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  zoh_utils.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  avpcl.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  avpcl_mode0.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  avpcl_mode1.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  avpcl_mode2.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  avpcl_mode3.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  avpcl_mode4.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  avpcl_mode5.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  avpcl_mode6.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  avpcl_mode7.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  avpcl_utils.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  CudaCompressorDXT.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  CudaUtils.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  Debug.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  FileSystem.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  Memory.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  StrLib.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  Создание кода...
+  Компиляция...
+  TextWriter.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  Timer.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  BlockDXT.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  ColorBlock.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  ColorSpace.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  DirectDrawSurface.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  ErrorMetric.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  Filter.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  FloatImage.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  Image.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  ImageIO.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  NormalMap.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  Quantize.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  Box.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  Color.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  Fitting.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  Gamma.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  Half.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  Matrix.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  PackedFloat.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  Создание кода...
+  Компиляция...
+  Plane.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  SphericalHarmonic.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  Vector.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  Event.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  Mutex.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  nvthread.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  ParallelFor.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  Thread.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  ThreadPool.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  BlockCompressor.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  ClusterFit.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  CompressionOptions.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  CompressorDX10.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  CompressorDX11.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  CompressorDX9.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  CompressorDXT1.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  CompressorDXT5_RGBM.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  CompressorRGB.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  Context.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  CubeSurface.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  Создание кода...
+  Компиляция...
+  InputOptions.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  nvtt.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  nvtt_wrapper.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  OptimalCompressDXT.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  OutputOptions.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  QuickCompressDXT.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  SingleColorLookup.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  Surface.cpp
+F:\GameDev\Utils\RedImage\nvtt\nvcore\nvcore.h(23,10): fatal error C1083: Не удается открыть файл включение: pushlib/posh.h: No such file or directory,
+  TaskDispatcher.cpp
+  alpha.cpp
+  colourblock.cpp
+  colourfit.cpp
+  colourset.cpp
+  fastclusterfit.cpp
+  maths.cpp
+  weightedclusterfit.cpp
+  Создание кода...

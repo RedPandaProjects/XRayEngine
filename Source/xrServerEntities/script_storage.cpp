@@ -826,7 +826,7 @@ void CScriptStorage::print_error(lua_State *L, int iErrorCode)
 	}
 }
 
-#ifdef DEBUG
+#ifdef PRINT_CALL_STACK
 void CScriptStorage::flush_log()
 {
 	string_path			log_file_name;

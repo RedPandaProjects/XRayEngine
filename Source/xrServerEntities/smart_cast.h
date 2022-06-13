@@ -9,7 +9,7 @@
 #ifndef SMART_CAST_H
 #define SMART_CAST_H
 
-#ifdef DEBUG
+#if defined(DEBUG)||defined(XRSEFACTORY_EXPORTS)
 #	define PURE_DYNAMIC_CAST
 #endif // DEBUG
 
@@ -256,13 +256,13 @@
 #	undef cast_type_list
 #	define cast_type_list save_cast_list	(CSE_ALifeTraderAbstract,	CSE_Abstract)
 
-	DECLARE_SPECIALIZATION	(CSE_Visual,	CSE_Abstract,	visual);
+	DECLARE_SPECIALIZATION(ISE_Visual, CSE_Visual, visual);
 #	undef cast_type_list
-#	define cast_type_list save_cast_list	(CSE_Visual,	CSE_Abstract)
+#	define cast_type_list save_cast_list	(ISE_Visual,	CSE_Visual)
 
-	DECLARE_SPECIALIZATION	(CSE_Motion,	CSE_Abstract,	motion);
+	DECLARE_SPECIALIZATION	(ISE_Motion,	CSE_Abstract,	motion);
 #	undef cast_type_list
-#	define cast_type_list save_cast_list	(CSE_Motion,	CSE_Abstract)
+#	define cast_type_list save_cast_list	(ISE_Motion,	CSE_Abstract)
 
 	DECLARE_SPECIALIZATION	(ISE_Shape,		CSE_Abstract,	shape);
 #	undef cast_type_list

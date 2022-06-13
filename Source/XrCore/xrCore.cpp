@@ -1,7 +1,6 @@
 // xrCore.cpp : Defines the entry point for the DLL application.
 //
 #include "stdafx.h"
-#include "..\BearBundle\BearCore\BearCore.hpp"
 #pragma hdrstop
 
 #include <mmsystem.h>
@@ -52,7 +51,6 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
 			GCurrentGame = EGamePath::COP_1602;
 		}
 		Editor = editor_fs;
-		BearCore::Initialize();
 #ifdef XRCORE_STATIC	
 		_clear87	();
 		_control87	( _PC_53,   MCW_PC );
@@ -171,7 +169,6 @@ void xrCore::_destroy		()
 
 		Memory._destroy		();
 
-		BearCore::Destroy();
 	}
 }
 

@@ -119,7 +119,7 @@ CUIOptConCom g_OptConCom;
 #endif // PURE_ALLOC
 
 #ifdef SEVERAL_ALLOCATORS
-	ENGINE_API 	u32 engine_lua_memory_usage	();
+	//ENGINE_API 	u32 engine_lua_memory_usage	();
 	extern		u32 game_lua_memory_usage	();
 #endif // SEVERAL_ALLOCATORS
 
@@ -133,11 +133,12 @@ public:
 		u32		_process_heap	= mem_usage_impl(GetProcessHeap(),0,0);
 #ifdef SEVERAL_ALLOCATORS
 		u32		_game_lua		= game_lua_memory_usage();
-		u32		_engine_lua		= engine_lua_memory_usage();
+		//u32		_engine_lua		= engine_lua_memory_usage();
+		u32		_engine_lua = 0;
 		u32		_render			= ::Render->memory_usage();
 #endif // SEVERAL_ALLOCATORS
 		int		_eco_strings	= (int)g_pStringContainer->stat_economy			();
-		int		_eco_smem		= (int)g_pSharedMemoryContainer->stat_economy	();
+		int		_eco_smem		= (int)g_pSharedMemoryContainer->stat_economy	(); 
 		u32		m_base=0,c_base=0,m_lmaps=0,c_lmaps=0;
 		
 		//if (Device->Resources)	Device->Resources->_GetMemoryUsage	(m_base,c_base,m_lmaps,c_lmaps);

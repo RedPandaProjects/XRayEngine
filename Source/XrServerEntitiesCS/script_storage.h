@@ -19,15 +19,9 @@ class CScriptThread;
 #	define USE_LUA_STUDIO
 #endif // #ifndef MASTER_GOLD
 
-#ifdef XRGAME_EXPORTS
 #	ifndef MASTER_GOLD
 #		define PRINT_CALL_STACK
 #	endif // #ifndef MASTER_GOLD
-#else // #ifdef XRGAME_EXPORTS
-#	ifndef NDEBUG
-#		define PRINT_CALL_STACK
-#	endif // #ifndef NDEBUG
-#endif // #ifdef XRGAME_EXPORTS
 
 using namespace ScriptStorage;
 
@@ -37,7 +31,7 @@ private:
 	CScriptThread				*m_current_thread	;
 	BOOL						m_jit				;
 
-#ifdef DEBUG
+#ifdef PRINT_CALL_STACK
 public:
 	bool						m_stack_is_ready	;
 #endif // #ifdef DEBUG
@@ -76,7 +70,7 @@ public:
 	static	void				print_error					(lua_State *L,		int		iErrorCode);
 	virtual	void				on_error					(lua_State *L) = 0;
 
-#ifdef DEBUG
+#ifdef PRINT_CALL_STACK
 public:
 			void				flush_log					();
 #endif // DEBUG

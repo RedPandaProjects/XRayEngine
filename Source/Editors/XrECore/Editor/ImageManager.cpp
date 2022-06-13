@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#include "..\BearBundle\BearGraphics\BearGraphics.hpp"
+#include "RedImageTool/RedImage.hpp"
 
 #include "ImageManager.h"
 #include "xrImage_Resampler.h"
@@ -62,21 +62,17 @@ bool Stbi_Load(LPCSTR full_name, U32Vec& data, u32& w, u32& h, u32& a)
         }
         else
         {
-            BearImage img;
+            RedImageTool::RedImage img;
             if (img.LoadFromFile(full_name))
             {
                 img.ClearMipLevels();
-                img.Convert(BearTexturePixelFormat::R8G8B8A8);
+                img.Convert(RedImageTool::RedTexturePixelFormat::R8G8B8A8);
                 img.SwapRB();
-                w = img.GetSize().x;
-                h = img.GetSize().y;
+                w = img.GetWidth();
+                h = img.GetHeight();
                 data.resize(w * h);
                 a = true;
                 CopyMemory(data.data(), *img, w * h*4);
-               /* for (bsize i = 0; i < h/2; i++)
-                {
-                    bear_swap(data.data()+(i*w), data.data() + ((h - (i+1)) * w), w);
-                }*/
                 return true;
             }
         }

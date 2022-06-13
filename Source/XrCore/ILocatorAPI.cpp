@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "ILocatorAPI.h"
-#include "..\BearBundle\BearCore\BearCore.hpp"
+//#include "..\BearBundle\BearCore\BearCore.hpp"
 ILocatorAPI* xr_FS = NULL;
 
 ILocatorAPI::ILocatorAPI():dwAllocGranularity(0), dwOpenCounter(0)
@@ -30,23 +30,101 @@ CStreamReader* ILocatorAPI::rs_open(LPCSTR initial, LPCSTR N)
 	return nullptr;
 }
 
+static void Find(xr_vector<xr_string>& list, const char* path, const char* ext, bool full_path, bool find_file = true)
+{
+	WIN32_FIND_DATA file;
+	string_path full;
+	xr_strcpy(full, path);
+	xr_strcat(full, "\\");
+	xr_strcat(full, ext);
+	HANDLE search_handle = FindFirstFile(full, &file);
+	if (reinterpret_cast<int>(search_handle) != -1)
+	{
+		do
+		{
+			if (file.dwFileAttributes & 32)
+			{
+				if (!find_file)
+					continue;
+			}
+			else
+			{
+				if (find_file)
+					continue;
+			}
+			if (file.cFileName[0] == TEXT('.'))
+			{
+				if (file.cFileName[1] == 0 || ((file.cFileName[1] == TEXT('.') && file.cFileName[2] == 0)))
+				{
+					continue;
+				}
+			}
+			if (full_path)
+			{
+				string_path item;
+				xr_strcpy(item, path);
+				xr_strcat(item, "\\");
+				xr_strcat(item, file.cFileName);
+				list.push_back(item);
+			}
+			else
+			{
+				list.push_back(file.cFileName);
+			}
+		} while (FindNextFile(search_handle, &file));
+
+	}
+	FindClose(search_handle);
+}
+
+static void FindDirectory(xr_vector<xr_string>& list, const char* path, const char* ext,bool only_root=false)
+{
+	xr_vector<xr_string> temp;
+	Find(temp, path, ext, true, false);
+	if (!only_root)
+	{
+		for (xr_string& i : temp)
+		{
+			FindDirectory(list, i.c_str(), ext);
+		}
+	}
+	list.insert(list.begin(), temp.begin(),temp.end());
+}
+
+static void FindFiles(xr_vector<xr_string>& list, const char* path, const char* ext, bool only_root = false)
+{
+	xr_vector<xr_string> temp;
+	FindDirectory(temp, path, "*", only_root);
+	Find(list, path, ext, true);
+	for (xr_string& i : temp)
+	{
+		Find(list, i.c_str(), ext,true);
+	}
+}
+
+
 xr_vector<LPSTR>* ILocatorAPI::file_list_open(LPCSTR initial, LPCSTR folder, u32 flags)
 {
-	xr_vector<LPSTR> *files = xr_new < xr_vector<LPSTR>>();
+	xr_vector<LPSTR>* files = xr_new < xr_vector<LPSTR>>();
 	string_path path;
 	update_path(path, initial, folder);
 	if(flags & FS_ListFiles)
 	{
-		BearVector<BearString> Files;
+		xr_vector<xr_string> Files;
 		if (path[xr_strlen(path) - 1] = '\\')
 		{
 			path[xr_strlen(path) - 1] = 0;
 		}
-		BearFileManager::FindFiles(Files, path, "*",false, !(flags & FS_RootOnly));
-		for (BearString& str : Files)
+		FindFiles(Files, path, "*", !(flags & FS_RootOnly));
+		for (xr_string& str : Files)
 		{
 			string_path fname;
-			xr_strcpy(fname, *str);
+			const char* full_path = str.c_str();
+			if (strstr(full_path, path))
+			{
+				full_path += xr_strlen(path) + 1;
+			}
+			xr_strcpy(fname, full_path);
 			if (flags & FS_ClampExt)	if (0 != strext(fname)) *strext(fname) = 0;
 			files->push_back(xr_strdup(fname));
 
@@ -54,14 +132,23 @@ xr_vector<LPSTR>* ILocatorAPI::file_list_open(LPCSTR initial, LPCSTR folder, u32
 	}
 	if (flags & FS_ListFolders)
 	{
-		BearVector<BearString> Files;
-		BearFileManager::FindDirectories(Files, path, "*", !(flags & FS_RootOnly), false);
-		for (BearString& str : Files)
+		xr_vector<xr_string> Files;
+		if (path[xr_strlen(path) - 1] = '\\')
+		{
+			path[xr_strlen(path) - 1] = 0;
+		}
+		FindDirectory(Files, path, "*", !(flags & FS_RootOnly));
+		for (xr_string& str : Files)
 		{
 			string_path fname;
-			xr_strcpy(fname, *str);
+			const char* full_path = str.c_str();
+			if (strstr(full_path, path))
+			{
+				full_path += xr_strlen(path) + 1;
+			}
+			xr_strcpy(fname, full_path);
 			if (flags & FS_ClampExt)	if (0 != strext(fname)) *strext(fname) = 0;
-			files->push_back(xr_strdup( fname));
+			files->push_back(xr_strdup(fname));
 
 		}
 	}

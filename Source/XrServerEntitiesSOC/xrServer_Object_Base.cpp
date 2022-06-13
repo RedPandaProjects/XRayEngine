@@ -22,7 +22,7 @@
 #	include "object_factory.h"
 #endif
 
-#ifndef XRSE_FACTORY_EXPORTS
+#ifndef XRSEFACTORY_EXPORTS
 #	include "..\Editors\Public\xrEProps.h"
 	
 	IPropHelper &PHelper()
@@ -214,7 +214,7 @@ void CSE_Abstract::Spawn_Write				(NET_Packet	&tNetPacket, BOOL bLocal)
 //	tNetPacket.w_u64			(m_min_spawn_interval);
 //	tNetPacket.w_u64			(m_max_spawn_interval);
 
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS
 	CScriptValueContainer::assign();
 #endif
 
@@ -223,7 +223,7 @@ void CSE_Abstract::Spawn_Write				(NET_Packet	&tNetPacket, BOOL bLocal)
 	tNetPacket.w_u16			(0);
 	STATE_Write					(tNetPacket);
 	u16 size					= u16(tNetPacket.w_tell() - position);
-//#ifdef XRSE_FACTORY_EXPORTS
+//#ifdef XRSEFACTORY_EXPORTS
 	R_ASSERT3					((m_tClassID == CLSID_SPECTATOR) || (size > sizeof(size)),"object isn't successfully saved, get your backup :(",name_replace());
 //#endif
 	tNetPacket.w_seek			(position,&size,sizeof(u16));
@@ -408,7 +408,7 @@ void CSE_Abstract::FillProps				(LPCSTR pref, PropItemVec& items)
 
 void CSE_Abstract::FillProp					(LPCSTR pref, PropItemVec &items)
 {
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS
 	CScriptValueContainer::assign();
 	CScriptValueContainer::clear();
 #endif

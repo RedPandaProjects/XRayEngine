@@ -3,10 +3,8 @@
 UITopBarForm::UITopBarForm()
 {
 
-#define ADD_BUTTON_IMAGE_T1(Class,Name)
-#define ADD_BUTTON_IMAGE_T2(Class,Name)
 #define ADD_BUTTON_IMAGE_S(Name)	m_t##Name = EDevice->Resources->_CreateTexture("ed\\bar\\"#Name);m_time##Name = 0;
-#define ADD_BUTTON_IMAGE_D(Name) 	m_t##Name = EDevice->Resources->_CreateTexture("ed\\bar\\"#Name);m_b##Name = false;
+#define ADD_BUTTON_IMAGE_D(Name) 	m_t##Name = EDevice->Resources->_CreateTexture("ed\\bar\\"#Name);
 #include "UITopBarForm_ButtonList.h"
 	RefreshBar();
 }
@@ -47,36 +45,17 @@ void UITopBarForm::Draw()
 		}ImGui::SameLine();
 #define ADD_BUTTON_IMAGE_D(Name) \
 		m_t##Name->Load();\
-		if (ImGui::ImageButton(m_t##Name->surface_get(), ImVec2(20, 20), ImVec2(m_b##Name? 0.5 : 0, 0), ImVec2(m_b##Name ? 1 : 0.5, 1), 0))\
+		if (ImGui::ImageButton(m_t##Name->surface_get(), ImVec2(20, 20), ImVec2(0, 0), ImVec2(1, 1), 0))\
 		{\
-			m_b##Name = !m_b##Name;\
 			Click##Name(); \
 		}ImGui::SameLine();
-#define ADD_BUTTON_IMAGE_P(Name)\
-		m_t##Name->Load();\
-		 if (ImGui::ImageButton(m_t##Name->surface_get(), ImVec2(20, 20), ImVec2(m_b##Name? 0.5 : 0, 0), ImVec2(m_b##Name ? 1 : 0.5, 1), 0))\
-		{\
-			Click##Name();\
-		}ImGui::SameLine();
-#define ADD_BUTTON_IMAGE_T1(Class,Name)\
-ImGui::PushID(""#Class);\
-		 ImGui::PushStyleColor(ImGuiCol_Text, (ImVec4)ImColor::HSV(0,0,0));\
-		 if (ImGui::Button(""#Name, ImVec2(20, 20))) {Click##Class##Name();}ImGui::SameLine();\
-		 ImGui::PopStyleColor(1);\
-ImGui::PopID();
-#define ADD_BUTTON_IMAGE_T2(Class,Name)\
-	ImGui::PushID(""#Class);\
-		 if (ImGui::Button(""#Name, ImVec2(20, 20))) { Click##Class##Name();}ImGui::SameLine();\
-		ImGui::PopID();
-#define ADD_BUTTON_IMAGE_T1_1(Class,Name,T)\
-		 ImGui::PushStyleColor(ImGuiCol_Text, (ImVec4)ImColor::HSV(0,0,0));\
-		 if (ImGui::Button(""#T, ImVec2(20, 20))) {Click##Class##Name();}ImGui::SameLine();\
-		 ImGui::PopStyleColor(1);
+
 #include "UITopBarForm_ButtonList.h"
 
 		if (ImGui::Button("Play", ImVec2(0, 20))) { ClickLevelPlay(); }ImGui::SameLine();
 		if (ImGui::Button("Simulate", ImVec2(0, 20))) { ClickLevelSimulate(); }ImGui::SameLine();
 	}
+	ImGui::SameLine(0,1);
 	ImGui::End();
 	ImGui::PopStyleVar(5);
 }
@@ -121,7 +100,22 @@ void  UITopBarForm::ClickLevelSimulate()
 {
 	Scene->Play();
 }
+void UITopBarForm::ClickCForm()
+{
 
+}
+void UITopBarForm::ClickAIMap()
+{
+
+}
+void UITopBarForm::ClickGGraph()
+{
+
+}
+void UITopBarForm::ClickSRestrictor()
+{
+
+}
 
 /*
 void UITopBarForm::ClickZoom()

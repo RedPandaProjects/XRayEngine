@@ -454,6 +454,7 @@ void TUI::Redraw()
 
                 EDevice->Statistic->RenderDUMP_RT.End();
                 EDevice->EStatistic->Show(EDevice->pSystemFont);
+                UI->OnStats(EDevice->pSystemFont);
                 EDevice->SetRS(D3DRS_FILLMODE, D3DFILL_SOLID);
                 EDevice->pSystemFont->OnRender();
                 EDevice->SetRS(D3DRS_FILLMODE, EDevice->dwFillMode);
@@ -710,6 +711,10 @@ void TUI::RealResetUI()
         UI->Resize(1280, 800);
         ImGui::LoadIniSettingsFromDisk(ini_path);
     }
+}
+
+void TUI::OnStats(CGameFont* font)
+{
 }
 
 void SPBItem::GetInfo			(xr_string& txt, float& p, float& m)

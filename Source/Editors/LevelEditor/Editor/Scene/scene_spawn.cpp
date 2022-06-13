@@ -4,5 +4,5 @@
 void EScene::BuildSpawn()
 {
     m_Spawn.clear();
-    CGameSpawnConstructor SpawnConstructor("editor", m_Spawn, "editor", true);
+    CGameSpawnConstructor SpawnConstructor(Scene->m_LevelOp.m_FNLevelPath.c_str(), m_Spawn, Scene->m_LevelOp.m_FNLevelPath.c_str(), true);
 }

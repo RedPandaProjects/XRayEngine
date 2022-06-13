@@ -13,14 +13,6 @@
 #include "profiler.h"
 
 
-#ifdef NDEBUG
-namespace std {
-	void terminate()
-	{
-		abort();
-	}
-}
-#endif // #ifdef NDEBUG
 
 extern "C" {
 	DLL_API DLL_Pure*	__cdecl xrFactory_Create		(CLASS_ID clsid)

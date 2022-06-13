@@ -2,6 +2,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
+#if 0
 #include "UISleepWnd.h"
 #include "../../xrEngine/alife_space.h"
 #include "UIXmlInit.h"
@@ -144,3 +145,4 @@ void CUISleepWnd::SetRestTime(u8 hours, u8 minutes)
 void CUISleepWnd::SetText(LPCSTR str){
 	this->UIRestBtn->SetText(str);
 }
+#endif

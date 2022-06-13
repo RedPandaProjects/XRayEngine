@@ -9,7 +9,7 @@
 #ifndef SMART_CAST_H
 #define SMART_CAST_H
 
-#ifdef DEBUG
+#if defined(DEBUG)||defined(XRSEFACTORY_EXPORTS)
 #	define PURE_DYNAMIC_CAST
 #endif // DEBUG
 
