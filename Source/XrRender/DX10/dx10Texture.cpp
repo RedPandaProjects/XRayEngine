@@ -4,9 +4,8 @@
 
 #include "stdafx.h"
 #pragma hdrstop
+#undef NET_TEXTURE_LOADER
 #if NET_TEXTURE_LOADER
-#include "..\..\BearBundle\BearGraphics\BearGraphics.hpp"
-#include "..\..\BearBundle\BearGraphics\BearRHI\BearTextureUtils.h"
 #endif
 #pragma warning(disable:4995)
 #include "directx\d3dx9.h"

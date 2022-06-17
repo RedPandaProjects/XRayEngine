@@ -17,7 +17,7 @@ namespace RedImageTool
 		}
 
 		RedColor(const RedColor& color) { Copy(color); }
-		inline void Copy(const RedColor& color) { R8G8B8A8 = color.R8G8B8A8; memcpy(R32G32B32A32, color.R32G32B32A32, 4); }
+		inline void Copy(const RedColor& color) { R8G8B8A8 = color.R8G8B8A8; memcpy(R32G32B32A32, color.R32G32B32A32, 4 * sizeof(float)); }
 		inline void Swap(RedColor& color) { std::swap(R8G8B8A8, color.R8G8B8A8); std::swap(R32G32B32A32, color.R32G32B32A32); }
 		inline RedColor& operator=(const RedColor& color)
 		{

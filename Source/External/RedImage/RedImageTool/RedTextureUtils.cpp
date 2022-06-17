@@ -538,16 +538,16 @@ void RedTextureUtils::SetPixel(const RedColor & color, u8 * data, size_t x, size
 		switch (GetCountComp(format))
 		{
 		case 1:
-			memcpy(pixels, color.R32G32B32A32, 1);
+			memcpy(pixels, color.R32G32B32A32, 1*sizeof(float));
 			break;
 		case 2:
-			memcpy(pixels, color.R32G32B32A32,2);
+			memcpy(pixels, color.R32G32B32A32,2 * sizeof(float));
 			break;
 		case 3:
-			memcpy(pixels, color.R32G32B32A32, 3);
+			memcpy(pixels, color.R32G32B32A32, 3 * sizeof(float));
 			break;
 		case 4:
-			memcpy(pixels, color.R32G32B32A32, 4);
+			memcpy(pixels, color.R32G32B32A32, 4 * sizeof(float));
 			break;
 		default:
 			assert(false);
