@@ -19,6 +19,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <SDLCheck>false</SDLCheck>
+      <PreprocessorDefinitions>_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />
