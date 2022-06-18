@@ -54,7 +54,7 @@
     <ClInclude Include="tVector.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\Utils\RedImage\RedImageTool\RedImageTool.vcxproj">
+    <ProjectReference Include="..\..\External\RedImage\RedImageTool\RedImageTool.vcxproj">
       <Project>{416e323e-3a4b-41a7-b0f5-7a8ec8517b11}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\XrCore\XrCore.vcxproj">

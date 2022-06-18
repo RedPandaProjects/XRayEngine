@@ -548,14 +548,11 @@
     <Text Include="todo.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\BearBundle\BearCore\Platform\Desktop\BearCore.vcxproj">
-      <Project>{86b65138-c85e-4c26-967b-9a21eb954216}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\BearBundle\BearGraphics\Platform\Desktop\BearGraphics.vcxproj">
-      <Project>{3b75536d-008d-4495-9fe8-c7ae79ac6898}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\..\External\Luabind\Luabind.vcxproj">
       <Project>{18c37994-f2f2-46c0-bd55-bc738e8b9d89}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\RedImage\RedImageTool\RedImageTool.vcxproj">
+      <Project>{416e323e-3a4b-41a7-b0f5-7a8ec8517b11}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\XrAPI\XrAPI.vcxproj">
       <Project>{ff16ef0a-8a51-4c36-9213-4aa87cb4b317}</Project>
