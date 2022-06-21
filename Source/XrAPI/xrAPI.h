@@ -1,11 +1,14 @@
 #ifndef	xrApi_included
 #define xrApi_included
 #pragma once
-
+#ifdef SHIPPING
+#define XRAPI_API
+#else 
 #ifdef XRAPI_EXPORTS
 #define XRAPI_API __declspec(dllexport)
 #else
 #define XRAPI_API __declspec(dllimport)
+#endif
 #endif
 
 
@@ -34,10 +37,13 @@ extern XRAPI_API	IGame_Persistent* g_pGamePersistent;
 class XrGameMaterialLibraryInterface;
 extern XRAPI_API XrGameMaterialLibraryInterface* GameMaterialLibrary;
 
+#ifndef SHIPPING
 class XrGameEditorInterface;
 extern XRAPI_API XrGameEditorInterface* GameEditor;
 class XrEditorSceneInterface;
 extern XRAPI_API XrEditorSceneInterface* EditorScene;
+#endif
+
 #ifdef DEBUG
 	class IDebugRender;
 	extern XRAPI_API IDebugRender*	DRender;

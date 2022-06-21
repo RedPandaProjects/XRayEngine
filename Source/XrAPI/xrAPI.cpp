@@ -13,8 +13,10 @@ XRAPI_API XrDeviceInterface* Device = NULL;
 XRAPI_API	IGame_Persistent* g_pGamePersistent;
 XRAPI_API	bool g_dedicated_server = false;
 XRAPI_API XrGameMaterialLibraryInterface* GameMaterialLibrary = NULL;
+#ifndef SHIPPING
 XRAPI_API XrGameEditorInterface* GameEditor = NULL;
 XRAPI_API XrEditorSceneInterface* EditorScene = NULL;
+#endif
 #ifdef DEBUG
 	XRAPI_API IDebugRender*	DRender = NULL;
 #endif // DEBUG

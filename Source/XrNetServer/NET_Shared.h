@@ -1,12 +1,12 @@
 #pragma once
+#ifdef SHIPPING
+#define XRNETSERVER_API
+#else
 #ifdef XR_NETSERVER_EXPORTS
 	#define XRNETSERVER_API __declspec(dllexport)
 #else
 	#define XRNETSERVER_API __declspec(dllimport)
-
-	#ifndef _EDITOR
-		#pragma comment(lib,	"xrNetServer"	)
-    #endif
+#endif
 #endif
 
 #include "../xrCore/net_utils.h"

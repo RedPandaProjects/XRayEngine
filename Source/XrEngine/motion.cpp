@@ -145,7 +145,7 @@ bool COMotion::Load(IReader& F)
 	return true;
 }
 
-#if DEV_MODE
+#ifndef MASTER_GOLD
 void COMotion::CreateKey(float t, const Fvector& P, const Fvector& R)
 {
 	envs[ctPositionX]->InsertKey(t,P.x);
@@ -244,7 +244,7 @@ BOOL COMotion::NormalizeKeys(float from_time, float to_time, float speed)
 //------------------------------------------------------------------------------------------
 // Skeleton Motion
 //------------------------------------------------------------------------------------------
-#if DEV_MODE
+#ifndef MASTER_GOLD
 
 //#include "SkeletonCustom.h"
 CSMotion::CSMotion():CCustomMotion()

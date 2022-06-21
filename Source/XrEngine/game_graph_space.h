@@ -25,7 +25,7 @@ namespace GameGraph
 
 	class SLevel
 	{
-#if DEV_MODE
+#ifndef MASTER_GOLD
 	public:
 #endif
 		shared_str				m_name;
@@ -71,7 +71,7 @@ namespace GameGraph
 #pragma pack(push,1)
 	class CEdge
 	{
-#if DEV_MODE
+#ifndef MASTER_GOLD
 	public:
 #endif
 		_GRAPH_ID					m_vertex_id;
@@ -83,7 +83,7 @@ namespace GameGraph
 
 	class CVertex 
 	{
-#if DEV_MODE
+#ifndef MASTER_GOLD
 	public:
 #endif
 		Fvector						tLocalPoint;
@@ -111,7 +111,7 @@ namespace GameGraph
 
 	class CHeader 
 	{
-#if DEV_MODE
+#ifndef MASTER_GOLD
 	public:
 #endif
 		u8							m_version;
@@ -140,7 +140,7 @@ namespace GameGraph
 
 	class CLevelPoint
 	{
-	#if DEV_MODE
+	#ifndef MASTER_GOLD
 	public:
 	#endif
 		Fvector		tPoint;

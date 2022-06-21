@@ -83,7 +83,7 @@ class ENGINE_API motion_marks
 {
 public:
 	typedef					std::pair<  float, float > 				interval;
-#if DEV_MODE
+#ifndef MASTER_GOLD
 public:
 #else
 private:
@@ -97,7 +97,7 @@ public:
 	shared_str		name;
 	void			Load				(IReader*);
 
-#if DEV_MODE 
+#ifndef MASTER_GOLD 
 	void			Save				(IWriter*);
 #endif
 	bool			is_empty			() const { return intervals.empty(); }

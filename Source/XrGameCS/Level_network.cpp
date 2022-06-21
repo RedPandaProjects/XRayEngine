@@ -18,7 +18,6 @@
 #include "string_table.h"
 #include "file_transfer.h"
 
-ENGINE_API bool g_dedicated_server;
 
 const int max_objects_size			= 2*1024;
 const int max_objects_size_in_save	= 6*1024;

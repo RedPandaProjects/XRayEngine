@@ -12,11 +12,28 @@
 #include "xr_level_controller.h"
 #include "profiler.h"
 
-
+extern void setup_luabind_allocator();
+extern void CCC_RegisterCommands();
 
 extern "C" {
 	DLL_API DLL_Pure*	__cdecl xrFactory_Create		(CLASS_ID clsid)
 	{
+		static bool bIsInitilize = false;
+		if (!bIsInitilize)
+		{
+			CCC_RegisterCommands();
+			// keyboard binding
+			CCC_RegisterInput();
+
+			setup_luabind_allocator();
+
+#ifdef DEBUG
+			g_profiler = xr_new<CProfiler>();
+#endif
+
+			bIsInitilize = true;
+		}
+
 		DLL_Pure			*object = object_factory().client_object(clsid);
 #ifdef DEBUG
 		if (!object)
@@ -31,27 +48,4 @@ extern "C" {
 		xr_delete			(O);
 	}
 };
-extern void setup_luabind_allocator();
-extern void CCC_RegisterCommands();
 
-BOOL APIENTRY DllMain(HANDLE hModule, u32 ul_reason_for_call, LPVOID lpReserved)
-{
-	switch (ul_reason_for_call) {
-		case DLL_PROCESS_ATTACH: {
-			setup_luabind_allocator();
-			// register console commands
-			CCC_RegisterCommands();
-			// keyboard binding
-			CCC_RegisterInput			();
-#ifdef DEBUG
-			g_profiler			= xr_new<CProfiler>();
-#endif
-			break;
-		}
-
-		case DLL_PROCESS_DETACH: {
-			break;
-		}
-	}
-    return								(TRUE);
-}

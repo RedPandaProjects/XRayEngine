@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
+LRESULT CALLBACK RWndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
 {
 	return DefWindowProc( hWnd, message, wParam, lParam );
 }
@@ -42,7 +42,7 @@ bool TestDX11Present()
 	WNDCLASSEX wcex;
 	ZeroMemory(&wcex, sizeof(wcex));
 	wcex.cbSize = sizeof( WNDCLASSEX );
-	wcex.lpfnWndProc = WndProc;
+	wcex.lpfnWndProc = RWndProc;
 	wcex.hInstance = GetModuleHandle(NULL);
 	wcex.lpszClassName = "TestDX11WindowClass";
 	if( !RegisterClassEx( &wcex ) )

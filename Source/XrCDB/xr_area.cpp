@@ -74,7 +74,7 @@ int CObjectSpace::GetNearest		( xr_vector<ISpatial*>& q_spatial, xr_vector<CObje
 }
 
 //----------------------------------------------------------------------
-IC int	CObjectSpace::GetNearest	( xr_vector<CObject*>&	q_nearest, const Fvector &point, float range, CObject* ignore_object )
+int	CObjectSpace::GetNearest	( xr_vector<CObject*>&	q_nearest, const Fvector &point, float range, CObject* ignore_object )
 {
 	return							(
 		GetNearest(
@@ -88,7 +88,7 @@ IC int	CObjectSpace::GetNearest	( xr_vector<CObject*>&	q_nearest, const Fvector 
 }
 
 //----------------------------------------------------------------------
-IC int   CObjectSpace::GetNearest( xr_vector<CObject*>&	q_nearest, ICollisionForm* obj, float range)
+int   CObjectSpace::GetNearest( xr_vector<CObject*>&	q_nearest, ICollisionForm* obj, float range)
 {
 	CObject*	O		= obj->Owner	();
 	return				GetNearest( q_nearest, O->spatial.sphere.P, range + O->spatial.sphere.R, O );
@@ -138,7 +138,7 @@ void			CObjectSpace::Create				(  Fvector*	verts, CDB::TRI* tris, const hdrCFORM
 	m_BoundingVolume.set				(H.aabb);
 	g_SpatialSpace->initialize			(m_BoundingVolume);
 	g_SpatialSpacePhysic->initialize	(m_BoundingVolume);
-	//Sound->set_geometry_occ				( &Static );
+	//Sound->set_geometry_occ				( &Stat);
 	//Sound->set_handler					( _sound_event );
 }
 

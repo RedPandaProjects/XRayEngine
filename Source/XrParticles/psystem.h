@@ -2,10 +2,14 @@
 #define PSystemH
 #pragma once
 
+#ifdef SHIPPING
+#define PARTICLES_API
+#else
 #ifdef XRPARTICLES_EXPORTS
 	#define PARTICLES_API __declspec(dllexport)
 #else
 	#define PARTICLES_API __declspec(dllimport)
+#endif
 #endif
 
 // Actually this must be < sqrt(MAXFLOAT) since we store this value squared.

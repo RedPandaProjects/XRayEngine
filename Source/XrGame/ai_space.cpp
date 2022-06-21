@@ -23,8 +23,6 @@
 #include "../xrEngine/dedicated_server_only.h"
 #include "../xrEngine/no_single.h"
 
-ENGINE_API	bool g_dedicated_server;
-
 CAI_Space *g_ai_space = 0;
 
 CAI_Space::CAI_Space				()
@@ -94,6 +92,7 @@ CAI_Space::~CAI_Space				()
 }
 void CAI_Space::load_from_editor()
 {
+#ifndef MASTER_GOLD
 	unload(true);
 
 #ifdef DEBUG
@@ -104,6 +103,7 @@ void CAI_Space::load_from_editor()
 #endif
 
 	const IGameGraph::SLevel& current_level = game_graph().header().level("test");
+
 
 
 	m_level_graph = EditorScene->GetLevelGraph();
@@ -127,6 +127,8 @@ void CAI_Space::load_from_editor()
 #ifdef DEBUG
 	Msg("* Loading ai space is successfully completed (%.3fs, %7.3f Mb)", timer.GetElapsed_sec(), float(Memory.mem_usage() - mem_usage) / 1048576.0);
 #endif
+#endif
+
 }
 void CAI_Space::load				(LPCSTR level_name)
 {
@@ -142,10 +144,13 @@ void CAI_Space::load				(LPCSTR level_name)
 #endif
 
 	const IGameGraph::SLevel &current_level = game_graph().header().level(level_name);
+#ifndef MASTER_GOLD
 	if(Device->IsEditorMode())
 		m_level_graph = EditorScene->GetLevelGraph();
 	else
+#endif
 		m_level_graph			= xr_new<CLevelGraph>();
+
 	game_graph().set_current_level(current_level.id());
 	R_ASSERT2				(cross_table().header().level_guid() == level_graph().header().guid(), "cross_table doesn't correspond to the AI-map");
 	R_ASSERT2				(cross_table().header().game_guid() == game_graph().header().guid(), "graph doesn't correspond to the cross table");

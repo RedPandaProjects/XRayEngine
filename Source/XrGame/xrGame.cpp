@@ -14,11 +14,33 @@
 
 #include "lua/library_linkage.h"
 #include "luabind/library_linkage.h"
+void CCC_RegisterCommands();
+void setup_luabind_allocator();
 
 CSE_Abstract* F_entity_Create(LPCSTR section);
-extern "C" {
+extern "C"
+{
+
 	DLL_API DLL_Pure*	__cdecl xrFactory_Create		(CLASS_ID clsid)
 	{
+
+		static bool bIsInitilize = false;
+		if (!bIsInitilize)
+		{
+			PhysicsInitialize();
+			CCC_RegisterCommands();
+			// keyboard binding
+			CCC_RegisterInput();
+
+			setup_luabind_allocator();
+
+#ifdef DEBUG
+			g_profiler = xr_new<CProfiler>();
+#endif
+
+			bIsInitilize = true;
+		}
+
 		DLL_Pure			*object = object_factory().client_object(clsid);
 #ifdef DEBUG
 		if (!object)
@@ -39,29 +61,4 @@ extern "C" {
 
 };
 
-void CCC_RegisterCommands	();
-void setup_luabind_allocator();
 
-
-BOOL APIENTRY DllMain(HANDLE hModule, u32 ul_reason_for_call, LPVOID lpReserved)
-{
-	switch (ul_reason_for_call) {
-		case DLL_PROCESS_ATTACH: {
-			// register console commands
-			CCC_RegisterCommands();
-			// keyboard binding
-			CCC_RegisterInput	();
-
-			setup_luabind_allocator	();
-#ifdef DEBUG
-			g_profiler			= xr_new<CProfiler>();
-#endif
-			break;
-		}
-
-		case DLL_PROCESS_DETACH: {
-			break;
-		}
-	}
-    return								(TRUE);
-}

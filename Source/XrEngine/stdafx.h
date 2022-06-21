@@ -14,6 +14,10 @@
 
 // you must define ENGINE_BUILD then building the engine itself
 // and not define it if you are about to build DLL
+#ifdef SHIPPING
+#define ENGINE_API
+#define DLL_API
+#else 
 #ifndef NO_ENGINE_API
 	#ifdef	ENGINE_BUILD
 		#define DLL_API			__declspec(dllimport)
@@ -27,6 +31,7 @@
 	#define ENGINE_API
 	#define DLL_API
 #endif // NO_ENGINE_API
+#endif
 
 #define ECORE_API
 

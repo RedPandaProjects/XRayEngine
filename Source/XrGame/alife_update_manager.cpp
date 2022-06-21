@@ -230,6 +230,7 @@ bool CALifeUpdateManager::change_level	(NET_Packet &net_packet)
 #include "../xrEngine/igame_persistent.h"
 void CALifeUpdateManager::new_game_for_editor()
 {
+#ifndef SHIPPING
 	Msg("* Creating new game...");
 	unload();
 	reload(m_section);
@@ -249,6 +250,7 @@ void CALifeUpdateManager::new_game_for_editor()
 		(*I).second->on_register();
 
 	Msg("* New game is successfully created!");
+#endif
 
 }
 

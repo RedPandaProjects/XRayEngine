@@ -22,11 +22,11 @@ DEFINE_VECTOR			(PropItem*,PropItemVec,PropItemIt);
 struct ENGINE_API GameTypeChooser
 {
     Flags16	m_GameType;
-#if DEV_MODE
+#ifndef MASTER_GOLD
 		void	FillProp		(LPCSTR pref, PropItemVec& items);
 #endif // #ifndef XRGAME_EXPORTS
 
-#if DEV_MODE
+#ifndef MASTER_GOLD
 	bool 	LoadStream		(IReader&F);
 	bool 	LoadLTX			(CInifile& ini, LPCSTR sect_name, bool bOldFormat);
 	void 	SaveStream		(IWriter&);

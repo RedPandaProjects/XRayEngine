@@ -3,11 +3,14 @@
 #pragma once
 
 //#include "../include/xrapi/xrapi.h"
-
+#ifdef SHIPPING
+#define XRSOUND_API
+#else
 #ifdef XRSOUND_EXPORTS
 	#define XRSOUND_API __declspec(dllexport)
 #else
 	#define XRSOUND_API __declspec(dllimport)
+#endif
 #endif
 
 #define XRSOUND_EDITOR_API XRSOUND_API

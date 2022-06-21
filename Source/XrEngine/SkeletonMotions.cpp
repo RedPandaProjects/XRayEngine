@@ -456,7 +456,7 @@ void motion_marks::Load(IReader* R)
 		item.second			= R->r_float();
 	}
 }
-#if DEV_MODE
+#ifndef MASTER_GOLD
 void motion_marks::Save(IWriter* W)
 {
 	W->w_string			(name.c_str());

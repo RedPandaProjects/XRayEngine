@@ -28,28 +28,36 @@ static u32	init_counter	= 0;
 XRAPI_API extern EGamePath GCurrentGame;
 //. extern xr_vector<shared_str>*	LogFile;
 
-void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs, LPCSTR fs_fname, bool editor_fs )
+void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs, LPCSTR fs_fname, bool editor_fs ,EGamePath Game)
 {
 	
 	xr_strcpy					(ApplicationName,_ApplicationName);
-	if (0==init_counter) {
-
-		if (strstr(GetCommandLine(), "-soc_14") || strstr(GetCommandLine(), "-soc_10004"))
+	if (0==init_counter) 
+	{
+		if (Game == EGamePath::NONE)
 		{
-			GCurrentGame = EGamePath::SHOC_10004;
-		} 
-		else if (strstr(GetCommandLine(), "-soc"))
-		{
-			GCurrentGame = EGamePath::SHOC_10006;
-		}
-		else if (strstr(GetCommandLine(), "-cs"))
-		{
-			GCurrentGame = EGamePath::CS_1510;
+			if (strstr(GetCommandLine(), "-soc_14") || strstr(GetCommandLine(), "-soc_10004"))
+			{
+				GCurrentGame = EGamePath::SHOC_10004;
+			}
+			else if (strstr(GetCommandLine(), "-soc"))
+			{
+				GCurrentGame = EGamePath::SHOC_10006;
+			}
+			else if (strstr(GetCommandLine(), "-cs"))
+			{
+				GCurrentGame = EGamePath::CS_1510;
+			}
+			else
+			{
+				GCurrentGame = EGamePath::COP_1602;
+			}
 		}
 		else
 		{
-			GCurrentGame = EGamePath::COP_1602;
+			GCurrentGame = Game;
 		}
+
 		Editor = editor_fs;
 #ifdef XRCORE_STATIC	
 		_clear87	();
@@ -172,7 +180,7 @@ void xrCore::_destroy		()
 	}
 }
 
-#ifndef XRCORE_STATIC
+#ifndef SHIPPING
 
 //. why ??? 
 #if 0

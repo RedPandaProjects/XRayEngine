@@ -197,7 +197,7 @@ void ELightAnimLibrary::Unload()
     Items.clear();
 }
 
-__declspec(dllexport) void ELightAnimLibrary::Load()
+void ELightAnimLibrary::Load()
 {
 	string_path fn;
     FS.update_path(fn,_game_data_,"lanims.xr");
@@ -281,7 +281,7 @@ CLAItem* ELightAnimLibrary::AppendItem(LPCSTR name, CLAItem* src)
 	return I;
 }
 
-#if DEV_MODE 
+#ifndef MASTER_GOLD 
 void ELightAnimLibrary::RemoveObject(LPCSTR _fname, EItemType type, bool& res)   
 {
 	if (TYPE_FOLDER==type){

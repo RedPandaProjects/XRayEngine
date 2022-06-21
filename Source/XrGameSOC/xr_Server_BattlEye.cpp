@@ -14,7 +14,6 @@
 #ifdef BATTLEYE
 
 extern		int		g_be_message_out;
-ENGINE_API	bool	g_dedicated_server;
 
 BattlEyeServer::BattlEyeServer( xrServer* Server )
 {

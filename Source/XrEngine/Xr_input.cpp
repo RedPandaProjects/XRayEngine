@@ -539,14 +539,19 @@ void CInput::unacquire				()
 void CInput::acquire				(const bool &exclusive)
 {
 	pKeyboard->SetCooperativeLevel	(
+#ifndef MASTER_GOLD
 		Device->WeatherEditor() ? Device->WeatherEditor()->main_handle() : 
+#endif
 		Device->m_hWnd,
 		(exclusive ? DISCL_EXCLUSIVE : DISCL_NONEXCLUSIVE) | DISCL_FOREGROUND
 	);
 	pKeyboard->Acquire				();
 
 	pMouse->SetCooperativeLevel		(
+
+#ifndef MASTER_GOLD
 		Device->WeatherEditor() ? Device->WeatherEditor()->main_handle() :
+#endif
 		Device->m_hWnd,
 		(exclusive ? DISCL_EXCLUSIVE : DISCL_NONEXCLUSIVE) | DISCL_FOREGROUND | DISCL_NOWINKEY
 	);

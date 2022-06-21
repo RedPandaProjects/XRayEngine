@@ -2,11 +2,14 @@
 #define xrXMLParserH
 #pragma once
 
-
+#ifdef SHIPPING
+#define XRXMLPARSER_API
+#else
 #ifdef XRXMLPARSER_EXPORTS
 	#define XRXMLPARSER_API __declspec(dllexport)
 #else
 	#define XRXMLPARSER_API __declspec(dllimport)
+#endif
 #endif
 
 const LPCSTR CONFIG_PATH			= "$game_config$";

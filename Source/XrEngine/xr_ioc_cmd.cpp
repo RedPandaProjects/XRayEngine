@@ -533,6 +533,7 @@ public:
 	{
 		//free_render_mode_list();
 	}
+#ifndef SHIPPING
 	virtual void	Execute	(LPCSTR args)
 	{
 		//fill_render_mode_list	();
@@ -566,6 +567,7 @@ public:
 		tokens					= vid_quality_token;
 		return					inherited::GetToken();
 	}
+#endif
 
 };
 #ifndef DEDICATED_SERVER

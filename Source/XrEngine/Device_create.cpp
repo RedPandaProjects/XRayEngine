@@ -161,7 +161,7 @@ void CRenderDevice::ConnectToRender()
 		m_pRender			= RenderFactory->CreateRenderDeviceRender();
 }
 
-PROTECT_API void CRenderDevice::Create	() 
+void CRenderDevice::Create	() 
 {
 	SECUROM_MARKER_SECURITY_ON(4)
 

@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Kernel">
-      <UniqueIdentifier>{5e624fdd-2d33-4525-9fb4-b1e84a907d4f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core">
       <UniqueIdentifier>{a9648c2b-19a8-4630-b165-34461706f100}</UniqueIdentifier>
     </Filter>
@@ -153,6 +150,9 @@
     </Filter>
     <Filter Include="Models\Visuals">
       <UniqueIdentifier>{a0501602-5bd6-4c78-9820-754266231316}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Kernel">
+      <UniqueIdentifier>{5e624fdd-2d33-4525-9fb4-b1e84a907d4f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

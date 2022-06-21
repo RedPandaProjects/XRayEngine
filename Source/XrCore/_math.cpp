@@ -285,7 +285,7 @@ void	thread_spawn	(thread_t*	entry, const char*	name, unsigned	stack, void* argl
 	_beginthread		(thread_entry,stack,startup);
 }
 
-void spline1	( float t, Fvector *p, Fvector *ret )
+XRCORE_API void spline1	( float t, Fvector *p, Fvector *ret )
 {
 	float     t2  = t * t;
 	float     t3  = t2 * t;

@@ -46,7 +46,7 @@ void SJointIKData::clamp_by_limits(Fvector& dest_xyz)
 */
     }
 }
-
+#ifndef MASTER_GOLD
 void CBone::ShapeScale(const Fvector& _amount)
 {
 	switch (shape.type){
@@ -133,6 +133,7 @@ void CBone::ClampByLimits()
 }
 
 
+#endif
 #define BONE_VERSION					0x0002
 //------------------------------------------------------------------------------
 #define BONE_CHUNK_VERSION				0x0001

@@ -1,11 +1,13 @@
-#ifndef PSystemH
-#define PSystemH
 #pragma once
 
+#ifdef SHIPPING
+#define PARTICLES_API
+#else
 #ifdef XR_PARTICLES_EXPORTS
 	#define PARTICLES_API __declspec(dllexport)
 #else
 	#define PARTICLES_API __declspec(dllimport)
+#endif
 #endif
 
 // Actually this must be < sqrt(MAXFLOAT) since we store this value squared.
@@ -152,4 +154,3 @@ namespace PAPI{
 
     PARTICLES_API IParticleManager* ParticleManager		();
 };
-#endif //PSystemH

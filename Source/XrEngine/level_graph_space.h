@@ -11,7 +11,7 @@
 namespace LevelGraph
 {
 	class CHeader :
-#if DEV_MODE
+#ifndef MASTER_GOLD
 		public
 #else
 		private
@@ -34,7 +34,7 @@ namespace LevelGraph
 
 	class CVertex : 
 		
-#if DEV_MODE
+#ifndef MASTER_GOLD
 		public
 #else
 		private

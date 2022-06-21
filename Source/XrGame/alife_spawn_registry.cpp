@@ -92,6 +92,7 @@ void CALifeSpawnRegistry::load				(LPCSTR spawn_name)
 
 void CALifeSpawnRegistry::load_from_editor()
 {
+#ifndef SHIPPING
 	Msg("* Loading spawn registry...");
 	ai().patrol_path_storage_from_editor();
 
@@ -143,6 +144,9 @@ void CALifeSpawnRegistry::load_from_editor()
 	build_root_spawns();
 
 	Msg("* %d spawn points are successfully loaded", m_spawns.vertex_count());
+#else
+	R_ASSERT(!"not impl!");
+#endif
 }
 
 struct dummy {

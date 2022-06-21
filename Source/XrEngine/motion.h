@@ -101,7 +101,7 @@ public:
 #ifdef _LW_EXPORT
 	void			ParseObjectMotion(LWItemID object);
 #endif
-#if DEV_MODE
+#ifndef MASTER_GOLD
 	void 			FindNearestKey	(float t, float& min_k, float& max_k, float eps=EPS_L);
 	void			CreateKey		(float t, const Fvector& P, const Fvector& R);
 	void			DeleteKey		(float t);
@@ -127,7 +127,7 @@ enum ESMFlags{
 	esmUseWeaponBone	= 1<<7,
 };
 
-#if DEV_MODE
+#ifndef MASTER_GOLD
 	#include "SkeletonMotions.h"
 
 class ENGINE_API CSMotion: public CCustomMotion{

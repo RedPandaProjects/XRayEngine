@@ -18,11 +18,11 @@ class ENGINE_API XrDeviceInterface
 public:
 	XrDeviceInterface();
 	virtual ~XrDeviceInterface();
-#ifdef INGAME_EDITOR
 public:
+#ifdef INGAME_EDITOR
 	virtual 		XrWeatherEditor::ide* WeatherEditor() const { return nullptr; }
 #endif
-#if DEV_MODE
+#ifndef MASTER_GOLD
 	virtual			bool				IsEditorMode() { return false; }
 #else
 	constexpr bool IsEditorMode() { return false; }
