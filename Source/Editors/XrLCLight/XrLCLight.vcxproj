@@ -340,10 +340,10 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\BearBundle\BearGraphics\Platform\Desktop\BearGraphics.vcxproj">
-      <Project>{3b75536d-008d-4495-9fe8-c7ae79ac6898}</Project>
+    <ProjectReference Include="..\..\External\RedImage\RedImageTool\RedImageTool.vcxproj">
+      <Project>{416e323e-3a4b-41a7-b0f5-7a8ec8517b11}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\BearBundle\External\zlib\zlib.vcxproj">
+    <ProjectReference Include="..\..\External\zlib\zlib.vcxproj">
       <Project>{86d28925-9f85-43ec-980e-e99d7ff2501c}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\XrCDB\XrCDB.vcxproj">

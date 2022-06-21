@@ -5,7 +5,6 @@
 #include "../Public/shader_xrlc.h"
 #include "serialize.h"
 
-#define STB_IMAGE_IMPLEMENTATION
 #include "StbImage\stb_image.h"
 
 global_claculation_data	gl_data;
@@ -206,11 +205,11 @@ void global_claculation_data::xrLoad()
 							R_ASSERT2(Surface_Detect(name, N), "Can't load surface");
 							R_ASSERT2(BT.pSurface.LoadFromFile(name), "Can't load surface");
 							BT.pSurface.ClearMipLevels();
-							BT.pSurface.Convert(BearTexturePixelFormat::R8G8B8A8);
+							BT.pSurface.Convert(RedImageTool::RedTexturePixelFormat::R8G8B8A8);
 							BT.pSurface.SwapRB();
 							BT.THM.SetHasSurface(TRUE);
-							if ((BT.pSurface.GetSize().x != BT.dwWidth) || (BT.pSurface.GetSize().y != BT.dwHeight))
-								Msg		("! THM doesn't correspond to the texture: %dx%d -> %dx%d", BT.dwWidth, BT.dwHeight, BT.pSurface.GetSize().x, BT.pSurface.GetSize().y);
+							if ((BT.pSurface.GetWidth() != BT.dwWidth) || (BT.pSurface.GetHeight() != BT.dwHeight))
+								Msg		("! THM doesn't correspond to the texture: %dx%d -> %dx%d", BT.dwWidth, BT.dwHeight, BT.pSurface.GetWidth(), BT.pSurface.GetHeight());
 							BT.Vflip	();
 						} else {
 							// Free surface memory
