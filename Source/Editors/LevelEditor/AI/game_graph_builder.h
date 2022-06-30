@@ -103,7 +103,7 @@ public:
 
 						CGameGraphBuilder			();
 						~CGameGraphBuilder			();
-			void		build_graph					();
+			bool		build_graph					();
 };
 
 #include "game_graph_builder_inline.h"

@@ -34,6 +34,7 @@ void UIMainMenuForm::Draw()
             if (ImGui::MenuItem("Quit", "")) { ExecCommand(COMMAND_QUIT); }
             ImGui::EndMenu();
         }
+
         if (ImGui::BeginMenu("Scene"))
         {
             if (ImGui::MenuItem("Validate", "")) { ExecCommand(COMMAND_VALIDATE_SCENE); }

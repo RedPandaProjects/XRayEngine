@@ -644,6 +644,9 @@
     <ClCompile Include="UI\ObjectList\UIObjectList.cpp">
       <Filter>UI\ObjectList</Filter>
     </ClCompile>
+    <ClCompile Include="Editor\Scene\CFromBuilder.cpp">
+      <Filter>Editor\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -1060,6 +1063,9 @@
     </ClInclude>
     <ClInclude Include="UI\ObjectList\UIObjectListItem.h">
       <Filter>UI\ObjectList</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Scene\CFromBuilder.h">
+      <Filter>Editor\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

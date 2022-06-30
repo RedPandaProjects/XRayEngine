@@ -127,10 +127,15 @@ CLevelGraphEditor::~CLevelGraphEditor()
 {
 }
 
-void CLevelGraphEditor::build()
+bool CLevelGraphEditor::build()
 {
 	ESceneAIMapTool* AIMapTool = dynamic_cast<ESceneAIMapTool*>(Scene->GetTool(OBJCLASS_AIMAP));
 	g_params = AIMapTool->AIParams();
+	if (AIMapTool->Nodes().size() == 0)
+	{
+		Msg("! AIMap is empty!");
+		return false;
+	}
 
 	AIMapTool->EnumerateNodes();
 
@@ -180,4 +185,15 @@ void CLevelGraphEditor::build()
 	m_access_mask.assign(header().vertex_count(), true);
 	unpack_xz(vertex_position(header().box().max), m_max_x, m_max_z);
 	m_level_id = -1;
+	return true;
+}
+
+bool CLevelGraphEditor::empty() const
+{
+	return m_RealNodes.empty();
+}
+
+void CLevelGraphEditor::clear()
+{
+	m_RealNodes.clear();
 }

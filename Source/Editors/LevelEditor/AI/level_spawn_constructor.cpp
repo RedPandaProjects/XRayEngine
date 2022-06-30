@@ -190,10 +190,10 @@ void CLevelSpawnConstructor::add_free_object					(ISE_Abstract			*abstract)
 //		add_group_object		(abstract,_GetItem(*group_section,i,temp),true);
 //}
 
-void CLevelSpawnConstructor::load_objects						()
+bool CLevelSpawnConstructor::load_objects						()
 {
 	// loading spawn points
-	
+	Msg("Loading spawns ...");
 	u32							id;
 
 	for (auto& Obj : Scene->ListObj(OBJCLASS_SPAWNPOINT))
@@ -226,8 +226,13 @@ void CLevelSpawnConstructor::load_objects						()
 		}
 
 		ISE_ALifeCreatureActor* actor = alife_object->CastALifeCreatureActor();
-		if (actor) {
-			R_ASSERT3(!m_actor, "Too many actors on the level ", *m_level.name());
+		if (actor) 
+		{
+			if (m_actor)
+			{
+				Msg("! Too many actors on the level");
+				return false;
+			}
 			m_actor = actor;
 		}
 
@@ -248,7 +253,13 @@ void CLevelSpawnConstructor::load_objects						()
 		add_free_object(alife_object->CastAbstract());
 
 	}
-	R_ASSERT2					(!m_spawns.empty(),"There are no spawn-points!");
+
+	if (m_spawns.empty())
+	{
+		Msg("! There are no spawn-points!");
+		return false;
+	}
+	return true;
 }
 
 //IC	void CLevelSpawnConstructor::normalize_probability			(ISE_ALifeAnomalousZone *zone)
@@ -297,8 +308,9 @@ void CLevelSpawnConstructor::load_objects						()
 //	free_group_objects							();
 //}
 
-void CLevelSpawnConstructor::correct_objects					()
+bool CLevelSpawnConstructor::correct_objects					()
 {
+	Msg("Correct objects ...");
 	u32						m_level_graph_vertex_id = u32(-1);
 	u32						dwStart = game_graph().header().vertex_count(), dwFinish = game_graph().header().vertex_count(), dwCount = 0;
 	for (u32 i=0; i<game_graph().header().vertex_count(); ++i)
@@ -321,8 +333,9 @@ void CLevelSpawnConstructor::correct_objects					()
 		}
 	if (dwStart >= dwFinish) {
 		string4096			S;
-		xr_sprintf				(S,"There are no graph vertices in the game graph for the level '%s' !\n",*m_level.name());
-		R_ASSERT2			(dwStart < dwFinish,S);
+		xr_sprintf(S, "! There are no graph vertices in the game graph for the level '%s' !\n", *m_level.name());
+		Msg(S);
+		return false;
 	}
 
 	for (int i=0; i<(int)m_spawns.size(); i++) {
@@ -349,7 +362,8 @@ void CLevelSpawnConstructor::correct_objects					()
 			S			+= xr_sprintf(S,sizeof(S1) - (S1 - &S[0]),"Current level  : [%d][%s]\n",m_level.id(),*game_graph().header().level(m_level.id()).name());
 			S			+= xr_sprintf(S,sizeof(S1) - (S1 - &S[0]),"Conflict level : [%d][%s]\n",game_graph().vertex(dwBest)->level_id(),*game_graph().header().level(game_graph().vertex(dwBest)->level_id()).name());
 			S			+= xr_sprintf(S,sizeof(S1) - (S1 - &S[0]),"Probably, you filled offsets in \"game_levels.ltx\" incorrect");
-			R_ASSERT2	(game_graph().vertex(dwBest)->level_id() == m_level.id(),S1);
+			Msg(S1);
+			return false;
 		}
 
 		float				fCurrentBestDistance = cross_table().vertex(m_spawns[i]->m_tNodeID).distance();
@@ -361,11 +375,13 @@ void CLevelSpawnConstructor::correct_objects					()
 			S			+= xr_sprintf(S,sizeof(S1) - (S1 - &S[0]),"Spawn index : %d\n",i);
 			S			+= xr_sprintf(S,sizeof(S1) - (S1 - &S[0]),"Spawn node  : %d\n",m_spawns[i]->m_tNodeID);
 			S			+= xr_sprintf(S,sizeof(S1) - (S1 - &S[0]),"Spawn point : [%7.2f][%7.2f][%7.2f]\n",m_spawns[i]->CastAbstract()->o_Position.x,m_spawns[i]->CastAbstract()->o_Position.y,m_spawns[i]->CastAbstract()->o_Position.z);
-			R_ASSERT2	(dwBest != -1,S1);
+			Msg(S1);
+			return false;
 		}
 		m_spawns[i]->m_tGraphID		= (GameGraph::_GRAPH_ID)dwBest;
 		m_spawns[i]->m_fDistance	= fCurrentBestDistance;
 	}
+	return true;
 }
 
 void CLevelSpawnConstructor::correct_level_changers				()
@@ -442,50 +458,173 @@ public:
 
 void CLevelSpawnConstructor::generate_artefact_spawn_positions	()
 {
+	VERIFY(!m_graph_engine);
+	m_graph_engine = xr_new<CGraphEngineEditor>(m_level_graph->header().vertex_count());
 	// create graph engine
-	VERIFY								(!m_graph_engine);
-	m_graph_engine						= xr_new<CGraphEngineEditor>(m_level_graph->header().vertex_count());
+	CTimer Timer;
+	Timer.Start();
+	Msg("Generate artefact spawn positions ...");
+	size_t CountThread = std::min(CPU::ID.n_threads,m_spawns.size());
+	m_generate_artefact_spawn_positions_worker_counter = m_spawns.size();
+	xr_vector< HANDLE> Threads;
+	Msg("* create workers %d", CountThread);
+	for (size_t i = 0; i < CountThread; i++)
+	{
+		string_path Name;
+		xr_sprintf(Name, "GenerateArtefactSpawnPositionWorker_%d", i);
+		Threads.push_back(thread_spawn(&CLevelSpawnConstructor::ThreadGenerateArtefactSpawnPositionStartup, Name, 0, this));
+	}
 
+	for (HANDLE&i: Threads)
+	{
+		WaitForSingleObject(i, INFINITE);
+	}
+
+
+	Msg("* Completed. Time %3.2f", Timer.GetElapsed_sec());
+//
+//	xr_vector<u32>						l_tpaStack;
+//	SPAWN_STORAGE						zones;
+//	l_tpaStack.reserve					(1024);
+//	SPAWN_STORAGE::iterator				I = m_spawns.begin();
+//	SPAWN_STORAGE::iterator				E = m_spawns.end();
+//	for ( ; I != E; I++) {
+//		ISE_ALifeAnomalousZone* zone = (*I)->CastALifeAnomalousZone();
+//		if (!zone)
+//			continue;
+//		ISE_Abstract* Abstract = (*I)->CastAbstract();
+////		if (!level_graph().valid_vertex_position(zone->o_Position)) {
+////			zone->m_artefact_spawn_count	= 0;
+////			zone->m_artefact_position_offset		= m_level_points.size();
+////			continue;
+////		}
+//
+//		(*I)->m_tNodeID						= level_graph().vertex((*I)->m_tNodeID, Abstract->o_Position);
+//		if (!level_graph().valid_vertex_position(Abstract->o_Position) || !level_graph().inside((*I)->m_tNodeID, Abstract->o_Position))
+//			(*I)->m_tNodeID					= level_graph().vertex(u32(-1), Abstract->o_Position);
+//		const IGameLevelCrossTable::CCell	&cell = cross_table().vertex((*I)->m_tNodeID);
+//		(*I)->m_tGraphID					= cell.game_vertex_id();
+//		(*I)->m_fDistance					= cell.distance();
+//
+//		graph_engine().search			(
+//			level_graph(),
+//			(*I)->m_tNodeID,
+//			(*I)->m_tNodeID,
+//			&l_tpaStack,
+//			SFlooder<
+//				float,
+//				u32,
+//				u32
+//			>(
+//				zone->m_offline_interactive_radius,
+//				u32(-1),
+//				u32(-1)
+//			)
+//		);
+//		
+//		l_tpaStack.erase				(
+//			std::remove_if(
+//				l_tpaStack.begin(),
+//				l_tpaStack.end(),
+//				remove_too_far_predicate(
+//					&level_graph(),
+//					Abstract->o_Position,
+//					zone->m_offline_interactive_radius
+//				)
+//			),
+//			l_tpaStack.end()
+//		);
+///*
+//		if (zone->m_artefact_spawn_count >= l_tpaStack.size()) 
+//		{
+//			zone->m_artefact_spawn_count	= (u16)l_tpaStack.size();
+//#ifndef IGNORE_ZERO_SPAWN_POSITIONS
+//			if (!zone->m_artefact_spawn_count) {
+//				Msg						("! CANNOT GENERATE ARTEFACT SPAWN POSITIONS FOR ZONE [%s] ON LEVEL [%s]",zone->name_replace(),*level().name());
+//				Msg						("! ZONE [%s] ON LEVEL [%s] IS REMOVED BY AI COMPILER",zone->name_replace(),*level().name());
+//				R_ASSERT3				(zone->m_story_id == INVALID_STORY_ID,"Cannot remove story object",zone->name_replace());
+//				R_ASSERT3				(!zone->m_spawn_control,"Cannot remove spawn control object",zone->name_replace());
+//				zones.push_back			(zone);
+//				l_tpaStack.clear		();
+//				continue;
+//			}
+//#endif
+//		}
+//		else		*/
+//			std::random_shuffle			(l_tpaStack.begin(),l_tpaStack.end());
+//
+//		zone->m_artefact_position_offset= m_level_points.size();
+//		m_level_points.resize			(zone->m_artefact_position_offset + zone->m_artefact_spawn_count);
+//
+////		Msg								("%s  %f [%f][%f][%f] : artefact spawn positions",zone->name_replace(),zone->m_fRadius,VPUSH(zone->o_Position));
+//
+//		LEVEL_POINT_STORAGE::iterator	I = m_level_points.begin() + zone->m_artefact_position_offset;
+//		LEVEL_POINT_STORAGE::iterator	E = m_level_points.end();
+//		xr_vector<u32>::iterator		i = l_tpaStack.begin();
+//		for ( ; I != E; ++I, ++i) {
+//			(*I).tNodeID				= *i;
+//			(*I).tPoint					= level_graph().vertex_position(*i);
+//			(*I).fDistance				= cross_table().vertex(*i).distance();
+////			Msg							("    [%f][%f][%f] : %f",VPUSH((*I).tPoint),zone->o_Position.distance_to((*I).tPoint));
+//		}
+//		
+//		l_tpaStack.clear				();
+//	}
+
+#ifndef IGNORE_ZERO_SPAWN_POSITIONS
+	I									= std::remove_if(m_spawns.begin(),m_spawns.end(),remove_invalid_zones_predicate(this,&zones));
+	m_spawns.erase						(I,m_spawns.end());
+#endif
+}
+void CLevelSpawnConstructor::ThreadGenerateArtefactSpawnPositionStartup(void* args)
+{
+	reinterpret_cast<CLevelSpawnConstructor*>(args)->generate_artefact_spawn_positions_worker();
+}
+
+void CLevelSpawnConstructor::generate_artefact_spawn_positions_worker()
+{
 	xr_vector<u32>						l_tpaStack;
 	SPAWN_STORAGE						zones;
-	l_tpaStack.reserve					(1024);
-	SPAWN_STORAGE::iterator				I = m_spawns.begin();
-	SPAWN_STORAGE::iterator				E = m_spawns.end();
-	for ( ; I != E; I++) {
-		ISE_ALifeAnomalousZone* zone = (*I)->CastALifeAnomalousZone();
+	l_tpaStack.reserve(1024);
+
+	while (InterlockedCompareExchange(&m_generate_artefact_spawn_positions_worker_counter, 0, 0))
+	{
+		size_t Index = InterlockedDecrement(&m_generate_artefact_spawn_positions_worker_counter);
+		ISE_ALifeObject* Object = m_spawns[Index];
+		ISE_ALifeAnomalousZone* zone = Object->CastALifeAnomalousZone();
 		if (!zone)
 			continue;
-		ISE_Abstract* Abstract = (*I)->CastAbstract();
-//		if (!level_graph().valid_vertex_position(zone->o_Position)) {
-//			zone->m_artefact_spawn_count	= 0;
-//			zone->m_artefact_position_offset		= m_level_points.size();
-//			continue;
-//		}
+		ISE_Abstract* Abstract = Object->CastAbstract();
+		//		if (!level_graph().valid_vertex_position(zone->o_Position)) {
+		//			zone->m_artefact_spawn_count	= 0;
+		//			zone->m_artefact_position_offset		= m_level_points.size();
+		//			continue;
+		//		}
+		Object->m_tNodeID = level_graph().vertex(Object->m_tNodeID, Abstract->o_Position);
+		if (!level_graph().valid_vertex_position(Abstract->o_Position) || !level_graph().inside(Object->m_tNodeID, Abstract->o_Position))
+			Object->m_tNodeID = level_graph().vertex(u32(-1), Abstract->o_Position);
+		const IGameLevelCrossTable::CCell& cell = cross_table().vertex(Object->m_tNodeID);
+		Object->m_tGraphID = cell.game_vertex_id();
+		Object->m_fDistance = cell.distance();
 
-		(*I)->m_tNodeID						= level_graph().vertex((*I)->m_tNodeID, Abstract->o_Position);
-		if (!level_graph().valid_vertex_position(Abstract->o_Position) || !level_graph().inside((*I)->m_tNodeID, Abstract->o_Position))
-			(*I)->m_tNodeID					= level_graph().vertex(u32(-1), Abstract->o_Position);
-		const IGameLevelCrossTable::CCell	&cell = cross_table().vertex((*I)->m_tNodeID);
-		(*I)->m_tGraphID					= cell.game_vertex_id();
-		(*I)->m_fDistance					= cell.distance();
-
-		graph_engine().search			(
+		m_generate_artefact_spawn_positions_worker_mutex.Enter();
+		graph_engine().search(
 			level_graph(),
-			(*I)->m_tNodeID,
-			(*I)->m_tNodeID,
+			Object->m_tNodeID,
+			Object->m_tNodeID,
 			&l_tpaStack,
 			SFlooder<
-				float,
-				u32,
-				u32
+			float,
+			u32,
+			u32
 			>(
 				zone->m_offline_interactive_radius,
 				u32(-1),
 				u32(-1)
-			)
+				)
 		);
-		
-		l_tpaStack.erase				(
+
+		l_tpaStack.erase(
 			std::remove_if(
 				l_tpaStack.begin(),
 				l_tpaStack.end(),
@@ -497,47 +636,25 @@ void CLevelSpawnConstructor::generate_artefact_spawn_positions	()
 			),
 			l_tpaStack.end()
 		);
-/*
-		if (zone->m_artefact_spawn_count >= l_tpaStack.size()) 
-		{
-			zone->m_artefact_spawn_count	= (u16)l_tpaStack.size();
-#ifndef IGNORE_ZERO_SPAWN_POSITIONS
-			if (!zone->m_artefact_spawn_count) {
-				Msg						("! CANNOT GENERATE ARTEFACT SPAWN POSITIONS FOR ZONE [%s] ON LEVEL [%s]",zone->name_replace(),*level().name());
-				Msg						("! ZONE [%s] ON LEVEL [%s] IS REMOVED BY AI COMPILER",zone->name_replace(),*level().name());
-				R_ASSERT3				(zone->m_story_id == INVALID_STORY_ID,"Cannot remove story object",zone->name_replace());
-				R_ASSERT3				(!zone->m_spawn_control,"Cannot remove spawn control object",zone->name_replace());
-				zones.push_back			(zone);
-				l_tpaStack.clear		();
-				continue;
-			}
-#endif
-		}
-		else		*/
-			std::random_shuffle			(l_tpaStack.begin(),l_tpaStack.end());
+		std::random_shuffle(l_tpaStack.begin(), l_tpaStack.end());
+		zone->m_artefact_position_offset = m_level_points.size();
+		m_level_points.resize(zone->m_artefact_position_offset + zone->m_artefact_spawn_count);
 
-		zone->m_artefact_position_offset= m_level_points.size();
-		m_level_points.resize			(zone->m_artefact_position_offset + zone->m_artefact_spawn_count);
-
-//		Msg								("%s  %f [%f][%f][%f] : artefact spawn positions",zone->name_replace(),zone->m_fRadius,VPUSH(zone->o_Position));
+		//		Msg								("%s  %f [%f][%f][%f] : artefact spawn positions",zone->name_replace(),zone->m_fRadius,VPUSH(zone->o_Position));
 
 		LEVEL_POINT_STORAGE::iterator	I = m_level_points.begin() + zone->m_artefact_position_offset;
 		LEVEL_POINT_STORAGE::iterator	E = m_level_points.end();
 		xr_vector<u32>::iterator		i = l_tpaStack.begin();
-		for ( ; I != E; ++I, ++i) {
-			(*I).tNodeID				= *i;
-			(*I).tPoint					= level_graph().vertex_position(*i);
-			(*I).fDistance				= cross_table().vertex(*i).distance();
-//			Msg							("    [%f][%f][%f] : %f",VPUSH((*I).tPoint),zone->o_Position.distance_to((*I).tPoint));
+		for (; I != E; ++I, ++i) {
+			(*I).tNodeID = *i;
+			(*I).tPoint = level_graph().vertex_position(*i);
+			(*I).fDistance = cross_table().vertex(*i).distance();
+			//			Msg							("    [%f][%f][%f] : %f",VPUSH((*I).tPoint),zone->o_Position.distance_to((*I).tPoint));
 		}
-		
-		l_tpaStack.clear				();
-	}
+		m_generate_artefact_spawn_positions_worker_mutex.Leave();
+		l_tpaStack.clear();
 
-#ifndef IGNORE_ZERO_SPAWN_POSITIONS
-	I									= std::remove_if(m_spawns.begin(),m_spawns.end(),remove_invalid_zones_predicate(this,&zones));
-	m_spawns.erase						(I,m_spawns.end());
-#endif
+	}
 }
 
 void CLevelSpawnConstructor::fill_level_changers				()
@@ -604,28 +721,45 @@ void CLevelSpawnConstructor::update_artefact_spawn_positions	()
 	m_game_spawn_constructor->add_level_points	(m_level_points);
 }
 
-void CLevelSpawnConstructor::Execute							()
+bool CLevelSpawnConstructor::Execute							()
 {
-	load_objects						();
+	CTimer Timer;
+	Timer.Start();
+	if (!load_objects())
+	{
+		m_cross_table = 0;
+		m_level_graph = 0;
+		xr_delete(m_graph_engine);
+		return false;
+	}
 //	fill_spawn_groups					();
 
 	init								();
 	
-	correct_objects						();
+	if (!correct_objects())
+	{
+		m_cross_table = 0;
+		m_level_graph = 0;
+		xr_delete(m_graph_engine);
+		return false;
+	}
 	generate_artefact_spawn_positions	();
 	correct_level_changers				();
-	verify_space_restrictors			();
+//	verify_space_restrictors			();
 	
 	//xr_delete							(m_level_graph);
 	m_cross_table						= 0;
 	m_level_graph = 0;
 	xr_delete							(m_graph_engine);
+	Msg("Spawn build completed time %3.2f", Timer.GetElapsed_sec());
+	return true;
 }
 
-void CLevelSpawnConstructor::update								()
+bool CLevelSpawnConstructor::update								()
 {
-	fill_level_changers					();
+	//fill_level_changers					();
 	update_artefact_spawn_positions		();
+	return true;
 }
 
 void CLevelSpawnConstructor::verify_space_restrictors			()

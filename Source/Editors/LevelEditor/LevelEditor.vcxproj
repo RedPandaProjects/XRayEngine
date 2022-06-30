@@ -63,6 +63,7 @@
     <ClCompile Include="Editor\Entry\StaticObject\SceneObject.cpp" />
     <ClCompile Include="Editor\Entry\StaticObject\SceneObjectIO.cpp" />
     <ClCompile Include="Editor\Entry\WayPoint\WayPoint.cpp" />
+    <ClCompile Include="Editor\Scene\CFromBuilder.cpp" />
     <ClCompile Include="Editor\Scene\LEPhysics.cpp" />
     <ClCompile Include="Editor\Scene\scene.cpp" />
     <ClCompile Include="Editor\Scene\SceneIO.cpp" />
@@ -237,6 +238,7 @@
     <ClInclude Include="Editor\Entry\Spawn\SpawnPoint.h" />
     <ClInclude Include="Editor\Entry\StaticObject\SceneObject.h" />
     <ClInclude Include="Editor\Entry\WayPoint\WayPoint.h" />
+    <ClInclude Include="Editor\Scene\CFromBuilder.h" />
     <ClInclude Include="Editor\Scene\LEPhysics.h" />
     <ClInclude Include="Editor\Scene\mesh_data.h" />
     <ClInclude Include="Editor\Scene\scene.h" />

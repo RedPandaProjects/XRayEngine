@@ -6,57 +6,21 @@
 #pragma hdrstop
 
 #include "ELog.h"
-#if 1
-	#include "UILogForm.h"
-	#include "ui_main.h"
-	void  ELogCallback(LPCSTR txt)
-	{
-    	if (0==txt[0]) return;
-    	bool bDlg 		= ('#'==txt[0])||((0!=txt[1])&&('#'==txt[1]));
-        TMsgDlgType mt	= ('!'==txt[0])||((0!=txt[1])&&('!'==txt[1]))?mtError:mtInformation;
-        if (('!'==txt[0])||('#'==txt[0])) txt++;
-        if (('!'==txt[0])||('#'==txt[0])) txt++;
-		if (bDlg)		UILogForm::AddDlgMessage	(mt,txt);
-        else			UILogForm::AddMessage		(mt,txt);
-	}
-#endif
-#ifdef _LW_EXPORT
-	#include <lwhost.h>
-	extern "C" LWMessageFuncs	*g_msg;
-	void ELogCallback(LPCSTR txt)
-	{
-		if (0==txt[0])	return;
-		bool bDlg 		= ('#'==txt[0])||((0!=txt[1])&&('#'==txt[1]));
-		if (bDlg){
-			int mt		= ('!'==txt[0])||((0!=txt[1])&&('!'==txt[1]))?1:0;
-			if (('!'==txt[0])||('#'==txt[0])) txt++;
-			if (('!'==txt[0])||('#'==txt[0])) txt++;
-			if (mt==1)	g_msg->error(txt,0);
-			else		g_msg->info(txt,0);
-		}
-	}
-#endif
-#ifdef _MAX_EXPORT
-	#include "NetDeviceLog.h"
-	void ELogCallback(LPCSTR txt)
-	{
- 		if (0!=txt[0]){
-			if (txt[0]=='!')EConsole.print(mtError,txt+1);
-			else			EConsole.print(mtInformation,txt);
-		}
-	}
-#endif
-#ifdef _MAYA_PLUGIN
-	void ELogCallback(LPCSTR txt)
-	{
- 		if (0!=txt[0]){
-			if (txt[0]=='!')std::cerr << "XR-Error: " << txt+1 << "\n";
-			else			std::cerr << "XR-Info: " << txt << "\n";
-		}
-//.		MStringArray res;
-//		MGlobal::executeCommand("confirmDialog -title \"Error\" -message \"Mesh have non-triangulated polygon.\" -button \"Ok\" -defaultButton \"Ok\"",res);
-	}
-#endif
+#include "UILogForm.h"
+#include "ui_main.h"
+void  ELogCallback(LPCSTR txt)
+{
+	if (0 == txt[0]) return;
+	bool bDlg = ('#' == txt[0]) || ((0 != txt[1]) && ('#' == txt[1]));
+	TMsgDlgType mt = ('!' == txt[0]) || ((0 != txt[1]) && ('!' == txt[1])) ? mtError : mtInformation;
+	if (('!' == txt[0]) || ('#' == txt[0])) txt++;
+	if (('!' == txt[0]) || ('#' == txt[0])) txt++;
+	if (bDlg)		UILogForm::AddDlgMessage(mt, txt);
+	else			UILogForm::AddMessage(mt, txt);
+	if(UI)
+	UI->WriteConsole(mt, txt);
+
+}
 
 //----------------------------------------------------
 CLog ELog;

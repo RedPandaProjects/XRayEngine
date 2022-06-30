@@ -103,6 +103,7 @@ void ESceneAIMapTool::OnRender(int priority, bool strictB2F)
                                     pv->set(v4); pv++;
                                     pv->set(v3); pv++;
                                     cnt+=6;
+                                    
                                     if (cnt>=block_size-6){
                                         Stream->Unlock	(cnt,m_RGeom->vb_stride);
                                         EDevice->DP		(D3DPT_TRIANGLELIST,m_RGeom,vBase,cnt/3);

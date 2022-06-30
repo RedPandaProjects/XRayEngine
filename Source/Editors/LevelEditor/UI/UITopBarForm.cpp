@@ -98,18 +98,21 @@ void  UITopBarForm::ClickLevelPlay()
 }
 void  UITopBarForm::ClickLevelSimulate()
 {
-	Scene->Play();
+	Scene->Play(); 
 }
 void UITopBarForm::ClickCForm()
 {
+	Scene->BuildCForm();
 
 }
 void UITopBarForm::ClickAIMap()
 {
+	Scene->BuildAIMap();
 
 }
 void UITopBarForm::ClickGGraph()
 {
+	Scene->BuildGameGraph();
 
 }
 void UITopBarForm::ClickSRestrictor()

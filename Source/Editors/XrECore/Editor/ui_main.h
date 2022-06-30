@@ -235,6 +235,10 @@ public:
 	void 			ProgressEnd			(SPBItem*&);
     virtual void	ProgressDraw();
     SPBItem*		ProgressLast		(){return m_ProgressItems.empty()?0:m_ProgressItems.back();}
+
+	void ShowConsole();
+    void WriteConsole(TMsgDlgType mt, const char* txt);
+    void CloseConsole();
 public:
     ref_rt				RT;
     ref_rt				ZB;

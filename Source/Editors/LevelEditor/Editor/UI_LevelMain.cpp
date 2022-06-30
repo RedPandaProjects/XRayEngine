@@ -1300,10 +1300,20 @@ void CLevelMain::OnStats(CGameFont* font)
     float Height = font->GetHeight();
     font->SetColor(color_rgba(255, 0, 0, 255));
     font->SetHeight(14);
-	font->OutNext("NEED REBUILD CFORM");
-	font->OutNext("NEED REBUILD AIMAP");
-	font->OutNext("NEED REBUILD GAME GRAPH");
-	font->OutNext("NEED REBUILD SPACE RESTRICTOR");
+    if (!Scene->m_RTFlags.is(EScene::flIsBuildedCForm))
+    {
+		font->OutNext("NEED REBUILD CFORM");
+    }
+	if (!Scene->m_RTFlags.is(EScene::flIsBuildedAIMap))
+	{
+        font->OutNext("NEED REBUILD AIMAP");
+	}
+	if (!Scene->m_RTFlags.is(EScene::flIsBuildedGameGraph))
+	{
+        font->OutNext("NEED REBUILD GAME GRAPH");
+	}
+
+
 	font->SetHeight(Height);
 }
 

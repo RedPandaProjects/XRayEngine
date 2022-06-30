@@ -543,7 +543,7 @@ void CGameGraphBuilder::build_game_graph()
 
 }
 
-void CGameGraphBuilder::build_graph	()
+bool CGameGraphBuilder::build_graph	()
 {
 	Msg					("Building level game graph");
 	
@@ -556,12 +556,17 @@ void CGameGraphBuilder::build_graph	()
 //	Msg						("%f",timer.GetElapsed_sec());
 	load_graph_points		();
 //	Msg						("%f",timer.GetElapsed_sec());
+
+	if (graph().vertices().size() == 0)
+	{
+		Msg("! GameGraph points not found on level!");
+		return false;
+	}
+
 	build_cross_table		();
 //	Msg						("%f",timer.GetElapsed_sec());
 	build_game_graph				();
 //	Msg						("%f",timer.GetElapsed_sec());
-	
-
 
 
 	IGameGraph::CHeader GameGraphHeader;
@@ -643,5 +648,5 @@ void CGameGraphBuilder::build_graph	()
 
 
 	Msg						("Level graph is generated successfully");
+	return true;
 }
-

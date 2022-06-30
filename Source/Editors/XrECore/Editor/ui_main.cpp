@@ -687,8 +687,54 @@ void TUI::ProgressDraw()
         string2048 out;
         xr_sprintf(out,"[%d%%]%s\r\n", val, txt.c_str());
         DWORD  dw;
-        WriteConsole(m_HConsole, out, xr_strlen(out), &dw, NULL);
+        SetConsoleTextAttribute(m_HConsole, 10);
+        ::WriteConsole(m_HConsole, out, xr_strlen(out), &dw, NULL);
     }
+}
+
+void TUI::ShowConsole()
+{
+	if (!m_HConsole)
+	{
+		AllocConsole();
+		m_HConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+		SetConsoleTextAttribute(m_HConsole, 15);
+	}
+}
+
+void TUI::WriteConsole(TMsgDlgType mt, const char* txt)
+{
+    if (m_HConsole)
+	{
+		switch (mt)
+		{
+		case mtError:
+			SetConsoleTextAttribute(m_HConsole, 12);
+            break;
+		case mtInformation:
+			SetConsoleTextAttribute(m_HConsole, 11);
+            break;
+		case mtConfirmation:
+			SetConsoleTextAttribute(m_HConsole, 14);
+            break;
+        default:
+            SetConsoleTextAttribute(m_HConsole,15);
+            break;
+        }
+
+		DWORD  dw;
+		::WriteConsole(m_HConsole, txt, xr_strlen(txt), &dw, NULL);
+		::WriteConsole(m_HConsole, "\r\n", 2, &dw, NULL);
+    }
+}
+
+void TUI::CloseConsole()
+{
+	if (m_ProgressItems.size() == 0)
+	{
+		FreeConsole();
+		m_HConsole = 0;
+	}
 }
 
 void TUI::OnDrawUI()

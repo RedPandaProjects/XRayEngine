@@ -274,7 +274,7 @@ void	__cdecl			thread_entry	(void*	_params )	{
 	entry				(arglist);
 }
 
-void	thread_spawn	(thread_t*	entry, const char*	name, unsigned	stack, void* arglist )
+HANDLE	thread_spawn	(thread_t*	entry, const char*	name, unsigned	stack, void* arglist )
 {
 	Debug._initialize	(false);
 
@@ -282,7 +282,7 @@ void	thread_spawn	(thread_t*	entry, const char*	name, unsigned	stack, void* argl
 	startup->entry		= entry;
 	startup->name		= (char*)name;
 	startup->args		= arglist;
-	_beginthread		(thread_entry,stack,startup);
+	return (HANDLE)_beginthread(thread_entry, stack, startup);
 }
 
 XRCORE_API void spline1	( float t, Fvector *p, Fvector *ret )

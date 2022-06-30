@@ -25,7 +25,7 @@ class CSpaceRestrictorWrapper;
 class CPatrolPathStorage;
 class ISE_ALifeDynamicObject;
 
-class CLevelSpawnConstructor : public CThread {
+class CLevelSpawnConstructor  {
 public:
 	typedef SpawnConstructorSpace::LEVEL_POINT_STORAGE			LEVEL_POINT_STORAGE;
 	typedef  xr_vector<ISE_ALifeLevelChanger*>					LEVEL_CHANGER_STORAGE;
@@ -56,9 +56,9 @@ private:
 
 protected:
 			void						init								();
-			void						load_objects						();
+			bool						load_objects						();
 //			void						fill_spawn_groups					();
-			void						correct_objects						();
+			bool						correct_objects						();
 			void						generate_artefact_spawn_positions	();
 			void						correct_level_changers				();
 			void						verify_space_restrictors			();
@@ -85,11 +85,16 @@ protected:
 public:
 	IC									CLevelSpawnConstructor				(const IGameGraph::SLevel &level, CGameSpawnConstructor *game_spawn_constructor, bool no_separator_check);
 	virtual								~CLevelSpawnConstructor				();
-	virtual void						Execute								();
+	virtual bool						Execute								();
 	IC		ISE_ALifeCreatureActor		*actor								() const;
 	IC		const IGameGraph::SLevel	&level								() const;
-			void						update								();
+			bool						update								();
 	IC		CGameSpawnConstructor		&game_spawn_constructor				() const;
+private:
+	static void					ThreadGenerateArtefactSpawnPositionStartup(void* args);
+	void						generate_artefact_spawn_positions_worker();
+	volatile UINT32				m_generate_artefact_spawn_positions_worker_counter;
+	xrCriticalSection			m_generate_artefact_spawn_positions_worker_mutex;
 };
 
 #include "level_spawn_constructor_inline.h"

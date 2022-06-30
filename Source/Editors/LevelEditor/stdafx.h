@@ -147,6 +147,7 @@
 #include "Editor/Tools/WayPoint/ESceneWayControls.h"
 #include "Editor/Tools/Glow/ESceneGlowTools.h"
 
+#include "Editor/Scene/CFromBuilder.h"
 #include "Editor/Scene/scene.h"
 #include "Editor/Scene/SceneGraph.h"
 #include "Editor/Scene/SceneSummaryInfo.h"

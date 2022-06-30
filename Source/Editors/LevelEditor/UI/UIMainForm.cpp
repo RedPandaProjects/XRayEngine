@@ -162,9 +162,208 @@ void UIMainForm::DrawRenderToolBar(ImVec2 Size)
         ImGui::BeginGroup();
         m_tMenu->Load();
         {
+			if (ImGui::BeginPopupContextItem("MenuScene"))
+			{
+				if (ImGui::BeginMenu("Render"))
+				{
+					if (ImGui::BeginMenu("Quality"))
+					{
+						static bool selected[4] = { false,false,true,false };
+						if (ImGui::MenuItem("25%", "", &selected[0]))
+						{
+							selected[1] = selected[2] = selected[3] = false;
+							UI->SetRenderQuality(1 / 4.f);
+							UI->RedrawScene();
+						}
+						if (ImGui::MenuItem("50%", "", &selected[1]))
+						{
+							selected[0] = selected[2] = selected[3] = false;
+							UI->SetRenderQuality(1 / 2.f);
+							UI->RedrawScene();
+						}
+						if (ImGui::MenuItem("100%", "", &selected[2]))
+						{
+							selected[1] = selected[0] = selected[3] = false;
+							UI->SetRenderQuality(1.f);
+							UI->RedrawScene();
+						}
+						if (ImGui::MenuItem("200%", "", &selected[3]))
+						{
+							selected[1] = selected[2] = selected[0] = false;
+							UI->SetRenderQuality(2.f);
+							UI->RedrawScene();
+						}
+						ImGui::EndMenu();
+					}
+					if (ImGui::BeginMenu("Fill Mode"))
+					{
+						bool selected[3] = { EDevice->dwFillMode == D3DFILL_POINT,EDevice->dwFillMode == D3DFILL_WIREFRAME,EDevice->dwFillMode == D3DFILL_SOLID };
+						if (ImGui::MenuItem("Point", "", &selected[0]))
+						{
+							EDevice->dwFillMode = D3DFILL_POINT;
+							UI->RedrawScene();
+						}
+						if (ImGui::MenuItem("Wireframe", "", &selected[1]))
+						{
+							EDevice->dwFillMode = D3DFILL_WIREFRAME;
+							UI->RedrawScene();
+						}
+						if (ImGui::MenuItem("Solid", "", &selected[2]))
+						{
+							EDevice->dwFillMode = D3DFILL_SOLID;
+							UI->RedrawScene();
+						}
+						ImGui::EndMenu();
+					}
+					if (ImGui::BeginMenu("Shader Mode"))
+					{
+						bool selected[2] = { EDevice->dwShadeMode == D3DSHADE_FLAT,EDevice->dwShadeMode == D3DSHADE_GOURAUD };
+						if (ImGui::MenuItem("Flat", "", &selected[0]))
+						{
+							EDevice->dwShadeMode = D3DSHADE_FLAT;
+							UI->RedrawScene();
+						}
+						if (ImGui::MenuItem("Gouraud", "", &selected[1]))
+						{
+							EDevice->dwShadeMode = D3DSHADE_GOURAUD;
+							UI->RedrawScene();
+						}
+						ImGui::EndMenu();
+					}
+					{
+						bool selected = psDeviceFlags.test(rsEdgedFaces);
+						if (ImGui::MenuItem("Edged Faces", "", &selected))
+						{
+							psDeviceFlags.set(rsEdgedFaces, selected);
+							UI->RedrawScene();
+						}
+					}
+					ImGui::Separator();
+					{
+						bool selected = !HW.Caps.bForceGPU_SW;
+						if (ImGui::MenuItem("RenderHW", "", &selected))
+						{
+							HW.Caps.bForceGPU_SW = !selected;
+							UI->Resize();
+						}
+					}
+					ImGui::Separator();
+					{
+						bool selected = psDeviceFlags.test(rsFilterLinear);
+						if (ImGui::MenuItem("Filter Linear", "", &selected))
+						{
+							psDeviceFlags.set(rsFilterLinear, selected);
+							UI->RedrawScene();
+						}
+					}
+					{
+						bool selected = psDeviceFlags.test(rsRenderTextures);
+						if (ImGui::MenuItem("Textures", "", &selected))
+						{
+							psDeviceFlags.set(rsRenderTextures, selected);
+							UI->RedrawScene();
+						}
+					}
+					ImGui::EndMenu();
+				}
+				ImGui::Separator();
+				{
+					bool selected = psDeviceFlags.test(rsDrawSafeRect);
+					if (ImGui::MenuItem("Draw Safe Rect", "", &selected))
+					{
+						psDeviceFlags.set(rsDrawSafeRect, selected);
+						UI->RedrawScene();
+					}
+				}
+				{
+					bool selected = psDeviceFlags.test(rsDrawGrid);
+					if (ImGui::MenuItem("Draw Grid", "", &selected))
+					{
+						psDeviceFlags.set(rsDrawGrid, selected);
+						UI->RedrawScene();
+					}
+				}
+				ImGui::Separator();
+				{
+					bool selected = psDeviceFlags.test(rsFog);
+					if (ImGui::MenuItem("Fog", "", &selected))
+					{
+						psDeviceFlags.set(rsFog, selected);
+						UI->RedrawScene();
+					}
+				}
+				{
+					if (ImGui::BeginMenu("Environment"))
+					{
+						bool selected = !psDeviceFlags.test(rsEnvironment);
+						if (ImGui::MenuItem("None", "", &selected))
+						{
+							psDeviceFlags.set(rsEnvironment, false);
+							UI->RedrawScene();
+						}
+						ImGui::Separator();
+						for (auto& i : g_pGamePersistent->Environment().WeatherCycles)
+						{
+							selected = psDeviceFlags.test(rsEnvironment) && i.first == g_pGamePersistent->Environment().CurrentCycleName;
+							if (ImGui::MenuItem(i.first.c_str(), "", &selected))
+							{
+								psDeviceFlags.set(rsEnvironment, true);
+								g_pGamePersistent->Environment().SetWeather(i.first.c_str(), true);
+								UI->RedrawScene();
+							}
+						}
+
+						ImGui::EndMenu();
+					}
+				}
+				ImGui::Separator();
+				{
+					bool selected = psDeviceFlags.test(rsLighting);;
+					if (ImGui::MenuItem("Lighting", "", &selected))
+					{
+						psDeviceFlags.set(rsLighting, selected);
+						UI->RedrawScene();
+					}
+				}
+				{
+					bool selected = psDeviceFlags.test(rsMuteSounds);
+					if (ImGui::MenuItem("Mute Sounds", "", &selected))
+					{
+						psDeviceFlags.set(rsMuteSounds, selected);
+					}
+				}
+				{
+					bool selected = psDeviceFlags.test(rsRenderRealTime);
+					if (ImGui::MenuItem("Real Time", "", &selected))
+					{
+						psDeviceFlags.set(rsRenderRealTime, selected);
+					}
+				}
+				ImGui::Separator();
+				{
+					bool selected = psDeviceFlags.test(rsStatistic);
+					if (ImGui::MenuItem("Stats", "", &selected)) { psDeviceFlags.set(rsStatistic, selected);  UI->RedrawScene(); }
+
+				}
+				ImGui::Separator();
+				if (ImGui::MenuItem("Preferences", "")) { ExecCommand(COMMAND_EDITOR_PREF); }
+				ImGui::Separator();
+				if (ImGui::MenuItem("ReloadLTX", ""))
+				{
+					xr_delete(pSettings);
+					string_path 			si_name;
+					FS.update_path(si_name, "$game_config$", "system.ltx");
+					pSettings = xr_new<CInifile>(si_name, TRUE);// FALSE,TRUE,TRUE);
+					xr_delete(pGameIni);
+					string_path					fname;
+					FS.update_path(fname, "$game_config$", "game.ltx");
+					pGameIni = xr_new<CInifile>(fname, TRUE);
+				}
+				ImGui::EndPopup();
+			}
             if (ImGui::ImageButton(m_tMenu->surface_get(), ImVec2(16, ImGui::GetFontSize())))
-            {
-               
+			{
+				ImGui::OpenPopup("MenuScene");
             }
         }
         ImGui::EndGroup();
