@@ -199,7 +199,14 @@ void xrDebug::backend	(const char *expression, const char *description, const ch
 #		ifdef USE_BUG_TRAP
 				BT_SetUserMessage	(assertion_info);
 #		endif // USE_BUG_TRAP
-				DEBUG_INVOKE;
+				if (IsDebuggerPresent())
+				{
+					__debugbreak();
+				}
+				else
+				{
+					exit(-1);
+				}
 				break;
 			}
 			case IDTRYAGAIN : {
@@ -211,7 +218,7 @@ void xrDebug::backend	(const char *expression, const char *description, const ch
 				ignore_always	= true;
 				break;
 			}
-			default : NODEFAULT;
+			default : 		exit(-1);
 		}
 #	else // USE_OWN_ERROR_MESSAGE_WINDOW
 #		ifdef USE_BUG_TRAP
