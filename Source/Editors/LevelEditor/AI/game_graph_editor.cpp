@@ -57,3 +57,34 @@ void CGameGraphEditor::set_cross_table(IGameLevelCrossTable* cross_table)
 	m_current_level_some_vertex_id = 0;
 	m_current_level_cross_table = cross_table;
 }
+
+void CGameGraphEditor::save(IWriter& stream)
+{
+	m_header.save(&stream);
+	size_t EdgeOffset =header().vertex_count() * sizeof(CVertex);
+	for (size_t i = 0; i < header().vertex_count(); i++)
+	{
+		m_nodes[i].dwEdgeOffset += EdgeOffset;
+	}
+
+	stream.w(m_nodes, header().vertex_count() * sizeof(CVertex));
+
+	stream.w(m_edges, header().edge_count() * sizeof(IGameGraph::CEdge));
+
+	GameGraph::LEVEL_MAP::const_iterator	I = header().levels().begin();
+	GameGraph::LEVEL_MAP::const_iterator	E = header().levels().end();
+	for (; I != E; ++I) 
+	{
+		u32						size = m_current_level_cross_table->header().level_vertex_count();
+		stream.w_u32(size * sizeof(IGameLevelCrossTable::CCell) + sizeof(IGameLevelCrossTable::CHeader) + 1);
+		stream.w(&m_current_level_cross_table->header(), sizeof(IGameLevelCrossTable::CHeader));
+		for (size_t i = 0; i < size; i++)
+		{
+			stream.w(&m_current_level_cross_table->vertex(i), sizeof(IGameLevelCrossTable::CCell));
+		}
+	}
+	for (size_t i = 0; i < header().vertex_count(); i++)
+	{
+		m_nodes[i].dwEdgeOffset -= EdgeOffset;
+	}
+}

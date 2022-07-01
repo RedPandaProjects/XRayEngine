@@ -336,6 +336,7 @@ public:
 	bool BuildAIMap();
 	bool BuildGameGraph();
 	bool BuildCForm();
+	bool BuildForPCPlay();
 
 	virtual bool RayPick(const Fvector& start, const Fvector& dir, float& dist, Fvector* pt = 0, Fvector* n = 0);
 protected:

@@ -1,14 +1,21 @@
 #include "stdafx.h"
+#include "UITopBarForm.h"
 
 UITopBarForm::UITopBarForm()
 {
 	m_tUndo = EDevice->Resources->_CreateTexture("ed\\bar\\Undo"); m_timeUndo = 0;
 	m_tRedo = EDevice->Resources->_CreateTexture("ed\\bar\\Redo"); m_timeRedo = 0;
+	m_tNew = EDevice->Resources->_CreateTexture("ed\\bar\\new");
+	m_tOpen = EDevice->Resources->_CreateTexture("ed\\bar\\open");
+	m_tSave= EDevice->Resources->_CreateTexture("ed\\bar\\save");
 	m_tCForm = EDevice->Resources->_CreateTexture("ed\\bar\\CForm");
 	m_tAIMap = EDevice->Resources->_CreateTexture("ed\\bar\\AIMap");
 	m_tGGraph = EDevice->Resources->_CreateTexture("ed\\bar\\GGraph");
+	m_tPlayInEditor = EDevice->Resources->_CreateTexture("ed\\bar\\play_in_editor");
+	m_tPlayPC = EDevice->Resources->_CreateTexture("ed\\bar\\play_pc");
 	m_VerifySpaceRestrictors = false;
 	RefreshBar();
+	m_GameProcess.hProcess = nullptr;
 }
 
 UITopBarForm::~UITopBarForm()
@@ -53,6 +60,21 @@ void UITopBarForm::Draw()
 			ClickRedo();
 		}ImGui::SameLine();
 
+		m_tNew->Load();
+		if (ImGui::ImageButton(m_tNew->surface_get(), ImVec2(20, 20), ImVec2(0, 0), ImVec2(1, 1), 0))
+		{
+			ClickNew();
+		}ImGui::SameLine();
+		m_tOpen->Load();
+		if (ImGui::ImageButton(m_tOpen->surface_get(), ImVec2(20, 20), ImVec2(0, 0), ImVec2(1, 1), 0))
+		{
+			ClickOpen();
+		}ImGui::SameLine();
+		m_tSave->Load();
+		if (ImGui::ImageButton(m_tSave->surface_get(), ImVec2(20, 20), ImVec2(0, 0), ImVec2(1, 1), 0))
+		{
+			ClickSave();
+		}ImGui::SameLine();
 		m_tCForm->Load();
 		if (ImGui::ImageButton(m_tCForm->surface_get(), ImVec2(20, 20), ImVec2(0, 0), ImVec2(1, 1), 0))
 		{
@@ -69,7 +91,11 @@ void UITopBarForm::Draw()
 			ClickGGraph();
 		}ImGui::SameLine();
 
-		if (ImGui::Button("Play", ImVec2(0, 20))) { ClickLevelPlay(); }
+		m_tPlayInEditor->Load();
+		if (ImGui::ImageButton(m_tPlayInEditor->surface_get(), ImVec2(20, 20), ImVec2(0, 0), ImVec2(1, 1), 0))
+		{
+			ClickPlayInEditor();
+		}
 		{
 			ImGui::SameLine(0,0);
 			if (ImGui::ArrowButton("##PlaySettings", ImGuiDir_Down, ImVec2(ImGui::GetFrameHeight(), 20),0))
@@ -82,10 +108,36 @@ void UITopBarForm::Draw()
 				ImGui::EndPopup();
 			}
 		}
+		ImGui::SameLine();
+		m_tPlayPC->Load();
+		if (ImGui::ImageButton(m_tPlayPC->surface_get(), ImVec2(20, 20), ImVec2(0, 0), ImVec2(1, 1), 0))
+		{
+			ClickPlayPC();
+		}
 	}
 	ImGui::SameLine(0,1);
 	ImGui::End();
 	ImGui::PopStyleVar(5);
+	if (m_GameProcess.hProcess)
+	{ 
+
+		DWORD ExitCode = 0;
+		if (GetExitCodeProcess(m_GameProcess.hProcess, &ExitCode) == 0)
+		{
+			Msg("! Cannot return exit code in game process (%d).\n", GetLastError());
+			m_GameProcess.hProcess = 0;
+			
+		}
+		else
+		{
+			if (ExitCode != STILL_ACTIVE)
+			{
+				CloseHandle(m_GameProcess.hProcess);
+				CloseHandle(m_GameProcess.hThread);
+				m_GameProcess.hProcess = 0;
+			}
+		}
+	}
 }
 void UITopBarForm::RefreshBar()
 {/*
@@ -120,13 +172,18 @@ void UITopBarForm::ClickRedo()
 {
 	ExecCommand(COMMAND_REDO);
 }
-void  UITopBarForm::ClickLevelPlay()
+
+void UITopBarForm::ClickNew()
 {
-	Scene->Play();
+	ExecCommand(COMMAND_CLEAR);
 }
-void  UITopBarForm::ClickLevelSimulate()
+void UITopBarForm::ClickOpen()
 {
-	Scene->Play(); 
+	ExecCommand(COMMAND_LOAD);
+}
+void UITopBarForm::ClickSave()
+{
+	ExecCommand(COMMAND_SAVE, xr_string(LTools->m_LastFileName.c_str()));
 }
 void UITopBarForm::ClickCForm()
 {
@@ -142,6 +199,46 @@ void UITopBarForm::ClickGGraph()
 {
 	Scene->BuildGameGraph();
 
+}
+void UITopBarForm::ClickPlayInEditor()
+{
+	Scene->Play();
+}
+void UITopBarForm::ClickPlayPC()
+{
+	if (m_GameProcess.hProcess)
+		return;
+
+	if (!Scene->BuildForPCPlay())
+		return;
+
+	m_GameProcess = {};
+	STARTUPINFO si = {};
+
+	ZeroMemory(&si, sizeof(si));
+	si.cb = sizeof(si);
+	ZeroMemory(&m_GameProcess, sizeof(m_GameProcess));
+
+
+	string_path CommandLine;
+	xr_sprintf(CommandLine, "Xr3DA.exe -editor_scene -start server(editor/single/alife/new) client(localhost) -nointro -noprefetch");
+	Msg("~ Run Game %s.\n", CommandLine);
+	// Start the child process. 
+	if (!CreateProcess(NULL,   // No module name (use command line)
+		CommandLine,        // Command line
+		NULL,           // Process handle not inheritable
+		NULL,           // Thread handle not inheritable
+		FALSE,          // Set handle inheritance to FALSE
+		0,              // No creation flags
+		NULL,           // Use parent's environment block
+		NULL,           // Use parent's starting directory 
+		&si,            // Pointer to STARTUPINFO structure
+		&m_GameProcess)           // Pointer to PROCESS_INFORMATION structure
+		)
+	{
+		Msg("! PlayPC:CreateProcess failed (%d).\n", GetLastError());
+		return;
+	}
 }
 /*
 void UITopBarForm::ClickZoom()

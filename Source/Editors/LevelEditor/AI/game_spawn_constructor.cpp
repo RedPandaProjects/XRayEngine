@@ -221,8 +221,7 @@ bool CGameSpawnConstructor::save_spawn				(LPCSTR name, LPCSTR output)
 	m_game_graph->save				(stream);
 	stream.close_chunk				();
 
-	stream.save_to					(*spawn_name(output));
-	return true;
+	return	stream.save_to(*spawn_name(output));
 }
 
 bool CGameSpawnConstructor::save_spawn(LPCSTR name, CMemoryWriter& stream)
