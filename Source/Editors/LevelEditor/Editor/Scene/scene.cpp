@@ -241,6 +241,23 @@ void EScene::OnFrame( float dT )
 
     if(m_RTFlags.test(flUpdateSnapList) )
 		UpdateSnapListReal();    
+    if (m_RTFlags.test(flIsStopPlayInEditor))
+    {
+        m_RTFlags.set(flIsStopPlayInEditor, FALSE);
+        if (IsPlayInEditor())
+        {
+			ShowCursor(TRUE);
+			g_pGameLevel->IR_Release();
+			Device->seqParallel.clear_not_free();
+			g_pGameLevel->net_Stop();
+			Device->seqParallel.clear_not_free();
+			DEL_INSTANCE(g_pGameLevel);
+			DEL_INSTANCE(g_hud);
+			GetTool(OBJCLASS_SPAWNPOINT)->m_EditFlags.set(ESceneToolBase::flVisible, true);
+			UI->RedrawScene();
+        }
+	
+    }
 }
 
 void EScene::Reset()
@@ -680,13 +697,7 @@ bool EScene::IsPlayInEditor()
 void EScene::Stop()
 {
     if (!IsPlayInEditor())return;
-    ShowCursor(TRUE);
-    g_pGameLevel->IR_Release();
-    g_pGameLevel->net_Stop();
-    DEL_INSTANCE(g_pGameLevel);
-    DEL_INSTANCE(g_hud);
-    GetTool(OBJCLASS_SPAWNPOINT)->m_EditFlags.set(ESceneToolBase::flVisible, true);
-    UI->RedrawScene();
+    m_RTFlags.set(flIsStopPlayInEditor, TRUE);
 }
 
 void EScene::LoadCFrom(CObjectSpace* Space, CDB::build_callback cb)
@@ -767,6 +778,7 @@ bool EScene::BuildCForm()
 
     return true;
 }
+
 
 bool EScene::RayPick(const Fvector& start, const Fvector& dir, float& dis ,Fvector* pt, Fvector* n)
 {
