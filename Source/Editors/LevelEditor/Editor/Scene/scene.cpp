@@ -602,14 +602,22 @@ void EScene::OnRTFlagsChange	(PropValue* sender)
     ExecCommand(COMMAND_UPDATE_PROPERTIES);
 }
 
+void EScene::OnNameChange(PropValue* sender)
+{
+	m_RTFlags.set(flIsBuildedGameGraph, false); m_game_graph.clear();
+    UI->RedrawScene();
+}
+
 
 void EScene::FillProp(LPCSTR pref, PropItemVec& items, ObjClassID cls_id)
 {
 	PHelper().CreateCaption		(items,PrepareKey(pref,"Scene\\Name"),			LTools->m_LastFileName.c_str());
+
     PHelper().CreateRText		(items,PrepareKey(pref,"Scene\\Name prefix"),	&m_LevelOp.m_LevelPrefix);
 
     PropValue* V;
-    PHelper().CreateRText		(items,PrepareKey(pref,"Scene\\Build options\\Level path"),		&m_LevelOp.m_FNLevelPath);
+    auto NaneProp = PHelper().CreateRText		(items,PrepareKey(pref,"Scene\\Build options\\Level path"),		&m_LevelOp.m_FNLevelPath);
+    NaneProp->OnChangeEvent.bind(this, &EScene::OnNameChange);
     PHelper().CreateRText		(items,PrepareKey(pref,"Scene\\Build options\\Custom data"),	&m_LevelOp.m_BOPText);
     PHelper().CreateRText		(items,PrepareKey(pref,"Scene\\Map version"),					&m_LevelOp.m_map_version);
 

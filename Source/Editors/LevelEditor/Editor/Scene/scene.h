@@ -133,6 +133,7 @@ protected:
 
 	void  	OnBuildControlClick(ButtonValue* sender, bool& bModif, bool& bSafe);
 	void  	OnRTFlagsChange(PropValue* sender);
+	void  	OnNameChange(PropValue* sender);
 public:
 	enum {
 		flRT_Unsaved = (1 << 0),
