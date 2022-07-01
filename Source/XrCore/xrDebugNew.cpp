@@ -45,7 +45,7 @@ extern bool shared_str_initialized;
 #include <new.h>							// for _set_new_mode
 #include <signal.h>							// for signals
 
-#ifdef MASTER_GOLD
+#ifndef MASTER_GOLD
 #	define USE_OWN_ERROR_MESSAGE_WINDOW
 #else // DEBUG
 #	define USE_OWN_MINI_DUMP
@@ -147,11 +147,11 @@ void xrDebug::do_exit	(const std::string &message)
 
 void xrDebug::backend	(const char *expression, const char *description, const char *argument0, const char *argument1, const char *file, int line, const char *function, bool &ignore_always)
 {
-	if (IsDebuggerPresent())
+	/*if (IsDebuggerPresent())
 	{
 		DebugBreak();
 		return;
-	}
+	}*/
 		static xrCriticalSection CS
 #ifdef PROFILE_CRITICAL_SECTIONS
 	(MUTEX_PROFILE_ID(xrDebug::backend))
@@ -188,7 +188,7 @@ void xrDebug::backend	(const char *expression, const char *description, const ch
 #	ifdef USE_OWN_ERROR_MESSAGE_WINDOW
 		int					result = 
 			MessageBox(
-				GetTopWindow(NULL),
+				NULL,
 				assertion_info,
 				"Fatal Error",
 				MB_CANCELTRYCONTINUE|MB_ICONERROR|MB_SYSTEMMODAL
