@@ -140,10 +140,12 @@ void CEngineAPI::InitializeNotDedicated()
 extern "C"  DLL_Pure * __cdecl xrFactory_Create(CLASS_ID clsid);
 extern "C" void		__cdecl	xrFactory_Destroy(DLL_Pure * O);
 extern "C" bool SupportsRendering();
-extern "C" bool InitializeRendering();
+extern "C" void InitializeRendering();
 #else
 extern "C" {
-	typedef bool __cdecl SupportsRendering();
+	typedef bool  SupportsRendering();
+	typedef void  InitializeRendering();
+	typedef void  xrGameInitialize();
 };
 #endif
 void CEngineAPI::Initialize(void)
@@ -153,7 +155,6 @@ void CEngineAPI::Initialize(void)
 #ifdef SHIPPING
 	//InitializeNotDedicated();
 	InitializeRendering();
-	EngineDevice->ConnectToRender();
 	pCreate = &xrFactory_Create;
 	pDestroy = &xrFactory_Destroy;
 
@@ -178,9 +179,14 @@ void CEngineAPI::Initialize(void)
 		R_ASSERT		(hRender);
 		g_current_renderer	= 1;
 	}
+	{
+		InitializeRendering* pInitializeRendering = (InitializeRendering*)GetProcAddress(hRender, "InitializeRendering");
+		R_ASSERT(pInitializeRendering);
+		pInitializeRendering();
+	}
 
 
-
+	EngineDevice->ConnectToRender();
 	// game	
 	{
 		LPCSTR			g_name	= "XrGame.dll";
@@ -199,7 +205,9 @@ void CEngineAPI::Initialize(void)
 		if (0==hGame)	R_CHK			(GetLastError());
 		R_ASSERT2		(hGame,"Game DLL raised exception during loading or there is no game DLL at all");
 		pCreate			= (Factory_Create*)		GetProcAddress(hGame,"xrFactory_Create"		);	R_ASSERT(pCreate);
-		pDestroy		= (Factory_Destroy*)	GetProcAddress(hGame,"xrFactory_Destroy"	);	R_ASSERT(pDestroy);
+		pDestroy		= (Factory_Destroy*)		GetProcAddress(hGame,"xrFactory_Destroy"		);	R_ASSERT(pDestroy);
+		xrGameInitialize* pxrGameInitialize = (xrGameInitialize*)	GetProcAddress(hGame,"xrGameInitialize"	);	R_ASSERT(pxrGameInitialize);
+		pxrGameInitialize();
 	}
 
 	//////////////////////////////////////////////////////////////////////////

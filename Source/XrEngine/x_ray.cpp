@@ -987,11 +987,15 @@ CApplication::CApplication()
 
 	// levels
 	Level_Current				= u32(-1);
+	pFontSystem = NULL;
+	ls_header[0] = '\0';
+	ls_tip_number[0] = '\0';
+	ls_tip[0] = '\0';
 	if (Device->IsEditorMode())return;
 	Level_Scan					( );
 
 	// Font
-	pFontSystem					= NULL;
+
 
 	// Register us
 	Device->seqFrame.Add			(this, REG_PRIORITY_HIGH+1000);
@@ -1003,21 +1007,25 @@ CApplication::CApplication()
 
 	// App Title
 //	app_title[ 0 ] = '\0';
-	ls_header[ 0 ] = '\0';
-	ls_tip_number[ 0 ] = '\0';
-	ls_tip[ 0 ] = '\0';
+
 }
 
 CApplication::~CApplication()
 {
-	Console->Hide				( );
+	if (Console)
+	{
+		Console->Hide();
+	}
 
 	// font
 	xr_delete					( pFontSystem		);
 
-	EngineDevice->seqFrameMT.Remove	(&SoundProcessor);
-	EngineDevice->seqFrame.Remove		(&SoundProcessor);
-	EngineDevice->seqFrame.Remove		(this);
+	if (EngineDevice)
+	{
+		EngineDevice->seqFrameMT.Remove(&SoundProcessor);
+		EngineDevice->seqFrame.Remove(&SoundProcessor);
+		EngineDevice->seqFrame.Remove(this);
+	}
 
 
 	// events

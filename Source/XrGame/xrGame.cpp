@@ -20,27 +20,22 @@ void setup_luabind_allocator();
 CSE_Abstract* F_entity_Create(LPCSTR section);
 extern "C"
 {
-
-	DLL_API DLL_Pure*	__cdecl xrFactory_Create		(CLASS_ID clsid)
+	DLL_API void __cdecl xrGameInitialize()
 	{
+		PhysicsInitialize();
+		CCC_RegisterCommands();
+		// keyboard binding
+		CCC_RegisterInput();
 
-		static bool bIsInitilize = false;
-		if (!bIsInitilize)
-		{
-			PhysicsInitialize();
-			CCC_RegisterCommands();
-			// keyboard binding
-			CCC_RegisterInput();
-
-			setup_luabind_allocator();
+		setup_luabind_allocator();
 
 #ifdef DEBUG
-			g_profiler = xr_new<CProfiler>();
+		g_profiler = xr_new<CProfiler>();
 #endif
 
-			bIsInitilize = true;
-		}
-
+	}
+	DLL_API DLL_Pure*	__cdecl xrFactory_Create		(CLASS_ID clsid)
+	{
 		DLL_Pure			*object = object_factory().client_object(clsid);
 #ifdef DEBUG
 		if (!object)
