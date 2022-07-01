@@ -20,7 +20,9 @@ private:
 	void ClickAIMap();  ref_texture m_tAIMap;
 	void ClickGGraph();  ref_texture m_tGGraph;
 	void ClickPlayInEditor();  ref_texture m_tPlayInEditor;
+	void ClickBuildAndMake(); ref_texture m_tBuildAndMake;
+	void ClickTerminated();  ref_texture m_tTerminated;
 	void ClickPlayPC();  ref_texture m_tPlayPC;
-	PROCESS_INFORMATION m_GameProcess;
+	void ClickPlayCleanGame();  ref_texture m_tPlayCleanGame;
 	bool m_VerifySpaceRestrictors;
 };

@@ -14,6 +14,7 @@ CLevelTool::CLevelTool()
     dwFogColor	= 0xffffffff;
     m_Flags.zero();
     m_ToolForm = 0;
+    m_CompilerProcess.hProcess = 0;
 }
 
 CLevelTool::~CLevelTool()
@@ -409,6 +410,45 @@ void  CLevelTool::OnFrame()
         //TfrmEditLightAnim::OnIdle();
     }
     m_Gizmo->OnFrame();
+
+    if (IsCompilerRunning())
+    {
+		DWORD ExitCode = 0;
+		if (GetExitCodeProcess(m_CompilerProcess.hProcess, &ExitCode) == 0)
+		{
+			Msg("! Cannot return exit code in compiler process (%d).\n", GetLastError());
+            m_CompilerProcess.hProcess = 0;
+
+		}
+		else
+		{
+			if (ExitCode != STILL_ACTIVE)
+			{
+				CloseHandle(m_CompilerProcess.hProcess);
+				CloseHandle(m_CompilerProcess.hThread);
+                m_CompilerProcess.hProcess = 0;
+			}
+		}
+	}  
+    if (IsGameRunning())
+	{
+		DWORD ExitCode = 0;
+		if (GetExitCodeProcess(m_GameProcess.hProcess, &ExitCode) == 0)
+		{
+			Msg("! Cannot return exit code in compiler process (%d).\n", GetLastError());
+            m_GameProcess.hProcess = 0;
+
+		}
+		else
+		{
+			if (ExitCode != STILL_ACTIVE)
+			{
+				CloseHandle(m_GameProcess.hProcess);
+				CloseHandle(m_GameProcess.hThread);
+                m_GameProcess.hProcess = 0;
+			}
+		}
+	}
 }
 
 
@@ -554,4 +594,96 @@ void   CLevelTool::Simulate()
 void   CLevelTool::UseSimulatePositions()
 {
 	/*g_scene_physics.UseSimulatePoses();*/
+}
+
+void CLevelTool::RunGame(const char* Params)
+{
+    if (IsGameRunning() || IsCompilerRunning())
+    {
+        return;
+    }
+	m_GameProcess = {};
+	STARTUPINFO si = {};
+
+	ZeroMemory(&si, sizeof(si));
+	si.cb = sizeof(si);
+	ZeroMemory(&m_GameProcess, sizeof(m_GameProcess));
+
+
+	string_path CommandLine;
+	xr_sprintf(CommandLine, "Xr3DA.exe %s", Params);
+	Msg("~ Run Game %s.\n", CommandLine);
+	// Start the child process. 
+	if (!CreateProcess(NULL,   // No module name (use command line)
+		CommandLine,        // Command line
+		NULL,           // Process handle not inheritable
+		NULL,           // Thread handle not inheritable
+		FALSE,          // Set handle inheritance to FALSE
+		0,              // No creation flags
+		NULL,           // Use parent's environment block
+		NULL,           // Use parent's starting directory 
+		&si,            // Pointer to STARTUPINFO structure
+		&m_GameProcess)           // Pointer to PROCESS_INFORMATION structure
+		)
+	{
+		Msg("! PlayPC:CreateProcess failed (%d).\n", GetLastError());
+		return;
+	}
+}
+
+void CLevelTool::RunXrLC()
+{
+	if (m_CompilerProcess.hProcess)
+		return;
+
+	if (m_GameProcess.hProcess)
+		return;
+
+	STARTUPINFO si = {};
+
+	ZeroMemory(&si, sizeof(si));
+	si.cb = sizeof(si);
+	ZeroMemory(&m_CompilerProcess, sizeof(m_CompilerProcess));
+
+
+	string_path CommandLine;
+	xr_sprintf(CommandLine, "XrLC.exe -f %s", Scene->m_LevelOp.m_FNLevelPath.c_str());
+	Msg("~ Run %s.\n", CommandLine);
+	// Start the child process. 
+	if (!CreateProcess(NULL,   // No module name (use command line)
+		CommandLine,        // Command line
+		NULL,           // Process handle not inheritable
+		NULL,           // Thread handle not inheritable
+		FALSE,          // Set handle inheritance to FALSE
+		0,              // No creation flags
+		NULL,           // Use parent's environment block
+		NULL,           // Use parent's starting directory 
+		&si,            // Pointer to STARTUPINFO structure
+		&m_CompilerProcess)           // Pointer to PROCESS_INFORMATION structure
+		)
+	{
+		Msg("! XrLC:CreateProcess failed (%d).\n", GetLastError());
+		return;
+	}
+}
+bool CLevelTool::IsCompilerRunning()
+{
+	return m_CompilerProcess.hProcess;
+}
+
+bool CLevelTool::IsGameRunning()
+{
+    return m_GameProcess.hProcess;
+}
+
+void CLevelTool::Terminated()
+{
+    if (IsGameRunning())
+    {
+        TerminateProcess(m_GameProcess.hProcess, 1);
+    }
+	if (IsCompilerRunning())
+	{
+		TerminateProcess(m_CompilerProcess.hProcess, 1);
+	}
 }

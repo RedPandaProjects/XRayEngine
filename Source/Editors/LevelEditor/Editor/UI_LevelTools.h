@@ -11,6 +11,9 @@ class TfrmObjectList;
 class CLevelTool: public CToolCustom
 {
 	typedef CToolCustom inherited;
+
+	PROCESS_INFORMATION m_CompilerProcess;
+	PROCESS_INFORMATION m_GameProcess;
     UIToolCustom*           m_ToolForm;
     int             sub_target;
     ObjClassID		target;
@@ -131,6 +134,13 @@ public:
     CCommandVar			CommandShowTarget		(CCommandVar p1, CCommandVar p2);
     CCommandVar			CommandReadonlyTarget	(CCommandVar p1, CCommandVar p2);
     CCommandVar			CommandMultiRenameObjects(CCommandVar p1,CCommandVar p2);
+public:
+    void RunGame(const char* Params = "");
+    void RunXrLC();
+	bool IsCompilerRunning();
+	bool IsGameRunning();
+	void Terminated();
+
 };
 extern CLevelTool*		LTools;
 
