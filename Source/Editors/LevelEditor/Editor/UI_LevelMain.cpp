@@ -946,7 +946,7 @@ char* CLevelMain::GetCaption()
 
 bool  CLevelMain::ApplyShortCut(DWORD Key, TShiftState Shift)
 {
-    if (Scene->IsSimulate())return true;
+    if (Scene->IsPlayInEditor())return true;
     return inherited::ApplyShortCut(Key,Shift);
 }
 
@@ -1284,14 +1284,6 @@ void CLevelMain::OnDrawUI()
 
 bool CLevelMain::KeyDown(WORD Key, TShiftState Shift)
 {
-    if (Scene->IsSimulate())
-    {
-        if (Key == VK_ESCAPE)
-        {
-            Scene->Stop();
-        }
-        return true;
-    }
     return TUI::KeyDown(Key, Shift);
 }
 
@@ -1319,3 +1311,8 @@ void CLevelMain::OnStats(CGameFont* font)
 
 
 
+
+bool CLevelMain::IsPlayInEditor()
+{
+	return Scene->IsPlayInEditor();
+}

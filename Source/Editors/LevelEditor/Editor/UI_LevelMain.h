@@ -110,6 +110,8 @@ public:
     virtual void OnDrawUI();
     bool  KeyDown(WORD Key, TShiftState Shift);
     virtual void	OnStats(CGameFont* font);
+
+    virtual bool IsPlayInEditor();
 private:
 };    
 extern CLevelMain*	LUI;

@@ -61,7 +61,7 @@ protected:
 			bool						correct_objects						();
 			void						generate_artefact_spawn_positions	();
 			void						correct_level_changers				();
-			void						verify_space_restrictors			();
+			bool						verify_space_restrictors			();
 			void						fill_level_changers					();
 			ISE_Abstract				*create_object						(IReader				*chunk);
 			void						add_graph_point						(ISE_Abstract			*abstract);

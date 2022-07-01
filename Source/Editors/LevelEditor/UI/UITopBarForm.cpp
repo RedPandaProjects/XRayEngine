@@ -2,10 +2,12 @@
 
 UITopBarForm::UITopBarForm()
 {
-
-#define ADD_BUTTON_IMAGE_S(Name)	m_t##Name = EDevice->Resources->_CreateTexture("ed\\bar\\"#Name);m_time##Name = 0;
-#define ADD_BUTTON_IMAGE_D(Name) 	m_t##Name = EDevice->Resources->_CreateTexture("ed\\bar\\"#Name);
-#include "UITopBarForm_ButtonList.h"
+	m_tUndo = EDevice->Resources->_CreateTexture("ed\\bar\\Undo"); m_timeUndo = 0;
+	m_tRedo = EDevice->Resources->_CreateTexture("ed\\bar\\Redo"); m_timeRedo = 0;
+	m_tCForm = EDevice->Resources->_CreateTexture("ed\\bar\\CForm");
+	m_tAIMap = EDevice->Resources->_CreateTexture("ed\\bar\\AIMap");
+	m_tGGraph = EDevice->Resources->_CreateTexture("ed\\bar\\GGraph");
+	m_VerifySpaceRestrictors = false;
 	RefreshBar();
 }
 
@@ -36,24 +38,50 @@ void UITopBarForm::Draw()
 	ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(4, 2));
 	ImGui::Begin("TOOLBAR", NULL, window_flags);
 	{
-#define ADD_BUTTON_IMAGE_S(Name)\
-		m_t##Name->Load();\
-		if (ImGui::ImageButton(m_t##Name->surface_get(), ImVec2(20, 20), ImVec2(m_time##Name>EDevice->TimerAsync() ? 0.5 : 0, 0), ImVec2(m_time##Name>EDevice->TimerAsync() ? 1 : 0.5, 1), 0))\
-		{\
-			m_time##Name = EDevice->TimerAsync() + 130;\
-			Click##Name();\
+
+
+		m_tUndo->Load();
+		if (ImGui::ImageButton(m_tUndo->surface_get(), ImVec2(20, 20), ImVec2(m_timeUndo > EDevice->TimerAsync() ? 0.5 : 0, 0), ImVec2(m_timeUndo > EDevice->TimerAsync() ? 1 : 0.5, 1), 0))
+		{
+			m_timeUndo = EDevice->TimerAsync() + 130;
+			ClickUndo();
 		}ImGui::SameLine();
-#define ADD_BUTTON_IMAGE_D(Name) \
-		m_t##Name->Load();\
-		if (ImGui::ImageButton(m_t##Name->surface_get(), ImVec2(20, 20), ImVec2(0, 0), ImVec2(1, 1), 0))\
-		{\
-			Click##Name(); \
+		m_tRedo->Load();
+		if (ImGui::ImageButton(m_tRedo->surface_get(), ImVec2(20, 20), ImVec2(m_timeRedo > EDevice->TimerAsync() ? 0.5 : 0, 0), ImVec2(m_timeRedo > EDevice->TimerAsync() ? 1 : 0.5, 1), 0))
+		{
+			m_timeRedo = EDevice->TimerAsync() + 130;
+			ClickRedo();
 		}ImGui::SameLine();
 
-#include "UITopBarForm_ButtonList.h"
+		m_tCForm->Load();
+		if (ImGui::ImageButton(m_tCForm->surface_get(), ImVec2(20, 20), ImVec2(0, 0), ImVec2(1, 1), 0))
+		{
+			ClickCForm();
+		}ImGui::SameLine();
+		m_tAIMap->Load();
+		if (ImGui::ImageButton(m_tAIMap->surface_get(), ImVec2(20, 20), ImVec2(0, 0), ImVec2(1, 1), 0))
+		{
+			ClickAIMap();
+		}ImGui::SameLine();
+		m_tGGraph->Load();
+		if (ImGui::ImageButton(m_tGGraph->surface_get(), ImVec2(20, 20), ImVec2(0, 0), ImVec2(1, 1), 0))
+		{
+			ClickGGraph();
+		}ImGui::SameLine();
 
-		if (ImGui::Button("Play", ImVec2(0, 20))) { ClickLevelPlay(); }ImGui::SameLine();
-		if (ImGui::Button("Simulate", ImVec2(0, 20))) { ClickLevelSimulate(); }ImGui::SameLine();
+		if (ImGui::Button("Play", ImVec2(0, 20))) { ClickLevelPlay(); }
+		{
+			ImGui::SameLine(0,0);
+			if (ImGui::ArrowButton("##PlaySettings", ImGuiDir_Down, ImVec2(ImGui::GetFrameHeight(), 20),0))
+				ImGui::OpenPopup("test");
+
+			ImGui::SameLine();
+			if (ImGui::BeginPopup("test"))
+			{
+				ImGui::Checkbox("Verify space restrictors",&m_VerifySpaceRestrictors);
+				ImGui::EndPopup();
+			}
+		}
 	}
 	ImGui::SameLine(0,1);
 	ImGui::End();
@@ -115,11 +143,6 @@ void UITopBarForm::ClickGGraph()
 	Scene->BuildGameGraph();
 
 }
-void UITopBarForm::ClickSRestrictor()
-{
-
-}
-
 /*
 void UITopBarForm::ClickZoom()
 {

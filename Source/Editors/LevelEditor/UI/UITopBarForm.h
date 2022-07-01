@@ -6,11 +6,16 @@ public:
 	virtual ~UITopBarForm();
 	virtual void Draw();
 	void RefreshBar();
+	bool VerifySpaceRestrictors()const {return m_VerifySpaceRestrictors;}
 private:
 	void ClickLevelPlay();
 	void ClickLevelSimulate();
 
-#define ADD_BUTTON_IMAGE_S(Name) void Click##Name(); ref_texture m_t##Name;u32 m_time##Name;
-#define ADD_BUTTON_IMAGE_D(Name) void Click##Name();  ref_texture m_t##Name;
-#include "UITopBarForm_ButtonList.h"
+	void ClickUndo(); ref_texture m_tUndo; u32 m_timeUndo;
+	void ClickRedo(); ref_texture m_tRedo; u32 m_timeRedo;
+	void ClickCForm();  ref_texture m_tCForm;
+	void ClickAIMap();  ref_texture m_tAIMap;
+	void ClickGGraph();  ref_texture m_tGGraph;
+
+	bool m_VerifySpaceRestrictors;
 };

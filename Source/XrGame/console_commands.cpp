@@ -1366,8 +1366,17 @@ public:
 
 		if( EQ(args,"off")||EQ(args,"0") )
 			bWhatToDo = FALSE;
-
-		MainMenu()->Activate( bWhatToDo );
+		if (Device->IsEditorMode())
+		{
+			if (bWhatToDo)
+			{
+				EditorScene->Stop();
+			}
+		}
+		else
+		{
+			MainMenu()->Activate(bWhatToDo);
+		}
 	}
 };
 

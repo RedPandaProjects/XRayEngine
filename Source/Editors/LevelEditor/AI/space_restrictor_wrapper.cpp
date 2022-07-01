@@ -192,7 +192,7 @@ struct sort_by_xz_predicate {
 	}
 };
 
-void CSpaceRestrictorWrapper::build_border			()
+bool CSpaceRestrictorWrapper::build_border			()
 {
 	typedef CShapeData::ShapeVec	ShapeVec;
 	ShapeVec::const_iterator		I = object().shape()->shapes.begin();
@@ -210,9 +210,13 @@ void CSpaceRestrictorWrapper::build_border			()
 		BORDER::iterator			I = std::unique(m_border.begin(),m_border.end());
 		m_border.erase				(I,m_border.end());
 		std::sort					(m_border.begin(),m_border.end(),sort_by_xz_predicate(m_level_graph));
-	}
 
-	VERIFY3							(!m_border.empty(),"space restrictor has no border %S",object().CastAbstract()->name_replace());
+	}
+	if (m_border.empty())
+	{
+		Msg("! space restrictor has no border %S", object().CastAbstract()->name_replace());
+	}
+	return !m_border.empty();
 }
 
 void CSpaceRestrictorWrapper::verify_connectivity	()
@@ -268,7 +272,7 @@ void CSpaceRestrictorWrapper::verify_connectivity	()
 	);
 }
 
-void CSpaceRestrictorWrapper::verify				(ILevelGraph &level_graph, CGraphEngineEditor &graph_engine, bool no_separator_check)
+bool CSpaceRestrictorWrapper::verify				(ILevelGraph &level_graph, CGraphEngineEditor &graph_engine, bool no_separator_check)
 {
 	VERIFY							(!m_level_graph);
 	m_level_graph					= &level_graph;
@@ -276,10 +280,12 @@ void CSpaceRestrictorWrapper::verify				(ILevelGraph &level_graph, CGraphEngineE
 	VERIFY							(!m_graph_engine);
 	m_graph_engine					= &graph_engine;
 
-	build_border					();
+	if (!build_border())
+		return false;
 
 	if (!no_separator_check)
 		verify_connectivity			();
 
 	clear							();
+	return true;
 }

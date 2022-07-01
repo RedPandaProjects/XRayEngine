@@ -106,7 +106,7 @@ public:
     virtual void		ShowProperties		(LPCSTR focused_item);
     virtual void		UpdateProperties	(BOOL bForced){m_Flags.set(flUpdateProperties|flUpdateObjectList,TRUE); if (bForced) OnFrame();}
     virtual void		RefreshProperties	();
-    virtual bool UpdateCamera();
+	virtual bool UpdateCamera();
 private:
     virtual void		Simulate			();
     virtual void		UseSimulatePositions();

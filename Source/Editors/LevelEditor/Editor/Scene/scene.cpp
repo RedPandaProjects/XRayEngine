@@ -659,11 +659,11 @@ void EScene::FillPropObjects(LPCSTR pref, PropItemVec& items, ObjClassID cls_id)
 
 void EScene::Play()
 {
-    if (IsSimulate())
+    if (IsPlayInEditor())
         return;
     if (!BuildSpawn())
         return;
-    Console->Execute("main_menu off");
+   // Console->Execute("main_menu off");
     g_hud = (CCustomHUD*)NEW_INSTANCE(CLSID_HUDMANAGER);
     g_pGameLevel = (IGame_Level*)NEW_INSTANCE(CLSID_EDITOR_LEVEL);
     g_pGameLevel->net_Start("all/single/alife/new", "localhost");
@@ -672,20 +672,21 @@ void EScene::Play()
     ShowCursor(FALSE);
 }
 
-bool EScene::IsSimulate()
+bool EScene::IsPlayInEditor()
 {
     return g_pGameLevel;
 }
 
 void EScene::Stop()
 {
-    if (!IsSimulate())return;
+    if (!IsPlayInEditor())return;
     ShowCursor(TRUE);
     g_pGameLevel->IR_Release();
     g_pGameLevel->net_Stop();
     DEL_INSTANCE(g_pGameLevel);
     DEL_INSTANCE(g_hud);
     GetTool(OBJCLASS_SPAWNPOINT)->m_EditFlags.set(ESceneToolBase::flVisible, true);
+    UI->RedrawScene();
 }
 
 void EScene::LoadCFrom(CObjectSpace* Space, CDB::build_callback cb)

@@ -10,4 +10,5 @@ namespace ImGui
     IMGUI_API bool InputFloat3(const char* label, float v[3], int dec, ImGuiInputTextFlags flags = 0);
     IMGUI_API bool InputFloat4(const char* label, float v[4], int dec, ImGuiInputTextFlags flags = 0);
     IMGUI_API bool  BeginPopupModal(const char* name, bool* p_open, ImGuiWindowFlags flags, bool open_always);
+    IMGUI_API bool ArrowButton(const char* str_id, ImGuiDir dir, ImVec2 size, ImGuiButtonFlags flags);
 }

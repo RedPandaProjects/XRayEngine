@@ -263,7 +263,7 @@ void CLevelTool::RefreshProperties()
 
 bool CLevelTool::UpdateCamera()
 {
-    if (Scene->IsSimulate())
+    if (Scene->IsPlayInEditor())
     {
         g_pGameLevel->Cameras().ApplyDevice(VIEWPORT_NEAR);
         return true;
@@ -361,7 +361,7 @@ void CLevelTool::ZoomObject(BOOL bSelectedOnly)
 void CLevelTool::GetCurrentFog(u32& fog_color, float& s_fog, float& e_fog)
 {
 
-	if (psDeviceFlags.is(rsEnvironment)&&psDeviceFlags.is(rsFog))
+	if (psDeviceFlags.is(rsEnvironment)&&psDeviceFlags.is(rsFog)||UI->IsPlayInEditor())
     {
         s_fog				= g_pGamePersistent->Environment().CurrentEnv->fog_near;
         e_fog				= g_pGamePersistent->Environment().CurrentEnv->fog_far;
@@ -390,7 +390,7 @@ LPCSTR CLevelTool::GetInfo()
 void  CLevelTool::OnFrame()
 {
 
-    if (psDeviceFlags.is(rsEnvironment))
+    if (psDeviceFlags.is(rsEnvironment) &&! UI->IsPlayInEditor())
     {
         g_pGamePersistent->Environment().SetGameTime(g_pGamePersistent->Environment().GetGameTime() + Device->fTimeDelta * g_pGamePersistent->Environment().fTimeFactor, g_pGamePersistent->Environment().fTimeFactor);
     }
@@ -419,7 +419,7 @@ void  CLevelTool::RenderEnvironment()
     switch(est){
     case esEditLightAnim:
     case esEditScene:		
-    	if (psDeviceFlags.is(rsEnvironment))
+    	if (psDeviceFlags.is(rsEnvironment)|| UI->IsPlayInEditor())
         { 
     		g_pGamePersistent->Environment().RenderSky	();
    		    g_pGamePersistent->Environment().RenderClouds	();
@@ -440,7 +440,7 @@ void  CLevelTool::Render()
     case esEditLightAnim:
     case esEditScene:
     	Scene->Render(EDevice->m_Camera.GetTransform()); 
-        if (psDeviceFlags.is(rsEnvironment)) g_pGamePersistent->Environment().RenderLast	();
+        if (psDeviceFlags.is(rsEnvironment)|| UI->IsPlayInEditor()) g_pGamePersistent->Environment().RenderLast	();
     break;
     case esBuildLevel:  	Builder.OnRender();				break;
     }

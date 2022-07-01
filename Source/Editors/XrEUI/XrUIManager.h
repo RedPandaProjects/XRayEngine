@@ -29,6 +29,7 @@ public:
 
 	inline float GetMenuBarHeight()const { return m_MenuBarHeight; }
 	inline TShiftState GetShiftState()const { return m_ShiftState; };
+	virtual bool IsPlayInEditor() { return false; }
 protected:
 	virtual void OnDrawUI();
 private:

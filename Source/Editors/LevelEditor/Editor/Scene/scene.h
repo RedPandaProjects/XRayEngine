@@ -324,8 +324,8 @@ public:
 	void 			FillProp(LPCSTR pref, PropItemVec& items, ObjClassID cls_id);
 	void 			FillPropObjects(LPCSTR pref, PropItemVec& items, ObjClassID cls_id);
 	void Play();
-	bool IsSimulate();
-	void Stop();
+	bool IsPlayInEditor();
+	virtual void Stop();
 
 	virtual	void LoadCFrom(CObjectSpace* Space, CDB::build_callback cb);
 	virtual IReader* LoadSpawn();

@@ -349,11 +349,13 @@ LRESULT XrUIManager::WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM l
         case VK_SHIFT:
             break;
         default:
-            ApplyShortCut(wParam);
+            if(!IsPlayInEditor())   ApplyShortCut(wParam);
             break;
         }
     default:
         break;
     }
-    return ImGui_ImplWin32_WndProcHandler(hwnd, msg, wParam, lParam);;
+    if (!IsPlayInEditor())
+        return ImGui_ImplWin32_WndProcHandler(hwnd, msg, wParam, lParam);;
+    return 0;
 }

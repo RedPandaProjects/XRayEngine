@@ -745,7 +745,9 @@ bool CLevelSpawnConstructor::Execute							()
 	}
 	generate_artefact_spawn_positions	();
 	correct_level_changers				();
-//	verify_space_restrictors			();
+	if (MainForm->GetTopBarForm()->VerifySpaceRestrictors())
+		if (!verify_space_restrictors())
+			return false;
 	
 	//xr_delete							(m_level_graph);
 	m_cross_table						= 0;
@@ -762,22 +764,25 @@ bool CLevelSpawnConstructor::update								()
 	return true;
 }
 
-void CLevelSpawnConstructor::verify_space_restrictors			()
+bool CLevelSpawnConstructor::verify_space_restrictors			()
 {
 	Msg									("Level [%s] : searching for AI map separators space restrictors",*m_level.name());
 	SPACE_RESTRICTORS::iterator			I = m_space_restrictors.begin();
 	SPACE_RESTRICTORS::iterator			E = m_space_restrictors.end();
+	bool bResult = true;
 	for ( ; I != E; ++I) {
 		VERIFY							(*I);
 		
 		if ((*I)->object().m_space_restrictor_type == RestrictionSpace::eRestrictorTypeNone)
 			continue;
 
-		(*I)->verify					(*m_level_graph,*m_graph_engine,m_no_separator_check);
+		if (!(*I)->verify(*m_level_graph, *m_graph_engine, m_no_separator_check))
+			bResult = false;
 	}
 
 	delete_data							(m_space_restrictors);
 
 	if (m_no_separator_check)
 		Msg								("Level [%s] : no separators found",*m_level.name());
+	return bResult;
 }

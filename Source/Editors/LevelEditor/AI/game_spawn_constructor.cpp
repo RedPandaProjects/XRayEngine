@@ -131,6 +131,7 @@ bool CGameSpawnConstructor::process_spawns	()
 		return false;
 	if (!verify_spawns())
 		return false;
+	return true;
 }
 
 bool CGameSpawnConstructor::verify_spawns			(ALife::_SPAWN_ID spawn_id)

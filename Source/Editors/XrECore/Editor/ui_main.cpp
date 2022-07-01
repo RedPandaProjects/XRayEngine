@@ -388,7 +388,7 @@ void TUI::Redraw()
             ZB.create("rt_depth", RTSize.x * EDevice->m_ScreenQuality, RTSize.y * EDevice->m_ScreenQuality, D3DFORMAT::D3DFMT_D24X8);
             m_Flags.set(flRedraw, TRUE);
             EDevice->fASPECT = ((float)RTSize.y) / ((float)RTSize.x);
-            EDevice->mProject.build_projection(deg2rad(EDevice->fFOV), EDevice->fASPECT, EDevice->m_Camera.m_Znear, EDevice->m_Camera.m_Zfar);
+         
             EDevice->m_fNearer = EDevice->mProject._43;
             EDevice->fWidth_2 = GetRenderWidth() / 2.f;
             EDevice->fHeight_2 = GetRenderHeight() / 2.f;
@@ -398,12 +398,16 @@ void TUI::Redraw()
             RCache.set_xform_project(EDevice->mProject);
             RCache.set_xform_world(Fidentity);
         }
+        if (!UI->IsPlayInEditor())
+		{
+			EDevice->mProject.build_projection(deg2rad(EDevice->fFOV), EDevice->fASPECT, EDevice->m_Camera.m_Znear, EDevice->m_Camera.m_Zfar);
+        }
 
         if (EDevice->Begin())
         {
             if (psDeviceFlags.is(rsRenderRealTime))
                 m_Flags.set(flRedraw, TRUE);
-            if (m_Flags.is(flRedraw))
+            if (m_Flags.is(flRedraw)||UI->IsPlayInEditor())
             {
                
                 m_Flags.set(flRedraw, FALSE);
