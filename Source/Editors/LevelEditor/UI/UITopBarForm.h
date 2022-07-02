@@ -16,6 +16,9 @@ private:
 	void ClickOpen(); ref_texture m_tOpen;
 	void ClickSave(); ref_texture m_tSave;
 
+	void ClickReloadConfigs();  ref_texture m_tReloadConfigs;
+	void ClickOpenGameData();  ref_texture m_tOpenGameData;
+
 	void ClickCForm();  ref_texture m_tCForm;
 	void ClickAIMap();  ref_texture m_tAIMap;
 	void ClickGGraph();  ref_texture m_tGGraph;

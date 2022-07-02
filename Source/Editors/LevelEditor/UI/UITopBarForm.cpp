@@ -16,6 +16,9 @@ UITopBarForm::UITopBarForm()
 	m_tBuildAndMake = EDevice->Resources->_CreateTexture("ed\\bar\\build_all");
 	m_tPlayCleanGame= EDevice->Resources->_CreateTexture("ed\\bar\\play_clean_game");
 	m_tTerminated = EDevice->Resources->_CreateTexture("ed\\bar\\terminated");
+
+	m_tReloadConfigs = EDevice->Resources->_CreateTexture("ed\\bar\\reload_configs");
+	m_tOpenGameData = EDevice->Resources->_CreateTexture("ed\\bar\\open_gamedata");
 	m_VerifySpaceRestrictors = false;
 	RefreshBar();
 }
@@ -77,6 +80,7 @@ void UITopBarForm::Draw()
 		{
 			ClickSave();
 		}ImGui::SameLine();
+
 		m_tCForm->Load();
 		if (ImGui::ImageButton(m_tCForm->surface_get(), ImVec2(20, 20), ImVec2(0, 0), ImVec2(1, 1), 0))
 		{
@@ -131,6 +135,12 @@ void UITopBarForm::Draw()
 			ImGui::BeginDisabled();
 		}
 		ImGui::SameLine();
+		m_tReloadConfigs->Load();
+		if (ImGui::ImageButton(m_tReloadConfigs->surface_get(), ImVec2(20, 20), ImVec2(0, 0), ImVec2(1, 1), 0))
+		{
+			ClickReloadConfigs();
+		}ImGui::SameLine();
+
 		m_tBuildAndMake->Load();
 		if (ImGui::ImageButton(m_tBuildAndMake->surface_get(), ImVec2(20, 20), ImVec2(0, 0), ImVec2(1, 1), 0))
 		{
@@ -149,9 +159,18 @@ void UITopBarForm::Draw()
 		{
 			ClickPlayCleanGame();
 		}
+		ImGui::SameLine();
+
+		
 		if (LTools->IsCompilerRunning() || LTools->IsGameRunning())
 		{
 			ImGui::EndDisabled();
+		}
+
+		m_tOpenGameData->Load();
+		if (ImGui::ImageButton(m_tOpenGameData->surface_get(), ImVec2(20, 20), ImVec2(0, 0), ImVec2(1, 1), 0))
+		{
+			ClickOpenGameData();
 		}
 	}
 	ImGui::SameLine(0,1);
@@ -204,6 +223,26 @@ void UITopBarForm::ClickOpen()
 void UITopBarForm::ClickSave()
 {
 	ExecCommand(COMMAND_SAVE, xr_string(LTools->m_LastFileName.c_str()));
+}
+void UITopBarForm::ClickReloadConfigs()
+{
+	xr_delete(pSettings);
+	string_path 			si_name;
+	FS.update_path(si_name, "$game_config$", "system.ltx");
+	pSettings = xr_new<CInifile>(si_name, TRUE);// FALSE,TRUE,TRUE);
+	xr_delete(pGameIni);
+	string_path					fname;
+	FS.update_path(fname, "$game_config$", "game.ltx");
+	pGameIni = xr_new<CInifile>(fname, TRUE);
+	g_SEFactoryManager->reload();
+	g_pGamePersistent->OnAppEnd();
+	g_pGamePersistent->OnAppStart();
+}
+void UITopBarForm::ClickOpenGameData()
+{
+	string_path GameDataPath;
+	FS.update_path(GameDataPath, "$game_data$", "");
+	ShellExecuteA(NULL, "open", GameDataPath, NULL, NULL, SW_SHOWDEFAULT);
 }
 void UITopBarForm::ClickCForm()
 {

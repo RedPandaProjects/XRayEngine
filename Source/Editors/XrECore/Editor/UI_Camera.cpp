@@ -53,6 +53,42 @@ void CUI_Camera::Reset()
     BuildCamera();
 }
 
+const Fvector& CUI_Camera::GetPosition() const
+{
+    if (UI->IsPlayInEditor())
+    {
+        return Device->vCameraPosition;
+    }
+    return m_Position;
+}
+
+const Fvector& CUI_Camera::GetRight() const
+{
+	if (UI->IsPlayInEditor())
+	{
+		return Device->vCameraRight;
+	}
+   return m_CamMat.i;
+}
+
+const Fvector& CUI_Camera::GetNormal() const
+{
+	if (UI->IsPlayInEditor())
+	{
+		return Device->vCameraTop;
+	}
+    return m_CamMat.k;
+}
+
+const Fvector& CUI_Camera::GetDirection() const
+{
+	if (UI->IsPlayInEditor())
+	{
+		return Device->vCameraDirection;
+	}
+    return m_CamMat.j;
+}
+
 void CUI_Camera::Set(float h, float p, float b, float x, float y, float z)
 {
 	m_HPB.set(h,p,b);

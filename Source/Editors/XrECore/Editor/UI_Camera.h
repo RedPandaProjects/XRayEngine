@@ -63,10 +63,10 @@ public:
     const Fmatrix&	GetTransform() const {return m_CamMat;}
     const Fmatrix&	GetView		(Fmatrix& V) const {return V.invert(m_CamMat);}
     const Fvector&	GetHPB		() const {return m_HPB;}
-    const Fvector&	GetPosition	() const {return m_Position;}
-    const Fvector&	GetRight	() const {return m_CamMat.i;}
-    const Fvector&	GetNormal	() const {return m_CamMat.j;}
-    const Fvector&	GetDirection() const {return m_CamMat.k;}
+    const Fvector& GetPosition() const;
+    const Fvector&	GetRight	() const;
+    const Fvector& GetNormal() const;
+    const Fvector& GetDirection() const;
     void			Set			(float h, float p, float b, float x, float y, float z);
     void			Set			(const Fvector& hpb, const Fvector& pos);
     void			SetSensitivity(float sm, float sr);
