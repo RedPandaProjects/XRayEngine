@@ -46,7 +46,7 @@ protected:
 public:
 	IGameGraph();
 	virtual						~IGameGraph();
-	IC		void					save					(IWriter &stream);
+	virtual		void					save					(IWriter &stream);
 	IC	const IGameLevelCrossTable	&cross_table			() const;
 
 public:

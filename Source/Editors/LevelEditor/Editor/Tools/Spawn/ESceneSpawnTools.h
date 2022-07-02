@@ -48,7 +48,6 @@ public:
     virtual bool		can_use_inifile			()				{return true;}
     virtual bool		LoadSelection      		(IReader&);
     virtual void		SaveSelection      		(IWriter&);
-
 	virtual int 		MultiRenameObjects		();
 /*
     virtual void		GetStaticDesc			(int& v_cnt, int& f_cnt, bool b_selected_only);

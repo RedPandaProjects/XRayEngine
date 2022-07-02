@@ -33,7 +33,7 @@ private:
 private:
 			void			clear					();
 			void			fill_shape				(const CShapeData::shape_def &data);
-			void			build_border			();
+			bool			build_border			();
 			void			verify_connectivity		();
 			bool			inside					(const Fvector &position, float radius = EPS_L) const;
 			bool			inside					(u32 level_vertex_id, bool partially_inside, float radius = EPS_L) const;
@@ -43,7 +43,7 @@ private:
 public:
 							CSpaceRestrictorWrapper	(ISE_ALifeSpaceRestrictor *object);
 	IC		object_type		&object					() const;
-			void			verify					(ILevelGraph &level_graph, CGraphEngineEditor &graph_engine, bool no_separator_check);
+			bool			verify					(ILevelGraph &level_graph, CGraphEngineEditor &graph_engine, bool no_separator_check);
 };
 
 #include "space_restrictor_wrapper_inline.h"

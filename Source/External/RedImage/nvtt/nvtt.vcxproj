@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Public\Nvtt\nvconfig.h" />
+    <ClInclude Include="..\Public\Nvtt\nvcore\Array.h" />
+    <ClInclude Include="..\Public\Nvtt\nvcore\Debug.h" />
+    <ClInclude Include="..\Public\Nvtt\nvcore\DefsGnucDarwin.h" />
+    <ClInclude Include="..\Public\Nvtt\nvcore\DefsGnucLinux.h" />
+    <ClInclude Include="..\Public\Nvtt\nvcore\DefsGnucWin32.h" />
+    <ClInclude Include="..\Public\Nvtt\nvcore\DefsVcWin32.h" />
+    <ClInclude Include="..\Public\Nvtt\nvcore\FileSystem.h" />
+    <ClInclude Include="..\Public\Nvtt\nvcore\ForEach.h" />
+    <ClInclude Include="..\Public\Nvtt\nvcore\Hash.h" />
+    <ClInclude Include="..\Public\Nvtt\nvcore\Memory.h" />
+    <ClInclude Include="..\Public\Nvtt\nvcore\nvcore.h" />
+    <ClInclude Include="..\Public\Nvtt\nvcore\Ptr.h" />
+    <ClInclude Include="..\Public\Nvtt\nvcore\RefCounted.h" />
+    <ClInclude Include="..\Public\Nvtt\nvcore\StdStream.h" />
+    <ClInclude Include="..\Public\Nvtt\nvcore\Stream.h" />
+    <ClInclude Include="..\Public\Nvtt\nvcore\StrLib.h" />
+    <ClInclude Include="..\Public\Nvtt\nvcore\TextWriter.h" />
+    <ClInclude Include="..\Public\Nvtt\nvcore\Timer.h" />
+    <ClInclude Include="..\Public\Nvtt\nvcore\Utils.h" />
+    <ClInclude Include="..\Public\Nvtt\nvimage\BlockDXT.h" />
+    <ClInclude Include="..\Public\Nvtt\nvimage\ColorBlock.h" />
+    <ClInclude Include="..\Public\Nvtt\nvimage\ColorSpace.h" />
+    <ClInclude Include="..\Public\Nvtt\nvimage\DirectDrawSurface.h" />
+    <ClInclude Include="..\Public\Nvtt\nvimage\ErrorMetric.h" />
+    <ClInclude Include="..\Public\Nvtt\nvimage\Filter.h" />
+    <ClInclude Include="..\Public\Nvtt\nvimage\FloatImage.h" />
+    <ClInclude Include="..\Public\Nvtt\nvimage\Image.h" />
+    <ClInclude Include="..\Public\Nvtt\nvimage\ImageIO.h" />
+    <ClInclude Include="..\Public\Nvtt\nvimage\NormalMap.h" />
+    <ClInclude Include="..\Public\Nvtt\nvimage\nvimage.h" />
+    <ClInclude Include="..\Public\Nvtt\nvimage\PixelFormat.h" />
+    <ClInclude Include="..\Public\Nvtt\nvimage\PsdFile.h" />
+    <ClInclude Include="..\Public\Nvtt\nvimage\Quantize.h" />
+    <ClInclude Include="..\Public\Nvtt\nvimage\TgaFile.h" />
+    <ClInclude Include="..\Public\Nvtt\nvimage\ValveTextureFormat.h" />
+    <ClInclude Include="..\Public\Nvtt\nvmath\Box.h" />
+    <ClInclude Include="..\Public\Nvtt\nvmath\Color.h" />
+    <ClInclude Include="..\Public\Nvtt\nvmath\Fitting.h" />
+    <ClInclude Include="..\Public\Nvtt\nvmath\ftoi.h" />
+    <ClInclude Include="..\Public\Nvtt\nvmath\Gamma.h" />
+    <ClInclude Include="..\Public\Nvtt\nvmath\Half.h" />
+    <ClInclude Include="..\Public\Nvtt\nvmath\Matrix.h" />
+    <ClInclude Include="..\Public\Nvtt\nvmath\nvmath.h" />
+    <ClInclude Include="..\Public\Nvtt\nvmath\PackedFloat.h" />
+    <ClInclude Include="..\Public\Nvtt\nvmath\Plane.h" />
+    <ClInclude Include="..\Public\Nvtt\nvmath\SimdVector.h" />
+    <ClInclude Include="..\Public\Nvtt\nvmath\SimdVector_SSE.h" />
+    <ClInclude Include="..\Public\Nvtt\nvmath\SimdVector_VE.h" />
+    <ClInclude Include="..\Public\Nvtt\nvmath\SphericalHarmonic.h" />
+    <ClInclude Include="..\Public\Nvtt\nvmath\Vector.h" />
+    <ClInclude Include="..\Public\Nvtt\nvthread\Atomic.h" />
+    <ClInclude Include="..\Public\Nvtt\nvthread\Event.h" />
+    <ClInclude Include="..\Public\Nvtt\nvthread\Mutex.h" />
+    <ClInclude Include="..\Public\Nvtt\nvthread\nvthread.h" />
+    <ClInclude Include="..\Public\Nvtt\nvthread\ParallelFor.h" />
+    <ClInclude Include="..\Public\Nvtt\nvthread\Thread.h" />
+    <ClInclude Include="..\Public\Nvtt\nvthread\ThreadPool.h" />
+    <ClInclude Include="..\Public\Nvtt\nvthread\Win32.h" />
+    <ClInclude Include="..\Public\Nvtt\nvtt\BlockCompressor.h" />
+    <ClInclude Include="..\Public\Nvtt\nvtt\ClusterFit.h" />
+    <ClInclude Include="..\Public\Nvtt\nvtt\CompressionOptions.h" />
+    <ClInclude Include="..\Public\Nvtt\nvtt\Compressor.h" />
+    <ClInclude Include="..\Public\Nvtt\nvtt\CompressorDX10.h" />
+    <ClInclude Include="..\Public\Nvtt\nvtt\CompressorDX11.h" />
+    <ClInclude Include="..\Public\Nvtt\nvtt\CompressorDX9.h" />
+    <ClInclude Include="..\Public\Nvtt\nvtt\CompressorDXT1.h" />
+    <ClInclude Include="..\Public\Nvtt\nvtt\CompressorDXT5_RGBM.h" />
+    <ClInclude Include="..\Public\Nvtt\nvtt\CompressorRGB.h" />
+    <ClInclude Include="..\Public\Nvtt\nvtt\Context.h" />
+    <ClInclude Include="..\Public\Nvtt\nvtt\CubeSurface.h" />
+    <ClInclude Include="..\Public\Nvtt\nvtt\InputOptions.h" />
+    <ClInclude Include="..\Public\Nvtt\nvtt\nvtt.h" />
+    <ClInclude Include="..\Public\Nvtt\nvtt\nvtt_wrapper.h" />
+    <ClInclude Include="..\Public\Nvtt\nvtt\OptimalCompressDXT.h" />
+    <ClInclude Include="..\Public\Nvtt\nvtt\OutputOptions.h" />
+    <ClInclude Include="..\Public\Nvtt\nvtt\QuickCompressDXT.h" />
+    <ClInclude Include="..\Public\Nvtt\nvtt\SingleColorLookup.h" />
+    <ClInclude Include="..\Public\Nvtt\nvtt\Surface.h" />
+    <ClInclude Include="..\Public\Nvtt\nvtt\TaskDispatcher.h" />
+    <ClInclude Include="..\Public\Nvtt\nvtt\tools\cmdline.h" />
+    <ClInclude Include="..\Public\Nvtt\nvtt\tools\compressdialog.h" />
+    <ClInclude Include="..\Public\Nvtt\nvtt\tools\ui\configdialog.h" />
+    <ClInclude Include="bc6h\bits.h" />
+    <ClInclude Include="bc6h\shapes_two.h" />
+    <ClInclude Include="bc6h\tile.h" />
+    <ClInclude Include="bc6h\zoh.h" />
+    <ClInclude Include="bc6h\zoh_utils.h" />
+    <ClInclude Include="bc7\avpcl.h" />
+    <ClInclude Include="bc7\avpcl_utils.h" />
+    <ClInclude Include="bc7\bits.h" />
+    <ClInclude Include="bc7\endpts.h" />
+    <ClInclude Include="bc7\shapes_three.h" />
+    <ClInclude Include="bc7\shapes_two.h" />
+    <ClInclude Include="bc7\tile.h" />
+    <ClInclude Include="cuda\BitmapTable.h" />
+    <ClInclude Include="cuda\CudaCompressorDXT.h" />
+    <ClInclude Include="cuda\CudaMath.h" />
+    <ClInclude Include="cuda\CudaUtils.h" />
+    <ClInclude Include="experimental\nvtt_experimental.h" />
+    <ClInclude Include="nvconfig.h" />
+    <ClInclude Include="squish\alpha.h" />
+    <ClInclude Include="squish\colourblock.h" />
+    <ClInclude Include="squish\colourfit.h" />
+    <ClInclude Include="squish\colourset.h" />
+    <ClInclude Include="squish\config.h" />
+    <ClInclude Include="squish\fastclusterfit.h" />
+    <ClInclude Include="squish\maths.h" />
+    <ClInclude Include="squish\rangefit.h" />
+    <ClInclude Include="squish\simd.h" />
+    <ClInclude Include="squish\simd_3dnow.h" />
+    <ClInclude Include="squish\simd_sse.h" />
+    <ClInclude Include="squish\simd_ve.h" />
+    <ClInclude Include="squish\singlechannelfit.h" />
+    <ClInclude Include="squish\singlecolourfit.h" />
+    <ClInclude Include="squish\squish.h" />
+    <ClInclude Include="squish\weightedclusterfit.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="bc6h\zoh.cpp" />
+    <ClCompile Include="bc6h\zohone.cpp" />
+    <ClCompile Include="bc6h\zohtwo.cpp" />
+    <ClCompile Include="bc6h\zoh_utils.cpp" />
+    <ClCompile Include="bc7\avpcl.cpp" />
+    <ClCompile Include="bc7\avpcl_mode0.cpp" />
+    <ClCompile Include="bc7\avpcl_mode1.cpp" />
+    <ClCompile Include="bc7\avpcl_mode2.cpp" />
+    <ClCompile Include="bc7\avpcl_mode3.cpp" />
+    <ClCompile Include="bc7\avpcl_mode4.cpp" />
+    <ClCompile Include="bc7\avpcl_mode5.cpp" />
+    <ClCompile Include="bc7\avpcl_mode6.cpp" />
+    <ClCompile Include="bc7\avpcl_mode7.cpp" />
+    <ClCompile Include="bc7\avpcl_utils.cpp" />
+    <ClCompile Include="cuda\CudaCompressorDXT.cpp" />
+    <ClCompile Include="cuda\CudaUtils.cpp" />
+    <ClCompile Include="nvcore\Debug.cpp" />
+    <ClCompile Include="nvcore\FileSystem.cpp" />
+    <ClCompile Include="nvcore\Memory.cpp" />
+    <ClCompile Include="nvcore\StrLib.cpp" />
+    <ClCompile Include="nvcore\TextWriter.cpp" />
+    <ClCompile Include="nvcore\Timer.cpp" />
+    <ClCompile Include="nvimage\BlockDXT.cpp" />
+    <ClCompile Include="nvimage\ColorBlock.cpp" />
+    <ClCompile Include="nvimage\ColorSpace.cpp" />
+    <ClCompile Include="nvimage\DirectDrawSurface.cpp" />
+    <ClCompile Include="nvimage\ErrorMetric.cpp" />
+    <ClCompile Include="nvimage\Filter.cpp" />
+    <ClCompile Include="nvimage\FloatImage.cpp" />
+    <ClCompile Include="nvimage\Image.cpp" />
+    <ClCompile Include="nvimage\ImageIO.cpp" />
+    <ClCompile Include="nvimage\NormalMap.cpp" />
+    <ClCompile Include="nvimage\Quantize.cpp" />
+    <ClCompile Include="nvmath\Box.cpp" />
+    <ClCompile Include="nvmath\Color.cpp" />
+    <ClCompile Include="nvmath\Fitting.cpp" />
+    <ClCompile Include="nvmath\Gamma.cpp" />
+    <ClCompile Include="nvmath\Half.cpp" />
+    <ClCompile Include="nvmath\Matrix.cpp" />
+    <ClCompile Include="nvmath\PackedFloat.cpp" />
+    <ClCompile Include="nvmath\Plane.cpp" />
+    <ClCompile Include="nvmath\SphericalHarmonic.cpp" />
+    <ClCompile Include="nvmath\Vector.cpp" />
+    <ClCompile Include="nvthread\Event.cpp" />
+    <ClCompile Include="nvthread\Mutex.cpp" />
+    <ClCompile Include="nvthread\nvthread.cpp" />
+    <ClCompile Include="nvthread\ParallelFor.cpp" />
+    <ClCompile Include="nvthread\Thread.cpp" />
+    <ClCompile Include="nvthread\ThreadPool.cpp" />
+    <ClCompile Include="nvtt\BlockCompressor.cpp" />
+    <ClCompile Include="nvtt\ClusterFit.cpp" />
+    <ClCompile Include="nvtt\CompressionOptions.cpp" />
+    <ClCompile Include="nvtt\CompressorDX10.cpp" />
+    <ClCompile Include="nvtt\CompressorDX11.cpp" />
+    <ClCompile Include="nvtt\CompressorDX9.cpp" />
+    <ClCompile Include="nvtt\CompressorDXT1.cpp" />
+    <ClCompile Include="nvtt\CompressorDXT5_RGBM.cpp" />
+    <ClCompile Include="nvtt\CompressorRGB.cpp" />
+    <ClCompile Include="nvtt\Context.cpp" />
+    <ClCompile Include="nvtt\CubeSurface.cpp" />
+    <ClCompile Include="nvtt\InputOptions.cpp" />
+    <ClCompile Include="nvtt\nvtt.cpp" />
+    <ClCompile Include="nvtt\nvtt_wrapper.cpp" />
+    <ClCompile Include="nvtt\OptimalCompressDXT.cpp" />
+    <ClCompile Include="nvtt\OutputOptions.cpp" />
+    <ClCompile Include="nvtt\QuickCompressDXT.cpp" />
+    <ClCompile Include="nvtt\SingleColorLookup.cpp" />
+    <ClCompile Include="nvtt\Surface.cpp" />
+    <ClCompile Include="nvtt\TaskDispatcher.cpp" />
+    <ClCompile Include="squish\alpha.cpp" />
+    <ClCompile Include="squish\colourblock.cpp" />
+    <ClCompile Include="squish\colourfit.cpp" />
+    <ClCompile Include="squish\colourset.cpp" />
+    <ClCompile Include="squish\fastclusterfit.cpp" />
+    <ClCompile Include="squish\maths.cpp" />
+    <ClCompile Include="squish\weightedclusterfit.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Public\Nvtt\nvcore\Array.inl" />
+    <None Include="..\Public\Nvtt\nvmath\Box.inl" />
+    <None Include="..\Public\Nvtt\nvmath\Color.inl" />
+    <None Include="..\Public\Nvtt\nvmath\Matrix.inl" />
+    <None Include="..\Public\Nvtt\nvmath\Plane.inl" />
+    <None Include="..\Public\Nvtt\nvmath\Vector.inl" />
+    <None Include="nvmath\Color.inl" />
+    <None Include="squish\fastclusterlookup.inl" />
+    <None Include="squish\singlecolourlookup.inl" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <ProjectGuid>{32A26599-1A59-4866-8C03-1EA6E790405A}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Nvtt</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>nvtt</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="..\Default.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="..\Default.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="..\Default.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="..\Default.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(ProjectDir)..;.</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(ProjectDir)..;.</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(ProjectDir)..;.</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(ProjectDir)..;.</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

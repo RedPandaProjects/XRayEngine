@@ -330,7 +330,6 @@ void  TUI_CustomControl::SelectProcess(TShiftState _Shift)
 			{
 				Fvector Start;
 				Fvector Dir;
-                Msg("%d,%d", UI->m_CurrentCp.x, UI->m_CurrentCp.y);
 
 				
                 if (LTools->GetGimzo()->GetStatus() == Gizmo::EStatus::SelectedX|| LTools->GetGimzo()->GetStatus() == Gizmo::EStatus::SelectedZ)

@@ -62,7 +62,10 @@ LPCSTR	file_header = 0;
 #		define USE_DL_ALLOCATOR
 #	endif // USE_MEMORY_MONITOR
 #endif // PURE_ALLOC
-
+u32 game_lua_memory_usage()
+{
+	return					0;
+}
 #ifndef USE_DL_ALLOCATOR
 static void *lua_alloc_xr	(void *ud, void *ptr, size_t osize, size_t nsize) {
   (void)ud;
@@ -77,18 +80,6 @@ static void *lua_alloc_xr	(void *ud, void *ptr, size_t osize, size_t nsize) {
 #else // DEBUG_MEMORY_MANAGER
     return Memory.mem_realloc		(ptr, nsize);
 #endif // DEBUG_MEMORY_MANAGER
-}
-#else // USE_DL_ALLOCATOR
-static void *lua_alloc_dl	(void *ud, void *ptr, size_t osize, size_t nsize) {
-  (void)ud;
-  (void)osize;
-  if (nsize == 0)	{	dlfree			(ptr);	 return	NULL;  }
-  else				return dlrealloc	(ptr, nsize);
-}
-
-u32 game_lua_memory_usage	()
-{
-	return					((u32)dlmallinfo().uordblks);
 }
 #endif // USE_DL_ALLOCATOR
 
@@ -239,11 +230,11 @@ void CScriptStorage::reinit	()
 	if (m_virtual_machine)
 		lua_close(m_virtual_machine);
 
-#ifndef USE_DL_ALLOCATOR
-	m_virtual_machine = lua_newstate(lua_alloc_xr, NULL);
-#else // USE_DL_ALLOCATOR
-	m_virtual_machine = lua_newstate(lua_alloc_dl, NULL);
-#endif // USE_DL_ALLOCATOR
+#ifdef _WIN64
+	m_virtual_machine = luaL_newstate();
+#else 
+	m_virtual_machine = lua_newstate(lua_alloc, NULL);
+#endif
 
 	if (!m_virtual_machine) {
 		Msg("! ERROR : Cannot initialize script virtual machine!");
@@ -381,7 +372,7 @@ int CScriptStorage::vscript_log		(ScriptStorage::ELuaMessageType tLuaMessageType
 #ifdef PRINT_CALL_STACK
 void CScriptStorage::print_stack		()
 {
-#ifdef DEBUG
+#ifdef PRINT_CALL_STACK
 	if (!m_stack_is_ready)
 		return;
 
@@ -492,7 +483,7 @@ bool CScriptStorage::load_buffer	(lua_State *L, LPCSTR caBuffer, size_t tSize, L
 	}
 
 	if (l_iErrorCode) {
-#ifdef DEBUG
+#ifdef PRINT_CALL_STACK
 		print_output	(L,caScriptName,l_iErrorCode);
 #endif
 		on_error		(L);
@@ -739,7 +730,7 @@ void CScriptStorage::print_error(lua_State *L, int iErrorCode)
 	}
 }
 
-#ifdef DEBUG
+#ifdef PRINT_CALL_STACK
 void CScriptStorage::flush_log()
 {
 	string_path			log_file_name;

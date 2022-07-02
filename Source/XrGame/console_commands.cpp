@@ -150,7 +150,7 @@ CUIOptConCom g_OptConCom;
 #endif // SEVERAL_ALLOCATORS
 
 typedef void (*full_memory_stats_callback_type) ( );
-XRCORE_API full_memory_stats_callback_type g_full_memory_stats_callback;
+XRCORE_API extern full_memory_stats_callback_type g_full_memory_stats_callback;
 
 static void full_memory_stats	( )
 {
@@ -1366,8 +1366,17 @@ public:
 
 		if( EQ(args,"off")||EQ(args,"0") )
 			bWhatToDo = FALSE;
-
-		MainMenu()->Activate( bWhatToDo );
+		if (Device->IsEditorMode())
+		{
+			if (bWhatToDo)
+			{
+				EditorScene->Stop();
+			}
+		}
+		else
+		{
+			MainMenu()->Activate(bWhatToDo);
+		}
 	}
 };
 

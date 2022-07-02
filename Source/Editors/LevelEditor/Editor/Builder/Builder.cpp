@@ -38,7 +38,7 @@ SceneBuilder::~SceneBuilder()
 #define VERIFY_COMPILE(x,c1,c2) CHECK_BREAK \
 							if (!x){error_text.sprintf("ERROR: %s %s", c1,c2); break;}
 
-BOOL SceneBuilder::Compile(bool b_selected_only)
+BOOL SceneBuilder::Compile(bool b_selected_only, bool show_message )
 {
 	if(m_save_as_object)
 	{
@@ -99,10 +99,11 @@ BOOL SceneBuilder::Compile(bool b_selected_only)
 
         if (!error_text.empty()) 	ELog.DlgMsg(mtError,error_text.c_str());
         else if (UI->NeedAbort())	ELog.DlgMsg(mtInformation,"Building terminated.");
-        else						ELog.DlgMsg(mtInformation,"Building OK.");
+        else					if(show_message)	ELog.DlgMsg(mtInformation,"Building OK.");
     }catch(...){
     	ELog.DlgMsg(mtError,"Error has occured in builder routine. Editor aborted.");
-        abort();
+        UI->EndEState();
+        return false;
     }
     UI->EndEState();
 

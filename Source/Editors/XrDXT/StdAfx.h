@@ -6,7 +6,7 @@
 #pragma once
 
 #include "../../xrCore/xrCore.h"
-#include "../../BearBundle/BearGraphics/BearGraphics.hpp"
+#include "RedImageTool/RedImage.hpp"
 #define ECORE_API
 #include "../../XrRender/Private/ETextureParams.h"
 #include <io.h>

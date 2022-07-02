@@ -24,6 +24,7 @@
 
 #include <lua/library_linkage.h>
 #include <luabind/library_linkage.h>
+#include "xrServer_Objects_ALife.h"
 
 #pragma comment(lib,"xrCore.lib")
 
@@ -37,6 +38,7 @@ extern CScriptPropertiesListHelper	*g_property_list_helper;
 
 #endif // #ifdef NDEBUG
 
+extern SFillPropData			fp_data;
 void setup_luabind_allocator();
 extern "C" {
 	FACTORY_API	ISE_Abstract* __cdecl create_entity(LPCSTR section)
@@ -60,6 +62,15 @@ extern "C" {
 
 		CCharacterInfo::InitInternal();
 		CSpecificCharacter::InitInternal();
+	}
+	FACTORY_API void __cdecl reload()
+	{
+		if (fp_data.counter)
+		{
+
+			fp_data.unload();
+			fp_data.load();
+		}
 	}
 	FACTORY_API	void __cdecl destroy()
 	{

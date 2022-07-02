@@ -7,7 +7,7 @@
 #define DEBUG
 #endif 
 
-#ifndef DEBUG
+#ifdef SHIPPING
 #	define MASTER_GOLD
 #endif // DEBUG
 
@@ -202,7 +202,7 @@
 #pragma warning (disable : 4100 )		// unreferenced formal parameter
 
 // Our headers
-#ifdef XRCORE_STATIC
+#ifdef SHIPPING
 #	define XRCORE_API
 #else
 #	ifdef XRCORE_EXPORTS
@@ -279,7 +279,7 @@ DEFINE_VECTOR	(xr_rtoken,RTokenVec,RTokenVecIt);
 #include "intrusive_ptr.h"
 
 #include "net_utils.h"
-
+#include "..\XrAPI\xrGameManager.h"
 // destructor
 template <class T>
 class destructor
@@ -305,7 +305,7 @@ public:
 	bool		Editor;
 
 public:
-	void		_initialize	(LPCSTR ApplicationName, LogCallback cb=0, BOOL init_fs=TRUE, LPCSTR fs_fname=0,bool editor_fs=false);
+	void		_initialize	(LPCSTR ApplicationName, LogCallback cb=0, BOOL init_fs=TRUE, LPCSTR fs_fname=0,bool editor_fs=false, EGamePath Game = EGamePath::NONE);
 	void		_destroy	();
 };
 

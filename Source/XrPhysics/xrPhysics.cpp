@@ -7,9 +7,6 @@
 #include "ode/memory.h"
 
 
-
-
-
 #ifdef _MANAGED
 #pragma managed(push, off)
 #endif
@@ -26,29 +23,12 @@
 #endif // DEBUG_MEMORY_MANAGER
 
 
-
-
-BOOL APIENTRY DllMain( HMODULE hModule,
-                       DWORD  ul_reason_for_call,
-                       LPVOID lpReserved
-					 )
+void XRPHYSICS_API PhysicsInitialize()
 {
-   	lpReserved;
-	switch (ul_reason_for_call)
-	{
-		case DLL_PROCESS_ATTACH:
-
-			dSetAllocHandler			(ode_alloc		);
-			dSetReallocHandler			(ode_realloc	);
-			dSetFreeHandler				(ode_free		);
-
-			break;
-		case DLL_PROCESS_DETACH:
-			break;
-	}
-	return TRUE;
-
-}
+	dSetAllocHandler(ode_alloc);
+	dSetReallocHandler(ode_realloc);
+	dSetFreeHandler(ode_free);
+} 
 
 #ifdef _MANAGED
 #pragma managed(pop)

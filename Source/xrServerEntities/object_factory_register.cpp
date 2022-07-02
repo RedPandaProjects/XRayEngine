@@ -182,7 +182,6 @@
 #endif // NO_XR_GAME
 
 #ifndef NO_XR_GAME
-	ENGINE_API					bool g_dedicated_server;
 #	define ADD(a,b,c,d)			add<a,b>(c,d)
 #	define ADD_MP(a,b,c,d,e,f)	add(xr_new<CObjectItemClientServerSingleMp<a,b,c,d> >(e,f))
 #else
@@ -194,7 +193,9 @@ void CObjectFactory::register_classes	()
 #ifndef NO_XR_GAME
 	// client entities
 	add<CLevel>													(CLSID_GAME_LEVEL				,"level");
+#ifndef MASTER_GOLD
 	add<CLevelEditor>											(CLSID_EDITOR_LEVEL,			"level_editor");
+#endif
 	add<CGamePersistent>										(CLSID_GAME_PERSISTANT			,"game");
 	add<CHUDManager>											(CLSID_HUDMANAGER				,"hud_manager");
 	//Server Game type

@@ -44,7 +44,7 @@ struct story_name_predicate {
 	}
 };
 
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS
 
 struct SFillPropData{
     RTokenVec 	locations[4];
@@ -165,7 +165,7 @@ void CSE_ALifeTraderAbstract::FillProps	(LPCSTR pref, PropItemVec& items)
 {
 	PHelper().CreateU32			(items, PrepareKey(pref,*base()->s_name,"Money"), 	&m_dwMoney,	0, u32(-1));
 	PHelper().CreateFlag32		(items,	PrepareKey(pref,*base()->s_name,"Trader\\Infinite ammo"),&m_trader_flags, eTraderFlagInfiniteAmmo);
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS
 	RListValue *value		= PHelper().CreateRList	(items,	PrepareKey(pref,*base()->s_name,"npc profile"),	 
 		&m_sCharacterProfile, 
 		&*fp_data.character_profiles.begin(), fp_data.character_profiles.size());
@@ -185,14 +185,14 @@ CSE_ALifeGraphPoint::CSE_ALifeGraphPoint	(LPCSTR caSection) : CSE_Abstract(caSec
 	m_tLocations[2]				= 0;
 	m_tLocations[3]				= 0;
 
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS
 	fp_data.inc					();
 #endif
 }
 
 CSE_ALifeGraphPoint::~CSE_ALifeGraphPoint	()
 {
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS
     fp_data.dec					();
 #endif
 }
@@ -230,7 +230,7 @@ void CSE_ALifeGraphPoint::UPDATE_Write		(NET_Packet	&tNetPacket)
 #ifndef XRGAME_EXPORTS 
 void CSE_ALifeGraphPoint::FillProps			(LPCSTR pref, PropItemVec& items)
 {
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS
 	PHelper().CreateRToken8		(items,	PrepareKey(pref,*s_name,"Location\\1"),				&m_tLocations[0],			&*fp_data.locations[0].begin(), fp_data.locations[0].size());
 	PHelper().CreateRToken8		(items,	PrepareKey(pref,*s_name,"Location\\2"),				&m_tLocations[1],			&*fp_data.locations[1].begin(), fp_data.locations[1].size());
 	PHelper().CreateRToken8		(items,	PrepareKey(pref,*s_name,"Location\\3"),				&m_tLocations[2],			&*fp_data.locations[2].begin(), fp_data.locations[2].size());
@@ -259,7 +259,7 @@ CSE_ALifeObject::CSE_ALifeObject			(LPCSTR caSection) : CSE_Abstract(caSection)
 #ifdef XRGAME_EXPORTS
 	m_alife_simulator			= 0;
 #endif
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS
     fp_data.inc					();
 #endif
 	m_flags.set					(flOfflineNoMove,FALSE);
@@ -281,7 +281,7 @@ Fvector CSE_ALifeObject::draw_level_position	() const
 
 CSE_ALifeObject::~CSE_ALifeObject			()
 {
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS
     fp_data.dec					();
 #endif
 }
@@ -397,7 +397,7 @@ void CSE_ALifeObject::FillProps				(LPCSTR pref, PropItemVec& items)
 	}                            
 	PHelper().CreateFlag32		(items,	PrepareKey(pref,*s_name,"ALife\\Interactive"),			&m_flags,			flInteractive);
 	PHelper().CreateFlag32		(items,	PrepareKey(pref,*s_name,"ALife\\Used AI locations"),	&m_flags,			flUsedAI_Locations);
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS
 	PHelper().CreateRToken32	(items,	PrepareKey(pref,*s_name,"ALife\\Story ID"),				&m_story_id,		&*fp_data.story_names.begin(), fp_data.story_names.size());
 	PHelper().CreateRToken32	(items,	PrepareKey(pref,*s_name,"ALife\\Spawn Story ID"),		&m_spawn_story_id,	&*fp_data.spawn_story_names.begin(), fp_data.spawn_story_names.size());
 #endif
@@ -767,7 +767,7 @@ CSE_ALifeLevelChanger::CSE_ALifeLevelChanger(LPCSTR caSection) : CSE_ALifeSpaceR
 	m_dwNextNodeID				= u32(-1);
 	m_tNextPosition.set			(0.f,0.f,0.f);
 	m_tAngles.set				(0.f,0.f,0.f);
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS
     fp_data.inc					();
 #endif
 	m_bSilentMode				= FALSE;
@@ -775,7 +775,7 @@ CSE_ALifeLevelChanger::CSE_ALifeLevelChanger(LPCSTR caSection) : CSE_ALifeSpaceR
 
 CSE_ALifeLevelChanger::~CSE_ALifeLevelChanger()
 {
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS
     fp_data.dec					();
 #endif
 }
@@ -835,7 +835,7 @@ void CSE_ALifeLevelChanger::FillProps		(LPCSTR pref, PropItemVec& items)
 {
 	inherited1::FillProps		(pref,items);
 	
-#ifdef XRSE_FACTORY_EXPORTS
+#ifdef XRSEFACTORY_EXPORTS
 	PHelper().CreateRList		(items,PrepareKey(pref,*s_name,"Level to change"),		&m_caLevelToChange,		&*fp_data.level_ids.begin(), fp_data.level_ids.size());
 #endif
 	PHelper().CreateRText		(items,PrepareKey(pref,*s_name,"Level point to change"),	&m_caLevelPointToChange);

@@ -1460,6 +1460,15 @@ bool CSpawnPoint::OnChooseQuery(LPCSTR specific)
  {
      m_SpawnData.PreExportSpawn(this);
  }
+ bool CSpawnPoint::IsGraphPoint() const
+ {
+     ISE_Abstract* SEAbstract = m_SpawnData.GetEntity();
+     if (SEAbstract)
+     {
+         return SEAbstract->CastALifeGraphPoint();
+     }
+     return false;
+ }
  void CSpawnPoint::OnUpdateTransform()
  {
   

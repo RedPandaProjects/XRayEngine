@@ -11,6 +11,9 @@ class TfrmObjectList;
 class CLevelTool: public CToolCustom
 {
 	typedef CToolCustom inherited;
+
+	PROCESS_INFORMATION m_CompilerProcess;
+	PROCESS_INFORMATION m_GameProcess;
     UIToolCustom*           m_ToolForm;
     int             sub_target;
     ObjClassID		target;
@@ -106,7 +109,7 @@ public:
     virtual void		ShowProperties		(LPCSTR focused_item);
     virtual void		UpdateProperties	(BOOL bForced){m_Flags.set(flUpdateProperties|flUpdateObjectList,TRUE); if (bForced) OnFrame();}
     virtual void		RefreshProperties	();
-    virtual bool UpdateCamera();
+	virtual bool UpdateCamera();
 private:
     virtual void		Simulate			();
     virtual void		UseSimulatePositions();
@@ -131,6 +134,17 @@ public:
     CCommandVar			CommandShowTarget		(CCommandVar p1, CCommandVar p2);
     CCommandVar			CommandReadonlyTarget	(CCommandVar p1, CCommandVar p2);
     CCommandVar			CommandMultiRenameObjects(CCommandVar p1,CCommandVar p2);
+public:
+    void RunGame(const char* Params = "");
+	void RunXrLC();
+	void RunXrDO();
+	void RunXrAI_Spawn(bool current_level);
+	void RunXrAI_AIMap(bool draw);
+	void RunXrAI_Verify();
+	bool IsCompilerRunning();
+	bool IsGameRunning();
+	void Terminated();
+
 };
 extern CLevelTool*		LTools;
 

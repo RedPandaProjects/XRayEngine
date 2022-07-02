@@ -35,7 +35,6 @@
 #	include "PHDebug.h"
 #endif
 
-ENGINE_API bool g_dedicated_server;
 
 CGameObject::CGameObject		()
 {

@@ -723,7 +723,7 @@ public:
 			void						on_throw_completed					();
 	IC		const u32					&last_throw_time					() const;
 
-#ifdef DEBUG
+#ifdef  DEBUG
 public:
 			void						dbg_draw_vision						();
 			void						dbg_draw_visibility_rays			();

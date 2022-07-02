@@ -14,7 +14,7 @@ Gizmo::~Gizmo()
 
 void Gizmo::Render()
 {
-    if (!m_bVisible||Scene->IsSimulate())return;
+    if (!m_bVisible||Scene->IsPlayInEditor())return;
     RCache.set_Z(false);
     if (m_Type == EType::Move)
     {

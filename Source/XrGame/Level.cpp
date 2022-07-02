@@ -63,7 +63,6 @@
 #	include "debug_text_tree.h"
 #endif
 
-ENGINE_API bool g_dedicated_server;
 
 //extern BOOL	g_bDebugDumpPhysicsStep;
 extern CUISequencer * g_tutorial;

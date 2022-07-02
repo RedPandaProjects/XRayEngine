@@ -1,13 +1,8 @@
 #ifndef _XR_COMM_
 #define _XR_COMM_
 
-#ifdef _EDITOR
-	#include "xrLevel.h"
-#else
-	#include "../../BearBundle/BearGraphics/BearGraphics.hpp"
+	#include "RedImageTool/RedImage.hpp"
 	#include "../../xrEngine/xrLevel.h"
-#endif
-
 #pragma pack(push,4)
 
 const u32 XR_MAX_PORTAL_VERTS	= 6;
@@ -60,9 +55,7 @@ struct b_texture
 	u32					dwWidth;
 	u32					dwHeight;
 	BOOL				bHasAlpha;
-#ifndef _EDITOR
-	BearImage				pSurface;
-#endif
+	RedImageTool::RedImage pSurface;
 };
 
 struct b_light_control						// controller or "layer", 30fps

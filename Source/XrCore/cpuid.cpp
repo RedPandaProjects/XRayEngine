@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #pragma hdrstop
-#include "../BearBundle/BearCore/BearCore.hpp"
 
 #include "cpuid.h"
 

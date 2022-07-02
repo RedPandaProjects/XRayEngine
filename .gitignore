@@ -1,3 +1,4 @@
+.vs/
 Source/.vs/
 gamedata/shaders/r5/.vs/
 _appdata_/
@@ -8,6 +9,8 @@ Intermediate/
 /Lib/
 import/
 #rawdata/
+rawdata_soc/
+rawdata_cs/
 rawdata/backup/
 rawdata/groups/
 rawdata/levels/

@@ -88,21 +88,22 @@ private:
 private:
 	IC		shared_str				actor_level_name		();
 	IC		shared_str				spawn_name				(LPCSTR output);
-			void					save_spawn				(LPCSTR name, LPCSTR output);
-			void					save_spawn				(LPCSTR name, CMemoryWriter& output);
-			void					verify_level_changers	();
-			void					verify_spawns			(ALife::_SPAWN_ID spawn_id);
-			void					verify_spawns			();
-			void					process_spawns			();
-			void					load_spawns				(LPCSTR name, bool no_separator_check);
+			bool					save_spawn				(LPCSTR name, LPCSTR output);
+			bool					save_spawn				(LPCSTR name, CMemoryWriter& output);
+			bool					verify_level_changers	();
+			bool					verify_spawns			(ALife::_SPAWN_ID spawn_id);
+			bool					verify_spawns			();
+			bool					process_spawns			();
+			bool					load_spawns				(LPCSTR name, bool no_separator_check);
 	IC		SPAWN_GRAPH				&spawn_graph			();
 	IC		ALife::_SPAWN_ID		spawn_id				();
 	IC		void					process_spawns			(xr_vector<ALife::_SPAWN_ID> &spawns);
-			void					process_actor			(LPCSTR start_level_name);
+			bool					process_actor			(LPCSTR start_level_name);
 
 public:
-									CGameSpawnConstructor	(LPCSTR name, LPCSTR output, LPCSTR start, bool no_separator_check);
-									CGameSpawnConstructor	(LPCSTR name, CMemoryWriter& output, LPCSTR start, bool no_separator_check=true);
+	CGameSpawnConstructor();
+	bool build(LPCSTR name, LPCSTR output, LPCSTR start, bool no_separator_check);
+	bool build(LPCSTR name, CMemoryWriter& output, LPCSTR start, bool no_separator_check = true);
 	virtual							~CGameSpawnConstructor	();
 			void					add_story_object		(ALife::_STORY_ID id,ISE_ALifeDynamicObject *object, LPCSTR level_name);
 			void					add_object				(ISE_Abstract *object);

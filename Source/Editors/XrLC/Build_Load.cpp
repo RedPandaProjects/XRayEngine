@@ -13,7 +13,6 @@
 #include "../xrLCLight/xrMU_Model.h"
 #include "../xrLCLight/xrMU_Model_Reference.h"
 
-#define STB_IMAGE_IMPLEMENTATION
 #include "StbImage\stb_image.h"
 
 extern u32	version;
@@ -359,7 +358,7 @@ void CBuild::Load	(const b_params& Params, const IReader& _in_FS)
 						R_ASSERT2(BT.pSurface.LoadFromFile(name), "Can't load surface");
 						BT.pSurface.ClearMipLevels();
 						BT.THM.SetHasSurface(true);
-						BT.pSurface.Convert(BearTexturePixelFormat::R8G8B8A8);
+						BT.pSurface.Convert(RedImageTool::RedTexturePixelFormat::R8G8B8A8);
 						BT.pSurface.SwapRB();
 
 						/*for (bsize i = 0; i < BT.pSurface.GetSize().x * BT.pSurface.GetSize().y; i++)
@@ -367,11 +366,11 @@ void CBuild::Load	(const b_params& Params, const IReader& _in_FS)
 							u32 *color = ((u32*)*BT.pSurface)+i;
 							*color = color_rgba(color_get_B(*color), color_get_G(*color), color_get_R(*color), color_get_A(*color));
 						}*/
-						if ((BT.pSurface.GetSize().x != BT.dwWidth) || (BT.pSurface.GetSize().y != BT.dwHeight))
+						if ((BT.pSurface.GetWidth() != BT.dwWidth) || (BT.pSurface.GetHeight() != BT.dwHeight))
 						{
-							Msg		("! THM doesn't correspond to the texture: %dx%d -> %dx%d", BT.dwWidth, BT.dwHeight, BT.pSurface.GetSize().x, BT.pSurface.GetSize().y);
-							BT.dwWidth	= BT.THM.width = BT.pSurface.GetSize().x;
-							BT.dwHeight	= BT.THM.height = BT.pSurface.GetSize().y;
+							Msg		("! THM doesn't correspond to the texture: %dx%d -> %dx%d", BT.dwWidth, BT.dwHeight, BT.pSurface.GetWidth(), BT.pSurface.GetHeight());
+							BT.dwWidth	= BT.THM.width = BT.pSurface.GetWidth();
+							BT.dwHeight	= BT.THM.height = BT.pSurface.GetHeight();
 						}
 						//BT.Vflip	();
 					} else {

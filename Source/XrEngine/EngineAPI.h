@@ -32,9 +32,11 @@ extern "C" {
 class ENGINE_API		CEngineAPI
 {
 private:
+#ifndef SHIPPING
 	HMODULE				hGame;
 	HMODULE				hRender;
 	HMODULE				hTuner;
+#endif
 public:
 	BENCH_SEC_SCRAMBLEMEMBER1
 	Factory_Create*		pCreate;

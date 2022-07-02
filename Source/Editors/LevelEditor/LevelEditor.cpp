@@ -50,14 +50,14 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
     Console->Hide();
     ::MainForm = MainForm;
     UI->Push(MainForm, false);
-
     while (MainForm->Frame())
     {
     }
-    xr_delete(g_XrGameManager);
-    xr_delete(g_SEFactoryManager);
-    xr_delete(pApp);
-    xr_delete(MainForm);
+	xr_delete(MainForm);
+	xr_delete(pApp);
+	xr_delete(g_XrGameManager);
+	xr_delete(g_SEFactoryManager);
+
     Core._destroy();
     return 0;
 }

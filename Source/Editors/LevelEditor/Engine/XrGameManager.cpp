@@ -4,7 +4,10 @@
 #include "../../xrServerEntities/xrServer_Objects_Abstract.h"
 #include "..\XrEngine\XrGameEditorInterface.h"
 XrGameManager* g_XrGameManager = nullptr;
-
+extern "C" 
+{
+	typedef void  xrGameInitialize();
+};
 XrGameManager::XrGameManager()
 {
 	LPCSTR			g_name = "XrGame.dll";
@@ -27,6 +30,9 @@ XrGameManager::XrGameManager()
 	m_pDestroy = (Factory_Destroy*)GetProcAddress(m_hGame, "xrFactory_Destroy");	R_ASSERT(m_pCreate);
 	Engine.External.pCreate = m_pCreate;
 	Engine.External.pDestroy = m_pDestroy;
+
+	xrGameInitialize* pxrGameInitialize = (xrGameInitialize*)GetProcAddress(m_hGame, "xrGameInitialize");	R_ASSERT(pxrGameInitialize);
+	pxrGameInitialize();
 }
 
 XrGameManager::~XrGameManager()

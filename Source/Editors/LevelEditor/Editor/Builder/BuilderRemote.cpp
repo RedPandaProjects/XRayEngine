@@ -1446,7 +1446,7 @@ BOOL SceneBuilder::CompileStatic(bool b_selected_only)
             STextureParams 		tp;
             tp.width			= merged_image.w;
             tp.height			= merged_image.h;
-            tp.fmt				= STextureParams::tfDXT5;
+            tp.fmt				= STextureParams::tfRGBA;
             tp.type				= STextureParams::ttImage;
             tp.mip_filter		= STextureParams::kMIPFilterAdvanced;
             tp.flags.assign		(STextureParams::flDitherColor|STextureParams::flGenerateMipMaps);

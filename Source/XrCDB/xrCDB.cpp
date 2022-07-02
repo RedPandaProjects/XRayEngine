@@ -19,21 +19,7 @@ namespace Opcode {
 using namespace CDB;
 using namespace Opcode;
 
-BOOL APIENTRY DllMain( HANDLE hModule, 
-					  u32  ul_reason_for_call, 
-					  LPVOID lpReserved
-					  )
-{
-    switch (ul_reason_for_call)
-	{
-	case DLL_PROCESS_ATTACH:
-	case DLL_THREAD_ATTACH:
-	case DLL_THREAD_DETACH:
-	case DLL_PROCESS_DETACH:
-		break;
-    }
-    return TRUE;
-}
+
 
 // Model building
 MODEL::MODEL	()

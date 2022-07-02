@@ -124,7 +124,7 @@ float CObjectAnimator::GetLength		()
 	return res; 
 }
 
-#if DEV_MODE
+#ifndef MASTER_GOLD
 
 #include "envelope.h"
 

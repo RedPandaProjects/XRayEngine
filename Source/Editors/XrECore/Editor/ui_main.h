@@ -235,6 +235,10 @@ public:
 	void 			ProgressEnd			(SPBItem*&);
     virtual void	ProgressDraw();
     SPBItem*		ProgressLast		(){return m_ProgressItems.empty()?0:m_ProgressItems.back();}
+
+	void ShowConsole();
+    void WriteConsole(TMsgDlgType mt, const char* txt);
+    void CloseConsole();
 public:
     ref_rt				RT;
     ref_rt				ZB;
@@ -246,6 +250,7 @@ protected:
 public:
    IC  void ResetUI(bool bForced=false)  { if (!bForced)m_Flags.set(flResetUI, TRUE); if (bForced) RealResetUI(); }
    virtual Ivector2 GetRenderMousePosition()const { return Ivector2().set(0, 0); }
+   virtual void	OnStats(CGameFont* font);
 };
 //---------------------------------------------------------------------------
 extern ECORE_API TUI* UI;  

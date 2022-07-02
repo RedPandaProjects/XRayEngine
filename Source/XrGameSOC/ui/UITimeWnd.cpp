@@ -8,6 +8,7 @@
 //
 
 #include "StdAfx.h"
+#if 0
 #include "UITimeWnd.h"
 #include "UIInventoryUtilities.h"
 
@@ -61,3 +62,4 @@ void CUITimeWnd::Update(){
 	this->m_staticTime.SetText(*InventoryUtilities::GetGameTimeAsString(InventoryUtilities::etpTimeToMinutes));
 }
 
+#endif

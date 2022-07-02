@@ -98,8 +98,10 @@ BOOL CEffect_Rain::RayPick(const Fvector& s, const Fvector& d, float& range, col
 	BOOL bRes 			= TRUE;
 	if (Device->IsEditorMode())
 	{
+#ifndef MASTER_GOLD
 		EditorScene->RayPick(s, d, range);
 			return true;
+#endif
 	}
 	collide::rq_result	RQ;
 	CObject* E 			= g_pGameLevel->CurrentViewEntity();

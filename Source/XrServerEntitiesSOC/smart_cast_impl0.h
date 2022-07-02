@@ -8,8 +8,8 @@
 
 #pragma once
 
-#include <_type_traits.h>
-#include "object_type_traits.h"
+#include "../xrcore/_type_traits.h"
+#include "../XrEngine/object_type_traits.h"
 
 namespace SmartDynamicCast {
 	template <typename T1, typename T2>

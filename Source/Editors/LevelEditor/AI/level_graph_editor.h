@@ -14,7 +14,10 @@ class CLevelGraphEditor:public ILevelGraph
 public:
 	CLevelGraphEditor();
 	virtual			~CLevelGraphEditor();
-	void build();
+	bool build();
+	bool empty()const;
+	void clear();
+	bool save_temp();
 protected:
 	CHeader m_RealHeader;
 	xr_vector<CVertex> m_RealNodes;

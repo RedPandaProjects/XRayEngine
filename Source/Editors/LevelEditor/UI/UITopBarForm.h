@@ -6,14 +6,26 @@ public:
 	virtual ~UITopBarForm();
 	virtual void Draw();
 	void RefreshBar();
+	bool VerifySpaceRestrictors()const {return m_VerifySpaceRestrictors;}
 private:
-	void ClickLevelPlay();
-	void ClickLevelSimulate();
 
-#define ADD_BUTTON_IMAGE_T1(Class,Name)void Click##Class##Name();
-#define ADD_BUTTON_IMAGE_T2(Class,Name)void Click##Class##Name();
-#define ADD_BUTTON_IMAGE_S(Name) void Click##Name(); ref_texture m_t##Name;u32 m_time##Name;
-#define ADD_BUTTON_IMAGE_D(Name) void Click##Name();  ref_texture m_t##Name;bool m_b##Name;
-#define ADD_BUTTON_IMAGE_P(Name)  void Click##Name();ref_texture m_t##Name;bool m_b##Name;
-#include "UITopBarForm_ButtonList.h"
+	void ClickUndo(); ref_texture m_tUndo; u32 m_timeUndo;
+	void ClickRedo(); ref_texture m_tRedo; u32 m_timeRedo;
+
+	void ClickNew(); ref_texture m_tNew;
+	void ClickOpen(); ref_texture m_tOpen;
+	void ClickSave(); ref_texture m_tSave;
+
+	void ClickReloadConfigs();  ref_texture m_tReloadConfigs;
+	void ClickOpenGameData();  ref_texture m_tOpenGameData;
+
+	void ClickCForm();  ref_texture m_tCForm;
+	void ClickAIMap();  ref_texture m_tAIMap;
+	void ClickGGraph();  ref_texture m_tGGraph;
+	void ClickPlayInEditor();  ref_texture m_tPlayInEditor;
+	void ClickBuildAndMake(); ref_texture m_tBuildAndMake;
+	void ClickTerminated();  ref_texture m_tTerminated;
+	void ClickPlayPC();  ref_texture m_tPlayPC;
+	void ClickPlayCleanGame();  ref_texture m_tPlayCleanGame;
+	bool m_VerifySpaceRestrictors;
 };

@@ -88,7 +88,9 @@ void CEditorRenderDevice::Initialize()
 
 	RenderFactory = &RenderFactoryImpl;
 	UIRender = &UIRenderImpl;
+#ifdef DEBUG
 	DRender = &DebugRenderImpl;
+#endif
 
 	// game materials
 	//GameMaterialLibraryEditors->Load	();

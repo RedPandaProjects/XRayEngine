@@ -231,7 +231,7 @@ void	SFillPropData::inc()
 
 	++counter;
 }
-static SFillPropData			fp_data;
+ SFillPropData			fp_data;
 #endif // #ifdef XRSEFACTORY_EXPORTS
 
 #ifndef XRGAME_EXPORTS

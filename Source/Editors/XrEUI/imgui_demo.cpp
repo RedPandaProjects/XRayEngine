@@ -1145,13 +1145,14 @@ static void ShowDemoWindowWidgets()
         static int item_current_idx = 0; // Here we store our selection data as an index.
         const char* combo_preview_value = items[item_current_idx];  // Pass in the preview value visible before opening the combo (it could be anything)
         if (ImGui::BeginCombo("combo 1", combo_preview_value, flags))
-        {
+		{
+			static bool test_check = false;
+			ImGui::Checkbox("test", &test_check);
             for (int n = 0; n < IM_ARRAYSIZE(items); n++)
             {
                 const bool is_selected = (item_current_idx == n);
                 if (ImGui::Selectable(items[n], is_selected))
                     item_current_idx = n;
-
                 // Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
                 if (is_selected)
                     ImGui::SetItemDefaultFocus();
@@ -6767,7 +6768,7 @@ struct ExampleAppConsole
         ImGui::Separator();
 
         // Command-line
-        bool reclaim_focus = false;
+        bool reclaim_focus = false; 
         ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_CallbackCompletion | ImGuiInputTextFlags_CallbackHistory;
         if (ImGui::InputText("Input", InputBuf, IM_ARRAYSIZE(InputBuf), input_text_flags, &TextEditCallbackStub, (void*)this))
         {

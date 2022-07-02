@@ -127,7 +127,7 @@ public:
 };
 
 
-void LuaLog(LPCSTR caMessage)
+void RLuaLog(LPCSTR caMessage)
 {
 	MDB;	
 	Lua::LuaOut	(Lua::eLuaMessageTypeMessage,"%s",caMessage);
@@ -232,7 +232,7 @@ void	CResourceManager::LS_Load			()
 		luabind::set_error_callback		(LuaError);
 #endif
 
-	function		(LSVM, "log",	LuaLog);
+	function		(LSVM, "log", RLuaLog);
 
 	module			(LSVM)
 	[

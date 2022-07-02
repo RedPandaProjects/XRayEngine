@@ -15,9 +15,12 @@ public:
 	virtual ~CGameGraphEditor();
 	virtual	 void set_current_level(u32 level_id);
 	void realloc(const CHeader&new_header);
+	void clear();
+	bool empty()const;
 	void set_cross_table(IGameLevelCrossTable*cross_table);
 	IC const CVertex* vertex(u32 vertex_id) const	{ return m_nodes + vertex_id; }
 	IC		 CVertex* vertex(u32 vertex_id)			{ return m_nodes + vertex_id; };
-	IC		 CEdge* edge(u32 vertex_id) { return (CEdge*)m_edges+ vertex_id; };
+	IC		 CEdge* edge(u32 vertex_id) { return (CEdge*)m_edges + vertex_id; };
+	virtual		void					save(IWriter& stream);
 
 };

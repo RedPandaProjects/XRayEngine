@@ -1,5 +1,4 @@
 #include "stdafx.h"
-#include "..\BearBundle\BearCore\BearCore.hpp"
 #pragma hdrstop
 
 #include "xrdebug.h"
@@ -25,11 +24,8 @@ extern bool shared_str_initialized;
         static BOOL			bException	= TRUE;
     #   define USE_BUG_TRAP
 #else
-    #	define DEBUG_INVOKE	BearCore::GetDebug()->Break();
+    #	define DEBUG_INVOKE	__debugbreak();
         static BOOL			bException	= FALSE;
-#endif
-#ifndef _DEBUG
-#define USE_BUG_TRAP
 #endif
 #ifndef USE_BUG_TRAP
 #	include <exception>
@@ -49,7 +45,7 @@ extern bool shared_str_initialized;
 #include <new.h>							// for _set_new_mode
 #include <signal.h>							// for signals
 
-#ifdef _DEBUG
+#ifndef MASTER_GOLD
 #	define USE_OWN_ERROR_MESSAGE_WINDOW
 #else // DEBUG
 #	define USE_OWN_MINI_DUMP
@@ -151,11 +147,11 @@ void xrDebug::do_exit	(const std::string &message)
 
 void xrDebug::backend	(const char *expression, const char *description, const char *argument0, const char *argument1, const char *file, int line, const char *function, bool &ignore_always)
 {
-	if (IsDebuggerPresent())
+	/*if (IsDebuggerPresent())
 	{
 		DebugBreak();
 		return;
-	}
+	}*/
 		static xrCriticalSection CS
 #ifdef PROFILE_CRITICAL_SECTIONS
 	(MUTEX_PROFILE_ID(xrDebug::backend))
@@ -192,7 +188,7 @@ void xrDebug::backend	(const char *expression, const char *description, const ch
 #	ifdef USE_OWN_ERROR_MESSAGE_WINDOW
 		int					result = 
 			MessageBox(
-				GetTopWindow(NULL),
+				NULL,
 				assertion_info,
 				"Fatal Error",
 				MB_CANCELTRYCONTINUE|MB_ICONERROR|MB_SYSTEMMODAL
@@ -203,7 +199,14 @@ void xrDebug::backend	(const char *expression, const char *description, const ch
 #		ifdef USE_BUG_TRAP
 				BT_SetUserMessage	(assertion_info);
 #		endif // USE_BUG_TRAP
-				DEBUG_INVOKE;
+				if (IsDebuggerPresent())
+				{
+					__debugbreak();
+				}
+				else
+				{
+					exit(-1);
+				}
 				break;
 			}
 			case IDTRYAGAIN : {
@@ -215,7 +218,7 @@ void xrDebug::backend	(const char *expression, const char *description, const ch
 				ignore_always	= true;
 				break;
 			}
-			default : NODEFAULT;
+			default : 		exit(-1);
 		}
 #	else // USE_OWN_ERROR_MESSAGE_WINDOW
 #		ifdef USE_BUG_TRAP

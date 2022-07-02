@@ -139,7 +139,7 @@ public:
 			SceneBuilder            ();
 	virtual ~SceneBuilder           ();
 
-	BOOL	Compile            		(bool b_selected_only);
+	BOOL	Compile            		(bool b_selected_only,bool show_message=true);
 	BOOL 	MakeGame				();
     BOOL 	MakeDetails				();
     BOOL 	MakeHOM					();

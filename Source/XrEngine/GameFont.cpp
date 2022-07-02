@@ -365,6 +365,5 @@ void CGameFont::SetHeightI(float S)
 
 void CGameFont::SetHeight(float S)
 {
-	VERIFY			( uFlags&fsDeviceIndependent );
 	fCurrentHeight	= S;
 };

@@ -1,10 +1,7 @@
 #include "..\XrEngine\stdafx.h"
 
 
-ENGINE_API int  APIENTRY WinMain_impl(HINSTANCE hInstance,
-	HINSTANCE hPrevInstance,
-	char* lpCmdLine,
-	int       nCmdShow);
+ENGINE_API int EngineLaunch(EGamePath Game);
 int APIENTRY WinMain(HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,
 	char* lpCmdLine,
@@ -26,7 +23,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 
 	//free					(buffer);
 
-	WinMain_impl(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+	EngineLaunch(EGamePath::NONE);
 
 
 

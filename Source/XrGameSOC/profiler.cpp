@@ -8,6 +8,7 @@
 
 #include "stdafx.h"
 #include "profiler.h"
+#ifdef USE_PROFILER
 #include "../XrEngine/gamefont.h"
 
 #ifdef PROFILE_CRITICAL_SECTIONS
@@ -270,3 +271,4 @@ void CProfiler::add_profile_portion	(const CProfileResultPortion &profile_portio
 	InterlockedExchange			(&critical_section_counter,0);
 #endif // PROFILE_CRITICAL_SECTIONS
 }
+#endif

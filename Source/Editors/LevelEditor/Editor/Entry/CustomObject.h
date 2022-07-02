@@ -35,7 +35,7 @@ struct SExportStreams
 
 class  CCustomObject:private pureDrawUI
 {
-	
+protected:
     shared_str		EName;
     // orientation
 	Fvector 		EPosition;

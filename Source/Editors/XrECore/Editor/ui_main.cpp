@@ -388,7 +388,7 @@ void TUI::Redraw()
             ZB.create("rt_depth", RTSize.x * EDevice->m_ScreenQuality, RTSize.y * EDevice->m_ScreenQuality, D3DFORMAT::D3DFMT_D24X8);
             m_Flags.set(flRedraw, TRUE);
             EDevice->fASPECT = ((float)RTSize.y) / ((float)RTSize.x);
-            EDevice->mProject.build_projection(deg2rad(EDevice->fFOV), EDevice->fASPECT, EDevice->m_Camera.m_Znear, EDevice->m_Camera.m_Zfar);
+         
             EDevice->m_fNearer = EDevice->mProject._43;
             EDevice->fWidth_2 = GetRenderWidth() / 2.f;
             EDevice->fHeight_2 = GetRenderHeight() / 2.f;
@@ -398,12 +398,16 @@ void TUI::Redraw()
             RCache.set_xform_project(EDevice->mProject);
             RCache.set_xform_world(Fidentity);
         }
+        if (!UI->IsPlayInEditor())
+		{
+			EDevice->mProject.build_projection(deg2rad(EDevice->fFOV), EDevice->fASPECT, EDevice->m_Camera.m_Znear, EDevice->m_Camera.m_Zfar);
+        }
 
         if (EDevice->Begin())
         {
             if (psDeviceFlags.is(rsRenderRealTime))
                 m_Flags.set(flRedraw, TRUE);
-            if (m_Flags.is(flRedraw))
+            if (m_Flags.is(flRedraw)||UI->IsPlayInEditor())
             {
                
                 m_Flags.set(flRedraw, FALSE);
@@ -454,6 +458,7 @@ void TUI::Redraw()
 
                 EDevice->Statistic->RenderDUMP_RT.End();
                 EDevice->EStatistic->Show(EDevice->pSystemFont);
+                UI->OnStats(EDevice->pSystemFont);
                 EDevice->SetRS(D3DRS_FILLMODE, D3DFILL_SOLID);
                 EDevice->pSystemFont->OnRender();
                 EDevice->SetRS(D3DRS_FILLMODE, EDevice->dwFillMode);
@@ -686,8 +691,54 @@ void TUI::ProgressDraw()
         string2048 out;
         xr_sprintf(out,"[%d%%]%s\r\n", val, txt.c_str());
         DWORD  dw;
-        WriteConsole(m_HConsole, out, xr_strlen(out), &dw, NULL);
+        SetConsoleTextAttribute(m_HConsole, 10);
+        ::WriteConsole(m_HConsole, out, xr_strlen(out), &dw, NULL);
     }
+}
+
+void TUI::ShowConsole()
+{
+	if (!m_HConsole)
+	{
+		AllocConsole();
+		m_HConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+		SetConsoleTextAttribute(m_HConsole, 15);
+	}
+}
+
+void TUI::WriteConsole(TMsgDlgType mt, const char* txt)
+{
+    if (m_HConsole)
+	{
+		switch (mt)
+		{
+		case mtError:
+			SetConsoleTextAttribute(m_HConsole, 12);
+            break;
+		case mtInformation:
+			SetConsoleTextAttribute(m_HConsole, 11);
+            break;
+		case mtConfirmation:
+			SetConsoleTextAttribute(m_HConsole, 14);
+            break;
+        default:
+            SetConsoleTextAttribute(m_HConsole,15);
+            break;
+        }
+
+		DWORD  dw;
+		::WriteConsole(m_HConsole, txt, xr_strlen(txt), &dw, NULL);
+		::WriteConsole(m_HConsole, "\r\n", 2, &dw, NULL);
+    }
+}
+
+void TUI::CloseConsole()
+{
+	if (m_ProgressItems.size() == 0)
+	{
+		FreeConsole();
+		m_HConsole = 0;
+	}
 }
 
 void TUI::OnDrawUI()
@@ -710,6 +761,10 @@ void TUI::RealResetUI()
         UI->Resize(1280, 800);
         ImGui::LoadIniSettingsFromDisk(ini_path);
     }
+}
+
+void TUI::OnStats(CGameFont* font)
+{
 }
 
 void SPBItem::GetInfo			(xr_string& txt, float& p, float& m)

@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#ifndef SHIPPING
 #include "XrLevelEditor.h"
 #include "../xrphysics/iphworld.h"
 #include "phcommander.h"
@@ -237,3 +238,4 @@ BOOL CLevelEditor::net_Start(LPCSTR op_server, LPCSTR op_client)
 	spawn_item("bread", Fvector().set(0, 0, 0), 0, 0);*/
 	return TRUE;
 }
+#endif

@@ -19,9 +19,11 @@ void __cdecl dummy		(void)	{
 };
 CEngineAPI::CEngineAPI	()
 {
+#ifndef SHIPPING
 	hGame			= 0;
 	hRender			= 0;
 	hTuner			= 0;
+#endif
 	pCreate			= 0;
 	pDestroy		= 0;
 	tune_pause		= dummy	;
@@ -62,11 +64,10 @@ ENGINE_API bool is_enough_address_space_available	()
 
 void CEngineAPI::InitializeNotDedicated()
 {
-	SECUROM_MARKER_HIGH_SECURITY_ON(2)
-
-	LPCSTR			r2_name	= "xrRender_R2.dll";
-	LPCSTR			r3_name	= "xrRender_R3.dll";
-	LPCSTR			r4_name	= "xrRender_R4.dll";
+#ifndef SHIPPING
+	LPCSTR			r2_name = "xrRender_R2.dll";
+	LPCSTR			r3_name = "xrRender_R3.dll";
+	LPCSTR			r4_name = "xrRender_R4.dll";
 	LPCSTR			r5_name = "xrRender_R5.dll";
 	if (psDeviceFlags.test(rsR5))
 	{
@@ -82,58 +83,82 @@ void CEngineAPI::InitializeNotDedicated()
 	if (psDeviceFlags.test(rsR4))
 	{
 		// try to initialize R4
-		Log				("Loading DLL:",	r4_name);
-		hRender			= LoadLibrary		(r4_name);
-		if (0==hRender)	
+		Log("Loading DLL:", r4_name);
+		hRender = LoadLibrary(r4_name);
+		if (0 == hRender)
 		{
 			// try to load R1
-			Msg			("! ...Failed - incompatible hardware/pre-Vista OS.");
-			psDeviceFlags.set	(rsR2,TRUE);
+			Msg("! ...Failed - incompatible hardware/pre-Vista OS.");
+			psDeviceFlags.set(rsR2, TRUE);
 		}
 	}
 
 	if (psDeviceFlags.test(rsR3))
 	{
 		// try to initialize R3
-		Log				("Loading DLL:",	r3_name);
-		hRender			= LoadLibrary		(r3_name);
-		if (0==hRender)	
+		Log("Loading DLL:", r3_name);
+		hRender = LoadLibrary(r3_name);
+		if (0 == hRender)
 		{
 			// try to load R1
-			Msg			("! ...Failed - incompatible hardware/pre-Vista OS.");
-			psDeviceFlags.set	(rsR2,TRUE);
+			Msg("! ...Failed - incompatible hardware/pre-Vista OS.");
+			psDeviceFlags.set(rsR2, TRUE);
 		}
 		else
-			g_current_renderer	= 3;
+			g_current_renderer = 3;
 	}
 
-	if (psDeviceFlags.test(rsR2))	
+	if (psDeviceFlags.test(rsR2))
 	{
 		// try to initialize R2
-		psDeviceFlags.set	(rsR5,FALSE);
-		psDeviceFlags.set	(rsR4,FALSE);
-		psDeviceFlags.set	(rsR3,FALSE);
-		
-		Log				("Loading DLL:",	r2_name);
-		hRender			= LoadLibrary		(r2_name);
-		if (0==hRender)	
+		psDeviceFlags.set(rsR5, FALSE);
+		psDeviceFlags.set(rsR4, FALSE);
+		psDeviceFlags.set(rsR3, FALSE);
+
+		Log("Loading DLL:", r2_name);
+		hRender = LoadLibrary(r2_name);
+		if (0 == hRender)
 		{
 			// try to load R1
-			Msg			("! ...Failed - incompatible hardware.");
+			Msg("! ...Failed - incompatible hardware.");
 		}
 		else
-			g_current_renderer	= 2;
+			g_current_renderer = 2;
 	}
 
 	SECUROM_MARKER_HIGH_SECURITY_OFF(2)
+#else
+	g_current_renderer = 2;
+#endif
+
+	
 }
 #endif // DEDICATED_SERVER
 
+#ifdef SHIPPING
 
+extern "C"  DLL_Pure * __cdecl xrFactory_Create(CLASS_ID clsid);
+extern "C" void		__cdecl	xrFactory_Destroy(DLL_Pure * O);
+extern "C" bool SupportsRendering();
+extern "C" void InitializeRendering();
+#else
+extern "C" {
+	typedef bool  SupportsRendering();
+	typedef void  InitializeRendering();
+	typedef void  xrGameInitialize();
+};
+#endif
 void CEngineAPI::Initialize(void)
 {
 	//////////////////////////////////////////////////////////////////////////
 	// render
+#ifdef SHIPPING
+	//InitializeNotDedicated();
+	InitializeRendering();
+	pCreate = &xrFactory_Create;
+	pDestroy = &xrFactory_Destroy;
+
+#else
 	LPCSTR			r1_name	= "xrRender_R1.dll";
 
 	#ifndef DEDICATED_SERVER
@@ -154,9 +179,14 @@ void CEngineAPI::Initialize(void)
 		R_ASSERT		(hRender);
 		g_current_renderer	= 1;
 	}
+	{
+		InitializeRendering* pInitializeRendering = (InitializeRendering*)GetProcAddress(hRender, "InitializeRendering");
+		R_ASSERT(pInitializeRendering);
+		pInitializeRendering();
+	}
+
 
 	EngineDevice->ConnectToRender();
-
 	// game	
 	{
 		LPCSTR			g_name	= "XrGame.dll";
@@ -175,7 +205,9 @@ void CEngineAPI::Initialize(void)
 		if (0==hGame)	R_CHK			(GetLastError());
 		R_ASSERT2		(hGame,"Game DLL raised exception during loading or there is no game DLL at all");
 		pCreate			= (Factory_Create*)		GetProcAddress(hGame,"xrFactory_Create"		);	R_ASSERT(pCreate);
-		pDestroy		= (Factory_Destroy*)	GetProcAddress(hGame,"xrFactory_Destroy"	);	R_ASSERT(pDestroy);
+		pDestroy		= (Factory_Destroy*)		GetProcAddress(hGame,"xrFactory_Destroy"		);	R_ASSERT(pDestroy);
+		xrGameInitialize* pxrGameInitialize = (xrGameInitialize*)	GetProcAddress(hGame,"xrGameInitialize"	);	R_ASSERT(pxrGameInitialize);
+		pxrGameInitialize();
 	}
 
 	//////////////////////////////////////////////////////////////////////////
@@ -191,26 +223,26 @@ void CEngineAPI::Initialize(void)
 		tune_pause		= (VTPause*)	GetProcAddress(hTuner,"VTPause"		);	R_ASSERT(tune_pause);
 		tune_resume		= (VTResume*)	GetProcAddress(hTuner,"VTResume"	);	R_ASSERT(tune_resume);
 	}
+#endif
 }
 
 void CEngineAPI::Destroy	(void)
 {
+#ifndef SHIPPING
 	if (hGame)				{ FreeLibrary(hGame);	hGame	= 0; }
 	if (hRender)			{ FreeLibrary(hRender); hRender = 0; }
+#endif
 	pCreate					= 0;
 	pDestroy				= 0;
 	Engine.Event._destroy	();
 	XRC.r_clear_compact		();
 }
 
-extern "C" {
-	typedef bool __cdecl SupportsAdvancedRendering	(void);
-	typedef bool _declspec(dllexport) SupportsDX10Rendering();
-	typedef bool _declspec(dllexport) SupportsDX11Rendering();
-};
+
 
 void CEngineAPI::CreateRendererList()
 {
+#ifndef SHIPPING
 	//	TODO: ask renderers if they are supported!
 	if(vid_quality_token != NULL)		return;
 	bool bSupports_r2 = false;
@@ -239,7 +271,7 @@ void CEngineAPI::CreateRendererList()
 		if (hRender)	
 		{
 			bSupports_r2 = true;
-			SupportsAdvancedRendering *test_rendering = (SupportsAdvancedRendering*) GetProcAddress(hRender,"SupportsAdvancedRendering");	
+			SupportsRendering*test_rendering = (SupportsRendering*) GetProcAddress(hRender,"SupportsRendering");
 			R_ASSERT(test_rendering);
 			bSupports_r2_5 = test_rendering();
 			FreeLibrary(hRender);
@@ -254,7 +286,7 @@ void CEngineAPI::CreateRendererList()
 		SetErrorMode(0);
 		if (hRender)	
 		{
-			SupportsDX10Rendering *test_dx10_rendering = (SupportsDX10Rendering*) GetProcAddress(hRender,"SupportsDX10Rendering");
+			SupportsRendering*test_dx10_rendering = (SupportsRendering*) GetProcAddress(hRender,"SupportsRendering");
 			R_ASSERT(test_dx10_rendering);
 			bSupports_r3 = test_dx10_rendering();
 			FreeLibrary(hRender);
@@ -269,7 +301,7 @@ void CEngineAPI::CreateRendererList()
 		SetErrorMode	(0);
 		if (hRender)	
 		{
-			SupportsDX11Rendering *test_dx11_rendering = (SupportsDX11Rendering*) GetProcAddress(hRender,"SupportsDX11Rendering");
+			SupportsRendering*test_dx11_rendering = (SupportsRendering*) GetProcAddress(hRender,"SupportsRendering");
 			R_ASSERT(test_dx11_rendering);
 			bSupports_r4 = true;// test_dx11_rendering();
 			FreeLibrary(hRender);
@@ -280,7 +312,7 @@ void CEngineAPI::CreateRendererList()
 		SetErrorMode(0);
 		if (hRender)
 		{
-			SupportsDX11Rendering* test_dx11_rendering = (SupportsDX11Rendering*)GetProcAddress(hRender, "SupportsRendering");
+			SupportsRendering* test_dx11_rendering = (SupportsRendering*)GetProcAddress(hRender, "SupportsRendering");
 			R_ASSERT(test_dx11_rendering);
 			bSupports_r5 =  test_dx11_rendering();
 			FreeLibrary(hRender);
@@ -416,4 +448,5 @@ void CEngineAPI::CreateRendererList()
 #endif // DEBUG
 	}
 	*/
+#endif
 }

@@ -6,57 +6,30 @@
 #pragma hdrstop
 
 #include "ELog.h"
-#if 1
-	#include "UILogForm.h"
-	#include "ui_main.h"
-	void  ELogCallback(LPCSTR txt)
+#include "UILogForm.h"
+#include "ui_main.h"
+void  ELogCallback(LPCSTR txt)
+{
+	if (0 == txt[0]) return;
+	TMsgDlgType mt = TMsgDlgType::mtCustom;
+	if (strncmp(txt, "! ", 2) == 0)
 	{
-    	if (0==txt[0]) return;
-    	bool bDlg 		= ('#'==txt[0])||((0!=txt[1])&&('#'==txt[1]));
-        TMsgDlgType mt	= ('!'==txt[0])||((0!=txt[1])&&('!'==txt[1]))?mtError:mtInformation;
-        if (('!'==txt[0])||('#'==txt[0])) txt++;
-        if (('!'==txt[0])||('#'==txt[0])) txt++;
-		if (bDlg)		UILogForm::AddDlgMessage	(mt,txt);
-        else			UILogForm::AddMessage		(mt,txt);
+		mt = mtError;
 	}
-#endif
-#ifdef _LW_EXPORT
-	#include <lwhost.h>
-	extern "C" LWMessageFuncs	*g_msg;
-	void ELogCallback(LPCSTR txt)
+	if (strncmp(txt, "~ ", 2) == 0)
 	{
-		if (0==txt[0])	return;
-		bool bDlg 		= ('#'==txt[0])||((0!=txt[1])&&('#'==txt[1]));
-		if (bDlg){
-			int mt		= ('!'==txt[0])||((0!=txt[1])&&('!'==txt[1]))?1:0;
-			if (('!'==txt[0])||('#'==txt[0])) txt++;
-			if (('!'==txt[0])||('#'==txt[0])) txt++;
-			if (mt==1)	g_msg->error(txt,0);
-			else		g_msg->info(txt,0);
-		}
+		mt = mtConfirmation;
 	}
-#endif
-#ifdef _MAX_EXPORT
-	#include "NetDeviceLog.h"
-	void ELogCallback(LPCSTR txt)
+	if (strncmp(txt, "* ", 2) == 0)
 	{
- 		if (0!=txt[0]){
-			if (txt[0]=='!')EConsole.print(mtError,txt+1);
-			else			EConsole.print(mtInformation,txt);
-		}
+		mt = mtInformation;
 	}
-#endif
-#ifdef _MAYA_PLUGIN
-	void ELogCallback(LPCSTR txt)
-	{
- 		if (0!=txt[0]){
-			if (txt[0]=='!')std::cerr << "XR-Error: " << txt+1 << "\n";
-			else			std::cerr << "XR-Info: " << txt << "\n";
-		}
-//.		MStringArray res;
-//		MGlobal::executeCommand("confirmDialog -title \"Error\" -message \"Mesh have non-triangulated polygon.\" -button \"Ok\" -defaultButton \"Ok\"",res);
-	}
-#endif
+
+	UILogForm::AddMessage(txt);
+	if(UI)
+		UI->WriteConsole(mt, txt);
+
+}
 
 //----------------------------------------------------
 CLog ELog;
@@ -236,7 +209,7 @@ void CLog::Msg(TMsgDlgType mt, LPCSTR _Format, ...)
 	vsprintf( buf, _Format, l );
 
 #if 1
-    UILogForm::AddMessage(mt,xr_string(buf));
+    UILogForm::AddMessage(xr_string(buf));
 #endif
 #ifdef _MAX_EXPORT
 	EConsole.print(mt,buf);

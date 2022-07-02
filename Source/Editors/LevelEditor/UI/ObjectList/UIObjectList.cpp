@@ -126,11 +126,19 @@ void UIObjectList::Refresh()
 			if (it->first == OBJCLASS_DUMMY)
 				continue;
 			ObjectList& lst = ot->GetObjects();
+			size_t Index = 0;
 			for (CCustomObject*Obj: lst)
 			{
-				UIObjectListItem*Item = static_cast<UIObjectListItem*>(Form->m_Root.AppendItem(Obj->GetName(),0));
-				VERIFY(Item);
-				Item->Object = Obj;
+				if (Obj->GetName() == 0 || Obj->GetName()[0] == 0)
+				{
+					continue;
+				}
+				else
+				{
+					UIObjectListItem* Item = static_cast<UIObjectListItem*>(Form->m_Root.AppendItem(Obj->GetName(), 0)); VERIFY(Item);
+					Item->Object = Obj;
+				}
+				
 			}
 			
 		}

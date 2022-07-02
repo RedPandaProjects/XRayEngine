@@ -25,7 +25,7 @@ public:
 #pragma pack(push,2)
 	class CHeader 
 	{
-#if DEV_MODE
+#ifndef MASTER_GOLD
 	public:
 #endif
 		u32					dwVersion;
@@ -43,7 +43,7 @@ public:
 	
 	class  CCell 
 	{
-#if DEV_MODE
+#ifndef MASTER_GOLD
 	public:
 #endif
 		GameGraph::_GRAPH_ID	tGraphIndex;

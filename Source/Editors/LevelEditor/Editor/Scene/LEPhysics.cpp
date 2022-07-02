@@ -188,9 +188,6 @@ void CScenePhyscs::DestroyObjectSpace	()
 
  void CScenePhyscs::GenerateCFrom(CObjectSpace* To, CDB::build_callback cb)
  {
-     ObjClassID cls = LTools->CurrentClassID();
-     if (cls == OBJCLASS_DUMMY)	return;
-     ESceneToolBase* pCurrentTool = Scene->GetOTool(cls);
 
      bool bResult = true;
 

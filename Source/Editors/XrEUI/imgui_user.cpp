@@ -65,3 +65,8 @@ bool ImGui::BeginPopupModal(const char* name, bool* p_open, ImGuiWindowFlags fla
     }
    return  ImGui::BeginPopupModal(name, p_open, flags);
 }
+
+IMGUI_API bool ImGui::ArrowButton(const char* str_id, ImGuiDir dir, ImVec2 size, ImGuiButtonFlags flags)
+{
+    return ArrowButtonEx(str_id, dir, size, flags);
+}

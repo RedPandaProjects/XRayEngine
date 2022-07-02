@@ -88,7 +88,7 @@ public:
     	void 	OnAnimControlClick		(ButtonValue* value, bool& bModif, bool& bSafe);  
         
 		virtual void get_bone_xform				(LPCSTR name, Fmatrix& xform);
-        IC ISE_Abstract* GetEntity() { return m_Data; }
+        IC ISE_Abstract* GetEntity()const { return m_Data; }
 	};
 
 	SSpawnData    	m_SpawnData;
@@ -167,6 +167,7 @@ public:
     		void 	UseSimulatePose ();
     virtual	void  ExportSpawn(xr_vector<NET_Packet>& Ps);
     virtual void	PreExportSpawn();
+	bool IsGraphPoint()const;
 public:
 
     IC ISE_Abstract* GetEntity() { PreExportSpawn(); return m_SpawnData.GetEntity(); }

@@ -5,8 +5,8 @@
 #include "stdafx.h"
 #pragma hdrstop
 #if NET_TEXTURE_LOADER
-#include "..\..\BearBundle\BearGraphics\BearGraphics.hpp"
-#include "..\..\BearBundle\BearGraphics\BearRHI\BearTextureUtils.h"
+#include "..\..\External\RedImage\RedImageTool\RedImage.hpp"
+using namespace RedImageTool;
 #endif
 #pragma warning(disable:4995)
 #include "directx\d3dx9.h"
@@ -301,60 +301,60 @@ IC u32 it_height_rev_base(u32 d, u32 s)	{	return	color_rgba	(
 }
 */
 #if NET_TEXTURE_LOADER
-DXGI_FORMAT Convert(BearImage&Image)
+DXGI_FORMAT Convert(RedImage&Image)
 {
 	switch (Image.GetFormat())
 	{
-	case BearTexturePixelFormat::R8:
+	case RedTexturePixelFormat::R8:
 		return DXGI_FORMAT::DXGI_FORMAT_A8_UNORM;
 		break;
-	case BearTexturePixelFormat::R8G8:
+	case RedTexturePixelFormat::R8G8:
 		return DXGI_FORMAT::DXGI_FORMAT_R8G8_UNORM;
 		break;
-	case BearTexturePixelFormat::R8G8B8:
-		Image.Convert(BearTexturePixelFormat::R8G8B8A8);
+	case RedTexturePixelFormat::R8G8B8:
+		Image.Convert(RedTexturePixelFormat::R8G8B8A8);
 		return DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM;
 		break;
-	case BearTexturePixelFormat::R8G8B8A8:
+	case RedTexturePixelFormat::R8G8B8A8:
 		return DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM;
 		break;
-	case BearTexturePixelFormat::R32F:
+	case RedTexturePixelFormat::R32F:
 		return DXGI_FORMAT::DXGI_FORMAT_R32_FLOAT;
 		break;
-	case BearTexturePixelFormat::R32G32F:
+	case RedTexturePixelFormat::R32G32F:
 		return DXGI_FORMAT::DXGI_FORMAT_R32G32_FLOAT;
 		break;
-	case BearTexturePixelFormat::R32G32B32F:
+	case RedTexturePixelFormat::R32G32B32F:
 		return DXGI_FORMAT::DXGI_FORMAT_R32G32B32_FLOAT;
 		break;
-	case BearTexturePixelFormat::R32G32B32A32F:
+	case RedTexturePixelFormat::R32G32B32A32F:
 		return DXGI_FORMAT::DXGI_FORMAT_R32G32B32A32_FLOAT;
 		break;
-	case BearTexturePixelFormat::BC1:
+	case RedTexturePixelFormat::BC1:
 		return DXGI_FORMAT::DXGI_FORMAT_BC1_UNORM;
 		break;
-	case BearTexturePixelFormat::BC1a:
+	case RedTexturePixelFormat::BC1a:
 		return DXGI_FORMAT::DXGI_FORMAT_BC1_UNORM;
 		break;
-	case BearTexturePixelFormat::BC2:
+	case RedTexturePixelFormat::BC2:
 		return DXGI_FORMAT::DXGI_FORMAT_BC2_UNORM;
 		break;
-	case BearTexturePixelFormat::BC3:
+	case RedTexturePixelFormat::BC3:
 		return DXGI_FORMAT::DXGI_FORMAT_BC3_UNORM;
 		break;
-	case BearTexturePixelFormat::BC4:
+	case RedTexturePixelFormat::BC4:
 		return DXGI_FORMAT::DXGI_FORMAT_BC4_UNORM;
 		break;
-	case BearTexturePixelFormat::BC5:
+	case RedTexturePixelFormat::BC5:
 		return DXGI_FORMAT::DXGI_FORMAT_BC5_UNORM;
 		break;
-	case BearTexturePixelFormat::BC6:
+	case RedTexturePixelFormat::BC6:
 #ifndef USE_DX11
 		R_ASSERT(!"BC6 DX10 не поддерживает");
 #endif
 		return DXGI_FORMAT::DXGI_FORMAT_BC6H_SF16;
 		break;
-	case BearTexturePixelFormat::BC7:
+	case RedTexturePixelFormat::BC7:
 #ifndef USE_DX11
 		R_ASSERT(!"BC7 DX10 не поддерживает");
 #endif
@@ -417,8 +417,8 @@ Load:
 	
 		S = FS.r_open(fn);
 		R_ASSERT2(S, fn);
-		BearImage Image;
-		if (!Image.LoadFromBuffer(BearMemoryStream(S->pointer(), S->length())))
+		RedImage Image;
+		if (!Image.LoadFromMemory(S->pointer(), S->length()))
 		{
 			Msg("! Can't get image info for texture '%s'", fn);
 			FS.r_close(S);
@@ -442,8 +442,8 @@ Load:
 			R_ASSERT(IsBump == false);
 			R_ASSERT(Image.GetDepth()==6);
 			D3D_TEXTURE2D_DESC	Desc = {};
-			Desc.Width = Image.GetSize().x;
-			Desc.Height = Image.GetSize().y;
+			Desc.Width = Image.GetWidth();
+			Desc.Height = Image.GetHeight();
 			Desc.MipLevels = Image.GetMips();
 			Desc.ArraySize = 6;
 			Desc.Format = Format;
@@ -463,12 +463,12 @@ Load:
 			{
 				for (UINT a = 0; a < Desc.MipLevels; a++)
 				{
-					bsize MipW = BearTextureUtils::GetMip(Desc.Width, a);
-					bsize MipH = BearTextureUtils::GetMip(Desc.Height, a);
+					size_t MipW = RedTextureUtils::GetMip(Desc.Width, a);
+					size_t MipH = RedTextureUtils::GetMip(Desc.Height, a);
 					D3D_SUBRESOURCE_DATA SubResource = { };
 					SubResource.pSysMem = Pointer;
-					SubResource.SysMemPitch = static_cast<UINT>(BearTextureUtils::GetSizeWidth(MipW, Image.GetFormat()));
-					SubResource.SysMemSlicePitch = static_cast<UINT>(BearTextureUtils::GetSizeDepth(MipW, MipH, Image.GetFormat()));
+					SubResource.SysMemPitch = static_cast<UINT>(RedTextureUtils::GetSizeWidth(MipW, Image.GetFormat()));
+					SubResource.SysMemSlicePitch = static_cast<UINT>(RedTextureUtils::GetSizeDepth(MipW, MipH, Image.GetFormat()));
 					Pointer += SubResource.SysMemSlicePitch;
 					SubResources.push_back(SubResource);
 				}
@@ -480,8 +480,8 @@ Load:
 		else if(Image.GetDepth()>1)
 		{
 			D3D_TEXTURE3D_DESC	Desc = {};
-			Desc.Width = Image.GetSize().x;
-			Desc.Height = Image.GetSize().y;
+			Desc.Width = Image.GetWidth();
+			Desc.Height = Image.GetHeight();
 			Desc.MipLevels = Image.GetMips();
 			Desc.Depth = Image.GetDepth();;
 			Desc.Format = Format;
@@ -495,12 +495,12 @@ Load:
 			{
 				for (UINT a = 0; a < Desc.MipLevels; a++)
 				{
-					bsize MipW = BearTextureUtils::GetMip(Desc.Width, a);
-					bsize MipH = BearTextureUtils::GetMip(Desc.Height, a);
+					size_t MipW = RedTextureUtils::GetMip(Desc.Width, a);
+					size_t MipH = RedTextureUtils::GetMip(Desc.Height, a);
 					D3D_SUBRESOURCE_DATA SubResource = { };
 					SubResource.pSysMem = Pointer;
-					SubResource.SysMemPitch = static_cast<UINT>(BearTextureUtils::GetSizeWidth(MipW, Image.GetFormat()));
-					SubResource.SysMemSlicePitch = static_cast<UINT>(BearTextureUtils::GetSizeDepth(MipW, MipH, Image.GetFormat()));
+					SubResource.SysMemPitch = static_cast<UINT>(RedTextureUtils::GetSizeWidth(MipW, Image.GetFormat()));
+					SubResource.SysMemSlicePitch = static_cast<UINT>(RedTextureUtils::GetSizeDepth(MipW, MipH, Image.GetFormat()));
 					Pointer += SubResource.SysMemSlicePitch;
 					SubResources.push_back(SubResource);
 				}
@@ -511,8 +511,8 @@ Load:
 		else
 		{
 			D3D_TEXTURE2D_DESC	Desc = {};
-			Desc.Width = Image.GetSize().x;
-			Desc.Height = Image.GetSize().y;
+			Desc.Width = Image.GetWidth();
+			Desc.Height = Image.GetHeight();
 			Desc.MipLevels = Image.GetMips();
 			Desc.ArraySize = Image.GetDepth();;
 			Desc.Format = Format;
@@ -534,12 +534,12 @@ Load:
 			{
 				for (UINT a = 0; a < Desc.MipLevels; a++)
 				{
-					bsize MipW = BearTextureUtils::GetMip(Desc.Width, a);
-					bsize MipH = BearTextureUtils::GetMip(Desc.Height, a);
+					size_t MipW = RedTextureUtils::GetMip(Desc.Width, a);
+					size_t MipH = RedTextureUtils::GetMip(Desc.Height, a);
 					D3D_SUBRESOURCE_DATA SubResource = { };
 					SubResource.pSysMem = Pointer;
-					SubResource.SysMemPitch = static_cast<UINT>(BearTextureUtils::GetSizeWidth(MipW, Image.GetFormat()));
-					SubResource.SysMemSlicePitch = static_cast<UINT>(BearTextureUtils::GetSizeDepth(MipW, MipH, Image.GetFormat()));
+					SubResource.SysMemPitch = static_cast<UINT>(RedTextureUtils::GetSizeWidth(MipW, Image.GetFormat()));
+					SubResource.SysMemSlicePitch = static_cast<UINT>(RedTextureUtils::GetSizeDepth(MipW, MipH, Image.GetFormat()));
 					Pointer += SubResource.SysMemSlicePitch;
 					SubResources.push_back(SubResource);
 				}

@@ -67,6 +67,7 @@ EScene::EScene()
     //ClearSnapList	(false);
 //   g_frmConflictLoadObject 		= xr_new<TfrmAppendObjectInfo>((TComponent*)NULL);
 
+
 }
 
 EScene::~EScene()
@@ -114,7 +115,25 @@ void EScene::AppendObject( CCustomObject* object, bool bUndo )
 {
 	VERIFY			  	(object);
 	VERIFY				(m_Valid);
-    
+
+    switch (object->FClassID)
+    {
+    case OBJCLASS_SCENEOBJECT:
+		m_RTFlags.set(flIsBuildedCForm, FALSE);
+		UI->RedrawScene();
+        break;
+
+    case OBJCLASS_SPAWNPOINT:
+		CSpawnPoint* Spawn = dynamic_cast<CSpawnPoint*>(object);
+		if (Spawn && Spawn->IsGraphPoint())
+		{
+			m_RTFlags.set(flIsBuildedGameGraph, FALSE);
+			UI->RedrawScene();
+			break;
+		}
+        break;
+    }
+
     ESceneCustomOTool* mt	= GetOTool(object->FClassID);
     VERIFY3(mt,"Can't find Object Tools:",GetTool(object->FClassID)->ClassDesc());
     mt->_AppendObject	(object);
@@ -129,6 +148,23 @@ bool EScene::RemoveObject( CCustomObject* object, bool bUndo, bool bDeleting )
 {
 	VERIFY				(object);
 	VERIFY				(m_Valid);
+
+	switch (object->FClassID)
+	{
+	case OBJCLASS_SCENEOBJECT:
+		m_RTFlags.set(flIsBuildedCForm, FALSE);
+		UI->RedrawScene();
+		break;
+	case OBJCLASS_SPAWNPOINT:
+		CSpawnPoint* Spawn = dynamic_cast<CSpawnPoint*>(object);
+		if (Spawn && Spawn->IsGraphPoint())
+		{
+			m_RTFlags.set(flIsBuildedGameGraph, FALSE);
+			UI->RedrawScene();
+			break;
+		}
+		break;
+	}
 
     ESceneCustomOTool* mt 	= GetOTool(object->FClassID);
     if (mt&&mt->IsEditable())
@@ -205,6 +241,23 @@ void EScene::OnFrame( float dT )
 
     if(m_RTFlags.test(flUpdateSnapList) )
 		UpdateSnapListReal();    
+    if (m_RTFlags.test(flIsStopPlayInEditor))
+    {
+        m_RTFlags.set(flIsStopPlayInEditor, FALSE);
+        if (IsPlayInEditor())
+        {
+			ShowCursor(TRUE);
+			g_pGameLevel->IR_Release();
+			Device->seqParallel.clear_not_free();
+			g_pGameLevel->net_Stop();
+			Device->seqParallel.clear_not_free();
+			DEL_INSTANCE(g_pGameLevel);
+			DEL_INSTANCE(g_hud);
+			GetTool(OBJCLASS_SPAWNPOINT)->m_EditFlags.set(ESceneToolBase::flVisible, true);
+			UI->RedrawScene();
+        }
+	
+    }
 }
 
 void EScene::Reset()
@@ -230,27 +283,31 @@ void EScene::Unload		(BOOL bEditableOnly)
 ECORE_API xrGUID generate_guid();
 void EScene::Clear(BOOL bEditableToolsOnly)
 {
-	// clear snap
-    ClearSnapList			(false);
-	// clear scene tools
-    SceneToolsMapPairIt t_it 	= m_SceneTools.begin();
-    SceneToolsMapPairIt t_end 	= m_SceneTools.end();
-    for (; t_it!=t_end; t_it++)
-        if (t_it->second&&t_it->first!=OBJCLASS_DUMMY){ 
-        	if (!bEditableToolsOnly||(bEditableToolsOnly&&t_it->second->IsEditable())){
-	        	t_it->second->Clear();
+    // clear snap
+    ClearSnapList(false);
+    // clear scene tools
+    SceneToolsMapPairIt t_it = m_SceneTools.begin();
+    SceneToolsMapPairIt t_end = m_SceneTools.end();
+    for (; t_it != t_end; t_it++)
+        if (t_it->second && t_it->first != OBJCLASS_DUMMY) {
+            if (!bEditableToolsOnly || (bEditableToolsOnly && t_it->second->IsEditable())) {
+                t_it->second->Clear();
             }
         }
-        
-    Tools->ClearDebugDraw	();
 
-    m_RTFlags.set			(flRT_Unsaved|flRT_Modified,FALSE);
-  
-    m_GUID					= generate_guid();
-    m_OwnerName				= xr_string().sprintf("\\\\%s\\%s",Core.CompName,Core.UserName).c_str();
-    m_CreateTime			= time(NULL);
+    Tools->ClearDebugDraw();
 
-    m_SaveCache.free		();
+    m_RTFlags.set(flRT_Unsaved | flRT_Modified, FALSE);
+
+    m_GUID = generate_guid();
+    m_OwnerName = xr_string().sprintf("\\\\%s\\%s", Core.CompName, Core.UserName).c_str();
+    m_CreateTime = time(NULL);
+
+    m_SaveCache.free();
+    m_cfrom_builder.clear();
+    m_level_graph.clear();
+    m_game_graph.clear();
+    m_RTFlags.set(flIsBuildedAIMap | flIsBuildedGameGraph | flIsBuildedCForm, FALSE);
 }
 
 
@@ -280,6 +337,37 @@ bool EScene::GetBox(Fbox& box, ObjectList& lst)
 
 void EScene::Modified()
 {
+    switch (LTools->CurrentClassID())
+	{
+	case OBJCLASS_SPAWNPOINT:
+    {
+        ObjectList lst;
+        if (Scene->GetQueryObjects(lst, LTools->CurrentClassID(), 1, -1, 0))
+        {
+            for (CCustomObject* Obj : lst)
+            {
+                CSpawnPoint* Spawn = dynamic_cast<CSpawnPoint*>(Obj);
+                if (Spawn&&Spawn->IsGraphPoint())
+                {
+					m_RTFlags.set(flIsBuildedGameGraph, FALSE);
+                    break;
+                }
+            }
+        }
+    }
+		break;
+	case OBJCLASS_AIMAP:
+		m_RTFlags.set(flIsBuildedAIMap, FALSE);
+		break;
+    case OBJCLASS_SCENEOBJECT:
+        m_RTFlags.set(flIsBuildedCForm, FALSE);
+        break;
+	case OBJCLASS_DUMMY:
+		m_RTFlags.set(flIsBuildedCForm, FALSE);
+		m_RTFlags.set(flIsBuildedAIMap, FALSE);
+		m_RTFlags.set(flIsBuildedGameGraph, FALSE);
+        break;
+    }
 	m_RTFlags.set(flRT_Modified|flRT_Unsaved,TRUE);
     g_scene_physics.OnSceneModified();
     ExecCommand(COMMAND_UPDATE_CAPTION);
@@ -515,14 +603,22 @@ void EScene::OnRTFlagsChange	(PropValue* sender)
     ExecCommand(COMMAND_UPDATE_PROPERTIES);
 }
 
+void EScene::OnNameChange(PropValue* sender)
+{
+	m_RTFlags.set(flIsBuildedGameGraph, false); m_game_graph.clear();
+    UI->RedrawScene();
+}
+
 
 void EScene::FillProp(LPCSTR pref, PropItemVec& items, ObjClassID cls_id)
 {
 	PHelper().CreateCaption		(items,PrepareKey(pref,"Scene\\Name"),			LTools->m_LastFileName.c_str());
+
     PHelper().CreateRText		(items,PrepareKey(pref,"Scene\\Name prefix"),	&m_LevelOp.m_LevelPrefix);
 
     PropValue* V;
-    PHelper().CreateRText		(items,PrepareKey(pref,"Scene\\Build options\\Level path"),		&m_LevelOp.m_FNLevelPath);
+    auto NaneProp = PHelper().CreateRText		(items,PrepareKey(pref,"Scene\\Build options\\Level path"),		&m_LevelOp.m_FNLevelPath);
+    NaneProp->OnChangeEvent.bind(this, &EScene::OnNameChange);
     PHelper().CreateRText		(items,PrepareKey(pref,"Scene\\Build options\\Custom data"),	&m_LevelOp.m_BOPText);
     PHelper().CreateRText		(items,PrepareKey(pref,"Scene\\Map version"),					&m_LevelOp.m_map_version);
 
@@ -589,11 +685,11 @@ void EScene::FillPropObjects(LPCSTR pref, PropItemVec& items, ObjClassID cls_id)
 
 void EScene::Play()
 {
-    if (IsSimulate())return;
-    BuildAIMap();
-    m_GraphBuilder.build_graph();
-    BuildSpawn();
-    Console->Execute("main_menu off");
+    if (IsPlayInEditor())
+        return;
+    if (!BuildSpawn())
+        return;
+   // Console->Execute("main_menu off");
     g_hud = (CCustomHUD*)NEW_INSTANCE(CLSID_HUDMANAGER);
     g_pGameLevel = (IGame_Level*)NEW_INSTANCE(CLSID_EDITOR_LEVEL);
     g_pGameLevel->net_Start("all/single/alife/new", "localhost");
@@ -602,30 +698,25 @@ void EScene::Play()
     ShowCursor(FALSE);
 }
 
-bool EScene::IsSimulate()
+bool EScene::IsPlayInEditor()
 {
     return g_pGameLevel;
 }
 
 void EScene::Stop()
 {
-    if (!IsSimulate())return;
-    ShowCursor(TRUE);
-    g_pGameLevel->IR_Release();
-    g_pGameLevel->net_Stop();
-    DEL_INSTANCE(g_pGameLevel);
-    DEL_INSTANCE(g_hud);
-    GetTool(OBJCLASS_SPAWNPOINT)->m_EditFlags.set(ESceneToolBase::flVisible, true);
+    if (!IsPlayInEditor())return;
+    m_RTFlags.set(flIsStopPlayInEditor, TRUE);
 }
 
 void EScene::LoadCFrom(CObjectSpace* Space, CDB::build_callback cb)
 {
-    g_scene_physics.GenerateCFrom(Space,cb);
+    m_cfrom_builder.Load(Space, cb);
 }
 
 IReader* EScene::LoadSpawn()
 {
-    return xr_new<IReader>(m_Spawn.pointer(), m_Spawn.size());
+    return xr_new<IReader>(m_spawn_data.pointer(), m_spawn_data.size());
 }
 
 
@@ -641,11 +732,62 @@ ILevelGraph* EScene::GetLevelGraph()
     return &m_level_graph;
 }
 
-void EScene::BuildAIMap()
+bool EScene::BuildAIMap()
 {
-    m_level_graph.build();
-
+    if (!m_RTFlags.is(flIsBuildedAIMap))
+	{
+        if (!m_level_graph.build())
+		{
+            return false;;
+		}
+		UI->CloseConsole();
+		m_game_graph.clear();
+		m_RTFlags.set(flIsBuildedAIMap, TRUE);
+		m_RTFlags.set(flIsBuildedGameGraph, FALSE);
+        UI->RedrawScene();
+    }
+    return true;
 }
+
+bool EScene::BuildGameGraph()
+{
+	if (!m_RTFlags.is(flIsBuildedGameGraph))
+    {
+        if (m_level_graph.empty())
+        {
+            if (!BuildAIMap())
+                return false;
+		}
+		UI->ShowConsole();
+        if (!m_graph_builder.build_graph())
+		{
+			UI->CloseConsole();
+            return false;
+        }
+
+		UI->CloseConsole();
+		m_RTFlags.set(flIsBuildedGameGraph, TRUE);
+		UI->RedrawScene();
+    }
+    return true;
+}
+
+bool EScene::BuildCForm()
+{
+	if (!m_RTFlags.is(flIsBuildedCForm))
+	{
+        if (!m_cfrom_builder.build())
+		{
+            Msg("! CForm is empty!");
+            return false;
+		}
+		m_RTFlags.set(flIsBuildedCForm, TRUE);
+		UI->RedrawScene();
+	}
+
+    return true;
+}
+
 
 bool EScene::RayPick(const Fvector& start, const Fvector& dir, float& dis ,Fvector* pt, Fvector* n)
 {

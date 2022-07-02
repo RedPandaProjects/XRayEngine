@@ -398,7 +398,7 @@ IC	float	_BCL		editor_hi_limit ( u8 k ) const	{ return IK_data.limits[k].limit.y
     void			    ResetData		();
     void			    CopyData		(CBone* bone);
     
-#if DEV_MODE
+#ifndef MASTER_GOLD
 	void			    ShapeScale		(const Fvector& amount);
 	void			    BindRotate		(const Fvector& amount);
 	void			    BindMove		(const Fvector& amount);

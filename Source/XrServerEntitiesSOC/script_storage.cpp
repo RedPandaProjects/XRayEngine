@@ -74,18 +74,6 @@ static void *lua_alloc_xr	(void *ud, void *ptr, size_t osize, size_t nsize) {
     return Memory.mem_realloc		(ptr, nsize);
 #endif // DEBUG_MEMORY_MANAGER
 }
-#else // USE_DL_ALLOCATOR
-static void *lua_alloc_dl	(void *ud, void *ptr, size_t osize, size_t nsize) {
-  (void)ud;
-  (void)osize;
-  if (nsize == 0)	{	dlfree			(ptr);	 return	NULL;  }
-  else				return dlrealloc	(ptr, nsize);
-}
-
-u32 game_lua_memory_usage	()
-{
-	return					((u32)dlmallinfo().uordblks);
-}
 #endif // USE_DL_ALLOCATOR
 
 CScriptStorage::CScriptStorage		()
@@ -106,6 +94,10 @@ CScriptStorage::~CScriptStorage		()
 }
 
 
+u32 game_lua_memory_usage()
+{
+	return					0;
+}
 
 void CScriptStorage::reinit	()
 {
@@ -114,11 +106,7 @@ void CScriptStorage::reinit	()
 #ifdef _WIN64
 	m_virtual_machine = luaL_newstate();
 #else 
-#ifndef USE_DL_ALLOCATOR
 	m_virtual_machine		= lua_newstate(lua_alloc_xr, NULL);
-#else // USE_DL_ALLOCATOR
-	m_virtual_machine		= lua_newstate(lua_alloc_dl, NULL);
-#endif // USE_DL_ALLOCATOR
 #endif
 	if (!m_virtual_machine) {
 		Msg					("! ERROR : Cannot initialize script virtual machine!");
@@ -156,7 +144,7 @@ void CScriptStorage::reinit	()
 
 	if (!strstr(Core.Params, "-nojit")) {
 		luajit::open_lib(lua(), LUA_JITLIBNAME, luaopen_jit);
-#ifndef DEBUG
+#if 0
 		put_function(lua(), opt_lua_binary, sizeof(opt_lua_binary), "jit.opt");
 		put_function(lua(), opt_inline_lua_binary, sizeof(opt_lua_binary), "jit.opt_inline");
 		dojitopt(lua(), "2");

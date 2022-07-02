@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\..\XrAPI\xrGameManager.h"
 #include "Utils\Cursor3D.h"
+#include "..\xrengine\GameFont.h"
 
 #ifdef _LEVEL_EDITOR
 //.    if (m_Cursor->GetVisible()) RedrawScene();
@@ -945,7 +946,7 @@ char* CLevelMain::GetCaption()
 
 bool  CLevelMain::ApplyShortCut(DWORD Key, TShiftState Shift)
 {
-    if (Scene->IsSimulate())return true;
+    if (Scene->IsPlayInEditor())return true;
     return inherited::ApplyShortCut(Key,Shift);
 }
 
@@ -1283,16 +1284,35 @@ void CLevelMain::OnDrawUI()
 
 bool CLevelMain::KeyDown(WORD Key, TShiftState Shift)
 {
-    if (Scene->IsSimulate())
-    {
-        if (Key == VK_ESCAPE)
-        {
-            Scene->Stop();
-        }
-        return true;
-    }
     return TUI::KeyDown(Key, Shift);
+}
+
+void CLevelMain::OnStats(CGameFont* font)
+{
+    float Height = font->GetHeight();
+    font->SetColor(color_rgba(255, 0, 0, 255));
+    font->SetHeight(14);
+    if (!Scene->m_RTFlags.is(EScene::flIsBuildedCForm))
+    {
+		font->OutNext("NEED REBUILD CFORM");
+    }
+	if (!Scene->m_RTFlags.is(EScene::flIsBuildedAIMap))
+	{
+        font->OutNext("NEED REBUILD AIMAP");
+	}
+	if (!Scene->m_RTFlags.is(EScene::flIsBuildedGameGraph))
+	{
+        font->OutNext("NEED REBUILD GAME GRAPH");
+	}
+
+
+	font->SetHeight(Height);
 }
 
 
 
+
+bool CLevelMain::IsPlayInEditor()
+{
+	return Scene->IsPlayInEditor();
+}

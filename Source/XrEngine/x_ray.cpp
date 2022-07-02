@@ -41,8 +41,8 @@ extern	int PASCAL IntroDSHOW_wnd	(HINSTANCE hInstC, HINSTANCE hInstP, LPSTR lpCm
 //int		max_load_stage = 0;
 
 // computing build id
-XRCORE_API	LPCSTR	build_date;
-XRCORE_API	u32		build_id;
+XRCORE_API extern	LPCSTR	build_date;
+XRCORE_API	extern u32		build_id;
 
 #ifdef MASTER_GOLD
 #	define NO_MULTI_INSTANCES
@@ -70,7 +70,7 @@ static int start_year	= 1999;	// 1999
 #define DEFAULT_MODULE_HASH "3CAABCFCFF6F3A810019C6A72180F166"
 static char szEngineHash[33] = DEFAULT_MODULE_HASH;
 
-PROTECT_API char * ComputeModuleHash( char * pszHash )
+ char * ComputeModuleHash( char * pszHash )
 {
 	SECUROM_MARKER_HIGH_SECURITY_ON(3)
 
@@ -210,7 +210,7 @@ struct path_excluder_predicate
 	xr_auth_strings_t const *	m_ignore;
 };
 
-PROTECT_API void InitSettings	()
+ void InitSettings	()
 {
 	#ifndef DEDICATED_SERVER
 	//	Msg( "EH: %s\n" , ComputeModuleHash( szEngineHash ) );
@@ -244,7 +244,7 @@ PROTECT_API void InitSettings	()
 	pGameIni					= xr_new<CInifile>	(fname,TRUE);
 	CHECK_OR_EXIT				(0!=pGameIni->section_count(), make_string("Cannot find file %s.\nReinstalling application may fix this problem.",fname));
 }
-PROTECT_API void InitConsole	()
+ void InitConsole	()
 {
 	SECUROM_MARKER_SECURITY_ON(5)
 
@@ -270,7 +270,7 @@ PROTECT_API void InitConsole	()
 	SECUROM_MARKER_SECURITY_OFF(5)
 }
 
-PROTECT_API void InitInput		()
+ void InitInput		()
 {
 	BOOL bCaptureInput			= !strstr(Core.Params,"-i");
 
@@ -281,12 +281,12 @@ void destroyInput	()
 	xr_delete					( pInput		);
 }
 
-PROTECT_API void InitSound1		()
+ void InitSound1		()
 {
 	CSound_manager_interface::_create				(0);
 }
 
-PROTECT_API void InitSound2		()
+ void InitSound2		()
 {
 	CSound_manager_interface::_create				(1);
 }
@@ -693,17 +693,13 @@ void foo	()
 }
 #endif // 0
 
-ENGINE_API	bool g_dedicated_server	= false;
 
 #ifndef DEDICATED_SERVER
 	// forward declaration for Parental Control checks
 	BOOL IsPCAccessAllowed(); 
 #endif // DEDICATED_SERVER
 
-	ENGINE_API int APIENTRY WinMain_impl(HINSTANCE hInstance,
-                     HINSTANCE hPrevInstance,
-                     char *    lpCmdLine,
-                     int       nCmdShow)
+ENGINE_API int EngineLaunch(EGamePath Game)
 {
 #ifdef DEDICATED_SERVER
 	Debug._initialize			(true);
@@ -737,9 +733,6 @@ ENGINE_API	bool g_dedicated_server	= false;
 //	foo();
 #ifndef DEDICATED_SERVER
 
-	// Check for virtual memory
-	if ( ( strstr( lpCmdLine , "--skipmemcheck" ) == NULL ) && IsOutOfVirtualMemory() )
-		return 0;
 
 	// Parental Control for Vista and upper
 	if ( ! IsPCAccessAllowed() ) {
@@ -802,9 +795,10 @@ ENGINE_API	bool g_dedicated_server	= false;
 	LPCSTR						fsgame_ltx_name = "-fsltx ";
 	string_path					fsgame = "";
 	//MessageBox(0, lpCmdLine, "my cmd string", MB_OK);
-	if (strstr(lpCmdLine, fsgame_ltx_name)) {
+	if (strstr(GetCommandLine(), fsgame_ltx_name)) 
+	{
 		int						sz = xr_strlen(fsgame_ltx_name);
-		sscanf					(strstr(lpCmdLine,fsgame_ltx_name)+sz,"%[^ ] ",fsgame);
+		sscanf					(strstr(GetCommandLine(),fsgame_ltx_name)+sz,"%[^ ] ",fsgame);
 		//MessageBox(0, fsgame, "using fsltx", MB_OK);
 	}
 
@@ -814,7 +808,7 @@ ENGINE_API	bool g_dedicated_server	= false;
 
 
 
-	Core._initialize			("xray",NULL, TRUE, fsgame[0] ? fsgame : NULL);
+	Core._initialize			("xray",NULL, TRUE, fsgame[0] ? fsgame : NULL,false,Game);
 
 	InitSettings				();
 
@@ -840,7 +834,7 @@ ENGINE_API	bool g_dedicated_server	= false;
 		Engine.External.CreateRendererList();
 
 		LPCSTR benchName = "-batch_benchmark ";
-		if(strstr(lpCmdLine, benchName))
+		if(strstr(GetCommandLine(), benchName))
 		{
 			int sz = xr_strlen(benchName);
 			string64				b_name;
@@ -849,9 +843,9 @@ ENGINE_API	bool g_dedicated_server	= false;
 			return 0;
 		}
 
-		Msg("command line %s", lpCmdLine);
+		Msg("command line %s", GetCommandLine());
 		LPCSTR sashName = "-openautomate ";
-		if(strstr(lpCmdLine, sashName))
+		if(strstr(GetCommandLine(), sashName))
 		{
 			int sz = xr_strlen(sashName);
 			string512				sash_arg;
@@ -861,13 +855,6 @@ ENGINE_API	bool g_dedicated_server	= false;
 			g_SASH.MainLoop();
 			return 0;
 		}
-
-		if (strstr(lpCmdLine,"-launcher")) 
-		{
-			int l_res = doLauncher();
-			if (l_res != 0)
-				return 0;
-		};
 
 #ifndef DEDICATED_SERVER
 		if(strstr(Core.Params,"-r2a"))	
@@ -1000,11 +987,15 @@ CApplication::CApplication()
 
 	// levels
 	Level_Current				= u32(-1);
+	pFontSystem = NULL;
+	ls_header[0] = '\0';
+	ls_tip_number[0] = '\0';
+	ls_tip[0] = '\0';
 	if (Device->IsEditorMode())return;
 	Level_Scan					( );
 
 	// Font
-	pFontSystem					= NULL;
+
 
 	// Register us
 	Device->seqFrame.Add			(this, REG_PRIORITY_HIGH+1000);
@@ -1016,21 +1007,25 @@ CApplication::CApplication()
 
 	// App Title
 //	app_title[ 0 ] = '\0';
-	ls_header[ 0 ] = '\0';
-	ls_tip_number[ 0 ] = '\0';
-	ls_tip[ 0 ] = '\0';
+
 }
 
 CApplication::~CApplication()
 {
-	Console->Hide				( );
+	if (Console)
+	{
+		Console->Hide();
+	}
 
 	// font
 	xr_delete					( pFontSystem		);
 
-	EngineDevice->seqFrameMT.Remove	(&SoundProcessor);
-	EngineDevice->seqFrame.Remove		(&SoundProcessor);
-	EngineDevice->seqFrame.Remove		(this);
+	if (EngineDevice)
+	{
+		EngineDevice->seqFrameMT.Remove(&SoundProcessor);
+		EngineDevice->seqFrame.Remove(&SoundProcessor);
+		EngineDevice->seqFrame.Remove(this);
+	}
 
 
 	// events
@@ -1196,7 +1191,7 @@ void CApplication::destroy_loading_shaders()
 
 //u32 calc_progress_color(u32, u32, int, int);
 
-PROTECT_API void CApplication::LoadDraw		()
+ void CApplication::LoadDraw		()
 {
 	if(g_appLoaded)				return;
 	EngineDevice->dwFrame				+= 1;
@@ -1499,35 +1494,6 @@ void FreeLauncher(){
 	if (hLauncher)	{ 
 		FreeLibrary(hLauncher); 
 		hLauncher = NULL; pLauncher = NULL; };
-}
-
-int doLauncher()
-{
-/*
-	execUserScript();
-	InitLauncher();
-	int res = pLauncher(0);
-	FreeLauncher();
-	if(res == 1) // do benchmark
-		g_bBenchmark = true;
-
-	if(g_bBenchmark){ //perform benchmark cycle
-		doBenchmark();
-	
-		// InitLauncher	();
-		// pLauncher	(2);	//show results
-		// FreeLauncher	();
-
-		Core._destroy			();
-		return					(1);
-
-	};
-	if(res==8){//Quit
-		Core._destroy			();
-		return					(1);
-	}
-*/
-	return 0;
 }
 
 void doBenchmark(LPCSTR name)
