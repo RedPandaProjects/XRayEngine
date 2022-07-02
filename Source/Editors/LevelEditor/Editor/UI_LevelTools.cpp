@@ -697,7 +697,7 @@ void CLevelTool::RunXrDO()
 		&m_CompilerProcess)           // Pointer to PROCESS_INFORMATION structure
 		)
 	{
-		Msg("! XrLC:CreateProcess failed (%d).\n", GetLastError());
+		Msg("! xrDO_light:CreateProcess failed (%d).\n", GetLastError());
 		return;
 	}
 }
@@ -732,7 +732,7 @@ void CLevelTool::RunXrAI_Spawn(bool current_level)
 		&m_CompilerProcess)           // Pointer to PROCESS_INFORMATION structure
 		)
 	{
-		Msg("! XrLC:CreateProcess failed (%d).\n", GetLastError());
+		Msg("! xrAI:CreateProcess failed (%d).\n", GetLastError());
 		return;
 	}
 }
@@ -767,7 +767,7 @@ void CLevelTool::RunXrAI_AIMap(bool draw)
 		&m_CompilerProcess)           // Pointer to PROCESS_INFORMATION structure
 		)
 	{
-		Msg("! XrLC:CreateProcess failed (%d).\n", GetLastError());
+		Msg("! xrAI:CreateProcess failed (%d).\n", GetLastError());
 		return;
 	}
 }
@@ -802,7 +802,7 @@ void CLevelTool::RunXrAI_Verify()
 		&m_CompilerProcess)           // Pointer to PROCESS_INFORMATION structure
 		)
 	{
-		Msg("! XrLC:CreateProcess failed (%d).\n", GetLastError());
+		Msg("! xrAI:CreateProcess failed (%d).\n", GetLastError());
 		return;
 	}
 }

@@ -5,6 +5,7 @@
 
 CFromBuilder::CFromBuilder()
 {
+	m_Box.invalidate();
 }
 
 CFromBuilder::~CFromBuilder()

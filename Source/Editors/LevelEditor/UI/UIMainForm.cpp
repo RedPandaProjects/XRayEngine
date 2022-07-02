@@ -87,12 +87,14 @@ UIMainForm::~UIMainForm()
 
 void UIMainForm::Draw()
 {
+    bOpen = true;
     m_MainMenu->Draw();
     m_TopBar->Draw();
     m_LeftBar->Draw();
 	m_Properties->Draw();
 	m_WorldProperties->Draw();
-    ImGui::ShowDemoWindow(&bOpen);
+    static bool Demo = true;
+    ImGui::ShowDemoWindow(&Demo);
     m_Render->Draw();
 }
 

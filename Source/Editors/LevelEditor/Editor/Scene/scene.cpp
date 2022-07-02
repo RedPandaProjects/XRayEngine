@@ -304,6 +304,7 @@ void EScene::Clear(BOOL bEditableToolsOnly)
     m_CreateTime = time(NULL);
 
     m_SaveCache.free();
+    m_cfrom_builder.clear();
     m_level_graph.clear();
     m_game_graph.clear();
     m_RTFlags.set(flIsBuildedAIMap | flIsBuildedGameGraph | flIsBuildedCForm, FALSE);

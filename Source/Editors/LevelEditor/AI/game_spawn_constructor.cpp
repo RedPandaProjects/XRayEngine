@@ -332,45 +332,45 @@ bool CGameSpawnConstructor::process_actor			(LPCSTR start_level_name)
 		return false;
 	}
 
-	if (!start_level_name)
-		return true;
+	//if (!start_level_name)
+	//	return true;
 
-	if (!xr_strcmp(*actor_level_name(),start_level_name))
-		return true;
+	//if (!xr_strcmp(*actor_level_name(),start_level_name))
+	//	return true;
 
-	const IGameGraph::SLevel		&level = game_graph().header().level(start_level_name);
-	GameGraph::_GRAPH_ID				dest = GameGraph::_GRAPH_ID(-1);
-	GraphEngineSpace::CGameLevelParams	evaluator(level.id());
-	CGraphEngineEditor					*graph_engine = xr_new<CGraphEngineEditor>(game_graph().header().vertex_count());
+	//const IGameGraph::SLevel		&level = game_graph().header().level(start_level_name);
+	//GameGraph::_GRAPH_ID				dest = GameGraph::_GRAPH_ID(-1);
+	//GraphEngineSpace::CGameLevelParams	evaluator(level.id());
+	//CGraphEngineEditor					*graph_engine = xr_new<CGraphEngineEditor>(game_graph().header().vertex_count());
 
-	bool							failed = !graph_engine->search(game_graph(),m_actor->CastALifeObject()->m_tGraphID,GameGraph::_GRAPH_ID(-1),0,evaluator);
-	if (failed) {
-		Msg							("! Cannot build path via game graph from the current level to the level %s!",start_level_name);
-		float						min_dist = flt_max;
-		Fvector						current = game_graph().vertex(m_actor->CastALifeObject()->m_tGraphID)->game_point();
-		GameGraph::_GRAPH_ID			n = game_graph().header().vertex_count();
-		for (GameGraph::_GRAPH_ID i=0; i<n; ++i) {
-			if (game_graph().vertex(i)->level_id() == level.id()) {
-				float				distance = game_graph().vertex(i)->game_point().distance_to_sqr(current);
-				if (distance < min_dist) {
-					min_dist		= distance;
-					dest			= i;
-				}
-			}
-		}
-		if (!game_graph().vertex(dest)) {
-			Msg						("! There is no game vertices on the level %s, cannot jump to the specified level",start_level_name);
-			return false;
-		}
-	}
-	else
-		dest						= (GameGraph::_GRAPH_ID)evaluator.selected_vertex_id();
+	//bool							failed = !graph_engine->search(game_graph(),m_actor->CastALifeObject()->m_tGraphID,GameGraph::_GRAPH_ID(-1),0,evaluator);
+	//if (failed) {
+	//	Msg							("! Cannot build path via game graph from the current level to the level %s!",start_level_name);
+	//	float						min_dist = flt_max;
+	//	Fvector						current = game_graph().vertex(m_actor->CastALifeObject()->m_tGraphID)->game_point();
+	//	GameGraph::_GRAPH_ID			n = game_graph().header().vertex_count();
+	//	for (GameGraph::_GRAPH_ID i=0; i<n; ++i) {
+	//		if (game_graph().vertex(i)->level_id() == level.id()) {
+	//			float				distance = game_graph().vertex(i)->game_point().distance_to_sqr(current);
+	//			if (distance < min_dist) {
+	//				min_dist		= distance;
+	//				dest			= i;
+	//			}
+	//		}
+	//	}
+	//	if (!game_graph().vertex(dest)) {
+	//		Msg						("! There is no game vertices on the level %s, cannot jump to the specified level",start_level_name);
+	//		return false;
+	//	}
+	//}
+	//else
+	//	dest						= (GameGraph::_GRAPH_ID)evaluator.selected_vertex_id();
 
-	m_actor->CastALifeObject()->m_tGraphID				= dest;
-	m_actor->CastALifeObject()->m_tNodeID				= game_graph().vertex(dest)->level_vertex_id();
-	m_actor->CastAbstract()->o_Position				= game_graph().vertex(dest)->level_point();
+	//m_actor->CastALifeObject()->m_tGraphID				= dest;
+	//m_actor->CastALifeObject()->m_tNodeID				= game_graph().vertex(dest)->level_vertex_id();
+	//m_actor->CastAbstract()->o_Position				= game_graph().vertex(dest)->level_point();
 
-	xr_delete						(graph_engine);
+	//xr_delete						(graph_engine);
 	return true;
 }
 
