@@ -65,46 +65,99 @@ void UIMainMenuForm::Draw()
             ImGui::EndMenu();
         }
         if (ImGui::BeginMenu("Compile"))
-        {
-            if (ImGui::MenuItem("Build", ""))
+		{
+            if (ImGui::BeginMenu("Make"))
             {
-                ExecCommand(COMMAND_BUILD);
+                if (ImGui::MenuItem("Make All", ""))
+                {
+                    ExecCommand(COMMAND_BUILD);
+                }
+                ImGui::Separator();
+                if (ImGui::MenuItem("Make Game", ""))
+                {
+                    ExecCommand(COMMAND_MAKE_GAME);
+                }
+                if (ImGui::MenuItem("Make Details", ""))
+                {
+                    ExecCommand(COMMAND_MAKE_DETAILS);
+                }
+                if (ImGui::MenuItem("Make Hom", ""))
+                {
+                    ExecCommand(COMMAND_MAKE_HOM);
+                }
+                if (ImGui::MenuItem("Make ", ""))
+                {
+                    ExecCommand(COMMAND_MAKE_SOM);
+                }
+                if (ImGui::MenuItem("Make AI-Map", ""))
+                {
+                    ExecCommand(COMMAND_MAKE_AIMAP);
+                }
+                ImGui::EndMenu();
             }
-            ImGui::Separator();
-            if (ImGui::MenuItem("Make Game", ""))
-            {
-                ExecCommand(COMMAND_MAKE_GAME);
+			if (LTools->IsCompilerRunning() || LTools->IsGameRunning())
+			{
+				ImGui::BeginDisabled();
+			}
+            if (ImGui::BeginMenu("Compile"))
+			{
+				if (ImGui::MenuItem("Geometry & Light", ""))
+				{
+                    LTools->RunXrLC();
+				}
+				if (ImGui::MenuItem("Detail Object Light", ""))
+				{
+					LTools->RunXrDO();
+				}
+                if (ImGui::BeginMenu("AIMap"))
+				{
+					if (ImGui::MenuItem("High", ""))
+					{
+						LTools->RunXrAI_AIMap(false);
+					}
+					if (ImGui::MenuItem("Low", ""))
+					{
+						LTools->RunXrAI_AIMap(false);
+					}
+					if (ImGui::MenuItem("Verify", ""))
+					{
+                        LTools->RunXrAI_Verify();
+					}
+					ImGui::EndMenu();
+                }
+                if (ImGui::BeginMenu("Spawn"))
+				{
+					if (ImGui::MenuItem("Only current level", ""))
+					{
+						LTools->RunXrAI_Spawn(true);
+					}
+					if (ImGui::MenuItem("All levels", ""))
+					{
+						LTools->RunXrAI_Spawn(false);
+					}
+					ImGui::EndMenu();
+                }
+				
+                ImGui::EndMenu();
             }
-            if (ImGui::MenuItem("Make Details", ""))
-            {
-                ExecCommand(COMMAND_MAKE_DETAILS);
-            }
-            if (ImGui::MenuItem("Make Hom", ""))
-            {
-                ExecCommand(COMMAND_MAKE_HOM);
-            }
-            if (ImGui::MenuItem("Make ", ""))
-            {
-                ExecCommand(COMMAND_MAKE_SOM);
-            }
-            if (ImGui::MenuItem("Make AI-Map", ""))
-            {
-                ExecCommand(COMMAND_MAKE_AIMAP);
-            }
-            ImGui::Separator();
-            if (ImGui::MenuItem("Import Error List", ""))
-            {
-                ExecCommand(COMMAND_IMPORT_COMPILER_ERROR);
-            }
-            if (ImGui::MenuItem("Export Error List", ""))
-            {
-                ExecCommand(COMMAND_EXPORT_COMPILER_ERROR);
-            }
-            if (ImGui::MenuItem("Clear Error List", ""))
-            {
-                ExecCommand(COMMAND_CLEAR_DEBUG_DRAW);
-            }
-            ImGui::EndMenu();
+			if (LTools->IsCompilerRunning() || LTools->IsGameRunning())
+			{
+				ImGui::EndDisabled();
+			}
+			ImGui::Separator();
+			if (ImGui::MenuItem("Import Error List", ""))
+			{
+				ExecCommand(COMMAND_IMPORT_COMPILER_ERROR);
+			}
+			if (ImGui::MenuItem("Export Error List", ""))
+			{
+				ExecCommand(COMMAND_EXPORT_COMPILER_ERROR);
+			}
+			if (ImGui::MenuItem("Clear Error List", ""))
+			{
+				ExecCommand(COMMAND_CLEAR_DEBUG_DRAW);
+			}
+			ImGui::EndMenu();
         }
         if (ImGui::BeginMenu("Editors"))
         {

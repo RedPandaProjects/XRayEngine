@@ -666,6 +666,147 @@ void CLevelTool::RunXrLC()
 		return;
 	}
 }
+void CLevelTool::RunXrDO()
+{
+	if (m_CompilerProcess.hProcess)
+		return;
+
+	if (m_GameProcess.hProcess)
+		return;
+
+	STARTUPINFO si = {};
+
+	ZeroMemory(&si, sizeof(si));
+	si.cb = sizeof(si);
+	ZeroMemory(&m_CompilerProcess, sizeof(m_CompilerProcess));
+
+
+	string_path CommandLine;
+	xr_sprintf(CommandLine, "xrDO_light.exe -f %s", Scene->m_LevelOp.m_FNLevelPath.c_str());
+	Msg("~ Run %s.\n", CommandLine);
+	// Start the child process. 
+	if (!CreateProcess(NULL,   // No module name (use command line)
+		CommandLine,        // Command line
+		NULL,           // Process handle not inheritable
+		NULL,           // Thread handle not inheritable
+		FALSE,          // Set handle inheritance to FALSE
+		0,              // No creation flags
+		NULL,           // Use parent's environment block
+		NULL,           // Use parent's starting directory 
+		&si,            // Pointer to STARTUPINFO structure
+		&m_CompilerProcess)           // Pointer to PROCESS_INFORMATION structure
+		)
+	{
+		Msg("! XrLC:CreateProcess failed (%d).\n", GetLastError());
+		return;
+	}
+}
+void CLevelTool::RunXrAI_Spawn(bool current_level)
+{
+	if (m_CompilerProcess.hProcess)
+		return;
+
+	if (m_GameProcess.hProcess)
+		return;
+
+	STARTUPINFO si = {};
+
+	ZeroMemory(&si, sizeof(si));
+	si.cb = sizeof(si);
+	ZeroMemory(&m_CompilerProcess, sizeof(m_CompilerProcess));
+
+
+	string_path CommandLine;
+	xr_sprintf(CommandLine, "xrAI.exe -no_separator_check -s %s -out all", current_level? Scene->m_LevelOp.m_FNLevelPath.c_str():"");
+	Msg("~ Run %s.\n", CommandLine);
+	// Start the child process. 
+	if (!CreateProcess(NULL,   // No module name (use command line)
+		CommandLine,        // Command line
+		NULL,           // Process handle not inheritable
+		NULL,           // Thread handle not inheritable
+		FALSE,          // Set handle inheritance to FALSE
+		0,              // No creation flags
+		NULL,           // Use parent's environment block
+		NULL,           // Use parent's starting directory 
+		&si,            // Pointer to STARTUPINFO structure
+		&m_CompilerProcess)           // Pointer to PROCESS_INFORMATION structure
+		)
+	{
+		Msg("! XrLC:CreateProcess failed (%d).\n", GetLastError());
+		return;
+	}
+}
+void CLevelTool::RunXrAI_AIMap(bool draw)
+{
+	if (m_CompilerProcess.hProcess)
+		return;
+
+	if (m_GameProcess.hProcess)
+		return;
+
+	STARTUPINFO si = {};
+
+	ZeroMemory(&si, sizeof(si));
+	si.cb = sizeof(si);
+	ZeroMemory(&m_CompilerProcess, sizeof(m_CompilerProcess));
+
+
+	string_path CommandLine;
+	xr_sprintf(CommandLine, "xrAI.exe -f %s %s", Scene->m_LevelOp.m_FNLevelPath.c_str(), draw?"-draft":"");
+	Msg("~ Run %s.\n", CommandLine);
+	// Start the child process. 
+	if (!CreateProcess(NULL,   // No module name (use command line)
+		CommandLine,        // Command line
+		NULL,           // Process handle not inheritable
+		NULL,           // Thread handle not inheritable
+		FALSE,          // Set handle inheritance to FALSE
+		0,              // No creation flags
+		NULL,           // Use parent's environment block
+		NULL,           // Use parent's starting directory 
+		&si,            // Pointer to STARTUPINFO structure
+		&m_CompilerProcess)           // Pointer to PROCESS_INFORMATION structure
+		)
+	{
+		Msg("! XrLC:CreateProcess failed (%d).\n", GetLastError());
+		return;
+	}
+}
+void CLevelTool::RunXrAI_Verify()
+{
+	if (m_CompilerProcess.hProcess)
+		return;
+
+	if (m_GameProcess.hProcess)
+		return;
+
+	STARTUPINFO si = {};
+
+	ZeroMemory(&si, sizeof(si));
+	si.cb = sizeof(si);
+	ZeroMemory(&m_CompilerProcess, sizeof(m_CompilerProcess));
+
+
+	string_path CommandLine;
+	xr_sprintf(CommandLine, "xrAI.exe -verify %s", Scene->m_LevelOp.m_FNLevelPath.c_str());
+	Msg("~ Run %s.\n", CommandLine);
+	// Start the child process. 
+	if (!CreateProcess(NULL,   // No module name (use command line)
+		CommandLine,        // Command line
+		NULL,           // Process handle not inheritable
+		NULL,           // Thread handle not inheritable
+		FALSE,          // Set handle inheritance to FALSE
+		0,              // No creation flags
+		NULL,           // Use parent's environment block
+		NULL,           // Use parent's starting directory 
+		&si,            // Pointer to STARTUPINFO structure
+		&m_CompilerProcess)           // Pointer to PROCESS_INFORMATION structure
+		)
+	{
+		Msg("! XrLC:CreateProcess failed (%d).\n", GetLastError());
+		return;
+	}
+}
+
 bool CLevelTool::IsCompilerRunning()
 {
 	return m_CompilerProcess.hProcess;

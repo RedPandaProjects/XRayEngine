@@ -136,7 +136,11 @@ public:
     CCommandVar			CommandMultiRenameObjects(CCommandVar p1,CCommandVar p2);
 public:
     void RunGame(const char* Params = "");
-    void RunXrLC();
+	void RunXrLC();
+	void RunXrDO();
+	void RunXrAI_Spawn(bool current_level);
+	void RunXrAI_AIMap(bool draw);
+	void RunXrAI_Verify();
 	bool IsCompilerRunning();
 	bool IsGameRunning();
 	void Terminated();
