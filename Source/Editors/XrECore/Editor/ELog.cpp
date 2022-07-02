@@ -11,14 +11,23 @@
 void  ELogCallback(LPCSTR txt)
 {
 	if (0 == txt[0]) return;
-	bool bDlg = ('#' == txt[0]) || ((0 != txt[1]) && ('#' == txt[1]));
-	TMsgDlgType mt = ('!' == txt[0]) || ((0 != txt[1]) && ('!' == txt[1])) ? mtError : mtInformation;
-	if (('!' == txt[0]) || ('#' == txt[0])) txt++;
-	if (('!' == txt[0]) || ('#' == txt[0])) txt++;
-	if (bDlg)		UILogForm::AddDlgMessage(mt, txt);
-	else			UILogForm::AddMessage(mt, txt);
+	TMsgDlgType mt = TMsgDlgType::mtCustom;
+	if (strncmp(txt, "! ", 2) == 0)
+	{
+		mt = mtError;
+	}
+	if (strncmp(txt, "~ ", 2) == 0)
+	{
+		mt = mtConfirmation;
+	}
+	if (strncmp(txt, "* ", 2) == 0)
+	{
+		mt = mtInformation;
+	}
+
+	UILogForm::AddMessage(txt);
 	if(UI)
-	UI->WriteConsole(mt, txt);
+		UI->WriteConsole(mt, txt);
 
 }
 
@@ -200,7 +209,7 @@ void CLog::Msg(TMsgDlgType mt, LPCSTR _Format, ...)
 	vsprintf( buf, _Format, l );
 
 #if 1
-    UILogForm::AddMessage(mt,xr_string(buf));
+    UILogForm::AddMessage(xr_string(buf));
 #endif
 #ifdef _MAX_EXPORT
 	EConsole.print(mt,buf);

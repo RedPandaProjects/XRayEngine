@@ -110,10 +110,10 @@ CCommandVar 	ExecCommand	(u32 cmd, CCommandVar p1, CCommandVar p2)
         xr_string sp2	= p2.IsString()?xr_string(p2):xr_string("");
         if (p1.IsString()) sp1 = ((sp1.find("\n")==sp1.npos)&&(sp1.find("\r")==sp1.npos))?sp1:xr_string("..."); 
         if (p2.IsString()) sp2 = ((sp2.find("\n")==sp2.npos)&&(sp2.find("\r")==sp2.npos))?sp2:xr_string("...");
-        if (p1.IsString()&&p2.IsString()) 		Msg("%s%s (\"%s\",\"%s\")",	level,CMD->Name(),sp1.c_str(),sp2.c_str());
+    /*    if (p1.IsString() && p2.IsString()) 		Msg("%s%s (\"%s\",\"%s\")", level, CMD->Name(), sp1.c_str(), sp2.c_str());
         else if (p1.IsInteger()&&p2.IsInteger())Msg("%s%s (%d,%d)",			level,CMD->Name(),u32(p1),u32(p2));
         else if (p1.IsInteger()&&p2.IsString()) Msg("%s%s (%d,\"%s\")",		level,CMD->Name(),u32(p1),sp2.c_str());
-        else if (p1.IsString()&&p2.IsInteger()) Msg("%s%s (\"%s\",%d)",		level,CMD->Name(),sp1.c_str(),u32(p2));
+        else if (p1.IsString()&&p2.IsInteger()) Msg("%s%s (\"%s\",%d)",		level,CMD->Name(),sp1.c_str(),u32(p2));*/
     }
     exec_level++;
     res 	 			= CMD->command(p1,p2);
