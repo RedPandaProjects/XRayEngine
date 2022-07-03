@@ -237,6 +237,7 @@ void UITopBarForm::ClickReloadConfigs()
 	g_SEFactoryManager->reload();
 	g_pGamePersistent->OnAppEnd();
 	g_pGamePersistent->OnAppStart();
+	Tools->UpdateProperties();
 }
 void UITopBarForm::ClickOpenGameData()
 {

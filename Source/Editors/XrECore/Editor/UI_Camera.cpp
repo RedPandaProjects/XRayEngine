@@ -77,7 +77,7 @@ const Fvector& CUI_Camera::GetNormal() const
 	{
 		return Device->vCameraTop;
 	}
-    return m_CamMat.k;
+    return m_CamMat.j;
 }
 
 const Fvector& CUI_Camera::GetDirection() const
@@ -86,7 +86,7 @@ const Fvector& CUI_Camera::GetDirection() const
 	{
 		return Device->vCameraDirection;
 	}
-    return m_CamMat.j;
+    return m_CamMat.k;
 }
 
 void CUI_Camera::Set(float h, float p, float b, float x, float y, float z)

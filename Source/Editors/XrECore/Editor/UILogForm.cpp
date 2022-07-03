@@ -106,7 +106,7 @@ void UILogForm::Update()
 			FistRun = true;
 		}
 		ImGui::EndChild();
-		ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_CallbackCompletion | ImGuiInputTextFlags_CallbackHistory;
+		ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue ;
 		if (ImGui::InputText("Exec", m_Exec, IM_ARRAYSIZE(m_Exec), input_text_flags))
 		{
 			if (m_Exec[0])
