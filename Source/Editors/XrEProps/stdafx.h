@@ -29,5 +29,6 @@ inline void not_implemented()
 #include "Tree\Properties\UIPropertiesItem.h"
 #include "Tree\Properties\UIPropertiesForm.h"
 #include "UIItemListForm.h"
-#include "UIChooseForm.h"
+#include "Tree\Choose\UIChooseFormItem.h"
+#include "Tree\Choose\UIChooseForm.h"
 #include "UIKeyPressForm.h"

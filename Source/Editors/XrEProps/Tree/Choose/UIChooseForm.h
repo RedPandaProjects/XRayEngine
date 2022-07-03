@@ -1,35 +1,33 @@
 #pragma once
-class XREPROPS_API UIChooseForm :
-    public XrUI,private FolderHelper<SChooseItem>
+class XREPROPS_API UIChooseForm :  public XrUI
 {
-    virtual void DrawItem(Node* Node);
+    friend class UIChooseFormItem;
+ /*   virtual void DrawItem(Node* Node);
     virtual bool IsDrawFloder(Node* Node);
     void AppendItem(SChooseItem& item);
-    void UpdateTexture();
-    Node m_GeneralNode;
+ 
+    Node m_GeneralNode;*/
+    void UpdateSelected(UIChooseFormItem*NewSelected);
+    UIChooseFormItem m_RootItem;
     ImTextureID m_Texture;
     ImGuiTextFilter m_Filter;
-private:
-    int 			iMultiSelLimit;
-    int             iSelectedInList;
     UIPropertiesForm* m_Props;
     Flags32  m_Flags;
     xr_string m_Title;
     xr_vector<SChooseItem*>m_SelectedItems;
-
-    inline SChooseItem* GetSelectedItem() { if (m_SelectedItems.size()) { return m_SelectedItems.back(); }return nullptr; }
-    SChooseItem* m_ClickItem;
-    SChooseItem* m_SelectedItem;
+    s32 m_SelectedList;
+    SChooseItem* GetSelectedItem();
+    UIChooseFormItem* m_SelectedItem;
     SChooseItem m_ItemNone;
     ChooseItemVec	m_Items;
     u32 m_ChooseID;
     void  FillItems(u32 choose_id);
+    void CheckFavorite();
 protected:
 
     DEFINE_MAP(u32, SChooseEvents, EventsMap, EventsMapIt);
     static EventsMap			m_Events;
 private:
-    static xr_string 			m_LastSelection;
     SChooseEvents 	E;
     static UIChooseForm* Form;
     static ImTextureID NullTexture;

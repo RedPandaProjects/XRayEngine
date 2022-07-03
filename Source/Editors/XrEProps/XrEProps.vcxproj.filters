@@ -22,6 +22,9 @@
     <Filter Include="Tree\Properties">
       <UniqueIdentifier>{4ab16daa-db00-4e5e-8177-31950ef45a01}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Tree\Choose">
+      <UniqueIdentifier>{fbf56145-c3d8-4c6b-95fb-295cdefee3b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -45,9 +48,6 @@
     <ClCompile Include="UIItemListForm.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="UIChooseForm.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="FolderLib.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -69,6 +69,12 @@
     <ClCompile Include="Tree\Properties\UIPropertiesItem.cpp">
       <Filter>Tree\Properties</Filter>
     </ClCompile>
+    <ClCompile Include="Tree\Choose\UIChooseForm.cpp">
+      <Filter>Tree\Choose</Filter>
+    </ClCompile>
+    <ClCompile Include="Tree\Choose\UIChooseFormItem.cpp">
+      <Filter>Tree\Choose</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="UITextForm.h">
@@ -86,9 +92,6 @@
     <ClInclude Include="UIItemListForm.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="UIChooseForm.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="FolderLib.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
@@ -103,6 +106,12 @@
     </ClInclude>
     <ClInclude Include="Tree\Properties\UIPropertiesItem.h">
       <Filter>Tree\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="Tree\Choose\UIChooseForm.h">
+      <Filter>Tree\Choose</Filter>
+    </ClInclude>
+    <ClInclude Include="Tree\Choose\UIChooseFormItem.h">
+      <Filter>Tree\Choose</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
