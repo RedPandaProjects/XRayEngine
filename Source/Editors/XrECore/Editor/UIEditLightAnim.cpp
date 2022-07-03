@@ -9,10 +9,10 @@ UIEditLightAnim::UIEditLightAnim()
     m_Modife = false;
     m_Items = xr_new<UIItemListForm>();
     m_Items->SetOnItemFocusedEvent(TOnILItemFocused(this,&UIEditLightAnim::OnItemFocused));
-    m_Items->SetOnItemCreaetEvent(TOnItemCreate(this, &UIEditLightAnim::OnCreateItem));
+    /*m_Items->SetOnItemCreaetEvent(TOnItemCreate(this, &UIEditLightAnim::OnCreateItem));
     m_Items->SetOnItemCloneEvent(TOnItemClone(this, &UIEditLightAnim::OnCloneItem));
     m_Items->SetOnItemRemoveEvent(TOnItemRemove(this, &UIEditLightAnim::OnRemoveItem));
-    m_Items->SetOnItemRenameEvent(TOnItemRename(this, &UIEditLightAnim::OnRenameItem));
+    m_Items->SetOnItemRenameEvent(TOnItemRename(this, &UIEditLightAnim::OnRenameItem));*/
     m_Items->m_Flags.set(UIItemListForm::fMenuEdit, true);
     m_Props = xr_new<UIPropertiesForm>();
     m_Props->SetModifiedEvent(TOnModifiedEvent(this, &UIEditLightAnim::OnModified));

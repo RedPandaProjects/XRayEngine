@@ -130,20 +130,16 @@ void UIObjectTool::Draw()
         ImGui::BeginChild("Props", ImVec2(0,128));
         m_Props->Draw();
         ImGui::EndChild();
-        ImGui::Separator();
         ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::TreePop();
-    }
+	}
+	ImGui::Separator();
     ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
     if (ImGui::TreeNode("Object List"))
-    {
-        ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
-        ImGui::BeginChild("Object List");
-        ImGui::Separator();
-        m_ObjectList->Draw();
-        ImGui::Separator();
-        ImGui::EndChild();
-        ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
+	{
+		ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
+		m_ObjectList->Draw();
+		ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::TreePop();
     }
 }

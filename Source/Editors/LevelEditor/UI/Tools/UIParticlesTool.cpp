@@ -51,18 +51,16 @@ void UIParticlesTool::Draw()
                 }
             }
         }
-        ImGui::Separator();
         ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::TreePop();
-    }
+	}
+	ImGui::Separator();
     ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
     if (ImGui::TreeNode("Particles"))
-    {
-        ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
-        ImGui::Separator();
-        m_ParticlesList->Draw();
-        ImGui::Separator();
-        ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
+	{
+		ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
+		m_ParticlesList->Draw();
+		ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::TreePop();
     }
 }

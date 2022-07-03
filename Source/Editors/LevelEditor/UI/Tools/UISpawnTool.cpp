@@ -54,18 +54,16 @@ void UISpawnTool::Draw()
 
             }
         }
-        ImGui::Separator();
         ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::TreePop();
-    }
+	}
+	ImGui::Separator();
     ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
     if (ImGui::TreeNode("Object List"))
-    {
-        ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
-        ImGui::Separator();
-        m_SpawnList->Draw();
-        ImGui::Separator();
-        ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
+	{
+		ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
+		m_SpawnList->Draw();
+		ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
         ImGui::TreePop();
     }
 }

@@ -8,7 +8,7 @@ UIImageEditorForm::UIImageEditorForm()
     m_ItemProps = xr_new<UIPropertiesForm>();
     m_ItemList = xr_new<UIItemListForm>();
     m_ItemList->SetOnItemFocusedEvent(TOnILItemFocused(this,&UIImageEditorForm::OnItemsFocused));
-    m_ItemList->SetOnItemRemoveEvent(TOnItemRemove(&ImageLib, &CImageManager::RemoveTexture));
+ //   m_ItemList->SetOnItemRemoveEvent(TOnItemRemove(&ImageLib, &CImageManager::RemoveTexture));
     m_Texture = nullptr;
     m_bFilterImage = true;
     m_bFilterCube = true;
@@ -74,7 +74,7 @@ void UIImageEditorForm::Draw()
         ImGui::SameLine();
         if (ImGui::Button("Remove Texture"))
         {
-            m_ItemList->RemoveSelectItem();
+        //    m_ItemList->RemoveSelectItem();
         }
     }
 
