@@ -41,12 +41,14 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Tree\Base\UITreeItem.cpp" />
+    <ClCompile Include="Tree\Choose\UIChooseForm.cpp" />
+    <ClCompile Include="Tree\Choose\UIChooseFormItem.cpp" />
+    <ClCompile Include="Tree\ItemList\UIItemListForm.cpp" />
+    <ClCompile Include="Tree\ItemList\UIItemListFormItem.cpp" />
     <ClCompile Include="Tree\Properties\UIPropertiesForm.cpp" />
     <ClCompile Include="Tree\Properties\UIPropertiesItem_DrawProp.cpp" />
     <ClCompile Include="Tree\Properties\UIPropertiesItem_Mixed.cpp" />
     <ClCompile Include="Tree\Properties\UIPropertiesItem.cpp" />
-    <ClCompile Include="UIChooseForm.cpp" />
-    <ClCompile Include="UIItemListForm.cpp" />
     <ClCompile Include="UIKeyPressForm.cpp" />
     <ClCompile Include="UINumericVectorForm.cpp" />
     <ClCompile Include="UITextForm.cpp" />
@@ -56,10 +58,12 @@
     <ClInclude Include="ItemListHelper.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Tree\Base\UITreeItem.h" />
+    <ClInclude Include="Tree\Choose\UIChooseForm.h" />
+    <ClInclude Include="Tree\Choose\UIChooseFormItem.h" />
+    <ClInclude Include="Tree\ItemList\UIItemListForm.h" />
+    <ClInclude Include="Tree\ItemList\UIItemListFormItem.h" />
     <ClInclude Include="Tree\Properties\UIPropertiesForm.h" />
     <ClInclude Include="Tree\Properties\UIPropertiesItem.h" />
-    <ClInclude Include="UIChooseForm.h" />
-    <ClInclude Include="UIItemListForm.h" />
     <ClInclude Include="UIKeyPressForm.h" />
     <ClInclude Include="UINumericVectorForm.h" />
     <ClInclude Include="UITextForm.h" />

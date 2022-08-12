@@ -85,7 +85,7 @@ void UIMainMenuForm::Draw()
                 {
                     ExecCommand(COMMAND_MAKE_HOM);
                 }
-                if (ImGui::MenuItem("Make ", ""))
+                if (ImGui::MenuItem("Make SOM", ""))
                 {
                     ExecCommand(COMMAND_MAKE_SOM);
                 }
@@ -95,9 +95,11 @@ void UIMainMenuForm::Draw()
                 }
                 ImGui::EndMenu();
             }
+            bool bDisable = false;
 			if (LTools->IsCompilerRunning() || LTools->IsGameRunning())
 			{
 				ImGui::BeginDisabled();
+                bDisable = true;
 			}
             if (ImGui::BeginMenu("Compile"))
 			{
@@ -140,7 +142,7 @@ void UIMainMenuForm::Draw()
 				
                 ImGui::EndMenu();
             }
-			if (LTools->IsCompilerRunning() || LTools->IsGameRunning())
+			if (bDisable)
 			{
 				ImGui::EndDisabled();
 			}
