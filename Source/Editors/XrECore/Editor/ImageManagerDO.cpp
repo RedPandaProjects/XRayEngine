@@ -202,7 +202,8 @@ int CImageManager::CreateMergedTexture(const RStringVec& _names, LPCSTR dest_nam
     	string_path		t_name;
 //.        FS.update_path	(t_name,_textures_,**n_it);
         FS.update_path	(t_name,_game_textures_,**n_it);
-        if (!Stbi_Load(EFS.ChangeFileExt(t_name,".dds"/*".tga"*/).c_str(),s_it->layers.back(),s_it->w,s_it->h,s_it->a)){
+	strcat(t_name, ".dds");
+        if (!Stbi_Load(t_name, s_it->layers.back(),s_it->w,s_it->h,s_it->a)){
             ELog.DlgMsg	(mtError,"Can't load texture '%s'. Check file existence.",**n_it);
             return -1;
         }
