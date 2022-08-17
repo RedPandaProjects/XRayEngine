@@ -117,32 +117,23 @@ DEFINE_VECTOR(shared_str,RStrVec,RStrVecIt);
 #include "..\..\XrRender\Private\ETextureParams.h"
 #include "..\..\XrRender\Private\ResourceManager.h"
 #include "Editor/ImageManager.h"
+
 inline xr_string ChangeFileExt(const char* name, const char* e)
 {
-	string_path path;
-	xr_strcpy(path, name);
-	if (strrchr(path,'.'))
-	{
-		strrchr(path, '.')[0] = 0;
-	}
-	xr_string str;
-	str.append(path);
-	str.append(e);
-	return str;
+	xr_string path = name;
 
+	size_t delimiterOffset = path.find_last_of('\\');
+	size_t pointOffset = path.find_last_of('.');
+
+	if ((pointOffset != xr_string::npos) && (delimiterOffset < pointOffset))
+		return path.replace((int)pointOffset, -1, e);
+	else
+		return path.append(e);
 }
+
 inline xr_string ChangeFileExt(const xr_string&name, const char* e)
 {
-	string_path path;
-	xr_strcpy(path, name.c_str());
-	if (strrchr(path, '.'))
-	{
-		strrchr(path, '.')[0] = 0;
-	}
-	xr_string str;
-	str.append(path);
-	str.append(e);
-	return str;
+	return ChangeFileExt(name.c_str(), e);
 
 }
 inline u32 TColor(u32 r)

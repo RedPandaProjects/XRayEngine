@@ -179,8 +179,18 @@ IC u32							xr_strlen				( const char* S );
 // string management
 
 // return pointer to ".ext"
-IC char*						strext					( const char* S )
-{	return (char*) strrchr(S,'.');	}
+IC char* strext(const char* S)
+{
+	std::string path = S;
+
+	size_t delimiterOffset = path.find_last_of('\\');
+	size_t pointOffset = path.find_last_of('.');
+
+	if ((pointOffset != std::string::npos) && (delimiterOffset < pointOffset))
+		return (char*)strrchr(S, '.');
+
+	return nullptr;
+};
 
 IC u32							xr_strlen				( const char* S )
 {	return (u32)strlen(S);			}
