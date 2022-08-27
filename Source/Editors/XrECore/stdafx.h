@@ -122,11 +122,8 @@ inline xr_string ChangeFileExt(const char* name, const char* e)
 {
 	xr_string path = name;
 
-	size_t delimiterOffset = path.find_last_of('\\');
-	size_t pointOffset = path.find_last_of('.');
-
-	if ((pointOffset != xr_string::npos) && (delimiterOffset < pointOffset))
-		return path.replace((int)pointOffset, -1, e);
+	if (int len = strlen(strext(name)))
+		return path.replace(path.length() - len, xr_string::npos, e);
 	else
 		return path.append(e);
 }

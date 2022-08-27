@@ -183,10 +183,10 @@ IC char* strext(const char* S)
 {
 	std::string path = S;
 
-	size_t delimiterOffset = path.find_last_of('\\');
-	size_t pointOffset = path.find_last_of('.');
+	int delimiterOffset = (int) path.find_last_of('\\');
+	int pointOffset = (int) path.find_last_of('.');
 
-	if ((pointOffset != std::string::npos) && (delimiterOffset < pointOffset))
+	if (delimiterOffset < pointOffset)
 		return (char*)strrchr(S, '.');
 
 	return nullptr;
