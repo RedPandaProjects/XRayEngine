@@ -6,7 +6,7 @@
 
 CUIArtefactParams::CUIArtefactParams()
 {
-	Memory.mem_fill			(m_info_items, 0, sizeof(m_info_items));
+	MemoryInterface->mem_fill			(m_info_items, 0, sizeof(m_info_items));
 }
 
 CUIArtefactParams::~CUIArtefactParams()

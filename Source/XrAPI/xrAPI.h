@@ -37,6 +37,9 @@ extern XRAPI_API	IGame_Persistent* g_pGamePersistent;
 class XrGameMaterialLibraryInterface;
 extern XRAPI_API XrGameMaterialLibraryInterface* GameMaterialLibrary;
 
+class XRayMemoryInterface;
+extern XRAPI_API XRayMemoryInterface*MemoryInterface;
+
 #ifndef SHIPPING
 class XrGameEditorInterface;
 extern XRAPI_API XrGameEditorInterface* GameEditor;

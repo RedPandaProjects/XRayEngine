@@ -318,7 +318,7 @@ void CEditorRenderDevice::Reset  	(bool )
     u32 tm_start			= TimerAsync();
     Resources->reset_begin	();
 	UI->ResetBegin();
-    Memory.mem_compact		();
+    MemoryInterface->mem_compact		();
     HW.DevPP.BackBufferWidth= dwRealWidth;
     HW.DevPP.BackBufferHeight= dwRealHeight;
     HW.Reset				(m_hWnd);

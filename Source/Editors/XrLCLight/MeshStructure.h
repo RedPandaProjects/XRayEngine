@@ -331,7 +331,7 @@ IC void isolate_vertices(BOOL bProgress, xr_vector<typeVertex*> &vertices )
 */
 	vertices.erase	(_end,vertices.end());
 	//g_bUnregister		= true;
-	Memory.mem_compact	();
+	MemoryInterface->mem_compact	();
 	
 	if (bProgress)	
 			Progress	(1.f);

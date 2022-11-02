@@ -130,7 +130,7 @@ void	MODEL::build_internal	(Fvector* V, int Vcnt, TRI* T, int Tcnt, build_callba
 	OPCC.Rules		= SPLIT_COMPLETE | SPLIT_SPLATTERPOINTS | SPLIT_GEOMCENTER;
 	OPCC.NoLeaf		= true;
 	OPCC.Quantized	= false;
-	// if (Memory.debug_mode) OPCC.KeepOriginal = true;
+	// if (MemoryInterface->debug_mode) OPCC.KeepOriginal = true;
 
 	tree			= CNEW(OPCODE_Model) ();
 	if (!tree->Build(OPCC)) {

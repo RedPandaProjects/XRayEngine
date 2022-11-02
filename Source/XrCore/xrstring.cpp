@@ -146,7 +146,7 @@ str_value*	str_container::dock		(str_c value)
 	cs.Enter					();
 
 #ifdef DEBUG_MEMORY_MANAGER
-	Memory.stat_strdock			++	;
+	MemoryInterface->stat_strdock			++	;
 #endif // DEBUG_MEMORY_MANAGER
 
 	str_value*	result			= 0	;
@@ -177,7 +177,7 @@ str_value*	str_container::dock		(str_c value)
 #endif //DEBUG
 		) {
 
-		result					= (str_value*)Memory.mem_alloc(HEADER+s_len_with_zero
+		result					= (str_value*)MemoryInterface->mem_alloc(HEADER+s_len_with_zero
 #ifdef DEBUG_MEMORY_NAME
 			, "storage: sstring"
 #endif // DEBUG_MEMORY_NAME
@@ -286,7 +286,7 @@ str_value*	str_container::dock		(str_c value)
 // 	//#endif // FIND_CHUNK_BENCHMARK_ENABLE
 
 #ifdef DEBUG_MEMORY_MANAGER
-	Memory.stat_strdock			++	;
+	MemoryInterface->stat_strdock			++	;
 #endif // DEBUG_MEMORY_MANAGER
 
 	str_value*	result			= 0	;
@@ -325,7 +325,7 @@ str_value*	str_container::dock		(str_c value)
 		// Insert string
 //		DUMP_PHASE;
 
-		result					= (str_value*)Memory.mem_alloc(HEADER+s_len_with_zero
+		result					= (str_value*)MemoryInterface->mem_alloc(HEADER+s_len_with_zero
 #ifdef DEBUG_MEMORY_NAME
 			, "storage: sstring"
 #endif // DEBUG_MEMORY_NAME

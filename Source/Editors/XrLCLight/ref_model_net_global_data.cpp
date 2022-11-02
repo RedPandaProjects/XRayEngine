@@ -9,7 +9,7 @@ namespace lc_net
 	void	net_global_data_impl<gl_ref_model_data>::create_data_file( LPCSTR path  )
 	{
 		FPU::m64r			();
-		Memory.mem_compact	();
+		MemoryInterface->mem_compact	();
 		clMsg( "create_ref_model_data_write:  start" );
 		IWriter * file = FS.w_open(path);
 		inlc_global_data()->write_mu_model_refs( *file );
@@ -29,7 +29,7 @@ namespace lc_net
 		}
 	 //unlink( fn );
 		FPU::m64r		();
-		Memory.mem_compact	();
+		MemoryInterface->mem_compact	();
 		return true;
 	}
 

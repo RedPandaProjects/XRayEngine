@@ -77,7 +77,7 @@ static CVirtualFileRW *g_net_data = 0;
 void net_task_manager::create_global_data_write( LPCSTR save_path )
 {
 	FPU::m64r			();
-	Memory.mem_compact	();
+	MemoryInterface->mem_compact	();
 
 	clMsg( "create_global_data_write:  start" );
 #ifdef NET_CMP
@@ -109,7 +109,7 @@ void net_task_manager::create_global_data_write( LPCSTR save_path )
 	
 	//g_net_data = xr_new<CVirtualFileRW>(global_data_file_name);
 	
-	// dbg_buf = Memory.mem_alloc( 560000000, "dbg_buf" );
+	// dbg_buf = MemoryInterface->mem_alloc( 560000000, "dbg_buf" );
 ////////////////
 	/*{
 		string_path			 blfile_name;
@@ -191,7 +191,7 @@ void	net_task_manager::run()
 #endif
 
 	FPU::m64r		();
-	Memory.mem_compact	();
+	MemoryInterface->mem_compact	();
 #if !defined(NET_CMP) && !defined(LOAD_GL_DATA)	
 	for	(u32 dit = 0; dit<size; dit++)
 		send( *user, dit );

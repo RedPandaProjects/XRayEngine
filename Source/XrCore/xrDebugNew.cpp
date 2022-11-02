@@ -305,7 +305,6 @@ void out_of_memory_handler	()
 	if ( g_full_memory_stats_callback )
 		g_full_memory_stats_callback	( );
 	else {
-		Memory.mem_compact	();
 #if 1
 		u32					crt_heap		= mem_usage_impl((HANDLE)_get_heap_handle(),0,0);
 #else // _EDITOR

@@ -81,7 +81,7 @@ bool  GetGlobalData( IAgent* agent,
 		 if(r>0)
 				globalDataStream->Release();
 		 agent->FreeCachedData(sessionId, dataDesc);
-		 Memory.mem_compact	();
+		 MemoryInterface->mem_compact	();
 */
 
 		 DataReadCreate( cache_dir );

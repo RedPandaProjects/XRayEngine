@@ -96,8 +96,7 @@ void CAI_Space::load_from_editor()
 	unload(true);
 
 #ifdef DEBUG
-	Memory.mem_compact();
-	u32						mem_usage = Memory.mem_usage();
+	u32						mem_usage = MemoryInterface->mem_usage();
 	CTimer					timer;
 	timer.Start();
 #endif
@@ -125,7 +124,7 @@ void CAI_Space::load_from_editor()
 	m_doors_manager = xr_new<::doors::manager>(ai().level_graph().header().box());
 
 #ifdef DEBUG
-	Msg("* Loading ai space is successfully completed (%.3fs, %7.3f Mb)", timer.GetElapsed_sec(), float(Memory.mem_usage() - mem_usage) / 1048576.0);
+	Msg("* Loading ai space is successfully completed (%.3fs, %7.3f Mb)", timer.GetElapsed_sec(), float(MemoryInterface->mem_usage() - mem_usage) / 1048576.0);
 #endif
 #endif
 
@@ -137,8 +136,7 @@ void CAI_Space::load				(LPCSTR level_name)
 	unload					(true);
 
 #ifdef DEBUG
-	Memory.mem_compact		();
-	u32						mem_usage = Memory.mem_usage();
+	u32						mem_usage = MemoryInterface->mem_usage();
 	CTimer					timer;
 	timer.Start				();
 #endif
@@ -176,7 +174,7 @@ void CAI_Space::load				(LPCSTR level_name)
 	m_doors_manager			= xr_new<::doors::manager>( ai().level_graph().header().box() );
 
 #ifdef DEBUG
-	Msg						("* Loading ai space is successfully completed (%.3fs, %7.3f Mb)",timer.GetElapsed_sec(),float(Memory.mem_usage() - mem_usage)/1048576.0);
+	Msg						("* Loading ai space is successfully completed (%.3fs, %7.3f Mb)",timer.GetElapsed_sec(),float(MemoryInterface->mem_usage() - mem_usage)/1048576.0);
 #endif
 }
 

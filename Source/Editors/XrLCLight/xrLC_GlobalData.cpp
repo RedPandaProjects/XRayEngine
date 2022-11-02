@@ -109,18 +109,18 @@ void	xrLC_GlobalData	::destroy_rcmodel	()
 }
 void xrLC_GlobalData::clear_build_textures_surface()
 {
-	clLog( "mem usage before clear build textures surface: %u", Memory.mem_usage() );
+	clLog( "mem usage before clear build textures surface: %u", MemoryInterface->mem_usage() );
 	//xr_vector<b_BuildTexture>		_textures;
 	xr_vector<b_BuildTexture>::iterator i = textures().begin();
 	xr_vector<b_BuildTexture>::const_iterator e = textures().end();
 	for(;i!=e;++i)
 		::clear((*i));
-	Memory.mem_compact();
-	clLog( "mem usage after clear build textures surface: %u", Memory.mem_usage() );
+	MemoryInterface->mem_compact();
+	clLog( "mem usage after clear build textures surface: %u", MemoryInterface->mem_usage() );
 }
 void xrLC_GlobalData::clear_build_textures_surface( const xr_vector<u32> &exept )
 {
-	clLog( "mem usage before clear build textures surface: %u", Memory.mem_usage() );
+	clLog( "mem usage before clear build textures surface: %u", MemoryInterface->mem_usage() );
 	xr_vector<b_BuildTexture>::iterator i = textures().begin();
 	xr_vector<b_BuildTexture>::const_iterator e = textures().end();
 	xr_vector<b_BuildTexture>::const_iterator b = textures().begin();
@@ -130,8 +130,8 @@ void xrLC_GlobalData::clear_build_textures_surface( const xr_vector<u32> &exept 
 		if( ff ==  exept.end() )
 			::clear((*i));
 	}
-	Memory.mem_compact();
-	clLog( "mem usage after clear build textures surface: %u", Memory.mem_usage() );
+	MemoryInterface->mem_compact();
+	clLog( "mem usage after clear build textures surface: %u", MemoryInterface->mem_usage() );
 }
 
 void	xrLC_GlobalData	::create_rcmodel	(CDB::CollectorPacked& CL)
@@ -625,12 +625,12 @@ void mu_mesh_clear();
 void	xrLC_GlobalData::clear_mu_models	()
 {	
 
-		clLog( "mem usage before mu_clear %d", Memory.mem_usage() );
+		clLog( "mem usage before mu_clear %d", MemoryInterface->mem_usage() );
 		vec_clear(_mu_models);// not clear ogf
 		vec_clear(_mu_refs);
 		mu_mesh_clear();
-		Memory.mem_compact();
-		clLog( "mem usage after mu_clear: %d", Memory.mem_usage() );
+		MemoryInterface->mem_compact();
+		clLog( "mem usage after mu_clear: %d", MemoryInterface->mem_usage() );
 
 }
 void		xrLC_GlobalData::				clear			()

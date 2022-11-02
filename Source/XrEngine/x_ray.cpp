@@ -392,7 +392,7 @@ void Startup()
 
 	// Main cycle
 	CheckCopyProtection			( );
-Memory.mem_usage();
+MemoryInterface->mem_usage();
 	EngineDevice->Run					( );
 
 	// Destroy APP
@@ -1111,7 +1111,7 @@ void CApplication::LoadEnd		()
 	ll_dwReference--;
 	if (0==ll_dwReference)		{
 		Msg						("* phase time: %d ms",phase_timer.GetElapsed_ms());
-		Msg						("* phase cmem: %d K", Memory.mem_usage()/1024);
+		Msg						("* phase cmem: %d K", MemoryInterface->mem_usage()/1024);
 		Console->Execute		("stat_memory");
 		g_appLoaded				= TRUE;
 //		DUMP_PHASE;
@@ -1157,7 +1157,7 @@ void CApplication::LoadStage()
 	load_stage++;
 	VERIFY						(ll_dwReference);
 	Msg							("* phase time: %d ms",phase_timer.GetElapsed_ms());	phase_timer.Start();
-	Msg							("* phase cmem: %d K", Memory.mem_usage()/1024);
+	Msg							("* phase cmem: %d K", MemoryInterface->mem_usage()/1024);
 	
 	if (g_pGamePersistent->GameType()==1 && strstr(Core.Params,"alife"))
 		max_load_stage			= 17;

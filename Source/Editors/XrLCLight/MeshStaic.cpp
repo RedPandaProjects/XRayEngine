@@ -90,7 +90,7 @@ void xrLC_GlobalData	::vertices_isolate_and_pool_reload()
 	}
 /////////////////////////////////////////////////////////
 	_g_vertices.clear_not_free();
-	clLog( "mem usage before clear pool: %u", Memory.mem_usage() );
+	clLog( "mem usage before clear pool: %u", MemoryInterface->mem_usage() );
 
 
 	_VertexPool.clear();
@@ -100,8 +100,8 @@ void xrLC_GlobalData	::vertices_isolate_and_pool_reload()
 		b_vert_not_register = true;
 		_g_vertices.resize( not_empty_verts, 0 );
 
-		Memory.mem_compact();
-		clLog( "mem usage after clear pool: %u", Memory.mem_usage() );
+		MemoryInterface->mem_compact();
+		clLog( "mem usage after clear pool: %u", MemoryInterface->mem_usage() );
 
 		INetReaderFile r_verts( path_name );
 		for(u32 i = 0; i < not_empty_verts; ++i )
@@ -119,14 +119,14 @@ void	xrLC_GlobalData::clear_mesh		()
 {
 	
 	//R_ASSERT(g_XSplit.empty());
-	clLog( "mem usage before clear mesh: %u", Memory.mem_usage() );
+	clLog( "mem usage before clear mesh: %u", MemoryInterface->mem_usage() );
 	//g_vertices().clear();
 	//g_faces().clear();
 	//_VertexPool.clear();
 	//_FacePool.clear();
 	gl_mesh_clear	();
-	Memory.mem_compact();
-	clLog( "mem usage after clear mesh: %u", Memory.mem_usage() );
+	MemoryInterface->mem_compact();
+	clLog( "mem usage after clear mesh: %u", MemoryInterface->mem_usage() );
 }
 
 

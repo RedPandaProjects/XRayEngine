@@ -374,7 +374,7 @@ void CLocatorAPI::LoadArchive(archive& A, LPCSTR entrypoint)
 		buffer			+= sizeof(crc);
 
 		u32				name_length = buffer_size - 4*sizeof(u32);
-		Memory.mem_copy	(name,buffer,name_length);
+		memcpy	(name,buffer,name_length);
 		name[name_length] = 0;
 		buffer			+= buffer_size - 4*sizeof(u32);
 
@@ -742,7 +742,7 @@ void CLocatorAPI::_initialize	(u32 flags, LPCSTR target_folder, LPCSTR fs_name)
 	CTimer t;
 	t.Start();
 	Log				("Initializing File System...");
-	u32	M1			= Memory.mem_usage();
+	u32	M1			= MemoryInterface->mem_usage();
 
 	m_Flags.set		(flags,TRUE);
 
@@ -864,7 +864,7 @@ void CLocatorAPI::_initialize	(u32 flags, LPCSTR target_folder, LPCSTR fs_name)
 	};
 		
 
-	u32	M2			= Memory.mem_usage();
+	u32	M2			= MemoryInterface->mem_usage();
 	Msg				("FS: %d files cached %d archives, %dKb memory used.",m_files.size(),m_archives.size(), (M2-M1)/1024);
 
 	m_Flags.set		(flReady,TRUE);

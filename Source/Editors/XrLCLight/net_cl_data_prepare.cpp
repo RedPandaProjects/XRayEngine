@@ -80,10 +80,10 @@ void		SetGlobalCompileDataInitialized( )
 {
 	
 	lc_net::globals().get<lc_net::gl_cl_data>().init();
-	clLog( "mem usage before collision model destroy: %u", Memory.mem_usage() );
+	clLog( "mem usage before collision model destroy: %u", MemoryInterface->mem_usage() );
 	inlc_global_data()->destroy_rcmodel	();
-	Memory.mem_compact();
-	clLog( "mem usage after collision model destroy: %u", Memory.mem_usage() );
+	MemoryInterface->mem_compact();
+	clLog( "mem usage after collision model destroy: %u", MemoryInterface->mem_usage() );
 //	inlc_global_data()->clear_build_textures_surface();
 	wait_lock.Enter();
 		//cl_data_prepare.wait();

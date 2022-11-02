@@ -151,10 +151,10 @@ void CStats::Show()
 		}
 	}
 	{
-		float mem_count		= float	(Memory.stat_calls);
+		float mem_count		= float	(MemoryInterface->stat_calls);
 		if (mem_count>fMem_calls)	fMem_calls	=	mem_count;
 		else						fMem_calls	=	.9f*fMem_calls + .1f*mem_count;
-		Memory.stat_calls	= 0		;
+		MemoryInterface->stat_calls	= 0		;
 	}
 
 	////////////////////////////////////////////////
@@ -284,9 +284,9 @@ void CStats::Show()
 		F.OutNext	("TEST 3:      %2.2fms, %d",TEST3.result,TEST3.count);
 #ifdef DEBUG_MEMORY_MANAGER
 		F.OutSkip	();
-		F.OutNext	("str: cmp[%3d], dock[%3d], qpc[%3d]",Memory.stat_strcmp,Memory.stat_strdock,CPU::qpc_counter);
-		Memory.stat_strcmp	=	0		;
-		Memory.stat_strdock	=	0		;
+		F.OutNext	("str: cmp[%3d], dock[%3d], qpc[%3d]",MemoryInterface->stat_strcmp,MemoryInterface->stat_strdock,CPU::qpc_counter);
+		MemoryInterface->stat_strcmp	=	0		;
+		MemoryInterface->stat_strdock	=	0		;
 		CPU::qpc_counter	=	0		;
 #else // DEBUG_MEMORY_MANAGER
 		F.OutSkip	();

@@ -10,7 +10,7 @@
 
 CUIOutfitInfo2::CUIOutfitInfo2()
 {
-	Memory.mem_fill			(m_items, 0, sizeof(m_items));
+	MemoryInterface->mem_fill			(m_items, 0, sizeof(m_items));
 }
 
 CUIOutfitInfo2::~CUIOutfitInfo2()

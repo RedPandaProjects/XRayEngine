@@ -76,7 +76,7 @@ void		INetBlockReader::			create_block	( u32 size )
 /*
 	if( !_buffer )
 	{
-			_buffer = (u8*)	Memory.mem_alloc	( size
+			_buffer = (u8*)	MemoryInterface->mem_alloc	( size
 #ifdef DEBUG_MEMORY_NAME
 			,		"INetBlockReader - storage"
 #endif // DEBUG_MEMORY_NAME
@@ -85,7 +85,7 @@ void		INetBlockReader::			create_block	( u32 size )
 	}
 	if( _block_size < size )
 	{
-			_buffer = (u8*)Memory.mem_realloc	(_buffer,size
+			_buffer = (u8*)MemoryInterface->mem_realloc	(_buffer,size
 #ifdef DEBUG_MEMORY_NAME
 			,	"CMemoryWriter - storage"
 #endif // DEBUG_MEMORY_NAME
@@ -101,7 +101,7 @@ INetBlockReader::~INetBlockReader		()
 {
 	R_ASSERT(!mem_reader.allocated()||mem_reader.count()==0);
 	mem_reader.free_buff();
-//	Memory.mem_free( _buffer );
+//	MemoryInterface->mem_free( _buffer );
 }
 /*
 	IC void			w_string(const char *p)			{	w(p,(u32)xr_strlen(p));w_u8(13);w_u8(10);	}
@@ -275,7 +275,7 @@ INetFileBuffWriter::~INetFileBuffWriter()
 	xr_delete(mem_writter);
 }
 /*
-			data = (BYTE*)	Memory.mem_realloc	(data,mem_size
+			data = (BYTE*)	MemoryInterface->mem_realloc	(data,mem_size
 #ifdef DEBUG_MEMORY_NAME
 			,	"CMemoryWriter - storage"
 #endif // DEBUG_MEMORY_NAME
@@ -292,7 +292,7 @@ void CReadMemoryBlock::r(void *p,int cnt)const
 CReadMemoryBlock::CReadMemoryBlock	( const u32	buff_size_, u8* buffer ): buf_size(buff_size_), file_size( 0 ), position( 0 ), _buffer( buffer )
 {
 /*
-	data = (u8*)	Memory.mem_alloc	(file_size_
+	data = (u8*)	MemoryInterface->mem_alloc	(file_size_
 #ifdef DEBUG_MEMORY_NAME
 			,		"CReadMemoryBlock - storage"
 #endif // DEBUG_MEMORY_NAME
@@ -303,7 +303,7 @@ CReadMemoryBlock::CReadMemoryBlock	( const u32	buff_size_, u8* buffer ): buf_siz
 
 CReadMemoryBlock::	~CReadMemoryBlock	()
 {
-	//Memory.mem_free( data );
+	//MemoryInterface->mem_free( data );
 }
 
 #include "../../xrCore/FS_impl.h"

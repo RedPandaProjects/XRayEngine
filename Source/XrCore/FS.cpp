@@ -132,7 +132,7 @@ bool file_handle_internal	(LPCSTR file_name, u32 &size, int &file_handle)
 
 void *FileDownload		(LPCSTR file_name, const int &file_handle, u32 &file_size)
 {
-	void				*buffer = Memory.mem_alloc	(
+	void				*buffer = MemoryInterface->mem_alloc	(
 		file_size
 #ifdef DEBUG_MEMORY_NAME
 		,"FILE in memory"
@@ -219,12 +219,12 @@ void CMemoryWriter::w	(const void* ptr, u32 count)
 		// reallocate
 		if (mem_size==0)	mem_size=128;
 		while (mem_size <= (position+count)) mem_size*=2;
-		if (0==data)		data = (BYTE*)	Memory.mem_alloc	(mem_size
+		if (0==data)		data = (BYTE*)	MemoryInterface->mem_alloc	(mem_size
 #ifdef DEBUG_MEMORY_NAME
 			,		"CMemoryWriter - storage"
 #endif // DEBUG_MEMORY_NAME
 			);
-		else				data = (BYTE*)	Memory.mem_realloc	(data,mem_size
+		else				data = (BYTE*)	MemoryInterface->mem_realloc	(data,mem_size
 #ifdef DEBUG_MEMORY_NAME
 			,	"CMemoryWriter - storage"
 #endif // DEBUG_MEMORY_NAME

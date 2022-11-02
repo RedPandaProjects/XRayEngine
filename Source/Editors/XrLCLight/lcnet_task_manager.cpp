@@ -108,7 +108,7 @@ namespace	lc_net{
 
 		R_ASSERT( _user );
 		FPU::m64r		();
-		Memory.mem_compact	();
+		MemoryInterface->mem_compact	();
 	}
 	void	task_manager::create_user( )
 	{

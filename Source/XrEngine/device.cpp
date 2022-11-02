@@ -134,8 +134,7 @@ void CRenderDevice::End		(void)
 //			pApp->destroy_loading_shaders					();
 
 			m_pRender->ResourcesDestroyNecessaryTextures	();
-			Memory.mem_compact								();
-			Msg												("* MEMORY USAGE: %d K",Memory.mem_usage()/1024);
+			Msg												("* MEMORY USAGE: %d K",MemoryInterface->mem_usage()/1024);
 			Msg												("* End of synchronization A[%d] R[%d]",b_is_Active, b_is_Ready);
 
 #ifdef FIND_CHUNK_BENCHMARK_ENABLE
@@ -161,7 +160,7 @@ void CRenderDevice::End		(void)
 		g_SASH.DisplayFrame(Device->fTimeGlobal);
 	m_pRender->End();
 	//RCache.OnFrameEnd	();
-	//Memory.dbg_check		();
+	//MemoryInterface->dbg_check		();
     //CHK_DX				(HW.pDevice->EndScene());
 
 	//HRESULT _hr		= HW.pDevice->Present( NULL, NULL, NULL, NULL );

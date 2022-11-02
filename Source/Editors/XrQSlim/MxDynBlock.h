@@ -54,7 +54,7 @@ public:
 
 	void remove(int i) { (*this)[i] = (*this)[--fill]; }
 	void remove_inorder(int i)
-	{ Memory.mem_move(&(*this)[i], &(*this)[i+1], (--fill - i)*sizeof(T)); }
+	{ MemoryInterface->mem_move(&(*this)[i], &(*this)[i+1], (--fill - i)*sizeof(T)); }
 
 	// Restricted STL-like interface for interoperability with
 	// STL-based code.  Overrides select MxBlock<> definitions and

@@ -31,8 +31,8 @@
 #endif // _EDITOR
 
 #ifdef DEBUG_MEMORY_MANAGER
-	static	void *	ode_alloc	(size_t size)								{ return Memory.mem_alloc(size,"ODE");			}
-	static	void *	ode_realloc	(void *ptr, size_t oldsize, size_t newsize)	{ return Memory.mem_realloc(ptr,newsize,"ODE");	}
+	static	void *	ode_alloc	(size_t size)								{ return MemoryInterface->mem_alloc(size,"ODE");			}
+	static	void *	ode_realloc	(void *ptr, size_t oldsize, size_t newsize)	{ return MemoryInterface->mem_realloc(ptr,newsize,"ODE");	}
 	static	void	ode_free	(void *ptr, size_t size)					{ return xr_free(ptr);							}
 #else // DEBUG_MEMORY_MANAGER
 	static	void *	ode_alloc	(size_t size)								{ return xr_malloc(size);			}

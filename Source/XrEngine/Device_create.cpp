@@ -87,7 +87,7 @@ void CRenderDevice::_SetupStates	()
 /*
 void CRenderDevice::_Create	(LPCSTR shName)
 {
-	Memory.mem_compact			();
+	MemoryInterface->mem_compact			();
 
 	// after creation
 	b_is_Ready					= TRUE;
@@ -113,7 +113,6 @@ void CRenderDevice::_Create	(LPCSTR shName)
 
 void CRenderDevice::_Create	(LPCSTR shName)
 {
-	Memory.mem_compact			();
 
 	// after creation
 	b_is_Ready					= TRUE;

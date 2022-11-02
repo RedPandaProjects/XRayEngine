@@ -49,7 +49,7 @@
 #include "nvimage/PixelFormat.h"
 #include "nvimage/ColorSpace.h"
 
-#include "nvcore/Memory.h"
+#include "nvcore/MemoryInterface->h"
 #include "nvcore/Ptr.h"
 
 using namespace nv;

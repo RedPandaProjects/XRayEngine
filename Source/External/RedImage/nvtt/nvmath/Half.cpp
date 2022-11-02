@@ -497,7 +497,7 @@ nv::half_to_float( uint16 h )
 #endif
 #endif
 
-#include "nvcore/Memory.h" // NV_ALIGN_16
+#include "nvcore/MemoryInterface->h" // NV_ALIGN_16
 
 static __m128 half_to_float4_SSE2(__m128i h)
 {

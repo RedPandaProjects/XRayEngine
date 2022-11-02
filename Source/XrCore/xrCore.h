@@ -212,13 +212,14 @@
 #	endif
 #endif
 
+#include "..\XrAPI\xrAPI.h"
+#include "Interface/XRayDebugInterface.h"
 #include "xrDebug.h"
 #include "vector.h"
 
 #include "clsid.h"
 #include "xrSyncronize.h"
 #include "xrMemory.h"
-#include "xrDebug.h"
 
 #include "_stl_extensions.h"
 #include "xrsharedmem.h"
@@ -265,6 +266,7 @@ DEFINE_VECTOR	(xr_rtoken,RTokenVec,RTokenVecIt);
 #define			xr_pure_interface	__interface
 
 #include "FS.h"
+#include "Interface/XRayLogInterface.h"
 #include "log.h"
 #include "xr_trims.h"
 #include "xr_ini.h"

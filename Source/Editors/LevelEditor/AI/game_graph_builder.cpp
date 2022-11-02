@@ -99,7 +99,7 @@ void CGameGraphBuilder::load_graph_point	(ISE_Abstract*entity)
 	}
 
 	vertex.tNeighbourCount	= 0;
-	Memory.mem_copy			(vertex.tVertexTypes,graph_point->m_tLocations,GameGraph::LOCATION_TYPE_COUNT*sizeof(GameGraph::_LOCATION_ID));
+	memcpy			(vertex.tVertexTypes,graph_point->m_tLocations,GameGraph::LOCATION_TYPE_COUNT*sizeof(GameGraph::_LOCATION_ID));
 	vertex.tLevelID			= 0;
 	vertex.tDeathPointCount = 0;
 	vertex.dwPointOffset	= 0;

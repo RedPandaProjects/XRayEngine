@@ -275,7 +275,7 @@ SPS*	CResourceManager::_CreatePS			(LPCSTR _name)
 		{
 			string1024			tmp;
 			//	TODO: HACK: Test failure
-			//Memory.mem_compact();
+			//MemoryInterface->mem_compact();
 			xr_sprintf				(tmp, "DX10: %s is missing. Replace with stub_default.ps", cname);
 			Msg					(tmp);
 			strconcat					(sizeof(cname), cname,::Render->getShaderPath(),"stub_default",".ps");
@@ -353,7 +353,7 @@ SGS*	CResourceManager::_CreateGS			(LPCSTR name)
 		{
 			string1024			tmp;
 			//	TODO: HACK: Test failure
-			//Memory.mem_compact();
+			//MemoryInterface->mem_compact();
 			xr_sprintf				(tmp, "DX10: %s is missing. Replace with stub_default.gs", cname);
 			Msg					(tmp);
 			strconcat					(sizeof(cname), cname,::Render->getShaderPath(),"stub_default",".gs");

@@ -32,7 +32,7 @@
 
 #include "nvmath/Vector.inl"
 
-#include "nvcore/Memory.h"
+#include "nvcore/MemoryInterface->h"
 
 #include <new> // placement new
 

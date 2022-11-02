@@ -76,7 +76,6 @@ void  dxRenderDeviceRender::Reset( HWND hWnd, u32 &dwWidth, u32 &dwHeight, float
 #endif // DEBUG	
 
 	Resources->reset_begin	();
-	Memory.mem_compact		();
 	HW.Reset				(hWnd);
 
 #if defined(USE_DX10) || defined(USE_DX11)
@@ -388,7 +387,6 @@ void dxRenderDeviceRender::End()
 	if (HW.Caps.SceneMode)	overdrawEnd();
 
 	RCache.OnFrameEnd	();
-	Memory.dbg_check		();
 
 	DoAsyncScreenshot();
 

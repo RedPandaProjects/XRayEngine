@@ -2,7 +2,7 @@
 
 #include "StrLib.h"
 
-#include "Memory.h"
+#include "MemoryInterface->h"
 #include "Utils.h" // swap
 
 #include <math.h>   // log

@@ -85,6 +85,9 @@
     <Filter Include="FS\LocatorAPI">
       <UniqueIdentifier>{2ff7fb3e-a41d-4c3f-ac70-21a8a6184e63}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Interface">
+      <UniqueIdentifier>{347a0a09-abbd-454c-a086-8a19b29d9508}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FTimer.cpp">
@@ -261,6 +264,15 @@
     </ClCompile>
     <ClCompile Include="ELocatorAPI.cpp">
       <Filter>FS\LocatorAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\XRayMemoryInterface.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\XRayDebugInterface.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\XRayLogInterface.cpp">
+      <Filter>Interface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -561,6 +573,15 @@
     </ClInclude>
     <ClInclude Include="Config.h">
       <Filter>Kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\XRayMemoryInterface.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\XRayDebugInterface.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\XRayLogInterface.h">
+      <Filter>Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

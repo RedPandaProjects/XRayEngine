@@ -21,7 +21,7 @@
 using namespace				luabind;
 
 #ifdef	DEBUG
-#define MDB	Memory.dbg_check()
+#define MDB	MemoryInterface->dbg_check()
 #else
 #define MDB
 #endif
@@ -153,9 +153,9 @@ static void *lua_alloc	(void *ud, void *ptr, size_t osize, size_t nsize) {
 	}
 	else
 #ifdef DEBUG_MEMORY_NAME
-		return Memory.mem_realloc		(ptr, nsize, "LUA");
+		return MemoryInterface->mem_realloc		(ptr, nsize, "LUA");
 #else // DEBUG_MEMORY_MANAGER
-		return Memory.mem_realloc		(ptr, nsize);
+		return MemoryInterface->mem_realloc		(ptr, nsize);
 #endif // DEBUG_MEMORY_MANAGER
 }
 #else // USE_DL_ALLOCATOR

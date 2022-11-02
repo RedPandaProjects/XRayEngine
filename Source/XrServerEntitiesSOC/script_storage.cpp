@@ -69,9 +69,9 @@ static void *lua_alloc_xr	(void *ud, void *ptr, size_t osize, size_t nsize) {
   }
   else
 #ifdef DEBUG_MEMORY_NAME
-    return Memory.mem_realloc		(ptr, nsize, "LUA");
+    return MemoryInterface->mem_realloc		(ptr, nsize, "LUA");
 #else // DEBUG_MEMORY_MANAGER
-    return Memory.mem_realloc		(ptr, nsize);
+    return MemoryInterface->mem_realloc		(ptr, nsize);
 #endif // DEBUG_MEMORY_MANAGER
 }
 #endif // USE_DL_ALLOCATOR
@@ -606,17 +606,17 @@ static LPVOID __cdecl luabind_allocator(
 
 	if (!pointer) {
 #ifdef DEBUG
-		return	(Memory.mem_alloc(size, "luabind"));
+		return	(MemoryInterface->mem_alloc(size, "luabind"));
 #else // #ifdef DEBUG
-		return	(Memory.mem_alloc(size));
+		return	(MemoryInterface->mem_alloc(size));
 #endif // #ifdef DEBUG
 	}
 
 	LPVOID		non_const_pointer = const_cast<LPVOID>(pointer);
 #ifdef DEBUG
-	return		(Memory.mem_realloc(non_const_pointer, size, "luabind"));
+	return		(MemoryInterface->mem_realloc(non_const_pointer, size, "luabind"));
 #else // #ifdef DEBUG
-	return		(Memory.mem_realloc(non_const_pointer, size));
+	return		(MemoryInterface->mem_realloc(non_const_pointer, size));
 #endif // #ifdef DEBUG
 }
 

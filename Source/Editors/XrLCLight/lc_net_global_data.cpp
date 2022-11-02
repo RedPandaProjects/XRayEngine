@@ -17,7 +17,7 @@ namespace lc_net
 	void	net_global_data_impl<gl_cl_data>::create_data_file( LPCSTR path  )
 	{
 		FPU::m64r			();
-		Memory.mem_compact	();
+		MemoryInterface->mem_compact	();
 		//std::random_shuffle	(inlc_global_data()->g_deflectors().begin(),inlc_global_data()->g_deflectors().end());
 		clMsg( "create_global_data_write:  start" );
 		IWriter * file = FS.w_open(path);
@@ -39,7 +39,7 @@ namespace lc_net
 		 inlc_global_data()->read( r_global );
 		
 		 FPU::m64r		();
-		 Memory.mem_compact	();
+		 MemoryInterface->mem_compact	();
 		//inlc_global_data()->create_read_faces();
 		//inlc_global_data()->create_write_faces();
 		return true;

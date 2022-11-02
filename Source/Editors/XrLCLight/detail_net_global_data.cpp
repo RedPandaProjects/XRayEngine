@@ -22,7 +22,7 @@ namespace lc_net{
 	void	net_global_data_impl<gl_detail_cl_data>::create_data_file( LPCSTR path  )
 	{
 		//FPU::m64r			();
-		//Memory.mem_compact	();
+		//MemoryInterface->mem_compact	();
 		//if(!write_faces)
 			//inlc_global_data()->create_write_faces();
 		clMsg( "gl_detail_cl_data:  start" );
@@ -41,7 +41,7 @@ namespace lc_net{
 	
 		gl_data.read(r_global);
 		//FPU::m64r			();
-		//Memory.mem_compact	();
+		//MemoryInterface->mem_compact	();
 		return true;
 	}
 	void	net_global_data_impl<gl_detail_cl_data>::destroy_data( )

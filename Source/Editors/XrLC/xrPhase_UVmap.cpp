@@ -141,10 +141,10 @@ void CBuild::mem_CompactSubdivs()
 }
 void CBuild::mem_Compact()
 {
-	Memory.mem_compact	();
+	MemoryInterface->mem_compact	();
 	/*
 	u32					bytes,blocks_used,blocks_free;
-	bytes				= Memory.mem_usage(&blocks_used,&blocks_free);
+	bytes				= MemoryInterface->mem_usage(&blocks_used,&blocks_free);
 	LPCSTR h_status		= 0;
 	if (HeapValidate	(GetProcessHeap(),0,0))	h_status = "OK";
 	else										h_status = "DAMAGED";
