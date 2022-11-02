@@ -12,9 +12,12 @@
 	IC void*	xr_realloc	(void* P, size_t size)	{	return MemoryInterface->mem_realloc(P,size);				}
 
 XRCORE_API	char* 	xr_strdup	(const char* string);
-
-
-
+#if !__UNREAL__
+IC void* operator new		(size_t size) { R_ASSERT(false);return nullptr; }
+IC void		operator delete		(void* p) { R_ASSERT(false); }
+IC void* operator new[](size_t size) {	R_ASSERT(false);	return nullptr;	}
+IC void		operator delete[](void* p) {	R_ASSERT(false);}
+#endif
 // POOL-ing
 const		u32			mem_pools_count			=	54;
 const		u32			mem_pools_ebase			=	16;

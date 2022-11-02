@@ -28,12 +28,15 @@ static u32	init_counter	= 0;
 XRAPI_API extern EGamePath GCurrentGame;
 //. extern xr_vector<shared_str>*	LogFile;
 
-void xrCore::Initialize	(XRayMemoryInterface* Interface,LPCSTR FSName, bool IsEditor ,EGamePath Game)
+void xrCore::Initialize	(XRayMemoryInterface* InMemoryInterface,LPCSTR FSName, bool IsEditor ,EGamePath Game)
 {
-	
+	MemoryInterface = InMemoryInterface;
 	xr_strcpy					(ApplicationName,"XRay2UnrealEnigne");
 	if (0==init_counter) 
 	{
+		g_pStringContainer = xr_new<str_container>();
+		g_pSharedMemoryContainer = xr_new<smem_container>();
+
 		if (Game == EGamePath::NONE)
 		{
 			if (strstr(GetCommandLine(), "-soc_14") || strstr(GetCommandLine(), "-soc_10004"))
@@ -172,7 +175,8 @@ void xrCore::Destroy		()
 			xr_delete		(trained_model);
 		}
 #endif
-
+		xr_delete(g_pStringContainer);
+		xr_delete(g_pSharedMemoryContainer);
 
 	}
 }

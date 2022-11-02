@@ -176,7 +176,7 @@ void InitLog()
 	R_ASSERT			(LogFile==NULL);
 	LogFile				= xr_new< xr_vector<shared_str> >();
 	LogFile->reserve	(1000);
-	logCS = new xrCriticalSection;
+	logCS = xr_new< xrCriticalSection>();
 }
 
 void CreateLog			(BOOL nl)

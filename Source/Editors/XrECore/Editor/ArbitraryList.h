@@ -44,7 +44,7 @@ public:
 		}else{
 			VERIFY ( iReservedSize > 0 );
 			VERIFY ( iSize > 0 );
-			delete[] pT;
+			xr_delete( pT);
 			pT = NULL;
 		}
 	}
@@ -69,7 +69,7 @@ public:
 		if ( iNum <= iReservedSize ){
 			if ( iNum == 0 ){
 				// Shrunk to 0 - bin the memory.
-				delete[] pT;
+				xr_delete(pT);
 				pT = NULL;
 				iReservedSize = 0;
 			}else{
@@ -82,16 +82,16 @@ public:
 			u32 iNewSize = ( iNum * 3 ) >> 1;
 			if ( pT == NULL ){
 				VERIFY ( iReservedSize == 0 );
-				pT = new T [iNewSize];
+				pT = xr_alloc< T>(iNewSize);
 			}else{
 				VERIFY ( iReservedSize != 0 );
 
 				T *pOldT = pT;
-				pT = new T[iNewSize];
+				pT = xr_alloc< T>(iNewSize);
 				for ( u32 i = 0; i < iReservedSize; i++ ){
 					pT[i] = pOldT[i];
 				}
-				delete[] pOldT;
+				xr_delete(pOldT);
 			}
 			VERIFY ( pT != NULL );
 			iReservedSize = iNewSize;

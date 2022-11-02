@@ -121,7 +121,7 @@ void CSkeletonX::_Render_soft	(ref_geom& hGeom, u32 vCount, u32 iOffset, u32 pCo
 		Device->Statistic->RenderDUMP_SKIN.Begin	();
 		if (*Vertices1W)
 		{
-			PSGP.skin1W(
+			PSGP->skin1W(
 				Dest,										// dest
 				*Vertices1W,								// source
 				vCount,										// count
@@ -130,7 +130,7 @@ void CSkeletonX::_Render_soft	(ref_geom& hGeom, u32 vCount, u32 iOffset, u32 pCo
 		}else 
 		if(*Vertices2W)
 		{
-			PSGP.skin2W(
+			PSGP->skin2W(
 				Dest,										// dest
 				*Vertices2W,								// source
 				vCount,										// count
@@ -139,7 +139,7 @@ void CSkeletonX::_Render_soft	(ref_geom& hGeom, u32 vCount, u32 iOffset, u32 pCo
 		}else
 		if(*Vertices3W)
 		{
-			PSGP.skin3W(
+			PSGP->skin3W(
 				Dest,										// dest
 				*Vertices3W,								// source
 				vCount,										// count
@@ -148,7 +148,7 @@ void CSkeletonX::_Render_soft	(ref_geom& hGeom, u32 vCount, u32 iOffset, u32 pCo
 		}else
 		if(*Vertices4W)
 		{
-			PSGP.skin4W(
+			PSGP->skin4W(
 				Dest,										// dest
 				*Vertices4W,								// source
 				vCount,										// count

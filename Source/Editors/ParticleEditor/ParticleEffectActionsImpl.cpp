@@ -1158,11 +1158,11 @@ void	EPATurbulence::Compile		(IWriter& F)
     if(nval != 0){
         for(int i = 0; i < detail; i++){
             for(int j = 0; j < detail; j++)
-                delete [] nval[i][j];
+               xr_free( nval[i][j]);
         }
         for(int i = 0; i < detail; i++)
-            delete [] nval[i];
-        delete [] nval;
+			xr_free(nval[i]);
+		xr_free(nval);
         nval = 0;
     }
 }

@@ -257,8 +257,8 @@ public:
 	while (head)
 	{
 	    AngleIntListNode *temp = head;
-	    head = head->next;
-	    delete temp;
+		head = head->next;
+		xr_delete(temp);
 	}
 	head = tail = 0;
     }

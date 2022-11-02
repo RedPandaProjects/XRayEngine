@@ -1198,7 +1198,7 @@ void CLocatorAPI::file_from_archive	(IReader *&R, LPCSTR fname, const ILocatorAP
 	string512					temp;
 	xr_sprintf					(temp, sizeof(temp),"%s:%s",*A.path,fname);
 
-#ifdef DEBUG
+#if 0
 	register_file_mapping		(ptr,sz,temp);
 #endif // DEBUG
 
@@ -1214,7 +1214,7 @@ void CLocatorAPI::file_from_archive	(IReader *&R, LPCSTR fname, const ILocatorAP
 	R							= xr_new<CTempReader>(dest,desc.size_real,0);
 	UnmapViewOfFile				(ptr);
 
-#ifdef DEBUG
+#if 0
 	unregister_file_mapping		(ptr,sz);
 #endif // DEBUG
 }

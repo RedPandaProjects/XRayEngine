@@ -703,9 +703,9 @@ int DXTCompressBump(LPCSTR out_name, u8* T_height_gloss, u8* T_normal_map,
         {
             res = 0;
         }
-        delete img;
+        xr_delete(img);
     }
-    delete pSrc;
+    xr_delete( pSrc);
     if (gloss_power < 0.1f)
     {
         res = -1000;

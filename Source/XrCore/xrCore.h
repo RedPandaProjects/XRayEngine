@@ -13,15 +13,6 @@
 
 //#define BENCHMARK_BUILD
 
-#ifdef	BENCHMARK_BUILD
-#	define	BENCH_SEC_CALLCONV			__stdcall
-#	define	BENCH_SEC_SCRAMBLEVTBL1		virtual int GetFlags()	{ return 1;}
-#	define	BENCH_SEC_SCRAMBLEVTBL2		virtual void* GetData()	{ return 0;}
-#	define	BENCH_SEC_SCRAMBLEVTBL3		virtual void* GetCache(){ return 0;}
-#	define	BENCH_SEC_SIGN				, void *pBenchScrampleVoid = 0
-#	define	BENCH_SEC_SCRAMBLEMEMBER1	float	m_fSrambleMember1;
-#	define	BENCH_SEC_SCRAMBLEMEMBER2	float	m_fSrambleMember2;
-#else	//	BENCHMARK_BUILD
 #	define	BENCH_SEC_CALLCONV
 #	define	BENCH_SEC_SCRAMBLEVTBL1
 #	define	BENCH_SEC_SCRAMBLEVTBL2
@@ -29,7 +20,6 @@
 #	define	BENCH_SEC_SIGN
 #	define	BENCH_SEC_SCRAMBLEMEMBER1
 #	define	BENCH_SEC_SCRAMBLEMEMBER2
-#endif	//	BENCHMARK_BUILD
 
 #pragma warning(disable:4996)
 
@@ -53,26 +43,13 @@
 	#error Please enable multi-threaded library...
 #endif
 
-#	include "xrCore_platform.h"
+#include "xrCore_platform.h"
 
-/*
-// stl-config
-// *** disable exceptions for both STLport and VC7.1 STL
-// #define _STLP_NO_EXCEPTIONS	1
-// #if XRAY_EXCEPTIONS
- 	#define _HAS_EXCEPTIONS		1	// force STL again
-// #endif
-*/
-
-// *** try to minimize code bloat of STLport
-#ifdef __BORLANDC__
+#ifdef XRCORE_EXPORTS				// no exceptions, export allocator and common stuff
+#define _STLP_DESIGNATED_DLL	1
+#define _STLP_USE_DECLSPEC		1
 #else
-	#ifdef XRCORE_EXPORTS				// no exceptions, export allocator and common stuff
-	#define _STLP_DESIGNATED_DLL	1
-	#define _STLP_USE_DECLSPEC		1
-	#else
-	#define _STLP_USE_DECLSPEC		1	// no exceptions, import allocator and common stuff
-	#endif
+#define _STLP_USE_DECLSPEC		1	// no exceptions, import allocator and common stuff
 #endif
 
 // #include <exception>
@@ -95,30 +72,11 @@
     #endif
 #endif
 
-#ifdef XRCORE_STATIC
-#	define NO_FS_SCAN
-#endif
-
-#if 0
-#	define NO_FS_SCAN
-#endif
-
-// inline control - redefine to use compiler's heuristics ONLY
-// it seems "IC" is misused in many places which cause code-bloat
-// ...and VC7.1 really don't miss opportunities for inline :)
-#if 0
-#	define __forceinline	inline
-#endif
 #define _inline			inline
 #define __inline		inline
 #define IC				inline
 #define ICF				__forceinline			// !!! this should be used only in critical places found by PROFILER
-#if 0
-#	define ICN
-#else
-#	define ICN			__declspec (noinline)	
-#endif
-
+#define ICN			__declspec (noinline)	
 
 #include <time.h>
 #define ALIGN(a)		__declspec(align(a))

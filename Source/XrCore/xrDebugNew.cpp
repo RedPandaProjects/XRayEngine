@@ -13,7 +13,6 @@
 #include <direct.h>
 #pragma warning(pop)
 
-extern bool shared_str_initialized;
 
 #ifdef __BORLANDC__
     #	include "d3d9.h"
@@ -58,8 +57,6 @@ static bool	error_after_dialog = false;
 
 void LogStackTrace	(LPCSTR header)
 {
-	if (!shared_str_initialized)
-		return;
 
 
 	Msg				("%s",header);
@@ -107,7 +104,7 @@ void xrDebug::gather_info		(const char *expression, const char *description, con
 
 		buffer			+= xr_sprintf(buffer,assertion_size - u32(buffer - buffer_base),"%s",endline);
 		if (!i) {
-			if (shared_str_initialized) {
+			{
 				Msg		("%s",assertion_info);
 				FlushLog();
 			}
@@ -123,7 +120,7 @@ void xrDebug::gather_info		(const char *expression, const char *description, con
 #endif // USE_MEMORY_MONITOR
 
 	if (!IsDebuggerPresent() && !strstr(GetCommandLine(),"-no_call_stack_assert")) {
-		if (shared_str_initialized)
+	
 			Msg			("stack trace:\n");
 
 #ifdef USE_OWN_ERROR_MESSAGE_WINDOW
@@ -131,7 +128,6 @@ void xrDebug::gather_info		(const char *expression, const char *description, con
 #endif // USE_OWN_ERROR_MESSAGE_WINDOW
 		
 
-		if (shared_str_initialized)
 			FlushLog	();
 
 		os_clipboard::copy_to_clipboard	(assertion_info);
@@ -595,7 +591,6 @@ LONG WINAPI UnhandledFilter	(_EXCEPTION_POINTERS *pExceptionInfo)
 		CONTEXT				save = *pExceptionInfo->ContextRecord;
 		*pExceptionInfo->ContextRecord = save;
 
-		if (shared_str_initialized)
 			Msg				("stack trace:\n");
 
 		if (!IsDebuggerPresent())
@@ -607,7 +602,6 @@ LONG WINAPI UnhandledFilter	(_EXCEPTION_POINTERS *pExceptionInfo)
 	
 
 		if (*error_message) {
-			if (shared_str_initialized)
 				Msg			("\n%s",error_message);
 
 			xr_strcat			(error_message,sizeof(error_message),"\r\n");
@@ -618,7 +612,6 @@ LONG WINAPI UnhandledFilter	(_EXCEPTION_POINTERS *pExceptionInfo)
 		}
 	}
 
-	if (shared_str_initialized)
 		FlushLog			();
 
 #ifndef USE_OWN_ERROR_MESSAGE_WINDOW

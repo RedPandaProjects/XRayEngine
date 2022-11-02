@@ -204,7 +204,7 @@ void CStats::Show()
 		//F.OutNext	("VERT:        %d/%d",		RCache.stat.verts,RCache.stat.calls?RCache.stat.verts/RCache.stat.calls:0);
 		//F.OutNext	("POLY:        %d/%d",		RCache.stat.polys,RCache.stat.calls?RCache.stat.polys/RCache.stat.calls:0);
 		//F.OutNext	("DIP/DP:      %d",			RCache.stat.calls);
-#ifdef DEBUG
+#if 0
 		F.OutSkip	();
 		F.OutNext	("mapped:      %d",			g_file_mapped_memory);
 		F.OutSkip	();

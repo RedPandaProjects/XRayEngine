@@ -177,7 +177,7 @@ void CacheBin ( void )
 	for ( int i = 0; i < c_iCacheNumTypes; i++ )
 	{
 		VERIFY ( ccsState[i].pwCacheFifoState != NULL );
-		delete[] ccsState[i].pwCacheFifoState;
+		xr_delete(ccsState[i].pwCacheFifoState);
 		ccsState[i].pwCacheFifoState = NULL;
 	}
 	ctCacheHistory.resize ( 0 );
@@ -1643,5 +1643,5 @@ case 2:
 
 	memcpy ( pwList, pwNewIndex, sizeof(WORD) * 3 * iHowManyTris );
 
-	delete[] pwNewIndex;
+	xr_delete(pwNewIndex);
 }

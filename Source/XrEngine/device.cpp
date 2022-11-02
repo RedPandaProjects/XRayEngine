@@ -42,7 +42,6 @@ ref_light	precache_light = 0;
 ENGINE_API xr_list<LOADING_EVENT>* g_loading_events = nullptr;
 bool CRenderDevice::Begin	()
 {
-	g_loading_events = &loading_events;
 #ifndef DEDICATED_SERVER
 
 	/*
@@ -391,6 +390,8 @@ void CRenderDevice::message_loop()
 void CRenderDevice::Run			()
 {
 //	DUMP_PHASE;
+	g_loading_events = &loading_events;
+
 	g_bLoaded		= FALSE;
 	Log				("Starting engine...");
 	thread_name		("X-RAY Primary thread");

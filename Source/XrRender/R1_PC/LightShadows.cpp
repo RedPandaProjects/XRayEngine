@@ -510,7 +510,7 @@ void CLightShadows::render	()
 			*/
 			int	c0,c1,c2;
 
-			PSGP.PLC_calc3(c0,c1,c2,*Device,v,TT.N,S.L,Le,S.C);
+			PSGP->PLC_calc3(c0,c1,c2,*Device,v,TT.N,S.L,Le,S.C);
 
 			if (c0>S_clip && c1>S_clip && c2>S_clip)		continue;	
 			clamp		(c0,S_ambient,255);

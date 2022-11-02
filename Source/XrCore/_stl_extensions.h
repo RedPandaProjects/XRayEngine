@@ -224,8 +224,8 @@ protected:
 template	<typename T, typename allocator = xalloc<T> >									class	xr_list 		: public std::list<T,allocator>			{ public: u32 size() const {return (u32)__super::size(); } };
 template	<typename K, class P=std::less<K>, typename allocator = xalloc<K> >				class	xr_set			: public std::set<K,P,allocator>		{ public: u32 size() const {return (u32)__super::size(); } };
 template	<typename K, class P=std::less<K>, typename allocator = xalloc<K> >				class	xr_multiset		: public std::multiset<K,P,allocator>	{ public: u32 size() const {return (u32)__super::size(); } };
-template	<typename K, class V, class P=std::less<K> >	class	xr_map 			: public std::map<K,V,P>		{ public: u32 size() const {return (u32)__super::size(); } };
-template	<typename K, class V, class P=std::less<K> >	class	xr_multimap		: public std::multimap<K,V,P>	{ public: u32 size() const {return (u32)__super::size(); } };
+template	<typename K, class V, class P=std::less<K>, typename allocator = xalloc<std::pair<const K, V>>>	class	xr_map 			: public std::map<K,V,P, allocator>		{ public: u32 size() const {return (u32)__super::size(); } };
+template	<typename K, class V, class P=std::less<K>, typename allocator = xalloc<std::pair<const K, V>>>	class	xr_multimap		: public std::multimap<K,V,P, allocator>	{ public: u32 size() const {return (u32)__super::size(); } };
 
 #ifdef STLPORT
 	template	<typename V, class _HashFcn=std::hash<V>, class _EqualKey=std::equal_to<V>, typename allocator = xalloc<V> >	class	xr_hash_set		: public std::hash_set<V,_HashFcn,_EqualKey,allocator>		{ public: u32 size() const {return (u32)__super::size(); } };
@@ -234,7 +234,7 @@ template	<typename K, class V, class P=std::less<K> >	class	xr_multimap		: publi
 	template	<typename K, class V, class _HashFcn=std::hash<K>, class _EqualKey=std::equal_to<K>, typename allocator = xalloc<std::pair<K,V> > >	class	xr_hash_map		: public std::hash_map<K,V,_HashFcn,_EqualKey,allocator>		{ public: u32 size() const {return (u32)__super::size(); } };
 	template	<typename K, class V, class _HashFcn=std::hash<K>, class _EqualKey=std::equal_to<K>, typename allocator = xalloc<std::pair<K,V> > >	class	xr_hash_multimap: public std::hash_multimap<K,V,_HashFcn,_EqualKey,allocator>	{ public: u32 size() const {return (u32)__super::size(); } };
 #else 
-	template	<typename K, class V, class _Traits=stdext::hash_compare<K, std::less<K> > >	class	xr_hash_map		: public stdext::hash_map<K,V,_Traits>	{ public: u32 size() const {return (u32)__super::size(); } };
+	template	<typename K, class V, class _Traits=stdext::hash_compare<K, std::less<K> >, typename allocator = xalloc<std::pair<const K, V>>>	class	xr_hash_map		: public stdext::hash_map<K,V,_Traits, allocator>	{ public: u32 size() const {return (u32)__super::size(); } };
 #endif // #ifdef STLPORT
 
 #endif
