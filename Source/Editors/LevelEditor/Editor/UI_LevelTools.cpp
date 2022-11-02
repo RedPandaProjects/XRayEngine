@@ -384,7 +384,7 @@ LPCSTR CLevelTool::GetInfo()
 {
 	static xr_string sel;
 	int cnt = Scene->SelectionCount(true,CurrentClassID());
-	return sel.sprintf(" Sel: %d",cnt).c_str();
+	return sel.Printf(" Sel: %d",cnt).c_str();
 }
 
 

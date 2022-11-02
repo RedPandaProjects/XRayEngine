@@ -161,7 +161,7 @@ void CToolCustom::Render()
         LPCSTR s = NULL;
         if (vit->i)
         {
-        	temp.sprintf		("P: %d",cnt++);
+        	temp.Printf		("P: %d",cnt++);
             s = temp.c_str();
         }
 
@@ -174,13 +174,13 @@ void CToolCustom::Render()
     EDevice->SetShader		(EDevice->m_SelectionShader);
     cnt=0;
       for (SDebugDraw::LineIt eit=m_DebugDraw.m_Lines.begin(); eit!=m_DebugDraw.m_Lines.end(); eit++){
-        if (eit->i)        temp.sprintf		("L: %d",cnt++);
+        if (eit->i)        temp.Printf		("L: %d",cnt++);
         DU_impl.dbgDrawEdge		(eit->p[0],eit->p[1],				eit->c,	eit->i?temp.c_str():"");
     }
     EDevice->SetShader		(EDevice->m_SelectionShader);
     cnt=0;
     for (SDebugDraw::FaceIt fwit=m_DebugDraw.m_WireFaces.begin(); fwit!=m_DebugDraw.m_WireFaces.end(); fwit++){
-    	if (fwit->i)        temp.sprintf		("F: %d",cnt++);
+    	if (fwit->i)        temp.Printf		("F: %d",cnt++);
         DU_impl.dbgDrawFace		(fwit->p[0],fwit->p[1],fwit->p[2],fwit->c,	fwit->i?temp.c_str():"");
     }
     cnt=0;
@@ -195,7 +195,7 @@ void CToolCustom::Render()
     cnt=0;
     for (SDebugDraw::OBBVecIt oit=m_DebugDraw.m_OBB.begin(); oit!=m_DebugDraw.m_OBB.end(); oit++)
     {
-        temp.sprintf		("OBB: %d",cnt++);
+        temp.Printf		("OBB: %d",cnt++);
         DU_impl.DrawOBB			(Fidentity,*oit,0x2F00FF00,0xFF00FF00);
         DU_impl.OutText			(oit->m_translate,temp.c_str(),0xffff0000,0x0000000);
     }

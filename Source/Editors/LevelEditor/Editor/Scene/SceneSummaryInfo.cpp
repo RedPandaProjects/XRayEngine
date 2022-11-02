@@ -162,11 +162,11 @@ void SSceneSummary::STextureInfo::Export	(IWriter* F, u32& mem_use)
     }
     xr_string 		tmp2;
     for (objinf_map_it o_it=objects.begin(); o_it!=objects.end(); o_it++){
-        tmp2 		+= xr_string().sprintf("%s%s[%d*%3.2f]",tmp2.size()?"; ":"",o_it->first.c_str(),o_it->second.ref_count,o_it->second.area);
+        tmp2 		+= xr_string().Printf("%s%s[%d*%3.2f]",tmp2.size()?"; ":"",o_it->first.c_str(),o_it->second.ref_count,o_it->second.area);
     }
     int tex_mem		= info.MemoryUsage(*file_name);
     mem_use			+=tex_mem;
-    tmp.sprintf		(mask,*file_name,info.FormatString(),
+    tmp.Printf		(mask,*file_name,info.FormatString(),
     				info.width,info.height,info.HasAlpha()?"present":"absent",
                     iFloor(tex_mem/1024),
                     effective_area, _sqrt((pixel_area*info.width*info.height)/effective_area), tmp2.c_str(), 

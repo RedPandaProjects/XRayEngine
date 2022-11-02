@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../xrCore/xrCore.h"
-#include "../../xrAPI/xrAPI.h"
+#include "../xrAPI/xrAPI.h"
 
 #ifndef MASTER_GOLD
 #define INGAME_EDITOR

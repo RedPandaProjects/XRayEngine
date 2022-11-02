@@ -300,7 +300,7 @@ void EScene::Clear(BOOL bEditableToolsOnly)
     m_RTFlags.set(flRT_Unsaved | flRT_Modified, FALSE);
 
     m_GUID = generate_guid();
-    m_OwnerName = xr_string().sprintf("\\\\%s\\%s", Core.CompName, Core.UserName).c_str();
+    m_OwnerName = xr_string().Printf("\\\\%s\\%s", Core.CompName, Core.UserName).c_str();
     m_CreateTime = time(NULL);
 
     m_SaveCache.free();

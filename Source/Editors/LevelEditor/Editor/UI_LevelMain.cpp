@@ -1220,7 +1220,7 @@ void CLevelMain::OutCameraPos()
 	if (m_bReady){
         xr_string s;
         const Fvector& c 	= EDevice->m_Camera.GetPosition();
-        s.sprintf("C: %3.1f, %3.1f, %3.1f",c.x,c.y,c.z);
+        s.Printf("C: %3.1f, %3.1f, %3.1f",c.x,c.y,c.z);
     //	const Fvector& hpb 	= EDevice->m_Camera.GetHPB();
     //	s.sprintf(" Cam: %3.1f�, %3.1f�, %3.1f�",rad2deg(hpb.y),rad2deg(hpb.x),rad2deg(hpb.z));
        // fraBottomBar->paCamera->Caption=s; fraBottomBar->paCamera->Repaint();

@@ -862,9 +862,9 @@ void CSpawnPoint::Render( int priority, bool strictB2F )
                 }else{
                     switch (m_Type)
                     {
-                    case ptRPoint: 	s_name.sprintf("RPoint T:%d",m_RP_TeamID); break;
+                    case ptRPoint: 	s_name.Printf("RPoint T:%d",m_RP_TeamID); break;
                     case ptEnvMod:
-                    	s_name.sprintf("EnvMod V:%3.2f, F:%3.2f",m_EM_ViewDist,m_EM_FogDensity);
+                    	s_name.Printf("EnvMod V:%3.2f, F:%3.2f",m_EM_ViewDist,m_EM_FogDensity);
 					break;
                     default: THROW2("CSpawnPoint:: Unknown Type");
                     }

@@ -98,7 +98,7 @@ bool ESceneObjectTool::ExportBreakableObjects(SExportStreams* F)
             SBPart*	P				= *p_it;
         	if (P->Valid()){
                 // export visual
-                xr_string sn		= xr_string().sprintf("meshes\\brkbl#%d.ogf",(p_it-parts.begin()));
+                xr_string sn		= xr_string().Printf("meshes\\brkbl#%d.ogf",(p_it-parts.begin()));
                 xr_string fn		= Scene->LevelPath()+sn.c_str();
                 IWriter* W			= FS.w_open(fn.c_str()); R_ASSERT(W);
                 if (!P->Export(*W,1)){
@@ -219,7 +219,7 @@ bool ESceneObjectTool::ExportClimableObjects(SExportStreams* F)
         	if (P->Valid())
             {
                 // export visual
-                xr_string sn		            = xr_string().sprintf("clmbl#%d",(p_it-parts.begin()));
+                xr_string sn		            = xr_string().Printf("clmbl#%d",(p_it-parts.begin()));
 
 				Fvector local_normal	        = {0,0,0};
 

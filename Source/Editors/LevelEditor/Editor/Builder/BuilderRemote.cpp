@@ -79,11 +79,11 @@ public:
         xr_string txt_name = xr_string(fn)+".txt";
         IWriter* F	= FS.w_open(txt_name.c_str());
         if (F){
-            F->w_string	(xr_string().sprintf("Map size X x Z:            [%d x %d]",bb_sx,bb_sz).c_str());
-            F->w_string	(xr_string().sprintf("Max static vertex per m^2: %d",max_svert).c_str());
-            F->w_string	(xr_string().sprintf("Total static vertices:     %d",total_svert).c_str());
-            F->w_string	(xr_string().sprintf("Max mu vertex per m^2:     %d",max_muvert).c_str());
-            F->w_string	(xr_string().sprintf("Total mu vertices:         %d",total_muvert).c_str());
+            F->w_string	(xr_string().Printf("Map size X x Z:            [%d x %d]",bb_sx,bb_sz).c_str());
+            F->w_string	(xr_string().Printf("Max static vertex per m^2: %d",max_svert).c_str());
+            F->w_string	(xr_string().Printf("Total static vertices:     %d",total_svert).c_str());
+            F->w_string	(xr_string().Printf("Max mu vertex per m^2:     %d",max_muvert).c_str());
+            F->w_string	(xr_string().Printf("Total mu vertices:         %d",total_muvert).c_str());
             FS.w_close	(F);
 	        return true;
         }
@@ -755,7 +755,7 @@ BOOL SceneBuilder::BuildObject(CSceneObject* obj)
 {
 	CEditableObject *O = obj->GetReference();
     xr_string temp;
-    temp.sprintf("Building object: %s",obj->GetName());
+    temp.Printf("Building object: %s",obj->GetName());
     UI->SetStatus(temp.c_str());
 
     Fmatrix T 			= obj->_Transform();
@@ -823,7 +823,7 @@ int	GetModelIdx( LPCSTR model_name )
 BOOL SceneBuilder::BuildMUObject(CSceneObject* obj)
 {
 	CEditableObject *O = obj->GetReference();
-    xr_string temp; temp.sprintf("Building object: %s",obj->GetName());
+    xr_string temp; temp.Printf("Building object: %s",obj->GetName());
     UI->SetStatus(temp.c_str());
 
     int model_idx = GetModelIdx( O->GetName() ) ;

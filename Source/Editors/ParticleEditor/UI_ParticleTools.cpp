@@ -211,7 +211,7 @@ void CParticleTool::OnFrame()
         if (m_EditPE->IsPlaying())
         {
 
-            xr_string nn; nn.sprintf(" PE Playing...[%d]", m_EditPE->ParticlesCount()).c_str();
+            xr_string nn; nn.Printf(" PE Playing...[%d]", m_EditPE->ParticlesCount()).c_str();
             UI->SetStatus(nn.c_str(), false);
         }
         
@@ -220,7 +220,7 @@ void CParticleTool::OnFrame()
     break;
     case emGroup:
     	if (m_EditPG->IsPlaying())
-        	UI->SetStatus(xr_string().sprintf(" PE Playing...[%d]",m_EditPG->ParticlesCount()).c_str(),false);
+        	UI->SetStatus(xr_string().Printf(" PE Playing...[%d]",m_EditPG->ParticlesCount()).c_str(),false);
         else
         	UI->SetStatus(" Stopped.",false);
     break;

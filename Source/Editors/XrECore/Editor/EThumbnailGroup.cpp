@@ -105,7 +105,7 @@ void EGroupThumbnail::FillProp(PropItemVec& items)
 {
     PHelper().CreateCaption	(items, "Objects\\Count",						xr_string(objects.size()).c_str());
     for (SStringVecIt it=objects.begin(); it!=objects.end(); it++)
-	    PHelper().CreateCaption	(items, xr_string().sprintf("Objects\\#%d",it-objects.begin()).c_str(),it->c_str());
+	    PHelper().CreateCaption	(items, xr_string().Printf("Objects\\#%d",it-objects.begin()).c_str(),it->c_str());
 }
 //------------------------------------------------------------------------------
 

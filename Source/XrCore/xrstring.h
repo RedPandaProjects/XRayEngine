@@ -43,7 +43,7 @@ public:
 	void				clean			();
 	void				dump			();
 	void				dump			(IWriter* W);
-	void				verify			();
+	void				test			();
 	u32					stat_economy	();
 #ifdef PROFILE_CRITICAL_SECTIONS
 						str_container	():cs(MUTEX_PROFILE_ID(str_container)){}

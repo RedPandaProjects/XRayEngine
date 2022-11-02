@@ -95,7 +95,7 @@ class CCC_DbgStrCheck : public IConsole_Command
 {
 public:
 	CCC_DbgStrCheck(LPCSTR N) : IConsole_Command(N)  { bEmptyArgsHandled = TRUE; };
-	virtual void Execute(LPCSTR args) { g_pStringContainer->verify(); }
+	virtual void Execute(LPCSTR args) { g_pStringContainer->test(); }
 };
 
 class CCC_DbgStrDump : public IConsole_Command

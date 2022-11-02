@@ -211,7 +211,7 @@ void		str_container::clean	()
 	cs.Leave	();
 }
 
-void		str_container::verify	()
+void		str_container::test	()
 {
 	cs.Enter	();
 	impl->verify();
@@ -378,7 +378,7 @@ void		str_container::clean	()
 	cs.Leave	();
 }
 
-void		str_container::verify	()
+void		str_container::test	()
 {
 	cs.Enter	();
 	str_container_impl::cdb::iterator	it	= impl->container.begin	();

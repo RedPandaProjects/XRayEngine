@@ -163,11 +163,11 @@ void ESoundThumbnail::FillProp(PropItemVec& items)
 
 void ESoundThumbnail::FillInfo(PropItemVec& items)
 {
-    PHelper().CreateCaption		(items, "Quality", 		xr_string().sprintf("%3.2f",m_fQuality).c_str());
-    PHelper().CreateCaption		(items, "Min Dist", 	xr_string().sprintf("%3.2f",m_fMinDist).c_str());
-    PHelper().CreateCaption		(items, "Max Dist",		xr_string().sprintf("%3.2f",m_fMaxDist).c_str());
-    PHelper().CreateCaption		(items, "Max AI Dist",	xr_string().sprintf("%3.2f",m_fMaxAIDist).c_str());
-    PHelper().CreateCaption		(items, "Base Volume",	xr_string().sprintf("%3.2f",m_fBaseVolume).c_str());
+    PHelper().CreateCaption		(items, "Quality", 		xr_string().Printf("%3.2f",m_fQuality).c_str());
+    PHelper().CreateCaption		(items, "Min Dist", 	xr_string().Printf("%3.2f",m_fMinDist).c_str());
+    PHelper().CreateCaption		(items, "Max Dist",		xr_string().Printf("%3.2f",m_fMaxDist).c_str());
+    PHelper().CreateCaption		(items, "Max AI Dist",	xr_string().Printf("%3.2f",m_fMaxAIDist).c_str());
+    PHelper().CreateCaption		(items, "Base Volume",	xr_string().Printf("%3.2f",m_fBaseVolume).c_str());
     PHelper().CreateCaption		(items, "Game Type",	get_token_name(anomaly_type_token,m_uGameType));
 }
 //------------------------------------------------------------------------------

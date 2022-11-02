@@ -192,7 +192,7 @@ xr_string ESceneLightTool::GenLightControlName()
 	xr_string name;
     int idx=0;
     do{
-    	name.sprintf("control_%02d",idx++);
+    	name.Printf("control_%02d",idx++);
     }while (FindLightControl(name.c_str()));
     return name;
 }

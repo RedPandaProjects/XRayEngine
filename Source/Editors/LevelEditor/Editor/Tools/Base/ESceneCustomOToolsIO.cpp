@@ -30,7 +30,7 @@ bool ESceneCustomOTool::LoadSelection(IReader& F)
     int count					= 0;
 	F.r_chunk					(CHUNK_OBJECT_COUNT,&count);
 
-    SPBItem* pb 				= UI->ProgressStart(count,xr_string().sprintf("Loading %s(stream)...",ClassDesc()).c_str());
+    SPBItem* pb 				= UI->ProgressStart(count,xr_string().Printf("Loading %s(stream)...",ClassDesc()).c_str());
     Scene->ReadObjectsStream	(F,CHUNK_OBJECTS, EScene::TAppendObject(this, &ESceneCustomOTool::OnLoadSelectionAppendObject),pb);
     UI->ProgressEnd				(pb);
 
@@ -62,7 +62,7 @@ bool ESceneCustomOTool::LoadLTX(CInifile& ini)
 
     u32 count			= ini.r_u32("main", "objects_count");
 
-	SPBItem* pb 		= UI->ProgressStart(count,xr_string().sprintf("Loading %s(ltx)...",ClassDesc()).c_str());
+	SPBItem* pb 		= UI->ProgressStart(count,xr_string().Printf("Loading %s(ltx)...",ClassDesc()).c_str());
 
     u32 i				= 0;
     string128			buff;
@@ -93,7 +93,7 @@ bool ESceneCustomOTool::LoadStream(IReader& F)
     int count					= 0;
 	F.r_chunk					(CHUNK_OBJECT_COUNT,&count);
 
-    SPBItem* pb 				= UI->ProgressStart(count,xr_string().sprintf("Loading %s...",ClassDesc()).c_str());
+    SPBItem* pb 				= UI->ProgressStart(count,xr_string().Printf("Loading %s...",ClassDesc()).c_str());
     Scene->ReadObjectsStream	(F,CHUNK_OBJECTS, EScene::TAppendObject(this, &ESceneCustomOTool::OnLoadAppendObject),pb);
     UI->ProgressEnd				(pb);
 

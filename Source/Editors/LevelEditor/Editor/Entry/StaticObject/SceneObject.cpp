@@ -362,7 +362,7 @@ void CSceneObject::OnShowHint(AStringVec& dest)
             int gm_id			= surf->_GameMtl(); 
             if (gm_id!=GAMEMTL_NONE_ID){ 
                 SGameMtl* mtl 	=  GameMaterialLibrary->GetMaterialByID(gm_id);
-                if (mtl)		dest.push_back(xr_string().sprintf("Occlusion Factor: %3.2f",mtl->fSndOcclusionFactor));
+                if (mtl)		dest.push_back(xr_string().Printf("Occlusion Factor: %3.2f",mtl->fSndOcclusionFactor));
             }
         }else if (pinf.e_obj->m_objectFlags.is(CEditableObject::eoHOM)){
         }else{

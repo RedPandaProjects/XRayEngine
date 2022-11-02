@@ -370,7 +370,7 @@ void CElevatorState::Deactivate()
 
 
 
-CElevatorState::SEnertionState CElevatorState:: m_etable[clbNoState][clbNoState]=
+CElevatorState::SEnertionState CElevatorState::m_etable[clbNoState][clbNoState]=
 {
 //						clbNone			clbNearUp		clbNearDown		clbClimbingUp	clbClimbingDown	clbDepart	clbNoLadder
 /*clbNone			*/	{{0,0},			{0,0},			{0,0},			{0,0},			{0,0},			{0,0},		{0,0}},							//clbNone			

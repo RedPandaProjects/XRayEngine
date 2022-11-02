@@ -16,14 +16,16 @@
     <BearBundle>$(SolutionDir)BearBundle\</BearBundle>
   </PropertyGroup>
   <PropertyGroup>
-    <OutDir>$(SolutionDir)..\Bin\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)..\..\..\..\..\Binaries\Win64\</OutDir>
     <IntDir>$(SolutionDir)..\Intermediate\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <TargetName>$(ProjectName)_$(Configuration)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <Link>
       <ImportLibrary>$(SolutionDir)..\Lib\$(Platform)\$(Configuration)\$(TargetName).lib</ImportLibrary>
       <AdditionalLibraryDirectories>$(SolutionDir)..\Lib\$(Platform)\$(Configuration);$(SolutionDir)..\SDK\Lib\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LargeAddressAware>true</LargeAddressAware>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
     <ClCompile>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>

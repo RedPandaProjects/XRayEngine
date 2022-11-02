@@ -46,7 +46,7 @@ public:
 	virtual BOOL 						dir_delete			(LPCSTR full_path,BOOL remove_files){return dir_delete(0,full_path,remove_files);}
 	virtual void 						file_delete			(LPCSTR path,LPCSTR nm);
 	virtual void 						file_delete			(LPCSTR full_path){file_delete(0,full_path);}
-	virtual virtual void 						file_copy			(LPCSTR src, LPCSTR dest);
+	virtual void 						file_copy			(LPCSTR src, LPCSTR dest);
 	virtual void 						file_rename			(LPCSTR src, LPCSTR dest,bool bOwerwrite=true);
 	virtual int							file_length			(LPCSTR src);
 

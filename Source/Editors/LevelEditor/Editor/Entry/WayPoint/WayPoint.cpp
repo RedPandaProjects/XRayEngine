@@ -58,7 +58,7 @@ void CWayPoint::Render(LPCSTR parent_name, bool bParentSelect)
             xx.sub	(p2,p1);
             xx.mul	(0.95f);
             xx.add	(p1);
-            DU_impl.OutText(xx,xr_string().sprintf("P: %1.2f",O->probability).c_str(),c,s);
+            DU_impl.OutText(xx,xr_string().Printf("P: %1.2f",O->probability).c_str(),c,s);
         }
 	    DU_impl.OutText(m_vPosition,hint.c_str(),c,s);
     }
@@ -394,7 +394,7 @@ CWayPoint* CWayObject::AppendWayPoint()
             }
             else
             {
-                temp.sprintf("%s_%02d", pref, i - 1);
+                temp.Printf("%s_%02d", pref, i - 1);
             }
             FindWPByName(temp.c_str(), result);
             if (!result)

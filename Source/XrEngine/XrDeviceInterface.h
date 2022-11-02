@@ -2,8 +2,8 @@
 
 #include "pure.h"
 #include "stats.h"
-#include "FactoryPtr.h"
-#include "RenderDeviceRender.h"
+#include "../XrRender/Public/FactoryPtr.h"
+#include "../XrRender/Public/RenderDeviceRender.h"
 
 #ifdef INGAME_EDITOR
 #	include "../XrWeatherEditor/Public/interfaces.hpp"

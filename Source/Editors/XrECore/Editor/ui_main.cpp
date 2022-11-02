@@ -769,8 +769,8 @@ void TUI::OnStats(CGameFont* font)
 
 void SPBItem::GetInfo			(xr_string& txt, float& p, float& m)
 {
-    if (info.size())txt.sprintf("%s (%s)",text.c_str(),info.c_str());
-    else			txt.sprintf("%s",text.c_str());
+    if (info.size())txt.Printf("%s (%s)",text.c_str(),info.c_str());
+    else			txt.Printf("%s",text.c_str());
     p				= progress;
     m				= max;
 }  

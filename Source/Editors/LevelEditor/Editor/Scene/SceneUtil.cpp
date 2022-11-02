@@ -71,12 +71,12 @@ void EScene::GenObjectName(ObjClassID cls_id, char* buffer, const char* pref)
             }
             else
             {
-                temp.sprintf("%s_%02d", pref, i - 1);
+                temp.Printf("%s_%02d", pref, i - 1);
             }
         }
         else
         {
-            temp.sprintf("%02d", i );
+            temp.Printf("%02d", i );
         }
        
         FindObjectByNameCB(temp.c_str(), result);

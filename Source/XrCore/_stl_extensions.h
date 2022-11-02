@@ -122,7 +122,7 @@ public:
 	inline xr_string& operator = (const std::basic_string<char, std::char_traits<char>, xalloc<char> >& right) { assign(right); return *this; }
 	inline xr_string& operator = (const xr_string& right) { assign(right); return *this; }
 	inline xr_string& operator = (xr_string&& right) { swap(right); return *this; }
-	inline xr_string& __cdecl	sprintf(const char* format, ...)
+	inline xr_string& __cdecl	Printf(const char* format, ...)
 	{
 		string4096 	buf;
 		va_list		p;

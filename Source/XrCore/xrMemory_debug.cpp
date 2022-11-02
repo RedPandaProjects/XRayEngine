@@ -116,7 +116,7 @@ void	xrMemory::dbg_check		()
 	if (!debug_mode)		return;
 
 	// Check RO strings
-	if (g_pStringContainer) g_pStringContainer->verify	();
+	if (g_pStringContainer) g_pStringContainer->test	();
 
 	// Check overrun
 	debug_cs.Enter			();
