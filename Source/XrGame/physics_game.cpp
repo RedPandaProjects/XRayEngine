@@ -169,7 +169,6 @@ static void play_object( dxGeomUserData* data, SGameMtlPair* mtl_pair, const dCo
 							Msg( "data->ph_ref_object: %p ", data->ph_ref_object );
 							Msg( "data: %p ", data );
 							Msg( "materials: %s ", mtl_pair->dbg_Name() );
-							FlushLog();
 							FATAL( "bad data->ph_ref_object" );
 						}
 #else

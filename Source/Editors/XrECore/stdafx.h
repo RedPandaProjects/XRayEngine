@@ -32,6 +32,10 @@
 #define         RENDER  R_R1
 #define			REDITOR 1
 
+#ifdef ECORE_API
+#undef ECORE_API
+#endif
+
 #ifdef	XRECORE_EXPORTS
 #define ECORE_API		__declspec(dllexport)
 #else

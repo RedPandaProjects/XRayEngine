@@ -196,7 +196,7 @@ enum {
 #define		REQ_DESTROY()	if (EDevice->bReady)	return;
 
 #include "../../../xrCPU_Pipe/xrCPU_Pipe.h"
-ENGINE_API extern xrDispatchTable	PSGP;
+ENGINE_API extern xrDispatchTable*PSGP;
 
 #include "../../../xrRender/Private/R_Backend_Runtime.h"
 

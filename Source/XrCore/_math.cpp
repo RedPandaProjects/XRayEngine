@@ -208,11 +208,9 @@ void _initialize_cpu_thread	()
 #define _MM_SET_DENORMALS_ZERO_MODE(mode) _mm_setcsr((_mm_getcsr() & ~_MM_DENORMALS_ZERO_MASK) | (mode))
 static	BOOL	_denormals_are_zero_supported	= TRUE;
 extern void __cdecl _terminate		();
-void debug_on_thread_spawn	();
 
 void _initialize_cpu_thread	()
 {
-	debug_on_thread_spawn	();
 #ifndef XRCORE_STATIC
 	// fpu & sse 
 	FPU::m24r	();
@@ -276,7 +274,6 @@ void	__cdecl			thread_entry	(void*	_params )	{
 
 HANDLE	thread_spawn	(thread_t*	entry, const char*	name, unsigned	stack, void* arglist )
 {
-	Debug._initialize	(false);
 
 	THREAD_STARTUP*		startup	= xr_new<THREAD_STARTUP>	();
 	startup->entry		= entry;

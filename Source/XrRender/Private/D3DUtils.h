@@ -4,7 +4,7 @@
 
 #ifndef D3DUtilsH
 #define D3DUtilsH
-#include "DrawUtils.h"
+#include "../Public/DrawUtils.h"
 //----------------------------------------------------
 #ifdef REDITOR
 class CEditableObject;

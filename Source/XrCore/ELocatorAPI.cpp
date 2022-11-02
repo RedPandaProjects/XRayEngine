@@ -110,12 +110,10 @@ void ELocatorAPI::_initialize	(u32 flags, LPCSTR target_folder, LPCSTR fs_fname)
 
 	m_Flags.set		(flReady,TRUE);
 
-	CreateLog		(0!=strstr(Core.Params,"-nolog"));
 }
 
 void ELocatorAPI::_destroy		()
 {
-	CloseLog		();
 
 	for(PathPairIt p_it=pathes.begin(); p_it!=pathes.end(); p_it++){
 		char* str	= LPSTR(p_it->first);

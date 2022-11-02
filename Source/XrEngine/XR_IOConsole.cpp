@@ -331,27 +331,27 @@ void CConsole::OnRender()
 	}
 	
 	// ---------------------
-	u32 log_line = LogFile->size()-1;
+	u32 log_line = 0;//LogFile->size()-1;
 	ypos -= LDIST;
-	for( int i = log_line - scroll_delta; i >= 0; --i ) 
-	{
-		ypos -= LDIST;
-		if ( ypos < -1.0f )
-		{
-			break;
-		}
-		LPCSTR ls = ((*LogFile)[i]).c_str();
-		
-		if ( !ls )
-		{
-			continue;
-		}
-		Console_mark cm = (Console_mark)ls[0];
-		pFont->SetColor( get_mark_color( cm ) );
-		//u8 b = (is_mark( cm ))? 2 : 0;
-		//OutFont( ls + b, ypos );
-		OutFont( ls, ypos );
-	}
+	//for( int i = log_line - scroll_delta; i >= 0; --i ) 
+	//{
+	//	ypos -= LDIST;
+	//	if ( ypos < -1.0f )
+	//	{
+	//		break;
+	//	}
+	//	LPCSTR ls = ((*LogFile)[i]).c_str();
+	//	
+	//	if ( !ls )
+	//	{
+	//		continue;
+	//	}
+	//	Console_mark cm = (Console_mark)ls[0];
+	//	pFont->SetColor( get_mark_color( cm ) );
+	//	//u8 b = (is_mark( cm ))? 2 : 0;
+	//	//OutFont( ls + b, ypos );
+	//	OutFont( ls, ypos );
+	//}
 	
 	string16 q;
 	itoa( log_line, q, 10 );

@@ -32,9 +32,9 @@
 	#define DLL_API
 #endif // NO_ENGINE_API
 #endif
-
+#ifndef ECORE_API
 #define ECORE_API
-
+#endif
 // Our headers
 #include "engine.h"
 #include "defines.h"

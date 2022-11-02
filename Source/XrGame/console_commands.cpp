@@ -149,8 +149,6 @@ CUIOptConCom g_OptConCom;
 	extern		u32 game_lua_memory_usage	();
 #endif // SEVERAL_ALLOCATORS
 
-typedef void (*full_memory_stats_callback_type) ( );
-XRCORE_API extern full_memory_stats_callback_type g_full_memory_stats_callback;
 
 static void full_memory_stats	( )
 {
@@ -192,7 +190,6 @@ class CCC_MemStats : public IConsole_Command
 public:
 	CCC_MemStats(LPCSTR N) : IConsole_Command(N)  {
 		bEmptyArgsHandled = TRUE;
-		g_full_memory_stats_callback	= &full_memory_stats;
 	};
 	virtual void Execute(LPCSTR args) {
 		full_memory_stats( );
@@ -733,7 +730,7 @@ class CCC_FlushLog : public IConsole_Command {
 public:
 	CCC_FlushLog(LPCSTR N) : IConsole_Command(N)  { bEmptyArgsHandled = true; };
 	virtual void Execute(LPCSTR /**args/**/) {
-		FlushLog();
+	//	FlushLog();
 		Msg		("* Log file has been saved successfully!");
 	}
 };
@@ -742,8 +739,7 @@ class CCC_ClearLog : public IConsole_Command {
 public:
 	CCC_ClearLog(LPCSTR N) : IConsole_Command(N)  { bEmptyArgsHandled = true; };
 	virtual void Execute(LPCSTR) {
-		LogFile->clear_not_free	();
-		FlushLog				();
+		//LogFile->clear_not_free	();
 		Msg						("* Log file has been cleaned successfully!");
 	}
 };

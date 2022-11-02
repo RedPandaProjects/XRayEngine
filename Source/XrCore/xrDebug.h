@@ -8,13 +8,9 @@ typedef	void		on_dialog			(bool before);
 class XRCORE_API	xrDebug
 {
 private:
-	crashhandler*	handler	;
-	on_dialog*		m_on_dialog;
+	crashhandler* handler;
+	on_dialog* m_on_dialog;
 
-public:
-	void			_initialize			(const bool &dedicated);
-	void			_destroy			();
-	
 public:
 	crashhandler*	get_crashhandler	()							{ return handler;	};
 	void			set_crashhandler	(crashhandler* _handler)	{ handler=_handler;	};
@@ -58,7 +54,6 @@ IC	std::string __cdecl	make_string		(LPCSTR format,...)
 
 extern XRCORE_API	xrDebug		Debug;
 
-XRCORE_API void LogStackTrace	(LPCSTR header);
 
 #include "xrDebug_macros.h"
 

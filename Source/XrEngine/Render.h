@@ -6,7 +6,7 @@
 //#include "IRenderDetailModel.h"
 
 #include "../xrAPI/xrAPI.h"
-#include "FactoryPtr.h"
+#include "../XrRender/Public/FactoryPtr.h"
 class IUIShader;
 typedef FactoryPtr<IUIShader> wm_shader;
 //#include "WallMarkArray.h"

@@ -23,20 +23,24 @@ namespace CPU
 };
 
 static u32	init_counter	= 0;
-
-
+extern XRayDebugInterface* GDebugInterface;
+extern XRayLogInterface* GLogInterface;
 XRAPI_API extern EGamePath GCurrentGame;
 //. extern xr_vector<shared_str>*	LogFile;
-
-void xrCore::Initialize	(XRayMemoryInterface* InMemoryInterface,LPCSTR FSName, bool IsEditor ,EGamePath Game)
+extern xrCriticalSection* LogCS;
+void xrCore::Initialize	(XRayMemoryInterface* InMemoryInterface, XRayLogInterface* InLogInterface, XRayDebugInterface* InDebugInterface, LPCSTR FSName, bool IsEditor ,EGamePath Game)
 {
+
 	MemoryInterface = InMemoryInterface;
+	GLogInterface = InLogInterface;
+	GDebugInterface = InDebugInterface;
+
 	xr_strcpy					(ApplicationName,"XRay2UnrealEnigne");
 	if (0==init_counter) 
 	{
 		g_pStringContainer = xr_new<str_container>();
 		g_pSharedMemoryContainer = xr_new<smem_container>();
-
+		LogCS = xr_new < xrCriticalSection>();
 		if (Game == EGamePath::NONE)
 		{
 			if (strstr(GetCommandLine(), "-soc_14") || strstr(GetCommandLine(), "-soc_10004"))
@@ -107,7 +111,6 @@ void xrCore::Initialize	(XRayMemoryInterface* InMemoryInterface,LPCSTR FSName, b
 		CPU::Detect			();
 		
 
-		InitLog				();
 		_initialize_cpu		();
 
 //		Debug._initialize	();
@@ -177,6 +180,7 @@ void xrCore::Destroy		()
 #endif
 		xr_delete(g_pStringContainer);
 		xr_delete(g_pSharedMemoryContainer);
+		xr_delete(LogCS);
 
 	}
 }

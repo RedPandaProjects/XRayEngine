@@ -264,7 +264,7 @@ void CTextConsole::DrawLog( HDC hDC, RECT* pRect )
 	TextOut( hDC, xb, Height-tm.tmHeight-3, s_edt, xr_strlen(s_edt) );
 
 	SetTextColor( hDC, RGB(205, 205, 225) );
-	u32 log_line = LogFile->size()-1;
+	u32 log_line = 0;//LogFile->size()-1;
 	string16 q, q2;
 	itoa( log_line, q, 10 );
 	xr_strcpy( q2, sizeof(q2), "[" );
@@ -275,31 +275,31 @@ void CTextConsole::DrawLog( HDC hDC, RECT* pRect )
 	TextOut( hDC, Width - 8 * qn, Height-tm.tmHeight-tm.tmHeight, q2, qn );
 
 	int ypos = Height - tm.tmHeight - tm.tmHeight;
-	for( int i = LogFile->size()-1-scroll_delta; i >= 0; --i ) 
-	{
-		ypos -= tm.tmHeight;
-		if ( ypos < y_top_max )
-		{
-			break;
-		}
-		LPCSTR ls = ((*LogFile)[i]).c_str();
+	//for( int i = LogFile->size()-1-scroll_delta; i >= 0; --i ) 
+	//{
+	//	ypos -= tm.tmHeight;
+	//	if ( ypos < y_top_max )
+	//	{
+	//		break;
+	//	}
+	//	LPCSTR ls = ((*LogFile)[i]).c_str();
 
-		if ( !ls )
-		{
-			continue;
-		}
-		Console_mark cm = (Console_mark)ls[0];
-		COLORREF     c2 = (COLORREF)bgr2rgb( get_mark_color( cm ) );
-		SetTextColor( hDC, c2 );
-		u8 b = (is_mark( cm ))? 2 : 0;
-		LPCSTR pOut = ls + b;
+	//	if ( !ls )
+	//	{
+	//		continue;
+	//	}
+	//	Console_mark cm = (Console_mark)ls[0];
+	//	COLORREF     c2 = (COLORREF)bgr2rgb( get_mark_color( cm ) );
+	//	SetTextColor( hDC, c2 );
+	//	u8 b = (is_mark( cm ))? 2 : 0;
+	//	LPCSTR pOut = ls + b;
 
-		BOOL res = TextOut( hDC, 10, ypos, pOut, xr_strlen(pOut) );
-		if ( !res )
-		{
-			R_ASSERT2( 0, "TextOut(..) return NULL" );
-		}
-	}
+	//	BOOL res = TextOut( hDC, 10, ypos, pOut, xr_strlen(pOut) );
+	//	if ( !res )
+	//	{
+	//		R_ASSERT2( 0, "TextOut(..) return NULL" );
+	//	}
+	//}
 
 	if ( g_pGameLevel && ( Device->dwTimeGlobal - m_last_time > 500 ) )
 	{

@@ -893,13 +893,13 @@ void CLocatorAPI::_initialize	(u32 flags, LPCSTR target_folder, LPCSTR fs_name)
 	rec_files.clear	();
 	//-----------------------------------------------------------
 
-	CreateLog		(0!=strstr(Core.Params,"-nolog"));
+	//CreateLog		(0!=strstr(Core.Params,"-nolog"));
 
 }
 
 void CLocatorAPI::_destroy		()
 {
-	CloseLog		();
+	//CloseLog		();
 
 	for				(files_it I=m_files.begin(); I!=m_files.end(); I++)
 	{

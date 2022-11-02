@@ -186,7 +186,6 @@ SVS*	CResourceManager::_CreateVS		(LPCSTR _name)
 		HRESULT const _hr		= ::Render->shader_compile( name, (DWORD const*)data, size, c_entry, c_target, D3DXSHADER_DEBUG | D3DXSHADER_PACKMATRIX_ROWMAJOR, (void*&)_vs);
 
 		if ( FAILED(_hr) ) {
-			FlushLog();
 		}
 
 		CHECK_OR_EXIT			(
@@ -256,7 +255,6 @@ SPS*	CResourceManager::_CreatePS			(LPCSTR name)
 		HRESULT const _hr		= ::Render->shader_compile( name, (DWORD const*)data, size, c_entry, c_target, D3DXSHADER_DEBUG | D3DXSHADER_PACKMATRIX_ROWMAJOR, (void*&)_ps);
 
 		if ( FAILED(_hr) ) {
-			FlushLog();
 		}
 
 		CHECK_OR_EXIT		(

@@ -227,7 +227,7 @@ public:
 	bool		Editor;
 
 public:
-	void		Initialize	(XRayMemoryInterface*Interface, LPCSTR fs_fname=0,bool IsEditor = false, EGamePath Game = EGamePath::NONE);
+	void		Initialize	(XRayMemoryInterface*InMemoryInterface, XRayLogInterface* InLogInterface, XRayDebugInterface* InDebugInterface, LPCSTR fs_fname=0,bool IsEditor = false, EGamePath Game = EGamePath::NONE);
 	void		Destroy	();
 };
 
