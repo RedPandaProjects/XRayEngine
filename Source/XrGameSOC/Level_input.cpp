@@ -82,11 +82,11 @@ public:
 		enabled_	= FALSE;
 	}
 	void	enable	()	{ if (!enabled_)	{ 
-		Engine.External.tune_resume	();	enabled_=TRUE;	
+		Engine->External.tune_resume	();	enabled_=TRUE;	
 		Msg	("vtune : enabled");
 	}}
 	void	disable	()	{ if (enabled_)		{ 
-		Engine.External.tune_pause	();	enabled_=FALSE; 
+		Engine->External.tune_pause	();	enabled_=FALSE; 
 		Msg	("vtune : disabled");
 	}}
 }	vtune	;
@@ -237,11 +237,11 @@ void CLevel::IR_OnKeyboardPress	(int key)
 				}
 				if (tpObject)
 				{
-					Engine.Sheduler.Unregister	(tpObject);
-					Engine.Sheduler.Register	(tpObject, TRUE);
+					Engine->Sheduler.Unregister	(tpObject);
+					Engine->Sheduler.Register	(tpObject, TRUE);
 				};
-				Engine.Sheduler.Unregister	(*I);
-				Engine.Sheduler.Register	(*I, TRUE);
+				Engine->Sheduler.Unregister	(*I);
+				Engine->Sheduler.Register	(*I, TRUE);
 
 				CActor* pActor = smart_cast<CActor*> (*I);
 				if (pActor)

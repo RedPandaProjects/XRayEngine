@@ -49,7 +49,7 @@ void configs_dumper::shedule_Update(u32 dt)
 	{
 		m_complete_cb	(m_buffer_for_compress, m_buffer_for_compress_size, m_dump_result.size());
 		m_state			= ds_not_active;
-		Engine.Sheduler.Unregister(this);
+		Engine->Sheduler.Unregister(this);
 	}
 }
 
@@ -224,13 +224,13 @@ void configs_dumper::dump_config(complete_callback_t complete_cb)
 	if (m_make_start_event)
 	{
 		SetEvent(m_make_start_event);
-		Engine.Sheduler.Register	(this, TRUE);
+		Engine->Sheduler.Register	(this, TRUE);
 		return;
 	}
 	m_make_start_event			= CreateEvent(NULL, FALSE, TRUE, NULL);
 	m_make_done_event			= CreateEvent(NULL, FALSE, FALSE, NULL);
 	thread_spawn				(&configs_dumper::dumper_thread, "configs_dumper", 0, this);
-	Engine.Sheduler.Register	(this, TRUE);
+	Engine->Sheduler.Register	(this, TRUE);
 }
 
 void configs_dumper::compress_configs	()

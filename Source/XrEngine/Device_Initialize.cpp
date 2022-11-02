@@ -36,7 +36,7 @@ void CRenderDevice::initialize_editor	()
 
  void CRenderDevice::Initialize			()
 {
-	Log("Initializing Engine...");
+	Log("Initializing Engine->..");
 	TimerGlobal.Start			();
 	TimerMM.Start				();
 

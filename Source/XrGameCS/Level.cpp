@@ -88,12 +88,12 @@ CLevel::CLevel():IPureClient	(Device->GetTimerGlobal())
 	m_bGameConfigStarted		= FALSE;
 	m_connect_server_err		= xrServer::ErrNoError;
 
-	eChangeRP					= Engine.Event.Handler_Attach	("LEVEL:ChangeRP",this);
-	eDemoPlay					= Engine.Event.Handler_Attach	("LEVEL:PlayDEMO",this);
-	eChangeTrack				= Engine.Event.Handler_Attach	("LEVEL:PlayMusic",this);
-	eEnvironment				= Engine.Event.Handler_Attach	("LEVEL:Environment",this);
+	eChangeRP					= Engine->Event.Handler_Attach	("LEVEL:ChangeRP",this);
+	eDemoPlay					= Engine->Event.Handler_Attach	("LEVEL:PlayDEMO",this);
+	eChangeTrack				= Engine->Event.Handler_Attach	("LEVEL:PlayMusic",this);
+	eEnvironment				= Engine->Event.Handler_Attach	("LEVEL:Environment",this);
 
-	eEntitySpawn				= Engine.Event.Handler_Attach	("LEVEL:spawn",this);
+	eEntitySpawn				= Engine->Event.Handler_Attach	("LEVEL:spawn",this);
 
 	m_pBulletManager			= xr_new<CBulletManager>();
 
@@ -224,12 +224,12 @@ CLevel::~CLevel()
 
 	Msg							("- Destroying level");
 
-	Engine.Event.Handler_Detach	(eEntitySpawn,	this);
+	Engine->Event.Handler_Detach	(eEntitySpawn,	this);
 
-	Engine.Event.Handler_Detach	(eEnvironment,	this);
-	Engine.Event.Handler_Detach	(eChangeTrack,	this);
-	Engine.Event.Handler_Detach	(eDemoPlay,		this);
-	Engine.Event.Handler_Detach	(eChangeRP,		this);
+	Engine->Event.Handler_Detach	(eEnvironment,	this);
+	Engine->Event.Handler_Detach	(eChangeTrack,	this);
+	Engine->Event.Handler_Detach	(eDemoPlay,		this);
+	Engine->Event.Handler_Detach	(eChangeRP,		this);
 
 	if (ph_world)
 	{
@@ -532,9 +532,9 @@ struct debug_memory_guard {
 
 void CLevel::MakeReconnect()
 {
-	if (!Engine.Event.Peek("KERNEL:disconnect"))
+	if (!Engine->Event.Peek("KERNEL:disconnect"))
 	{
-		Engine.Event.Defer	("KERNEL:disconnect");
+		Engine->Event.Defer	("KERNEL:disconnect");
 		char const * server_options = NULL;
 		char const * client_options = NULL;
 		if (m_caServerOptions.c_str())
@@ -551,7 +551,7 @@ void CLevel::MakeReconnect()
 		{
 			client_options = xr_strdup("");
 		}
-		Engine.Event.Defer	("KERNEL:start", size_t(server_options), size_t(client_options));
+		Engine->Event.Defer	("KERNEL:start", size_t(server_options), size_t(client_options));
 	}
 }
 
@@ -587,7 +587,7 @@ void CLevel::OnFrame	()
 			ClearAllObjects();
 		}
 
-		Engine.Event.Defer				("kernel:disconnect");
+		Engine->Event.Defer				("kernel:disconnect");
 		return;
 	} else {
 

@@ -18,6 +18,7 @@
 
 class engine_impl;
 
+typedef fastdelegate::FastDelegate0<bool>		LOADING_EVENT;
 
 // refs
 class ENGINE_API CRenderDevice: public XrDeviceInterface
@@ -165,13 +166,13 @@ private:
 	XrWeatherEditor::ide					*m_editor;
 	engine_impl					*m_engine;
 #endif // #ifdef INGAME_EDITOR
+	xr_list<LOADING_EVENT> loading_events;
 };
 
 
 extern		ENGINE_API		bool				g_bBenchmark;
 
-typedef fastdelegate::FastDelegate0<bool>		LOADING_EVENT;
-extern	ENGINE_API xr_list<LOADING_EVENT>		g_loading_events;
+extern	ENGINE_API xr_list<LOADING_EVENT>		*g_loading_events;
 class ENGINE_API CLoadScreenRenderer :public pureRender
 {
 public:

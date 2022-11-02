@@ -90,12 +90,12 @@ BOOL CLevel::net_Start	( LPCSTR op_server, LPCSTR op_client )
 		}
 	}
 	//---------------------------------------------------------------------------
-	g_loading_events.push_back	(LOADING_EVENT(this,&CLevel::net_start1));
-	g_loading_events.push_back	(LOADING_EVENT(this,&CLevel::net_start2));
-	g_loading_events.push_back	(LOADING_EVENT(this,&CLevel::net_start3));
-	g_loading_events.push_back	(LOADING_EVENT(this,&CLevel::net_start4));
-	g_loading_events.push_back	(LOADING_EVENT(this,&CLevel::net_start5));
-	g_loading_events.push_back	(LOADING_EVENT(this,&CLevel::net_start6));
+	g_loading_events->push_back	(LOADING_EVENT(this,&CLevel::net_start1));
+	g_loading_events->push_back	(LOADING_EVENT(this,&CLevel::net_start2));
+	g_loading_events->push_back	(LOADING_EVENT(this,&CLevel::net_start3));
+	g_loading_events->push_back	(LOADING_EVENT(this,&CLevel::net_start4));
+	g_loading_events->push_back	(LOADING_EVENT(this,&CLevel::net_start5));
+	g_loading_events->push_back	(LOADING_EVENT(this,&CLevel::net_start6));
 	
 	return net_start_result_total;
 }
@@ -212,14 +212,14 @@ bool CLevel::net_start4				()
 {
 	if(!net_start_result_total) return true;
 
-	g_loading_events.pop_front();
+	g_loading_events->pop_front();
 
-	g_loading_events.push_front	(LOADING_EVENT(this,&CLevel::net_start_client6));
-	g_loading_events.push_front	(LOADING_EVENT(this,&CLevel::net_start_client5));
-	g_loading_events.push_front	(LOADING_EVENT(this,&CLevel::net_start_client4));
-	g_loading_events.push_front	(LOADING_EVENT(this,&CLevel::net_start_client3));
-	g_loading_events.push_front	(LOADING_EVENT(this,&CLevel::net_start_client2));
-	g_loading_events.push_front	(LOADING_EVENT(this,&CLevel::net_start_client1));
+	g_loading_events->push_front	(LOADING_EVENT(this,&CLevel::net_start_client6));
+	g_loading_events->push_front	(LOADING_EVENT(this,&CLevel::net_start_client5));
+	g_loading_events->push_front	(LOADING_EVENT(this,&CLevel::net_start_client4));
+	g_loading_events->push_front	(LOADING_EVENT(this,&CLevel::net_start_client3));
+	g_loading_events->push_front	(LOADING_EVENT(this,&CLevel::net_start_client2));
+	g_loading_events->push_front	(LOADING_EVENT(this,&CLevel::net_start_client1));
 
 	return false;
 }

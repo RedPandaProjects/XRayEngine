@@ -58,7 +58,7 @@ bool CLevel::synchronize_map_data()
 	{
 		Msg("Wait map data time out: reconnecting...");
 		MakeReconnect();
-		g_loading_events.erase(++g_loading_events.begin(), g_loading_events.end());
+		g_loading_events->erase(++g_loading_events->begin(), g_loading_events->end());
 		return true;
 	}
 	
@@ -73,7 +73,7 @@ bool CLevel::synchronize_map_data()
 	{
 		Msg("! Incorect map or version, reconnecting...");
 		MakeReconnect();
-		g_loading_events.erase(++g_loading_events.begin(), g_loading_events.end());
+		g_loading_events->erase(++g_loading_events->begin(), g_loading_events->end());
 		return true;
 	}
 	if (map_data.IsInvalidClientChecksum())

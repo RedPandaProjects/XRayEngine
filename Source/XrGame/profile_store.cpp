@@ -32,7 +32,7 @@ profile_store::profile_store(CGameSpy_Full* fullgs_obj) :
 profile_store::~profile_store()
 {
 	if (m_progress_indicator)
-		Engine.Sheduler.Unregister(this);
+		Engine->Sheduler.Unregister(this);
 	
 	xr_delete(m_awards_store);
 	xr_delete(m_best_scores_store);
@@ -172,7 +172,7 @@ void profile_store::load_profile(store_operation_cb progress_indicator_cb)
 	
 	m_progress_indicator		(true, "mp_loading_awards");
 	//m_progress_indicator		(true, "mp_loading_best_scores"); - merged
-	Engine.Sheduler.Register	(this, FALSE);
+	Engine->Sheduler.Register	(this, FALSE);
 	load_profile_fields			();
 }
 
@@ -239,14 +239,14 @@ void profile_store::loaded_fields(bool const result, char const * err_descr)
 	{
 		Msg("WARNING: loading awards terminated by user");
 		VERIFY(!m_progress_indicator);
-		Engine.Sheduler.Unregister(this);
+		Engine->Sheduler.Unregister(this);
 		return;
 	}
 
 	store_operation_cb			tmp_cb = m_complete_cb;
 	m_complete_cb.clear			();
 	m_progress_indicator.clear	();
-	Engine.Sheduler.Unregister	(this);
+	Engine->Sheduler.Unregister	(this);
 
 	if (!result)
 	{

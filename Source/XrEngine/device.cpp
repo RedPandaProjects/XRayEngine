@@ -39,8 +39,10 @@ ENGINE_API BOOL g_bRendering = FALSE;
 BOOL		g_bLoaded = FALSE;
 ref_light	precache_light = 0;
 
+ENGINE_API xr_list<LOADING_EVENT>* g_loading_events = nullptr;
 bool CRenderDevice::Begin	()
 {
+	g_loading_events = &loading_events;
 #ifndef DEDICATED_SERVER
 
 	/*
@@ -211,7 +213,7 @@ void CRenderDevice::PreCache	(u32 amount, bool b_draw_loadscreen, bool b_wait_us
 #endif
 	// Msg			("* PCACHE: start for %d...",amount);
 	dwPrecacheFrame	= dwPrecacheTotal = amount;
-	if (amount && !precache_light && g_pGameLevel && g_loading_events.empty()) {
+	if (amount && !precache_light && g_pGameLevel && g_loading_events->empty()) {
 		precache_light					= ::Render->light_create();
 		precache_light->set_shadow		(false);
 		precache_light->set_position	(vCameraPosition);
@@ -229,7 +231,6 @@ void CRenderDevice::PreCache	(u32 amount, bool b_draw_loadscreen, bool b_wait_us
 
 int g_svDedicateServerUpdateReate = 100;
 
-ENGINE_API xr_list<LOADING_EVENT>			g_loading_events;
 
 void CRenderDevice::on_idle		()
 {
@@ -243,10 +244,10 @@ void CRenderDevice::on_idle		()
 #endif
 	if (psDeviceFlags.test(rsStatistic))	g_bEnableStatGather	= TRUE;
 	else									g_bEnableStatGather	= FALSE;
-	if(g_loading_events.size())
+	if(g_loading_events->size())
 	{
-		if( g_loading_events.front()() )
-			g_loading_events.pop_front();
+		if( g_loading_events->front()() )
+			g_loading_events->pop_front();
 		pApp->LoadDraw				();
 		return;
 	}else 

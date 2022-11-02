@@ -80,14 +80,14 @@ CGamePersistent::CGamePersistent(void)
 		Msg					("- playing in demo mode '%s'",fname);
 		pDemoFile			=	FS.r_open	(fname);
 		Device->seqFrame.Add	(this);
-		eDemoStart			=	Engine.Event.Handler_Attach("GAME:demo",this);	
+		eDemoStart			=	Engine->Event.Handler_Attach("GAME:demo",this);	
 		uTime2Change		=	0;
 	} else {
 		pDemoFile			=	NULL;
 		eDemoStart			=	NULL;
 	}
 
-	eQuickLoad				= Engine.Event.Handler_Attach("Game:QuickLoad",this);
+	eQuickLoad				= Engine->Event.Handler_Attach("Game:QuickLoad",this);
 	Fvector3* DofValue		= Console->GetFVectorPtr("r2_dof");
 	SetBaseDof				(*DofValue);
 }
@@ -96,8 +96,8 @@ CGamePersistent::~CGamePersistent(void)
 {	
 	FS.r_close					(pDemoFile);
 	Device->seqFrame.Remove		(this);
-	Engine.Event.Handler_Detach	(eDemoStart,this);
-	Engine.Event.Handler_Detach	(eQuickLoad,this);
+	Engine->Event.Handler_Detach	(eDemoStart,this);
+	Engine->Event.Handler_Detach	(eQuickLoad,this);
 }
 
 void CGamePersistent::RegisterModel(IRenderVisual* V)
@@ -578,7 +578,7 @@ void CGamePersistent::OnFrame	()
 	__super::OnFrame			();
 
 	if(!Device->Paused())
-		Engine.Sheduler.Update		();
+		Engine->Sheduler.Update		();
 
 	// update weathers ambient
 	if(!Device->Paused())
@@ -597,9 +597,9 @@ void CGamePersistent::OnFrame	()
 			sscanf				(params,"%[^,],%[^,],%[^,],%d",o_server,o_client,o_demo,&o_time);
 
 			// Start _new level + demo
-			Engine.Event.Defer	("KERNEL:disconnect");
-			Engine.Event.Defer	("KERNEL:start",size_t(xr_strdup(_Trim(o_server))),size_t(xr_strdup(_Trim(o_client))));
-			Engine.Event.Defer	("GAME:demo",	size_t(xr_strdup(_Trim(o_demo))), u64(o_time));
+			Engine->Event.Defer	("KERNEL:disconnect");
+			Engine->Event.Defer	("KERNEL:start",size_t(xr_strdup(_Trim(o_server))),size_t(xr_strdup(_Trim(o_client))));
+			Engine->Event.Defer	("GAME:demo",	size_t(xr_strdup(_Trim(o_demo))), u64(o_time));
 			uTime2Change		= 0xffffffff;	// Block changer until Event received
 		}
 	}

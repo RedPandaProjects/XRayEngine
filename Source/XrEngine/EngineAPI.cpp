@@ -242,7 +242,7 @@ void CEngineAPI::Destroy	(void)
 #endif
 	pCreate					= 0;
 	pDestroy				= 0;
-	Engine.Event._destroy	();
+	Engine->Event._destroy	();
 	XRC.r_clear_compact		();
 }
 

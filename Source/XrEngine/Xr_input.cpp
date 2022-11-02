@@ -219,8 +219,8 @@ void CInput::KeyUpdate	( )
 	if(!Device->IsEditorMode() && !b_altF4 && KBState[DIK_F4] && (KBState[DIK_RMENU] || KBState[DIK_LMENU]) )
 	{
 		b_altF4				= TRUE;
-		Engine.Event.Defer	("KERNEL:disconnect");
-		Engine.Event.Defer	("KERNEL:quit");
+		Engine->Event.Defer	("KERNEL:disconnect");
+		Engine->Event.Defer	("KERNEL:quit");
 	}
 
 

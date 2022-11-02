@@ -317,16 +317,16 @@ void CSpectator::FirstEye_ToPlayer(CObject* pObject)
 		};
 		if (smart_cast<CSpectator*>(pCurViewEntity))
 		{
-			Engine.Sheduler.Unregister	(pCurViewEntity);
-			Engine.Sheduler.Register	(pCurViewEntity, TRUE);
+			Engine->Sheduler.Unregister	(pCurViewEntity);
+			Engine->Sheduler.Register	(pCurViewEntity, TRUE);
 		};
 	};
 	if (pObject)
 	{
 		Level().SetEntity(pObject);
 
-		Engine.Sheduler.Unregister	(pObject);
-		Engine.Sheduler.Register	(pObject, TRUE);
+		Engine->Sheduler.Unregister	(pObject);
+		Engine->Sheduler.Register	(pObject, TRUE);
 
 		CActor* pActor = smart_cast<CActor*> (pObject);
 		if (pActor)

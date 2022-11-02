@@ -53,7 +53,8 @@ MultipacketHeader
 
 //==============================================================================
 
-static NET_Compressor   Compressor;
+static int   MultipacketSenderCounter = 0;
+static NET_Compressor* Compressor;
 static const unsigned   MaxMultipacketSize          = 32768;
 
 XRNETSERVER_API int     psNET_GuaranteedPacketMode  = NET_GUARANTEEDPACKET_DEFAULT;
@@ -63,6 +64,18 @@ XRNETSERVER_API int     psNET_GuaranteedPacketMode  = NET_GUARANTEEDPACKET_DEFAU
 
 MultipacketSender::MultipacketSender()
 {
+    if (MultipacketSenderCounter++ == 0)
+    {
+        Compressor = xr_new<NET_Compressor>();
+   }
+}
+
+MultipacketSender::~MultipacketSender()
+{
+    if (--MultipacketSenderCounter== 0)
+    {
+        xr_delete(Compressor);
+    }
 }
 
 
@@ -138,14 +151,14 @@ MultipacketSender::_FlushSendBuffer( u32 timeout, Buffer* buf )
     {
         // compress data
 
-        unsigned            comp_sz     = Compressor.compressed_size( buf->buffer.B.count );        
+        unsigned            comp_sz     = Compressor->compressed_size( buf->buffer.B.count );        
         u8                  packet_data[MaxMultipacketSize];
         MultipacketHeader*  header      = (MultipacketHeader*)packet_data;
 
         R_ASSERT(comp_sz < sizeof(packet_data)-sizeof(MultipacketHeader));
         R_ASSERT(comp_sz < 65535);
 
-        comp_sz = Compressor.Compress( packet_data+sizeof(MultipacketHeader), sizeof(packet_data)-sizeof(MultipacketHeader), 
+        comp_sz = Compressor->Compress( packet_data+sizeof(MultipacketHeader), sizeof(packet_data)-sizeof(MultipacketHeader), 
                                        buf->buffer.B.data, buf->buffer.B.count 
                                      );
 
@@ -200,7 +213,7 @@ MultipacketReciever::RecievePacket( const void* packet_data, u32 packet_sz, u32 
     if ( header->tag != NET_TAG_MERGED  &&  header->tag != NET_TAG_NONMERGED )
        return;
 
-    Compressor.Decompress( data, sizeof(data), 
+    Compressor->Decompress( data, sizeof(data), 
                            (u8*)packet_data+sizeof(MultipacketHeader), packet_sz-sizeof(MultipacketHeader) 
                          );
 
@@ -256,6 +269,6 @@ MultipacketReciever::RecievePacket( const void* packet_data, u32 packet_sz, u32 
 
 void XRNETSERVER_API DumpNetCompressorStats(bool brief)
 {
-	Compressor.DumpStats(brief);
+	Compressor->DumpStats(brief);
 }
 

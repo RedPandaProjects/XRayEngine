@@ -77,12 +77,12 @@ CLevel::CLevel():IPureClient	(Device->GetTimerGlobal())
 	game_configured				= FALSE;
 	m_bGameConfigStarted		= FALSE;
 
-	eChangeRP					= Engine.Event.Handler_Attach	("LEVEL:ChangeRP",this);
-	eDemoPlay					= Engine.Event.Handler_Attach	("LEVEL:PlayDEMO",this);
-	eChangeTrack				= Engine.Event.Handler_Attach	("LEVEL:PlayMusic",this);
-	eEnvironment				= Engine.Event.Handler_Attach	("LEVEL:Environment",this);
+	eChangeRP					= Engine->Event.Handler_Attach	("LEVEL:ChangeRP",this);
+	eDemoPlay					= Engine->Event.Handler_Attach	("LEVEL:PlayDEMO",this);
+	eChangeTrack				= Engine->Event.Handler_Attach	("LEVEL:PlayMusic",this);
+	eEnvironment				= Engine->Event.Handler_Attach	("LEVEL:Environment",this);
 
-	eEntitySpawn				= Engine.Event.Handler_Attach	("LEVEL:spawn",this);
+	eEntitySpawn				= Engine->Event.Handler_Attach	("LEVEL:spawn",this);
 
 	m_pBulletManager			= xr_new<CBulletManager>();
 
@@ -196,12 +196,12 @@ CLevel::~CLevel()
 //	g_pGameLevel		= NULL;
 	Msg							("- Destroying level");
 
-	Engine.Event.Handler_Detach	(eEntitySpawn,	this);
+	Engine->Event.Handler_Detach	(eEntitySpawn,	this);
 
-	Engine.Event.Handler_Detach	(eEnvironment,	this);
-	Engine.Event.Handler_Detach	(eChangeTrack,	this);
-	Engine.Event.Handler_Detach	(eDemoPlay,		this);
-	Engine.Event.Handler_Detach	(eChangeRP,		this);
+	Engine->Event.Handler_Detach	(eEnvironment,	this);
+	Engine->Event.Handler_Detach	(eChangeTrack,	this);
+	Engine->Event.Handler_Detach	(eDemoPlay,		this);
+	Engine->Event.Handler_Detach	(eChangeRP,		this);
 
 	if (ph_world)
 	{
@@ -463,7 +463,7 @@ void CLevel::OnFrame	()
 		if (OnClient() && GameID() != GAME_SINGLE) 
 			ClearAllObjects();
 
-		Engine.Event.Defer				("kernel:disconnect");
+		Engine->Event.Defer				("kernel:disconnect");
 		return;
 	} else {
 

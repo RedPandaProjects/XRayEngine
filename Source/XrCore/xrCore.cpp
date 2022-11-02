@@ -28,10 +28,10 @@ static u32	init_counter	= 0;
 XRAPI_API extern EGamePath GCurrentGame;
 //. extern xr_vector<shared_str>*	LogFile;
 
-void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs, LPCSTR fs_fname, bool editor_fs ,EGamePath Game)
+void xrCore::Initialize	(XRayMemoryInterface* Interface,LPCSTR FSName, bool IsEditor ,EGamePath Game)
 {
 	
-	xr_strcpy					(ApplicationName,_ApplicationName);
+	xr_strcpy					(ApplicationName,"XRay2UnrealEnigne");
 	if (0==init_counter) 
 	{
 		if (Game == EGamePath::NONE)
@@ -58,7 +58,7 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
 			GCurrentGame = Game;
 		}
 
-		Editor = editor_fs;
+		Editor = IsEditor;
 #ifdef XRCORE_STATIC	
 		_clear87	();
 		_control87	( _PC_53,   MCW_PC );
@@ -111,7 +111,7 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
 
 		rtc_initialize		();
 
-		if(editor_fs)
+		if(IsEditor)
 			xr_FS	= xr_new<ELocatorAPI>();
 		else
 			xr_FS	= xr_new<CLocatorAPI>();
@@ -119,7 +119,8 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
 		xr_EFS				= xr_new<EFS_Utils>		();
 //.		R_ASSERT			(co_res==S_OK);
 	}
-	if (init_fs){
+	if (true)
+	{
 		u32 flags			= 0;
 		if (0!=strstr(Params,"-build"))	 flags |= CLocatorAPI::flBuildCopy;
 		if (0!=strstr(Params,"-ebuild")) flags |= CLocatorAPI::flBuildCopy|CLocatorAPI::flEBuildCopy;
@@ -137,7 +138,7 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
 		if (0!=strstr(Params,"-file_activity"))	 flags |= CLocatorAPI::flDumpFileActivity;
 	#endif
 #endif
-		FS._initialize		(flags,0,fs_fname);
+		FS._initialize		(flags,0,FSName);
 		Msg					("'%s' build %d, %s\n","xrCore",build_id, build_date);
 		EFS._initialize		();
 #ifdef DEBUG
@@ -147,7 +148,7 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
     #endif
 #endif // DEBUG
 	}
-	SetLogCB				(cb);
+	SetLogCB				(nullptr);
 	init_counter++;
 }
 
@@ -155,7 +156,7 @@ void xrCore::_initialize	(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs,
 #include "compression_ppmd_stream.h"
 extern compression::ppmd::stream	*trained_model;
 #endif
-void xrCore::_destroy		()
+void xrCore::Destroy		()
 {
 	--init_counter;
 	if (0==init_counter){

@@ -1,4 +1,4 @@
-// Engine.cpp: implementation of the CEngine class.
+// Engine->cpp: implementation of the CEngine class.
 //
 //////////////////////////////////////////////////////////////////////
 
@@ -6,8 +6,8 @@
 #include "Engine.h"
 #include "dedicated_server_only.h"
 
-CEngine				Engine;
-xrDispatchTable		PSGP;
+CEngine			*	Engine = nullptr;;
+xrDispatchTable		*PSGP = nullptr;
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -36,10 +36,11 @@ extern	void msCreate		(LPCSTR name);
 	
 	R_ASSERT	(hPSGP);
 	xrBinder*	bindCPU	= (xrBinder*)	GetProcAddress(hPSGP,"xrBind_PSGP");	R_ASSERT(bindCPU);
-	bindCPU		(&PSGP, CPU::ID.feature);
+	PSGP = xr_new<xrDispatchTable>();
+	bindCPU		(PSGP, CPU::ID.feature);
 
 	// Other stuff
-	Engine.Sheduler.Initialize			( );
+	Engine->Sheduler.Initialize			( );
 	// 
 #ifdef DEBUG
 	msCreate							("game");
@@ -50,12 +51,12 @@ typedef void __cdecl ttapi_Done_func(void);
 
 void CEngine::Destroy	()
 {
-	Engine.Sheduler.Destroy				( );
+	Engine->Sheduler.Destroy				( );
 #ifdef DEBUG_MEMORY_MANAGER
 	extern void	dbg_dump_leaks_prepare	( );
 	if (MemoryInterface->debug_mode)				dbg_dump_leaks_prepare	();
 #endif // DEBUG_MEMORY_MANAGER
-	Engine.External.Destroy				( );
+	Engine->External.Destroy				( );
 	
 	if (hPSGP)	
 	{ 
@@ -66,5 +67,6 @@ void CEngine::Destroy	()
 		FreeLibrary	(hPSGP); 
 		hPSGP		=0; 
 		ZeroMemory	(&PSGP,sizeof(PSGP));
+		xr_delete(PSGP);
 	}
 }

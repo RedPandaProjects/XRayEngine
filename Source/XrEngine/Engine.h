@@ -1,4 +1,4 @@
-// Engine.h: interface for the CEngine class.
+// Engine->h: interface for the CEngine class.
 //
 //////////////////////////////////////////////////////////////////////
 
@@ -28,7 +28,7 @@ public:
 	~CEngine();
 };
 
-ENGINE_API extern xrDispatchTable	PSGP;
-ENGINE_API extern CEngine			Engine;
+ENGINE_API extern xrDispatchTable* PSGP;
+ENGINE_API extern CEngine		*  Engine;
 
 #endif // !defined(AFX_ENGINE_H__22802DD7_D7EB_4234_9781_E237657471AC__INCLUDED_)

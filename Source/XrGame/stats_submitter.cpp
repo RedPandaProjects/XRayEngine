@@ -135,7 +135,7 @@ void stats_submitter::begin_session()
 		return;
 	}
 	
-	Engine.Sheduler.Register(this, FALSE);
+	Engine->Sheduler.Register(this, FALSE);
 }
 
 void __cdecl stats_submitter::created_session_cb(const SCInterfacePtr theInterface,
@@ -149,14 +149,14 @@ void __cdecl stats_submitter::created_session_cb(const SCInterfacePtr theInterfa
 	{
 		my_inst->m_last_operation_cb	(false, CGameSpy_ATLAS::TryToTranslate(theHttpResult).c_str());
 		my_inst->terminate_session		();
-		Engine.Sheduler.Unregister		(my_inst);
+		Engine->Sheduler.Unregister		(my_inst);
 		return;
 	}
 	if (theResult != SCResult_NO_ERROR)
 	{
 		my_inst->m_last_operation_cb	(false, CGameSpy_ATLAS::TryToTranslate(theResult).c_str());
 		my_inst->terminate_session		();
-		Engine.Sheduler.Unregister		(my_inst);
+		Engine->Sheduler.Unregister		(my_inst);
 		return;
 	}
 	SCResult tmp_result = my_inst->m_atlas_obj->SetReportIntention(
@@ -173,7 +173,7 @@ void __cdecl stats_submitter::created_session_cb(const SCInterfacePtr theInterfa
 	{
 		my_inst->m_last_operation_cb(false, CGameSpy_ATLAS::TryToTranslate(tmp_result).c_str());
 		my_inst->terminate_session();
-		Engine.Sheduler.Unregister(my_inst);
+		Engine->Sheduler.Unregister(my_inst);
 		return;
 	}
 }
@@ -189,14 +189,14 @@ void __cdecl stats_submitter::set_intension_cb(const SCInterfacePtr theInterface
 	{
 		my_inst->m_last_operation_cb	(false, CGameSpy_ATLAS::TryToTranslate(theHttpResult).c_str());
 		my_inst->terminate_session		();
-		Engine.Sheduler.Unregister		(my_inst);
+		Engine->Sheduler.Unregister		(my_inst);
 		return;
 	}
 	if (theResult != SCResult_NO_ERROR)
 	{
 		my_inst->m_last_operation_cb	(false, CGameSpy_ATLAS::TryToTranslate(theResult).c_str());
 		my_inst->terminate_session		();
-		Engine.Sheduler.Unregister		(my_inst);
+		Engine->Sheduler.Unregister		(my_inst);
 		return;
 	}
 	char const * tmp_connection_id = my_inst->m_atlas_obj->GetConnectionId();
@@ -211,7 +211,7 @@ void __cdecl stats_submitter::set_intension_cb(const SCInterfacePtr theInterface
 	{
 		my_inst->m_last_operation_cb	(false, "mp_failed_to_create_report");
 		my_inst->terminate_session		();
-		Engine.Sheduler.Unregister		(my_inst);
+		Engine->Sheduler.Unregister		(my_inst);
 		return;
 	}
 	
@@ -228,7 +228,7 @@ void __cdecl stats_submitter::set_intension_cb(const SCInterfacePtr theInterface
 	{
 		my_inst->m_last_operation_cb(false, CGameSpy_ATLAS::TryToTranslate(tmp_result).c_str());
 		my_inst->terminate_session();
-		Engine.Sheduler.Unregister(my_inst);
+		Engine->Sheduler.Unregister(my_inst);
 		return;
 	}
 }
@@ -244,20 +244,20 @@ void __cdecl stats_submitter::submitted_cb(const SCInterfacePtr theInterface,
 	{
 		my_inst->m_last_operation_cb	(false, CGameSpy_ATLAS::TryToTranslate(theHttpResult).c_str());
 		my_inst->terminate_session		();
-		Engine.Sheduler.Unregister		(my_inst);
+		Engine->Sheduler.Unregister		(my_inst);
 		return;
 	}
 	if (theResult != SCResult_NO_ERROR)
 	{
 		my_inst->m_last_operation_cb	(false, CGameSpy_ATLAS::TryToTranslate(theResult).c_str());
 		my_inst->terminate_session		();
-		Engine.Sheduler.Unregister		(my_inst);
+		Engine->Sheduler.Unregister		(my_inst);
 		return;
 	}
 	
 	my_inst->m_last_operation_cb	(true, "");
 	my_inst->terminate_session		();
-	Engine.Sheduler.Unregister		(my_inst);
+	Engine->Sheduler.Unregister		(my_inst);
 }
 
 bool stats_submitter::prepare_report()

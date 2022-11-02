@@ -17,25 +17,25 @@ extern		BOOL		g_bSheduleInProgress;
 ISheduled::~ISheduled	()
 {
 	VERIFY2				(
-		!Engine.Sheduler.Registered(this),
+		!Engine->Sheduler.Registered(this),
 		make_string("0x%08x : %s",this,*shedule_Name())
 	);
 
 	// sad, but true
 	// we need this to become MASTER_GOLD
 #ifndef DEBUG
-	Engine.Sheduler.Unregister				(this);
+	Engine->Sheduler.Unregister				(this);
 #endif // DEBUG
 }
 
 void	ISheduled::shedule_register			()
 {
-	Engine.Sheduler.Register				(this);
+	Engine->Sheduler.Register				(this);
 }
 
 void	ISheduled::shedule_unregister		()
 {
-	Engine.Sheduler.Unregister				(this);
+	Engine->Sheduler.Unregister				(this);
 }
 
 void	ISheduled::shedule_Update			(u32 dt)

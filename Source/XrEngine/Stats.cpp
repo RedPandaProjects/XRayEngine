@@ -28,8 +28,8 @@ public:
 	}
 
 	BOOL	enabled	()	{ return enabled_;	}
-	void	enable	()	{ if (!enabled_)	{ Engine.External.tune_resume	();	enabled_=TRUE;	}}
-	void	disable	()	{ if (enabled_)		{ Engine.External.tune_pause	();	enabled_=FALSE; }}
+	void	enable	()	{ if (!enabled_)	{ Engine->External.tune_resume	();	enabled_=TRUE;	}}
+	void	disable	()	{ if (enabled_)		{ Engine->External.tune_pause	();	enabled_=FALSE; }}
 	void	update	(float value)	{
 		if (value < average_*0.7f)	{
 			// 25% deviation
@@ -138,7 +138,7 @@ void CStats::Show()
 	// calc FPS & TPS
 	if (Device->fTimeDelta>EPS_S) {
 		float fps  = 1.f/Device->fTimeDelta;
-		//if (Engine.External.tune_enabled)	vtune.update	(fps);
+		//if (Engine->External.tune_enabled)	vtune.update	(fps);
 		float fOne = 0.3f;
 		float fInv = 1.f-fOne;
 		fFPS = fInv*fFPS + fOne*fps;

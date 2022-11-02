@@ -43,7 +43,7 @@ MultipacketSender
 {
 public:
                     MultipacketSender();
-    virtual         ~MultipacketSender() {}
+    virtual         ~MultipacketSender();
 
     void            SendPacket( const void* packet_data, u32 packet_sz, u32 flags, u32 timeout );
     void            FlushSendBuffer( u32 timeout );

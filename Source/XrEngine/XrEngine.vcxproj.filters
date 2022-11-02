@@ -585,7 +585,7 @@
     <ClInclude Include="xr_ioc_cmd.h">
       <Filter>Engine\Console\commands</Filter>
     </ClInclude>
-    <ClInclude Include="Engine.h">
+    <ClInclude Include="Engine->h">
       <Filter>Engine\Core</Filter>
     </ClInclude>
     <ClInclude Include="EngineAPI.h">
@@ -1139,7 +1139,7 @@
     <ClCompile Include="xr_ioc_cmd.cpp">
       <Filter>Engine\Console\commands</Filter>
     </ClCompile>
-    <ClCompile Include="Engine.cpp">
+    <ClCompile Include="Engine->cpp">
       <Filter>Engine\Core</Filter>
     </ClCompile>
     <ClCompile Include="EngineAPI.cpp">

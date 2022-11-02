@@ -185,7 +185,7 @@ void  BattlEyeServer::KickPlayer( int player, char* reason )
 		Level().Server->SendBroadcast( tmp_client->ID, P ); // to all, except self
 
 		Level().OnSessionTerminate( reason2 ); //to self
-		Engine.Event.Defer("KERNEL:disconnect");
+		Engine->Event.Defer("KERNEL:disconnect");
 		return;
 	}
 

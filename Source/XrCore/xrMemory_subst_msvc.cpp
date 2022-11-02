@@ -17,7 +17,6 @@
 	extern void save_stack_trace	();
 #endif // DEBUG_MEMORY_MANAGER
 
-MEMPOOL		mem_pools			[mem_pools_count];
 
 #ifdef PURE_ALLOC
 bool	g_use_pure_alloc		= false;

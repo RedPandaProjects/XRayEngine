@@ -13,9 +13,9 @@ static string_path			logFName		= "engine.log";
 static string_path			log_file_name	= "engine.log";
 static BOOL 				no_log			= TRUE;
 #ifdef PROFILE_CRITICAL_SECTIONS
-	static xrCriticalSection	logCS(MUTEX_PROFILE_ID(log));
+	static xrCriticalSection	*logCS(MUTEX_PROFILE_ID(log));
 #else // PROFILE_CRITICAL_SECTIONS
-	static xrCriticalSection	logCS;
+	static xrCriticalSection	*logCS;
 #endif // PROFILE_CRITICAL_SECTIONS
 xr_vector<shared_str>*		LogFile			= NULL;
 static LogCallback			LogCB			= 0;
@@ -23,7 +23,7 @@ static LogCallback			LogCB			= 0;
 void FlushLog			()
 {
 	if (!no_log){
-		logCS.Enter			();
+		logCS->Enter			();
 		IWriter *f			= FS.w_open(logFName);
         if (f) {
             for (u32 it=0; it<LogFile->size(); it++)	{
@@ -32,7 +32,7 @@ void FlushLog			()
 			}
             FS.w_close		(f);
         }
-		logCS.Leave			();
+		logCS->Leave			();
     }
 }
 
@@ -41,7 +41,7 @@ void AddOne				(const char *split)
 	if(!LogFile)		
 						return;
 
-	logCS.Enter			();
+	logCS->Enter			();
 
 #ifdef DEBUG
 	OutputDebugString	(split);
@@ -58,7 +58,7 @@ void AddOne				(const char *split)
 	//exec CallBack
 	if (LogExecCB&&LogCB)LogCB(split);
 
-	logCS.Leave				();
+	logCS->Leave				();
 }
 
 void Log				(const char *s) 
@@ -176,6 +176,7 @@ void InitLog()
 	R_ASSERT			(LogFile==NULL);
 	LogFile				= xr_new< xr_vector<shared_str> >();
 	LogFile->reserve	(1000);
+	logCS = new xrCriticalSection;
 }
 
 void CreateLog			(BOOL nl)

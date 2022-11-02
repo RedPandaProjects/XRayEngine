@@ -56,7 +56,7 @@ screenshot_manager::~screenshot_manager()
 {
 	if (is_active())
 	{
-		Engine.Sheduler.Unregister(this);
+		Engine->Sheduler.Unregister(this);
 		m_state = 0;
 	}
 	xr_free(m_jpeg_buffer);
@@ -183,7 +183,7 @@ void screenshot_manager::shedule_Update(u32 dt)
 		}
 		if (!is_making_screenshot() && !is_drawing_downloads())
 		{
-			Engine.Sheduler.Unregister(this);
+			Engine->Sheduler.Unregister(this);
 		}
 	} else if (is_make_in_progress && (--m_defered_ssframe_counter == 0))
 	{
@@ -233,7 +233,7 @@ void screenshot_manager::make_screenshot(complete_callback_t cb)
 	m_complete_callback = cb;
 	if (!is_drawing_downloads())
 	{
-		Engine.Sheduler.Register(this, TRUE);
+		Engine->Sheduler.Register(this, TRUE);
 	}
 	m_state |= making_screenshot;
 	m_defered_ssframe_counter = defer_framescount;
@@ -247,14 +247,14 @@ void screenshot_manager::set_draw_downloads(bool draw)
 	{
 		if (!is_active())
 		{
-			Engine.Sheduler.Register(this, TRUE);
+			Engine->Sheduler.Register(this, TRUE);
 		}
 		m_state |= drawing_download_states;
 	} else
 	{
 		if (!is_making_screenshot() && is_drawing_downloads())
 		{
-			Engine.Sheduler.Unregister(this);
+			Engine->Sheduler.Unregister(this);
 		}
 		m_state &= ~drawing_download_states;
 	}

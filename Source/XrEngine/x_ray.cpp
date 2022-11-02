@@ -188,7 +188,8 @@ void InitEngine		()
 	EngineDevice = xr_new<CRenderDevice>();
 	GameMaterialLibrary = xr_new<CGameMtlLibrary>();
 	Device = EngineDevice;
-	Engine.Initialize			( );
+	Engine = xr_new<CEngine>();
+	Engine->Initialize			( );
 	while (!g_bIntroFinished)	Sleep	(100);
 	EngineDevice->Initialize			( );
 	CheckCopyProtection			( );
@@ -314,7 +315,8 @@ void destroyEngine	()
 {
 
 	EngineDevice->Destroy				( );
-	Engine.Destroy				( );
+	Engine->Destroy				( );
+	xr_delete(Engine);
 	xr_delete(EngineDevice);
 	xr_delete(GameMaterialLibrary);
 }
@@ -400,7 +402,7 @@ MemoryInterface->mem_usage();
 	xr_delete					( g_SpatialSpace		);
 	DEL_INSTANCE				( g_pGamePersistent		);
 	xr_delete					( pApp					);
-	Engine.Event.Dump			( );
+	Engine->Event.Dump			( );
 
 	// Destroying
 //.	destroySound();
@@ -768,7 +770,7 @@ ENGINE_API int EngineLaunch(EGamePath Game)
 
 		InitConsole				();
 
-		Engine.External.CreateRendererList();
+		Engine->External.CreateRendererList();
 
 		LPCSTR benchName = "-batch_benchmark ";
 		if(strstr(GetCommandLine(), benchName))
@@ -809,11 +811,11 @@ ENGINE_API int EngineLaunch(EGamePath Game)
 			Console->Execute			("renderer renderer_r1");
 #endif
 //.		InitInput					( );
-		Engine.External.Initialize	( );
+		Engine->External.Initialize	( );
 		Console->Execute			("stat_memory");
 
 		Startup	 					( );
-		Core._destroy				( );
+		Core.Destroy				( );
 
 		// check for need to execute something external
 		if (/*xr_strlen(g_sLaunchOnExit_params) && */xr_strlen(g_sLaunchOnExit_app) ) 
@@ -915,12 +917,12 @@ CApplication::CApplication()
 	max_load_stage = 0;
 
 	// events
-	eQuit						= Engine.Event.Handler_Attach("KERNEL:quit",this);
-	eStart						= Engine.Event.Handler_Attach("KERNEL:start",this);
-	eStartLoad					= Engine.Event.Handler_Attach("KERNEL:load",this);
-	eDisconnect					= Engine.Event.Handler_Attach("KERNEL:disconnect",this);
-	eConsole					= Engine.Event.Handler_Attach("KERNEL:console",this);
-	eStartMPDemo				= Engine.Event.Handler_Attach("KERNEL:start_mp_demo",this);
+	eQuit						= Engine->Event.Handler_Attach("KERNEL:quit",this);
+	eStart						= Engine->Event.Handler_Attach("KERNEL:start",this);
+	eStartLoad					= Engine->Event.Handler_Attach("KERNEL:load",this);
+	eDisconnect					= Engine->Event.Handler_Attach("KERNEL:disconnect",this);
+	eConsole					= Engine->Event.Handler_Attach("KERNEL:console",this);
+	eStartMPDemo				= Engine->Event.Handler_Attach("KERNEL:start_mp_demo",this);
 
 	// levels
 	Level_Current				= u32(-1);
@@ -966,12 +968,12 @@ CApplication::~CApplication()
 
 
 	// events
-	Engine.Event.Handler_Detach	(eConsole,this);
-	Engine.Event.Handler_Detach	(eDisconnect,this);
-	Engine.Event.Handler_Detach	(eStartLoad,this);
-	Engine.Event.Handler_Detach	(eStart,this);
-	Engine.Event.Handler_Detach	(eQuit,this);
-	Engine.Event.Handler_Detach	(eStartMPDemo,this);
+	Engine->Event.Handler_Detach	(eConsole,this);
+	Engine->Event.Handler_Detach	(eDisconnect,this);
+	Engine->Event.Handler_Detach	(eStartLoad,this);
+	Engine->Event.Handler_Detach	(eStart,this);
+	Engine->Event.Handler_Detach	(eQuit,this);
+	Engine->Event.Handler_Detach	(eStartMPDemo,this);
 	
 }
 
@@ -1042,7 +1044,7 @@ void CApplication::OnEvent(EVENT E, u64 P1, u64 P2)
 			DEL_INSTANCE			(g_pGameLevel);
 			Console->Show			();
 			
-			if( (FALSE == Engine.Event.Peek("KERNEL:quit")) &&(FALSE == Engine.Event.Peek("KERNEL:start")) )
+			if( (FALSE == Engine->Event.Peek("KERNEL:quit")) &&(FALSE == Engine->Event.Peek("KERNEL:start")) )
 			{
 				Console->Execute("main_menu off");
 				Console->Execute("main_menu on");
@@ -1172,7 +1174,7 @@ void CApplication::LoadSwitch	()
 // Sequential
 void CApplication::OnFrame	( )
 {
-	Engine.Event.OnFrame			();
+	Engine->Event.OnFrame			();
 	g_SpatialSpace->update			();
 	g_SpatialSpacePhysic->update	();
 	if (g_pGameLevel)				g_pGameLevel->SoundEvent_Dispatch	( );
@@ -1459,7 +1461,7 @@ void doBenchmark(LPCSTR name)
 		}
 
 
-		Engine.External.Initialize	( );
+		Engine->External.Initialize	( );
 
 		xr_strcpy						(Console->ConfigFile,"user.ltx");
 		if (strstr(Core.Params,"-ltx ")) {
