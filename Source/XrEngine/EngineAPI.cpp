@@ -159,8 +159,11 @@ void CEngineAPI::Initialize(void)
 	pDestroy = &xrFactory_Destroy;
 
 #else
-	LPCSTR			r1_name	= "xrRender_R1.dll";
-
+#ifdef _DEBUG
+	LPCSTR			r1_name	= "xrRender_R1_Debug.dll";
+#else
+	LPCSTR			r1_name = "xrRender_R1_Release.dll";
+#endif
 	#ifndef DEDICATED_SERVER
 		InitializeNotDedicated();
 	#endif // DEDICATED_SERVER
@@ -189,7 +192,12 @@ void CEngineAPI::Initialize(void)
 	EngineDevice->ConnectToRender();
 	// game	
 	{
-		LPCSTR			g_name	= "XrGame.dll";
+#ifdef _DEBUG
+		LPCSTR			g_name = "XrGame_Debug.dll";
+#else
+		LPCSTR			g_name = "XrGame_Release.dll";
+#endif
+		
 		switch (xrGameManager::GetGame())
 		{
 		case EGame::CS:

@@ -26,18 +26,6 @@ public class XRayEngineModules : ModuleRules
 			PublicAdditionalLibraries.Add(Path.Combine(LibPath,"XrCDB" + Prefix + ".lib"));
 			PublicAdditionalLibraries.Add(Path.Combine(LibPath,"XrAPI" + Prefix + ".lib"));
 
-			PublicDelayLoadDLLs.Add("lua51.dll");
-			PublicDelayLoadDLLs.Add("OpenAL" + Prefix + ".dll");
-			PublicDelayLoadDLLs.Add("XrGameSpy" + Prefix + ".dll");
-			PublicDelayLoadDLLs.Add("XrCore" + Prefix + ".dll");
-			PublicDelayLoadDLLs.Add("XrXMLParser" + Prefix + ".dll");
-			PublicDelayLoadDLLs.Add("XrNetServer" + Prefix + ".dll");
-			PublicDelayLoadDLLs.Add("XrCPU_Pipe" + Prefix + ".dll");
-			PublicDelayLoadDLLs.Add("XrParticles" + Prefix + ".dll");
-			PublicDelayLoadDLLs.Add("XrCDB" + Prefix + ".dll");
-			PublicDelayLoadDLLs.Add("XrEngine" + Prefix + ".dll");
-			PublicDelayLoadDLLs.Add("XrSound" + Prefix + ".dll");
-			PublicDelayLoadDLLs.Add("XrGame" + Prefix + ".dll");
 		} 
 	}
 }

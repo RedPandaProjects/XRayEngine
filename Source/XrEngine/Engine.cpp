@@ -27,8 +27,13 @@ extern	void msCreate		(LPCSTR name);
 
  void CEngine::Initialize	(void)
 {
+#ifdef _DEBUG
+	 hPSGP = LoadLibrary("xrCPU_Pipe_Debug.dll");
+#else
+	 hPSGP = LoadLibrary("xrCPU_Pip_Release.dll");
+#endif
 	// Bind PSGP
-	hPSGP		= LoadLibrary("xrCPU_Pipe.dll");
+	
 	R_ASSERT	(hPSGP);
 	xrBinder*	bindCPU	= (xrBinder*)	GetProcAddress(hPSGP,"xrBind_PSGP");	R_ASSERT(bindCPU);
 	bindCPU		(&PSGP, CPU::ID.feature);

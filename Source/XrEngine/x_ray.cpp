@@ -701,68 +701,6 @@ void foo	()
 
 ENGINE_API int EngineLaunch(EGamePath Game)
 {
-#ifdef DEDICATED_SERVER
-	Debug._initialize			(true);
-#else // DEDICATED_SERVER
-	Debug._initialize			(false);
-#endif // DEDICATED_SERVER
-
-	if (!IsDebuggerPresent()) {
-
-		HMODULE const kernel32	= LoadLibrary("kernel32.dll");
-		R_ASSERT				(kernel32);
-
-		typedef BOOL (*HeapSetInformation_type) (HANDLE, HEAP_INFORMATION_CLASS, PVOID, SIZE_T);
-		HeapSetInformation_type const heap_set_information = 
-			(HeapSetInformation_type)GetProcAddress(kernel32, "HeapSetInformation");
-		if (heap_set_information) {
-			ULONG HeapFragValue	= 2;
-#ifdef DEBUG
-			BOOL const result	= 
-#endif // #ifdef DEBUG
-				heap_set_information(
-					GetProcessHeap(),
-					HeapCompatibilityInformation,
-					&HeapFragValue,
-					sizeof(HeapFragValue)
-				);
-			VERIFY2				(result, "can't set process heap low fragmentation");
-		}
-	}
-
-//	foo();
-#ifndef DEDICATED_SERVER
-
-
-	// Parental Control for Vista and upper
-	if ( ! IsPCAccessAllowed() ) {
-		MessageBox( NULL , "Access restricted" , "Parental Control" , MB_OK | MB_ICONERROR );
-		return 1;
-	}
-
-	// Check for another instance
-#ifdef NO_MULTI_INSTANCES
-	#define STALKER_PRESENCE_MUTEX "Local\\STALKER-COP"
-	
-	HANDLE hCheckPresenceMutex = INVALID_HANDLE_VALUE;
-	hCheckPresenceMutex = OpenMutex( READ_CONTROL , FALSE ,  STALKER_PRESENCE_MUTEX );
-	if ( hCheckPresenceMutex == NULL ) {
-		// New mutex
-		hCheckPresenceMutex = CreateMutex( NULL , FALSE , STALKER_PRESENCE_MUTEX );
-		if ( hCheckPresenceMutex == NULL )
-			// Shit happens
-			return 2;
-	} else {
-		// Already running
-		CloseHandle( hCheckPresenceMutex );
-		return 1;
-	}
-#endif
-#else // DEDICATED_SERVER
-	g_dedicated_server			= true;
-#endif // DEDICATED_SERVER
-
-	SetThreadAffinityMask		(GetCurrentThread(),1);
 
 	// Title window
 	logoWindow					= CreateDialog(GetModuleHandle(NULL),	MAKEINTRESOURCE(IDD_STARTUP), 0, logDlgProc );
@@ -808,7 +746,6 @@ ENGINE_API int EngineLaunch(EGamePath Game)
 
 
 
-	Core._initialize			("xray",NULL, TRUE, fsgame[0] ? fsgame : NULL,false,Game);
 
 	InitSettings				();
 
