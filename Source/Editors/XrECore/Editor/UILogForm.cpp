@@ -53,7 +53,6 @@ void UILogForm::Update()
 		}ImGui::SameLine();
 		if (ImGui::Button("Flush")) 
 		{
-			FlushLog();
 		}ImGui::SameLine();
 		if (ImGui::Button("Copy"))
 		{

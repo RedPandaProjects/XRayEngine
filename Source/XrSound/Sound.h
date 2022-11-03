@@ -95,7 +95,7 @@ public:
 public:
 									ref_sound_data		();
 									ref_sound_data		(LPCSTR fName, esound_type sound_type, int game_type);
-	virtual							~ref_sound_data		();
+									~ref_sound_data		();
 	float							get_length_sec		() const {return fTimeTotal;};
 };
 typedef resptr_core<ref_sound_data,resptr_base<ref_sound_data> >	ref_sound_data_ptr;

@@ -12,7 +12,7 @@
 
 #include "nvcore/Utils.h" // max
 #include "nvcore/Ptr.h"
-#include "nvcore/MemoryInterface->h"
+#include "nvcore/Memory.h"
 #include "nvcore/Array.inl"
 
 #include <math.h>

@@ -20,6 +20,12 @@
 float g_MinBoxSize 	= 0.05f;
 
 #if 1
+
+CSurface::~CSurface()
+{
+    {R_ASSERT(!m_Shader); xr_delete(m_ImageData); }
+}
+
 void CSurface::CreateImageData()
 {
 	VERIFY		(0==m_ImageData);

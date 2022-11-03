@@ -221,7 +221,7 @@ BOOL COMotion::NormalizeKeys(float from_time, float to_time, float speed)
         }
     }
     for (int ch=0; ch<ctMaxChannel; ch++){
-    	E				= Envelope(EChannelType(ch));
+    	E				= Envelope(EMotionChannelType(ch));
         FloatIt	f_it	= tms.begin();   VERIFY(tms.size()==E->keys.size());
 	    for (KeyIt k_it=E->keys.begin(); k_it!=E->keys.end(); k_it++,f_it++)
             (*k_it)->time = *f_it;

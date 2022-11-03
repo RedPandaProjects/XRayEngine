@@ -5,7 +5,7 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#include "Shader.h"
+#include "XRayShader.h"
 #include "ResourceManager.h"
 
 #include "dxRenderDeviceRender.h"
@@ -18,7 +18,7 @@ SConstantList::~SConstantList			()			{	DEV->_DeleteConstantList	(this);			}
 SPass::~SPass							()			{	DEV->_DeletePass			(this);			}
 ShaderElement::~ShaderElement			()			{	DEV->_DeleteElement		(this);			}
 SGeometry::~SGeometry					()			{	DEV->DeleteGeom			(this);			}
-Shader::~Shader							()			{	DEV->Delete				(this);			}
+XRayShader::~XRayShader							()			{	DEV->Delete				(this);			}
 																							 
 //////////////////////////////////////////////////////////////////////////					 
 void	resptrcode_shader::create		(LPCSTR s_shader, LPCSTR s_textures, LPCSTR s_constants, LPCSTR s_matrices)
@@ -97,7 +97,7 @@ BOOL ShaderElement::equal	(ShaderElement* S)
 }
 
 //
-BOOL Shader::equal	(Shader& S)
+BOOL XRayShader::equal	(XRayShader& S)
 {
 	return
 		E[0]->equal(&*S.E[0]) &&
@@ -106,7 +106,7 @@ BOOL Shader::equal	(Shader& S)
 		E[3]->equal(&*S.E[3]) &&
 		E[4]->equal(&*S.E[4]);
 }
-BOOL Shader::equal	(Shader* S)
+BOOL XRayShader::equal	(XRayShader* S)
 {	return	equal(*S);	}
 
 void STextureList::clear()

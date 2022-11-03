@@ -124,21 +124,21 @@ public:
 typedef	resptr_core<ShaderElement,resptr_base<ShaderElement> >								ref_selement;
 
 //////////////////////////////////////////////////////////////////////////
-struct 	 ECORE_API	Shader			: public xr_resource_flagged									{
+struct 	 ECORE_API	XRayShader			: public xr_resource_flagged									{
 public:
 	ref_selement		E		[6];	// R1 - 0=norm_lod0(det),	1=norm_lod1(normal),	2=L_point,		3=L_spot,	4=L_for_models,	
 										// R2 - 0=deffer,			1=norm_lod1(normal),	2=psm,			3=ssm,		4=dsm
-						~Shader			();
-	BOOL				equal			(Shader& S);
-	BOOL				equal			(Shader* S);
+						~XRayShader			();
+	BOOL				equal			(XRayShader& S);
+	BOOL				equal			(XRayShader* S);
 };
-struct 	 ECORE_API	resptrcode_shader	: public resptr_base<Shader>
+struct 	 ECORE_API	resptrcode_shader	: public resptr_base<XRayShader>
 {
 	void				create			(LPCSTR s_shader=0, LPCSTR s_textures=0, LPCSTR s_constants=0, LPCSTR s_matrices=0);
 	void				create			(IBlender*	B,	LPCSTR s_shader=0, LPCSTR s_textures=0, LPCSTR s_constants=0, LPCSTR s_matrices=0);
 	void				destroy			()	{ _set(NULL);		}
 };
-typedef	resptr_core<Shader,resptrcode_shader>												ref_shader;
+typedef	resptr_core<XRayShader,resptrcode_shader>												ref_shader;
 
 enum	SE_R1				{
 	SE_R1_NORMAL_HQ			= 0,	// high quality/detail

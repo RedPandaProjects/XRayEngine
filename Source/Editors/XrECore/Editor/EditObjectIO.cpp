@@ -14,7 +14,7 @@
  #include "exportobjectOGF.h"
 
 #if 1
- #include "Shader.h"
+ #include "XRayShader.h"
 
 bool CEditableObject::Load(const char* fname)
 {

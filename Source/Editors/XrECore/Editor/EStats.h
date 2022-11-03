@@ -7,7 +7,7 @@
 // refs
 class CGameFont;
 
-class ECORE_API CEStats:	public CStatsPhysics
+class ECORE_API CEStats:	public CStats
 {
 public:
 	float		fFPS,fRFPS,fTPS;	// FPS, RenderFPS, TPS

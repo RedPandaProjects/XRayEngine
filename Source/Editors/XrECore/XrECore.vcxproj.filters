@@ -380,7 +380,7 @@
     <ClCompile Include="..\..\XrRender\Private\SH_Constant.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\Shader.cpp">
+    <ClCompile Include="..\..\XrRender\Private\XRayShader.cpp">
       <Filter>Render</Filter>
     </ClCompile>
     <ClCompile Include="..\..\XrRender\Private\tss_def.cpp">

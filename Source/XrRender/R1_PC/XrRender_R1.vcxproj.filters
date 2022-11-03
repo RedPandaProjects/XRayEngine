@@ -456,7 +456,7 @@
     <ClInclude Include="..\Private\SH_Texture.h">
       <Filter>Refactored\Execution &amp; 3D\Shaders\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="..\Private\Shader.h">
+    <ClInclude Include="..\Private\XRayShader.h">
       <Filter>Refactored\Execution &amp; 3D\Shaders\Resources</Filter>
     </ClInclude>
     <ClInclude Include="..\DX9\dx9r_constants_cache.h">
@@ -875,7 +875,7 @@
     <ClCompile Include="..\Private\SH_Texture.cpp">
       <Filter>Refactored\Execution &amp; 3D\Shaders\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\Shader.cpp">
+    <ClCompile Include="..\Private\XRayShader.cpp">
       <Filter>Refactored\Execution &amp; 3D\Shaders\Resources</Filter>
     </ClCompile>
     <ClCompile Include="..\DX9\dx9r_constants_cache.cpp">

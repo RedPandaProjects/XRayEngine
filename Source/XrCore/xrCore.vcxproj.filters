@@ -274,6 +274,9 @@
     <ClCompile Include="Interface\XRayLogInterface.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
+    <ClCompile Include="xr_resource.cpp">
+      <Filter>shared memory/string library</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FTimer.h">

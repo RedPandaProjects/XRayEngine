@@ -1,6 +1,6 @@
 // This code is in the public domain -- Ignacio Castaño <castano@gmail.com>
 
-#include "MemoryInterface->h"
+#include "Memory.h"
 #include "Debug.h"
 
 #include <stdlib.h>

@@ -130,7 +130,7 @@ bool CEditableMesh::LoadMesh(IReader& F){
 	F.r					(m_Faces, m_FaceCount*sizeof(st_Face));
 
 	m_SmoothGroups		= xr_alloc<u32>(m_FaceCount);
-    MemoryInterface->mem_fill32	(m_SmoothGroups,m_Flags.is(flSGMask)?0:u32(-1),m_FaceCount);
+    memset	(m_SmoothGroups,m_Flags.is(flSGMask)?0:0xFFFFFFFF,4*m_FaceCount);
 	u32 sg_chunk_size	= F.find_chunk(EMESH_CHUNK_SG);
 	if (sg_chunk_size){
 		VERIFY			(m_FaceCount*sizeof(u32)==sg_chunk_size);
@@ -214,7 +214,7 @@ bool CEditableMesh::LoadMesh(IReader& F){
 	}
 
 #if 1
-    if (!EPrefs->object_flags.is(epoDeffLoadRB))
+    if (EPrefs&&!EPrefs->object_flags.is(epoDeffLoadRB))
     {
         GenerateFNormals	();
         GenerateAdjacency	();
@@ -225,7 +225,7 @@ bool CEditableMesh::LoadMesh(IReader& F){
 	    UnloadVNormals		();
     }
     
-    if (!EPrefs->object_flags.is(epoDeffLoadCF)) 
+    if (EPrefs && !EPrefs->object_flags.is(epoDeffLoadCF))
     	GenerateCFModel();       
 #endif
 	//OptimizeMesh	(false);

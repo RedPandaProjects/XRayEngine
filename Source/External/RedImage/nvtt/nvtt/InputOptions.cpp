@@ -27,7 +27,7 @@
 #include "nvmath/Vector.inl"
 
 #include "nvcore/Utils.h" // nextPowerOfTwo
-#include "nvcore/MemoryInterface->h"
+#include "nvcore/Memory.h"
 
 #include <string.h> // memcpy, memset
 

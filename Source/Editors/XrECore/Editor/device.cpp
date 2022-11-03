@@ -80,7 +80,7 @@ void CEditorRenderDevice::Initialize()
 		hPSGP = LoadLibrary("xrCPU_Pipe.dll");
 		R_ASSERT(hPSGP);
 		xrBinder* bindCPU = (xrBinder*)GetProcAddress(hPSGP, "xrBind_PSGP");	R_ASSERT(bindCPU);
-		bindCPU(&PSGP, CPU::ID.feature);
+		bindCPU(PSGP, CPU::ID.feature);
 	}
 
     m_DefaultMat.set(1,1,1);
@@ -318,7 +318,6 @@ void CEditorRenderDevice::Reset  	(bool )
     u32 tm_start			= TimerAsync();
     Resources->reset_begin	();
 	UI->ResetBegin();
-    MemoryInterface->mem_compact		();
     HW.DevPP.BackBufferWidth= dwRealWidth;
     HW.DevPP.BackBufferHeight= dwRealHeight;
     HW.Reset				(m_hWnd);

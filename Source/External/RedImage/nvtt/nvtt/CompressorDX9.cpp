@@ -44,7 +44,7 @@
 #include "nvmath/Vector.inl"
 #include "nvmath/Color.inl"
 
-#include "nvcore/MemoryInterface->h"
+#include "nvcore/Memory.h"
 
 #include <new> // placement new
 

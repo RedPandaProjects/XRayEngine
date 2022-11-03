@@ -101,6 +101,82 @@ void CEditableMesh::RecomputeBBox()
 		m_Box.modify(m_Vertices[k]);
 }
 
+void CEditableMesh::GenerateVertices(xr_vector<st_StaticMeshVertex>& Vertices, CSurface* Surface)
+{
+	if (m_VertCount == 0)
+		return;
+	if (m_SurfFaces.find(Surface) == m_SurfFaces.end())
+		return;
+	GenerateVNormals(0);
+	VERIFY(m_VertexNormals);
+	auto&Face = m_SurfFaces[Surface];
+	for (size_t i = 0; i < Face.size(); i++)
+	{
+		u32 FaceIndex = Face[i];
+		st_Face& MeshFace = m_Faces[FaceIndex];
+
+		for (size_t k = 0; k < 3; k++)
+		{
+			st_StaticMeshVertex ResultVertex;
+			st_FaceVert& fv = MeshFace.pv[k];
+			u32 NormalID = FaceIndex * 3 + (u32)k;//fv.pindex;
+			VERIFY2(NormalID < m_FaceCount * 3, "Normal index out of range.");
+			VERIFY2((u32)fv.pindex < m_VertCount, "Point index out of range.");
+
+			ResultVertex.Normal = m_VertexNormals[NormalID];;
+			ResultVertex.Position = m_Vertices[fv.pindex];
+			ResultVertex.UV.set(0, 0);
+
+			for (size_t UVOffset = 0; UVOffset < m_VMRefs[fv.vmref].count; UVOffset++)
+			{
+				st_VMapPt& VertexMapPoint = m_VMRefs[fv.vmref].pts[UVOffset];
+				if (m_VMaps[VertexMapPoint.vmap_index]->type != vmtUV)
+				{
+					continue;
+				}
+				VERIFY2(VertexMapPoint.vmap_index<int(m_VMaps.size()), "- VMap index out of range");
+				st_VMap* VMap = m_VMaps[VertexMapPoint.vmap_index];
+				VERIFY2(VertexMapPoint.index < VMap->size(), "- VMap point index out of range");
+				ResultVertex.UV = VMap->getUV(VertexMapPoint.index);
+				break;
+			}
+			Vertices.push_back(ResultVertex);
+		}
+		if (Surface->m_Flags.is(CSurface::sf2Sided))
+		{
+			for (int k = 2; k >= 0; k--)
+			{
+				st_StaticMeshVertex ResultVertex;
+				st_FaceVert& fv = MeshFace.pv[k];
+				u32 NormalID = FaceIndex * 3 + k;//fv.pindex;
+				VERIFY2(NormalID < m_FaceCount * 3, "Normal index out of range.");
+				VERIFY2((u32)fv.pindex < m_VertCount, "Point index out of range.");
+
+				ResultVertex.Normal = m_VertexNormals[NormalID];
+				ResultVertex.Normal.mul(-1);
+				ResultVertex.Position = m_Vertices[fv.pindex];
+				ResultVertex.UV.set(0, 0);
+
+				for (size_t UVOffset = 0; UVOffset < m_VMRefs[fv.vmref].count; UVOffset++)
+				{
+					st_VMapPt& VertexMapPoint = m_VMRefs[fv.vmref].pts[UVOffset];
+					if (m_VMaps[VertexMapPoint.vmap_index]->type != vmtUV)
+					{
+						continue;
+					}
+					VERIFY2(VertexMapPoint.vmap_index<int(m_VMaps.size()), "- VMap index out of range");
+					st_VMap* VMap = m_VMaps[VertexMapPoint.vmap_index];
+					VERIFY2(VertexMapPoint.index < VMap->size(), "- VMap point index out of range");
+					ResultVertex.UV = VMap->getUV(VertexMapPoint.index);
+					break;
+				}
+				Vertices.push_back(ResultVertex);
+			}
+		}
+	}
+	UnloadVNormals();
+}
+
 void CEditableMesh::GenerateFNormals()
 {
 	m_FNormalsRefs++;
@@ -113,59 +189,82 @@ void CEditableMesh::GenerateFNormals()
 									m_Vertices[m_Faces[k].pv[1].pindex], 
 									m_Vertices[m_Faces[k].pv[2].pindex]);
 }
-BOOL CEditableMesh::m_bDraftMeshMode = FALSE;
 
 void CEditableMesh::GenerateVNormals(const Fmatrix* parent_xform)
 {
 	m_VNormalsRefs++;
-    if (m_VertexNormals)		return;
-	m_VertexNormals				= xr_alloc<Fvector>(m_FaceCount*3);
+	if (m_VertexNormals)		return;
+	m_VertexNormals = xr_alloc<Fvector>(m_FaceCount * 3);
 
 	// gen req    
-	GenerateFNormals	();
-	GenerateAdjacency	();
-
-	for (u32 f_i=0; f_i<m_FaceCount; f_i++ )
+	GenerateFNormals();
+	GenerateAdjacency();
+	if (m_Flags.is(flSGMask))
 	{
-			
-			for (int k=0; k<3; k++)
+		for (u32 f_i = 0; f_i < m_FaceCount; f_i++)
+		{
+
+			for (int k = 0; k < 3; k++)
 			{
-				Fvector& N 	= m_VertexNormals[f_i*3+k];
-				IntVec& a_lst=(*m_Adjs)[m_Faces[f_i].pv[k].pindex];
+				Fvector& N = m_VertexNormals[f_i * 3 + k];
+				xr_vector<s32>& a_lst = (*m_Adjs)[m_Faces[f_i].pv[k].pindex];
 
-				IntIt face_adj_it = std::find( a_lst.begin(), a_lst.end(), f_i );
-				VERIFY( face_adj_it!=a_lst.end() );
-//
-				N.set	(m_FaceNormals[a_lst.front()]);
-                if(m_bDraftMeshMode)
-                  continue;
-                  
-				using  iterate_adj=  itterate_adjacents< itterate_adjacents_params_dynamic<st_FaceVert> >  ;
-				iterate_adj::recurse_tri_params p( N, m_SmoothGroups, m_FaceNormals, a_lst, m_Faces, m_FaceCount );
-				iterate_adj::RecurseTri( face_adj_it - a_lst.begin(), p );
-				float len 	= N.magnitude();
-				if (len>EPS_S)
+				auto face_adj_it = std::find(a_lst.begin(), a_lst.end(), f_i);
+				VERIFY(face_adj_it != a_lst.end());
+				//
+
+				using  iterate_adj = itterate_adjacents< itterate_adjacents_params_dynamic<st_FaceVert> >;
+				iterate_adj::recurse_tri_params p(N,m_SmoothGroups, m_FaceNormals,a_lst, m_Faces, m_FaceCount);
+				iterate_adj::RecurseTri(face_adj_it - a_lst.begin(), p);
+				float len = N.magnitude();
+				if (len > EPS_S)
 				{
-	                N.div	(len);
-                }else
+					N.div(len);
+				}
+				else
 				{
-//.                	Msg		("!Invalid smooth group found (Maya type). Object: '%s'. Vertex: [%3.2f, %3.2f, %3.2f]",m_Parent->GetName(),VPUSH(m_Vertices[m_Faces[f_i].pv[k].pindex]));
+					Msg("!Invalid smooth group found (Maya type). Object: '%s'. Vertex: [%3.2f, %3.2f, %3.2f]", m_Parent->GetName(), VPUSH(m_Vertices[m_Faces[f_i].pv[k].pindex]));
+					N.set(m_FaceNormals[a_lst.front()]);
+				}
 
-					if(parent_xform)
-                    {
-					Fvector p0;
-                  	parent_xform->transform_tiny(p0, m_Vertices[m_Faces[f_i].pv[k].pindex]);
-                    Tools->m_DebugDraw.AppendPoint(p0, 0xffff0000, true, true, "invalid vNORMAL");
-                    }
-
-                    N.set	(m_FaceNormals[a_lst.front()]);
-                }
+			
 			}
+		}
+	}
+	else
+	{
+		for (u32 f_i = 0; f_i < m_FaceCount; f_i++)
+		{
+
+			for (int k = 0; k < 3; k++)
+			{
+				Fvector& N = m_VertexNormals[f_i * 3 + k];
+				xr_vector<s32>& a_lst = (*m_Adjs)[m_Faces[f_i].pv[k].pindex];
+
+				auto face_adj_it = std::find(a_lst.begin(), a_lst.end(), f_i);
+				VERIFY(face_adj_it != a_lst.end());
+				//
+
+				using  iterate_adj = itterate_adjacents< itterate_adjacents_params_dynamic_without_smoothgroups<st_FaceVert> >;
+				iterate_adj::recurse_tri_params p(N, m_FaceNormals, a_lst, m_Faces, m_FaceCount, cosf(deg2rad(60.f)));
+				iterate_adj::RecurseTri(face_adj_it - a_lst.begin(), p);
+				float len = N.magnitude();
+				if (len > EPS_S)
+				{
+					N.div(len);
+				}
+				else
+				{
+					Msg("!Invalid smooth group found (Maya type). Object: '%s'. Vertex: [%3.2f, %3.2f, %3.2f]", m_Parent->GetName(), VPUSH(m_Vertices[m_Faces[f_i].pv[k].pindex]));
+					N.set(m_FaceNormals[a_lst.front()]);
+				}
+			}
+		}
 	}
 
 
-	UnloadFNormals		();
-    UnloadAdjacency		();
+	UnloadFNormals();
+	UnloadAdjacency();
 }
 /*
 void CEditableMesh::GenerateVNormals(const Fmatrix* parent_xform)

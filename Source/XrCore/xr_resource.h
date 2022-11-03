@@ -7,8 +7,10 @@ class	XRCORE_API	xr_resource	{
 public:
 	enum			{RF_REGISTERED=1<<0 };
 public:
+					xr_resource		(): dwReference(0)				{ }
+	virtual			~xr_resource	();
+	static void		Delete(xr_resource* Resource);
 	u32				dwReference;
-	xr_resource()			: dwReference(0)				{ }
 };
 
 class	XRCORE_API	xr_resource_flagged	:	public xr_resource			{
@@ -41,7 +43,7 @@ protected:
 protected:
 	// ref-counting
 	void				_inc	()									{	if (0==p_) return;	p_->dwReference++;														}
-	void				_dec	()									{	if (0==p_) return;	p_->dwReference--; if (0==p_->dwReference) xr_delete(p_);				}
+	void				_dec	()									{	if (0==p_) return;	p_->dwReference--; if (0==p_->dwReference) xr_resource::Delete(p_);		}
 public:
 	ICF		void		_set	(T * rhs) 							{	if (0!=rhs) rhs->dwReference++;	_dec(); p_ = rhs;											}
 	ICF		void		_set	(resptr_base<T> const & rhs)		{	T* prhs = rhs._get(); _set(prhs);															}

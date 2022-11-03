@@ -319,6 +319,7 @@
     <ClCompile Include="xrstring.cpp" />
     <ClCompile Include="xrSyncronize.cpp" />
     <ClCompile Include="Xr_ini.cpp" />
+    <ClCompile Include="xr_resource.cpp" />
     <ClCompile Include="xr_shared.cpp" />
     <ClCompile Include="xr_trims.cpp" />
     <ClCompile Include="_compressed_normal.cpp" />

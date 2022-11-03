@@ -65,6 +65,9 @@
     <ProjectReference Include="..\..\External\Vorbis\Vorbis.vcxproj">
       <Project>{ac3d4f35-0e39-47f7-aeb7-552811a90a07}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\XrAPI\XrAPI.vcxproj">
+      <Project>{ff16ef0a-8a51-4c36-9213-4aa87cb4b317}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\XrCDB\XrCDB.vcxproj">
       <Project>{7e263157-2fc0-42d7-a676-dd6049bb60f5}</Project>
     </ProjectReference>

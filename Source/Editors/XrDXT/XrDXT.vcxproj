@@ -57,6 +57,9 @@
     <ProjectReference Include="..\..\External\RedImage\RedImageTool\RedImageTool.vcxproj">
       <Project>{416e323e-3a4b-41a7-b0f5-7a8ec8517b11}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\XrAPI\XrAPI.vcxproj">
+      <Project>{ff16ef0a-8a51-4c36-9213-4aa87cb4b317}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\XrCore\XrCore.vcxproj">
       <Project>{da642d7c-4fff-43dc-98f8-3f96caf1e4ba}</Project>
     </ProjectReference>

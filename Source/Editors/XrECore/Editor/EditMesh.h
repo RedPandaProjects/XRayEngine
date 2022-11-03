@@ -17,7 +17,7 @@ class	CCustomObject;
 #	include "pick_defs.h"
 #endif
 
-#include <bone.h>
+#include "../../../XrEngine/bone.h"
 
 #pragma pack( push,1 )
 const u8	vmtUV		= 0;
@@ -169,6 +169,14 @@ struct ECORE_API st_MeshOptions{
 	int 			m_Reserved1;
     st_MeshOptions	(){m_Reserved0=0;m_Reserved1=0;}
 };
+
+struct  st_StaticMeshVertex
+{
+	Fvector3 Position;
+	Fvector3 Normal;
+	Fvector2 UV;
+
+};
 #pragma pack( pop )
 
 DEFINE_VECTOR		(IntVec,AdjVec,AdjIt);
@@ -216,7 +224,8 @@ class ECORE_API CEditableMesh {
 	void 			UnloadRenderBuffers	();
 #endif
 public:
-	static 			BOOL m_bDraftMeshMode;
+
+	void 			GenerateVertices	(xr_vector<st_StaticMeshVertex>&Vertexes, CSurface*Surface);
     void 			GenerateFNormals	();
     void 			GenerateVNormals	(const Fmatrix* parent_xform);
     void            GenerateSVertices	(u32 influence);

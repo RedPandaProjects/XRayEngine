@@ -6,7 +6,7 @@
 #define ResourceManagerH
 #pragma once
 
-#include	"shader.h"
+#include	"XRayShader.h"
 #include	"tss_def.h"
 #include	"TextureDescrManager.h"
 // refs
@@ -78,7 +78,7 @@ private:
 	// main shader-array
 	xr_vector<SPass*>									v_passes;
 	xr_vector<ShaderElement*>							v_elements;
-	xr_vector<Shader*>									v_shaders;
+	xr_vector<XRayShader*>									v_shaders;
 	
 	xr_vector<ref_texture>								m_necessary;
 	// misc
@@ -188,9 +188,9 @@ public:
 	ShaderElement*					_CreateElement		(ShaderElement& L);
 	void							_DeleteElement		(const ShaderElement* L);
 
-	Shader*							_cpp_Create			(LPCSTR		s_shader,	LPCSTR s_textures=0,	LPCSTR s_constants=0,	LPCSTR s_matrices=0);
-	Shader*							_cpp_Create			(IBlender*	B,			LPCSTR s_shader=0,		LPCSTR s_textures=0,	LPCSTR s_constants=0, LPCSTR s_matrices=0);
-	Shader*							_lua_Create			(LPCSTR		s_shader,	LPCSTR s_textures);
+	XRayShader*							_cpp_Create			(LPCSTR		s_shader,	LPCSTR s_textures=0,	LPCSTR s_constants=0,	LPCSTR s_matrices=0);
+	XRayShader*							_cpp_Create			(IBlender*	B,			LPCSTR s_shader=0,		LPCSTR s_textures=0,	LPCSTR s_constants=0, LPCSTR s_matrices=0);
+	XRayShader*							_lua_Create			(LPCSTR		s_shader,	LPCSTR s_textures);
 	BOOL							_lua_HasShader		(LPCSTR		s_shader);
 
 	CResourceManager						()	: bDeferredLoad(TRUE){	}
@@ -204,9 +204,9 @@ public:
 	void			reset_end				();
 
 	// Creation/Destroying
-	Shader*			Create					(LPCSTR s_shader=0, LPCSTR s_textures=0,	LPCSTR s_constants=0,	LPCSTR s_matrices=0);
-	Shader*			Create					(IBlender*	B,		LPCSTR s_shader=0,		LPCSTR s_textures=0,	LPCSTR s_constants=0, LPCSTR s_matrices=0);
-	void			Delete					(const Shader*		S	);
+	XRayShader*			Create					(LPCSTR s_shader=0, LPCSTR s_textures=0,	LPCSTR s_constants=0,	LPCSTR s_matrices=0);
+	XRayShader*			Create					(IBlender*	B,		LPCSTR s_shader=0,		LPCSTR s_textures=0,	LPCSTR s_constants=0, LPCSTR s_matrices=0);
+	void			Delete					(const XRayShader*		S	);
 	void			RegisterConstantSetup	(LPCSTR name,		R_constant_setup* s)	{	v_constant_setup.push_back(mk_pair(shared_str(name),s));	}
 
 	SGeometry*		CreateGeom				(D3DVERTEXELEMENT9* decl, ID3DVertexBuffer* vb, ID3DIndexBuffer* ib);

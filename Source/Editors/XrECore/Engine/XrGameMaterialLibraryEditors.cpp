@@ -61,6 +61,16 @@ XrGameMaterialLibraryEditors::~XrGameMaterialLibraryEditors()
 {
 }
 
+void XrGameMaterialLibraryEditors::Unload()
+{
+	for (GameMtlIt m_it = materials.begin(); materials.end() != m_it; ++m_it)
+		xr_delete(*m_it);
+	materials.clear();
+	for (GameMtlPairIt p_it = material_pairs.begin(); material_pairs.end() != p_it; ++p_it)
+		xr_delete(*p_it);
+	material_pairs.clear();
+}
+
 SGameMtl* XrGameMaterialLibraryEditors::AppendMaterial(SGameMtl* parent)
 {
     SGameMtl* M = xr_new<SGameMtlEditor>();

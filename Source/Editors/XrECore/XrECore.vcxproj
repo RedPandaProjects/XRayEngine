@@ -84,7 +84,7 @@
     <ClCompile Include="..\..\XrRender\Private\R_Backend_xform.cpp" />
     <ClCompile Include="..\..\XrRender\Private\r_constants.cpp" />
     <ClCompile Include="..\..\XrRender\Private\R_DStreams.cpp" />
-    <ClCompile Include="..\..\XrRender\Private\Shader.cpp" />
+    <ClCompile Include="..\..\XrRender\Private\XRayShader.cpp" />
     <ClCompile Include="..\..\XrRender\Private\SH_Atomic.cpp" />
     <ClCompile Include="..\..\XrRender\Private\SH_Constant.cpp" />
     <ClCompile Include="..\..\XrRender\Private\SH_Matrix.cpp" />

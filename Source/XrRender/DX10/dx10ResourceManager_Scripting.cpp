@@ -375,10 +375,10 @@ BOOL	CResourceManager::_lua_HasShader	(LPCSTR s_shader)
 #endif
 }
 
-Shader*	CResourceManager::_lua_Create		(LPCSTR d_shader, LPCSTR s_textures)
+XRayShader*	CResourceManager::_lua_Create		(LPCSTR d_shader, LPCSTR s_textures)
 {
 	CBlender_Compile	C;
-	Shader				S;
+	XRayShader				S;
 
 	// undecorate
 	string256	undercorated;
@@ -457,7 +457,7 @@ Shader*	CResourceManager::_lua_Create		(LPCSTR d_shader, LPCSTR s_textures)
 		if (S.equal(v_shaders[it]))	return v_shaders[it];
 
 	// Create _new_ entry
-	Shader*		N			=	xr_new<Shader>(S);
+	XRayShader*		N			=	xr_new<XRayShader>(S);
 	N->dwFlags				|=	xr_resource_flagged::RF_REGISTERED;
 	v_shaders.push_back		(N);
 	return N;

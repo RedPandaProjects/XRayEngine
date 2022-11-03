@@ -2,7 +2,7 @@
 
 class CFrustum;
 class CEditableObject;
-class Shader;
+class XRayShader;
 
 struct SIndexDist{
     u32 	index;

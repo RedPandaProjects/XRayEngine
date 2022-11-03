@@ -2,7 +2,7 @@
 #ifndef ParticleEffectDefH
 #define ParticleEffectDefH
 
-#include "Shader.h"
+#include "XRayShader.h"
 
 namespace PAPI
 {

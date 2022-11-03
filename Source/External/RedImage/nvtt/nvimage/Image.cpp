@@ -8,7 +8,7 @@
 #include "nvcore/Debug.h"
 #include "nvcore/Ptr.h"
 #include "nvcore/Utils.h" // swap
-#include "nvcore/MemoryInterface->h" // realloc, free
+#include "nvcore/Memory.h" // realloc, free
 
 #include <string.h> // memcpy
 

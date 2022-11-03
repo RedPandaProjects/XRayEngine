@@ -268,7 +268,7 @@ public:
 	IC	void						set_Element			(ShaderElement* S, u32	pass=0);
 	IC	void						set_Element			(ref_selement& S, u32	pass=0)		{ set_Element(&*S,pass);		}
 
-	IC	void						set_Shader			(Shader* S, u32 pass=0);
+	IC	void						set_Shader			(XRayShader* S, u32 pass=0);
 	IC	void						set_Shader			(ref_shader& S, u32 pass=0)			{ set_Shader(&*S,pass);			}
 
 	ICF	void						set_States			(ID3DState* _state);

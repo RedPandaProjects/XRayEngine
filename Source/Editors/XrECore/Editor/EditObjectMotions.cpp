@@ -82,7 +82,7 @@ void CEditableObject::GotoBindPose()
     for (BoneIt b_it=lst.begin(); b_it!=lst.end(); b_it++) (*b_it)->Reset();
     CalculateAnimation(0);
 #if 1
-    UI->RedrawScene();
+    if(UI)UI->RedrawScene();
 #endif
 }
 

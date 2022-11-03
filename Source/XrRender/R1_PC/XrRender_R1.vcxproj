@@ -267,7 +267,7 @@
     <ClInclude Include="..\Private\r__dsgraph_structure.h" />
     <ClInclude Include="..\Private\r__dsgraph_types.h" />
     <ClInclude Include="..\Private\r__sector.h" />
-    <ClInclude Include="..\Private\Shader.h" />
+    <ClInclude Include="..\Private\XRayShader.h" />
     <ClInclude Include="..\Private\SH_Atomic.h" />
     <ClInclude Include="..\Private\SH_Constant.h" />
     <ClInclude Include="..\Private\SH_Matrix.h" />
@@ -399,7 +399,7 @@
     <ClCompile Include="..\Private\r__screenshot.cpp" />
     <ClCompile Include="..\Private\r__sector.cpp" />
     <ClCompile Include="..\Private\r__sector_traversal.cpp" />
-    <ClCompile Include="..\Private\Shader.cpp" />
+    <ClCompile Include="..\Private\XRayShader.cpp" />
     <ClCompile Include="..\Private\SH_Atomic.cpp" />
     <ClCompile Include="..\Private\SH_Constant.cpp" />
     <ClCompile Include="..\Private\SH_Matrix.cpp" />

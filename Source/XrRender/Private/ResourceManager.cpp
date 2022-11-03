@@ -145,10 +145,10 @@ void CResourceManager::_DeleteElement(const ShaderElement* S)
 	Msg	("! ERROR: Failed to find compiled 'shader-element'");
 }
 
-Shader*	CResourceManager::_cpp_Create	(IBlender* B, LPCSTR s_shader, LPCSTR s_textures, LPCSTR s_constants, LPCSTR s_matrices)
+XRayShader*	CResourceManager::_cpp_Create	(IBlender* B, LPCSTR s_shader, LPCSTR s_textures, LPCSTR s_constants, LPCSTR s_matrices)
 {
 	CBlender_Compile	C;
-	Shader				S;
+	XRayShader				S;
 
 	//.
 	// if (strstr(s_shader,"transparent"))	__asm int 3;
@@ -228,13 +228,13 @@ Shader*	CResourceManager::_cpp_Create	(IBlender* B, LPCSTR s_shader, LPCSTR s_te
 		if (S.equal(v_shaders[it]))	return v_shaders[it];
 
 	// Create _new_ entry
-	Shader*		N			=	xr_new<Shader>(S);
+	XRayShader*		N			=	xr_new<XRayShader>(S);
 	N->dwFlags				|=	xr_resource_flagged::RF_REGISTERED;
 	v_shaders.push_back		(N);
 	return N;
 }
 
-Shader*	CResourceManager::_cpp_Create	(LPCSTR s_shader, LPCSTR s_textures, LPCSTR s_constants, LPCSTR s_matrices)
+XRayShader*	CResourceManager::_cpp_Create	(LPCSTR s_shader, LPCSTR s_textures, LPCSTR s_constants, LPCSTR s_matrices)
 {
 //#ifndef DEDICATED_SERVER
 #ifndef REDITOR
@@ -260,7 +260,7 @@ Shader*	CResourceManager::_cpp_Create	(LPCSTR s_shader, LPCSTR s_textures, LPCST
 //#endif
 }
 
-Shader*		CResourceManager::Create	(IBlender*	B,		LPCSTR s_shader,	LPCSTR s_textures,	LPCSTR s_constants, LPCSTR s_matrices)
+XRayShader*		CResourceManager::Create	(IBlender*	B,		LPCSTR s_shader,	LPCSTR s_textures,	LPCSTR s_constants, LPCSTR s_matrices)
 {
 //#ifndef DEDICATED_SERVER
 #ifndef REDITOR
@@ -279,7 +279,7 @@ Shader*		CResourceManager::Create	(IBlender*	B,		LPCSTR s_shader,	LPCSTR s_textu
 	}
 }
 
-Shader*		CResourceManager::Create	(LPCSTR s_shader,	LPCSTR s_textures,	LPCSTR s_constants,	LPCSTR s_matrices)
+XRayShader*		CResourceManager::Create	(LPCSTR s_shader,	LPCSTR s_textures,	LPCSTR s_constants,	LPCSTR s_matrices)
 {
 //#ifndef DEDICATED_SERVER
 #ifndef REDITOR
@@ -292,7 +292,7 @@ Shader*		CResourceManager::Create	(LPCSTR s_shader,	LPCSTR s_textures,	LPCSTR s_
 			return	_lua_Create	(s_shader,s_textures);
 		else								
 		{
-			Shader* pShader = _cpp_Create	(s_shader,s_textures,s_constants,s_matrices);
+			XRayShader* pShader = _cpp_Create	(s_shader,s_textures,s_constants,s_matrices);
 			if (pShader)
 				return pShader;
 			else
@@ -323,7 +323,7 @@ Shader*		CResourceManager::Create	(LPCSTR s_shader,	LPCSTR s_textures,	LPCSTR s_
 //#endif
 }
 
-void CResourceManager::Delete(const Shader* S)
+void CResourceManager::Delete(const XRayShader* S)
 {
 	if (0==(S->dwFlags&xr_resource_flagged::RF_REGISTERED))	return;
 	if (reclaim(v_shaders,S))						return;

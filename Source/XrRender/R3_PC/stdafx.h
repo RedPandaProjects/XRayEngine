@@ -33,7 +33,7 @@
 #include "../../xrEngine/psystem.h"
 
 #include "../Private/HW.h"
-#include "../Private/Shader.h"
+#include "../Private/XRayShader.h"
 #include "../Private/R_Backend.h"
 #include "../Private/R_Backend_Runtime.h"
 

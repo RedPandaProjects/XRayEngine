@@ -1,8 +1,8 @@
 #ifndef EditObjectH
 #define EditObjectH
 
-#include "Bone.h"
-#include "Motion.h"
+#include "../../../XrEngine/Bone.h"
+#include "../../../XrEngine/Motion.h"
 #if 1
 #	include "../../../Editors/Public/PropertiesListTypes.h"
 //	#include "PropertiesListHelper.h"
@@ -39,7 +39,7 @@ class	CCustomObject;
 
 // refs
 class XRayMtl;
-class SSimpleImage;
+struct SSimpleImage;
 
 class ECORE_API CSurface
 {
@@ -80,7 +80,7 @@ public:
     	return (0!=xr_strlen(m_Texture))&&(0!=xr_strlen(m_ShaderName));
     }
 #if 1
-					~CSurface		(){R_ASSERT(!m_Shader);xr_delete(m_ImageData);}
+					~CSurface		();
 	IC void			CopyFrom		(CSurface* surf){*this = *surf; m_Shader=0; m_RTFlags.set(rtValidShader, FALSE);}
     IC int			_Priority		()	{return _Shader()?_Shader()->E[0]->flags.iPriority:1;}
     IC bool			_StrictB2F		()	{return _Shader()?_Shader()->E[0]->flags.bStrictB2F:false;}

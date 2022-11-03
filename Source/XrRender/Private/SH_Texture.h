@@ -50,7 +50,7 @@ public:
 	BOOL								video_IsPlaying	();
 
 	CTexture							();
-	virtual ~CTexture					();
+	~CTexture							();
 	
 #if defined(USE_DX10) || defined(USE_DX11)
 	ID3DShaderResourceView*				get_SRView() {return m_pSRView;}

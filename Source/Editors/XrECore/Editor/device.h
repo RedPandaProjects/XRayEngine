@@ -8,7 +8,7 @@
 #include "../../../xrCore/ftimer.h"
 #include "estats.h"
 #include "../../../xrEngine/shader_xrlc.h"
-#include "../../../xrRender/Private/shader.h"
+#include "../../../xrRender/Private/XRayShader.h"
 #include "../../../xrRender/Private/R_Backend.h"
 
 

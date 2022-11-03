@@ -22,7 +22,7 @@ public class XRayEngineModules : ModuleRules
 			string LibPath = Path.Combine(ModuleDirectory,"Lib", "x64","Debug");
 			string BinPath = Path.Combine(ModuleDirectory,"Bin", "x64","Debug");
 			PublicAdditionalLibraries.Add(Path.Combine(LibPath,"XrCore"+ Prefix+".lib"));
-			PublicAdditionalLibraries.Add(Path.Combine(LibPath,"XrEngine" + Prefix + ".lib"));
+            PublicAdditionalLibraries.Add(Path.Combine(LibPath,"XrEngine" + Prefix + ".lib"));
 			PublicAdditionalLibraries.Add(Path.Combine(LibPath,"XrCDB" + Prefix + ".lib"));
 			PublicAdditionalLibraries.Add(Path.Combine(LibPath,"XrAPI" + Prefix + ".lib"));
 
