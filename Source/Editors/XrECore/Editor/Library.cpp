@@ -120,7 +120,13 @@ CEditableObject* ELibrary::LoadEditObject(LPCSTR name)
     if (FS.exist(fn))
     {
         if (m_EditObject->Load(fn))	return m_EditObject;
-    }else{
+    }
+    else if (FS.exist(name))
+    {
+        if (m_EditObject->Load(name))	return m_EditObject;
+    }
+    else
+    {
 		ELog.Msg(mtError,"Can't find file '%s'",fn);
     }
     xr_delete(m_EditObject);
@@ -151,7 +157,7 @@ void ELibrary::RemoveEditObject(CEditableObject*& object)
 	if (object){
 	    object->m_RefCount--;
     	R_ASSERT(object->m_RefCount>=0);
-		if ((object->m_RefCount==0)&&EPrefs->object_flags.is(epoDiscardInstance))
+		if ((object->m_RefCount==0)&&  (EPrefs&&EPrefs->object_flags.is(epoDiscardInstance)))
 			if (!object->IsModified()) UnloadEditObject(object->GetName());
         object=0;
 	}

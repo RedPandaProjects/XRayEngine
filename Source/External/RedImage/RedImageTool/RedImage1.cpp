@@ -193,7 +193,6 @@ void RedImage::SetPixel(const RedColor& color, size_t x, size_t y, size_t d)
 void RedImage::SwapRB()
 {
 	if (Empty())return;
-	assert(m_Mips == 1);
 	if (m_Mips != 1)return;
 	if (m_PixelFotmat != RedTexturePixelFormat::R8G8B8A8)
 	{

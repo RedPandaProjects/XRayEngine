@@ -45,7 +45,8 @@ void ELocatorAPI::_initialize	(u32 flags, LPCSTR target_folder, LPCSTR fs_fname)
 
 	// append application path
 
-	if (m_Flags.is(flScanAppRoot)){
+	if (m_Flags.is(flScanAppRoot))
+    {
         string_path tmpAppPath;
         xr_strcpy(tmpAppPath, sizeof(tmpAppPath), Core.ApplicationPath);
         if (xr_strlen(tmpAppPath))
@@ -61,7 +62,22 @@ void ELocatorAPI::_initialize	(u32 flags, LPCSTR target_folder, LPCSTR fs_fname)
                 *(strrchr(tmpAppPath, '\\') + 1) = 0;
         }
 		append_path		("$app_root$", tmpAppPath,0,FALSE);
-        append_path("$fs_root$", tmpAppPath, 0, FALSE);
+		if (fs_fname)
+		{
+            string_path		FSRoot;
+            xr_strcpy(FSRoot,fs_fname);
+			if (strrchr(FSRoot, '\\'))
+				*(strrchr(FSRoot, '\\') + 1) = 0;
+			else if (strrchr(FSRoot, '/'))
+				*(strrchr(FSRoot, '/') + 1) = 0;
+
+			append_path("$fs_root$", FSRoot, 0, FALSE);
+			
+		}
+        else
+        {
+			append_path("$fs_root$", tmpAppPath, 0, FALSE);
+        }
     }
     else
     {

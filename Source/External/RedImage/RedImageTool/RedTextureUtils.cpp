@@ -969,7 +969,7 @@ void RedTextureUtils::CompressorToCompressor(u8 * dst, u8 * src, size_t w, size_
 	float*temp = red_alloc<float>(w*h * 3);
 	CompressorToFloat((u8*)temp, src, w, h, 3, compressor_src);
 	FloatToHalf4(dst, (u8*)temp, w, h, 3);
-	free(temp);
+	red_free(temp);
 	}
 		break;
 	case RedTexturePixelFormat::BC7:
@@ -1530,7 +1530,7 @@ void * RedTextureUtils::StartDecompressor(RedTexturePixelFormat Compressor, size
 
 void RedTextureUtils::EndDecompressor(void * in)
 {
-	free(in);
+	red_free(in);
 }
 
 void RedTextureUtils::GetBlock(RedColor(&color)[16], u8 * data, size_t w, size_t h, size_t x_, size_t y, RedTexturePixelFormat px)
@@ -1892,6 +1892,6 @@ void RedTextureUtils::TempCompress(u8 * in, u8 * out, size_t w, size_t h, RedTex
 	}
 	if(out!=0)
 		Convert(px, InPixelFormat,out, in, w, h);
-	free(in);
+	red_free(in);
 }
 

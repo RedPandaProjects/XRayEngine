@@ -5,7 +5,6 @@
 #ifndef LibraryH
 #define LibraryH
 
-#include "pure.h"     
 //----------------------------------------------------
 class CEditableObject;
 
