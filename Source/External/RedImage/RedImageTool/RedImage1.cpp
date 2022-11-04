@@ -198,9 +198,9 @@ void RedImage::SwapRB()
 	{
 		for (size_t i = 0; i < m_Depth; i++)
 		{
-			for (size_t x = 0; x < m_Width * m_Height; x++)
+			for (size_t x = 0; x < m_Width ; x++)
 			{
-				for (size_t y = 0; y < m_Width * m_Height; y++)
+				for (size_t y = 0; y <m_Height; y++)
 				{
 					RedColor Color = GetPixel(x, y, i);
 					std::swap(Color.R8U, Color.B8U);
