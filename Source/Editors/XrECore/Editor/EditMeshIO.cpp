@@ -230,7 +230,7 @@ bool CEditableMesh::LoadMesh(IReader& F){
 #endif
 	//OptimizeMesh	(false);
     RebuildVMaps	();
-
+    GenerateVNormals(0);
 	return 			true;
 }
 //----------------------------------------------------
