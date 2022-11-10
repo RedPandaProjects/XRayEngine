@@ -138,9 +138,9 @@ HRESULT CInput::CreateInputDevice( LPDIRECTINPUTDEVICE8* device, GUID guidDevice
 	if (!Device->WeatherEditor())
 #endif // #ifdef INGAME_EDITOR
 	{
-		HRESULT	_hr = (*device)->SetCooperativeLevel( Device->m_hWnd, dwFlags );
+		/*HRESULT	_hr = (*device)->SetCooperativeLevel( Device->m_hWnd, dwFlags );
 		if (FAILED(_hr) && (_hr==E_NOTIMPL)) Msg("! INPUT: Can't set coop level. Emulation???");
-		else R_CHK(_hr);
+		else R_CHK(_hr);*/
 	}
 
 	// setup the buffer size for the keyboard data
@@ -254,8 +254,8 @@ void CInput::KeyUpdate	( )
 	}
 
 
-	if(!Device->IsEditorMode()&&b_alt_tab)
-		SendMessage(Device->m_hWnd, WM_SYSCOMMAND, SC_MINIMIZE, 0);
+	//if(!Device->IsEditorMode()&&b_alt_tab)
+		//SendMessage(Device->m_hWnd, WM_SYSCOMMAND, SC_MINIMIZE, 0);
 
 /*
 #ifndef _EDITOR
@@ -538,23 +538,23 @@ void CInput::unacquire				()
 
 void CInput::acquire				(const bool &exclusive)
 {
-	pKeyboard->SetCooperativeLevel	(
-#ifndef MASTER_GOLD
-		Device->WeatherEditor() ? Device->WeatherEditor()->main_handle() : 
-#endif
-		Device->m_hWnd,
-		(exclusive ? DISCL_EXCLUSIVE : DISCL_NONEXCLUSIVE) | DISCL_FOREGROUND
-	);
-	pKeyboard->Acquire				();
+//	pKeyboard->SetCooperativeLevel	(
+//#ifndef MASTER_GOLD
+//		Device->WeatherEditor() ? Device->WeatherEditor()->main_handle() : 
+//#endif
+//		Device->m_hWnd,
+//		(exclusive ? DISCL_EXCLUSIVE : DISCL_NONEXCLUSIVE) | DISCL_FOREGROUND
+//	);
+	//pKeyboard->Acquire				();
 
-	pMouse->SetCooperativeLevel		(
-
-#ifndef MASTER_GOLD
-		Device->WeatherEditor() ? Device->WeatherEditor()->main_handle() :
-#endif
-		Device->m_hWnd,
-		(exclusive ? DISCL_EXCLUSIVE : DISCL_NONEXCLUSIVE) | DISCL_FOREGROUND | DISCL_NOWINKEY
-	);
+//	pMouse->SetCooperativeLevel		(
+//
+//#ifndef MASTER_GOLD
+//		Device->WeatherEditor() ? Device->WeatherEditor()->main_handle() :
+//#endif
+//		Device->m_hWnd,
+//		(exclusive ? DISCL_EXCLUSIVE : DISCL_NONEXCLUSIVE) | DISCL_FOREGROUND | DISCL_NOWINKEY
+//	);
 	pMouse->Acquire					();
 }
 

@@ -397,6 +397,11 @@ void CEnvironment::SelectEnv(EnvVec* envs, IEnvDescriptor*& e, float gt)
 	}
 }
 
+CEnvDescriptor* CEnvironment::GetCurrentDescriptor(size_t i)
+{
+	{ return dynamic_cast<CEnvDescriptor*>(Current[i]); }
+}
+
 void CEnvironment::SelectEnvs(EnvVec* envs, IEnvDescriptor*& e0, IEnvDescriptor*& e1, float gt)
 {
 	EnvIt env		= std::lower_bound(envs->begin(),envs->end(),gt,lb_env_pred);
@@ -633,4 +638,14 @@ CLensFlareDescriptor* CEnvironment::add_flare					(xr_vector<CLensFlareDescripto
 	result->load			(m_suns_config, id.c_str());
 	collection.push_back	(result);	
 	return					(result);
+}
+
+void CEnvDescriptor::copy(const IEnvDescriptor& src)
+{
+
+	float tm0 = exec_time;
+	float tm1 = exec_time_loaded;
+	*this = *dynamic_cast<const CEnvDescriptor*>(&src);
+	exec_time = tm0;
+	exec_time_loaded = tm1;
 }

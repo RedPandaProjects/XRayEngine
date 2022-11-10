@@ -5,7 +5,7 @@
 #include "game_cl_base.h"
 #include "xrmessages.h"
 #include "xrGameSpyServer.h"
-#include "../XrEngine/x_ray.h"
+#include "../XrEngine/XRayEngine.h"
 #include "../XrEngine/device.h"
 #include "../XrEngine/IGame_Persistent.h"
 #include "../XrEngine/xr_ioconsole.h"
@@ -15,7 +15,7 @@ BOOL CLevel::net_Start	( LPCSTR op_server, LPCSTR op_client )
 {
 	net_start_result_total				= TRUE;
 
-	pApp->LoadBegin				();
+	g_Engine->LoadBegin				();
 
 	//make Client Name if options doesn't have it
 	LPCSTR	NameStart	= strstr(op_client,"/name=");
@@ -116,15 +116,15 @@ bool CLevel::net_start1				()
 
 			m_name					= l_name;
 
-			int						id = pApp->Level_ID(l_name,"1.0",true);
+			int						id = g_Engine->Level_ID(l_name,"1.0",true);
 
 			if (id<0) {
-				pApp->LoadEnd				();
+				g_Engine->LoadEnd				();
 				Log							("Can't find level: ",l_name);
 				net_start_result_total		= FALSE;
 				return true;
 			}
-			pApp->Level_Set			(id);
+			g_Engine->Level_Set			(id);
 		}
 	}
 	return true;
@@ -267,7 +267,7 @@ bool CLevel::net_start6()
 	BulletManager().Clear		();
 	BulletManager().Load		();
 
-	pApp->LoadEnd				();
+	g_Engine->LoadEnd				();
 
 	if(net_start_result_total)
 	{

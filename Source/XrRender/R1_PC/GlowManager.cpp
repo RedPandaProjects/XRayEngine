@@ -5,7 +5,7 @@
 #include "stdafx.h"
 #include "../../xrEngine/igame_persistent.h"
 #include "../../xrEngine/environment.h"
-#include "../../xrEngine/x_ray.h"
+#include "../../xrEngine/XRayEngine.h"
 #include "../../xrEngine/GameFont.h"
 #include "GlowManager.h"
 #include "../../xrEngine/xr_object.h"

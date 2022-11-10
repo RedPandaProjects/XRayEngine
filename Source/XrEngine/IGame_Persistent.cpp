@@ -5,7 +5,7 @@
 #include "..\XrAPI\xrGameManager.h"
 #ifndef _EDITOR
 #include "environment.h"
-#	include "x_ray.h"
+#	include "XRayEngineInterface.h"
 #	include "IGame_Level.h"
 #	include "XR_IOConsole.h"
 #	include "Render.h"
@@ -135,6 +135,16 @@ void IGame_Persistent::Disconnect	()
 //.		g_hud->OnDisconnected			();
 #endif
 }
+
+class CEnvironment* IGame_Persistent::EnvironmentAsCOP()
+{
+	return static_cast<CEnvironment*>(pEnvironment);
+};
+
+class CEnvironmentSOC* IGame_Persistent::EnvironmentAsSOC()
+{
+	return static_cast<CEnvironmentSOC*>(pEnvironment);
+};
 
 void IGame_Persistent::OnGameStart()
 {

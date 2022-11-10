@@ -15,8 +15,6 @@
 
 #include "../../XrEngine/object_broker.h"
 
-extern ENGINE_API string512  g_sLaunchOnExit_app;
-extern ENGINE_API string512  g_sLaunchOnExit_params;
 
 xr_token	game_types		[];
 
@@ -64,13 +62,13 @@ CUIMapList::~CUIMapList(){
 }
 
 void CUIMapList::StartDedicatedServer(){
-	strcpy					(g_sLaunchOnExit_app,"dedicated\\xr_3da.exe");
+	/*strcpy					(g_sLaunchOnExit_app,"dedicated\\xr_3da.exe");
 
 	strcpy					(g_sLaunchOnExit_params,"-i -nosound -");
 	strcat					(g_sLaunchOnExit_params,GetCommandLine(""));
 	Msg						("%s","-- Going to quit before starting dedicated server");
 	Msg						("%s %s",g_sLaunchOnExit_app, g_sLaunchOnExit_params);
-	Console->Execute		("quit");
+	Console->Execute		("quit");*/
 }
 
 void CUIMapList::Init(float x, float y, float width, float height){

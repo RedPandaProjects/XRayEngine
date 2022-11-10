@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "igame_level.h"
-#include "x_ray.h"
+#include "XRayEngineInterface.h"
 
 #include "gamefont.h"
 #include "fDemoRecord.h"
@@ -297,27 +297,27 @@ BOOL CDemoRecord::ProcessCam(SCamEffectorInfo& info)
 		if(IR_GetKeyState(DIK_F1))
 		{
 
-			pApp->pFontSystem->SetColor	(color_rgba(255,0,0,255));
-			pApp->pFontSystem->SetAligment(CGameFont::alCenter);
-			pApp->pFontSystem->OutSetI	(0,-.05f);
-			pApp->pFontSystem->OutNext	("%s","RECORDING");
-			pApp->pFontSystem->OutNext	("Key frames count: %d",iCount);
-			pApp->pFontSystem->SetAligment(CGameFont::alLeft);
-			pApp->pFontSystem->OutSetI	(-0.2f,+.05f);
-			pApp->pFontSystem->OutNext	("SPACE");
-			pApp->pFontSystem->OutNext	("BACK");
-			pApp->pFontSystem->OutNext	("ESC");
-			pApp->pFontSystem->OutNext	("F11");
-			pApp->pFontSystem->OutNext	("LCONTROL+F11");
-			pApp->pFontSystem->OutNext	("F12");
-			pApp->pFontSystem->SetAligment(CGameFont::alLeft);
-			pApp->pFontSystem->OutSetI	(0,+.05f);
-			pApp->pFontSystem->OutNext	("= Append Key");
-			pApp->pFontSystem->OutNext	("= Cube Map");
-			pApp->pFontSystem->OutNext	("= Quit");
-			pApp->pFontSystem->OutNext	("= Level Map ScreenShot");
-			pApp->pFontSystem->OutNext	("= Level Map ScreenShot(High Quality)");
-			pApp->pFontSystem->OutNext	("= ScreenShot");
+			g_Engine->pFontSystem->SetColor	(color_rgba(255,0,0,255));
+			g_Engine->pFontSystem->SetAligment(CGameFont::alCenter);
+			g_Engine->pFontSystem->OutSetI	(0,-.05f);
+			g_Engine->pFontSystem->OutNext	("%s","RECORDING");
+			g_Engine->pFontSystem->OutNext	("Key frames count: %d",iCount);
+			g_Engine->pFontSystem->SetAligment(CGameFont::alLeft);
+			g_Engine->pFontSystem->OutSetI	(-0.2f,+.05f);
+			g_Engine->pFontSystem->OutNext	("SPACE");
+			g_Engine->pFontSystem->OutNext	("BACK");
+			g_Engine->pFontSystem->OutNext	("ESC");
+			g_Engine->pFontSystem->OutNext	("F11");
+			g_Engine->pFontSystem->OutNext	("LCONTROL+F11");
+			g_Engine->pFontSystem->OutNext	("F12");
+			g_Engine->pFontSystem->SetAligment(CGameFont::alLeft);
+			g_Engine->pFontSystem->OutSetI	(0,+.05f);
+			g_Engine->pFontSystem->OutNext	("= Append Key");
+			g_Engine->pFontSystem->OutNext	("= Cube Map");
+			g_Engine->pFontSystem->OutNext	("= Quit");
+			g_Engine->pFontSystem->OutNext	("= Level Map ScreenShot");
+			g_Engine->pFontSystem->OutNext	("= Level Map ScreenShot(High Quality)");
+			g_Engine->pFontSystem->OutNext	("= ScreenShot");
 
 		}
 
@@ -417,7 +417,7 @@ void CDemoRecord::IR_OnKeyboardPress	(int dik)
 #endif // #ifndef MASTER_GOLD
 
 	if	(dik == DIK_PAUSE)		
-		EngineDevice->Pause(!Device->Paused(), TRUE, TRUE, "demo_record");
+		Device->Pause(!Device->Paused(), TRUE, TRUE, "demo_record");
 }
 
 static void update_whith_timescale( Fvector &v, const Fvector &v_delta )
@@ -536,5 +536,5 @@ void CDemoRecord::MakeLevelMapScreenshot(BOOL bHQ)
 
 void CDemoRecord::OnRender()
 {
-	pApp->pFontSystem->OnRender();
+	g_Engine->pFontSystem->OnRender();
 }

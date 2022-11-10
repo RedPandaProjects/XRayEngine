@@ -70,12 +70,12 @@ void XRayEditor::LoadDraw()
 
 void XRayEditor::OnEvent(EVENT E, u64 P1, u64 P2)
 {
-	CApplication::OnEvent(E,P1,P2);
+	XRayEngineInterface::OnEvent(E,P1,P2);
 }
 
 void _BCL XRayEditor::OnFrame()
 {
-	CApplication::OnFrame();
+	XRayEngineInterface::OnFrame();
 }
 
 void XRayEditor::load_draw_internal()

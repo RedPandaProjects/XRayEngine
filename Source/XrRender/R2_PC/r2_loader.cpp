@@ -4,7 +4,7 @@
 #include "../Private/fbasicvisual.h"
 #include "../../xrEngine/fmesh.h"
 #include "../../xrEngine/xrLevel.h"
-#include "../../xrEngine/x_ray.h"
+#include "../../xrEngine/XRayEngine.h"
 #include "../../xrEngine/IGame_Persistent.h"
 #include "../../xrCore/stream_reader.h"
 
@@ -21,7 +21,7 @@ void CRender::level_Load(IReader* fs)
 	R_ASSERT						(!b_loaded);
 
 	// Begin
-	pApp->LoadBegin					();
+	g_Engine->LoadBegin					();
 	dxRenderDeviceRender::Instance().Resources->DeferredLoad	(TRUE);
 	IReader*						chunk;
 
@@ -98,7 +98,7 @@ void CRender::level_Load(IReader* fs)
 	LoadLights					(fs);
 
 	// End
-	pApp->LoadEnd				();
+	g_Engine->LoadEnd				();
 
 	// sanity-clear
 	lstLODs.clear				();

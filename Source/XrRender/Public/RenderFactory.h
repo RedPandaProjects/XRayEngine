@@ -4,9 +4,7 @@
 
 class IWallMarkArray;
 
-#ifdef DEBUG
-	class IObjectSpaceRender;
-#endif // DEBUG
+class IObjectSpaceRender;
 
 class IFontRender;
 class IApplicationRender;
@@ -50,9 +48,7 @@ public:
 	RENDER_FACTORY_INTERFACE(StatGraphRender)
 	RENDER_FACTORY_INTERFACE(ConsoleRender)
 	RENDER_FACTORY_INTERFACE(RenderDeviceRender)
-#	ifdef DEBUG
-		RENDER_FACTORY_INTERFACE(ObjectSpaceRender)
-#	endif // DEBUG
+	RENDER_FACTORY_INTERFACE(ObjectSpaceRender)
 	RENDER_FACTORY_INTERFACE(ApplicationRender)
 	RENDER_FACTORY_INTERFACE(WallMarkArray)
 	RENDER_FACTORY_INTERFACE(StatsRender)

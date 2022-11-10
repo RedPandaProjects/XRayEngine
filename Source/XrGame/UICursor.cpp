@@ -14,14 +14,14 @@ CUICursor::CUICursor()
 	vPrevPos.set			(0.0f, 0.0f);
 	vPos.set				(0.f,0.f);
 	InitInternal			();
-	Device->seqRender.Add	(this,-3/*2*/);
+	Device->seqRenderUI.Add	(this,-3/*2*/);
 	Device->seqResolutionChanged.Add(this);
 }
 //--------------------------------------------------------------------
 CUICursor::~CUICursor	()
 {
 	xr_delete				(m_static);
-	Device->seqRender.Remove	(this);
+	Device->seqRenderUI.Remove	(this);
 	Device->seqResolutionChanged.Remove(this);
 }
 
@@ -52,7 +52,7 @@ void CUICursor::InitInternal()
 
 //--------------------------------------------------------------------
 u32 last_render_frame = 0;
-void CUICursor::OnRender	()
+void CUICursor::OnRenderUI	()
 {
 	g_btnHint->OnRender();
 	g_statHint->OnRender();

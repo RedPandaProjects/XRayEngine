@@ -8,7 +8,7 @@
 #include "script_engine_space.h"
 #include "level.h"
 #include "game_cl_base.h"
-#include "../XrEngine/x_ray.h"
+#include "../XrEngine/XRayEngine.h"
 #include "../XrEngine/gamemtllib.h"
 #include "PhysicsCommon.h"
 #include "level_sounds.h"

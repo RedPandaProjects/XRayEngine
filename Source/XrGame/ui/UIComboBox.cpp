@@ -248,8 +248,8 @@ void CUIComboBox::Update()
 		
 		if(m_list_frame.IsShown())
 		{
-			Device->seqRender.Remove		(this);
-			Device->seqRender.Add		(this, 3);
+			Device->seqRenderUI.Remove		(this);
+			Device->seqRenderUI.Add		(this, 3);
 		}
 	}
 
@@ -313,14 +313,14 @@ void CUIComboBox::SendMessage(CUIWindow* pWnd, s16 msg, void* pData)
 	}
 }
 
-void CUIComboBox::OnRender()
+void CUIComboBox::OnRenderUI()
 {
 	if(IsShown())
 	{
 		if(m_list_frame.IsShown())
 		{
 			m_list_frame.Draw			();
-			Device->seqRender.Remove		(this);
+			Device->seqRenderUI.Remove		(this);
 		}
 	}
 }

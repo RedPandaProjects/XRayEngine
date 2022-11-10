@@ -211,7 +211,7 @@ void CMainMenu::Activate	(bool bActivate)
 			Device->seqRender.Remove			(g_pGameLevel);
 			CCameraManager::ResetPP			();
 		};
-		Device->seqRender.Add				(this, 4); // 1-console 2-cursor 3-tutorial
+		Device->seqRenderUI.Add				(this, 4); // 1-console 2-cursor 3-tutorial
 
 		Console->Execute					("stat_memory");
 	}else{
@@ -219,7 +219,7 @@ void CMainMenu::Activate	(bool bActivate)
 		m_Flags.set							(flActive,				FALSE);
 		m_Flags.set							(flNeedChangeCapture,	TRUE);
 
-		Device->seqRender.Remove				(this);
+		Device->seqRenderUI.Remove				(this);
 
 		bool b = !!Console->bVisible;
 		if(b){
@@ -381,7 +381,7 @@ bool CMainMenu::OnRenderPPUI_query()
 
 
 extern void draw_wnds_rects();
-void CMainMenu::OnRender	()
+void CMainMenu::OnRenderUI	()
 {
 	if(m_Flags.test(flGameSaveScreenshot))
 		return;
@@ -662,15 +662,12 @@ void	CMainMenu::OnDownloadPatchProgress			(u64 bytesReceived, u64 totalSize)
 	m_sPDProgress.Progress = (float(bytesReceived)/float(totalSize))*100.0f;
 };
 
-extern ENGINE_API string512  g_sLaunchOnExit_app;
-extern ENGINE_API string512  g_sLaunchOnExit_params;
-extern ENGINE_API string_path	g_sLaunchWorkingFolder;
 void	CMainMenu::OnRunDownloadedPatch			(CUIWindow*, void*)
 {
-	xr_strcpy					(g_sLaunchOnExit_app,*m_sPatchFileName);
+	/*xr_strcpy					(g_sLaunchOnExit_app,*m_sPatchFileName);
 	xr_strcpy					(g_sLaunchOnExit_params,"");
 	xr_strcpy					(g_sLaunchWorkingFolder, "");
-	Console->Execute		("quit");
+	Console->Execute		("quit");*/
 }
 
 void CMainMenu::CancelDownload()

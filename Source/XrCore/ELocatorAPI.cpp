@@ -67,9 +67,9 @@ void ELocatorAPI::_initialize	(u32 flags, LPCSTR target_folder, LPCSTR fs_fname)
             string_path		FSRoot;
             xr_strcpy(FSRoot,fs_fname);
 			if (strrchr(FSRoot, '\\'))
-				*(strrchr(FSRoot, '\\') + 1) = 0;
+				*(strrchr(FSRoot, '\\') ) = 0;
 			else if (strrchr(FSRoot, '/'))
-				*(strrchr(FSRoot, '/') + 1) = 0;
+				*(strrchr(FSRoot, '/')) = 0;
 
 			append_path("$fs_root$", FSRoot, 0, FALSE);
 			

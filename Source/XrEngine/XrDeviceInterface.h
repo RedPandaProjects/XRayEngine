@@ -135,6 +135,7 @@ public:
 
 	// Registrators
 	CRegistrator	<pureRender			>			seqRender;
+	CRegistrator	<pureRenderUI		>			seqRenderUI;
 	CRegistrator	<pureAppActivate	>			seqAppActivate;
 	CRegistrator	<pureAppDeactivate	>			seqAppDeactivate;
 	CRegistrator	<pureAppStart		>			seqAppStart;

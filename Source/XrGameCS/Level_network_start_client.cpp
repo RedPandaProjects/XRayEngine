@@ -5,7 +5,7 @@
 #include "PHdynamicdata.h"
 #include "Physics.h"
 #include "level.h"
-#include "../xrEngine/x_ray.h"
+#include "../xrEngine/XRayEngine.h"
 #include "../xrEngine/igame_persistent.h"
 #include "PhysicsGamePars.h"
 #include "ai_space.h"
@@ -22,7 +22,7 @@ BOOL CLevel::net_Start_client	( LPCSTR options )
 #include "string_table.h"
 bool	CLevel::net_start_client1				()
 {
-	pApp->LoadBegin	();
+	g_Engine->LoadBegin	();
 	// name_of_server
 	string64					name_of_server = "";
 //	strcpy_s						(name_of_server,*m_caClientOptions);
@@ -84,7 +84,7 @@ bool	CLevel::net_start_client3				()
 			rescan_mp_archives(); //because if we are using psNET_direct_connect, we not download map...
 		}
 		// Determine internal level-ID
-		int						level_id = pApp->Level_ID(level_name, level_ver, true);
+		int						level_id = g_Engine->Level_ID(level_name, level_ver, true);
 		if (level_id==-1)	
 		{
 			Disconnect			();
@@ -194,7 +194,7 @@ bool	CLevel::net_start_client6				()
 
 		if (!game_configured)
 		{
-			pApp->LoadEnd						(); 
+			g_Engine->LoadEnd						(); 
 			return true;
 		}
 		
@@ -228,6 +228,6 @@ bool	CLevel::net_start_client6				()
 		net_start_result_total				= FALSE;
 	}
 
-	pApp->LoadEnd							(); 
+	g_Engine->LoadEnd							(); 
 	return true;
 }

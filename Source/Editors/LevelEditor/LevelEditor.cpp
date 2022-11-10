@@ -7,7 +7,7 @@
 #include "..\XrEngine\IGame_Persistent.h"
 #include "..\XrEngine\XR_IOConsole.h"
 #include "..\XrEngine\IGame_Level.h"
-#include "..\XrEngine\x_ray.h"
+#include "..\XrEngine\XRayEngine.h"
 #include "Engine/XRayEditor.h"
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {
@@ -38,7 +38,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
     Scene = xr_new<EScene>();
     EditorScene = Scene;
     UIMainForm* MainForm = xr_new< UIMainForm>();
-    pApp = xr_new<XRayEditor>();
+    g_Engine = xr_new<XRayEditor>();
     g_XrGameManager = xr_new<XrGameManager>();
     g_SEFactoryManager = xr_new<XrSEFactoryManager>();
     /*
@@ -54,7 +54,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
     {
     }
 	xr_delete(MainForm);
-	xr_delete(pApp);
+	xr_delete(g_Engine);
 	xr_delete(g_XrGameManager);
 	xr_delete(g_SEFactoryManager);
 

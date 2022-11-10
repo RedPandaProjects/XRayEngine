@@ -424,7 +424,7 @@
     <ClInclude Include="xr_ioc_cmd.h" />
     <ClInclude Include="xr_object.h" />
     <ClInclude Include="xr_object_list.h" />
-    <ClInclude Include="x_ray.h" />
+    <ClInclude Include="XRayEngineInterface.h" />
     <ClInclude Include="_d3d_extensions.h" />
   </ItemGroup>
   <ItemGroup>
@@ -589,7 +589,7 @@
     <ClCompile Include="xr_ioc_cmd.cpp" />
     <ClCompile Include="xr_object.cpp" />
     <ClCompile Include="xr_object_list.cpp" />
-    <ClCompile Include="x_ray.cpp" />
+    <ClCompile Include="XRayEngineInterface.cpp" />
     <ClCompile Include="_scripting.cpp" />
   </ItemGroup>
   <ItemGroup>

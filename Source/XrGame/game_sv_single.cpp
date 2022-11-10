@@ -8,7 +8,7 @@
 #include "../xrEngine/object_broker.h"
 #include "gamepersistent.h"
 #include "xrServer.h"
-#include "../xrEngine/x_ray.h"
+#include "../xrEngine/XRayEngineInterface.h"
 #include "../xrEngine/dedicated_server_only.h"
 #include "../xrEngine/no_single.h"
 
@@ -345,13 +345,13 @@ void game_sv_Single::restart_simulator			(LPCSTR saved_game_name)
 	xr_strcpy					(g_pGamePersistent->m_game_params.m_game_or_spawn,saved_game_name);
 	xr_strcpy					(g_pGamePersistent->m_game_params.m_new_or_load,"load");
 
-	pApp->ls_header[0] = '\0';
-	pApp->ls_tip_number[0] = '\0';
-	pApp->ls_tip[0] = '\0';
-	pApp->LoadBegin			();
+	g_Engine->ls_header[0] = '\0';
+	g_Engine->ls_tip_number[0] = '\0';
+	g_Engine->ls_tip[0] = '\0';
+	g_Engine->LoadBegin			();
 	m_alife_simulator		= xr_new<CALifeSimulator>(&server(),&options);
 //	g_pGamePersistent->LoadTitle		("st_client_synchronising");
 	g_pGamePersistent->LoadTitle		();
 	Device->PreCache			(60, true, true);
-	pApp->LoadEnd			();
+	g_Engine->LoadEnd			();
 }

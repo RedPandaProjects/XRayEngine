@@ -3,7 +3,7 @@
 #include "ui_base.h"
 class CUIStatic;
 
-class CUICursor:	public pureRender, 
+class CUICursor:	public pureRenderUI, 
 					public pureScreenResolutionChanged
 {
 	bool			bVisible;
@@ -15,7 +15,7 @@ class CUICursor:	public pureRender,
 public:
 					CUICursor					();
 	virtual			~CUICursor					();
-	virtual void	OnRender					();
+	virtual void	OnRenderUI					();
 	
 	Fvector2		GetCursorPositionDelta		();
 

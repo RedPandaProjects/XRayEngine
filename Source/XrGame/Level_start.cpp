@@ -5,7 +5,7 @@
 #include "game_cl_base.h"
 #include "xrmessages.h"
 #include "xrGameSpyServer.h"
-#include "../xrEngine/x_ray.h"
+#include "../xrEngine/XRayEngineInterface.h"
 #include "../xrEngine/Device.h"
 #include "../xrEngine/IGame_Persistent.h"
 #include "../xrEngine/xr_ioconsole.h"
@@ -29,7 +29,7 @@ BOOL CLevel::net_Start	( LPCSTR op_server, LPCSTR op_client )
 {
 	net_start_result_total				= TRUE;
 
-	pApp->LoadBegin				();
+	g_Engine->LoadBegin				();
 
 	string64	player_name;
 	GetPlayerName_FromRegistry( player_name, sizeof(player_name) );
@@ -127,7 +127,7 @@ bool CLevel::net_start1				()
 			if (!g_dedicated_server)
 				g_pGamePersistent->LoadTitle(true, map_data.m_name);
 
-			int							id = pApp->Level_ID(map_data.m_name.c_str(), l_ver.c_str(), true);
+			int							id = g_Engine->Level_ID(map_data.m_name.c_str(), l_ver.c_str(), true);
 
 			if (id<0) {
 				Log						("Can't find level: ",map_data.m_name.c_str());
@@ -242,7 +242,7 @@ bool CLevel::net_start6				()
 	BulletManager().Clear		();
 	BulletManager().Load		();
 
-	pApp->LoadEnd				();
+	g_Engine->LoadEnd				();
 
 	if(net_start_result_total){
 		if (strstr(Core.Params,"-$")) {

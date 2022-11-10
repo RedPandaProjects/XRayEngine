@@ -337,3 +337,13 @@ void CEnvironmentSOC::OnFrame()
 	// ******************** Environment params (setting)
 	m_pRender->OnFrame(*this);
 }
+
+void CEnvSOCDescriptor::copy(const IEnvDescriptor& src)
+{
+	float tm0 = exec_time;
+	float tm1 = exec_time_loaded;
+	*this = *dynamic_cast<const CEnvSOCDescriptor*>(&src);
+	exec_time = tm0;
+	exec_time_loaded = tm1;
+
+}

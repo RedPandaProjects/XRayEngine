@@ -13,7 +13,7 @@
 #include <directx\d3dx9.h>
 #pragma warning(default:4995)
 
-#include "x_ray.h"
+#include "XRayEngineInterface.h"
 #include "render.h"
 
 // must be defined before include of FS_impl.h
@@ -104,7 +104,6 @@ void CRenderDevice::Clear	()
 	m_pRender->Clear();
 }
 
-extern void CheckPrivilegySlowdown();
 
 
 void CRenderDevice::End		(void)
@@ -142,7 +141,6 @@ void CRenderDevice::End		(void)
 			g_find_chunk_counter.flush();
 #endif // FIND_CHUNK_BENCHMARK_ENABLE
 
-			CheckPrivilegySlowdown							();
 			
 			if(g_pGamePersistent->GameType()==1)//haCk
 			{
@@ -157,8 +155,6 @@ void CRenderDevice::End		(void)
 	g_bRendering		= FALSE;
 	// end scene
 	//	Present goes here, so call OA Frame end.
-	if (g_SASH.IsBenchmarkRunning())
-		g_SASH.DisplayFrame(Device->fTimeGlobal);
 	m_pRender->End();
 	//RCache.OnFrameEnd	();
 	//MemoryInterface->dbg_check		();
@@ -247,13 +243,10 @@ void CRenderDevice::on_idle		()
 	{
 		if( g_loading_events->front()() )
 			g_loading_events->pop_front();
-		pApp->LoadDraw				();
+		g_Engine->LoadDraw				();
 		return;
 	}else 
 	{
-		if ( (!Device->dwPrecacheFrame) && (!g_SASH.IsBenchmarkRunning())
-			&& g_bLoaded)
-			g_SASH.StartBenchmark();
 
 		FrameMove						( );
 	}
@@ -498,7 +491,6 @@ void CRenderDevice::Pause(BOOL bOn, BOOL bTimer, BOOL bSound, LPCSTR reason)
 {
 	static int snd_emitters_ = -1;
 
-	if (g_bBenchmark)	return;
 
 
 #ifdef DEBUG
@@ -627,12 +619,12 @@ void CLoadScreenRenderer::stop()
 {
 	if(!b_registered)				return;
 	Device->seqRender.Remove			(this);
-	pApp->destroy_loading_shaders	();
+	g_Engine->destroy_loading_shaders	();
 	b_registered					= false;
 	b_need_user_input				= false;
 }
 
 void CLoadScreenRenderer::OnRender() 
 {
-	pApp->load_draw_internal();
+	g_Engine->load_draw_internal();
 }

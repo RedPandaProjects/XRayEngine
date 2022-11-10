@@ -527,12 +527,12 @@ void CGamePersistent::OnRenderPPUI_PP()
 	MainMenu()->OnRenderPPUI_PP();
 }
 #include "string_table.h"
-#include "../XrEngine/x_ray.h"
+#include "../XrEngine/XRayEngine.h"
 void CGamePersistent::LoadTitle(LPCSTR str)
 {
 	string512			buff;
 	sprintf_s				(buff, "%s...", CStringTable().translate(str).c_str());
-	pApp->LoadTitleInt	(buff,"","");
+	g_Engine->LoadTitleInt	(buff,"","");
 }
 
 bool CGamePersistent::CanBePaused()

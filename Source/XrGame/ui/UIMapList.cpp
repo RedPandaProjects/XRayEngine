@@ -17,9 +17,6 @@
 
 #include "ui/UICDkey.h"
 
-extern ENGINE_API string512		g_sLaunchOnExit_app;
-extern ENGINE_API string512		g_sLaunchOnExit_params;
-extern ENGINE_API string_path	g_sLaunchWorkingFolder;
 
 LPCSTR GameTypeToString(EGameIDs gt, bool bShort);
 
@@ -72,11 +69,11 @@ void CUIMapList::StartDedicatedServer(){
 	GetModuleFileName(NULL, ModuleFileName, sizeof(ModuleFileName));
 
 	char* ModuleName	= NULL;
-	GetFullPathName		(ModuleFileName, sizeof(g_sLaunchWorkingFolder), g_sLaunchWorkingFolder, &ModuleName);
-	//removing module name from WorkingDirectory that contain full path...
-	ModuleName[0]		= 0;
+	//GetFullPathName		(ModuleFileName, sizeof(g_sLaunchWorkingFolder), g_sLaunchWorkingFolder, &ModuleName);
+	////removing module name from WorkingDirectory that contain full path...
+	//ModuleName[0]		= 0;
 			
-	xr_strcpy			(g_sLaunchOnExit_app, g_sLaunchWorkingFolder);
+	/*xr_strcpy			(g_sLaunchOnExit_app, g_sLaunchWorkingFolder);
 	xr_strcat			(g_sLaunchOnExit_app, "dedicated\\xrEngine.exe");
 
 	xr_strcpy			(g_sLaunchOnExit_params, g_sLaunchOnExit_app);
@@ -85,7 +82,7 @@ void CUIMapList::StartDedicatedServer(){
 	Msg					("Going to quit before starting dedicated server");
 	Msg					("Working folder is:%s", g_sLaunchWorkingFolder);
 	Msg					("%s %s",g_sLaunchOnExit_app, g_sLaunchOnExit_params);
-	Console->Execute	("quit");
+	Console->Execute	("quit");*/
 }
 
 

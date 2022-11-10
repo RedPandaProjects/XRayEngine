@@ -2,7 +2,7 @@
 
 #include "dxApplicationRender.h"
 #ifndef REDITOR
-#include "../../xrEngine/x_ray.h"
+#include "../../xrEngine/XRayEngine.h"
 #include "../../xrEngine/GameFont.h"
 #endif
 void draw_multiline_text(CGameFont* F, float fTargetWidth, LPCSTR pszText);
@@ -46,7 +46,7 @@ void dxApplicationRender::KillHW()
 
 u32 calc_progress_color(u32, u32, int, int);
 
-void dxApplicationRender::load_draw_internal(CApplication &owner)
+void dxApplicationRender::load_draw_internal(XRayEngineInterface &owner)
 {
 #ifndef REDITOR
 #if defined(USE_DX10) || defined(USE_DX11)

@@ -9,7 +9,7 @@
 #include "RenderVisual.h"
 #include "Kinematics.h"
 
-#include "x_ray.h"
+#include "XRayEngineInterface.h"
 #include "GameFont.h"
 
 #include "mp_logging.h"

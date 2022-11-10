@@ -8,7 +8,7 @@
 #include "game_cl_artefacthunt.h"
 #include "game_cl_single.h"
 #include "MainMenu.h"
-#include "../xrEngine/x_ray.h"
+#include "../xrEngine/XRayEngineInterface.h"
 #include "file_transfer.h"
 #include "screenshot_server.h"
 #include "../xrNetServer/NET_AuthCheck.h"
@@ -21,7 +21,7 @@ LPCSTR xrServer::get_map_download_url(LPCSTR level_name, LPCSTR level_version)
 {
 	R_ASSERT(level_name && level_version);
 	LPCSTR ret_url = "";
-	CInifile* level_ini = pApp->GetArchiveHeader(level_name, level_version);
+	CInifile* level_ini = g_Engine->GetArchiveHeader(level_name, level_version);
 	if (!level_ini)
 	{
 		if(!IsGameTypeSingle())

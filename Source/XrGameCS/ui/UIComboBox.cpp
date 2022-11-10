@@ -212,8 +212,8 @@ void CUIComboBox::Update()
 		
 		if(m_list_frame.IsShown())
 		{
-			Device->seqRender.Remove		(this);
-			Device->seqRender.Add		(this, 3);
+			Device->seqRenderUI.Remove		(this);
+			Device->seqRenderUI.Add		(this, 3);
 		}
 	}
 
@@ -295,7 +295,7 @@ void CUIComboBox::Undo()
 	SetCurrentValue		();
 }
 
-void CUIComboBox::OnRender()
+void CUIComboBox::OnRenderUI()
 {
 	if(IsShown())
 	{
@@ -304,7 +304,7 @@ void CUIComboBox::OnRender()
 			UI()->PushScissor			(UI()->ScreenRect(),true);
 			m_list_frame.Draw			();
 			UI()->PopScissor			();
-			Device->seqRender.Remove		(this);
+			Device->seqRenderUI.Remove		(this);
 		}
 	}
 }

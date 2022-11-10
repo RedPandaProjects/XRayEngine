@@ -157,7 +157,7 @@ void CUISequencer::Start(LPCSTR tutor_name)
 		pItem->Load				(&uiXml,i);
 	}
 
-	Device->seqRender.Add		(this, render_prio /*-2*/);
+	Device->seqRenderUI.Add		(this, render_prio /*-2*/);
 	
 	CUISequenceItem* pCurrItem	= GetNextItem();
 	R_ASSERT3					(pCurrItem, "no item(s) to start", tutor_name);
@@ -227,7 +227,7 @@ void CUISequencer::Destroy()
 
 	m_global_sound.stop			();
 	Device->seqFrame.Remove		(this);
-	Device->seqRender.Remove		(this);
+	Device->seqRenderUI.Remove		(this);
 	delete_data					(m_sequencer_items);
 	delete_data					(m_UIWindow);
 	IR_Release					();
@@ -298,7 +298,7 @@ void CUISequencer::OnFrame()
 	m_UIWindow->Update			();
 }
 
-void CUISequencer::OnRender	()
+void CUISequencer::OnRenderUI	()
 {
 	if (m_UIWindow->IsShown())	
 		m_UIWindow->Draw();

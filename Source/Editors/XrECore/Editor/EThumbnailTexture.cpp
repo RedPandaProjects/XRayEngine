@@ -94,7 +94,10 @@ bool ETextureThumbnail::Load(LPCSTR src_name, LPCSTR path)
         FS.update_path                  (fn,_game_textures_,fn);
     }
 
-    if (!FS.exist(fn)) return false;
+    if (!FS.exist(fn))
+    {
+        return false;
+    }
 
     IReader* F 		= FS.r_open(fn);
     u16 version 	= 0;

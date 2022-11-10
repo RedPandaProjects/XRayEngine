@@ -15,13 +15,13 @@ CUICursor::CUICursor()
 	bVisible				= false;
 	vPos.set				(0.f,0.f);
 	InitInternal			();
-	Device->seqRender.Add	(this,2);
+	Device->seqRenderUI.Add	(this,2);
 }
 //--------------------------------------------------------------------
 CUICursor::~CUICursor	()
 {
 	xr_delete				(m_static);
-	Device->seqRender.Remove	(this);
+	Device->seqRenderUI.Remove	(this);
 }
 
 void CUICursor::OnScreenRatioChanged()
@@ -48,7 +48,7 @@ void CUICursor::InitInternal()
 
 //--------------------------------------------------------------------
 u32 last_render_frame = 0;
-void CUICursor::OnRender	()
+void CUICursor::OnRenderUI	()
 {
 	if( !IsVisible() ) return;
 #ifdef DEBUG

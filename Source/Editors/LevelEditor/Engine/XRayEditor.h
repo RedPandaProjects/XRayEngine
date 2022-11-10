@@ -1,6 +1,6 @@
 #pragma once
 
-class XRayEditor :public CApplication
+class XRayEditor :public XRayEngineInterface
 {
 public:
 	XRayEditor();

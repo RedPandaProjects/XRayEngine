@@ -2,7 +2,7 @@
 #include "igame_level.h"
 
 //#include "xr_effgamma.h"
-#include "x_ray.h"
+#include "XRayEngineInterface.h"
 #include "xr_ioconsole.h"
 #include "xr_ioc_cmd.h"
 //#include "fbasicvisual.h"

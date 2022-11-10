@@ -5,7 +5,7 @@
 #include "game_cl_base.h"
 #include "xrmessages.h"
 #include "xrGameSpyServer.h"
-#include "../XrEngine/x_ray.h"
+#include "../XrEngine/XRayEngine.h"
 #include "../XrEngine/device.h"
 #include "../XrEngine/IGame_Persistent.h"
 #include "../XrEngine/xr_ioconsole.h"

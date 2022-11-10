@@ -7,7 +7,7 @@ class CUISequenceItem;
 class CUIXml;
 class IUISequenceVideoItem;
 
-class CUISequencer :public pureFrame, public pureRender,	public IInputReceiver
+class CUISequencer :public pureFrame, public pureRenderUI,	public IInputReceiver
 {
 protected:
 	CUIWindow*				m_UIWindow;
@@ -25,7 +25,7 @@ public:
 	void					Destroy				();				//be careful
 
 	virtual void			OnFrame				();
-	virtual void			OnRender			();
+	virtual void			OnRenderUI			() override;
 	CUIWindow*				MainWnd				()				{return m_UIWindow;}
 	bool					IsActive			()				{return m_bActive;}
 

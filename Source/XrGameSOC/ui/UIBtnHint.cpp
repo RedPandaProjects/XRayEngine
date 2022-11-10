@@ -10,7 +10,7 @@ CUIButtonHint*		g_btnHint = NULL;
 CUIButtonHint::CUIButtonHint	()
 :m_ownerWnd(NULL),m_enabledOnFrame(false)
 {
-	Device->seqRender.Add		(this, REG_PRIORITY_LOW-1000);
+	Device->seqRenderUI.Add		(this, REG_PRIORITY_LOW-1000);
 
 	CUIXmlInit					xml_init;
 	CUIXml						uiXml;
@@ -31,10 +31,10 @@ CUIButtonHint::CUIButtonHint	()
 
 CUIButtonHint::~CUIButtonHint	()
 {
-	Device->seqRender.Remove		(this);
+	Device->seqRenderUI.Remove		(this);
 }
 
-void CUIButtonHint::OnRender	()
+void CUIButtonHint::OnRenderUI	()
 {
 	if(m_enabledOnFrame){
 		m_text->Update		();
@@ -50,7 +50,7 @@ void CUIButtonHint::SetHintText	(CUIWindow* w, LPCSTR text)
 	m_ownerWnd					= w;
 	m_text->SetText				(text);
 	m_text->AdjustWidthToText	();
-	m_text->ResetClrAnimation		();
+	m_text->ResetClrAnimation	();
 	float hh =					_max(m_text->GetWidth()+30.0f, 80.0f);
 	SetWidth					(hh);
 	m_border->SetWidth			(hh);

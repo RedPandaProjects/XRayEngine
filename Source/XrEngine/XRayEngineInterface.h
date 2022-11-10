@@ -4,12 +4,11 @@
 // refs
 class ENGINE_API CGameFont;
 
-#include "FactoryPtr.h"
-#include "ApplicationRender.h"
+#include "../XrRender/Public/FactoryPtr.h"
+#include "../XrRender/Public/ApplicationRender.h"
 
 // definition
-class ENGINE_API CApplication	:
-	public pureFrame,
+class ENGINE_API XRayEngineInterface	:
 	public IEventReceiver
 {
 	friend class dxApplicationRender;
@@ -25,7 +24,6 @@ public:
 	string2048				ls_tip_number;
 	string2048				ls_tip;
 private:
-	FactoryPtr<IApplicationRender>	m_pRender;
 
 	int		max_load_stage;
 
@@ -64,14 +62,30 @@ public:
 	virtual	void			OnEvent				(EVENT E, u64 P1, u64 P2);
 
 	// Other
-							CApplication		();
-	virtual					~CApplication		();
+							XRayEngineInterface		();
+	virtual					~XRayEngineInterface		();
 
-	virtual void	_BCL	OnFrame				();
+	virtual void			OnFrame				();
 	virtual	void			load_draw_internal	();
 	virtual	void			destroy_loading_shaders();
+	virtual void					Initialize();
+	virtual void					Destroy();
+private:
+	void InitEngine();
+	void InitSettings();
+	void InitInput();
+	void InitConsole();
+	void InitSound1();
+	void execUserScript();
+	void InitSound2();
+
+	void destroyInput();
+	void destroySettings();
+	void destroyConsole();
+	void destroySound();
+	void destroyEngine();
 };
 
-extern ENGINE_API	CApplication*	pApp;
+extern ENGINE_API	XRayEngineInterface*	g_Engine;
 
 #endif //__XR_BASE_H__

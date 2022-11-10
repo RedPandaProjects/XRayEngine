@@ -5,7 +5,7 @@
 //. class IUIShader;
 class CUIStatic;
 
-class CUICursor:public pureRender
+class CUICursor:public pureRenderUI
 {
 	bool			bVisible;
 	Fvector2		vPos;
@@ -16,7 +16,7 @@ class CUICursor:public pureRender
 public:
 					CUICursor		();
 	virtual			~CUICursor		();
-	virtual void	OnRender		();
+	virtual void	OnRenderUI		();
 	
 	Fvector2		GetCursorPositionDelta();
 

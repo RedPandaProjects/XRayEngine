@@ -12,7 +12,7 @@
 #include "ui/UIActorMenu.h"
 #include "ui/UIPdaWnd.h"
 
-#include "../xrEngine/x_ray.h"
+#include "../xrEngine/XRayEngine.h"
 EGameIDs ParseStringToGameType(LPCSTR str);
 struct predicate_remove_stat {
 	bool	operator() (SDrawStaticStruct& s) {

@@ -16,10 +16,6 @@
 #include "../xrEngine/object_broker.h"
 #include "game_base.h"
 
-extern ENGINE_API string512		g_sLaunchOnExit_app;
-extern ENGINE_API string512		g_sLaunchOnExit_params;
-extern ENGINE_API string_path	g_sLaunchWorkingFolder;
-
 LPCSTR GameTypeToString(EGameIDs gt, bool bShort);
 
 extern	void	GetPlayerName_FromRegistry	(char* name, u32 const name_size);
@@ -79,16 +75,16 @@ void CUIMapList::StartDedicatedServer(){
 	//removing module name from WorkingDirectory that contain full path...
 	ModuleName[0]		= 0;
 			
-	strcpy_s			(g_sLaunchOnExit_app, g_sLaunchWorkingFolder);
-	strcat_s			(g_sLaunchOnExit_app, "dedicated\\xrEngine.exe");
+	//strcpy_s			(g_sLaunchOnExit_app, g_sLaunchWorkingFolder);
+	//strcat_s			(g_sLaunchOnExit_app, "dedicated\\xrEngine.exe");
 
-	strcpy_s			(g_sLaunchOnExit_params, g_sLaunchOnExit_app);
-	strcat_s			(g_sLaunchOnExit_params, " -i -fsltx ..\\fsgame.ltx -nosound -");
-	strcat_s			(g_sLaunchOnExit_params, GetCommandLine(""));
-	Msg					("Going to quit before starting dedicated server");
-	Msg					("Working folder is:%s", g_sLaunchWorkingFolder);
-	Msg					("%s %s",g_sLaunchOnExit_app, g_sLaunchOnExit_params);
-	Console->Execute	("quit");
+	//strcpy_s			(g_sLaunchOnExit_params, g_sLaunchOnExit_app);
+	//strcat_s			(g_sLaunchOnExit_params, " -i -fsltx ..\\fsgame.ltx -nosound -");
+	//strcat_s			(g_sLaunchOnExit_params, GetCommandLine(""));
+	//Msg					("Going to quit before starting dedicated server");
+	//Msg					("Working folder is:%s", g_sLaunchWorkingFolder);
+	//Msg					("%s %s",g_sLaunchOnExit_app, g_sLaunchOnExit_params);
+	//Console->Execute	("quit");
 }
 
 

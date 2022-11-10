@@ -4,7 +4,7 @@
 class CUIStatic;
 class CUIFrameLineWnd;
 
-class CUIButtonHint :public CUIWindow, public pureRender
+class CUIButtonHint :public CUIWindow, public pureRenderUI
 {
 	CUIWindow*			m_ownerWnd;
 
@@ -16,7 +16,7 @@ public:
 	virtual			~CUIButtonHint	();
 	CUIWindow*		Owner			()	{return m_ownerWnd;}
 	void			Discard			()	{m_ownerWnd=NULL;};
-	virtual void	OnRender		();
+	virtual void	OnRenderUI		() override;
 	void			Draw_			()	{m_enabledOnFrame = true;};
 	void			SetHintText		(CUIWindow* w, LPCSTR text);
 };

@@ -52,7 +52,7 @@
 #include "CustomHUD.h"
 #include "CameraManager.h"
 #include "IGame_Level.h"
-#include "x_ray.h"
+#include "XRayEngine.h"
 #include "..\..\XrCDB\xrCDB.h"
 #include "..\..\XrCDB\ISpatial.h"
 #include "..\..\XrRender\Public\ParticleCustom.h"

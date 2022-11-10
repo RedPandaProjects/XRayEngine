@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Level.h"
 #include "xrMessages.h"
-#include "../XrEngine/x_ray.h"
+#include "../XrEngine/XRayEngine.h"
 #include "GameSpy/GameSpy_GCD_Client.h"
 
 

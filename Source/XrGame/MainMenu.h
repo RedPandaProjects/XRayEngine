@@ -46,7 +46,7 @@ struct  Patch_Dawnload_Progress{
 class CMainMenu :
 	public IMainMenu,
 	public IInputReceiver,
-	public pureRender,
+	public pureRenderUI,
 	public CDialogHolder,
 	public CUIWndCallback,
 	public CDeviceResetNotifier
@@ -158,7 +158,7 @@ public:
 	void			OnRenderPPUI_main				();
 	void			OnRenderPPUI_PP					();
 
-	virtual void			OnRender						();
+	virtual void			OnRenderUI						() override;
 	virtual void	_BCL	OnFrame							(void);
 
 	virtual bool	UseIndicators					()						{return false;}

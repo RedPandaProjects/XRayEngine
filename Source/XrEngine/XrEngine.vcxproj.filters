@@ -387,7 +387,7 @@
     <ClInclude Include="trivial_encryptor.h">
       <Filter>General</Filter>
     </ClInclude>
-    <ClInclude Include="x_ray.h">
+    <ClInclude Include="XRayEngineInterface.h">
       <Filter>General</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
@@ -584,9 +584,6 @@
     </ClInclude>
     <ClInclude Include="xr_ioc_cmd.h">
       <Filter>Engine\Console\commands</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine->h">
-      <Filter>Engine\Core</Filter>
     </ClInclude>
     <ClInclude Include="EngineAPI.h">
       <Filter>Engine\Core</Filter>
@@ -954,6 +951,7 @@
     <ClInclude Include="gametype_chooser.h">
       <Filter>Game API\Server</Filter>
     </ClInclude>
+    <ClInclude Include="Engine.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="defines.cpp">
@@ -962,7 +960,7 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>General</Filter>
     </ClCompile>
-    <ClCompile Include="x_ray.cpp">
+    <ClCompile Include="XRayEngineInterface.cpp">
       <Filter>General</Filter>
     </ClCompile>
     <ClCompile Include="IInputReceiver.cpp">
@@ -1138,9 +1136,6 @@
     </ClCompile>
     <ClCompile Include="xr_ioc_cmd.cpp">
       <Filter>Engine\Console\commands</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine->cpp">
-      <Filter>Engine\Core</Filter>
     </ClCompile>
     <ClCompile Include="EngineAPI.cpp">
       <Filter>Engine\Core</Filter>
@@ -1343,6 +1338,7 @@
     <ClCompile Include="gametype_chooser.cpp">
       <Filter>Game API\Server</Filter>
     </ClCompile>
+    <ClCompile Include="Engine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc">

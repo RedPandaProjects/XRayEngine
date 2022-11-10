@@ -437,7 +437,7 @@ bool allow_intro ()
 #ifdef MASTER_GOLD
 	if (g_SASH.IsRunning())
 #else	// #ifdef MASTER_GOLD
-	if ((0!=strstr(Core.Params, "-nointro")) || g_SASH.IsRunning())
+	if ((0!=strstr(Core.Params, "-nointro")) )
 #endif	// #ifdef MASTER_GOLD
 	{
 		return false;
@@ -817,10 +817,10 @@ void CGamePersistent::OnRenderPPUI_PP()
 	MainMenu()->OnRenderPPUI_PP();
 }
 #include "string_table.h"
-#include "../xrEngine/x_ray.h"
+#include "../xrEngine/XRayEngineInterface.h"
 void CGamePersistent::LoadTitle(bool change_tip, shared_str map_name)
 {
-	pApp->LoadStage();
+	g_Engine->LoadStage();
 	if(change_tip)
 	{
 		string512				buff;
@@ -846,7 +846,7 @@ void CGamePersistent::LoadTitle(bool change_tip, shared_str map_name)
 		else
 			xr_sprintf			(buff, "ls_mp_tip_%d", tip_num);
 
-		pApp->LoadTitleInt		(CStringTable().translate("ls_header").c_str(), tmp.c_str(), CStringTable().translate(buff).c_str());
+		g_Engine->LoadTitleInt		(CStringTable().translate("ls_header").c_str(), tmp.c_str(), CStringTable().translate(buff).c_str());
 	}
 }
 

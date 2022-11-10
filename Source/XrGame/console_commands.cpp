@@ -1360,14 +1360,14 @@ public:
 
 		if( EQ(args,"off")||EQ(args,"0") )
 			bWhatToDo = FALSE;
-		if (Device->IsEditorMode())
+		/*if (Device->IsEditorMode())
 		{
 			if (bWhatToDo)
 			{
 				EditorScene->Stop();
 			}
 		}
-		else
+		else*/
 		{
 			MainMenu()->Activate(bWhatToDo);
 		}

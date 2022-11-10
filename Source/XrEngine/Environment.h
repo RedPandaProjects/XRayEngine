@@ -20,9 +20,9 @@ class CLensFlareDescriptor;
 
 #define DAY_LENGTH		86400.f
 
-#include "FactoryPtr.h"
+#include "../XrRender/Public/FactoryPtr.h"
 #include "EnvironmentBase.h"
-#include "EnvironmentRender.h"
+#include "../XrRender/Public/EnvironmentRender.h"
 
 #ifdef INGAME_EDITOR
 #	define	INGAME_EDITOR_VIRTUAL	virtual
@@ -104,14 +104,7 @@ public:
 						CEnvDescriptor	(shared_str const& identifier);
 
 	virtual void				load			(CEnvironment& environment, CInifile& config);
-	virtual void				copy			(const IEnvDescriptor& src)
-	{
-		float tm0		= exec_time;
-		float tm1		= exec_time_loaded; 
-		*this			= *dynamic_cast<const CEnvDescriptor*>(&src);
-		exec_time		= tm0;
-		exec_time_loaded= tm1;
-	}
+	virtual void				copy			(const IEnvDescriptor& src);
 
 	virtual void				on_device_create	();
 	virtual void				on_device_destroy	();
@@ -148,7 +141,7 @@ private:
 
 	void					calculate_dynamic_sun_dir();
 public:
-	CEnvDescriptor*			GetCurrentDescriptor(size_t i) { return dynamic_cast<CEnvDescriptor*>(Current[i]); }
+	CEnvDescriptor*			GetCurrentDescriptor(size_t i) ;
 
 	FactoryPtr<IEnvironmentRender>	m_pRender;
 

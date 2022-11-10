@@ -84,7 +84,7 @@ public:
 				bool		m_has_upgrade;
 };
 
-class CUIDragItem: public CUIWindow, public pureRender, public pureFrame
+class CUIDragItem: public CUIWindow, public pureRenderUI, public pureFrame
 {
 	typedef		CUIWindow	inherited;
 	CUIStatic				m_static;
@@ -102,7 +102,7 @@ public:
 	virtual		bool		OnMouseAction					(float x, float y, EUIMessages mouse_action);
 	virtual		void		Draw					();
 
-	virtual		void			OnRender				();
+	virtual		void			OnRenderUI				();
 	virtual		void	_BCL	OnFrame					();
 
 		CUICellItem*		ParentItem				()							{return m_pParent;}

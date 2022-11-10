@@ -27,7 +27,7 @@ struct  Patch_Dawnload_Progress{
 class CMainMenu :
 	public IMainMenu,
 	public IInputReceiver,
-	public pureRender,
+	public pureRenderUI,
 	public CDialogHolder,
 	public CUIWndCallback,
 	public CDeviceResetNotifier
@@ -124,7 +124,7 @@ public:
 	void			OnRenderPPUI_main				();
 	void			OnRenderPPUI_PP					();
 
-	virtual void	OnRender						();
+	virtual void	OnRenderUI						() override;
 	virtual void	OnFrame							(void);
 	virtual void	StartStopMenu					(CUIDialogWnd* pDialog, bool bDoHideIndicators);
 	virtual bool	UseIndicators					()						{return false;}

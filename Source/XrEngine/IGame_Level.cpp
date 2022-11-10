@@ -2,7 +2,7 @@
 #include "igame_level.h"
 #include "igame_persistent.h"
 
-#include "x_ray.h"
+#include "XRayEngineInterface.h"
 #include "std_classes.h"
 #include "customHUD.h"
 #include "render.h"
@@ -86,7 +86,7 @@ BOOL IGame_Level::Load			(u32 dwNum)
 	SECUROM_MARKER_PERFORMANCE_ON(10)
 
 	// Initialize level data
-	pApp->Level_Set				( dwNum );
+	g_Engine->Level_Set				( dwNum );
 	string_path					temp;
 	if (!FS.exist(temp, "$level$", "level.ltx"))
 		Debug.fatal	(DEBUG_INFO,"Can't find level configuration file '%s'.",temp);
@@ -111,7 +111,7 @@ BOOL IGame_Level::Load			(u32 dwNum)
 	Sound->set_geometry_occ		(ObjectSpace.GetStaticModel	());
 	Sound->set_handler			( _sound_event );
 
-	pApp->LoadSwitch			();
+	g_Engine->LoadSwitch			();
 
 
 	// HUD + Environment

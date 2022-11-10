@@ -9,7 +9,7 @@
 #include "../XrEngine/object_broker.h"
 #include "gamepersistent.h"
 #include "xrServer.h"
-#include "..\XrEngine\x_ray.h"
+#include "..\XrEngine\XRayEngine.h"
 
 game_sv_Single::game_sv_Single			()
 {
@@ -327,9 +327,9 @@ void game_sv_Single::restart_simulator			(LPCSTR saved_game_name)
 	strcpy					(g_pGamePersistent->m_game_params.m_game_or_spawn,saved_game_name);
 	strcpy					(g_pGamePersistent->m_game_params.m_new_or_load,"load");
 
-	pApp->LoadBegin			();
+	g_Engine->LoadBegin			();
 	m_alife_simulator		= xr_new<CALifeSimulator>(&server(),&options);
 	g_pGamePersistent->LoadTitle		("st_client_synchronising");
 	Device->PreCache			(30,true,false);
-	pApp->LoadEnd			();
+	g_Engine->LoadEnd			();
 }

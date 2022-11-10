@@ -78,7 +78,7 @@ void CUISequencer::Start(LPCSTR tutor_name)
 {
 	VERIFY(m_items.size()==0);
 	Device->seqFrame.Add			(this, REG_PRIORITY_LOW-10000);
-	Device->seqRender.Add		(this, 3);
+	Device->seqRenderUI.Add		(this, 3);
 	
 	m_UIWindow					= xr_new<CUIWindow>();
 
@@ -113,7 +113,7 @@ void CUISequencer::Start(LPCSTR tutor_name)
 void CUISequencer::Destroy()
 {
 	Device->seqFrame.Remove		(this);
-	Device->seqRender.Remove		(this);
+	Device->seqRenderUI.Remove		(this);
 	delete_data					(m_items);
 	delete_data					(m_UIWindow);
 	IR_Release					();
@@ -159,7 +159,7 @@ void CUISequencer::OnFrame()
 	m_UIWindow->Update			();
 }
 
-void CUISequencer::OnRender	()
+void CUISequencer::OnRenderUI	()
 {
 	if (m_UIWindow->IsShown())	
 		m_UIWindow->Draw();

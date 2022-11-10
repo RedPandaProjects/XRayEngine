@@ -3,7 +3,7 @@
 #include "PHdynamicdata.h"
 #include "Physics.h"
 #include "level.h"
-#include "../XrEngine/x_ray.h"
+#include "../XrEngine/XRayEngine.h"
 #include "../XrEngine/igame_persistent.h"
 #include "PhysicsGamePars.h"
 #include "ai_space.h"
@@ -17,7 +17,7 @@ BOOL CLevel::net_Start_client	( LPCSTR options )
 #include "string_table.h"
 bool	CLevel::net_start_client1				()
 {
-	pApp->LoadBegin	();
+	g_Engine->LoadBegin	();
 	// name_of_server
 	string64					name_of_server = "";
 //	strcpy						(name_of_server,*m_caClientOptions);
@@ -66,10 +66,10 @@ bool	CLevel::net_start_client3				()
 		level_ver = "1.0";
 
 		// Determine internal level-ID
-		int						level_id = pApp->Level_ID(level_name, level_ver,true);
+		int						level_id = g_Engine->Level_ID(level_name, level_ver,true);
 		if (level_id<0)	{
 			Disconnect			();
-			pApp->LoadEnd		();
+			g_Engine->LoadEnd		();
 
 			connected_to_server = FALSE;
 			Msg("! Level (name:%s), (version:%s), not found",
@@ -77,7 +77,7 @@ bool	CLevel::net_start_client3				()
 		
 			return false;
 		}
-		pApp->Level_Set			(level_id);
+		g_Engine->Level_Set			(level_id);
 		m_name					= level_name;
 		// Load level
 		R_ASSERT2				(Load(level_id),"Loading failed.");
@@ -174,6 +174,6 @@ bool	CLevel::net_start_client6				()
 		net_start_result_total				= FALSE;
 	}
 
-	pApp->LoadEnd							(); 
+	g_Engine->LoadEnd							(); 
 	return true;
 }

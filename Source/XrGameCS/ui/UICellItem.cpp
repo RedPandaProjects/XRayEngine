@@ -277,14 +277,14 @@ CUIDragItem::CUIDragItem(CUICellItem* parent)
 	m_back_list						= NULL;
 	m_pParent						= parent;
 	AttachChild						(&m_static);
-	Device->seqRender.Add			(this, REG_PRIORITY_LOW-5000);
+	Device->seqRenderUI.Add			(this, REG_PRIORITY_LOW-5000);
 	Device->seqFrame.Add				(this, REG_PRIORITY_LOW-5000);
 	VERIFY							(m_pParent->GetMessageTarget());
 }
 
 CUIDragItem::~CUIDragItem()
 {
-	Device->seqRender.Remove			(this);
+	Device->seqRenderUI.Remove			(this);
 	Device->seqFrame.Remove			(this);
 }
 
@@ -311,7 +311,7 @@ bool CUIDragItem::OnMouse(float x, float y, EUIMessages mouse_action)
 	return false;
 }
 
-void CUIDragItem::OnRender()
+void CUIDragItem::OnRenderUI()
 {
 	Draw			();
 }

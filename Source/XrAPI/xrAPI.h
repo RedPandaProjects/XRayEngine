@@ -47,10 +47,8 @@ class XrEditorSceneInterface;
 extern XRAPI_API XrEditorSceneInterface* EditorScene;
 #endif
 
-#ifdef DEBUG
 	class IDebugRender;
 	extern XRAPI_API IDebugRender*	DRender;
-#endif // DEBUG
 
 /*
 // This class is exported from the xrAPI.dll

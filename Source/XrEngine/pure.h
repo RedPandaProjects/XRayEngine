@@ -16,6 +16,7 @@ typedef void  RP_FUNC		(void *obj);
 
 DECLARE_MESSAGE_CL(Frame,_BCL);
 DECLARE_MESSAGE(Render);
+DECLARE_MESSAGE(RenderUI);
 DECLARE_MESSAGE(AppActivate);
 DECLARE_MESSAGE(AppDeactivate);
 DECLARE_MESSAGE(AppStart);

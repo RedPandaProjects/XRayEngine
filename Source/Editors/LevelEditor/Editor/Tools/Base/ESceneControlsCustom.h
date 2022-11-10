@@ -15,7 +15,8 @@ struct SBeforeAppendCallbackParams{
 typedef  fastdelegate::FastDelegate1 < SBeforeAppendCallbackParams*, bool> TBeforeAppendCallback;
 typedef  fastdelegate::FastDelegate2 < TShiftState , CCustomObject* , bool> TAfterAppendCallback;
 
-class TUI_CustomControl{
+class TUI_CustomControl
+{
 protected:
     friend class ESceneToolBase;
     int sub_target;

@@ -53,17 +53,9 @@ public:
 	CEnvSOCDescriptor();
 
 	virtual void				load			(LPCSTR exec_tm, LPCSTR sect, IEnvironment* parent);
-	virtual void				copy			(const IEnvDescriptor& src)
-	{
-		float tm0		= exec_time;
-		float tm1		= exec_time_loaded; 
-		*this = *dynamic_cast<const CEnvSOCDescriptor*>(&src);
-		exec_time		= tm0;
-		exec_time_loaded= tm1;
-	}
-
-	void				on_device_create	();
-	void				on_device_destroy	();
+	virtual void				copy			(const IEnvDescriptor& src)override;
+	void				on_device_create	() override;
+	void				on_device_destroy	() override;
 };
 
 class ENGINE_API		CEnvSOCDescriptorMixer: public CEnvSOCDescriptor,public IEnvDescriptorMixer {

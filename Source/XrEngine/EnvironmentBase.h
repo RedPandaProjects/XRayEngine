@@ -1,6 +1,6 @@
 #pragma once
-#include "FactoryPtr.h"
-#include "EnvironmentRender.h"
+#include "../XrRender/Public/FactoryPtr.h"
+#include "../XrRender/Public/EnvironmentRender.h"
 class IEnvironment;
 class 	IEnvModifier
 {

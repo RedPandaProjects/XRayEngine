@@ -18,9 +18,7 @@ XRAPI_API XRayMemoryInterface* MemoryInterface = NULL;
 XRAPI_API XrGameEditorInterface* GameEditor = NULL;
 XRAPI_API XrEditorSceneInterface* EditorScene = NULL;
 #endif
-#ifdef DEBUG
 	XRAPI_API IDebugRender*	DRender = NULL;
-#endif // DEBUG
 
 /*
 // This is an example of an exported variable

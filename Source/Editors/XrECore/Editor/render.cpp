@@ -20,7 +20,6 @@ CRender   			RImplementation;
 CRender::CRender	()
 {
 	val_bInvisible = FALSE;
-	::Render = &RImplementation;
 	m_skinning					= 0;
 }
 

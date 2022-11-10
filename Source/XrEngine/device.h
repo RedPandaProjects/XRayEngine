@@ -170,7 +170,6 @@ private:
 };
 
 
-extern		ENGINE_API		bool				g_bBenchmark;
 
 extern	ENGINE_API xr_list<LOADING_EVENT>		*g_loading_events;
 class ENGINE_API CLoadScreenRenderer :public pureRender

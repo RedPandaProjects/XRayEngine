@@ -2,8 +2,6 @@
 #define ObjectSpaceRender_included
 #pragma once
 
-#ifdef DEBUG
-
 class IObjectSpaceRender
 {
 public:
@@ -15,6 +13,5 @@ public:
 	virtual void SetShader() = 0;
 };
 
-#endif // DEBUG
 
 #endif	//	ObjectSpaceRender_included

@@ -7,7 +7,7 @@
 
 class CUIListBoxItem;
 
-class CUIComboBox : public CUIWindow, public CUIOptionsItem, public pureRender
+class CUIComboBox : public CUIWindow, public CUIOptionsItem, public pureRenderUI
 {
 	friend class CUIXmlInit;
 	typedef enum{
@@ -26,7 +26,7 @@ public:
 	virtual void	UndoOptValue		();	// backup->current
 	virtual bool	IsChangedOptValue	() const;	// backup!=current
 
-	virtual void	OnRender					(); // only for list-box
+	virtual void	OnRenderUI					(); // only for list-box
 
 			LPCSTR		GetText					();
 			LPCSTR		GetTextOf				(int index);
