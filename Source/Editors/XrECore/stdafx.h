@@ -5,7 +5,6 @@
 // DirectX headers
 #include <d3d9.h>
 #include "directx\d3dx9.h"
-#include "..\..\XrRender\Private\xrD3dDefs.h"
 
 #include <dinput.h>
 //#include <dsound.h>
@@ -66,7 +65,8 @@ DEFINE_VECTOR		(xr_string*,LPAStringVec,LPAStringIt);
 #include "..\..\XrEngine\defines.h"
 
 #include "../../xrphysics/xrphysics.h"
-#include "..\..\XrRender\Private\FVF.h"
+#include "..\..\XrRender\Public\Kinematics.h"
+#include "..\..\XrRender\Public\KinematicsAnimated.h"
 
 struct str_pred 
 {
@@ -79,15 +79,9 @@ struct astr_pred
     {	return x<y;	}
 };
 
-#include "editor\device.h"
 #include "..\..\XrEngine\properties.h"
-#include "editor\render.h"
-DEFINE_VECTOR(FVF::L,FLvertexVec,FLvertexIt);
-DEFINE_VECTOR(FVF::TL,FTLvertexVec,FTLvertexIt);
-DEFINE_VECTOR(FVF::LIT,FLITvertexVec,FLITvertexIt);
 DEFINE_VECTOR(shared_str,RStrVec,RStrVecIt);
 
-#include "Editor/EditorPreferences.h"
 
 #ifdef _LEVEL_EDITOR                
 	#include "net_utils.h"
@@ -119,8 +113,6 @@ DEFINE_VECTOR(shared_str,RStrVec,RStrVecIt);
 #define		TEX_SPOT_ATT	"internal\\internal_light_attclip"
 
 #include "..\..\XrRender\Private\ETextureParams.h"
-#include "..\..\XrRender\Private\ResourceManager.h"
-#include "Editor/ImageManager.h"
 inline xr_string ChangeFileExt(const char* name, const char* e)
 {
 	string_path path;

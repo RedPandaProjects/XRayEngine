@@ -34,7 +34,7 @@ void CImage::SaveTGA(LPCSTR name, BOOL b24)
 
 	IWriter* F	= FS.w_open(name);
     if (F){
-		tga.maketga	(*F);
+		//tga.maketga	(*F);
     	FS.w_close	(F);
     }else{
         Log			("!Can't save tga:",name);
@@ -187,7 +187,7 @@ extern u32 * Stbi_Load(const char*,u32&,u32&);
 void CImage::Load	(LPCSTR name)
 {
 	VERIFY		(!pData);
-	pData		= Stbi_Load((LPSTR)name,dwWidth,dwHeight);
+	//pData		= Stbi_Load((LPSTR)name,dwWidth,dwHeight);
 }
 
 bool CImage::LoadTGA(LPCSTR name)

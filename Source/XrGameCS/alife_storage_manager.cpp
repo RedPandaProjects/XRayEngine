@@ -17,7 +17,7 @@
 #include "alife_registry_container.h"
 #include "xrserver.h"
 #include "level.h"
-#include "../xrEngine/XRayEngine.h"
+#include "../xrEngine/XRayEngineInterface.h"
 #include "saved_game_wrapper.h"
 #include "string_table.h"
 #include "../xrEngine/igame_persistent.h"
@@ -137,7 +137,7 @@ bool CALifeStorageManager::load	(LPCSTR save_name)
 	FS.update_path				(file_name,"$game_saves$",m_save_name);
 
 	strcpy_s					(g_last_saved_game, save_name);
-	strcpy_s					(g_bug_report_file, file_name);
+	//strcpy_s					(g_bug_report_file, file_name);
 
 	IReader						*stream;
 	stream						= FS.r_open(file_name);

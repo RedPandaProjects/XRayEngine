@@ -187,7 +187,7 @@ LPCSTR animation_name(CAI_Stalker *self, const MotionID &animation)
 {
 	if (!animation)
 		return			("");
-	IKinematicsAnimated	*skeleton_animated = smart_cast<IKinematicsAnimated*>(self->Visual());
+	IKinematicsAnimated	*skeleton_animated = CastToIKinematicsAnimated(self->Visual());
 	VERIFY				(skeleton_animated);
 	LPCSTR				name = skeleton_animated->LL_MotionDefName_dbg(animation).first;
 	return				(name);
@@ -1242,7 +1242,7 @@ static Fmatrix aim_on_actor		(
 
 static void fill_bones				(CAI_Stalker& self, Fmatrix const& transform, IKinematicsAnimated* kinematics_animated, LPCSTR animation_id, bool const local)
 {
-	IKinematics*						kinematics = smart_cast<IKinematics*>(kinematics_animated);
+	IKinematics*						kinematics = kinematics_animated->dcast_PKinematics();
 	u16									bone_count = kinematics->LL_BoneCount();
 	MotionID							animation = kinematics_animated->LL_MotionID(animation_id);
 	VERIFY								(animation.valid());
@@ -1359,7 +1359,7 @@ static void draw_bones				(
 
 static void draw_animation_bones	(CAI_Stalker& self, Fmatrix const& transform, IKinematicsAnimated* kinematics_animated, LPCSTR animation_id)
 {
-	IKinematics* kinematics				= smart_cast<IKinematics*>(kinematics_animated);
+	IKinematics* kinematics				= kinematics_animated->dcast_PKinematics();
 
 	u16									spine_bone_id = 
 		(u16)kinematics->LL_BoneID(
@@ -1394,7 +1394,7 @@ static void draw_animation_bones	(CAI_Stalker& self, Fmatrix const& transform, I
 
 #if 0
 	Fmatrix								player_head;
-	IKinematics* actor_kinematics		= smart_cast<IKinematics*>(Actor()->Visual());
+	IKinematics* actor_kinematics		= CastToIKinematics(Actor()->Visual());
 	actor_kinematics->Bone_GetAnimPos	(player_head, actor_kinematics->LL_BoneID("bip01_head"), 1, false);
 	player_head.mulA_43					(Actor()->XFORM());
 	Fvector								target = player_head.c;
@@ -1633,7 +1633,7 @@ Fvector	g_debug_position_3		= Fvector().set(0.f, 0.f, 0.f);
 void CAI_Stalker::OnRender				()
 {
 #if 0
-	IKinematicsAnimated*		kinematics = smart_cast<IKinematicsAnimated*>(Visual());
+	IKinematicsAnimated*		kinematics = CastToIKinematicsAnimated(Visual());
 	VERIFY						(kinematics);
 //	draw_animation_bones		(*this, XFORM(), kinematics, "loophole_2_no_look_idle_0");
 

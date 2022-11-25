@@ -11,8 +11,6 @@
 //
 #include "../../xrCore/xrCore.h"
 
-#include "../../../xrRender/Private/hwcaps.h"
-#include "../../../xrRender/Private/hw.h"
 #include "../../../xrEngine/pure.h"
 class CGameFont;
 
@@ -22,10 +20,6 @@ class CGameFont;
 
 //
 
-
-DEFINE_VECTOR(FVF::L,FLvertexVec,FLvertexIt);
-DEFINE_VECTOR(FVF::TL,FTLvertexVec,FTLvertexIt);
-DEFINE_VECTOR(FVF::LIT,FLITvertexVec,FLITvertexIt);
 DEFINE_VECTOR(shared_str,RStrVec,RStrVecIt);
 
 #endif

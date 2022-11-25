@@ -120,8 +120,8 @@ void CGameObject::net_Destroy	()
 	xr_delete				(m_ini_file);
 
 	m_script_clsid			= -1;
-	if (Visual() && smart_cast<IKinematics*>(Visual()))
-		smart_cast<IKinematics*>(Visual())->Callback	(0,0);
+	if (Visual() && CastToIKinematics(Visual()))
+		CastToIKinematics(Visual())->Callback	(0,0);
 
 	inherited::net_Destroy						();
 	setReady									(FALSE);
@@ -749,12 +749,12 @@ BOOL CGameObject::TestServerFlag(u32 Flag) const
 
 void CGameObject::add_visual_callback		(visual_callback *callback)
 {
-	VERIFY						(smart_cast<IKinematics*>(Visual()));
+	VERIFY						(CastToIKinematics(Visual()));
 	CALLBACK_VECTOR_IT			I = std::find(visual_callbacks().begin(),visual_callbacks().end(),callback);
 	VERIFY						(I == visual_callbacks().end());
 
 	if (m_visual_callback.empty())	SetKinematicsCallback(true);
-//		smart_cast<IKinematics*>(Visual())->Callback(VisualCallback,this);
+//		CastToIKinematics(Visual())->Callback(VisualCallback,this);
 	m_visual_callback.push_back	(callback);
 }
 
@@ -764,16 +764,16 @@ void CGameObject::remove_visual_callback	(visual_callback *callback)
 	VERIFY						(I != m_visual_callback.end());
 	m_visual_callback.erase		(I);
 	if (m_visual_callback.empty())	SetKinematicsCallback(false);
-//		smart_cast<IKinematics*>(Visual())->Callback(0,0);
+//		CastToIKinematics(Visual())->Callback(0,0);
 }
 
 void CGameObject::SetKinematicsCallback		(bool set)
 {
 	if(!Visual())	return;
 	if (set)
-		smart_cast<IKinematics*>(Visual())->Callback(VisualCallback,this);
+		CastToIKinematics(Visual())->Callback(VisualCallback,this);
 	else
-		smart_cast<IKinematics*>(Visual())->Callback(0,0);
+		CastToIKinematics(Visual())->Callback(0,0);
 };
 
 void VisualCallback	(IKinematics *tpKinematics)
@@ -1039,7 +1039,7 @@ void CGameObject::on_matrix_change	(const Fmatrix &previous)
 void render_box						(IRenderVisual *visual, const Fmatrix &xform, const Fvector &additional, bool draw_child_boxes, const u32 &color)
 {
 	CDebugRenderer			&renderer = Level().debug_renderer();
-	IKinematics				*kinematics = smart_cast<IKinematics*>(visual);
+	IKinematics				*kinematics = CastToIKinematics(visual);
 	VERIFY					(kinematics);
 	u16						bone_count = kinematics->LL_BoneCount();
 	VERIFY					(bone_count);

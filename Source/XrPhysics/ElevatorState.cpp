@@ -4,7 +4,7 @@
 #include "PHCharacter.h"
 #include "MathUtils.h"
 #include "PHWorld.h"
-#include "../xrengine/device.h"
+#include "../xrengine/XrDeviceInterface.h"
 #ifdef DEBUG
 #include "../xrEngine/Statgraph.h"
 #include "debug_output.h"

@@ -163,7 +163,6 @@ void CMainMenu::ReadTextureInfo()
 
 }
 
-extern ENGINE_API BOOL	bShowPauseString;
 extern bool				IsGameTypeSingle();
 
 void CMainMenu::Activate	(bool bActivate)
@@ -195,13 +194,13 @@ void CMainMenu::Activate	(bool bActivate)
 		Console->Hide				();
 
 
-		if(b_is_single)
+		/*if(b_is_single)
 		{
 			m_Flags.set					(flRestorePauseStr, bShowPauseString);
 			bShowPauseString			= FALSE;
 			if(!m_Flags.test(flRestorePause))
 				Device->Pause			(TRUE, TRUE, FALSE, "mm_activate2");
-		}
+		}*/
 
 		if(g_pGameLevel)
 		{
@@ -246,13 +245,13 @@ void CMainMenu::Activate	(bool bActivate)
 		if(m_Flags.test(flRestoreConsole))
 			Console->Show			();
 
-		if(b_is_single)
-		{
-			if(!m_Flags.test(flRestorePause))
-				Device->Pause			(FALSE, TRUE, FALSE, "mm_deactivate1");
+		//if(b_is_single)
+		//{
+		//	if(!m_Flags.test(flRestorePause))
+		//		Device->Pause			(FALSE, TRUE, FALSE, "mm_deactivate1");
 
-			bShowPauseString			= m_Flags.test(flRestorePauseStr);
-		}	
+		//	//bShowPauseString			= m_Flags.test(flRestorePauseStr);
+		//}	
 
 		if(m_Flags.test(flRestoreCursor))
 			GetUICursor().Show			();

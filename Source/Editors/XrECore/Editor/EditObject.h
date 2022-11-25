@@ -44,7 +44,6 @@ struct SSimpleImage;
 class ECORE_API CSurface
 {
     u32				m_GameMtlID;
-    ref_shader		m_Shader;
 	enum ERTFlags{
         rtValidShader	= (1<<0),
 	};
@@ -63,13 +62,10 @@ public:
 
 	Flags32			m_RTFlags;
 	u32				tag;
-    SSimpleImage*	m_ImageData;
 public:
 	CSurface		()
 	{
     	m_GameMtlName="default";
-        m_ImageData	= 0;
-		m_Shader	= 0;
         m_RTFlags.zero	();
 		m_Flags.zero	();
 		m_dwFVF		= 0;
@@ -81,10 +77,7 @@ public:
     }
 #if 1
 					~CSurface		();
-	IC void			CopyFrom		(CSurface* surf){*this = *surf; m_Shader=0; m_RTFlags.set(rtValidShader, FALSE);}
-    IC int			_Priority		()	{return _Shader()?_Shader()->E[0]->flags.iPriority:1;}
-    IC bool			_StrictB2F		()	{return _Shader()?_Shader()->E[0]->flags.bStrictB2F:false;}
-	IC ref_shader	_Shader			()	{if (!m_RTFlags.is(rtValidShader)) OnDeviceCreate(); return m_Shader;}
+	IC void			CopyFrom		(CSurface* surf){*this = *surf;  m_RTFlags.set(rtValidShader, FALSE);}
 #endif
     IC LPCSTR		_Name			()const {return *m_Name;}
     IC LPCSTR		_ShaderName		()const {return *m_ShaderName;}
@@ -111,15 +104,9 @@ public:
     IC u32			_GameMtl		()const	{return GameMaterialLibrary->GetMaterialID	(*m_GameMtlName);}
     IC void			OnDeviceCreate	()
     { 
-        R_ASSERT(!m_RTFlags.is(rtValidShader));
-    	if (m_ShaderName.size()&&m_Texture.size())	m_Shader.create(*m_ShaderName,*m_Texture); 
-        else                                       	m_Shader.create("editor\\wire");
-        m_RTFlags.set(rtValidShader,TRUE);
     }
     IC void			OnDeviceDestroy	()
     {
-    	m_Shader.destroy();
-        m_RTFlags.set(rtValidShader,FALSE);
     }
     void			CreateImageData	();
     void			RemoveImageData	();
@@ -153,12 +140,11 @@ public CPhysicsShellHolderEditorBase
     friend class TfrmPropertiesEObject;
     friend class CSector;
     friend class TUI_ControlSectorAdd;
-	friend class ELibrary;
+	friend class XRayObjectLibrary;
 	friend class TfrmEditLibrary;
 	friend class MeshExpUtility;
 
 #if 1
-	ref_geom 		vs_SkeletonGeom;
 #endif
 // desc
 	shared_str 		m_CreateName;
@@ -171,7 +157,6 @@ public CPhysicsShellHolderEditorBase
 
 	EditMeshVec		m_Meshes;
 
-    ref_shader		m_LODShader;
 
 	// skeleton
 	BoneVec			m_Bones;

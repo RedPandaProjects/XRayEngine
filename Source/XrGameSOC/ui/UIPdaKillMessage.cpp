@@ -59,12 +59,12 @@ float CUIPdaKillMessage::InitText(CUIStatic& refStatic, float x, PlayerInfo& inf
 	float selfHeight					= GetHeight();
 	CGameFont* pFont					= GetFont();
 
-	float width							= pFont->SizeOf_(*info.m_name);
+	float width							= pFont->GetTextSize(*info.m_name);
 	UI()->ClientToScreenScaledWidth		(width);
 
 	float height						= pFont->CurrentHeight_();
 	y = (selfHeight - height)/2;
-	float __eps							= pFont->SizeOf_('o');//hack -(
+	float __eps							= pFont->GetTextSize('o');//hack -(
 	UI()->ClientToScreenScaledWidth		(__eps);
 
 	clamp								(width, 0.0f, 120.0f);

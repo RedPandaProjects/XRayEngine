@@ -10,17 +10,16 @@ class CEditableObject;
 
 DEFINE_MAP_PRED(xr_string,CEditableObject*,EditObjMap,EditObjPairIt,astr_pred);
 //----------------------------------------------------
-class ECORE_API ELibrary//:	public pureDeviceCreate, public pureDeviceDestroy
+class ECORE_API XRayObjectLibrary//:	public pureDeviceCreate, public pureDeviceDestroy
 {
 	bool				m_bReady;
-	friend class TfrmChoseObject;
 	EditObjMap			m_EditObjects;
 
     CEditableObject*	LoadEditObject		(LPCSTR full_name);
     void				UnloadEditObject	(LPCSTR full_name);
 public:
-						ELibrary			();
-	virtual 			~ELibrary			();
+						XRayObjectLibrary			();
+	virtual 			~XRayObjectLibrary			();
                     
     void  		RemoveObject		(LPCSTR fname, EItemType type, bool& res);
     void  		RenameObject		(LPCSTR fn0, LPCSTR fn1, EItemType type);
@@ -45,7 +44,7 @@ public:
 	virtual		void	OnDeviceDestroy		();
 };
 
-extern ECORE_API ELibrary Lib;
+extern ECORE_API XRayObjectLibrary* GRayObjectLibrary;
 //----------------------------------------------------
 #endif /*_INCDEF_Library_H_*/
 

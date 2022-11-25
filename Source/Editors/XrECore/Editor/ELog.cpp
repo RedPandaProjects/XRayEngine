@@ -6,30 +6,7 @@
 #pragma hdrstop
 
 #include "ELog.h"
-#include "UILogForm.h"
-#include "ui_main.h"
-void  ELogCallback(LPCSTR txt)
-{
-	if (0 == txt[0]) return;
-	TMsgDlgType mt = TMsgDlgType::mtCustom;
-	if (strncmp(txt, "! ", 2) == 0)
-	{
-		mt = mtError;
-	}
-	if (strncmp(txt, "~ ", 2) == 0)
-	{
-		mt = mtConfirmation;
-	}
-	if (strncmp(txt, "* ", 2) == 0)
-	{
-		mt = mtInformation;
-	}
 
-	UILogForm::AddMessage(txt);
-	if(UI)
-		UI->WriteConsole(mt, txt);
-
-}
 
 //----------------------------------------------------
 CLog ELog;
@@ -114,7 +91,6 @@ int CLog::DlgMsg (TMsgDlgType mt, int btn, LPCSTR _Format, ...)
 
 	int res=0;
 #if 1 
-    ExecCommand(COMMAND_RENDER_FOCUS);
 
     res=MessageDlg(buf, mt, btn);
     if (mtConfirmation==mt){
@@ -151,7 +127,6 @@ int CLog::DlgMsg (TMsgDlgType mt, int btn, LPCSTR _Format, ...)
 void CLog::Close()
 {
 	SetLogCB(0);
-	UILogForm::Destroy();
 }
 
 
@@ -165,7 +140,6 @@ int CLog::DlgMsg (TMsgDlgType mt, LPCSTR _Format, ...)
 
     int res=0;
 #if 1
-    ExecCommand(COMMAND_RENDER_FOCUS);
 
     if (mtConfirmation==mt)	res=MessageDlg(buf, mt,  mbYes | mbNo | mbCancel);
     else                   	res=MessageDlg(buf, mt,  mbOK);
@@ -209,7 +183,6 @@ void CLog::Msg(TMsgDlgType mt, LPCSTR _Format, ...)
 	vsprintf( buf, _Format, l );
 
 #if 1
-    UILogForm::AddMessage(xr_string(buf));
 #endif
 #ifdef _MAX_EXPORT
 	EConsole.print(mt,buf);

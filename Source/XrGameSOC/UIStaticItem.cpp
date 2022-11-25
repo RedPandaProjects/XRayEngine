@@ -28,16 +28,14 @@ void CUIStaticItem::CreateShader(LPCSTR tex, LPCSTR sh)
 	dbg_tex_name = tex;
 	dbg_sh_name = sh;
 #endif
+	hShader->inited();
 	uFlags &= !flValidRect;
 }
 
 void CUIStaticItem::SetShader(const ui_shader& sh)
 {
 	hShader = sh;
-	if (!hShader->inited())
-	{
-		DebugBreak();
-	}
+	hShader->inited();
 }
 
 void CUIStaticItem::Init(LPCSTR tex, LPCSTR sh, float left, float top, u32 align)
@@ -110,7 +108,7 @@ void CUIStaticItem::Render(float angle)
 
 	// actual rendering
 	u32		vOffset;
-	UIRender->StartPrimitive(64, IUIRender::ePrimitiveType::ptLineList, IUIRender::ePointType::pttTL);
+	UIRender->StartPrimitive(64, IUIRender::ePrimitiveType::ptTriList, IUIRender::ePointType::pttTL);
 
 	inherited::Render			(bp_ns,dwColor,angle);
 	// unlock VB and Render it as triangle LIST

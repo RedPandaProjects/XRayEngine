@@ -67,13 +67,13 @@ CUIMapList::~CUIMapList(){
 
 void CUIMapList::StartDedicatedServer(){
 
-	string_path ModuleFileName;		
-	GetModuleFileName(NULL, ModuleFileName, sizeof(ModuleFileName));
+	//string_path ModuleFileName;		
+	//GetModuleFileName(NULL, ModuleFileName, sizeof(ModuleFileName));
 
-	char* ModuleName	= NULL;
-	GetFullPathName		(ModuleFileName, sizeof(g_sLaunchWorkingFolder), g_sLaunchWorkingFolder, &ModuleName);
-	//removing module name from WorkingDirectory that contain full path...
-	ModuleName[0]		= 0;
+	//char* ModuleName	= NULL;
+	//GetFullPathName		(ModuleFileName, sizeof(g_sLaunchWorkingFolder), g_sLaunchWorkingFolder, &ModuleName);
+	////removing module name from WorkingDirectory that contain full path...
+	//ModuleName[0]		= 0;
 			
 	//strcpy_s			(g_sLaunchOnExit_app, g_sLaunchWorkingFolder);
 	//strcat_s			(g_sLaunchOnExit_app, "dedicated\\xrEngine.exe");

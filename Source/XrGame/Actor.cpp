@@ -709,8 +709,8 @@ void CActor::HitSignal(float perc, Fvector& vLocalDir, CObject* who, s16 element
 		float	yaw, pitch;
 		D.getHP(yaw,pitch);
 		IRenderVisual *pV = Visual();
-		IKinematicsAnimated *tpKinematics = smart_cast<IKinematicsAnimated*>(pV);
-		IKinematics *pK = smart_cast<IKinematics*>(pV);
+		IKinematicsAnimated *tpKinematics = CastToIKinematicsAnimated(pV);
+		IKinematics *pK = CastToIKinematics(pV);
 		VERIFY(tpKinematics);
 #pragma todo("Dima to Dima : forward-back bone impulse direction has been determined incorrectly!")
 		MotionID motion_ID = m_anims->m_normal.m_damage[iFloor(pK->LL_GetBoneInstance(element).get_param(1) + (angle_difference(r_model_yaw + r_model_yaw_delta,yaw) <= PI_DIV_2 ? 0 : 1))];
@@ -1470,9 +1470,9 @@ void CActor::RenderIndicator			(Fvector dpos, float r1, float r2, const ui_shade
 
 	UIRender->StartPrimitive(4, IUIRender::ptTriStrip, IUIRender::pttLIT);
 
-	CBoneInstance& BI = smart_cast<IKinematics*>(Visual())->LL_GetBoneInstance(u16(m_head));
+	CBoneInstance& BI = CastToIKinematics(Visual())->LL_GetBoneInstance(u16(m_head));
 	Fmatrix M;
-	smart_cast<IKinematics*>(Visual())->CalculateBones	();
+	CastToIKinematics(Visual())->CalculateBones	();
 	M.mul						(XFORM(),BI.mTransform);
 
 	Fvector pos = M.c; pos.add(dpos);
@@ -1520,9 +1520,9 @@ void CActor::RenderText				(LPCSTR Text, Fvector dpos, float* pdup, u32 color)
 {
 	if (!g_Alive()) return;
 	
-	CBoneInstance& BI = smart_cast<IKinematics*>(Visual())->LL_GetBoneInstance(u16(m_head));
+	CBoneInstance& BI = CastToIKinematics(Visual())->LL_GetBoneInstance(u16(m_head));
 	Fmatrix M;
-	smart_cast<IKinematics*>(Visual())->CalculateBones	();
+	CastToIKinematics(Visual())->CalculateBones	();
 	M.mul						(XFORM(),BI.mTransform);
 	//------------------------------------------------
 	Fvector v0, v1;

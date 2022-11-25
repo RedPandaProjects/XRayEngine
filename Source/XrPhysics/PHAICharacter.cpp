@@ -8,7 +8,7 @@
 #include "tri-colliderKNoOPC\__aabb_tri.h"
 
 #include "phaicharacter.h"
-#include "../xrengine/device.h"
+#include "../xrengine/XrDeviceInterface.h"
 
 #ifdef DEBUG
 //#	include "../xrEngine/StatGraph.h"

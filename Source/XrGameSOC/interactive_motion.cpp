@@ -23,7 +23,7 @@ void interactive_motion::setup(LPCSTR m,CPhysicsShell *s)
 {
 	
 	VERIFY(s);
-	motion = smart_cast<IKinematicsAnimated*>(s->PKinematics())->LL_MotionID(m);
+	motion = s->PKinematics()->dcast_PKinematicsAnimated()->LL_MotionID(m);
 	if(motion.valid())
 		flags.set(fl_use_death_motion,TRUE);
 
@@ -38,7 +38,7 @@ void interactive_motion::anim_callback(CBlend *B)
 void interactive_motion::play(CPhysicsShell *s)
 {
 	VERIFY( s );
-	smart_cast<IKinematicsAnimated*>( s->PKinematics( ) )->PlayCycle( motion, TRUE, anim_callback, this );
+	s->PKinematics()->dcast_PKinematicsAnimated()->PlayCycle( motion, TRUE, anim_callback, this );
 	state_start( s );
 }
 

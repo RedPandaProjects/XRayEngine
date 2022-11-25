@@ -56,7 +56,7 @@ CPHCapture::CPHCapture	(CPHCharacter   *a_character, CPhysicsShellHolder	*a_tage
 		return;
 	}
 
-	IKinematics* p_kinematics=smart_cast<IKinematics*>(capturer_object->Visual());
+	IKinematics* p_kinematics=CastToIKinematics(capturer_object->Visual());
 
 	if(!p_kinematics)
 	{
@@ -135,7 +135,7 @@ CPHCapture::CPHCapture(CPHCharacter   *a_character,CPhysicsShellHolder	*a_taget_
 		return;
 	}
 
-	IKinematics* p_kinematics=smart_cast<IKinematics*>(capturer_object->Visual());
+	IKinematics* p_kinematics=CastToIKinematics(capturer_object->Visual());
 
 	if(!p_kinematics)
 	{
@@ -182,7 +182,7 @@ CPHCapture::CPHCapture(CPHCharacter   *a_character,CPhysicsShellHolder	*a_taget_
 		return;
 	}
 
-	IKinematics* K=	smart_cast<IKinematics*>(V);
+	IKinematics* K=	CastToIKinematics(V);
 
 	if(!K)
 	{

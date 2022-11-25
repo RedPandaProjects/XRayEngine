@@ -225,7 +225,7 @@ void ProcessOne	(LPCSTR path, _finddata_t& F, bool root_only, TOnFind on_find_cb
 void Recurse(LPCSTR path, bool root_only, TOnFind on_find_cb, void* data)
 {
 	xr_string		fpath	= path;
-	fpath			+= "*.*";
+	fpath			+= "*";
 
     // begin search
     _finddata_t		sFile;

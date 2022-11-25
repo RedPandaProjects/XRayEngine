@@ -2,7 +2,7 @@
 
 #if XRGAME_EXPORTS | XRSEFACTORY_EXPORTS;
 #	define	_memcpy CopyMemory
-#	define	_memset MemoryInterface->mem_fill
+#	define	_memset memset
 #	define	_strlen xr_strlen
 #else
 #	define	_memcpy memcpy

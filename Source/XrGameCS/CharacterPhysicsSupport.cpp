@@ -37,7 +37,7 @@
 extern	BOOL death_anim_debug;
 #endif // DEBUG
 
-#include "../xrEngine/Device.h"
+#include "../xrEngine/XrDeviceInterface.h"
 
 #define USE_SMART_HITS
 #define USE_IK
@@ -175,7 +175,7 @@ void CCharacterPhysicsSupport::in_NetSpawn( CSE_Abstract* e )
 	if( m_EntityAlife.use_simplified_visual	( ) )
 	{
 		m_flags.set( fl_death_anim_on, TRUE );
-		IKinematics*	ka = smart_cast<IKinematics*>( m_EntityAlife.Visual( ) );
+		IKinematics*	ka = CastToIKinematics( m_EntityAlife.Visual( ) );
 		VERIFY( ka );
 		ka->CalculateBones_Invalidate( );
 		ka->CalculateBones( TRUE );
@@ -187,8 +187,8 @@ void CCharacterPhysicsSupport::in_NetSpawn( CSE_Abstract* e )
 	}
 	CPHDestroyable::Init();//this zerows colbacks !!;
 	IRenderVisual *pVisual = m_EntityAlife.Visual();
-	IKinematicsAnimated*ka= smart_cast<IKinematicsAnimated*>( pVisual );
-	IKinematics*pK= smart_cast<IKinematics*>( pVisual );
+	IKinematicsAnimated*ka= CastToIKinematicsAnimated( pVisual );
+	IKinematics*pK= CastToIKinematics( pVisual );
 	VERIFY( &e->spawn_ini() );
 	m_death_anims.setup( ka, *e->s_name , pSettings );
 	if( !m_EntityAlife.g_Alive() )
@@ -216,7 +216,7 @@ void CCharacterPhysicsSupport::in_NetSpawn( CSE_Abstract* e )
 	}
 	if( Type( ) == etStalker )
 	{
-		m_hit_animations.SetupHitMotions( *smart_cast<IKinematicsAnimated*>( m_EntityAlife.Visual( ) ) );
+		m_hit_animations.SetupHitMotions( *CastToIKinematicsAnimated( m_EntityAlife.Visual( ) ) );
 	}
 	anim_mov_state.init( );
 
@@ -512,7 +512,7 @@ IC		void	CCharacterPhysicsSupport::						UpdateDeathAnims				()
 	if(!m_flags.test(fl_death_anim_on) && !is_imotion(m_interactive_motion))//!m_flags.test(fl_use_death_motion)//!b_death_anim_on&&m_pPhysicsShell->isFullActive()
 	{
 		DestroyIKController( );
-		smart_cast<IKinematicsAnimated*>(m_EntityAlife.Visual())->PlayCycle("death_init");
+		CastToIKinematicsAnimated(m_EntityAlife.Visual())->PlayCycle("death_init");
 		m_flags.set(fl_death_anim_on,TRUE);
 	}
 }
@@ -596,7 +596,7 @@ void CCharacterPhysicsSupport::in_UpdateCL( )
 		m_hit_animations.GetBaseMatrix(m,m_EntityAlife);
 		DBG_DrawMatrix(m,1.5f);
 /*
-		IKinematicsAnimated	*K = smart_cast<IKinematicsAnimated*>(m_EntityAlife.Visual());
+		IKinematicsAnimated	*K = CastToIKinematicsAnimated(m_EntityAlife.Visual());
 		u16 hb = K->LL_BoneID("bip01_head");
 		u16 pb = K->LL_GetBoneRoot();
 		u16 nb = K->LL_BoneID("bip01_neck");
@@ -629,7 +629,7 @@ void CCharacterPhysicsSupport::CreateSkeleton(CPhysicsShell* &pShell)
 #endif	
 	pShell		= P_create_Shell();
 
-	IKinematics* k = smart_cast<IKinematics*>(m_EntityAlife.Visual());
+	IKinematics* k = CastToIKinematics(m_EntityAlife.Visual());
 
 	phys_shell_verify_object_model ( m_EntityAlife );
 	pShell->preBuild_FromKinematics(k);
@@ -640,7 +640,7 @@ void CCharacterPhysicsSupport::CreateSkeleton(CPhysicsShell* &pShell)
 	pShell->SmoothElementsInertia(0.3f);
 	pShell->set_PhysicsRefObject(&m_EntityAlife);
 	SAllDDOParams disable_params;
-	disable_params.Load(smart_cast<IKinematics*>(m_EntityAlife.Visual())->LL_UserData());
+	disable_params.Load(CastToIKinematics(m_EntityAlife.Visual())->LL_UserData());
 	pShell->set_DisableParams(disable_params);
 
 	pShell->Build();
@@ -992,7 +992,7 @@ void	CCharacterPhysicsSupport::	CreateShell						( CObject* who, Fvector& dp, Fv
 	xr_delete( m_interactive_animation );
 	destroy_animation_collision( );
 	//DestroyIKController( );
-	IKinematics* K=smart_cast<IKinematics*>( m_EntityAlife.Visual( ) );
+	IKinematics* K=CastToIKinematics( m_EntityAlife.Visual( ) );
 	//animation movement controller issues
 	bool	anim_mov_ctrl =m_EntityAlife.animation_movement_controlled( );
 	CBoneInstance	&BR = K->LL_GetBoneInstance( K->LL_GetBoneRoot( ) );
@@ -1160,7 +1160,7 @@ if( dbg_draw_ragdoll_spawn )
 	//	m_pPhysicsShell->AnimToVelocityState( Device->fTimeDelta, 2 * default_l_limit, 10.f * default_w_limit );
 	//	mXFORM.set( sv_xform );
 	//}
-	IKinematics* K=smart_cast<IKinematics*>( m_EntityAlife.Visual( ) );
+	IKinematics* K=CastToIKinematics( m_EntityAlife.Visual( ) );
 	K->CalculateBones_Invalidate();
 	K->CalculateBones	(TRUE);
 }
@@ -1176,7 +1176,7 @@ void CCharacterPhysicsSupport::in_ChangeVisual()
 	xr_delete( m_interactive_animation );
 	destroy_animation_collision();
 	destroy( m_interactive_motion );
-	IKinematicsAnimated* KA = smart_cast<IKinematicsAnimated*>( m_EntityAlife.Visual( ) );
+	IKinematicsAnimated* KA = CastToIKinematicsAnimated( m_EntityAlife.Visual( ) );
 	if( KA )
 	{
 		m_death_anims.setup( KA, m_EntityAlife.cNameSect().c_str() , pSettings );

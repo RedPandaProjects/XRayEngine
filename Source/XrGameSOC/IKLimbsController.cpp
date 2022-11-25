@@ -21,7 +21,7 @@ void CIKLimbsController::Create( CGameObject* O )
 {
 	m_legs_blend	 = 0;
 	
-	IKinematics* K=smart_cast<IKinematics*>(O->Visual());
+	IKinematics* K=CastToIKinematics(O->Visual());
 	m_object = O;
 	VERIFY( K );
 	{

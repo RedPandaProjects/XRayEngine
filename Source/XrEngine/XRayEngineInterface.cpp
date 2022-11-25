@@ -31,7 +31,6 @@
 #include "securom_api.h"
 #include "..\XrAPI\xrGameManager.h"
 #include "GameMtlLib.h"
-#include "device.h"
 //---------------------------------------------------------------------
 ENGINE_API CInifile* pGameIni		= NULL;
 // computing build id
@@ -154,22 +153,16 @@ LPCSTR _GetFontTexName (LPCSTR section)
 
 void _InitializeFont(CGameFont*& F, LPCSTR section, u32 flags)
 {
-	LPCSTR font_tex_name = _GetFontTexName(section);
-	R_ASSERT(font_tex_name);
+	LPCSTR FontName = pSettings->r_string(section, "font");
+	float FontSize = pSettings->r_float(section, "size");
+	if (!F)
+		F = xr_new<CGameFont>(FontName, FontSize, flags);
+	else
+		F->Initialize(FontName, FontSize);
 
-	LPCSTR sh_name = pSettings->r_string(section,"shader");
-	if(!F){
-		F = xr_new<CGameFont> (sh_name, font_tex_name, flags);
-	}else
-		F->Initialize(sh_name, font_tex_name);
-
-	if (pSettings->line_exist(section,"size")){
-		float sz = pSettings->r_float(section,"size");
-		if (flags&CGameFont::fsDeviceIndependent)	F->SetHeightI(sz);
-		else										F->SetHeight(sz);
-	}
-	if (pSettings->line_exist(section,"interval"))
-		F->SetInterval(pSettings->r_fvector2(section,"interval"));
+#ifdef DEBUG
+	F->m_font_name = section;
+#endif
 
 }
 
@@ -432,13 +425,13 @@ void XRayEngineInterface::Initialize()
 		g_pGamePersistent = (IGame_Persistent*)NEW_INSTANCE(CLSID_GAME_PERSISTANT);
 		g_SpatialSpace = xr_new<ISpatial_DB>();
 		g_SpatialSpacePhysic = xr_new<ISpatial_DB>();
+		g_loading_events = xr_new < xr_list<LOADING_EVENT>>();
 	}
-	Device->seqAppStart.Process(rp_AppStart);
 }
 
 void XRayEngineInterface::Destroy()
 {
-	Device->seqAppEnd.Process(rp_AppEnd);
+	xr_delete(g_loading_events);
 	xr_delete(g_SpatialSpacePhysic);
 	xr_delete(g_SpatialSpace);
 	DEL_INSTANCE(g_pGamePersistent);
@@ -653,6 +646,7 @@ void XRayEngineInterface::OnFrame	( )
 	g_SpatialSpace->update			();
 	g_SpatialSpacePhysic->update	();
 	if (g_pGameLevel)				g_pGameLevel->SoundEvent_Dispatch	( );
+	Device->seqFrame.Process(rp_Frame);
 }
 
 void XRayEngineInterface::Level_Append		(LPCSTR folder)
@@ -680,20 +674,15 @@ void XRayEngineInterface::Level_Scan()
 {
 
 	for (u32 i=0; i<Levels.size(); i++)
-	{
+	{ 
 		xr_free(Levels[i].folder);
 		xr_free(Levels[i].name);
 	}
 	Levels.clear	();
 
+	Level_Append("labx8\\");
 
-	xr_vector<char*>* folder			= FS.file_list_open		("$game_levels$",FS_ListFolders|FS_RootOnly);
-//.	R_ASSERT							(folder&&folder->size());
 	
-	for (u32 i=0; i<folder->size(); ++i)	
-		Level_Append((*folder)[i]);
-	
-	FS.file_list_close		(folder);
 
 }
 
@@ -751,30 +740,8 @@ void XRayEngineInterface::Level_Set(u32 L)
 int XRayEngineInterface::Level_ID(LPCSTR name, LPCSTR ver, bool bSet)
 {
 	int result = -1;
-	CLocatorAPI* RealFS = dynamic_cast<CLocatorAPI*>(xr_FS);
-	VERIFY(RealFS);
-
-	CLocatorAPI::archives_it it		= RealFS->m_archives.begin();
-	CLocatorAPI::archives_it it_e	= RealFS->m_archives.end();
-	bool arch_res					= false;
-
-	for(;it!=it_e;++it)
-	{
-		CLocatorAPI::archive& A		= *it;
-		if(A.hSrcFile==NULL)
-		{
-			LPCSTR ln = A.header->r_string("header", "level_name");
-			LPCSTR lv = A.header->r_string("header", "level_ver");
-			if ( 0==stricmp(ln,name) && 0==stricmp(lv,ver) )
-			{
-				RealFS->LoadArchive(A);
-				arch_res = true;
-			}
-		}
-	}
-
-	if( arch_res )
-		Level_Scan							();
+	
+	Level_Scan							();
 	
 	string256		buffer;
 	strconcat		(sizeof(buffer),buffer,name,"\\");
@@ -790,42 +757,20 @@ int XRayEngineInterface::Level_ID(LPCSTR name, LPCSTR ver, bool bSet)
 	if(bSet && result!=-1)
 		Level_Set(result);
 
-	if( arch_res )
-		g_pGamePersistent->OnAssetsChanged	();
+	g_pGamePersistent->OnAssetsChanged	();
 
 	return result;
 }
 
 CInifile*  XRayEngineInterface::GetArchiveHeader(LPCSTR name, LPCSTR ver)
 {
-	CLocatorAPI* RealFS = dynamic_cast<CLocatorAPI*>(xr_FS);
-	VERIFY(RealFS);
-	CLocatorAPI::archives_it it		= RealFS->m_archives.begin();
-	CLocatorAPI::archives_it it_e	= RealFS->m_archives.end();
-
-	for(;it!=it_e;++it)
-	{
-		CLocatorAPI::archive& A		= *it;
-
-		LPCSTR ln = A.header->r_string("header", "level_name");
-		LPCSTR lv = A.header->r_string("header", "level_ver");
-		if ( 0==stricmp(ln,name) && 0==stricmp(lv,ver) )
-		{
-			return A.header;
-		}
-	}
 	return NULL;
 }
 
 void XRayEngineInterface::LoadAllArchives()
 {
-	CLocatorAPI* RealFS = dynamic_cast<CLocatorAPI*>(xr_FS);
-	VERIFY(RealFS);
-	if(RealFS->load_all_unloaded_archives() )
-	{
 		Level_Scan							();
 		g_pGamePersistent->OnAssetsChanged	();
-	}
 }
 
 void XRayEngineInterface::load_draw_internal()

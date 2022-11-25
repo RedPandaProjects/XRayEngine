@@ -593,7 +593,7 @@ void WeaponUsageStatistic::OnBullet_Hit(SBullet* pBullet, u16 TargetID, s16 elem
 		NewHit.Pos0 = BD.Bullet.bullet_pos;
 		NewHit.Pos1 = HitLocation;
 		NewHit.TargetName = pTarget->cName();
-		NewHit.BoneName = smart_cast<IKinematics*>(pTarget->Visual())->LL_BoneName_dbg(element);
+		NewHit.BoneName = CastToIKinematics(pTarget->Visual())->LL_BoneName_dbg(element);
 		NewHit.count = 1;
 		//---------------------------
 		WeaponIt->add_hit(NewHit);
@@ -759,7 +759,7 @@ void WeaponUsageStatistic::On_Check_Respond(NET_Packet* P)
 			CObject* pObj				= Level().Objects.net_Find(HData.TargetID);
 			
 			if (pObj)
-				HData.BoneName			= smart_cast<IKinematics*>(pObj->Visual())->LL_BoneName_dbg(BoneID);
+				HData.BoneName			= CastToIKinematics(pObj->Visual())->LL_BoneName_dbg(BoneID);
 		}
 		//---------------------------------------------------------------
 		RemoveBullet(BulletIt);

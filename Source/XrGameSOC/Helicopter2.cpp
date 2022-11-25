@@ -61,7 +61,7 @@ void CHelicopter::StartFlame ()
 
 void CHelicopter::UpdateHeliParticles	()
 {
-	IKinematics* K		= smart_cast<IKinematics*>(Visual());
+	IKinematics* K		= CastToIKinematics(Visual());
 	m_particleXFORM		= K->LL_GetTransform(m_smoke_bone);
 	m_particleXFORM.mulA_43(XFORM());
 
@@ -280,7 +280,7 @@ void CHelicopter::DieHelicopter()
 	m_brokenSound.play_at_pos		(0,XFORM().c,sm_Looped);
 
 
-	IKinematics* K		= smart_cast<IKinematics*>(Visual());
+	IKinematics* K		= CastToIKinematics(Visual());
 	if(true /*!PPhysicsShell()*/){
 		string256						I;
 		LPCSTR bone;

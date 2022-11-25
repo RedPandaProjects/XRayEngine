@@ -167,7 +167,7 @@ BOOL  CBulletManager::firetrace_callback(collide::rq_result& result, LPVOID para
 		//�����, �� ������������ ���, ��� ��� ��� ��
 		//� �������
 		VERIFY( !(result.O->ID() == bullet->parent_id &&  bullet->fly_dist<PARENT_IGNORE_DIST) );
-		if (0!=(V=smart_cast<IKinematics*>(result.O->Visual()))){
+		if (0!=(V=CastToIKinematics(result.O->Visual()))){
 			CBoneData& B = V->LL_GetData((u16)result.element);
 			hit_material_idx = B.game_mtl_idx;
 			Level().BulletManager().RegisterEvent(EVENT_HIT, TRUE,bullet, end_point, result, hit_material_idx);
@@ -317,7 +317,7 @@ void CBulletManager::DynamicObjectHit	(CBulletManager::_event& E)
 	m_inv.transform_tiny(p_in_object_space, E.point);
 
 	// bone-space
-	IKinematics* V = smart_cast<IKinematics*>(E.R.O->Visual());
+	IKinematics* V = CastToIKinematics(E.R.O->Visual());
 
 	if(V)
 	{

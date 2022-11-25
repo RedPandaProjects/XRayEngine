@@ -3,9 +3,6 @@
 #include "../xrCore/xrCore.h"
 #include "../xrAPI/xrAPI.h"
 
-#ifndef MASTER_GOLD
-#define INGAME_EDITOR
-#endif
 
 #ifdef _DEBUG
 #	define D3D_DEBUG_INFO

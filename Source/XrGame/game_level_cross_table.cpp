@@ -2,7 +2,7 @@
 #include "game_level_cross_table.h"
 CGameLevelCrossTable::CGameLevelCrossTable(const void* buffer, const u32& buffer_size)
 {
-	VERIFY(Device->IsEditorMode() == false);
+	//VERIFY(Device->IsEditorMode() == false);
 	memcpy(&m_tCrossTableHeader, buffer, sizeof(m_tCrossTableHeader));
 	buffer = (const u8*)buffer + sizeof(m_tCrossTableHeader);
 

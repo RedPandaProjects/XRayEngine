@@ -996,7 +996,7 @@ void CBaseMonster::update_eyes_visibility ()
 		return;
 	}
 
-	IKinematics* const skeleton	=	smart_cast<IKinematics*>(Visual());
+	IKinematics* const skeleton	=	CastToIKinematics(Visual());
 	if ( !skeleton )
 	{
 		return;

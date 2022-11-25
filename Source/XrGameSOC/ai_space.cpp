@@ -46,8 +46,8 @@ void CAI_Space::init				()
 	m_ef_storage			= xr_new<CEF_Storage>();
 
 #ifndef PRIQUEL
-	VERIFY					(!m_game_graph);
-	if (Device->IsEditorMode())
+	VERIFY(!m_game_graph);
+	if (Device->IsEditorMode()&& EditorScene)
 		m_game_graph = EditorScene->GetGameGraph();
 	else
 		m_game_graph = xr_new<CGameGraph>();
@@ -105,7 +105,6 @@ void CAI_Space::load				(LPCSTR level_name)
 	unload					(true);
 
 #ifdef DEBUG
-	MemoryInterface->mem_compact		();
 	u32						mem_usage = MemoryInterface->mem_usage();
 	CTimer					timer;
 	timer.Start				();

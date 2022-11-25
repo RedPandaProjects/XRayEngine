@@ -290,7 +290,7 @@ void CBulletManager::DynamicObjectHit	(CBulletManager::_event& E)
 	m_inv.transform_tiny(p_in_object_space, E.point);
 
 	// bone-space
-	IKinematics* V = smart_cast<IKinematics*>(E.R.O->Visual());
+	IKinematics* V = CastToIKinematics(E.R.O->Visual());
 
 	if(V)
 	{

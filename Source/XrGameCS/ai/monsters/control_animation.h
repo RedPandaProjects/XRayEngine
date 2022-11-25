@@ -99,7 +99,7 @@ public:
 // get motion time, when just MotionID available
 IC float CControlAnimation::motion_time(MotionID motion_id, IRenderVisual *visual)
 {
-	IKinematicsAnimated	*skeleton_animated	= smart_cast<IKinematicsAnimated*>(visual);
+	IKinematicsAnimated	*skeleton_animated	= CastToIKinematicsAnimated(visual);
 	VERIFY				(skeleton_animated);
 	CMotionDef			*motion_def			= skeleton_animated->LL_GetMotionDef(motion_id);
 	VERIFY				(motion_def);

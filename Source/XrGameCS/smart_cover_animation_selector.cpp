@@ -31,7 +31,7 @@ animation_selector::animation_selector				(CAI_Stalker *object) :
 	m_first_time		(true),
 	m_previous_time		(flt_max)
 {
-	m_skeleton_animated	= smart_cast<IKinematicsAnimated*>(object->Visual());
+	m_skeleton_animated	= CastToIKinematicsAnimated(object->Visual());
 	VERIFY				(m_skeleton_animated);
 	m_planner			= xr_new<animation_planner>(object, "animation planner");
 }

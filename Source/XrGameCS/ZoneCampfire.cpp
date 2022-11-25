@@ -70,22 +70,16 @@ void CZoneCampfire::GoDisabledState()
 #define OVL_TIME 3000
 void CZoneCampfire::turn_on_script()
 {
-	if( psDeviceFlags.test(rsR2|rsR3) )
-	{
 		m_turn_time				= Device->dwTimeGlobal+OVL_TIME;
 		m_turned_on				= true;
 		GoEnabledState			();
-	}
 }
 
 void CZoneCampfire::turn_off_script()
 {
-	if( psDeviceFlags.test(rsR2|rsR3) )
-	{
 		m_turn_time				= Device->dwTimeGlobal+OVL_TIME;
 		m_turned_on				= false;
 		GoDisabledState			();
-	}
 }
 
 bool CZoneCampfire::is_on()

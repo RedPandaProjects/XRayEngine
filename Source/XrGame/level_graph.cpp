@@ -13,7 +13,7 @@
 LPCSTR LEVEL_GRAPH_NAME = "level.ai";
 CLevelGraph::CLevelGraph		()
 {
-	VERIFY(Device->IsEditorMode() == false);
+	//VERIFY(Device->IsEditorMode() == false);
 #ifndef AI_COMPILER
 #ifdef DEBUG
 	sh_debug->create				("debug\\ai_nodes","$null");
@@ -58,6 +58,6 @@ CLevelGraph::CLevelGraph		()
 
 CLevelGraph::~CLevelGraph		()
 {
-	VERIFY(Device->IsEditorMode() == false);
+	//VERIFY(Device->IsEditorMode() == false);
 		FS.r_close(m_reader);
 }

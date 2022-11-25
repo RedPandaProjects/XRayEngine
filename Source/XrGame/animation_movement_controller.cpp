@@ -18,7 +18,7 @@ animation_movement_controller::animation_movement_controller( Fmatrix *_pObjXFor
 m_startObjXForm( inital_pose ), 
 m_pObjXForm( *_pObjXForm ),
 m_pKinematicsC( _pKinematicsC ),
-m_pKinematicsA( smart_cast<IKinematicsAnimated*>( _pKinematicsC ) ),
+m_pKinematicsA(_pKinematicsC->dcast_PKinematicsAnimated()),
 inital_position_blending(true),
 stopped(false),
 blend_linear_speed(0),
@@ -179,7 +179,7 @@ static void get_animation_root_position( Fmatrix &pos, IKinematics* K, IKinemati
 {
 	VERIFY( KA );
 	VERIFY( K );
-	VERIFY( smart_cast<IKinematics*>(KA) == K );
+	VERIFY(KA ->dcast_PKinematics() == K );
 
 	SKeyTable	keys;
 	KA->LL_BuldBoneMatrixDequatize( &K->LL_GetData( 0 ), u8(1<<0), keys );
@@ -307,8 +307,8 @@ void	animation_movement_controller::NewBlend	( CBlend* B, const Fmatrix &new_mat
 		B->blendAmount = B->blendPower;
 		m_control_blend = B;
 	*/
-	//CMotion* m_curr = smart_cast<IKinematicsAnimated*>(m_pKinematicsC)->LL_GetRootMotion(m_control_blend->motionID);
-	//CMotion* m_new = smart_cast<IKinematicsAnimated*>(m_pKinematicsC)->LL_GetRootMotion(B->motionID);
+	//CMotion* m_curr = CastToIKinematicsAnimated(m_pKinematicsC)->LL_GetRootMotion(m_control_blend->motionID);
+	//CMotion* m_new = CastToIKinematicsAnimated(m_pKinematicsC)->LL_GetRootMotion(B->motionID);
 	VERIFY( IsActive( ) );
 
 	//m_control_blend->timeCurrent = m_control_blend->timeTotal - SAMPLE_SPF;

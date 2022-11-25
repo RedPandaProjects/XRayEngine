@@ -3,7 +3,7 @@
 #include "PHdynamicdata.h"
 #include "Physics.h"
 #include "level.h"
-#include "../XrEngine/XRayEngine.h"
+#include "../XrEngine/XRayEngineInterface.h"
 #include "../XrEngine/igame_persistent.h"
 #include "PhysicsGamePars.h"
 #include "ai_space.h"
@@ -151,8 +151,6 @@ bool	CLevel::net_start_client5				()
 		{
 			HUD().Load							();
 			g_pGamePersistent->LoadTitle				("st_loading_textures");
-			Device->m_pRender->DeferredLoad		(FALSE);
-			Device->m_pRender->ResourcesDeferredUpload();
 			LL_CheckTextures					();
 		}
 	}

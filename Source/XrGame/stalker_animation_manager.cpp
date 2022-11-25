@@ -79,7 +79,7 @@ void CStalkerAnimationManager::reload				()
 	if (object().already_dead())
 		return;
 
-	m_skeleton_animated			= smart_cast<IKinematicsAnimated*>(m_visual);
+	m_skeleton_animated			= CastToIKinematicsAnimated(m_visual);
 	VERIFY						(m_skeleton_animated);
 
 	m_data_storage				= stalker_animation_data_storage().object(m_skeleton_animated);

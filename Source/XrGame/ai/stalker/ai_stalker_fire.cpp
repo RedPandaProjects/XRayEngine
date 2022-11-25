@@ -291,8 +291,8 @@ void CAI_Stalker::Hit(SHit* pHDS)
 				float					power_factor = m_power_fx_factor * HDS.damage() / 100.f;
 				clamp					(power_factor,0.f,1.f);
 
-				//IKinematicsAnimated		*tpKinematics = smart_cast<IKinematicsAnimated*>(Visual());
-				IKinematics *tpKinematics = smart_cast<IKinematics*>(Visual());
+				//IKinematicsAnimated		*tpKinematics = CastToIKinematicsAnimated(Visual());
+				IKinematics *tpKinematics = CastToIKinematics(Visual());
 	#ifdef DEBUG
 				tpKinematics->LL_GetBoneInstance	(HDS.bone());
 				if (HDS.bone() >= tpKinematics->LL_BoneCount()) {

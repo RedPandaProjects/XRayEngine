@@ -439,7 +439,7 @@ CWound* CEntityCondition::ConditionHit(SHit* pHDS)
 		}break;
 	}
 
-	if (bDebug) Msg("%s hitted in %s with %f[%f]", m_object->Name(), smart_cast<IKinematics*>(m_object->Visual())->LL_BoneName_dbg(pHDS->boneID), m_fHealthLost*100.0f, hit_power_org);
+	if (bDebug) Msg("%s hitted in %s with %f[%f]", m_object->Name(), CastToIKinematics(m_object->Visual())->LL_BoneName_dbg(pHDS->boneID), m_fHealthLost*100.0f, hit_power_org);
 	//���� ����������� ������ ������
 	if( bAddWound && GetHealth()>0 )
 	{

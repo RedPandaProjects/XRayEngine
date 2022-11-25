@@ -16,7 +16,7 @@ void interactive_motion_diagnostic( LPCSTR message, const MotionID &m, CPhysicsS
 		return;
 	VERIFY( m.valid() );
 	VERIFY( s );
-	IKinematicsAnimated* KA = smart_cast<IKinematicsAnimated*>( s->PKinematics( ) );
+	IKinematicsAnimated* KA = s->PKinematics()->dcast_PKinematicsAnimated();
 	VERIFY( KA );
 	CPhysicsShellHolder* O = smart_cast<CPhysicsShellHolder*>(s->get_ElementByStoreOrder( 0 )->PhysicsRefObject());
 	VERIFY( O );
@@ -51,7 +51,7 @@ void interactive_motion::setup( LPCSTR m, CPhysicsShell *s, float angle )
 {
 	VERIFY( m );
 	VERIFY( s );
-	IKinematicsAnimated* K = smart_cast<IKinematicsAnimated*>( s->PKinematics( ) );
+	IKinematicsAnimated* K = s->PKinematics()->dcast_PKinematicsAnimated();
 	VERIFY( K );
 	setup( K->LL_MotionID(m), s, angle );
 }
@@ -62,7 +62,7 @@ void interactive_motion::setup( const MotionID &m, CPhysicsShell *s, float _angl
 	VERIFY( s );
 	VERIFY( m.valid( ) );
 #ifdef	DEBUG
-	IKinematicsAnimated *KA = smart_cast<IKinematicsAnimated*>( s->PKinematics() );
+	IKinematicsAnimated *KA = s->PKinematics()->dcast_PKinematicsAnimated();
 	CMotionDef* MD = KA->LL_GetMotionDef(m);
 	VERIFY2( MD->StopAtEnd(), 
 		make_string( "can not use cyclic anim in death animth motion: %s", 
@@ -99,7 +99,7 @@ void interactive_motion::play( )
 {
 	VERIFY( shell );
 	VERIFY( motion.valid() );
-	smart_cast<IKinematicsAnimated*>( shell->PKinematics( ) )->PlayCycle( motion, TRUE, anim_callback, this );
+	shell->PKinematics()->dcast_PKinematicsAnimated()->PlayCycle(motion, TRUE, anim_callback, this);
 	state_start( );
 }
 

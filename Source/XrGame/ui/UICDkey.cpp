@@ -126,11 +126,11 @@ void CUICDkey::Draw()
 		
 		float	w_tmp			= 0.0f;
 		int i					= (int)xr_strlen( res1 );
-		w_tmp					= TextItemControl()->m_pFont->SizeOf_( res1 );
+		w_tmp					= TextItemControl()->m_pFont->GetTextSize( res1 );
 		UI().ClientToScreenScaledWidth( w_tmp );
 		out.x					= rect.left + w_tmp;
 		
-		w_tmp					= TextItemControl()->m_pFont->SizeOf_("-");
+		w_tmp					= TextItemControl()->m_pFont->GetTextSize("-");
 		UI().ClientToScreenScaledWidth( w_tmp );
 		
 		if(i>3)

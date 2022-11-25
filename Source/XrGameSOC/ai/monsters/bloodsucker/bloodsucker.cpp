@@ -223,8 +223,8 @@ void CAI_Bloodsucker::vfAssignBones()
 {
 	// ��������� callback �� �����
 
-	bone_spine =	&smart_cast<IKinematics*>(Visual())->LL_GetBoneInstance(smart_cast<IKinematics*>(Visual())->LL_BoneID("bip01_spine"));
-	bone_head =		&smart_cast<IKinematics*>(Visual())->LL_GetBoneInstance(smart_cast<IKinematics*>(Visual())->LL_BoneID("bip01_head"));
+	bone_spine =	&CastToIKinematics(Visual())->LL_GetBoneInstance(CastToIKinematics(Visual())->LL_BoneID("bip01_spine"));
+	bone_head =		&CastToIKinematics(Visual())->LL_GetBoneInstance(CastToIKinematics(Visual())->LL_BoneID("bip01_head"));
 	if(!PPhysicsShell())//������ ������� �������, ���� ������ ��� ��� - � ���� ����� ���� �������!!!
 	{
 		bone_spine->set_callback(bctCustom,BoneCallback,this);
@@ -423,7 +423,7 @@ void CAI_Bloodsucker::HitEntity(const CEntity *pEntity, float fDamage, float imp
 		
 		move_actor_cam();
 		
-		u16 bone_id = smart_cast<IKinematics*>(Actor()->Visual())->LL_BoneID("bip01_head");
+		u16 bone_id = CastToIKinematics(Actor()->Visual())->LL_BoneID("bip01_head");
 		Actor()->conditions().AddWound(m_vampire_wound, ALife::eHitTypeWound, bone_id);
 	}
 }

@@ -119,7 +119,7 @@ void CGamePersistent::RegisterModel(IRenderVisual* V)
 	case MT_SKELETON_RIGID:{
 		u16 def_idx		= GameMaterialLibrary->GetMaterialIdx("default_object");
 		R_ASSERT2		(GameMaterialLibrary->GetMaterialByIdx(def_idx)->Flags.is(SGameMtl::flDynamic),"'default_object' - must be dynamic");
-		IKinematics* K	= smart_cast<IKinematics*>(V); VERIFY(K);
+		IKinematics* K	= CastToIKinematics(V); VERIFY(K);
 		int cnt = K->LL_BoneCount();
 		for (u16 k=0; k<cnt; k++){
 			CBoneData& bd	= K->LL_GetData(k); 
@@ -484,7 +484,7 @@ void CGamePersistent::game_loaded()
 		if(	g_pGameLevel							&&
 			g_pGameLevel->bReady					&&
 			(allow_intro() && g_keypress_on_start)	&&
-			load_screen_renderer.b_need_user_input	&& 
+			/*load_screen_renderer.b_need_user_input	&& */
 			m_game_params.m_e_game_type == eGameIDSingle)
 		{
 			VERIFY				(NULL==m_intro);
@@ -569,7 +569,9 @@ void CGamePersistent::OnFrame	()
 	if (!g_dedicated_server && !m_intro_event.empty())	m_intro_event();
 	
 	if(!g_dedicated_server && Device->dwPrecacheFrame==0 && !m_intro && m_intro_event.empty())
-		load_screen_renderer.stop();
+		{
+		//load_screen_renderer.stop();
+		}
 
 	if( !m_pMainMenu->IsActive() )
 		m_pMainMenu->DestroyInternal(false);

@@ -1,7 +1,6 @@
 ﻿//---------------------------------------------------------------------------
 #include "stdafx.h"
 #pragma hdrstop
-#include "../Editor/UI_MainCommand.h"
 #include "XrGameMaterialLibraryEditors.h"
 //#include "../include/xrapi/xrapi.h"
 ECORE_API XrGameMaterialLibraryEditors* GameMaterialLibraryEditors = nullptr;
@@ -370,7 +369,6 @@ void  SGameMtlPairEditor::OnFlagChange(PropValue* sender)
     OwnProps.set(mask, bChecked);
     sender->Owner()->m_Flags.set(PropItem::flDisabled, !bChecked);
 
-    ExecCommand(COMMAND_UPDATE_PROPERTIES);
 }
 
 IC u32 SetMask(u32 mask, Flags32 flags, u32 flag)
@@ -698,14 +696,12 @@ void  SGameMtlPairEditor::OnDrawUI()
                 }
                 else
                 {
-                    ExecCommand(COMMAND_UPDATE_PROPERTIES);
                 }
 
             }
             else
             {
                 SetParent(GAMEMTL_NONE_ID);
-                ExecCommand(COMMAND_UPDATE_PROPERTIES);
             }
             m_EditParent = false;
         }
@@ -731,7 +727,6 @@ void  SGameMtlPairEditor::OnDrawUI()
                         ELog.DlgMsg(mtError, "Pair can't inherit from self.");
                     }
                 }
-                ExecCommand(COMMAND_UPDATE_PROPERTIES);
             }
             m_EditCommand = FALSE;
         }

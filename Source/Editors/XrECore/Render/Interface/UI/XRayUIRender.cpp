@@ -58,7 +58,7 @@ void XRayUIRender::GetActiveTextureResolution(Fvector2& res)
 	
 }
 
-void XRayUIRender::PushPoint(float x, float y, float z, u32 C, float u, float v)
+void XRayUIRender::PushPoint(float x, float y, float Scale, u32 C, UFont* Font, float FontSize, const char* String)
 {
 	
 }

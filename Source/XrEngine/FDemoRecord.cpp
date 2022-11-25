@@ -185,16 +185,12 @@ void GetLM_BBox(Fbox &bb, INT Step)
 
 void CDemoRecord::MakeLevelMapProcess()
 {
-	switch (m_Stage)
+	/*switch (m_Stage)
 	{
 	case 0:
 		{
 			s_dev_flags			= psDeviceFlags;
 			s_hud_flag.assign	(psHUD_Flags);
-			psDeviceFlags.zero	();
-			psDeviceFlags.set	(rsClearBB|rsFullscreen|rsDrawStatic,TRUE);
-			if (!psDeviceFlags.equal(s_dev_flags,rsFullscreen))
-				Device->Reset();
 
 		}break;
 
@@ -237,7 +233,7 @@ void CDemoRecord::MakeLevelMapProcess()
 		{
 			setup_lm_screenshot_matrices		();
 		}break;
-	}
+	}*/
 	m_Stage++;
 }
 

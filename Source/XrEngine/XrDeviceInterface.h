@@ -13,6 +13,8 @@
 
 #define DEVICE_RESET_PRECACHE_FRAME_COUNT 10
 
+typedef fastdelegate::FastDelegate0<bool>		LOADING_EVENT;
+extern	ENGINE_API xr_list<LOADING_EVENT>		*g_loading_events;
 class ENGINE_API XrDeviceInterface
 {
 public:
@@ -32,7 +34,6 @@ public:
 	IC u32	 TimerAsync() { return TimerGlobal.GetElapsed_ms(); }
 	IC u32	 TimerAsync_MMT() { return TimerMM.GetElapsed_ms() + Timer_MM_Delta; }
 	IC CTimer* GetTimerGlobal() { return &TimerGlobal; }
-	virtual void DumpResourcesMemoryUsage() { m_pRender->ResourcesDumpMemoryUsage(); }
 
 	Fmatrix									mInvFullTransform;
 	CTimer									TimerMM;
@@ -41,7 +42,6 @@ public:
 	xr_vector		<fastdelegate::FastDelegate0<> >	seqParallel;
 	CStats* Statistic;
 	float									fWidth_2, fHeight_2;
-	IRenderDeviceRender* m_pRender;
 	IC void time_factor(const float& time_factor)
 	{
 		Timer.time_factor(time_factor);
@@ -75,18 +75,6 @@ public:
 	BOOL									m_bNearer;
 	IC void									SetNearer(BOOL enabled)
 	{
-		if (enabled && !m_bNearer) {
-			m_bNearer = TRUE;
-			mProject._43 -= EPS_L;
-		}
-		else if (!enabled && m_bNearer) {
-			m_bNearer = FALSE;
-			mProject._43 += EPS_L;
-		}
-		m_pRender->SetCacheXform(mView, mProject);
-		//R_ASSERT(0);
-		//	TODO: re-implement set projection
-		//RCache.set_xform_project			(mProject);
 	}
 	virtual bool Begin() = 0;
 	virtual void End() = 0;

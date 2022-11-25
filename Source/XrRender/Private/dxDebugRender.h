@@ -52,7 +52,6 @@ private:
 	ref_shader		m_dbgShaders[dbgShaderCount];
 };
 
-extern dxDebugRender DebugRenderImpl;
 extern dxDebugRender* rdebug_render;
 #endif // DEBUG
 

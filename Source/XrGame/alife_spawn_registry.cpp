@@ -29,7 +29,7 @@ CALifeSpawnRegistry::CALifeSpawnRegistry	(LPCSTR section)
 
 CALifeSpawnRegistry::~CALifeSpawnRegistry	()
 {
-	if(!Device->IsEditorMode())	xr_delete(m_game_graph);
+	/*if(!Device->IsEditorMode())*/	xr_delete(m_game_graph);
 	m_chunk->close				();
 	FS.r_close					(m_file);
 }

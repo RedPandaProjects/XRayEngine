@@ -143,9 +143,9 @@ void CAI_Space::load				(LPCSTR level_name)
 
 	const IGameGraph::SLevel &current_level = game_graph().header().level(level_name);
 #ifndef MASTER_GOLD
-	if(Device->IsEditorMode())
+	/*if(Device->IsEditorMode())
 		m_level_graph = EditorScene->GetLevelGraph();
-	else
+	else*/
 #endif
 		m_level_graph			= xr_new<CLevelGraph>();
 
@@ -187,7 +187,7 @@ void CAI_Space::unload				(bool reload)
 
 	xr_delete				(m_doors_manager);
 	xr_delete				(m_graph_engine);
-	if(!Device->IsEditorMode())
+	//if(!Device->IsEditorMode())
 	xr_delete				(m_level_graph);
 
 	if (!reload && m_game_graph)

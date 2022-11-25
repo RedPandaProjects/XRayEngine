@@ -3,7 +3,6 @@
 
 #include "EditObject.h"
 #include "EditMesh.h"
-#include "ui_main.h"
 #include "../Public/PropertiesListHelper.h"
 #include "motion.h"
 #include "bone.h"
@@ -11,7 +10,6 @@
 void CEditableObject::OnChangeShader(PropValue*)
 {
     OnDeviceDestroy	();
-    UI->RedrawScene	();
 }
 //---------------------------------------------------------------------------
 

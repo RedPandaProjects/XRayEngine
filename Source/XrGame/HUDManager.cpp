@@ -58,7 +58,6 @@ void CFontManager::InitializeFonts()
 	InitializeFont(pFontGraffiti50Russian	,"ui_font_graff_50"				);
 	InitializeFont(pFontLetterica25			,"ui_font_letter_25"			);
 	InitializeFont(pFontStat				,"stat_font",					CGameFont::fsDeviceIndependent);
-	pFontStat->SetInterval	(0.75f, 1.0f);
 
 }
 
@@ -91,14 +90,12 @@ LPCSTR CFontManager::GetFontTexName (LPCSTR section)
 
 void CFontManager::InitializeFont(CGameFont*& F, LPCSTR section, u32 flags)
 {
-	LPCSTR font_tex_name = GetFontTexName(section);
-	R_ASSERT(font_tex_name);
-
-	LPCSTR sh_name = pSettings->r_string(section,"shader");
+	LPCSTR FontName = pSettings->r_string(section,"font");
+	float FontSize = pSettings->r_float(section,"size");
 	if(!F)
-		F = xr_new<CGameFont> (sh_name, font_tex_name, flags);
+		F = xr_new<CGameFont> (FontName, FontSize, flags);
 	else
-		F->Initialize(sh_name, font_tex_name);
+		F->Initialize(FontName, FontSize);
 
 #ifdef DEBUG
 	F->m_font_name = section;
@@ -229,7 +226,6 @@ void   CHUDManager::RenderActiveItemUI()
 	g_player_hud->render_item_ui		();
 }
 
-extern ENGINE_API BOOL bShowPauseString;
 //отрисовка элементов интерфейса
 void  CHUDManager::RenderUI()
 {
@@ -250,7 +246,7 @@ void  CHUDManager::RenderUI()
 		m_pHUDTarget->Render();
 
 
-	if( Device->Paused() && bShowPauseString){
+	if( Device->Paused() ){
 		CGameFont* pFont	= UI().Font().pFontGraffiti50Russian;
 		pFont->SetColor		(0x80FF0000	);
 		LPCSTR _str			= CStringTable().translate("st_game_paused").c_str();

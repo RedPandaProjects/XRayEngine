@@ -42,6 +42,7 @@ public:
 	virtual		void		RenderActiveItemUI		()=0;
 	virtual		bool		RenderActiveItemUIQuery	()=0;
 	virtual		void		net_Relcase				(CObject *object) = 0;
+	virtual		void		RenderUI				() = 0;
 };
 
 extern ENGINE_API CCustomHUD* g_hud;

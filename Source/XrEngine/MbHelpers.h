@@ -3,7 +3,6 @@
 
 #define MAX_MB_CHARS 4096
 
-typedef unsigned short int wide_char;
 
 ENGINE_API unsigned short int mbhMulti2Wide
 	( wide_char *WideStr , wide_char *WidePos , const unsigned short int WideStrSize , const char *MultiStr  );

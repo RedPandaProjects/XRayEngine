@@ -112,8 +112,8 @@ void CZombie::BoneCallback(CBoneInstance *B)
 void CZombie::vfAssignBones()
 {
 	// ��������� callback �� �����
-	bone_spine =	&smart_cast<IKinematics*>(Visual())->LL_GetBoneInstance(smart_cast<IKinematics*>(Visual())->LL_BoneID("bip01_spine"));
-	bone_head =		&smart_cast<IKinematics*>(Visual())->LL_GetBoneInstance(smart_cast<IKinematics*>(Visual())->LL_BoneID("bip01_head"));
+	bone_spine =	&CastToIKinematics(Visual())->LL_GetBoneInstance(CastToIKinematics(Visual())->LL_BoneID("bip01_spine"));
+	bone_head =		&CastToIKinematics(Visual())->LL_GetBoneInstance(CastToIKinematics(Visual())->LL_BoneID("bip01_head"));
 	//if(!PPhysicsShell())//������ ������� �������, ���� ������ ��� ��� - � ���� ����� ���� �������!!!
 	//{
 		//bone_spine->set_callback(BoneCallback,this);

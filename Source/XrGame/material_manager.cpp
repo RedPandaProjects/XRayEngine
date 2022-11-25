@@ -66,7 +66,7 @@ void CMaterialManager::reinit		()
 		entity_alive->character_physics_support()->movement()->SetPLastMaterialIDX	(&m_last_material_idx);
 
 //		if (entity_alive->use_simplified_visual()) {
-//			IKinematics			*kinematics = smart_cast<IKinematics*>(entity_alive->Visual());
+//			IKinematics			*kinematics = CastToIKinematics(entity_alive->Visual());
 //			m_my_material_idx	= kinematics->LL_GetData(kinematics->LL_GetBoneRoot()).game_mtl_idx;
 //		}
 

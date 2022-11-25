@@ -52,11 +52,11 @@ void CUICDkey::Draw()
 		int i					= m_lines.m_iCursorPos;
 		strncpy					(buff,m_lines.m_text.c_str(),i);
 		buff					[i]=0;
-		_w_tmp					= m_lines.m_pFont->SizeOf_(buff);
+		_w_tmp					= m_lines.m_pFont->GetTextSize(buff);
 		UI()->ClientToScreenScaledWidth(_w_tmp);
 		outXY.x					= rect.left+_w_tmp;
 		
-		_w_tmp					= m_lines.m_pFont->SizeOf_("-");
+		_w_tmp					= m_lines.m_pFont->GetTextSize("-");
 		UI()->ClientToScreenScaledWidth(_w_tmp);
 		
 		if(i>3)

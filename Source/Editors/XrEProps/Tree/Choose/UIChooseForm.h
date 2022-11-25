@@ -26,7 +26,7 @@ class XREPROPS_API UIChooseForm :  public XrUI
 protected:
 
     DEFINE_MAP(u32, SChooseEvents, EventsMap, EventsMapIt);
-    static EventsMap			m_Events;
+    static EventsMap		*	m_Events;
 private:
     SChooseEvents 	E;
     static UIChooseForm* Form;

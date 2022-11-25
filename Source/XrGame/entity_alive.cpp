@@ -368,7 +368,7 @@ void CEntityAlive::BloodyWallmarks (float P, const Fvector &dir, s16 element,
 		return;
 
 	//вычислить координаты попадания
-	IKinematics* V = smart_cast<IKinematics*>(Visual());
+	IKinematics* V = CastToIKinematics(Visual());
 		
 	Fvector start_pos = position_in_object_space;
 	if(V)
@@ -451,7 +451,7 @@ void CEntityAlive::StartFireParticles(CWound* pWound)
 			m_ParticleWounds.push_back(pWound);
 		}
 
-		IKinematics* V = smart_cast<IKinematics*>(Visual());
+		IKinematics* V = CastToIKinematics(Visual());
 
 		u16 particle_bone = CParticlesPlayer::GetNearestBone(V, pWound->GetBoneNum());
 		VERIFY(particle_bone  < 64 || BI_NONE == particle_bone);
@@ -800,7 +800,7 @@ void CEntityAlive::fill_hit_bone_surface_areas		( ) const
 	VERIFY								( !m_hit_bone_surface_areas_actual );
 	m_hit_bone_surface_areas_actual		= true;
 
-	IKinematics* const kinematics		= smart_cast<IKinematics*>( Visual() );
+	IKinematics* const kinematics		= CastToIKinematics( Visual() );
 	VERIFY								( kinematics );
 	VERIFY								( kinematics->LL_BoneCount() );
 
@@ -845,7 +845,7 @@ Fvector	CEntityAlive::get_new_local_point_on_mesh	( u16& bone_id ) const
 	if ( g_ai_use_old_vision )
 		return							inherited::get_new_local_point_on_mesh( bone_id );
 
-	IKinematics* const kinematics		= smart_cast<IKinematics*>( Visual() );
+	IKinematics* const kinematics		= CastToIKinematics( Visual() );
 	if ( !kinematics )
 		return							inherited::get_new_local_point_on_mesh( bone_id );
 
@@ -959,7 +959,7 @@ Fvector CEntityAlive::get_last_local_point_on_mesh	( Fvector const& last_point, 
 	if ( bone_id == u16(-1) )
 		return							inherited::get_last_local_point_on_mesh( last_point, bone_id );
 
-	IKinematics* const kinematics		= smart_cast<IKinematics*>( Visual() );
+	IKinematics* const kinematics		= CastToIKinematics( Visual() );
 	VERIFY								( kinematics );
 
 	Fmatrix transform;

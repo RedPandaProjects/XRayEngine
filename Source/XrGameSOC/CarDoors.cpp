@@ -339,7 +339,7 @@ void CCar::SDoor::ClosedToOpening()
 	if(!joint)return;
 	if(joint->bActive)return;
 	Fmatrix door_form,root_form;
-	IKinematics* pKinematics=smart_cast<IKinematics*>(pcar->Visual());
+	IKinematics* pKinematics=CastToIKinematics(pcar->Visual());
 //	CBoneData& bone_data= pKinematics->LL_GetData(u16(bone_id));
 	CBoneInstance& bone_instance=pKinematics->LL_GetBoneInstance(u16(bone_id));
 	bone_instance.set_callback(bctPhysics,pcar->PPhysicsShell()->GetBonesCallback(),joint->PSecond_element());
@@ -358,10 +358,10 @@ void CCar::SDoor::ClosingToClosed()
 {
 	state =closed;
 	if(!joint) return;
-	smart_cast<IKinematics*>(pcar->Visual())->CalculateBones();
+	CastToIKinematics(pcar->Visual())->CalculateBones();
 
 //	Fmatrix door_form;
-	IKinematics* pKinematics=smart_cast<IKinematics*>(pcar->Visual());
+	IKinematics* pKinematics=CastToIKinematics(pcar->Visual());
 //	CBoneData& bone_data= pKinematics->LL_GetData(u16(bone_id));
 	CBoneInstance& bone_instance=pKinematics->LL_GetBoneInstance(u16(bone_id));
 	bone_instance.set_callback(bctPhysics,0,joint->PFirst_element());

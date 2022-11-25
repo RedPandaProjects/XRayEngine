@@ -86,38 +86,7 @@ void EImageThumbnail::CreatePixels(u32* p, u32 w, u32 h)
 	m_Pixels.resize(THUMB_SIZE);
 	imf_Process(m_Pixels.data(),THUMB_WIDTH,THUMB_HEIGHT,p,w,h,imf_box);
 }
-void EImageThumbnail::Update(ImTextureID& Texture)
-{
-    if (m_Pixels.size() == 0)
-    {
-        if(Texture)
-        Texture->Release();
-        Texture == nullptr;
-        return;
-    }
-    ID3DTexture2D* pTexture = nullptr;
-    if (Texture != nullptr)
-    {
-        R_CHK(Texture->QueryInterface(__uuidof(ID3DTexture2D), (void**)&pTexture));
-    }
-    else
-    {
-        R_CHK(HW.pDevice->CreateTexture(THUMB_WIDTH, THUMB_HEIGHT, 1, 0, D3DFMT_X8R8G8B8, D3DPOOL_MANAGED, &pTexture, 0));
-        Texture = pTexture;
-    }
-    {
-        D3DLOCKED_RECT rect;
-        R_CHK(pTexture->LockRect(0, &rect, 0, D3DLOCK_DISCARD));
-        for (int i = 0; i < THUMB_HEIGHT; i++)
-        {
 
-            unsigned char* dest = static_cast<unsigned char*>(rect.pBits)+(rect.Pitch*i);
-            memcpy(dest, Pixels()+(THUMB_WIDTH*(THUMB_HEIGHT-i-1)), sizeof(unsigned char) * THUMB_WIDTH  * 4);
-        }
-        R_CHK(pTexture->UnlockRect(0));
-    }
-    
-}
 
 
 EImageThumbnail* CreateThumbnail(LPCSTR src_name, ECustomThumbnail::THMType type, bool bLoad)

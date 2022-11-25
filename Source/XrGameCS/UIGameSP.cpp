@@ -181,7 +181,6 @@ void CUIGameSP::StartCarBody(CInventoryOwner* pActorInv, CInventoryBox* pBox) //
 }
 
 
-extern ENGINE_API BOOL bShowPauseString;
 void CUIGameSP::ChangeLevel(	GameGraph::_GRAPH_ID game_vert_id, 
 								u32 level_vert_id, 
 								Fvector pos, 
@@ -281,7 +280,6 @@ void CChangeLevelWnd::Show()
 
 	g_block_pause							= true;
 	Device->Pause							(TRUE, TRUE, TRUE, "CChangeLevelWnd_show");
-	bShowPauseString						= FALSE;
 }
 
 void CChangeLevelWnd::Hide()

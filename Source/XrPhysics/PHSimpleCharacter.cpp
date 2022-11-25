@@ -1452,7 +1452,7 @@ u16 CPHSimpleCharacter::RetriveContactBone()
 	}
 	else 
 	{
-		//IKinematics* K=smart_cast<IKinematics*>(m_phys_ref_object->ObjectVisual());
+		//IKinematics* K=CastToIKinematics(m_phys_ref_object->ObjectVisual());
 		IKinematics* K=m_phys_ref_object->ObjectKinematics();
 		u16 count=K->LL_BoneCount();
 		CBoneInstance* bone_instances=&K->LL_GetBoneInstance(0);

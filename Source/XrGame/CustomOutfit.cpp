@@ -118,7 +118,7 @@ void CCustomOutfit::ReloadBonesProtection()
 		parent = smart_cast<CObject*>(Level().CurrentViewEntity());
 
 	if(parent && parent->Visual() && m_BonesProtectionSect.size())
-		m_boneProtection->reload( m_BonesProtectionSect, smart_cast<IKinematics*>(parent->Visual()));
+		m_boneProtection->reload( m_BonesProtectionSect, CastToIKinematics(parent->Visual()));
 }
 
 void CCustomOutfit::Hit(float hit_power, ALife::EHitType hit_type)
@@ -352,5 +352,5 @@ void CCustomOutfit::AddBonesProtection(LPCSTR bones_section)
 		parent = smart_cast<CObject*>(Level().CurrentViewEntity());
 
 	if ( parent && parent->Visual() && m_BonesProtectionSect.size() )
-		m_boneProtection->add(bones_section, smart_cast<IKinematics*>( parent->Visual() ) );
+		m_boneProtection->add(bones_section, CastToIKinematics( parent->Visual() ) );
 }

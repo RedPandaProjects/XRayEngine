@@ -11,7 +11,7 @@
 
 void character_hit_animation_controller::SetupHitMotions(IKinematicsAnimated &ca)
 {
-	//IKinematicsAnimated* ca = smart_cast<IKinematicsAnimated*>(m_EntityAlife.Visual());
+	//IKinematicsAnimated* ca = CastToIKinematicsAnimated(m_EntityAlife.Visual());
 	/*
 	bkhit_motion= ca.LL_MotionID("hitback");	//hitback2.skl
 	fvhit_motion= ca.LL_MotionID("hitfront");
@@ -32,7 +32,7 @@ void character_hit_animation_controller::SetupHitMotions(IKinematicsAnimated &ca
 	hit_downl	   = ca.LL_MotionID("hit_downl");
 	hit_downr	   = ca.LL_MotionID("hit_downr");
 
-	base_bone = smart_cast<IKinematics*>(&ca)->LL_BoneID("bip01_spine1");//bip01_spine1
+	base_bone = ca.dcast_PKinematics()->LL_BoneID("bip01_spine1");//bip01_spine1
 	for( u16 i = 0; num_anims>i; ++i )
 		block_times[i] = 0;
 
@@ -69,8 +69,8 @@ IC void	play_cycle(IKinematicsAnimated* CA,const MotionID &m,u8 channel,u32 &tim
 
 void character_hit_animation_controller::PlayHitMotion(const Fvector &dir,const Fvector &bone_pos, u16 bi, CEntityAlive &ea)const
 {
-	IKinematicsAnimated* CA = smart_cast<IKinematicsAnimated*>(ea.Visual());
-	IKinematics* C = smart_cast<IKinematics*>(ea.Visual());
+	IKinematicsAnimated* CA = CastToIKinematicsAnimated(ea.Visual());
+	IKinematics* C = CastToIKinematics(ea.Visual());
 	//play_cycle(CA,all_shift_down,1,block_times[6],1) ;
 	if( !(C->LL_BoneCount() > bi) )
 		return;
@@ -140,7 +140,7 @@ void character_hit_animation_controller::PlayHitMotion(const Fvector &dir,const 
 	//const float fade = 0.1f;
 	//for(u16 ii=0;MAX_PARTS>ii;++ii)
 	//CA->LL_FadeCycle(ii,fade,1<<1);
-	//smart_cast<IKinematicsAnimated*>(m_EntityAlife.Visual())->LL_MotionID("actor_hit_ani_180_2");
+	//CastToIKinematicsAnimated(m_EntityAlife.Visual())->LL_MotionID("actor_hit_ani_180_2");
 }
 
 bool character_hit_animation_controller::IsEffected( u16	bi, IKinematics &ca )const
@@ -158,6 +158,6 @@ bool character_hit_animation_controller::IsEffected( u16	bi, IKinematics &ca )co
 
 void character_hit_animation_controller::GetBaseMatrix( Fmatrix &m,CEntityAlive &ea)const
 {
-	IKinematics* CA = smart_cast<IKinematics*>(ea.Visual());
+	IKinematics* CA = CastToIKinematics(ea.Visual());
 	m.mul_43(ea.XFORM(),CA->LL_GetTransform(base_bone));
 }

@@ -271,7 +271,7 @@ void CUICustomEdit::AddChar(char c)
 {
 	if(xr_strlen(m_lines.GetText()) >= m_max_symb_count)					return;
 
-	float text_length	= m_lines.GetFont()->SizeOf_(m_lines.GetText());
+	float text_length	= m_lines.GetFont()->GetTextSize(m_lines.GetText());
 	UI()->ClientToScreenScaledWidth		(text_length);
 
 	if (!m_lines.GetTextComplexMode() && (text_length > GetWidth() - 1))	return;
@@ -378,11 +378,11 @@ void  CUICustomEdit::Draw()
 		string256							buff;
 		strncpy								(buff,m_lines.m_text.c_str(),i);
 		buff[i]								= 0;
-		_w_tmp								= m_lines.m_pFont->SizeOf_(buff);
+		_w_tmp								= m_lines.m_pFont->GetTextSize(buff);
 		UI()->ClientToScreenScaledWidth		(_w_tmp);
 		outXY.x								= pos.x + _w_tmp;
 		
-		_w_tmp								= m_lines.m_pFont->SizeOf_("-");
+		_w_tmp								= m_lines.m_pFont->GetTextSize("-");
 		UI()->ClientToScreenScaledWidth		(_w_tmp);
 		UI()->ClientToScreenScaled			(outXY);
 

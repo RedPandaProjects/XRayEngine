@@ -48,7 +48,12 @@ CGameSpy_Full::~CGameSpy_Full()
 
 void	CGameSpy_Full::LoadGameSpy()
 {
-	LPCSTR			g_name	= "xrGameSpy.dll";
+#ifdef _DEBUG
+	LPCSTR			g_name = "xrGameSpy_Debug.dll";
+#else
+	LPCSTR			g_name = "xrGameSpy_Release.dll";
+#endif
+
 	Log				("Loading DLL:",g_name);
 	m_hGameSpyDLL			= LoadLibrary	(g_name);
 	if (0==m_hGameSpyDLL)	R_CHK			(GetLastError());

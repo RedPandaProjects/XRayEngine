@@ -696,7 +696,7 @@ BOOL CBulletManager::firetrace_callback	(collide::rq_result& result, LPVOID para
 
 	//������������ ������
 	VERIFY							( !(result.O->ID() == bullet.parent_id &&  bullet.fly_dist < parent_ignore_distance) );
-	IKinematics* const kinematics	= smart_cast<IKinematics*>(result.O->Visual());
+	IKinematics* const kinematics	= CastToIKinematics(result.O->Visual());
 	if (!kinematics)
 		return						(FALSE);
 

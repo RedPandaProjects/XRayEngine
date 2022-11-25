@@ -7,7 +7,6 @@
 #pragma once
 
 #include "CameraDefs.h"
-#include "Device.h"
 // refs
 class CObject;
 

@@ -239,7 +239,7 @@ float CVisualMemoryManager::object_visible_distance(const CGameObject *game_obje
 
 	if (m_object) {
 		eye_matrix						= 
-			smart_cast<IKinematics*>(
+			CastToIKinematics(
 				m_object->Visual()
 			)
 			->LL_GetTransform		(
@@ -550,7 +550,7 @@ float CVisualMemoryManager::feel_vision_mtl_transp(CObject* O, u32 element)
 {
 	float vis				= 1.f;
 	if (O){
-		IKinematics* V		= smart_cast<IKinematics*>(O->Visual());
+		IKinematics* V		= CastToIKinematics(O->Visual());
 		if (0!=V){
 			CBoneData& B	= V->LL_GetData((u16)element);
 			vis				= GameMaterialLibrary->GetMaterialByIdx(B.game_mtl_idx)->fVisTransparencyFactor;

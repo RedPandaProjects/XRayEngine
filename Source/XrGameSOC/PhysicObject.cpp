@@ -68,12 +68,12 @@ void	CPhysicObject::SpawnInitPhysics	(CSE_Abstract* D)
 }
 void CPhysicObject::RunStartupAnim(CSE_Abstract *D)
 {
-	if(Visual()&&smart_cast<IKinematics*>(Visual()))
+	if(Visual()&&CastToIKinematics(Visual()))
 	{
 		//		CSE_PHSkeleton	*po	= smart_cast<CSE_PHSkeleton*>(D);
 		IKinematicsAnimated*	PKinematicsAnimated=NULL;
-		R_ASSERT			(Visual()&&smart_cast<IKinematics*>(Visual()));
-		PKinematicsAnimated	=smart_cast<IKinematicsAnimated*>(Visual());
+		R_ASSERT			(Visual()&&CastToIKinematics(Visual()));
+		PKinematicsAnimated	=CastToIKinematicsAnimated(Visual());
 		if(PKinematicsAnimated)
 		{
 			CSE_Visual					*visual = smart_cast<CSE_Visual*>(D);
@@ -81,8 +81,8 @@ void CPhysicObject::RunStartupAnim(CSE_Abstract *D)
 			R_ASSERT2					(*visual->startup_animation,"no startup animation");
 			PKinematicsAnimated->PlayCycle(*visual->startup_animation);
 		}
-		smart_cast<IKinematics*>(Visual())->CalculateBones_Invalidate();
-		smart_cast<IKinematics*>(Visual())->CalculateBones	();
+		CastToIKinematics(Visual())->CalculateBones_Invalidate();
+		CastToIKinematics(Visual())->CalculateBones	();
 
 	}
 }
@@ -117,7 +117,7 @@ void CPhysicObject::CreateSkeleton(CSE_ALifeObjectPhysic* po)
 	LPCSTR	fixed_bones=*po->fixed_bones;
 	m_pPhysicsShell=P_build_Shell(this,!po->_flags.test(CSE_PHSkeleton::flActive),fixed_bones);
 	ApplySpawnIniToPhysicShell(&po->spawn_ini(),m_pPhysicsShell,fixed_bones[0]!='\0');
-	ApplySpawnIniToPhysicShell(smart_cast<IKinematics*>(Visual())->LL_UserData(),m_pPhysicsShell,fixed_bones[0]!='\0');
+	ApplySpawnIniToPhysicShell(CastToIKinematics(Visual())->LL_UserData(),m_pPhysicsShell,fixed_bones[0]!='\0');
 }
 
 void CPhysicObject::Load(LPCSTR section)
@@ -169,7 +169,7 @@ void CPhysicObject::PHObjectPositionUpdate	()
 
 void CPhysicObject::AddElement(CPhysicsElement* root_e, int id)
 {
-	IKinematics* K		= smart_cast<IKinematics*>(Visual());
+	IKinematics* K		= CastToIKinematics(Visual());
 
 	CPhysicsElement* E	= P_create_Element();
 	CBoneInstance& B	= K->LL_GetBoneInstance(u16(id));
@@ -209,7 +209,7 @@ void CPhysicObject::AddElement(CPhysicsElement* root_e, int id)
 void CPhysicObject::CreateBody(CSE_ALifeObjectPhysic* po) {
 
 	if(m_pPhysicsShell) return;
-	IKinematics* pKinematics=smart_cast<IKinematics*>(Visual());
+	IKinematics* pKinematics=CastToIKinematics(Visual());
 	switch(m_type) {
 		case epotBox : {
 			m_pPhysicsShell=P_build_SimpleShell(this,m_mass,!po->_flags.test(CSE_ALifeObjectPhysic::flActive));

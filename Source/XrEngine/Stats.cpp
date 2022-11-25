@@ -144,7 +144,7 @@ void CStats::Show()
 		fFPS = fInv*fFPS + fOne*fps;
 
 		if (RenderTOTAL.result>EPS_S) {
-			u32	rendered_polies = Device->m_pRender->GetCacheStatPolys();
+			u32	rendered_polies = 1;
 			fTPS = fInv*fTPS + fOne*float(rendered_polies)/(RenderTOTAL.result*1000.f);
 			//fTPS = fInv*fTPS + fOne*float(RCache.stat.polys)/(RenderTOTAL.result*1000.f);
 			fRFPS= fInv*fRFPS+ fOne*1000.f/RenderTOTAL.result;
@@ -179,7 +179,7 @@ void CStats::Show()
 		float sz		= pFont->GetHeight();
 		pFont->SetHeightI(0.02f);
 		pFont->SetColor	(0xFFFF0000	);
-		pFont->OutSet	(Device->dwWidth/2.0f+(pFont->SizeOf_("--= tune =--")/2.0f),Device->dwHeight/2.0f);
+		pFont->OutSet	(Device->dwWidth/2.0f+(pFont->GetTextSize("--= tune =--")/2.0f),Device->dwHeight/2.0f);
 		pFont->OutNext	("--= tune =--");
 		pFont->OnRender	();
 		pFont->SetHeight(sz);
@@ -487,7 +487,6 @@ void CStats::OnRender				()
 			const CSound_stats_ext::SItem& item = *_I;
 			if (item._3D)
 			{
-				m_pRender->SetDrawParams(&*Device->m_pRender);
 				//RCache.set_xform_world(Fidentity);
 				//RCache.set_Shader		(Device->m_SelectionShader);
 				//RCache.set_c			("tfactor",1,1,1,1);

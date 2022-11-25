@@ -134,7 +134,7 @@ void CUILines::Reset(){
 
 float get_str_width(CGameFont*pFont, char ch)
 {
-	float ll = pFont->SizeOf_(ch);
+	float ll = pFont->GetTextSize(ch);
 	UI()->ClientToScreenScaledWidth(ll);
 	return ll;
 }
@@ -338,7 +338,7 @@ void CUILines::SetFont(CGameFont* pFont){
 
 LPCSTR GetElipsisText(CGameFont* pFont, float width, LPCSTR source_text, LPSTR buff, int buff_len)
 {
-	float text_len					= pFont->SizeOf_(source_text);
+	float text_len					= pFont->GetTextSize(source_text);
 	UI()->ClientToScreenScaledWidth	(text_len);
 
 	if(text_len<width)
@@ -347,7 +347,7 @@ LPCSTR GetElipsisText(CGameFont* pFont, float width, LPCSTR source_text, LPSTR b
 	}else
 	{
 		buff[0]							= 0;
-		float el_len					= pFont->SizeOf_("..");
+		float el_len					= pFont->GetTextSize("..");
 		UI()->ClientToScreenScaledWidth	(el_len);
 		float total						= 0.0f;
 		u16		pos						= 0;
@@ -355,7 +355,7 @@ LPCSTR GetElipsisText(CGameFont* pFont, float width, LPCSTR source_text, LPSTR b
 		while(total+el_len < width)
 		{
 			const char c					= *(source_text+pos);
-			float ch_len					= pFont->SizeOf_(c);
+			float ch_len					= pFont->GetTextSize(c);
 			UI()->ClientToScreenScaledWidth	(ch_len);
 		
 			if(total+ch_len+el_len < width)

@@ -12,8 +12,6 @@
 #include "../xrRender/Public/UIRender.h"
 #include "uicursor.h"
 
-extern ENGINE_API BOOL bShowPauseString;
-
 //-----------------------------------------------------------------------------
 // Tutorial Item
 //-----------------------------------------------------------------------------
@@ -166,7 +164,6 @@ void CUISequenceVideoItem::Start()
 
 	if(m_flags.test(etiNeedPauseOn) && !m_flags.test(etiStoredPauseState)){
 		Device->Pause			(TRUE, TRUE, TRUE, "videoitem_start");
-		bShowPauseString		= FALSE;
 	}
 
 	if(m_flags.test(etiNeedPauseOff) && m_flags.test(etiStoredPauseState))

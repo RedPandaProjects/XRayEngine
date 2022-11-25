@@ -148,7 +148,6 @@ class CCC_MemStats : public IConsole_Command
 public:
 	CCC_MemStats(LPCSTR N) : IConsole_Command(N)  { bEmptyArgsHandled = TRUE; };
 	virtual void Execute(LPCSTR args) {
-		MemoryInterface->mem_compact		();
 		u32		_crt_heap		= mem_usage_impl((HANDLE)_get_heap_handle(),0,0);
 		u32		_process_heap	= mem_usage_impl(GetProcessHeap(),0,0);
 #ifdef SEVERAL_ALLOCATORS
@@ -177,8 +176,8 @@ public:
 		Msg		("* [x-ray]: economy: strings[%d K], smem[%d K]",_eco_strings/1024,_eco_smem);
 
 #ifdef DEBUG
-		Msg		("* [x-ray]: file mapping: memory[%d K], count[%d]",g_file_mapped_memory/1024,g_file_mapped_count);
-		dump_file_mappings	();
+		/*Msg		("* [x-ray]: file mapping: memory[%d K], count[%d]",g_file_mapped_memory/1024,g_file_mapped_count);
+		dump_file_mappings	();*/
 #endif // DEBUG
 	}
 };
@@ -624,7 +623,7 @@ class CCC_FlushLog : public IConsole_Command {
 public:
 	CCC_FlushLog(LPCSTR N) : IConsole_Command(N)  { bEmptyArgsHandled = true; };
 	virtual void Execute(LPCSTR /**args/**/) {
-		FlushLog();
+		//FlushLog();
 		Msg		("* Log file has been saved successfully!");
 	}
 };
@@ -633,8 +632,8 @@ class CCC_ClearLog : public IConsole_Command {
 public:
 	CCC_ClearLog(LPCSTR N) : IConsole_Command(N)  { bEmptyArgsHandled = true; };
 	virtual void Execute(LPCSTR) {
-		LogFile->clear_not_free	();
-		FlushLog				();
+		//LogFile->clear_not_free	();
+		//FlushLog				();
 		Msg						("* Log file has been cleaned successfully!");
 	}
 };
@@ -1386,7 +1385,7 @@ public:
 		}
 
 		IRenderVisual			*visual = Render->model_Create(arguments);
-		IKinematics				*kinematics = smart_cast<IKinematics*>(visual);
+		IKinematics				*kinematics = CastToIKinematics(visual);
 		if (!kinematics) {
 			Render->model_Delete(visual);
 			Msg					("! Invalid visual type \"%s\" (not a IKinematics)",arguments);

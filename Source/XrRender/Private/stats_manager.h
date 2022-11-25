@@ -16,7 +16,6 @@ public:
 	~stats_manager ();
  	void increment_stats		( u32 size, enum_stats_buffer_type type, _D3DPOOL location );
 	void decrement_stats		( u32 size, enum_stats_buffer_type type, _D3DPOOL location );
-
 	void increment_stats_rtarget( ID3DTexture2D*	buff );
 	void increment_stats_vb		( ID3DVertexBuffer*		buff );
 	void increment_stats_ib		( ID3DIndexBuffer*		buff );
@@ -24,6 +23,7 @@ public:
 	void decrement_stats_rtarget( ID3DTexture2D*	buff );
 	void decrement_stats_vb		( ID3DVertexBuffer*		buff );
 	void decrement_stats_ib		( ID3DIndexBuffer*		buff );
+
 
 	u32 memory_usage_summary[enum_stats_buffer_type_COUNT][4];
 

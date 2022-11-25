@@ -188,14 +188,14 @@ void  CUICustomEdit::Draw()
 		u32 cursor_str_size = xr_strlen( cursor_str );
 
 		LPCSTR istr			= cursor_str;
-		float str_length	= font->SizeOf_( istr );
+		float str_length	= font->GetTextSize( istr );
 		UI().ClientToScreenScaledWidth( str_length );
 
 		u32 ix = 0;
 		while ( (str_length > ui_width) && (ix < cursor_str_size) )
 		{
 			istr			= cursor_str + ix;
-			str_length		= font->SizeOf_( istr );
+			str_length		= font->GetTextSize( istr );
 			UI().ClientToScreenScaledWidth( str_length );
 			++ix;
 		}
@@ -206,13 +206,13 @@ void  CUICustomEdit::Draw()
 		u32 jx = 1;
 		strncpy_s			(m_out_str, sizeof(m_out_str), astr, jx);
 
-		str_length			= font->SizeOf_(m_out_str);
+		str_length			= font->GetTextSize(m_out_str);
 		UI().ClientToScreenScaledWidth(str_length);
 
 		while((str_length < ui_width) && (jx < str_size-ix))
 		{
 			strncpy_s		(m_out_str, sizeof(m_out_str), astr, jx);
-			str_length		= font->SizeOf_(m_out_str);
+			str_length		= font->GetTextSize(m_out_str);
 			UI().ClientToScreenScaledWidth(str_length);
 			++jx;
 		}
@@ -228,10 +228,10 @@ void  CUICustomEdit::Draw()
 			for (int i = 0; i < sz; i++)
 				passText[i] = '*';
 			passText[sz] = 0;
-			m_dx_cur			= font->SizeOf_(passText); // cursor_str
+			m_dx_cur			= font->GetTextSize(passText); // cursor_str
 		}
 		else
-			m_dx_cur			= font->SizeOf_(istr); // cursor_str
+			m_dx_cur			= font->GetTextSize(istr); // cursor_str
 
 		m_force_update		= false;
 	}

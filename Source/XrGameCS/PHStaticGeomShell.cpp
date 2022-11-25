@@ -68,14 +68,14 @@ CPHStaticGeomShell* P_BuildStaticGeomShell(CGameObject* obj,ObjectContactCallbac
 	IRenderVisual* V=obj->Visual();
 	R_ASSERT2(V,"need visual to build");
 
-	smart_cast<IKinematics*>(V)->CalculateBones	(TRUE);		//. bForce - was TRUE
+	CastToIKinematics(V)->CalculateBones	(TRUE);		//. bForce - was TRUE
 	V->getVisData().box.getradius	(b.m_halfsize);
 
 	b.xform_set					(Fidentity);
 	CPHStaticGeomShell* pUnbrokenObject =P_BuildStaticGeomShell(obj,object_contact_callback,b);
 
 	
-	IKinematics* K=smart_cast<IKinematics*>(V); VERIFY(K);
+	IKinematics* K=CastToIKinematics(V); VERIFY(K);
 	K->CalculateBones(TRUE);
 	for (u16 k=0; k<K->LL_BoneCount(); k++){
 		K->LL_GetBoneInstance(k).set_callback( bctPhysics,cb,K->LL_GetBoneInstance(k).callback_param(), TRUE);

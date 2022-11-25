@@ -141,7 +141,7 @@ BOOL CAI_Crow::net_Spawn		(CSE_Abstract* DC)
 	setEnabled	(TRUE);
 
 	// animations
-	IKinematicsAnimated*	M		= smart_cast<IKinematicsAnimated*>(Visual()); R_ASSERT(M);
+	IKinematicsAnimated*	M		= CastToIKinematicsAnimated(Visual()); R_ASSERT(M);
 	m_Anims.m_death.Load		(M,"death");
 	m_Anims.m_death_dead.Load	(M,"death_drop");
 	m_Anims.m_death_idle.Load	(M,"death_idle");
@@ -168,11 +168,11 @@ void CAI_Crow::net_Destroy		()
 // crow update
 void CAI_Crow::switch2_FlyUp()
 {
-	smart_cast<IKinematicsAnimated*>(Visual())->PlayCycle	(m_Anims.m_fly.GetRandom());
+	CastToIKinematicsAnimated(Visual())->PlayCycle	(m_Anims.m_fly.GetRandom());
 }
 void CAI_Crow::switch2_FlyIdle()
 {
-	smart_cast<IKinematicsAnimated*>(Visual())->PlayCycle	(m_Anims.m_idle.GetRandom());
+	CastToIKinematicsAnimated(Visual())->PlayCycle	(m_Anims.m_idle.GetRandom());
 }
 void CAI_Crow::switch2_DeathDead()
 {
@@ -180,14 +180,14 @@ void CAI_Crow::switch2_DeathDead()
 	ISpatial*		self				=	smart_cast<ISpatial*> (this);
 	if (self)		self->spatial.type	|=	STYPE_VISIBLEFORAI;	
 	//
-	smart_cast<IKinematicsAnimated*>(Visual())->PlayCycle	(m_Anims.m_death_dead.GetRandom());
+	CastToIKinematicsAnimated(Visual())->PlayCycle	(m_Anims.m_death_dead.GetRandom());
 }
 void CAI_Crow::switch2_DeathFall()
 {
 	Fvector V;
 	V.mul(XFORM().k,fSpeed);
 //	m_PhysicMovementControl->SetVelocity(V);
-	smart_cast<IKinematicsAnimated*>(Visual())->PlayCycle	(m_Anims.m_death.GetRandom(),TRUE,cb_OnHitEndPlaying,this);
+	CastToIKinematicsAnimated(Visual())->PlayCycle	(m_Anims.m_death.GetRandom(),TRUE,cb_OnHitEndPlaying,this);
 }
 
 void CAI_Crow::state_Flying		(float fdt)
@@ -251,7 +251,7 @@ void CAI_Crow::state_DeathFall()
 		st_target = eDeathDead;
 
 	if (bPlayDeathIdle){
-		smart_cast<IKinematicsAnimated*>(Visual())->PlayCycle	(m_Anims.m_death_idle.GetRandom());
+		CastToIKinematicsAnimated(Visual())->PlayCycle	(m_Anims.m_death_idle.GetRandom());
 		bPlayDeathIdle		= false;
 	}
 	VERIFY2( valid_pos( Position() ), dbg_valide_pos_string(Position(),this,"CAI_Crow::state_DeathFall()") );
@@ -412,7 +412,7 @@ void CAI_Crow::HitSignal	(float /**HitAmount/**/, Fvector& /**local_dir/**/, COb
 //		if (first_time)	Die			(who);
 		st_target		= eDeathFall;
 	}
-	else smart_cast<IKinematicsAnimated*>(Visual())->PlayCycle(m_Anims.m_death_dead.GetRandom());
+	else CastToIKinematicsAnimated(Visual())->PlayCycle(m_Anims.m_death_dead.GetRandom());
 }
 //---------------------------------------------------------------------
 void CAI_Crow::HitImpulse	(float	/**amount/**/,		Fvector& /**vWorldDir/**/, Fvector& /**vLocalDir/**/)
@@ -422,7 +422,7 @@ void CAI_Crow::HitImpulse	(float	/**amount/**/,		Fvector& /**vWorldDir/**/, Fvec
 void CAI_Crow::CreateSkeleton()
 {
 	m_pPhysicsShell=P_build_Shell(this,false,(BONE_P_MAP*)0);//P_build_SimpleShell(this,0.3f,false);
-	m_pPhysicsShell->SetMaterial(smart_cast<IKinematics*>(Visual())->LL_GetData(smart_cast<IKinematics*>(Visual())->LL_GetBoneRoot()).game_mtl_idx);
+	m_pPhysicsShell->SetMaterial(CastToIKinematics(Visual())->LL_GetData(CastToIKinematics(Visual())->LL_GetBoneRoot()).game_mtl_idx);
 }
 
 //void CAI_Crow::Hit	(float P, Fvector &dir, CObject* who, s16 element,Fvector p_in_object_space, float impulse, ALife::EHitType hit_type)

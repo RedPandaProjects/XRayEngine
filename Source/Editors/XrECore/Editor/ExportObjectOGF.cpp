@@ -10,7 +10,6 @@
 
 #if 1
 #include "std_classes.h"
-#include "ui_main.h"
 #endif
 
 CObjectOGFCollectorPacked::CObjectOGFCollectorPacked(const Fbox &bb, int apx_vertices, int apx_faces)

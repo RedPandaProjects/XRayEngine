@@ -213,7 +213,7 @@ bool CEditableMesh::LoadMesh(IReader& F){
 		RebuildVMaps();
 	}
 
-#if 1
+#if 0
     if (EPrefs&&!EPrefs->object_flags.is(epoDeffLoadRB))
     {
         GenerateFNormals	();

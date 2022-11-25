@@ -236,7 +236,7 @@ void CHelicopter::UpdateWeapons		()
 
 void CHelicopter::UpdateMGunDir()
 {
-	IKinematics* K		= smart_cast<IKinematics*>(Visual());
+	IKinematics* K		= CastToIKinematics(Visual());
 	m_fire_bone_xform	= K->LL_GetTransform(m_fire_bone);
 
 	m_fire_bone_xform.mulA_43	(XFORM());

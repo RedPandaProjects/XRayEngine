@@ -1327,7 +1327,7 @@ void CUIMainIngameWnd::draw_adjust_mode()
 
 			Fvector FP,SP,FP2;
 
-			IKinematics* V			= smart_cast<IKinematics*>(pWpnHud->Visual());
+			IKinematics* V			= CastToIKinematics(pWpnHud->Visual());
 			VERIFY					(V);
 			V->CalculateBones		();
 

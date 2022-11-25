@@ -128,7 +128,7 @@ void CUILine::Draw(CGameFont* pFont, float x, float y) const{
 	for (int i=0; i<size; i++)
 	{
 		m_subLines[i].Draw(pFont, x+length, y);
-		float ll = pFont->SizeOf_(m_subLines[i].m_text.c_str()); //. all ok
+		float ll = pFont->GetTextSize(m_subLines[i].m_text.c_str()); //. all ok
 		UI()->ClientToScreenScaledWidth(ll);
 		length	+= ll;
 	}
@@ -391,7 +391,7 @@ const CUILine* CUILine::CutWord(CGameFont* pFont, float length){
 
 	for (u32 i= 0; i<m_subLines[0].m_text.length(); i++)
 	{
-		float ll = pFont->SizeOf_(m_subLines[0].m_text[i]);
+		float ll = pFont->GetTextSize(m_subLines[0].m_text[i]);
 		UI()->ClientToScreenScaledWidth(ll);
 		len += ll;
 
@@ -412,7 +412,7 @@ float  CUILine::GetLength_inclusiveWord_1(Position& pos, CGameFont* pFont) const
 
 	for (u32 i = 0; i < pos.curr_subline; ++i)
 	{
-		float ll = pFont->SizeOf_(m_subLines[i].m_text.c_str());
+		float ll = pFont->GetTextSize(m_subLines[i].m_text.c_str());
 		UI()->ClientToScreenScaledWidth(ll);
 		len	+= ll;
 	}
@@ -421,7 +421,7 @@ float  CUILine::GetLength_inclusiveWord_1(Position& pos, CGameFont* pFont) const
 	str.assign(m_subLines[pos.curr_subline].m_text, 0, pos.word_1.pos + pos.word_1.len);
 
 	
-	float ll2 = pFont->SizeOf_(str.c_str());
+	float ll2 = pFont->GetTextSize(str.c_str());
 	UI()->ClientToScreenScaledWidth(ll2);
 	len += ll2;
 
@@ -440,7 +440,7 @@ float  CUILine::GetLength_inclusiveWord_2(Position& pos, CGameFont* pFont) const
 
 	for (int i = 0; i <= last; i++)
 	{
-		float ll = pFont->SizeOf_(m_subLines[i].m_text.c_str());
+		float ll = pFont->GetTextSize(m_subLines[i].m_text.c_str());
 		UI()->ClientToScreenScaledWidth(ll);
 		len += ll;
 	}
@@ -448,7 +448,7 @@ float  CUILine::GetLength_inclusiveWord_2(Position& pos, CGameFont* pFont) const
 	xr_string str;
 	str.assign(m_subLines[last + 1].m_text, 0, pos.word_2.pos + pos.word_2.len);
 
-	float ll2	= pFont->SizeOf_(str.c_str());
+	float ll2	= pFont->GetTextSize(str.c_str());
 	UI()->ClientToScreenScaledWidth(ll2);
 	len			+= ll2;
 

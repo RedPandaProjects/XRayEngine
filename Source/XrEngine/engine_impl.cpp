@@ -7,7 +7,6 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
-#include "device.h"
 
 #ifdef INGAME_EDITOR
 #include "engine_impl.hpp"

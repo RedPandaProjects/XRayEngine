@@ -292,7 +292,7 @@ void parse_word(LPCSTR str, CGameFont* font, float& length, LPCSTR& next_word)
 	while(*str && !IsSpace(*str))
 	{
 //		length  += font->GetCharTC(*str).z;
-		length  += font->SizeOf_(*str);
+		length  += font->GetTextSize(*str);
 		++str;
 	}
 	next_word = (*str) ? str+1 : str;

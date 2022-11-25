@@ -131,7 +131,7 @@ void CUILines::Reset(){
 
 float get_str_width(CGameFont*pFont, char ch)
 {
-	float ll = pFont->SizeOf_(ch);
+	float ll = pFont->GetTextSize(ch);
 	UI()->ClientToScreenScaledWidth(ll);
 	return ll;
 }

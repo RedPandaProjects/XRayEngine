@@ -394,7 +394,7 @@ void CMissile::UpdateXForm	()
 			return;
 
 		VERIFY				(E);
-		IKinematics*		V		= smart_cast<IKinematics*>	(E->Visual());
+		IKinematics*		V		= CastToIKinematics	(E->Visual());
 		VERIFY				(V);
 
 		// Get matrices
@@ -664,7 +664,7 @@ void CMissile::activate_physic_shell()
 	m_pPhysicsShell->SetAirResistance	(0.f,0.f);
 	m_pPhysicsShell->set_DynamicScales	(1.f,1.f);
 
-	IKinematics							*kinematics = smart_cast<IKinematics*>(Visual());
+	IKinematics							*kinematics = CastToIKinematics(Visual());
 	VERIFY								(kinematics);
 	kinematics->CalculateBones_Invalidate();
 	kinematics->CalculateBones			(TRUE);
@@ -693,7 +693,7 @@ void CMissile::setup_physic_shell	()
 	R_ASSERT(!m_pPhysicsShell);
 	create_physic_shell();
 	m_pPhysicsShell->Activate	(XFORM(),0,XFORM());//,true 
-	IKinematics					*kinematics = smart_cast<IKinematics*>(Visual());
+	IKinematics					*kinematics = CastToIKinematics(Visual());
 	R_ASSERT					(kinematics);
 	kinematics->CalculateBones_Invalidate();
 	kinematics->CalculateBones			(TRUE);

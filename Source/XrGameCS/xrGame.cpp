@@ -15,8 +15,6 @@
 #include "lua/library_linkage.h"
 #include "luabind/library_linkage.h"
 
-#pragma comment(lib,"ode.lib")
-#pragma comment(lib,"xrEngine.lib")
 void CCC_RegisterCommands();
 void setup_luabind_allocator();
 

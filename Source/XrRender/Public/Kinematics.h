@@ -84,10 +84,8 @@ virtual	const IBoneData&		_BCL	GetBoneData(u16 bone_id) const = 0;
 	virtual IKinematicsAnimated*		dcast_PKinematicsAnimated() = 0;
 
 	// debug
-#ifdef DEBUG
 	virtual void						DebugRender			(Fmatrix& XFORM) = 0;
 	virtual shared_str			_BCL	getDebugName		() = 0;
-#endif
 };
 
 IC IKinematics* PKinematics (IRenderVisual* V) { return V?V->dcast_PKinematics():0;}

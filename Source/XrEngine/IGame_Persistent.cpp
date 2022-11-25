@@ -29,31 +29,16 @@ IGame_Persistent::IGame_Persistent	(bool bIsEditor)
 
 	m_pMainMenu						= NULL;
 
-#ifndef INGAME_EDITOR
-	#ifndef _EDITOR
-	pEnvironment					= xr_new<CEnvironment>();
-	#endif
-#else // #ifdef INGAME_EDITOR
-	if (!bIsEditor)
+	switch (xrGameManager::GetGame())
 	{
-		if (Device->WeatherEditor())
-			pEnvironment = xr_new<XrWeatherEditor::environment::manager>();
-		else
-		{
-			switch (xrGameManager::GetGame())
-			{
-			case EGame::SHOC:
-				pEnvironment = xr_new<CEnvironmentSOC>();
-				break;
-			default:
-				pEnvironment = xr_new<CEnvironment>();
-				break;
+	case EGame::SHOC:
+		pEnvironment = xr_new<CEnvironmentSOC>();
+		break;
+	default:
+		pEnvironment = xr_new<CEnvironment>();
+		break;
 
-			}
-		}
 	}
-	
-#endif // #ifdef INGAME_EDITOR
 }
 
 IGame_Persistent::~IGame_Persistent	()
@@ -162,7 +147,6 @@ void IGame_Persistent::OnGameStart()
 	Log				("Loading models...");
 	Render->models_Prefetch				();
 	//Device->Resources->DeferredUpload	();
-	Device->m_pRender->ResourcesDeferredUpload();
 
 	p_time				=			1000.f*Device->GetTimerGlobal()->GetElapsed_sec() - p_time;
 	u32		p_mem		=			MemoryInterface->mem_usage() - mem_0	;
@@ -258,7 +242,4 @@ void IGame_Persistent::destroy_particles		(const bool &all_particles)
 
 void IGame_Persistent::OnAssetsChanged()
 {
-#ifndef _EDITOR
-	Device->m_pRender->OnAssetsChanged(); //Resources->m_textures_description.Load();
-#endif    
 }

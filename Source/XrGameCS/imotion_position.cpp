@@ -38,7 +38,7 @@ static void interactive_motion_diag( LPCSTR message, const CBlend &b, CPhysicsSh
 	const MotionID & m = b.motionID;
 	VERIFY( m.valid() );
 	VERIFY( s );
-	IKinematicsAnimated* KA = smart_cast<IKinematicsAnimated*>( s->PKinematics( ) );
+	IKinematicsAnimated* KA = CastToIKinematicsAnimated( s->PKinematics( ) );
 	VERIFY( KA );
 	CPhysicsShellHolder* O = s->get_ElementByStoreOrder( 0 )->PhysicsRefObject();
 	VERIFY( O );
@@ -112,7 +112,7 @@ void imotion_position::state_start( )
 	IKinematics			*K	= shell->PKinematics();
 	saved_visual_callback = K->GetUpdateCallback();
 	K->SetUpdateCallback( 0 );
-	IKinematicsAnimated	*KA = smart_cast<IKinematicsAnimated*>( shell->PKinematics() );
+	IKinematicsAnimated	*KA = CastToIKinematicsAnimated( shell->PKinematics() );
 	VERIFY( KA );
 	KA->SetUpdateTracksCalback( &update_callback );
 	update_callback.motion = this;
@@ -269,7 +269,7 @@ void	imotion_position::state_end( )
 
 	VERIFY( K );
 
-	IKinematicsAnimated	*KA = smart_cast<IKinematicsAnimated*>( shell->PKinematics() );
+	IKinematicsAnimated	*KA = CastToIKinematicsAnimated( shell->PKinematics() );
 	VERIFY( KA );
 	update_callback.motion = 0;
 	KA->SetUpdateTracksCalback( 0 );

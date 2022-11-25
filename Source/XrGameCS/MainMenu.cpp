@@ -126,7 +126,6 @@ void CMainMenu::ReadTextureInfo()
 
 }
 
-extern ENGINE_API BOOL	bShowPauseString;
 extern bool				IsGameTypeSingle();
 
 void CMainMenu::Activate	(bool bActivate)
@@ -158,13 +157,13 @@ void CMainMenu::Activate	(bool bActivate)
 		Console->Hide				();
 
 
-		if(b_is_single)
+		/*if(b_is_single)
 		{
 			m_Flags.set					(flRestorePauseStr, bShowPauseString);
 			bShowPauseString			= FALSE;
 			if(!m_Flags.test(flRestorePause))
 				Device->Pause			(TRUE, TRUE, FALSE, "mm_activate2");
-		}
+		}*/
 
 		//m_startDialog->m_bWorkInPause		= true;
 		//StartStopMenu						(m_startDialog,true);
@@ -209,13 +208,13 @@ void CMainMenu::Activate	(bool bActivate)
 		if(m_Flags.test(flRestoreConsole))
 			Console->Show			();
 
-		if(b_is_single)
+		/*if(b_is_single)
 		{
 			if(!m_Flags.test(flRestorePause))
 				Device->Pause			(FALSE, TRUE, FALSE, "mm_deactivate1");
 
 			bShowPauseString			= m_Flags.test(flRestorePauseStr);
-		}	
+		}	*/
 
 		if(m_Flags.test(flRestoreCursor))
 			GetUICursor()->Show			();
@@ -628,14 +627,8 @@ void	CMainMenu::OnDownloadPatchProgress			(u64 bytesReceived, u64 totalSize)
 	m_sPDProgress.Progress = (float(bytesReceived)/float(totalSize))*100.0f;
 };
 
-extern ENGINE_API string512  g_sLaunchOnExit_app;
-extern ENGINE_API string512  g_sLaunchOnExit_params;
-extern ENGINE_API string_path	g_sLaunchWorkingFolder;
 void	CMainMenu::OnRunDownloadedPatch			(CUIWindow*, void*)
 {
-	strcpy_s					(g_sLaunchOnExit_app,*m_sPatchFileName);
-	strcpy_s					(g_sLaunchOnExit_params,"");
-	strcpy_s					(g_sLaunchWorkingFolder, "");
 	Console->Execute		("quit");
 }
 

@@ -43,7 +43,7 @@ protected:
 protected:
 	// ref-counting
 	void				_inc	()									{	if (0==p_) return;	p_->dwReference++;														}
-	void				_dec	()									{	if (0==p_) return;	p_->dwReference--; if (0==p_->dwReference) xr_resource::Delete(p_);		}
+	virtual void		_dec	()									{	if (0==p_) return;	p_->dwReference--; if (0==p_->dwReference) xr_resource::Delete(p_);		}
 public:
 	ICF		void		_set	(T * rhs) 							{	if (0!=rhs) rhs->dwReference++;	_dec(); p_ = rhs;											}
 	ICF		void		_set	(resptr_base<T> const & rhs)		{	T* prhs = rhs._get(); _set(prhs);															}

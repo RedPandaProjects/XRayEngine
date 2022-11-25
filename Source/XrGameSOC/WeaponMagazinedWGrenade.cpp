@@ -704,7 +704,7 @@ void CWeaponMagazinedWGrenade::UpdateSounds	()
 void CWeaponMagazinedWGrenade::UpdateGrenadeVisibility(bool visibility)
 {
 	if (H_Parent() != Level().CurrentEntity())	return;
-	IKinematics* pHudVisual						= smart_cast<IKinematics*>(m_pHUD->Visual());
+	IKinematics* pHudVisual						= CastToIKinematics(m_pHUD->Visual());
 	VERIFY										(pHudVisual);
 	pHudVisual->LL_SetBoneVisible				(pHudVisual->LL_BoneID(*grenade_bone_name),visibility,TRUE);
 	pHudVisual->CalculateBones_Invalidate		();

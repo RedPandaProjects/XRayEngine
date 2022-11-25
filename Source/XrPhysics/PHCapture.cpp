@@ -11,7 +11,7 @@
 #include "Kinematics.h"
 #include "iphysicsshellholder.h"
 #include "../xrengine/bone.h"
-#include "../xrengine/device.h"
+#include "../xrengine/XrDeviceInterface.h"
 #include "mathutilsode.h"
 #include "phelement.h"
 

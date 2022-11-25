@@ -18,8 +18,6 @@
 #include "MgcCont3DMinBox.h"         
 
 #if 1
-#include "ui_main.h"
-#include "ui_toolscustom.h"
 #include "..\Engine\XrGameMaterialLibraryEditors.h"
 #endif
 //#include "../../../xrRender/Private/SkeletonAnimated.h"
@@ -510,10 +508,6 @@ bool CExportSkeleton::PrepareGeometry(u8 influence)
 
     R_ASSERT(m_Source->IsDynamic()&&m_Source->IsSkeleton());
 
-#if 1
-    SPBItem* pb = UI->ProgressStart(5+m_Source->MeshCount()*2+m_Source->SurfaceCount(),"..Prepare skeleton geometry");
-    pb->Inc		();
-#endif
 
     bool bBreakable		= false;
     U16Vec   			bone_brk_parts(m_Source->BoneCount());
@@ -535,10 +529,6 @@ bool CExportSkeleton::PrepareGeometry(u8 influence)
     
     bool bRes			= true;
 
-#if 1
-	UI->SetStatus		("..Split meshes");
-#endif
-
     U16Vec				tmp_bone_lst;
 
     for(EditMeshIt mesh_it=m_Source->FirstMesh();mesh_it!=m_Source->LastMesh();mesh_it++)
@@ -550,9 +540,6 @@ bool CExportSkeleton::PrepareGeometry(u8 influence)
         MESH->GenerateVNormals							(0);
         MESH->GenerateFNormals							();
         MESH->GenerateSVertices							(influence);
-#if 1
-        pb->Inc											();
-#endif
 		// fill faces
         for (SurfFacesPairIt sp_it=MESH->m_SurfFaces.begin(); sp_it!=MESH->m_SurfFaces.end(); sp_it++)
         {
@@ -655,15 +642,9 @@ bool CExportSkeleton::PrepareGeometry(u8 influence)
         }
         // mesh fin
         MESH->UnloadSVertices();
-        MESH->UnloadVNormals();
-        MESH->UnloadFNormals();
-#if 1
-        pb->Inc		();
-#endif
+		MESH->UnloadVNormals();
+		MESH->UnloadFNormals();
 	}
-#if 1
-    UI->SetStatus	("..Calculate TB");
-#endif
         Msg				("Split statistic:");
         for (int k=0; k<(int)m_Splits.size(); k++)
         {
@@ -689,20 +670,11 @@ bool CExportSkeleton::PrepareGeometry(u8 influence)
         {
             split_it->CalculateTB();
             
-#if 1
-            pb->Inc		();
-#endif
         }
 
-#if 1
-        pb->Inc			();
-#endif
         // compute bounding
         ComputeBounding	();
 
-#if 1
-    UI->ProgressEnd(pb);
-#endif
     // restore active motion       6
     m_Source->SetActiveSMotion(active_motion);
 
@@ -731,10 +703,6 @@ bool CExportSkeleton::ExportGeometry(IWriter& F, u8 infl)
 {
 	if (!PrepareGeometry(infl)) return false;
 
-#if 1
-    SPBItem* pb = UI->ProgressStart(3+m_Splits.size(),"..Export skeleton geometry");
-    pb->Inc		("Make Progressive...");
-#endif
 	// fill per bone vertices
     BoneVec& bones 			= m_Source->Bones();
     xr_vector<FvectorVec>	bone_points;
@@ -751,11 +719,8 @@ bool CExportSkeleton::ExportGeometry(IWriter& F, u8 infl)
 	    for (SkelVertIt sv_it=lst.begin(); sv_it!=lst.end(); sv_it++)
         {
 		    bone_points		[sv_it->bones[0].id].push_back						(sv_it->offs);
-            bones			[sv_it->bones[0].id]->_RITransform().transform_tiny(bone_points[sv_it->bones[0].id].back());
-        }
-#if 1
-        pb->Inc		();
-#endif
+			bones[sv_it->bones[0].id]->_RITransform().transform_tiny(bone_points[sv_it->bones[0].id].back());
+		}
 	}
 
 	// create OGF
@@ -786,9 +751,6 @@ bool CExportSkeleton::ExportGeometry(IWriter& F, u8 infl)
     }
     F.close_chunk();
 
-#if 1
-    pb->Inc		("Compute bone bounding volume...");
-#endif
 
     // BoneNames
     F.open_chunk(OGF_S_BONE_NAMES);
@@ -819,9 +781,6 @@ bool CExportSkeleton::ExportGeometry(IWriter& F, u8 infl)
         F.close_chunk	();
     }
 
-#if 1
-    pb->Inc		();
-#endif
     if (m_Source->GetLODs() && xr_strlen(m_Source->GetLODs())>0 && bRes)
     {
         F.open_chunk	(OGF_S_LODS);
@@ -852,9 +811,6 @@ bool CExportSkeleton::ExportGeometry(IWriter& F, u8 infl)
         F.close_chunk	();
     }
 
-#if 1
-    UI->ProgressEnd(pb);
-#endif
     return bRes;
 }
 //----------------------------------------------------
@@ -886,10 +842,6 @@ bool CExportSkeleton::ExportMotionKeys(IWriter& F)
      	return !!m_Source->m_SMotionRefs.size();
     }
 
-#if 1
-	SPBItem* pb = UI->ProgressStart(1+m_Source->SMotionCount(),"..Export skeleton motions keys");
-    pb->Inc		();
-#endif
     // mem active motion
     CSMotion* active_motion=m_Source->ResetSAnimation();
 
@@ -1093,14 +1045,8 @@ bool CExportSkeleton::ExportMotionKeys(IWriter& F)
         xr_free						(items);
 
         F.close_chunk				();
-#if 1
-    	pb->Inc						();
-#endif
     }
     F.close_chunk					();
-#if 1
-	UI->ProgressEnd					(pb);
-#endif
     // restore active motion
     m_Source->SetActiveSMotion		(active_motion);
     return 							true;
@@ -1115,10 +1061,6 @@ bool CExportSkeleton::ExportMotionDefs(IWriter& F)
 
     bool bRes=true;
 
-#if 1
-	SPBItem* pb = UI->ProgressStart(3,"..Export skeleton motions defs");
-    pb->Inc		();
-#endif
 
     if (m_Source->m_SMotionRefs.size())
     {
@@ -1128,9 +1070,6 @@ bool CExportSkeleton::ExportMotionDefs(IWriter& F)
         	F.w_stringZ	(m_Source->m_SMotionRefs[i].c_str());
 
 	    F.close_chunk	();
-#if 1
-	    pb->Inc		();
-#endif
     }else{
         // save smparams
         F.open_chunk	(OGF_S_SMPARAMS);
@@ -1170,9 +1109,6 @@ bool CExportSkeleton::ExportMotionDefs(IWriter& F)
             for (int i=0; i<m_Source->BoneCount(); i++) 
 				F.w_u32(i);
         }
-#if 1
-	    pb->Inc		();
-#endif
         // motion defs
         SMotionVec& sm_lst	= m_Source->SMotions();
         F.w_u16((u16)sm_lst.size());
@@ -1213,15 +1149,9 @@ bool CExportSkeleton::ExportMotionDefs(IWriter& F)
 #endif
             }
         }
-#if 1
-	    pb->Inc		();
-#endif
 		F.close_chunk();
     }
     
-#if 1
-	UI->ProgressEnd(pb);
-#endif
     return bRes;
 }
 

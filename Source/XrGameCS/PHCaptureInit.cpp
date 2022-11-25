@@ -25,7 +25,7 @@ bool can_capture( CPHCharacter   *a_character, CPhysicsShellHolder	*a_taget_obje
 	   !a_character->PhysicsRefObject()->Visual( )
 	   ) return false;
 
-	IKinematics* p_kinematics = smart_cast<IKinematics*>( a_character->PhysicsRefObject()->Visual( ) );
+	IKinematics* p_kinematics = CastToIKinematics( a_character->PhysicsRefObject()->Visual( ) );
 	VERIFY( p_kinematics );
 	CInifile* ini = p_kinematics->LL_UserData();
 	if(!ini								||
@@ -42,7 +42,7 @@ bool can_capture( CPHCharacter   *a_character, CPhysicsShellHolder	*a_taget_obje
 		!a_taget_object->Visual() 
 		) return false;
 
-	IKinematics* K=	smart_cast<IKinematics*>( a_taget_object->Visual( ) );
+	IKinematics* K=	CastToIKinematics( a_taget_object->Visual( ) );
 
 	if(!K || !K->LL_GetBoneInstance(a_taget_element).callback_param() )
 		return false;
@@ -53,7 +53,7 @@ static CBoneInstance * get_capture_bone( CPHCharacter   *a_character )
 {
 	VERIFY( a_character );
 	VERIFY( a_character->PhysicsRefObject() );
-	IKinematics* p_kinematics = smart_cast<IKinematics*>( a_character->PhysicsRefObject()->Visual( ) );
+	IKinematics* p_kinematics = CastToIKinematics( a_character->PhysicsRefObject()->Visual( ) );
 	VERIFY( p_kinematics );
 	CInifile* ini = p_kinematics->LL_UserData();
 	VERIFY( ini );
@@ -165,7 +165,7 @@ CPHCapture::CPHCapture	( CPHCharacter   *a_character, CPhysicsShellHolder	*a_tag
 	IRenderVisual* V=m_taget_object->Visual( );
 	VERIFY( V );
 
-	IKinematics* K=	smart_cast<IKinematics*>( m_taget_object->Visual( ) );
+	IKinematics* K=	CastToIKinematics( m_taget_object->Visual( ) );
 	VERIFY( K );
 
 	CBoneInstance& tag_bone=K->LL_GetBoneInstance( a_taget_element );
@@ -185,7 +185,7 @@ void CPHCapture::Init( )
 	VERIFY( m_character->PhysicsRefObject()->Visual( ) );
 	VERIFY( m_capture_bone );
 
-	IKinematics* p_kinematics = smart_cast<IKinematics*>( m_character->PhysicsRefObject()->Visual( ) );
+	IKinematics* p_kinematics = CastToIKinematics( m_character->PhysicsRefObject()->Visual( ) );
 	VERIFY( p_kinematics );
 	CInifile	* ini = p_kinematics->LL_UserData();
 	VERIFY( ini );

@@ -5,7 +5,7 @@
 #include "PHdynamicdata.h"
 #include "Physics.h"
 #include "level.h"
-#include "../xrEngine/XRayEngine.h"
+#include "../xrEngine/XRayEngineInterface.h"
 #include "../xrEngine/igame_persistent.h"
 #include "PhysicsGamePars.h"
 #include "ai_space.h"

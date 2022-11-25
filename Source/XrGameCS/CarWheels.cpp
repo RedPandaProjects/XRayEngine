@@ -188,7 +188,7 @@ void CCar::SWheelDrive::Init()
 {
 	pwheel->Init();
 	gear_factor=pwheel->radius/pwheel->car->m_ref_radius;
-	CBoneData& bone_data= smart_cast<IKinematics*>(pwheel->car->Visual())->LL_GetData(u16(pwheel->bone_id));
+	CBoneData& bone_data= CastToIKinematics(pwheel->car->Visual())->LL_GetData(u16(pwheel->bone_id));
 	switch(bone_data.IK_data.type)
 	{
 	case jtWheel:
@@ -224,7 +224,7 @@ float CCar::SWheelDrive::ASpeed()
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void CCar::SWheelSteer::Init()
 {
-	IKinematics* pKinematics=smart_cast<IKinematics*>(pwheel->car->Visual());
+	IKinematics* pKinematics=CastToIKinematics(pwheel->car->Visual());
 	pwheel->Init();
 	(bone_map.find(pwheel->bone_id))->second.joint->GetLimits(lo_limit,hi_limit,0);
 	CBoneData& bone_data= pKinematics->LL_GetData(u16(pwheel->bone_id));

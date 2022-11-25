@@ -589,7 +589,7 @@ BOOL CAI_Stalker::net_Spawn			(CSE_Abstract* DC)
 		sound().set_sound_mask(u32(eStalkerSoundMaskDie));
 
 	//загрузить иммунитеты из модельки сталкера
-	IKinematics* pKinematics = smart_cast<IKinematics*>(Visual()); VERIFY(pKinematics);
+	IKinematics* pKinematics = CastToIKinematics(Visual()); VERIFY(pKinematics);
 	CInifile* ini = pKinematics->LL_UserData();
 	if(ini)
 	{
@@ -1276,7 +1276,7 @@ void CAI_Stalker::fill_bones_body_parts	(LPCSTR bone_id, const ECriticalWoundTyp
 	LPCSTR					body_part_section_id = pSettings->r_string(body_parts_section_id,bone_id);
 	VERIFY					(body_part_section_id);
 
-	IKinematics				*kinematics	= smart_cast<IKinematics*>(Visual());
+	IKinematics				*kinematics	= CastToIKinematics(Visual());
 	VERIFY					(kinematics);
 
 	CInifile::Sect			&body_part_section = pSettings->r_section(body_part_section_id);
@@ -1314,7 +1314,7 @@ float CAI_Stalker::shedule_Scale				()
 
 void CAI_Stalker::aim_bone_id					(shared_str const &bone_id)
 {
-//	IKinematics				*kinematics = smart_cast<IKinematics*>(Visual());
+//	IKinematics				*kinematics = CastToIKinematics(Visual());
 //	VERIFY2					(kinematics->LL_BoneID(bone_id) != BI_NONE, make_string("Cannot find bone %s",bone_id));
 	m_aim_bone_id			= bone_id;
 }
@@ -1326,7 +1326,7 @@ shared_str const &CAI_Stalker::aim_bone_id		() const
 
 void aim_target							(shared_str const& aim_bone_id, Fvector &result, const CGameObject *object)
 {
-	IKinematics				*kinematics = smart_cast<IKinematics*>(object->Visual());
+	IKinematics				*kinematics = CastToIKinematics(object->Visual());
 	VERIFY					(kinematics);
 
 	u16						bone_id = kinematics->LL_BoneID(aim_bone_id);

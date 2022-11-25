@@ -42,7 +42,7 @@ void ErrorLog(LPCSTR caMessage)
 void FlushLogs()
 {
 #ifdef PRINT_CALL_STACK
-	FlushLog();
+	//FlushLog();
 	ai().script_engine().flush_log();
 #endif // DEBUG
 }

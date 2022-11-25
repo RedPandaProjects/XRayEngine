@@ -7,23 +7,22 @@
 
 #include "Library.h"
 #include "EditObject.h"
-#include "ui_main.h"
 
 //----------------------------------------------------
-ELibrary Lib;
+XRayObjectLibrary *GRayObjectLibrary = nullptr;
 //----------------------------------------------------
-ELibrary::ELibrary()
+XRayObjectLibrary::XRayObjectLibrary()
 {
     m_bReady  = false;
 }
 //----------------------------------------------------
 
-ELibrary::~ELibrary()
+XRayObjectLibrary::~XRayObjectLibrary()
 {
 }
 //----------------------------------------------------
 
-void ELibrary::OnCreate()
+void XRayObjectLibrary::OnCreate()
 {
 	//EDevice->seqDevCreate.Add	(this,REG_PRIORITY_NORMAL);
 	//EDevice->seqDevDestroy.Add(this,REG_PRIORITY_NORMAL);
@@ -31,7 +30,7 @@ void ELibrary::OnCreate()
 }
 //----------------------------------------------------
 
-void ELibrary::OnDestroy()
+void XRayObjectLibrary::OnDestroy()
 {
 	VERIFY(m_bReady);
     m_bReady = false;
@@ -52,7 +51,7 @@ void ELibrary::OnDestroy()
 }
 //----------------------------------------------------
 
-void ELibrary::CleanLibrary()
+void XRayObjectLibrary::CleanLibrary()
 {
 	VERIFY(m_bReady);
     // remove all unused instance CEditableObject
@@ -65,7 +64,7 @@ void ELibrary::CleanLibrary()
     }
 }
 //----------------------------------------------------
-void ELibrary::ReloadObject(LPCSTR nm)
+void XRayObjectLibrary::ReloadObject(LPCSTR nm)
 {
 	VERIFY(m_bReady);
 	R_ASSERT(nm&&nm[0]);
@@ -75,7 +74,7 @@ void ELibrary::ReloadObject(LPCSTR nm)
     	it->second->Reload();
 }
 //---------------------------------------------------------------------------
-void ELibrary::ReloadObjects(){
+void XRayObjectLibrary::ReloadObjects(){
 	VERIFY(m_bReady);
 	EditObjPairIt O = m_EditObjects.begin();
 	EditObjPairIt E = m_EditObjects.end();
@@ -84,7 +83,7 @@ void ELibrary::ReloadObjects(){
 }
 //----------------------------------------------------
 
-void ELibrary::OnDeviceCreate(){
+void XRayObjectLibrary::OnDeviceCreate(){
 	VERIFY(m_bReady);
 	EditObjPairIt O = m_EditObjects.begin();
 	EditObjPairIt E = m_EditObjects.end();
@@ -93,7 +92,7 @@ void ELibrary::OnDeviceCreate(){
 }
 //---------------------------------------------------------------------------
 
-void ELibrary::OnDeviceDestroy(){
+void XRayObjectLibrary::OnDeviceDestroy(){
 	VERIFY(m_bReady);
 	EditObjPairIt O = m_EditObjects.begin();
 	EditObjPairIt E = m_EditObjects.end();
@@ -102,7 +101,7 @@ void ELibrary::OnDeviceDestroy(){
 }
 //---------------------------------------------------------------------------
 
-void ELibrary::EvictObjects()
+void XRayObjectLibrary::EvictObjects()
 {
 	EditObjPairIt O = m_EditObjects.begin();
 	EditObjPairIt E = m_EditObjects.end();
@@ -111,7 +110,7 @@ void ELibrary::EvictObjects()
 }
 //----------------------------------------------------
 
-CEditableObject* ELibrary::LoadEditObject(LPCSTR name)
+CEditableObject* XRayObjectLibrary::LoadEditObject(LPCSTR name)
 {
 	VERIFY(m_bReady);
     CEditableObject* m_EditObject = xr_new<CEditableObject>(name);
@@ -134,7 +133,7 @@ CEditableObject* ELibrary::LoadEditObject(LPCSTR name)
 }
 //---------------------------------------------------------------------------
 
-CEditableObject* ELibrary::CreateEditObject(LPCSTR nm)
+CEditableObject* XRayObjectLibrary::CreateEditObject(LPCSTR nm)
 {
 	VERIFY(m_bReady);
     R_ASSERT(nm&&nm[0]);
@@ -152,19 +151,19 @@ CEditableObject* ELibrary::CreateEditObject(LPCSTR nm)
 }
 //---------------------------------------------------------------------------
 
-void ELibrary::RemoveEditObject(CEditableObject*& object)
+void XRayObjectLibrary::RemoveEditObject(CEditableObject*& object)
 {
 	if (object){
 	    object->m_RefCount--;
     	R_ASSERT(object->m_RefCount>=0);
-		if ((object->m_RefCount==0)&&  (EPrefs&&EPrefs->object_flags.is(epoDiscardInstance)))
+		if ((object->m_RefCount==0))
 			if (!object->IsModified()) UnloadEditObject(object->GetName());
         object=0;
 	}
 }
 //---------------------------------------------------------------------------
 
-void ELibrary::Save(FS_FileSet* modif_map)
+void XRayObjectLibrary::Save(FS_FileSet* modif_map)
 {
 	VERIFY(m_bReady);
 	EditObjPairIt O = m_EditObjects.begin();
@@ -197,13 +196,13 @@ void ELibrary::Save(FS_FileSet* modif_map)
 }
 //---------------------------------------------------------------------------
 
-int ELibrary::GetObjects(FS_FileSet& files)
+int XRayObjectLibrary::GetObjects(FS_FileSet& files)
 {
     return FS.file_list(files,_objects_,FS_ListFiles|FS_ClampExt,"*.object");
 }
 //---------------------------------------------------------------------------
 
-void ELibrary::RemoveObject(LPCSTR _fname, EItemType type, bool& res)   
+void XRayObjectLibrary::RemoveObject(LPCSTR _fname, EItemType type, bool& res)   
 {
 	if (TYPE_FOLDER==type){
     	FS.dir_delete			(_objects_,_fname,FALSE);
@@ -231,7 +230,7 @@ void ELibrary::RemoveObject(LPCSTR _fname, EItemType type, bool& res)
 }
 //---------------------------------------------------------------------------
 
-void ELibrary::RenameObject(LPCSTR nm0, LPCSTR nm1, EItemType type)
+void XRayObjectLibrary::RenameObject(LPCSTR nm0, LPCSTR nm1, EItemType type)
 {
 	if (TYPE_FOLDER==type){
     	FS.dir_delete			(_objects_,nm0,FALSE);
@@ -261,7 +260,7 @@ void ELibrary::RenameObject(LPCSTR nm0, LPCSTR nm1, EItemType type)
 }
 //---------------------------------------------------------------------------
 
-void ELibrary::UnloadEditObject(LPCSTR full_name)
+void XRayObjectLibrary::UnloadEditObject(LPCSTR full_name)
 {
     EditObjPairIt it 	= m_EditObjects.find(full_name);
     if (it!=m_EditObjects.end()){

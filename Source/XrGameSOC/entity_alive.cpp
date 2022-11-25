@@ -355,7 +355,7 @@ void CEntityAlive::BloodyWallmarks (float P, const Fvector &dir, s16 element,
 		return;
 
 	//��������� ���������� ���������
-	IKinematics* V = smart_cast<IKinematics*>(Visual());
+	IKinematics* V = CastToIKinematics(Visual());
 		
 	Fvector start_pos = position_in_object_space;
 	if(V)
@@ -436,7 +436,7 @@ void CEntityAlive::StartFireParticles(CWound* pWound)
 			m_ParticleWounds.push_back(pWound);
 		}
 
-		IKinematics* V = smart_cast<IKinematics*>(Visual());
+		IKinematics* V = CastToIKinematics(Visual());
 
 		u16 particle_bone = CParticlesPlayer::GetNearestBone(V, pWound->GetBoneNum());
 		VERIFY(particle_bone  < 64 || BI_NONE == particle_bone);

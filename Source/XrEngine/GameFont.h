@@ -26,25 +26,15 @@ private:
 		EAligment	align;
 	};
 protected:
-	Fvector2				vHalfPixel;
-	Ivector2				vTS;
-
 	EAligment				eCurrentAlignment;
 	u32						dwCurrentColor;
 	float					fCurrentHeight;
 	float					fCurrentX, fCurrentY;
-	Fvector2				vInterval;
+	float					fSize;
 
-	Fvector 				*TCMap;
-	float					fHeight;
-	float					fXStep;
-	float					fYStep;
-	float					fTCHeight;
 	xr_vector<String>		strings;
 
 	IFontRender				*pFontRender;
-
-	u32						nNumChars;
 
 	u32						uFlags;
 
@@ -60,15 +50,12 @@ public:
 		fsForceDWORD		= u32(-1)
 	};
 
-protected:
-	IC const Fvector&		GetCharTC		(u16 c)		{return TCMap[c];}
-
 public:
 							CGameFont		(LPCSTR section, u32 flags=0);
-							CGameFont		(LPCSTR shader, LPCSTR texture, u32 flags=0);
+							CGameFont		(LPCSTR font, float size, u32 flags);
 							~CGameFont		();
 
-	void					Initialize		(LPCSTR shader, LPCSTR texture);
+	void					Initialize		(LPCSTR font, float size);
 
 	IC void					SetColor		(u32 C)		{dwCurrentColor=C;};
 
@@ -76,14 +63,12 @@ public:
 	IC void					SetHeight		(float S);
 
 	IC float				GetHeight		(){return fCurrentHeight;};
-	IC void					SetInterval		(float x, float y) {vInterval.set(x,y);};
-	IC void					SetInterval		(const Fvector2& v) {vInterval.set(v);};
 	IC void					SetAligment		(EAligment aligment){ eCurrentAlignment=aligment; }
 
-	float					SizeOf_			( LPCSTR s );
-	float					SizeOf_			( const wide_char *wsStr );
+	float					GetTextSize			( LPCSTR s );
+	float					GetTextSize			( const wide_char *wsStr );
 
-	float					SizeOf_			( const char cChar );  // only ANSII 
+	float					GetTextSize			( const char cChar );  // only ANSII 
 
 	float					CurrentHeight_	();
 

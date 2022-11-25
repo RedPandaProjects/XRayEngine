@@ -42,7 +42,7 @@ void CWeaponRPG7::UpdateMissileVisibility()
 		HudItemData()->set_bone_visible("grenade",vis_hud,TRUE);
 	}
 
-	IKinematics* pWeaponVisual	= smart_cast<IKinematics*>(Visual()); 
+	IKinematics* pWeaponVisual	= CastToIKinematics(Visual()); 
 	VERIFY						(pWeaponVisual);
 	pWeaponVisual->LL_SetBoneVisible(pWeaponVisual->LL_BoneID("grenade"),vis_weap,TRUE);
 }

@@ -8,7 +8,6 @@
 #include "../XrAPI/xrGameManager.h"
 #include "securom_api.h"
 #include "..\XrAPI\xrGameManager.h"
-#include "device.h"
 extern xr_token* vid_quality_token;
 
 //////////////////////////////////////////////////////////////////////
@@ -93,11 +92,6 @@ void CEngineAPI::Initialize(void)
 	pDestroy = &xrFactory_Destroy;
 
 #else
-#ifdef _DEBUG
-	LPCSTR			r1_name	= "xrRender_R1_Debug.dll";
-#else
-	LPCSTR			r1_name = "xrRender_R1_Release.dll";
-#endif
 	#ifndef DEDICATED_SERVER
 		InitializeNotDedicated();
 	#endif // DEDICATED_SERVER
@@ -116,10 +110,19 @@ void CEngineAPI::Initialize(void)
 		switch (xrGameManager::GetGame())
 		{
 		case EGame::CS:
-			g_name = "XrGameCS.dll";
+#ifdef _DEBUG
+			g_name = "XrGameCS_Debug.dll";
+#else
+			g_name = "XrGameCS_Release.dll";
+#endif
 			break;
 		case EGame::SHOC:
-			g_name = "XrGameSOC.dll";
+#ifdef _DEBUG
+			g_name = "XrGameSOC_Debug.dll";
+#else
+			g_name = "XrGameSOC_Release.dll";
+#endif
+		
 			break;
 		}
 

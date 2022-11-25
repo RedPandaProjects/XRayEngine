@@ -124,7 +124,7 @@ BOOL CArtefact::net_Spawn(CSE_Abstract* DC)
 	/////////////////////////////////////////
 	m_CarringBoneID = u16(-1);
 	/////////////////////////////////////////
-	IKinematicsAnimated	*K=smart_cast<IKinematicsAnimated*>(Visual());
+	IKinematicsAnimated	*K=CastToIKinematicsAnimated(Visual());
 	if(K)K->PlayCycle("idle");
 	
 	o_fastmode					= FALSE	;		// start initially with fast-mode enabled
@@ -162,7 +162,7 @@ void CArtefact::OnH_A_Chield()
 	}
 	else
 	{
-		IKinematics* K	= smart_cast<IKinematics*>(H_Parent()->Visual());
+		IKinematics* K	= CastToIKinematics(H_Parent()->Visual());
 		if (K)
 			m_CarringBoneID			= K->LL_BoneID("bip01_head");
 		else
@@ -321,7 +321,7 @@ void CArtefact::UpdateXForm()
 			return;
 
 		VERIFY				(E);
-		IKinematics*		V		= smart_cast<IKinematics*>	(E->Visual());
+		IKinematics*		V		= CastToIKinematics	(E->Visual());
 		VERIFY				(V);
 
 		// Get matrices
@@ -553,7 +553,7 @@ void SArtefactActivation::ChangeEffects()
 												iFloor(state_def.m_time*1000) );
 	};
 	if(state_def.m_animation.size()){
-		IKinematicsAnimated	*K=smart_cast<IKinematicsAnimated*>(m_af->Visual());
+		IKinematicsAnimated	*K=CastToIKinematicsAnimated(m_af->Visual());
 		if(K)K->PlayCycle(*state_def.m_animation);
 	}
 

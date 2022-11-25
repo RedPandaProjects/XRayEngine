@@ -19,7 +19,7 @@ void bone_group::init				(CActor* actor_ptr)
 	if (!m_bone_groups.empty())
 		return;
 
-	IKinematics* V		= smart_cast<IKinematics*>(actor_ptr->Visual());
+	IKinematics* V		= CastToIKinematics(actor_ptr->Visual());
 	VERIFY				(V);
 
 	m_bone_groups.insert(std::make_pair(V->LL_BoneID("bip01_head"),		gid_head));

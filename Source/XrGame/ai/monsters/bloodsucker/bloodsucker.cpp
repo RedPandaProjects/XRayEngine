@@ -330,8 +330,8 @@ void CAI_Bloodsucker::vfAssignBones()
 {
 	// Установка callback на кости
 
-	bone_spine =	&smart_cast<IKinematics*>(Visual())->LL_GetBoneInstance(smart_cast<IKinematics*>(Visual())->LL_BoneID("bip01_spine"));
-	bone_head =		&smart_cast<IKinematics*>(Visual())->LL_GetBoneInstance(smart_cast<IKinematics*>(Visual())->LL_BoneID("bip01_head"));
+	bone_spine =	&CastToIKinematics(Visual())->LL_GetBoneInstance(CastToIKinematics(Visual())->LL_BoneID("bip01_spine"));
+	bone_head =		&CastToIKinematics(Visual())->LL_GetBoneInstance(CastToIKinematics(Visual())->LL_BoneID("bip01_head"));
 	if(!PPhysicsShell())//нельзя ставить колбеки, если создан физ шел - у него стоят свои колбеки!!!
 	{
 		bone_spine->set_callback(bctCustom,BoneCallback,this);
@@ -668,7 +668,7 @@ void CAI_Bloodsucker::start_drag()
 {
 	if(m_animated){
 		com_man().script_capture(ControlCom::eControlAnimation);
-		smart_cast<IKinematicsAnimated*>(Visual())->PlayCycle("boloto_attack_link_bone",TRUE,animation_end_jump,this);
+		CastToIKinematicsAnimated(Visual())->PlayCycle("boloto_attack_link_bone",TRUE,animation_end_jump,this);
 		m_animated = false;
 	}
 }

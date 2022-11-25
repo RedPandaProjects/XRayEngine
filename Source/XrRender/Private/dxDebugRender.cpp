@@ -5,8 +5,6 @@
 #include "dxDebugRender.h"
 #include "dxUIShader.h"
 
-dxDebugRender DebugRenderImpl;
-dxDebugRender DebugRenderImpl_1;
 dxDebugRender::dxDebugRender()
 {
 	m_line_indices.reserve			(line_vertex_limit);
@@ -182,7 +180,7 @@ virtual void	add_lines			(Fvector const *vertices, u32 const &vertex_count, u16 
 	_line_vertices.resize(0);	
 	_add_lines( _line_vertices, _line_indices, vertices, vertex_count, pairs, pair_count, color );
 }
-} rdebug_render_impl;
-dxDebugRender *rdebug_render = &rdebug_render_impl; 
+} ;
+dxDebugRender *rdebug_render = nullptr; 
 
 #endif	//	DEBUG

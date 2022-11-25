@@ -3,7 +3,6 @@
 
 #include "EThumbnail.h"
 #ifndef XR_EPROPS_EXPORTS
-	#include "ImageManager.h"
 #endif
 #pragma package(smart_init)
 
@@ -17,7 +16,6 @@ ETextureThumbnail::ETextureThumbnail(LPCSTR src_name, bool bLoad):EImageThumbnai
     if(!strchr(src_name,'\\'))
     {
       xr_string _name                     	= src_name;
-      ImageLib.UpdateFileName             	(_name);
       m_Name                              	= _name.c_str();
       m_Name 	                			= ChangeFileExt(m_Name,".thm");
      }
@@ -28,7 +26,7 @@ ETextureThumbnail::ETextureThumbnail(LPCSTR src_name, bool bLoad):EImageThumbnai
 #else
 		if (!Load())
                 {
-                 ImageLib.CreateTextureThumbnail(this,src_name);
+                
                  }
 #endif
 }
@@ -178,50 +176,6 @@ void ETextureThumbnail::FillInfo(PropItemVec& items)
     PHelper().CreateCaption		(items, "Alpha",					_Alpha()?"on":"off");
 }
 
-void ETextureThumbnail::Update(ImTextureID& Texture)
-{
-    VERIFY(!Texture);
-    if (0 == m_Pixels.size())
-    {
-        u32                 image_w, image_h, image_a;
-        xr_string fn_img = EFS.ChangeFileExt(m_Name.c_str(), ".tga");
-        string_path fn;
-        FS.update_path(fn, _textures_, fn_img.c_str());
-
-        if (!FS.exist(fn))
-        {
-            fn_img = EFS.ChangeFileExt(m_Name.c_str(), ".dds");
-            FS.update_path(fn, _game_textures_, fn_img.c_str());
-
-            if (!FS.exist(fn))
-            {
-                ELog.Msg(mtError, "Can't make preview for texture '%s'.", m_Name.c_str());
-                return;
-            }
-        }
-
-        U32Vec data;
-        u32 w, h, a;
-        if (!Stbi_Load(fn, data, image_w, image_h, image_a))
-        {
-
-            fn_img = EFS.ChangeFileExt(m_Name.c_str(), ".dds");
-            u32	mem = 0;
-            Texture = ::RImplementation.texture_load(fn_img.c_str(), mem);
-            if (!Texture)
-                ELog.Msg(mtError, "Can't make preview for texture '%s'.", m_Name.c_str());
-
-            return;
-        }
-        ImageLib.MakeThumbnailImage(this, data.data(), image_w, image_h, image_a);
-    }
-
-    if (Valid())
-    {
-       
-        inherited::Update(Texture);
-    }
-}
 
 BOOL ETextureThumbnail::similar(ETextureThumbnail* thm1, xr_vector<xr_string>& sel_params)
 {

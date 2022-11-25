@@ -833,7 +833,7 @@ static void DBG_DrawTarckObj()
 	IKinematics *k = smart_cast<IKinematics *>( v );
 	if( !k )
 		return;
-	IKinematicsAnimated* ka = smart_cast<IKinematicsAnimated*>( k );
+	IKinematicsAnimated* ka = CastToIKinematicsAnimated( k );
 	if(!ka)
 		return;
 	DBG_AnimState( *ka );
@@ -866,7 +866,7 @@ void	DBG_DrawBones( const Fmatrix &xform,  IKinematics *K )
 }
 void	DBG_DrawBones( CObject &O )
 {
-	IKinematics *K = smart_cast<IKinematics*> ( O.Visual() );
+	IKinematics *K = CastToIKinematics ( O.Visual() );
 
 	//K->CalculateBones_Invalidate();
 	//K->CalculateBones();
@@ -898,7 +898,7 @@ void	DBG_PhysBones( CObject &O )
 
 void	DBG_DrawBind( CObject &O )
 {
-	IKinematics *K = smart_cast<IKinematics*> ( O.Visual() );
+	IKinematics *K = CastToIKinematics ( O.Visual() );
 
 	
 	u16 nbb = K->LL_BoneCount();

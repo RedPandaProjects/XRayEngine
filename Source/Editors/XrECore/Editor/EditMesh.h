@@ -188,7 +188,7 @@ struct st_RenderBuffer;
 class CSurface;
 class CSector;
 
-#if 1
+#if 0
 	struct ECORE_API st_RenderBuffer{
 		u32			dwStartVertex;
 	    u32			dwNumVertex;
@@ -276,7 +276,6 @@ protected:
 
 #if 1
     CDB::MODEL*		m_CFModel;
-	RBMap*			m_RenderBuffers;
 #endif
 
 	void 			FillRenderBuffer		(IntVec& face_lst, int start_face, int num_face, const CSurface* surf, LPBYTE& data);

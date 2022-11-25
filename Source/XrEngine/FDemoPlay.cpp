@@ -11,7 +11,6 @@
 #include "CameraManager.h"
 
 #include "xrSash.h"
-#include "device.h"
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -59,7 +58,7 @@ CDemoPlay::CDemoPlay(const char *name, float ms, u32 cycles, float life_time) : 
 		Log				("~ Total key-frames: ",m_count);
 	}
 	stat_started		= FALSE;
-	EngineDevice->PreCache		(50, true, false);
+	Device->PreCache		(50, true, false);
 }
 
 CDemoPlay::~CDemoPlay		()

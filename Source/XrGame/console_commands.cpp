@@ -160,16 +160,13 @@ static void full_memory_stats	( )
 #endif // SEVERAL_ALLOCATORS
 	int		_eco_strings	= (int)g_pStringContainer->stat_economy			();
 	int		_eco_smem		= (int)g_pSharedMemoryContainer->stat_economy	();
-	u32		m_base=0,c_base=0,m_lmaps=0,c_lmaps=0;
 
 
 	//if (Device->Resources)	Device->Resources->_GetMemoryUsage	(m_base,c_base,m_lmaps,c_lmaps);
 	//	Resource check moved to m_pRender
-	if (Device->m_pRender) Device->m_pRender->ResourcesGetMemoryUsage(m_base,c_base,m_lmaps,c_lmaps);
 
 	log_vminfo	();
 
-	Msg		("* [ D3D ]: textures[%d K]", (m_base+m_lmaps)/1024);
 
 #ifndef SEVERAL_ALLOCATORS
 	Msg		("* [x-ray]: crt heap[%d K], process heap[%d K]",_crt_heap/1024,_process_heap/1024);
@@ -1602,7 +1599,7 @@ public:
 		}
 
 		IRenderVisual			*visual = Render->model_Create(arguments);
-		IKinematics				*kinematics = smart_cast<IKinematics*>(visual);
+		IKinematics				*kinematics = CastToIKinematics(visual);
 		if (!kinematics) {
 			Render->model_Delete(visual);
 			Msg					("! Invalid visual type \"%s\" (not a IKinematics)",arguments);

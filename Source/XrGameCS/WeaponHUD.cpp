@@ -26,7 +26,7 @@ BOOL weapon_hud_value::load(const shared_str& section, CHudItem* owner)
 	LPCSTR visual_name			= pSettings->r_string(section, "visual");
 	IRenderVisual *pV			= ::Render->model_Create(visual_name);
 	m_animations				= smart_cast<IKinematicsAnimated*>(pV);
-	IKinematics *pK				= smart_cast<IKinematics*>(pV);
+	IKinematics *pK				= CastToIKinematics(pV);
 
 	// fire bone	
 	if(smart_cast<CWeapon*>(owner)){
@@ -129,7 +129,7 @@ void CWeaponHUD::animDisplay(MotionID M, BOOL bMixIn)
 	if(m_bVisible){
 		IRenderVisual *pV = Visual();
 		IKinematicsAnimated* PKinematicsAnimated		= smart_cast<IKinematicsAnimated*>(pV);
-		IKinematics* pK									= smart_cast<IKinematics*>(pV);
+		IKinematics* pK									= CastToIKinematics(pV);
 		VERIFY											(PKinematicsAnimated);
 		PKinematicsAnimated->PlayCycle					(M,bMixIn);
 		pK->CalculateBones_Invalidate	();

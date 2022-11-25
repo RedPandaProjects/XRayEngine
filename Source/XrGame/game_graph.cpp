@@ -2,7 +2,7 @@
 #include "game_graph.h"
 CGameGraph::CGameGraph(const IReader& _stream)
 {
-	VERIFY(!Device->IsEditorMode());
+	//VERIFY(!Device->IsEditorMode());
 	IReader& stream = const_cast<IReader&>(_stream);
 	m_header.load(&stream);
 	R_ASSERT2(header().version() == XRAI_CURRENT_VERSION, "Graph version mismatch!");
@@ -18,7 +18,7 @@ CGameGraph::CGameGraph(const IReader& _stream)
 
 CGameGraph::~CGameGraph()
 {
-	VERIFY(Device->IsEditorMode() == false);
+	//VERIFY(Device->IsEditorMode() == false);
 	xr_delete(m_current_level_cross_table);
 }
 

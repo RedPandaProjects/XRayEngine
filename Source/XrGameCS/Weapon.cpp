@@ -112,7 +112,7 @@ void CWeapon::UpdateXForm	()
 	if (parent->attached(this))
 		return;
 
-	IKinematics*			V = smart_cast<IKinematics*>	(E->Visual());
+	IKinematics*			V = CastToIKinematics	(E->Visual());
 	VERIFY					(V);
 
 	// Get matrices
@@ -1207,7 +1207,7 @@ void CWeapon::UpdateHUDAddonsVisibility()
 
 void CWeapon::UpdateAddonsVisibility()
 {
-	IKinematics* pWeaponVisual = smart_cast<IKinematics*>(Visual()); R_ASSERT(pWeaponVisual);
+	IKinematics* pWeaponVisual = CastToIKinematics(Visual()); R_ASSERT(pWeaponVisual);
 
 	u16  bone_id;
 	UpdateHUDAddonsVisibility								();	

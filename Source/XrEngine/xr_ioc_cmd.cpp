@@ -121,7 +121,6 @@ class CCC_TexturesStat : public IConsole_Command
 public:
 	CCC_TexturesStat(LPCSTR N) : IConsole_Command(N)  { bEmptyArgsHandled = TRUE; };
 	virtual void Execute(LPCSTR args) {
-		Device->DumpResourcesMemoryUsage();
 		//Device->Resources->_DumpMemoryUsage();
 		//	TODO: move this console commant into renderer
 		//VERIFY(0);
@@ -371,73 +370,6 @@ public:
 	}
 };
 //-----------------------------------------------------------------------
-class CCC_VID_Reset : public IConsole_Command
-{
-public:
-	CCC_VID_Reset(LPCSTR N) : IConsole_Command(N) { bEmptyArgsHandled = TRUE; };
-	virtual void Execute(LPCSTR args) {
-		if (Device->b_is_Ready) {
-			Device->Reset	();
-		}
-	}
-};
-class CCC_VidMode : public CCC_Token
-{
-	u32		_dummy;
-public :
-					CCC_VidMode(LPCSTR N) : CCC_Token(N, &_dummy, NULL) { bEmptyArgsHandled = FALSE; };
-	virtual void	Execute(LPCSTR args){
-		u32 _w, _h;
-		int cnt = sscanf		(args,"%dx%d",&_w,&_h);
-		if(cnt==2){
-			psCurrentVidMode[0] = _w;
-			psCurrentVidMode[1] = _h;
-		}else{
-			Msg("! Wrong video mode [%s]", args);
-			return;
-		}
-	}
-	virtual void	Status	(TStatus& S)	
-	{ 
-		xr_sprintf(S,sizeof(S),"%dx%d",psCurrentVidMode[0],psCurrentVidMode[1]); 
-	}
-	virtual xr_token* GetToken()				{return vid_mode_token;}
-	virtual void	Info	(TInfo& I)
-	{	
-		xr_strcpy(I,sizeof(I),"change screen resolution WxH");
-	}
-
-	virtual void	fill_tips(vecTips& tips, u32 mode)
-	{
-		TStatus  str, cur;
-		Status( cur );
-
-		bool res = false;
-		xr_token* tok = GetToken();
-		while ( tok->name && !res )
-		{
-			if ( !xr_strcmp( tok->name, cur ) )
-			{
-				xr_sprintf( str, sizeof(str), "%s  (current)", tok->name );
-				tips.push_back( str );
-				res = true;
-			}
-			tok++;
-		}
-		if ( !res )
-		{
-			tips.push_back( "---  (current)" );
-		}
-		tok = GetToken();
-		while ( tok->name )
-		{
-			tips.push_back( tok->name );
-			tok++;
-		}
-	}
-
-};
-//-----------------------------------------------------------------------
 class CCC_SND_Restart : public IConsole_Command
 {
 public:
@@ -449,24 +381,7 @@ public:
 
 //-----------------------------------------------------------------------
 float	ps_gamma=1.f,ps_brightness=1.f,ps_contrast=1.f;
-class CCC_Gamma : public CCC_Float
-{
-public:
-	CCC_Gamma	(LPCSTR N, float* V) : CCC_Float(N,V,0.5f,1.5f)	{}
 
-	virtual void Execute(LPCSTR args)
-	{
-		CCC_Float::Execute		(args);
-		//Device->Gamma.Gamma		(ps_gamma);
-		Device->m_pRender->setGamma(ps_gamma);
-		//Device->Gamma.Brightness	(ps_brightness);
-		Device->m_pRender->setBrightness(ps_brightness);
-		//Device->Gamma.Contrast	(ps_contrast);
-		Device->m_pRender->setContrast(ps_contrast);
-		//Device->Gamma.Update		();
-		Device->m_pRender->updateGamma();
-	}
-};
 
 //-----------------------------------------------------------------------
 /*
@@ -517,59 +432,9 @@ public:
 #endif
 */
 
-ENGINE_API BOOL r2_sun_static = TRUE;
-ENGINE_API BOOL r2_advanced_pp = FALSE;	//	advanced post process and effects
-
-u32	renderer_value	= 3;
 //void fill_render_mode_list();
 //void free_render_mode_list();
 
-class CCC_r2 : public CCC_Token
-{
-	typedef CCC_Token inherited;
-public:
-	CCC_r2(LPCSTR N) :inherited(N, &renderer_value, NULL){renderer_value=3;};
-	virtual			~CCC_r2	()
-	{
-		//free_render_mode_list();
-	}
-#ifndef SHIPPING
-	virtual void	Execute	(LPCSTR args)
-	{
-		//fill_render_mode_list	();
-		//	vid_quality_token must be already created!
-		tokens					= vid_quality_token;
-
-		inherited::Execute		(args);
-		//	0 - r1
-		//	1..3 - r2
-		//	4 - r3
-		psDeviceFlags.set		(rsR2, ((renderer_value>0) && renderer_value<4) );
-		psDeviceFlags.set		(rsR3, (renderer_value==4) );
-		psDeviceFlags.set		(rsR4, (renderer_value==5) );
-		psDeviceFlags.set		(rsR5, (renderer_value>=6) );
-		r2_sun_static	= (renderer_value<2);
-
-		r2_advanced_pp  = (renderer_value>=3);
-	}
-
-	virtual void	Save	(IWriter *F)	
-	{
-		//fill_render_mode_list	();
-		tokens					= vid_quality_token;
-		if( !strstr(Core.Params, "-r2") )
-		{
-			inherited::Save(F);
-		}
-	}
-	virtual xr_token* GetToken()
-	{
-		tokens					= vid_quality_token;
-		return					inherited::GetToken();
-	}
-#endif
-
-};
 #ifndef DEDICATED_SERVER
 class CCC_soundDevice : public CCC_Token
 {
@@ -720,54 +585,32 @@ void CCC_Register()
 	CMD1(CCC_E_Dump,	"e_list"				);
 	CMD1(CCC_E_Signal,	"e_signal"				);
 
-	CMD3(CCC_Mask,		"rs_wireframe",			&psDeviceFlags,		rsWireframe);
-	CMD3(CCC_Mask,		"rs_clear_bb",			&psDeviceFlags,		rsClearBB);
-	CMD3(CCC_Mask,		"rs_occlusion",			&psDeviceFlags,		rsOcclusion);
 
 	CMD3(CCC_Mask,		"rs_detail",			&psDeviceFlags,		rsDetails	);
 	//CMD4(CCC_Float,		"r__dtex_range",		&r__dtex_range,		5,		175	);
 
 //	CMD3(CCC_Mask,		"rs_constant_fps",		&psDeviceFlags,		rsConstantFPS			);
-	CMD3(CCC_Mask,		"rs_render_statics",	&psDeviceFlags,		rsDrawStatic			);
-	CMD3(CCC_Mask,		"rs_render_dynamics",	&psDeviceFlags,		rsDrawDynamic			);
 #endif
 
 	// Render device states
 	CMD4(CCC_Integer,	"r__supersample",		&ps_r__Supersample,			1,		4		);
 
-
-	CMD3(CCC_Mask,		"rs_v_sync",			&psDeviceFlags,		rsVSync				);
-//	CMD3(CCC_Mask,		"rs_disable_objects_as_crows",&psDeviceFlags,	rsDisableObjectsAsCrows	);
-	CMD3(CCC_Mask,		"rs_fullscreen",		&psDeviceFlags,		rsFullscreen			);
-	CMD3(CCC_Mask,		"rs_refresh_60hz",		&psDeviceFlags,		rsRefresh60hz			);
+;
 	CMD3(CCC_Mask,		"rs_stats",				&psDeviceFlags,		rsStatistic				);
 	CMD4(CCC_Float,		"rs_vis_distance",		&psVisDistance,		0.4f,	1.5f			);
 
 	CMD3(CCC_Mask,		"rs_cam_pos",			&psDeviceFlags,		rsCameraPos				);
 #ifdef DEBUG
-	CMD3(CCC_Mask,		"rs_occ_draw",			&psDeviceFlags,		rsOcclusionDraw			);
-	CMD3(CCC_Mask,		"rs_occ_stats",			&psDeviceFlags,		rsOcclusionStats		);
 	//CMD4(CCC_Integer,	"rs_skeleton_update",	&psSkeletonUpdate,	2,		128	);
 #endif // DEBUG
 
-	CMD2(CCC_Gamma,		"rs_c_gamma"			,&ps_gamma			);
-	CMD2(CCC_Gamma,		"rs_c_brightness"		,&ps_brightness		);
-	CMD2(CCC_Gamma,		"rs_c_contrast"			,&ps_contrast		);
 //	CMD4(CCC_Integer,	"rs_vb_size",			&rsDVB_Size,		32,		4096);
 //	CMD4(CCC_Integer,	"rs_ib_size",			&rsDIB_Size,		32,		4096);
 
 	// Texture manager	
-	CMD4(CCC_Integer,	"texture_lod",			&psTextureLOD,				0,	4	);
 	CMD4(CCC_Integer,	"net_dedicated_sleep",	&psNET_DedicatedSleep,		0,	64	);
 
-	// General video control
-	CMD1(CCC_VidMode,	"vid_mode"				);
 
-#ifdef DEBUG
-	CMD3(CCC_Token,		"vid_bpp",				&psCurrentBPP,	vid_bpp_token );
-#endif // DEBUG
-
-	CMD1(CCC_VID_Reset, "vid_restart"			);
 	
 	// Sound
 	CMD2(CCC_Float,		"snd_volume_eff",		&psSoundVEffects);
@@ -798,7 +641,7 @@ void CCC_Register()
 	CMD2(CCC_Float,		"cam_inert",			&psCamInert);
 	CMD2(CCC_Float,		"cam_slide_inert",		&psCamSlideInert);
 
-	CMD1(CCC_r2,		"renderer"				);
+	//CMD1(CCC_r2,		"renderer"				);
 
 #ifndef DEDICATED_SERVER
 	CMD1(CCC_soundDevice, "snd_device"			);
@@ -820,8 +663,6 @@ void CCC_Register()
 	extern int g_svTextConsoleUpdateRate;
 	CMD4(CCC_Integer, "sv_console_update_rate", &g_svTextConsoleUpdateRate, 1, 100);
 
-	extern int g_svDedicateServerUpdateReate;
-	CMD4(CCC_Integer, "sv_dedicated_server_update_rate", &g_svDedicateServerUpdateReate, 1, 1000);
 
 	CMD1(CCC_HideConsole,		"hide");
 

@@ -82,9 +82,9 @@ void type_motion_diagnostic( LPCSTR message, type_motion::edirection dr, const C
 	if(! death_anim_debug )
 		return;
 	
-	IKinematicsAnimated *KA = smart_cast<IKinematicsAnimated*>( ea.Visual() );
+	IKinematicsAnimated *KA = CastToIKinematicsAnimated( ea.Visual() );
 	VERIFY( KA );
-	IKinematics *K  = smart_cast<IKinematics*>( ea.Visual() );
+	IKinematics *K  = CastToIKinematics( ea.Visual() );
 	LPCSTR bone_name = "not_definite";
 	if( H.bone() != BI_NONE )
 	{

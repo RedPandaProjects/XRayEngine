@@ -15,7 +15,6 @@
 #include "../../xrServerEntities/script_engine.h"
 #include "ai_space.h"
 
-extern ENGINE_API BOOL bShowPauseString;
 
 CUISequenceSimpleItem::~CUISequenceSimpleItem()
 {
@@ -227,7 +226,6 @@ void CUISequenceSimpleItem::Start()
 	if(m_flags.test(etiNeedPauseOn) && !m_flags.test(etiStoredPauseState))
 	{
 		Device->Pause			(TRUE, TRUE, FALSE, "simpleitem_start");
-		bShowPauseString		= FALSE;
 	}
 
 	if(m_flags.test(etiNeedPauseOff) && m_flags.test(etiStoredPauseState))

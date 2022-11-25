@@ -260,7 +260,6 @@
     <ClInclude Include="data_storage_single_linked_list_inline.h" />
     <ClInclude Include="dedicated_server_only.h" />
     <ClInclude Include="defines.h" />
-    <ClInclude Include="device.h" />
     <ClInclude Include="dijkstra.h" />
     <ClInclude Include="dijkstra_inline.h" />
     <ClInclude Include="doug_lea_memory_allocator.h" />
@@ -438,13 +437,6 @@
     <ClCompile Include="cf_dynamic_mesh.cpp" />
     <ClCompile Include="CustomHUD.cpp" />
     <ClCompile Include="defines.cpp" />
-    <ClCompile Include="device.cpp" />
-    <ClCompile Include="Device_create.cpp" />
-    <ClCompile Include="Device_destroy.cpp" />
-    <ClCompile Include="Device_Initialize.cpp" />
-    <ClCompile Include="Device_Misc.cpp" />
-    <ClCompile Include="Device_overdraw.cpp" />
-    <ClCompile Include="Device_wndproc.cpp" />
     <ClCompile Include="doug_lea_memory_allocator.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </PrecompiledHeader>

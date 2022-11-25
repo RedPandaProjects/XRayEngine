@@ -1,6 +1,10 @@
 #include "stdafx.h"
 
-XrDeviceInterface::XrDeviceInterface():m_pRender(0)
+ENGINE_API BOOL g_bRendering = FALSE;
+
+ENGINE_API xr_list<LOADING_EVENT>	*		g_loading_events;
+
+XrDeviceInterface::XrDeviceInterface()
 {
 	m_bNearer = false;
 }

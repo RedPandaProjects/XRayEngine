@@ -96,7 +96,7 @@ void CAI_Space::load				(LPCSTR level_name)
 	unload					(true);
 
 #ifdef DEBUG
-	MemoryInterface->mem_compact		();
+	//MemoryInterface->mem_compact		();
 	u32						mem_usage = MemoryInterface->mem_usage();
 	CTimer					timer;
 	timer.Start				();

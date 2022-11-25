@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "UIChooseForm.h"
-UIChooseForm::EventsMap	UIChooseForm::m_Events;
+UIChooseForm::EventsMap*	UIChooseForm::m_Events;
 UIChooseForm* UIChooseForm::Form = 0;
 ImTextureID   UIChooseForm::NullTexture = nullptr;
 
@@ -412,21 +412,21 @@ void UIChooseForm::SelectItem(u32 choose_ID, int sel_cnt, LPCSTR init_name, TOnC
 
 void UIChooseForm::AppendEvents(u32 choose_ID, LPCSTR caption, TOnChooseFillItems on_fill, TOnChooseSelectItem on_sel, TGetTexture on_thm, TOnChooseClose on_close, u32 flags)
 {
-	EventsMapIt it = m_Events.find(choose_ID); VERIFY(it == m_Events.end());
-	m_Events.insert(std::make_pair(choose_ID, SChooseEvents(caption, on_fill, on_sel, on_thm, on_close, flags)));
+	EventsMapIt it = m_Events->find(choose_ID); VERIFY(it == m_Events->end());
+	m_Events->insert(std::make_pair(choose_ID, SChooseEvents(caption, on_fill, on_sel, on_thm, on_close, flags)));
 
 }
 
 void UIChooseForm::ClearEvents()
 {
     NullTexture->Release();
-    m_Events.clear();
+    m_Events->clear();
 }
 
 SChooseEvents* UIChooseForm::GetEvents(u32 choose_ID)
 {
-	EventsMapIt it = m_Events.find(choose_ID);
-	if (it != m_Events.end()) {
+	EventsMapIt it = m_Events->find(choose_ID);
+	if (it != m_Events->end()) {
 		return &it->second;
 	}
 	else return 0;

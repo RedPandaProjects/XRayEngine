@@ -115,7 +115,7 @@ void CCustomOutfit::ReloadBonesProtection( CActor* pActor )
 	{
 		return;
 	}
-	m_boneProtection->reload( m_BonesProtectionSect, smart_cast<IKinematics*>( pActor->Visual() ) );
+	m_boneProtection->reload( m_BonesProtectionSect, CastToIKinematics( pActor->Visual() ) );
 }
 
 void CCustomOutfit::Hit(float hit_power, ALife::EHitType hit_type)

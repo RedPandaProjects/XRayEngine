@@ -12,7 +12,7 @@
 //#include "CaptureBoneCallback.h"
 #include "iphysicsshellholder.h"
 #include "../xrengine/bone.h"
-#include "../xrengine/device.h"
+#include "../xrengine/XrDeviceInterface.h"
 extern	class CPHWorld	*ph_world;
 ///////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////
@@ -29,7 +29,7 @@ bool can_capture( CPHCharacter   *a_character, IPhysicsShellHolder	*a_taget_obje
 	   !a_character->PhysicsRefObject()->ObjectKinematics( )
 	   ) return false;
 
-	//IKinematics* p_kinematics = smart_cast<IKinematics*>( a_character->PhysicsRefObject()->ObjectVisual( ) );
+	//IKinematics* p_kinematics = CastToIKinematics( a_character->PhysicsRefObject()->ObjectVisual( ) );
 	IKinematics* p_kinematics = a_character->PhysicsRefObject()->ObjectKinematics( ) ;
 	VERIFY( p_kinematics );
 	CInifile* ini = p_kinematics->LL_UserData();
@@ -48,7 +48,7 @@ bool can_capture( CPHCharacter   *a_character, IPhysicsShellHolder	*a_taget_obje
 		!a_taget_object->ObjectKinematics() 
 		) return false;
 
-	//IKinematics* K=	smart_cast<IKinematics*>( a_taget_object->ObjectVisual( ) );
+	//IKinematics* K=	CastToIKinematics( a_taget_object->ObjectVisual( ) );
 	IKinematics* K=	 a_taget_object->ObjectKinematics( ) ;
 
 	if(!K || !K->LL_GetBoneInstance(a_taget_element).callback_param() )
@@ -60,7 +60,7 @@ static CBoneInstance * get_capture_bone( CPHCharacter   *a_character )
 {
 	VERIFY( a_character );
 	VERIFY( a_character->PhysicsRefObject() );
-	//IKinematics* p_kinematics = smart_cast<IKinematics*>( a_character->PhysicsRefObject()->ObjectVisual( ) );
+	//IKinematics* p_kinematics = CastToIKinematics( a_character->PhysicsRefObject()->ObjectVisual( ) );
 	IKinematics* p_kinematics =  a_character->PhysicsRefObject()->ObjectKinematics( ) ;
 	VERIFY( p_kinematics );
 	CInifile* ini = p_kinematics->LL_UserData();
@@ -173,7 +173,7 @@ CPHCapture::CPHCapture	( CPHCharacter   *a_character, IPhysicsShellHolder	*a_tag
 	//IRenderVisual* V=m_taget_object->ObjectVisual( );
 	//VERIFY( V );
 
-	//IKinematics* K=	smart_cast<IKinematics*>( m_taget_object->ObjectVisual( ) );
+	//IKinematics* K=	CastToIKinematics( m_taget_object->ObjectVisual( ) );
 	IKinematics* K=	m_taget_object->ObjectKinematics( ) ;
 	VERIFY( K );
 
@@ -195,7 +195,7 @@ void CPHCapture::Init( )
 	VERIFY( m_character->PhysicsRefObject()->ObjectKinematics( ) );
 	VERIFY( m_capture_bone );
 
-	//IKinematics* p_kinematics = smart_cast<IKinematics*>( m_character->PhysicsRefObject()->ObjectVisual( ) );
+	//IKinematics* p_kinematics = CastToIKinematics( m_character->PhysicsRefObject()->ObjectVisual( ) );
 	IKinematics* p_kinematics = m_character->PhysicsRefObject()->ObjectKinematics( ) ;
 	VERIFY( p_kinematics );
 	CInifile	* ini = p_kinematics->LL_UserData();

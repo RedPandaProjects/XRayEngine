@@ -25,7 +25,7 @@
 	#include "../xrEngine/bone.h"
 	#define RENDER 1
 	#include "../xrEngine/Render.h"
-	#include "../xrEngine/Device.h"
+	#include "../xrEngine/XrDeviceInterface.h"
 	#include "../XrRender/Private/light.h"
 #endif // _EDITOR
 

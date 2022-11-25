@@ -34,9 +34,9 @@ public:
 	enum LT
 	{
 		DIRECT		= 0,
+		OMNIPART	= 3,
 		POINT		= 1,
 		SPOT		= 2,
-		OMNIPART	= 3,
 		REFLECTED	= 4,
 	};
 public:
@@ -61,11 +61,7 @@ public:
 	virtual bool					get_hud_mode		()									= 0;
 	virtual ~IRender_Light()		;
 };
-struct ENGINE_API		resptrcode_light	: public resptr_base<IRender_Light>
-{
-	void				destroy			()				{ _set(NULL);						}
-};
-typedef	resptr_core<IRender_Light,resptrcode_light >	ref_light;
+
 
 //////////////////////////////////////////////////////////////////////////
 // definition (Dynamic Glow)
@@ -81,11 +77,6 @@ public:
 	virtual void					set_color			(float r, float g, float b)			= 0;
 	virtual ~IRender_Glow()			;
 };
-struct ENGINE_API		resptrcode_glow	: public resptr_base<IRender_Glow>
-{
-	void				destroy			()					{ _set(NULL);					}
-};
-typedef	resptr_core<IRender_Glow,resptrcode_glow >		ref_glow;
 
 //////////////////////////////////////////////////////////////////////////
 // definition (Per-object render-specific data)
@@ -290,7 +281,18 @@ public:
 protected:
 	virtual	void					ScreenshotImpl			(ScreenshotMode mode, LPCSTR name, CMemoryWriter* memory_writer) = 0;
 };
-
+struct ENGINE_API		resptrcode_glow : public resptr_base<IRender_Glow>
+{
+	void				_dec()  override { if (0 == p_) return;	p_->dwReference--; if (0 == p_->dwReference) Render->glow_destroy(p_); }
+	void				destroy() { _set(NULL); }
+};
+typedef	resptr_core<IRender_Glow, resptrcode_glow >		ref_glow;
+struct ENGINE_API		resptrcode_light : public resptr_base<IRender_Light>
+{
+	void				_dec()  override { if (0 == p_) return;	p_->dwReference--; if (0 == p_->dwReference) Render->light_destroy(p_); }
+	void				destroy() { _set(NULL); }
+};
+typedef	resptr_core<IRender_Light, resptrcode_light >	ref_light;
 //extern ENGINE_API	IRender_interface*	Render;
 
 #endif

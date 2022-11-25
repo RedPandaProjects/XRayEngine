@@ -13,7 +13,6 @@
 #if 1
 	#include "motion.h"
 	#include "bone.h"
-	#include "ImageManager.h"
 #endif
 
 // mimimal bounding box size
@@ -23,20 +22,13 @@ float g_MinBoxSize 	= 0.05f;
 
 CSurface::~CSurface()
 {
-    {R_ASSERT(!m_Shader); xr_delete(m_ImageData); }
 }
 
 void CSurface::CreateImageData()
 {
-	VERIFY		(0==m_ImageData);
-    m_ImageData			= xr_new<SSimpleImage>();
-	m_ImageData->name	= m_Texture;
-    m_ImageData->layers.push_back	(U32Vec());
-    ImageLib.LoadTextureData		(*m_ImageData->name,m_ImageData->layers.back(),m_ImageData->w,m_ImageData->h);
 }
 void CSurface::RemoveImageData()
 {
-	xr_delete	(m_ImageData);
 }
 #endif
 
@@ -51,9 +43,6 @@ CEditableObject::CEditableObject(LPCSTR name):
 	m_objectFlags.zero	();
     m_ObjectVersion	= 0;
 
-#if 1
-    vs_SkeletonGeom	= 0;
-#endif
 	m_BBox.invalidate();
 
     m_LoadState.zero();
@@ -71,7 +60,6 @@ CEditableObject::CEditableObject(LPCSTR name):
 
     m_RefCount		= 0;
 
-    m_LODShader		= 0;
     
     m_CreateName	= "unknown";
     m_CreateTime	= 0;

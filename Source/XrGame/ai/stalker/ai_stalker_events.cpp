@@ -92,7 +92,7 @@ void CAI_Stalker::OnEvent		(NET_Packet& P, u16 type)
 void CAI_Stalker::on_ownership_reject	( CObject*O, bool just_before_destroy )
 {
 	m_pPhysics_support->in_UpdateCL			();
-	IKinematics* const kinematics			= smart_cast<IKinematics*>(Visual());
+	IKinematics* const kinematics			= CastToIKinematics(Visual());
 	kinematics->CalculateBones_Invalidate	();
 	kinematics->CalculateBones				(true);
 

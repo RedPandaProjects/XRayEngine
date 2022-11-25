@@ -8,7 +8,6 @@
 #include "EditMesh.h"
 #include "EditObject.h"
 //#include "cl_collector.h"
-#include "ui_main.h"
 #include "pick_defs.h"
 #include "../XrETools/ETools.h"
 
@@ -199,14 +198,14 @@ bool CEditableMesh::BoxPick(const Fbox& box, const Fmatrix& inv_parent, SBoxPick
 
 bool CEditableMesh::FrustumPick(const CFrustum& frustum, const Fmatrix& parent)
 {
-	if (!m_Flags.is(flVisible)) return false;
+	/*if (!m_Flags.is(flVisible)) return false;
 
 	Fvector p[3];
 	for(u32 i=0;i<m_FaceCount;i++){
 		for( int k=0;k<3;k++)
             parent.transform_tiny(p[k],m_Vertices[m_Faces[i].pv[k].pindex]);
 		if (frustum.testPolyInside(p,3)) return true;
-	}
+	}*/
 	return false;
 }
 //---------------------------------------------------------------------------
@@ -215,7 +214,7 @@ void CEditableMesh::FrustumPickFaces(const CFrustum& frustum, const Fmatrix& par
 {
 	if (!m_Flags.is(flVisible)) return;
 
-	Fvector p[3];
+	/*Fvector p[3];
     bool bCulling=EPrefs->bp_cull;
 	for(u32 p_id=0;p_id<m_FaceCount;p_id++){
         for( int k=0;k<3;++k)
@@ -227,7 +226,7 @@ void CEditableMesh::FrustumPickFaces(const CFrustum& frustum, const Fmatrix& par
         }
         if (frustum.testPolyInside(p,3))
             fl.push_back(p_id);
-    }
+    }*/
 }
 #endif //
 

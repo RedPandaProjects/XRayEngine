@@ -10,12 +10,6 @@
     <Filter Include="Engine">
       <UniqueIdentifier>{c54c47ef-21d4-49ba-93fe-8107eaf5eef4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Render">
-      <UniqueIdentifier>{593c3986-0d03-46a3-af38-f8fdcf08f115}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Render\Interface">
-      <UniqueIdentifier>{acae559e-c3ca-49c5-a2db-95a29e68ed5c}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WildMagic\WmlMath.cpp">
@@ -74,27 +68,6 @@
     </ClCompile>
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="guid.cpp" />
-    <ClCompile Include="Editor\UI_MainMail.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\UI_MainCommand.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\ui_main.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\UI_Camera.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\TLSPRITE.CPP">
-      <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\SoundManager.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\render.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
     <ClCompile Include="Editor\PhysicsShellHolderEditorBase.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
@@ -105,15 +78,6 @@
       <Filter>Editor</Filter>
     </ClCompile>
     <ClCompile Include="Editor\Library.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\ImageManagerLOD.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\ImageManagerDO.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\ImageManager.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
     <ClCompile Include="Editor\GeometryCollector.cpp">
@@ -146,13 +110,7 @@
     <ClCompile Include="Editor\EThumbnail.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
-    <ClCompile Include="Editor\EStats.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
     <ClCompile Include="Editor\ELog.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\EditorPreferences.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
     <ClCompile Include="Editor\EditObjectSkin.cpp">
@@ -165,9 +123,6 @@
       <Filter>Editor</Filter>
     </ClCompile>
     <ClCompile Include="Editor\EditObjectIO.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\EditObjectImport.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
     <ClCompile Include="Editor\EditObjectEditor.cpp">
@@ -191,9 +146,6 @@
     <ClCompile Include="Editor\EditMesh.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
-    <ClCompile Include="Editor\EDetailModel.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
     <ClCompile Include="Editor\du_sphere_part.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
@@ -209,25 +161,7 @@
     <ClCompile Include="Editor\du_box.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
-    <ClCompile Include="Editor\DeviceScreenshot.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\device.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\D3DUtils.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\ColorPicker.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\c_dinput.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
     <ClCompile Include="Editor\xrLoadSurface.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\UI_ToolsCustom.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
     <ClCompile Include="Engine\nv_algebra.cpp">
@@ -242,308 +176,23 @@
     <ClCompile Include="Engine\bone.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\FBasicVisual.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\FHierrarhyVisual.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\SkeletonAnimated.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\SkeletonCustom.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\SkeletonRigid.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\SkeletonX.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\ResourceManager_Reset.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\Blender_Editor_Selection.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\Blender_Screen_SET.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\Blender_Editor_Wire.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\Blender_Lm(EbB).cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\Blender_Model_EbB.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\Blender_detail_still.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\Blender_tree.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\Blender_BmmD.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\tga.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\DetailModel.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\ModelPool.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\ParticleEffect.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\ParticleGroup.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\PSLibrary.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\Texture.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\xrRender_console.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\FVisual.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\ParticleEffectDef.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\FProgressive.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\FSkinned.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\Animation.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\HWCaps.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\HW.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\R_Backend_hemi.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\R_Backend_tree.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\R_Backend_xform.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\R_Backend_Runtime.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\R_Backend_DBG.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\DX9\dx9r_constants_cache.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\r_constants.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\R_DStreams.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\ResourceManager_Loader.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\ResourceManager_Resources.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\ResourceManager.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\SH_Matrix.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\SH_Texture.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\SH_Atomic.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\SH_RT.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\SH_Constant.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\XRayShader.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\tss_def.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\Blender_Recorder_StandartBinding.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\blenders\Blender.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\blenders\Blender_Palette.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\blenders\Blender_Recorder.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\TextureDescrManager.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\ETextureParams.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\Blender_Recorder_R2.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\stats_manager.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\R1_PC\BlenderDefault.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\R1_PC\Blender_default_aref.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\R1_PC\Blender_Vertex.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\R1_PC\Blender_Vertex_aref.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\R1_PC\Blender_Screen_GRAY.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\R1_PC\Blender_Blur.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\R1_PC\Blender_LaEmB.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\R1_PC\Blender_Model.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\R1_PC\Blender_Shadow_World.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\R_Backend.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\Blender_Particle.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\UIRenderForm.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\UISoundEditorForm.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
     <ClCompile Include="StbImage.cpp" />
-    <ClCompile Include="Editor\UIImageEditorForm.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\UIMinimapEditorForm.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\UILogForm.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\UIEditLightAnim.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\XrGamePersistentEditors.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Engine\XrGameMaterialLibraryEditors.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\dxRenderFactory.cpp">
-      <Filter>Render\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\dxStatGraphRender.cpp">
-      <Filter>Render\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\dxStatsRender.cpp">
-      <Filter>Render\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\dxThunderboltDescRender.cpp">
-      <Filter>Render\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\dxThunderboltRender.cpp">
-      <Filter>Render\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\dxUIRender.cpp">
-      <Filter>Render\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\dxUISequenceVideoItem.cpp">
-      <Filter>Render\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\dxUIShader.cpp">
-      <Filter>Render\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\dxWallMarkArray.cpp">
-      <Filter>Render\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\dxApplicationRender.cpp">
-      <Filter>Render\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\dxConsoleRender.cpp">
-      <Filter>Render\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\dxDebugRender.cpp">
-      <Filter>Render\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\dxEnvironmentRender.cpp">
-      <Filter>Render\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\dxFontRender.cpp">
-      <Filter>Render\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\dxLensFlareRender.cpp">
-      <Filter>Render\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\dxObjectSpaceRender.cpp">
-      <Filter>Render\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\dxParticleCustom.cpp">
-      <Filter>Render\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\dxRainRender.cpp">
-      <Filter>Render\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\dxRenderDeviceRender.cpp">
-      <Filter>Render\Interface</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Image.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrCPU_Pipe\xrSkin2W.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Engine\guid_generator.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\XrRender\Private\ResourceManager_Scripting.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrEngine\ai_script_lua_debug.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\XrEngine\ai_script_lua_extension.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
     <ClCompile Include="LuaMemoryController.cpp" />
+    <ClCompile Include="..\..\XrRender\Private\ETextureParams.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WildMagic\WmlMath.h">
@@ -610,28 +259,10 @@
       <Filter>WildMagic</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="Editor\UI_MainCommand.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor\ui_main.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor\UI_Camera.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor\TLSPRITE.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor\SoundManager.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
     <ClInclude Include="Editor\SkeletonVert.h">
       <Filter>Editor</Filter>
     </ClInclude>
     <ClInclude Include="Editor\SkeletonFace.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor\render.h">
       <Filter>Editor</Filter>
     </ClInclude>
     <ClInclude Include="Editor\PropSlimTools.h">
@@ -646,19 +277,10 @@
     <ClInclude Include="Editor\ParticleEffectActions.h">
       <Filter>Editor</Filter>
     </ClInclude>
-    <ClInclude Include="Editor\lwo2.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor\LW_ShaderDef.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
     <ClInclude Include="Editor\Library.h">
       <Filter>Editor</Filter>
     </ClInclude>
     <ClInclude Include="Editor\itterate_adjacents_dynamic.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor\ImageManager.h">
       <Filter>Editor</Filter>
     </ClInclude>
     <ClInclude Include="Editor\GeometryCollector.h">
@@ -673,22 +295,13 @@
     <ClInclude Include="Editor\EThumbnail.h">
       <Filter>Editor</Filter>
     </ClInclude>
-    <ClInclude Include="Editor\EStats.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
     <ClInclude Include="Editor\ELog.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor\EditorPreferences.h">
       <Filter>Editor</Filter>
     </ClInclude>
     <ClInclude Include="Editor\EditObject.h">
       <Filter>Editor</Filter>
     </ClInclude>
     <ClInclude Include="Editor\EditMesh.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor\EDetailModel.h">
       <Filter>Editor</Filter>
     </ClInclude>
     <ClInclude Include="Editor\du_sphere_part.h">
@@ -706,22 +319,7 @@
     <ClInclude Include="Editor\du_box.h">
       <Filter>Editor</Filter>
     </ClInclude>
-    <ClInclude Include="Editor\device.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor\D3DX_Wrapper.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor\D3DUtils.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor\ColorPicker.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
     <ClInclude Include="Editor\ArbitraryList.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor\UI_ToolsCustom.h">
       <Filter>Editor</Filter>
     </ClInclude>
     <ClInclude Include="Engine\cl_intersect.h">
@@ -746,25 +344,7 @@
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Editor\itterate_adjacents.h" />
-    <ClInclude Include="Editor\UIRenderForm.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
     <ClInclude Include="Editor\EditorChooseEvents.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor\UISoundEditorForm.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor\UIImageEditorForm.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor\UIMinimapEditorForm.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor\UILogForm.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor\UIEditLightAnim.h">
       <Filter>Editor</Filter>
     </ClInclude>
     <ClInclude Include="Engine\XrGamePersistentEditors.h">
@@ -772,63 +352,6 @@
     </ClInclude>
     <ClInclude Include="Engine\XrGameMaterialLibraryEditors.h">
       <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\XrRender\Private\dxRenderFactory.h">
-      <Filter>Render\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\XrRender\Private\dxStatGraphRender.h">
-      <Filter>Render\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\XrRender\Private\dxStatsRender.h">
-      <Filter>Render\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\XrRender\Private\dxThunderboltDescRender.h">
-      <Filter>Render\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\XrRender\Private\dxThunderboltRender.h">
-      <Filter>Render\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\XrRender\Private\dxUIRender.h">
-      <Filter>Render\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\XrRender\Private\dxUISequenceVideoItem.h">
-      <Filter>Render\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\XrRender\Private\dxUIShader.h">
-      <Filter>Render\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\XrRender\Private\dxWallMarkArray.h">
-      <Filter>Render\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\XrRender\Private\dxApplicationRender.h">
-      <Filter>Render\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\XrRender\Private\dxConsoleRender.h">
-      <Filter>Render\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\XrRender\Private\dxDebugRender.h">
-      <Filter>Render\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\XrRender\Private\dxEnvironmentRender.h">
-      <Filter>Render\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\XrRender\Private\dxFontRender.h">
-      <Filter>Render\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\XrRender\Private\dxLensFlareRender.h">
-      <Filter>Render\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\XrRender\Private\dxObjectSpaceRender.h">
-      <Filter>Render\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\XrRender\Private\dxParticleCustom.h">
-      <Filter>Render\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\XrRender\Private\dxRainRender.h">
-      <Filter>Render\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\XrRender\Private\dxRenderDeviceRender.h">
-      <Filter>Render\Interface</Filter>
     </ClInclude>
     <ClInclude Include="Engine\guid_generator.h">
       <Filter>Engine</Filter>
@@ -876,21 +399,6 @@
     </None>
     <None Include="WildMagic\WmlGVector.inl">
       <Filter>WildMagic</Filter>
-    </None>
-    <None Include="Editor\MinimapEditor.dfm">
-      <Filter>Editor</Filter>
-    </None>
-    <None Include="Editor\MinimapEditor.ddp">
-      <Filter>Editor</Filter>
-    </None>
-    <None Include="Editor\LogForm.dfm">
-      <Filter>Editor</Filter>
-    </None>
-    <None Include="Editor\ImageEditor.dfm">
-      <Filter>Editor</Filter>
-    </None>
-    <None Include="Editor\ImageEditor.ddp">
-      <Filter>Editor</Filter>
     </None>
   </ItemGroup>
 </Project>

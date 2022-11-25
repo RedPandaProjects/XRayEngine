@@ -270,9 +270,9 @@ void CActor::steer_Vehicle(float angle)
 	CCar*	car			= smart_cast<CCar*>(m_holder);
 	u16 anim_type       = car->DriverAnimationType();
 	SVehicleAnimCollection& anims=m_vehicle_anims->m_vehicles_type_collections[anim_type];
-	if(angle==0.f) 		smart_cast<IKinematicsAnimated*>	(Visual())->PlayCycle(anims.idles[0]);
-	else if(angle>0.f)	smart_cast<IKinematicsAnimated*>	(Visual())->PlayCycle(anims.steer_right);
-	else				smart_cast<IKinematicsAnimated*>	(Visual())->PlayCycle(anims.steer_left);
+	if(angle==0.f) 		CastToIKinematicsAnimated	(Visual())->PlayCycle(anims.idles[0]);
+	else if(angle>0.f)	CastToIKinematicsAnimated	(Visual())->PlayCycle(anims.steer_right);
+	else				CastToIKinematicsAnimated	(Visual())->PlayCycle(anims.steer_left);
 }
 
 void legs_play_callback		(CBlend *blend)
@@ -299,7 +299,7 @@ void CActor::g_SetSprintAnimation( u32 mstate_rl,MotionID &head,MotionID &torso,
 
 CMotion*        FindMotionKeys(MotionID motion_ID,IRenderVisual* V)
 {
-	IKinematicsAnimated* VA = smart_cast<IKinematicsAnimated*>(V);
+	IKinematicsAnimated* VA = CastToIKinematicsAnimated(V);
 	return (VA && motion_ID.valid())?VA->LL_GetRootMotion(motion_ID):0;
 }
 
@@ -325,7 +325,7 @@ void CActor::g_SetAnimation( u32 mstate_rl )
 			m_current_legs.invalidate	();
 			m_current_torso.invalidate	();
 
-			//smart_cast<IKinematicsAnimated*>(Visual())->PlayCycle(m_anims->m_dead_stop);
+			//CastToIKinematicsAnimated(Visual())->PlayCycle(m_anims->m_dead_stop);
 		}
 
 		return;
@@ -520,7 +520,7 @@ void CActor::g_SetAnimation( u32 mstate_rl )
 	{
 		if((mstate_rl&mcCrouch)&&!isActorAccelerated(mstate_rl, IsZoomAimingMode()))//!(mstate_rl&mcAccel))
 		{
-			M_legs=smart_cast<IKinematicsAnimated*>(Visual())->ID_Cycle("cr_idle_1");
+			M_legs=CastToIKinematicsAnimated(Visual())->ID_Cycle("cr_idle_1");
 		}
 		else 
 			M_legs	= ST->legs_idle;
@@ -533,14 +533,14 @@ void CActor::g_SetAnimation( u32 mstate_rl )
 	
 	// есть анимация для всего - запустим / иначе запустим анимацию по частям
 	if (m_current_torso!=M_torso){
-		if (m_bAnimTorsoPlayed)		m_current_torso_blend = smart_cast<IKinematicsAnimated*>	(Visual())->PlayCycle(M_torso,TRUE,AnimTorsoPlayCallBack,this);
-		else						/**/m_current_torso_blend = /**/smart_cast<IKinematicsAnimated*>	(Visual())->PlayCycle(M_torso);
+		if (m_bAnimTorsoPlayed)		m_current_torso_blend = CastToIKinematicsAnimated	(Visual())->PlayCycle(M_torso,TRUE,AnimTorsoPlayCallBack,this);
+		else						/**/m_current_torso_blend = /**/CastToIKinematicsAnimated	(Visual())->PlayCycle(M_torso);
 
 		m_current_torso=M_torso;
 	}
 	if(m_current_head!=M_head)
 	{
-		if(M_head)smart_cast<IKinematicsAnimated*>(Visual())->PlayCycle(M_head);
+		if(M_head)CastToIKinematicsAnimated(Visual())->PlayCycle(M_head);
 		m_current_head=M_head;
 	}
 	if (m_current_legs!=M_legs){
@@ -548,7 +548,7 @@ void CActor::g_SetAnimation( u32 mstate_rl )
 		VERIFY						(!m_current_legs_blend || !fis_zero(m_current_legs_blend->timeTotal));
 		if ((mstate_real&mcAnyMove)&&(mstate_old&mcAnyMove)&&m_current_legs_blend)
 			pos						= fmod(m_current_legs_blend->timeCurrent,m_current_legs_blend->timeTotal)/m_current_legs_blend->timeTotal;
-		m_current_legs_blend		= smart_cast<IKinematicsAnimated*>(Visual())->PlayCycle(M_legs,TRUE,legs_play_callback,this);
+		m_current_legs_blend		= CastToIKinematicsAnimated(Visual())->PlayCycle(M_legs,TRUE,legs_play_callback,this);
 
 
 		if ((!(mstate_old&mcAnyMove))&&(mstate_real&mcAnyMove))
@@ -609,7 +609,7 @@ void CActor::g_SetAnimation( u32 mstate_rl )
 	if (!m_current_torso_blend)
 		return;
 
-	IKinematicsAnimated		*skeleton_animated = smart_cast<IKinematicsAnimated*>(Visual());
+	IKinematicsAnimated		*skeleton_animated = CastToIKinematicsAnimated(Visual());
 
 	CMotionDef				*motion0 = skeleton_animated->LL_GetMotionDef(m_current_torso);
 	VERIFY					(motion0);

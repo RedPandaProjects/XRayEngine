@@ -139,13 +139,11 @@ void CUICustomItem::Render( const Fvector2& pos_ns, u32 color, float angle)
 	sPoly2D D;
 	sPoly2D* R		= UI()->ScreenFrustum().ClipPoly(S,D);
 	if (R&&R->size())
-		for (u32 k=0; k<R->size(); k++)
+		for (u32 k=0; k<R->size()-2; k++)
 		{
-//.			Fvector2 _pt;
-//.			UI()->ClientToScreenScaled			(_pt, (*R)[k].pt.x, (*R)[k].pt.y);
-//.			Pointer->set						(_pt.x, _pt.y,	color, (*R)[k].uv.x, (*R)[k].uv.y); 
-			
-			UIRender->PushPoint((*R)[k].pt.x, (*R)[k].pt.y,0,	color, (*R)[k].uv.x, (*R)[k].uv.y);
+			UIRender->PushPoint((*R)[0 + 0].pt.x, (*R)[0 + 0].pt.y, 0, color, (*R)[0 + 0].uv.x, (*R)[0 + 0].uv.y);
+			UIRender->PushPoint((*R)[k + 1].pt.x, (*R)[k + 1].pt.y, 0, color, (*R)[k + 1].uv.x, (*R)[k + 1].uv.y);
+			UIRender->PushPoint((*R)[k + 2].pt.x, (*R)[k + 2].pt.y, 0, color, (*R)[k + 2].uv.x, (*R)[k + 2].uv.y);
 		}
 }
 

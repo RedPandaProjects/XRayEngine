@@ -248,7 +248,7 @@ void CUIStatic::AdjustHeightToText()
 void CUIStatic::AdjustWidthToText()
 {
 	if(!m_pTextControl)	return;
-	float _len		= m_pTextControl->GetFont()->SizeOf_(m_pTextControl->GetText());
+	float _len		= m_pTextControl->GetFont()->GetTextSize(m_pTextControl->GetText());
 	UI().ClientToScreenScaledWidth(_len);
 	SetWidth		(_len);
 }
@@ -288,7 +288,7 @@ void CUITextWnd::AdjustHeightToText()
 
 void CUITextWnd::AdjustWidthToText()
 {
-	float _len		= TextItemControl().GetFont()->SizeOf_(TextItemControl().GetText());
+	float _len		= TextItemControl().GetFont()->GetTextSize(TextItemControl().GetText());
 	UI().ClientToScreenScaledWidth(_len);
 	SetWidth		(_len);
 }

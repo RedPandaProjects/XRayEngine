@@ -12,12 +12,10 @@
 #include "face_smoth_flags.h"
 #include "itterate_adjacents.h"
 #include "itterate_adjacents_dynamic.h"
-#	include "UI_ToolsCustom.h"
 #include "..\XrETools\ETools.h"
 
 CEditableMesh::~CEditableMesh(){
 	Clear();
-    R_ASSERT2(0==m_RenderBuffers,"Render buffer still referenced.");
 }
 
 void CEditableMesh::Construct()
@@ -34,7 +32,6 @@ void CEditableMesh::Construct()
     m_VertexNormals	= 0;
     m_SVertices		= 0;
     m_SVertInfl		= 0;
-    m_RenderBuffers	= 0;
 	m_FNormalsRefs	= 0;
 	m_VNormalsRefs	= 0;
 	m_AdjsRefs		= 0;

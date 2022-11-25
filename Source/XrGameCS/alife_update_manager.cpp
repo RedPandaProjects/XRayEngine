@@ -18,7 +18,7 @@
 #include "xrserver.h"
 #include "level.h"
 #include "graph_engine.h"
-#include "../xrEngine/XRayEngine.h"
+#include "../xrEngine/XRayEngineInterface.h"
 #include "restriction_space.h"
 #include "profiler.h"
 #include "mt_config.h"
@@ -262,7 +262,7 @@ void CALifeUpdateManager::load			(LPCSTR game_name, bool no_assert, bool new_onl
 	g_pGamePersistent->LoadTitle		("st_loading_alife_simulator");
 
 #ifdef DEBUG
-	MemoryInterface->mem_compact					();
+	//MemoryInterface->mem_compact					();
 	u32									memory_usage = MemoryInterface->mem_usage();
 #endif
 

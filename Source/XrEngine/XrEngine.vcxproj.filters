@@ -612,9 +612,6 @@
     <ClInclude Include="edit_actions.h">
       <Filter>Engine\text_editor\edit_actions</Filter>
     </ClInclude>
-    <ClInclude Include="device.h">
-      <Filter>RenderRef\Execution &amp; 3D\Device</Filter>
-    </ClInclude>
     <ClInclude Include="StatGraph.h">
       <Filter>RenderRef\Execution &amp; 3D\Device</Filter>
     </ClInclude>
@@ -1166,27 +1163,6 @@
     </ClCompile>
     <ClCompile Include="edit_actions.cpp">
       <Filter>Engine\text_editor\edit_actions</Filter>
-    </ClCompile>
-    <ClCompile Include="device.cpp">
-      <Filter>RenderRef\Execution &amp; 3D\Device</Filter>
-    </ClCompile>
-    <ClCompile Include="Device_create.cpp">
-      <Filter>RenderRef\Execution &amp; 3D\Device</Filter>
-    </ClCompile>
-    <ClCompile Include="Device_destroy.cpp">
-      <Filter>RenderRef\Execution &amp; 3D\Device</Filter>
-    </ClCompile>
-    <ClCompile Include="Device_Initialize.cpp">
-      <Filter>RenderRef\Execution &amp; 3D\Device</Filter>
-    </ClCompile>
-    <ClCompile Include="Device_Misc.cpp">
-      <Filter>RenderRef\Execution &amp; 3D\Device</Filter>
-    </ClCompile>
-    <ClCompile Include="Device_overdraw.cpp">
-      <Filter>RenderRef\Execution &amp; 3D\Device</Filter>
-    </ClCompile>
-    <ClCompile Include="Device_wndproc.cpp">
-      <Filter>RenderRef\Execution &amp; 3D\Device</Filter>
     </ClCompile>
     <ClCompile Include="StatGraph.cpp">
       <Filter>RenderRef\Execution &amp; 3D\Device</Filter>

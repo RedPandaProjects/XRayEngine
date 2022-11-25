@@ -244,7 +244,7 @@ void CStateBloodsuckerVampireExecuteAbstract::execute_vampire_hit()
 TEMPLATE_SPECIALIZATION
 void CStateBloodsuckerVampireExecuteAbstract::look_head()
 {
-	IKinematics *pK = smart_cast<IKinematics*>(object->Visual());
+	IKinematics *pK = CastToIKinematics(object->Visual());
 	Fmatrix bone_transform;
 	bone_transform = pK->LL_GetTransform(pK->LL_BoneID("bip01_head"));	
 

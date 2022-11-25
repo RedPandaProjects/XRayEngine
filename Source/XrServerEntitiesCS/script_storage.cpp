@@ -97,7 +97,7 @@ static LPVOID __cdecl luabind_allocator	(
 
 	if (!pointer) {
 #ifdef DEBUG
-		return	( MemoryInterface->mem_alloc(size, "luabind") );
+		return	( MemoryInterface->mem_alloc(size) );
 #else // #ifdef DEBUG
 		return	( MemoryInterface->mem_alloc(size) );
 #endif // #ifdef DEBUG
@@ -105,7 +105,7 @@ static LPVOID __cdecl luabind_allocator	(
 
 	LPVOID		non_const_pointer = const_cast<LPVOID>(pointer);
 #ifdef DEBUG
-	return		( MemoryInterface->mem_realloc(non_const_pointer, size, "luabind") );
+	return		( MemoryInterface->mem_realloc(non_const_pointer, size) );
 #else // #ifdef DEBUG
 	return		( MemoryInterface->mem_realloc(non_const_pointer, size) );
 #endif // #ifdef DEBUG

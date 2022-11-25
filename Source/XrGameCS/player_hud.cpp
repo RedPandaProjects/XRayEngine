@@ -306,7 +306,7 @@ void attachable_hud_item::load(const shared_str& sect_name)
 
 	// Visual
 	const shared_str& visual_name = pSettings->r_string(sect_name, "item_visual");
-	m_model						 = smart_cast<IKinematics*>(::Render->model_Create(visual_name.c_str()));
+	m_model						 = CastToIKinematics(::Render->model_Create(visual_name.c_str()));
 
 	m_attach_place_idx			= pSettings->r_u16(sect_name, "attach_place_idx");
 	m_measures.load				(sect_name, m_model);
@@ -434,7 +434,7 @@ void player_hud::load(const shared_str& player_hud_sect)
 
 	m_sect_name					= player_hud_sect;
 	const shared_str& model_name= pSettings->r_string(player_hud_sect, "visual");
-	m_model						= smart_cast<IKinematicsAnimated*>(::Render->model_Create(model_name.c_str()));
+	m_model						= CastToIKinematicsAnimated(::Render->model_Create(model_name.c_str()));
 
 	CInifile::Sect& _sect		= pSettings->r_section(player_hud_sect);
 	CInifile::SectCIt _b		= _sect.Data.begin();

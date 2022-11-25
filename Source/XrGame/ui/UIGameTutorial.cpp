@@ -172,7 +172,6 @@ void CUISequencer::Start(LPCSTR tutor_name)
 	if(m_flags.test(etsNeedPauseOn) && !m_flags.test(etsStoredPauseState))
 	{
 		Device->Pause			(TRUE, TRUE, TRUE, "tutorial_start");
-		bShowPauseString		= FALSE;
 	}
 
 	if(m_flags.test(etsNeedPauseOff) && m_flags.test(etsStoredPauseState))

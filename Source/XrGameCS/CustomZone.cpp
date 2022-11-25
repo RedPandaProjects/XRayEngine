@@ -297,7 +297,7 @@ BOOL CCustomZone::net_Spawn(CSE_Abstract* DC)
 	m_zone_flags.set			(eUseOnOffTime,	(m_TimeToDisable!=0)&&(m_TimeToEnable!=0) );
 
 	//�������� ��������� �����
-	bool br1 = (0==psDeviceFlags.test(rsR2|rsR3));
+	constexpr bool br1 = false;
 	
 	
 	bool render_ver_allowed = !br1 || (br1&&m_zone_flags.test(eIdleLightR1)) ;
@@ -605,7 +605,7 @@ BOOL CCustomZone::feel_touch_contact(CObject* O)
 {
 	if (smart_cast<CCustomZone*>(O))				return FALSE;
 	if (smart_cast<CBreakableObject*>(O))			return FALSE;
-	if (0==smart_cast<IKinematics*>(O->Visual()))	return FALSE;
+	if (0==CastToIKinematics(O->Visual()))	return FALSE;
 
 	if (O->ID() == ID())
 		return		(FALSE);

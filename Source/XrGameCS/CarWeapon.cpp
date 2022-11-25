@@ -31,7 +31,7 @@ CCarWeapon::CCarWeapon(CPhysicsShellHolder* obj)
 	m_object	= obj;
 	m_Ammo		= xr_new<CCartridge>();
 
-	IKinematics* K			= smart_cast<IKinematics*>(m_object->Visual());
+	IKinematics* K			= CastToIKinematics(m_object->Visual());
 	CInifile* pUserData		= K->LL_UserData(); 
 
 	m_rotate_x_bone			= K->LL_BoneID	(pUserData->r_string("mounted_weapon_definition","rotate_x_bone"));
@@ -88,7 +88,7 @@ void CCarWeapon::UpdateCL()
 {
 	if(!m_bActive)				return;
 	UpdateBarrelDir				();
-	IKinematics* K				= smart_cast<IKinematics*>(m_object->Visual());
+	IKinematics* K				= CastToIKinematics(m_object->Visual());
 	K->CalculateBones_Invalidate();
 	K->CalculateBones			(TRUE);
 	UpdateFire					();
@@ -130,17 +130,17 @@ void CCarWeapon::SetBoneCallbacks()
 {
 //	m_object->PPhysicsShell()->EnabledCallbacks(FALSE);
 	
-	CBoneInstance& biX		= smart_cast<IKinematics*>(m_object->Visual())->LL_GetBoneInstance(m_rotate_x_bone);	
+	CBoneInstance& biX		= CastToIKinematics(m_object->Visual())->LL_GetBoneInstance(m_rotate_x_bone);	
 	biX.set_callback		(bctCustom,BoneCallbackX,this);
-	CBoneInstance& biY		= smart_cast<IKinematics*>(m_object->Visual())->LL_GetBoneInstance(m_rotate_y_bone);	
+	CBoneInstance& biY		= CastToIKinematics(m_object->Visual())->LL_GetBoneInstance(m_rotate_y_bone);	
 	biY.set_callback		(bctCustom,BoneCallbackY,this);
 }
 
 void CCarWeapon::ResetBoneCallbacks()
 {
-	CBoneInstance& biX		= smart_cast<IKinematics*>(m_object->Visual())->LL_GetBoneInstance(m_rotate_x_bone);	
+	CBoneInstance& biX		= CastToIKinematics(m_object->Visual())->LL_GetBoneInstance(m_rotate_x_bone);	
 	biX.reset_callback		();
-	CBoneInstance& biY		= smart_cast<IKinematics*>(m_object->Visual())->LL_GetBoneInstance(m_rotate_y_bone);	
+	CBoneInstance& biY		= CastToIKinematics(m_object->Visual())->LL_GetBoneInstance(m_rotate_y_bone);	
 	biY.reset_callback		();
 
 //	m_object->PPhysicsShell()->EnabledCallbacks(TRUE);
@@ -148,7 +148,7 @@ void CCarWeapon::ResetBoneCallbacks()
 
 void CCarWeapon::UpdateBarrelDir()
 {
-	IKinematics* K		= smart_cast<IKinematics*>(m_object->Visual());
+	IKinematics* K		= CastToIKinematics(m_object->Visual());
 	m_fire_bone_xform	= K->LL_GetTransform(m_fire_bone);
 
 	m_fire_bone_xform.mulA_43(m_object->XFORM());

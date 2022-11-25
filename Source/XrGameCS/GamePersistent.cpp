@@ -108,7 +108,7 @@ void CGamePersistent::RegisterModel(IRenderVisual* V)
 	case MT_SKELETON_RIGID:{
 		u16 def_idx		= GameMaterialLibrary->GetMaterialIdx("default_object");
 		R_ASSERT2		(GameMaterialLibrary->GetMaterialByIdx(def_idx)->Flags.is(SGameMtl::flDynamic),"'default_object' - must be dynamic");
-		IKinematics* K	= smart_cast<IKinematics*>(V); VERIFY(K);
+		IKinematics* K	= CastToIKinematics(V); VERIFY(K);
 		int cnt = K->LL_BoneCount();
 		for (u16 k=0; k<cnt; k++){
 			CBoneData& bd	= K->LL_GetData(k); 
@@ -429,9 +429,8 @@ void CGamePersistent::WeathersUpdate()
 void CGamePersistent::start_logo_intro		()
 {
 #ifdef MASTER_GOLD
-	if (g_SASH.IsRunning())
 #else	// #ifdef MASTER_GOLD
-	if ((0!=strstr(Core.Params,"-nointro")) || g_SASH.IsRunning())
+	if ((0!=strstr(Core.Params,"-nointro")))
 #endif	// #ifdef MASTER_GOLD
 	{
 		m_intro_event			= 0;
@@ -463,9 +462,8 @@ void CGamePersistent::update_logo_intro			()
 void CGamePersistent::start_game_intro		()
 {
 #ifdef MASTER_GOLD
-	if (g_SASH.IsRunning())
 #else	// #ifdef MASTER_GOLD
-	if ((0!=strstr(Core.Params,"-nointro")) || g_SASH.IsRunning())
+	if ((0!=strstr(Core.Params,"-nointro")) )
 #endif	// #ifdef MASTER_GOLD
 	{
 		m_intro_event			= 0;
@@ -515,7 +513,7 @@ void CGamePersistent::OnFrame	()
 #endif
 	if (!g_dedicated_server && !m_intro_event.empty())	m_intro_event();
 	if (!g_dedicated_server && Device->dwPrecacheFrame == 0 && !m_intro && m_intro_event.empty())
-		load_screen_renderer.stop();
+		{/*load_screen_renderer.stop();*/}
 	if( !m_pMainMenu->IsActive() )
 		m_pMainMenu->DestroyInternal(false);
 
@@ -718,7 +716,7 @@ void CGamePersistent::OnRenderPPUI_PP()
 	MainMenu()->OnRenderPPUI_PP();
 }
 #include "string_table.h"
-#include "../xrEngine/XRayEngine.h"
+#include "../xrEngine/XRayEngineInterface.h"
 void CGamePersistent::LoadTitle(LPCSTR str)
 {
 	string512			buff;
