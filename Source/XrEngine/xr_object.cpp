@@ -75,10 +75,14 @@ void CObject::cNameVisual_set	(shared_str N)
 	if (*N && N[0]) 
 	{
 		IRenderVisual			*old_v = renderable.visual;
-		
+		if (old_v)
+		{
+			old_v->Renderable = nullptr;
+		}
 		NameVisual				= N;
 		renderable.visual		= Render->model_Create	(*N);
-		
+		VERIFY(renderable.visual->Renderable == nullptr);
+		renderable.visual->Renderable = this;
 		IKinematics* old_k	= old_v?old_v->dcast_PKinematics():NULL;
 		IKinematics* new_k	= renderable.visual->dcast_PKinematics();
 
