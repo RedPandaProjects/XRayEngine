@@ -39,7 +39,7 @@ bool CUICellItem::OnMouse(float x, float y, EUIMessages mouse_action)
 		GetMessageTarget()->SendMessage(this, DRAG_DROP_ITEM_SELECTED, NULL);
 		return false;
 	}else
-	if(mouse_action == WINDOW_MOUSE_MOVE && pInput->iGetAsyncBtnState(0)){
+	if(mouse_action == WINDOW_MOUSE_MOVE && GXRayInput->iGetAsyncBtnState(0)){
 		GetMessageTarget()->SendMessage(this, DRAG_DROP_ITEM_DRAG, NULL);
 		return true;
 	}else

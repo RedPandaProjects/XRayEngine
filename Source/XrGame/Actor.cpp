@@ -938,11 +938,11 @@ void CActor::UpdateCL	()
 		if(CurrentGameUI() && NULL==CurrentGameUI()->TopInputReceiver())
 		{
 			int dik = get_action_dik(kUSE, 0);
-			if(dik && pInput->iGetAsyncKeyState(dik))
+			if(dik && GXRayInput->iGetAsyncKeyState(dik))
 				m_bPickupMode=true;
 			
 			dik = get_action_dik(kUSE, 1);
-			if(dik && pInput->iGetAsyncKeyState(dik))
+			if(dik && GXRayInput->iGetAsyncKeyState(dik))
 				m_bPickupMode=true;
 		}
 	}

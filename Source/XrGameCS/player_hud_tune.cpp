@@ -19,31 +19,31 @@ float _delta_rot			= 0.05f;
 
 bool is_attachable_item_tuning_mode()
 {
-	return	pInput->iGetAsyncKeyState(DIK_LSHIFT)	||
-			pInput->iGetAsyncKeyState(DIK_Z)		||
-			pInput->iGetAsyncKeyState(DIK_X)		||
-			pInput->iGetAsyncKeyState(DIK_C);
+	return	GXRayInput->iGetAsyncKeyState(DIK_LSHIFT)	||
+			GXRayInput->iGetAsyncKeyState(DIK_Z)		||
+			GXRayInput->iGetAsyncKeyState(DIK_X)		||
+			GXRayInput->iGetAsyncKeyState(DIK_C);
 }
 
 void tune_remap(const Ivector& in_values, Ivector& out_values)
 {
-	if( pInput->iGetAsyncKeyState(DIK_LSHIFT) )
+	if( GXRayInput->iGetAsyncKeyState(DIK_LSHIFT) )
 	{
 		out_values = in_values;
 	}else
-	if( pInput->iGetAsyncKeyState(DIK_Z) )
+	if( GXRayInput->iGetAsyncKeyState(DIK_Z) )
 	{ //strict by X
 		out_values.x = in_values.y;
 		out_values.y = 0;
 		out_values.z = 0;
 	}else
-	if( pInput->iGetAsyncKeyState(DIK_X) )
+	if( GXRayInput->iGetAsyncKeyState(DIK_X) )
 	{ //strict by Y
 		out_values.x = 0;
 		out_values.y = in_values.y;
 		out_values.z = 0;
 	}else
-	if( pInput->iGetAsyncKeyState(DIK_C) )
+	if( GXRayInput->iGetAsyncKeyState(DIK_C) )
 	{ //strict by Z
 		out_values.x = 0;
 		out_values.y = 0;
@@ -291,7 +291,7 @@ void hud_draw_adjust_mode()
 		return;
 
 	LPCSTR _text = NULL;
-	if(pInput->iGetAsyncKeyState(DIK_LSHIFT) && hud_adj_mode)
+	if(GXRayInput->iGetAsyncKeyState(DIK_LSHIFT) && hud_adj_mode)
 		_text = "press SHIFT+NUM 0-return 1-hud_pos 2-hud_rot 3-itm_pos 4-itm_rot 5-fire_point 6-fire_2_point 7-shell_point 8-pos_step 9-rot_step";
 
 	switch (hud_adj_mode)
@@ -340,7 +340,7 @@ void hud_draw_adjust_mode()
 
 void hud_adjust_mode_keyb(int dik)
 {
-	if(pInput->iGetAsyncKeyState(DIK_LSHIFT))
+	if(GXRayInput->iGetAsyncKeyState(DIK_LSHIFT))
 	{
 		if(dik==DIK_NUMPAD0)
 			hud_adj_mode = 0;
@@ -363,7 +363,7 @@ void hud_adjust_mode_keyb(int dik)
 		if(dik==DIK_NUMPAD9)
 			hud_adj_mode = 9;
 	}
-	if(pInput->iGetAsyncKeyState(DIK_LCONTROL))
+	if(GXRayInput->iGetAsyncKeyState(DIK_LCONTROL))
 	{
 		if(dik==DIK_NUMPAD0)
 			hud_adj_item_idx = 0;

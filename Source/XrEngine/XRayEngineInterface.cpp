@@ -507,8 +507,7 @@ void XRayEngineInterface::InitSettings()
 void XRayEngineInterface::InitInput()
 {
 	BOOL bCaptureInput = !strstr(Core.Params, "-i");
-
-	pInput = xr_new<CInput>(bCaptureInput);
+	VERIFY(GXRayInput);
 }
 
 void XRayEngineInterface::InitConsole()
@@ -562,7 +561,6 @@ void XRayEngineInterface::InitSound2()
 void XRayEngineInterface::destroyInput()
 {
 
-	xr_delete(pInput);
 }
 
 void XRayEngineInterface::destroySettings()

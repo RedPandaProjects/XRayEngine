@@ -452,7 +452,7 @@ bool CUIMapWnd::OnMouse(float x, float y, EUIMessages mouse_action)
 		switch ( mouse_action )
 		{
 		case WINDOW_MOUSE_MOVE:
-			if( pInput->iGetAsyncBtnState(0) )
+			if( GXRayInput->iGetAsyncBtnState(0) )
 			{
 				GlobalMap()->MoveWndDelta		(GetUICursor()->GetCursorPositionDelta());
 				UpdateScroll					();

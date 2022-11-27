@@ -141,16 +141,16 @@ void attach_adjust_mode_keyb(int dik)
 {
 	if(!CAttachableItem::m_dbgItem)	return;
 
-	bool b_move		= !!(pInput->iGetAsyncKeyState(DIK_LSHIFT));
-	bool b_rot		= !!(pInput->iGetAsyncKeyState(DIK_LMENU));
+	bool b_move		= !!(GXRayInput->iGetAsyncKeyState(DIK_LSHIFT));
+	bool b_rot		= !!(GXRayInput->iGetAsyncKeyState(DIK_LMENU));
 	
 	int axis		= -1;
-	if(pInput->iGetAsyncKeyState(DIK_Z))
+	if(GXRayInput->iGetAsyncKeyState(DIK_Z))
 		axis = 0;
 	else
-	if(pInput->iGetAsyncKeyState(DIK_X))
+	if(GXRayInput->iGetAsyncKeyState(DIK_X))
 		axis = 1;
-	if(pInput->iGetAsyncKeyState(DIK_C))
+	if(GXRayInput->iGetAsyncKeyState(DIK_C))
 		axis = 2;
 
 	if(!b_move && !b_rot)	return;

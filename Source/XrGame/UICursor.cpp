@@ -8,7 +8,7 @@
 #define C_DEFAULT	color_xrgb(0xff,0xff,0xff)
 
 CUICursor::CUICursor()
-:m_static(NULL),m_b_use_win_cursor(false)
+:m_static(NULL)
 {    
 	bVisible				= false;
 	vPrevPos.set			(0.0f, 0.0f);
@@ -45,9 +45,6 @@ void CUICursor::InitInternal()
 	m_static->SetWndSize		(sz);
 	m_static->SetStretchTexture	(true);
 
-	u32 screen_size_x	= GetSystemMetrics( SM_CXSCREEN );
-	u32 screen_size_y	= GetSystemMetrics( SM_CYSCREEN );
-	m_b_use_win_cursor	= (screen_size_y >=Device->dwHeight && screen_size_x>=Device->dwWidth);
 }
 
 //--------------------------------------------------------------------
@@ -97,21 +94,9 @@ void CUICursor::UpdateCursorPosition(int _dx, int _dy)
 {
 	Fvector2	p;
 	vPrevPos	= vPos;
-	if(m_b_use_win_cursor)
-	{
-		POINT		pti;
-		BOOL r		= GetCursorPos(&pti);
-		if(!r)		return;
-		p.x			= (float)pti.x;
-		p.y			= (float)pti.y;
-		vPos.x		= p.x * (UI_BASE_WIDTH/(float)Device->dwWidth);
-		vPos.y		= p.y * (UI_BASE_HEIGHT/(float)Device->dwHeight);
-	}else
-	{
-		float sens = 1.0f;
-		vPos.x		+= _dx*sens;
-		vPos.y		+= _dy*sens;
-	}
+	float sens = 1.0f;
+	vPos.x += _dx * sens;
+	vPos.y += _dy * sens;
 	clamp		(vPos.x, 0.f, UI_BASE_WIDTH);
 	clamp		(vPos.y, 0.f, UI_BASE_HEIGHT);
 }

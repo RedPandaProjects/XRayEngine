@@ -472,42 +472,6 @@ public:
 	}
 };
 #endif
-//-----------------------------------------------------------------------
-class CCC_ExclusiveMode : public IConsole_Command {
-private:
-	typedef IConsole_Command inherited;
-
-public:
-					CCC_ExclusiveMode	(LPCSTR N) :
-		inherited	(N)
-	{
-	}
-
-	virtual void	Execute				(LPCSTR args)
-	{
-		bool		value = false;
-		if (!xr_strcmp(args,"on"))
-			value	= true;
-		else if (!xr_strcmp(args,"off"))
-			value	= false;
-		else if (!xr_strcmp(args,"true"))
-			value	= true;
-		else if (!xr_strcmp(args,"false"))
-			value	= false;
-		else if (!xr_strcmp(args,"1"))
-			value	= true;
-		else if (!xr_strcmp(args,"0"))
-			value	= false;
-		else InvalidSyntax();
-		
-		pInput->exclusive_mode	(value);
-	}
-
-	virtual void	Save	(IWriter *F)	
-	{
-	}
-};
-
 class ENGINE_API CCC_HideConsole : public IConsole_Command
 {
 public		:
@@ -657,8 +621,6 @@ void CCC_Register()
 #ifdef DEBUG	
 	CMD1(CCC_DumpOpenFiles,		"dump_open_files");
 #endif
-
-	CMD1(CCC_ExclusiveMode,		"input_exclusive_mode");
 
 	extern int g_svTextConsoleUpdateRate;
 	CMD4(CCC_Integer, "sv_console_update_rate", &g_svTextConsoleUpdateRate, 1, 100);

@@ -205,7 +205,7 @@ void remap_keys()
 	{
 		buff[0]				= 0;
 		_keyboard&	kb		= keyboards[idx];
-		bool res			= pInput->get_dik_name(kb.dik, buff, 128 );
+		bool res			= GXRayInput->GetDikName(kb.dik, buff, 128 );
 		if(res)
 			kb.key_local_name	= buff;
 		else

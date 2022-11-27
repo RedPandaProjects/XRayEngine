@@ -113,12 +113,12 @@ void line_edit_control::update_key_states	()
 {
 	m_key_state.zero( );
 
-	set_key_state	( ks_LShift,	!!pInput->iGetAsyncKeyState(DIK_LSHIFT)		);
-	set_key_state	( ks_RShift,	!!pInput->iGetAsyncKeyState(DIK_RSHIFT)		);
-	set_key_state	( ks_LCtrl,		!!pInput->iGetAsyncKeyState(DIK_LCONTROL)	);
-	set_key_state	( ks_RCtrl,		!!pInput->iGetAsyncKeyState(DIK_RCONTROL)	);
-	set_key_state	( ks_LAlt,		!!pInput->iGetAsyncKeyState(DIK_LALT)		);
-	set_key_state	( ks_RAlt,		!!pInput->iGetAsyncKeyState(DIK_RALT)		);
+	set_key_state	( ks_LShift,	!!GXRayInput->iGetAsyncKeyState(DIK_LSHIFT)		);
+	set_key_state	( ks_RShift,	!!GXRayInput->iGetAsyncKeyState(DIK_RSHIFT)		);
+	set_key_state	( ks_LCtrl,		!!GXRayInput->iGetAsyncKeyState(DIK_LCONTROL)	);
+	set_key_state	( ks_RCtrl,		!!GXRayInput->iGetAsyncKeyState(DIK_RCONTROL)	);
+	set_key_state	( ks_LAlt,		!!GXRayInput->iGetAsyncKeyState(DIK_LALT)		);
+	set_key_state	( ks_RAlt,		!!GXRayInput->iGetAsyncKeyState(DIK_RALT)		);
 	set_key_state	( ks_CapsLock,	text_editor::get_caps_lock_state()			);
 }
 

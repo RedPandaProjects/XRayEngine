@@ -48,7 +48,7 @@ void CUIMpTradeWnd::TryUsePreset(ETradePreset idx)
 void CUIMpTradeWnd::OnBtnPreset1Clicked(CUIWindow* w, void* d)
 {
 	CheckDragItemToDestroy				();
-	if(pInput->iGetAsyncKeyState(DIK_LSHIFT))
+	if(GXRayInput->iGetAsyncKeyState(DIK_LSHIFT))
 	{
 		DumpPreset					(_preset_idx_1);
 		return;
@@ -60,7 +60,7 @@ void CUIMpTradeWnd::OnBtnPreset1Clicked(CUIWindow* w, void* d)
 void CUIMpTradeWnd::OnBtnPreset2Clicked(CUIWindow* w, void* d)
 {
 	CheckDragItemToDestroy				();
-	if(pInput->iGetAsyncKeyState(DIK_LSHIFT))
+	if(GXRayInput->iGetAsyncKeyState(DIK_LSHIFT))
 	{
 		DumpPreset					(_preset_idx_2);
 		return;
@@ -71,7 +71,7 @@ void CUIMpTradeWnd::OnBtnPreset2Clicked(CUIWindow* w, void* d)
 void CUIMpTradeWnd::OnBtnPreset3Clicked(CUIWindow* w, void* d)
 {
 	CheckDragItemToDestroy				();
-	if(pInput->iGetAsyncKeyState(DIK_LSHIFT))
+	if(GXRayInput->iGetAsyncKeyState(DIK_LSHIFT))
 	{
 		DumpPreset					(_preset_idx_3);
 		return;
@@ -83,7 +83,7 @@ void CUIMpTradeWnd::OnBtnPreset3Clicked(CUIWindow* w, void* d)
 void CUIMpTradeWnd::OnBtnLastSetClicked(CUIWindow* w, void* d)
 {
 	CheckDragItemToDestroy				();
-	if(pInput->iGetAsyncKeyState(DIK_LSHIFT))
+	if(GXRayInput->iGetAsyncKeyState(DIK_LSHIFT))
 	{
 		DumpPreset					(_preset_idx_last);
 		return;
@@ -95,7 +95,7 @@ void	xr_stdcall	CUIMpTradeWnd::OnBtnPresetDefaultClicked	(CUIWindow* w, void* d)
 {
 	CheckDragItemToDestroy				();
 	{
-		if(pInput->iGetAsyncKeyState(DIK_LSHIFT))
+		if(GXRayInput->iGetAsyncKeyState(DIK_LSHIFT))
 		{
 			DumpPreset					(_preset_idx_default);
 			return;

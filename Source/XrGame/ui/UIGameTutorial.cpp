@@ -162,7 +162,7 @@ void CUISequencer::Start(LPCSTR tutor_name)
 	CUISequenceItem* pCurrItem	= GetNextItem();
 	R_ASSERT3					(pCurrItem, "no item(s) to start", tutor_name);
 	pCurrItem->Start			();
-	m_pStoredInputReceiver		= pInput->CurrentIR();
+	m_pStoredInputReceiver		= GXRayInput->CurrentIR();
 	IR_Capture					();
 
 
@@ -423,9 +423,9 @@ void CUISequencer::IR_OnKeyboardPress	(int dik)
 
 void CUISequencer::IR_OnActivate()
 {
-	if(!pInput) return;
+	if(!GXRayInput) return;
 	int i;
-	for (i = 0; i < CInput::COUNT_KB_BUTTONS; i++ )
+	for (i = 0; i < XRayInputInterface::COUNT_KB_BUTTONS; i++ )
 	{
 		if(IR_GetKeyState(i))
 		{

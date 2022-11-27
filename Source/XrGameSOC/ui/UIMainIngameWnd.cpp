@@ -814,7 +814,7 @@ bool CUIMainIngameWnd::OnKeyboardPress(int dik)
 		if(CAttachableItem::m_dbgItem){
 			static float rot_d = deg2rad(0.5f);
 			static float mov_d = 0.01f;
-			bool shift = !!pInput->iGetAsyncKeyState(DIK_LSHIFT);
+			bool shift = !!GXRayInput->iGetAsyncKeyState(DIK_LSHIFT);
 			flag = true;
 			switch (dik)
 			{

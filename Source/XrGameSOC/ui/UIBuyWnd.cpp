@@ -309,7 +309,7 @@ void CUIBuyWnd::OnBtnBulletBuy(int slot)
 
 		itemsList		= pSettings->r_string(*iitm->object().cNameSect(), "ammo_class");
 		int n = 0;
-		if (pInput->iGetAsyncKeyState(DIK_LSHIFT))
+		if (GXRayInput->iGetAsyncKeyState(DIK_LSHIFT))
 			n = 1;
 		if (_GetItemCount(itemsList.c_str())<2)
 			n = 0;

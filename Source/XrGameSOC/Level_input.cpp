@@ -193,10 +193,10 @@ void CLevel::IR_OnKeyboardPress	(int key)
 		return;
 
 	case DIK_F4: {
-		if (pInput->iGetAsyncKeyState(DIK_LALT))
+		if (GXRayInput->iGetAsyncKeyState(DIK_LALT))
 			break;
 
-		if (pInput->iGetAsyncKeyState(DIK_RALT))
+		if (GXRayInput->iGetAsyncKeyState(DIK_RALT))
 			break;
 
 		bool bOk = false;
@@ -261,7 +261,7 @@ void CLevel::IR_OnKeyboardPress	(int key)
 	case MOUSE_1: {
 		if (GameID() != GAME_SINGLE)
 			break;
-		if (pInput->iGetAsyncKeyState(DIK_LALT)) {
+		if (GXRayInput->iGetAsyncKeyState(DIK_LALT)) {
 			if (CurrentEntity()->CLS_ID == CLSID_OBJECT_ACTOR)
 				try_change_current_entity	();
 			else
@@ -400,9 +400,9 @@ void CLevel::IR_OnMouseStop( int /**axis/**/, int /**value/**/)
 
 void CLevel::IR_OnActivate()
 {
-	if(!pInput) return;
+	if(!GXRayInput) return;
 	int i;
-	for (i = 0; i < CInput::COUNT_KB_BUTTONS; i++ )
+	for (i = 0; i < XRayInputInterface::COUNT_KB_BUTTONS; i++ )
 	{
 		if(IR_GetKeyState(i))
 		{

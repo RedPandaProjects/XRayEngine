@@ -300,7 +300,6 @@ void CCameraManager::Update(const Fvector& P, const Fvector& D, const Fvector& N
 		m_cam_info.d.inertion	(D,	psCamInert);
 		m_cam_info.n.inertion	(N,	psCamInert);
 	}
-	
 	// Normalize
 	m_cam_info.d.normalize	();
 	m_cam_info.n.normalize	();

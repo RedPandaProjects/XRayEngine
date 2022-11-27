@@ -100,14 +100,14 @@ bool RedImage::LoadDDSFromMemory(void* pointer, size_t size)
 				{
 					size_t h = RedTextureUtils::GetMip(m_Height, m);
 					size_t w = RedTextureUtils::GetMip(m_Width, m);
-					u8*data = RedTextureUtils::GetImage(m_ImageBuffer, m_Width, m_Height, m_Mips, d, m, m_PixelFotmat);
+					u8*PixelData = RedTextureUtils::GetImage(m_ImageBuffer, m_Width, m_Height, m_Mips, d, m, m_PixelFotmat);
 					for (size_t x = 0; x < w*h; x++)
 					{
 						memcpy(&pixel, data, ByteSizePixel);
 						data += ByteSizePixel;
 						for (size_t a = 0; a < coutComp; a++)
 						{
-							*RedTextureUtils::GetPixelUint8(x, 0, 0, coutComp, a, data)= static_cast<u8>(ConvertColor((pixel & Header.ddspf.dwBitsMask[a]) >> ShiftBit[a], SizeBit[a], 8));;
+							*RedTextureUtils::GetPixelUint8(x, 0, 0, coutComp, a, PixelData)= static_cast<u8>(ConvertColor((pixel & Header.ddspf.dwBitsMask[a]) >> ShiftBit[a], SizeBit[a], 8));;
 						}
 					}
 				}

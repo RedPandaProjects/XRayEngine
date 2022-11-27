@@ -260,7 +260,7 @@ void	CUICustomMap::SendMessage			(CUIWindow* pWnd, s16 msg, void* pData)
 bool CUIGlobalMap::OnMouseAction	(float x, float y, EUIMessages mouse_action)
 {
 	if(inherited::OnMouseAction(x,y,mouse_action)) return true;
-	if(mouse_action==WINDOW_MOUSE_MOVE && (FALSE==pInput->iGetAsyncBtnState(0)))
+	if(mouse_action==WINDOW_MOUSE_MOVE && (FALSE==GXRayInput->iGetAsyncBtnState(0)))
 	{
 		if( MapWnd() )
 		{
@@ -516,7 +516,7 @@ bool CUILevelMap::OnMouseAction(float x, float y, EUIMessages mouse_action)
 	if (inherited::OnMouseAction(x,y,mouse_action))	return true;
 	if (MapWnd()->GlobalMap()->Locked())		return true;
 
-	if(mouse_action==WINDOW_MOUSE_MOVE && (FALSE==pInput->iGetAsyncBtnState(0)) )
+	if(mouse_action==WINDOW_MOUSE_MOVE && (FALSE==GXRayInput->iGetAsyncBtnState(0)) )
 	{
 		if( MapWnd() )
 		{

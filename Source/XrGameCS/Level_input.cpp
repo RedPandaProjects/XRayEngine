@@ -111,7 +111,7 @@ void CLevel::IR_OnKeyboardPress	(int key)
 		return;
 
 #ifdef INGAME_EDITOR
-	if (Device->WeatherEditor() && (pInput->iGetAsyncKeyState(DIK_LALT) || pInput->iGetAsyncKeyState(DIK_RALT)))
+	if (Device->WeatherEditor() && (GXRayInput->iGetAsyncKeyState(DIK_LALT) || GXRayInput->iGetAsyncKeyState(DIK_RALT)))
 		return;
 #endif // #ifdef INGAME_EDITOR
 
@@ -231,7 +231,7 @@ void CLevel::IR_OnKeyboardPress	(int key)
 				Msg("For this game type Demo Record is disabled.");
 ///				return;
 			};
-			if(!pInput->iGetAsyncKeyState(DIK_LSHIFT))
+			if(!GXRayInput->iGetAsyncKeyState(DIK_LSHIFT))
 			{
 				Console->Hide	();
 				Console->Execute("demo_record 1");
@@ -282,10 +282,10 @@ void CLevel::IR_OnKeyboardPress	(int key)
 		return;
 
 	case DIK_F4: {
-		if (pInput->iGetAsyncKeyState(DIK_LALT))
+		if (GXRayInput->iGetAsyncKeyState(DIK_LALT))
 			break;
 
-		if (pInput->iGetAsyncKeyState(DIK_RALT))
+		if (GXRayInput->iGetAsyncKeyState(DIK_RALT))
 			break;
 
 		bool bOk = false;
@@ -361,7 +361,7 @@ void CLevel::IR_OnKeyboardPress	(int key)
 		if (GameID() != eGameIDSingle)
 			break;
 
-		if (pInput->iGetAsyncKeyState(DIK_LALT)) {
+		if (GXRayInput->iGetAsyncKeyState(DIK_LALT)) {
 			if (smart_cast<CActor*>(CurrentEntity()))
 				try_change_current_entity	();
 			else
@@ -496,9 +496,9 @@ void CLevel::IR_OnMouseStop( int /**axis/**/, int /**value/**/)
 
 void CLevel::IR_OnActivate()
 {
-	if(!pInput) return;
+	if(!GXRayInput) return;
 	int i;
-	for (i = 0; i < CInput::COUNT_KB_BUTTONS; i++ )
+	for (i = 0; i < XRayInputInterface::COUNT_KB_BUTTONS; i++ )
 	{
 		if(IR_GetKeyState(i))
 		{
