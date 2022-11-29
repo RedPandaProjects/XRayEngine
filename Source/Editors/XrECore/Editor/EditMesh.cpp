@@ -98,13 +98,14 @@ void CEditableMesh::RecomputeBBox()
 		m_Box.modify(m_Vertices[k]);
 }
 
-void CEditableMesh::GenerateVertices(xr_vector<st_StaticMeshVertex>& Vertices, CSurface* Surface)
+void CEditableMesh::GenerateVertices(xr_vector<st_MeshVertex>& Vertices, CSurface* Surface)
 {
 	if (m_VertCount == 0)
 		return;
 	if (m_SurfFaces.find(Surface) == m_SurfFaces.end())
 		return;
 	GenerateVNormals(0);
+	GenerateSVertices(4);
 	VERIFY(m_VertexNormals);
 	auto&Face = m_SurfFaces[Surface];
 	for (size_t i = 0; i < Face.size(); i++)
@@ -114,7 +115,7 @@ void CEditableMesh::GenerateVertices(xr_vector<st_StaticMeshVertex>& Vertices, C
 
 		for (size_t k = 0; k < 3; k++)
 		{
-			st_StaticMeshVertex ResultVertex;
+			st_MeshVertex ResultVertex;
 			st_FaceVert& fv = MeshFace.pv[k];
 			u32 NormalID = FaceIndex * 3 + (u32)k;//fv.pindex;
 			VERIFY2(NormalID < m_FaceCount * 3, "Normal index out of range.");
@@ -123,7 +124,15 @@ void CEditableMesh::GenerateVertices(xr_vector<st_StaticMeshVertex>& Vertices, C
 			ResultVertex.Normal = m_VertexNormals[NormalID];;
 			ResultVertex.Position = m_Vertices[fv.pindex];
 			ResultVertex.UV.set(0, 0);
-
+			for (size_t i = 0; i < 4; i++)
+			{
+				ResultVertex.BoneID[i] = BI_NONE;
+			}
+			for (size_t i = 0; i < m_SVertices[NormalID].bones.size(); i++)
+			{
+				ResultVertex.BoneID[i] = m_SVertices[NormalID].bones[i].id;
+				ResultVertex.BoneWeight[i] = m_SVertices[NormalID].bones[i].w;
+			}
 			for (size_t UVOffset = 0; UVOffset < m_VMRefs[fv.vmref].count; UVOffset++)
 			{
 				st_VMapPt& VertexMapPoint = m_VMRefs[fv.vmref].pts[UVOffset];
@@ -143,7 +152,7 @@ void CEditableMesh::GenerateVertices(xr_vector<st_StaticMeshVertex>& Vertices, C
 		{
 			for (int k = 2; k >= 0; k--)
 			{
-				st_StaticMeshVertex ResultVertex;
+				st_MeshVertex ResultVertex;
 				st_FaceVert& fv = MeshFace.pv[k];
 				u32 NormalID = FaceIndex * 3 + k;//fv.pindex;
 				VERIFY2(NormalID < m_FaceCount * 3, "Normal index out of range.");
@@ -153,7 +162,11 @@ void CEditableMesh::GenerateVertices(xr_vector<st_StaticMeshVertex>& Vertices, C
 				ResultVertex.Normal.mul(-1);
 				ResultVertex.Position = m_Vertices[fv.pindex];
 				ResultVertex.UV.set(0, 0);
-
+				for (size_t i = 0; i < m_SVertices[NormalID].bones.size(); i++)
+				{
+					ResultVertex.BoneID[i] = m_SVertices[NormalID].bones[i].id;
+					ResultVertex.BoneWeight[i] = m_SVertices[NormalID].bones[i].w;
+				}
 				for (size_t UVOffset = 0; UVOffset < m_VMRefs[fv.vmref].count; UVOffset++)
 				{
 					st_VMapPt& VertexMapPoint = m_VMRefs[fv.vmref].pts[UVOffset];
@@ -171,6 +184,7 @@ void CEditableMesh::GenerateVertices(xr_vector<st_StaticMeshVertex>& Vertices, C
 			}
 		}
 	}
+	UnloadSVertices();
 	UnloadVNormals();
 }
 

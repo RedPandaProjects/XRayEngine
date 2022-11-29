@@ -170,11 +170,13 @@ struct ECORE_API st_MeshOptions{
     st_MeshOptions	(){m_Reserved0=0;m_Reserved1=0;}
 };
 
-struct  st_StaticMeshVertex
+struct  st_MeshVertex
 {
 	Fvector3 Position;
 	Fvector3 Normal;
 	Fvector2 UV;
+	u16		 BoneID[4];
+	float	 BoneWeight[4];
 
 };
 #pragma pack( pop )
@@ -225,7 +227,7 @@ class ECORE_API CEditableMesh {
 #endif
 public:
 
-	void 			GenerateVertices	(xr_vector<st_StaticMeshVertex>&Vertexes, CSurface*Surface);
+	void 			GenerateVertices	(xr_vector<st_MeshVertex>&Vertexes, CSurface*Surface);
     void 			GenerateFNormals	();
     void 			GenerateVNormals	(const Fmatrix* parent_xform);
     void            GenerateSVertices	(u32 influence);
