@@ -128,11 +128,15 @@ void CEditableMesh::GenerateVertices(xr_vector<st_MeshVertex>& Vertices, CSurfac
 			{
 				ResultVertex.BoneID[i] = BI_NONE;
 			}
-			for (size_t i = 0; i < m_SVertices[NormalID].bones.size(); i++)
+			if (m_SVertices)
 			{
-				ResultVertex.BoneID[i] = m_SVertices[NormalID].bones[i].id;
-				ResultVertex.BoneWeight[i] = m_SVertices[NormalID].bones[i].w;
+				for (size_t i = 0; i < m_SVertices[NormalID].bones.size(); i++)
+				{
+					ResultVertex.BoneID[i] = m_SVertices[NormalID].bones[i].id;
+					ResultVertex.BoneWeight[i] = m_SVertices[NormalID].bones[i].w;
+				}
 			}
+			
 			for (size_t UVOffset = 0; UVOffset < m_VMRefs[fv.vmref].count; UVOffset++)
 			{
 				st_VMapPt& VertexMapPoint = m_VMRefs[fv.vmref].pts[UVOffset];
@@ -162,10 +166,13 @@ void CEditableMesh::GenerateVertices(xr_vector<st_MeshVertex>& Vertices, CSurfac
 				ResultVertex.Normal.mul(-1);
 				ResultVertex.Position = m_Vertices[fv.pindex];
 				ResultVertex.UV.set(0, 0);
-				for (size_t i = 0; i < m_SVertices[NormalID].bones.size(); i++)
+				if (m_SVertices)
 				{
-					ResultVertex.BoneID[i] = m_SVertices[NormalID].bones[i].id;
-					ResultVertex.BoneWeight[i] = m_SVertices[NormalID].bones[i].w;
+					for (size_t i = 0; i < m_SVertices[NormalID].bones.size(); i++)
+					{
+						ResultVertex.BoneID[i] = m_SVertices[NormalID].bones[i].id;
+						ResultVertex.BoneWeight[i] = m_SVertices[NormalID].bones[i].w;
+					}
 				}
 				for (size_t UVOffset = 0; UVOffset < m_VMRefs[fv.vmref].count; UVOffset++)
 				{

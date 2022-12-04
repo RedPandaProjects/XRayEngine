@@ -16,7 +16,7 @@
     <BearBundle>$(SolutionDir)BearBundle\</BearBundle>
   </PropertyGroup>
   <PropertyGroup>
-    <OutDir>$(SolutionDir)..\..\..\..\..\Binaries\Win64\</OutDir>
+    <OutDir>$(SolutionDir)..\..\..\Binaries\Win64\</OutDir>
     <IntDir>$(SolutionDir)..\Intermediate\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
     <TargetName>$(ProjectName)_$(Configuration)</TargetName>
   </PropertyGroup>
