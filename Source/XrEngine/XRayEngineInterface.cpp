@@ -519,10 +519,12 @@ void XRayEngineInterface::InitConsole()
 #else
 		//	else
 	{
-		Console = xr_new<CConsole>();
+		extern void CCC_Register();
+		CCC_Register();
+	//	Console = xr_new<CConsole>();
 	}
 #endif
-	Console->Initialize();
+	//Console->Initialize();
 
 	xr_strcpy(Console->ConfigFile, "user.ltx");
 	if (strstr(Core.Params, "-ltx ")) {

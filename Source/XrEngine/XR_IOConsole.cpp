@@ -37,13 +37,105 @@ static u32 const tips_scroll_back_color  = color_rgba( 15, 15, 15, 230 );
 static u32 const tips_scroll_pos_color   = color_rgba( 70, 70, 70, 240 );
 
 
-ENGINE_API CConsole*		Console		=	NULL;
+ENGINE_API ConsoleBase*		Console		=	NULL;
 
 extern char const * const	ioc_prompt;
        char const * const	ioc_prompt	=	">>> ";
 
 extern char const * const	ch_cursor;
        char const * const	ch_cursor	=	"_";
+
+
+void ConsoleBase::AddCommand( IConsole_Command* cc )
+{
+	Commands[cc->Name()] = cc;
+}
+
+void ConsoleBase::RemoveCommand( IConsole_Command* cc )
+{
+	vecCMD_IT it = Commands.find( cc->Name() );
+	if ( Commands.end() != it )
+	{
+		Commands.erase(it);
+	}
+}
+
+void ConsoleBase::Execute( LPCSTR cmd )
+{
+	ExecuteCommand( cmd, false );
+}
+
+void ConsoleBase::ExecuteScript( LPCSTR str )
+{
+	u32  str_size = xr_strlen( str );
+	PSTR buf = (PSTR)_alloca( (str_size + 10) * sizeof(char) );
+	xr_strcpy( buf, str_size + 10, "cfg_load " );
+	xr_strcat( buf, str_size + 10, str );
+	Execute( buf );
+}
+
+void ConsoleBase::ExecuteCommand(LPCSTR cmd_str, bool record_cmd)
+{
+	u32  str_size = xr_strlen(cmd_str);
+	PSTR edt = (PSTR)_alloca((str_size + 1) * sizeof(char));
+	PSTR first = (PSTR)_alloca((str_size + 1) * sizeof(char));
+	PSTR last = (PSTR)_alloca((str_size + 1) * sizeof(char));
+
+	xr_strcpy(edt, str_size + 1, cmd_str);
+	edt[str_size] = 0;
+
+	text_editor::remove_spaces(edt);
+	if (edt[0] == 0)
+	{
+		return;
+	}
+
+	text_editor::split_cmd(first, last, edt);
+
+	// search
+	vecCMD_IT it = Commands.find(first);
+	if (it != Commands.end())
+	{
+		IConsole_Command* cc = it->second;
+		if (cc && cc->bEnabled)
+		{
+			if (cc->bLowerCaseArgs)
+			{
+				strlwr(last);
+			}
+			if (last[0] == 0)
+			{
+				if (cc->bEmptyArgsHandled)
+				{
+					cc->Execute(last);
+				}
+				else
+				{
+					IConsole_Command::TStatus stat;
+					cc->Status(stat);
+					Msg("- %s %s", cc->Name(), stat);
+				}
+			}
+			else
+			{
+				cc->Execute(last);
+				if (record_cmd)
+				{
+					cc->add_to_LRU((LPCSTR)last);
+				}
+			}
+		}
+		else
+		{
+			Log("! Command disabled.");
+		}
+	}
+	else
+	{
+		first[CONSOLE_BUF_SIZE - 21] = 0;
+		Log("! Unknown command: ", first);
+	}
+}
 
 text_editor::line_edit_control& CConsole::ec()
 {
@@ -142,20 +234,6 @@ void CConsole::Destroy()
 	xr_delete( pFont );
 	xr_delete( pFont2 );
 	Commands.clear();
-}
-
-void CConsole::AddCommand( IConsole_Command* cc )
-{
-	Commands[cc->Name()] = cc;
-}
-
-void CConsole::RemoveCommand( IConsole_Command* cc )
-{
-	vecCMD_IT it = Commands.find( cc->Name() );
-	if ( Commands.end() != it )
-	{
-		Commands.erase(it);
-	}
 }
 
 void CConsole::OnFrame()
@@ -669,20 +747,6 @@ void CConsole::SelectCommand()
 	vecHistory::reverse_iterator	it_rb = m_cmd_history.rbegin() + m_cmd_history_idx;
 	ec().set_edit( (*it_rb).c_str() );
 	reset_selected_tip();
-}
-
-void CConsole::Execute( LPCSTR cmd )
-{
-	ExecuteCommand( cmd, false );
-}
-
-void CConsole::ExecuteScript( LPCSTR str )
-{
-	u32  str_size = xr_strlen( str );
-	PSTR buf = (PSTR)_alloca( (str_size + 10) * sizeof(char) );
-	xr_strcpy( buf, str_size + 10, "cfg_load " );
-	xr_strcat( buf, str_size + 10, str );
-	Execute( buf );
 }
 
 // -------------------------------------------------------------------------------------------------

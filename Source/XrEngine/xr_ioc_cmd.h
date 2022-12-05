@@ -17,7 +17,7 @@ public		:
 	typedef xr_vector<shared_str>	vecTips;
 	typedef xr_vector<shared_str>	vecLRU;
 
-protected	:
+public:
 	LPCSTR			cName;
 	bool			bEnabled;
 	bool			bLowerCaseArgs;

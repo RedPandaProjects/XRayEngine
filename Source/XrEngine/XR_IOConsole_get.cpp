@@ -10,7 +10,7 @@
 #include "xr_ioc_cmd.h"
 
 
-bool CConsole::GetBool( LPCSTR cmd ) const
+bool ConsoleBase::GetBool( LPCSTR cmd ) const
 {
 	IConsole_Command* cc	= GetCommand(cmd);
 	CCC_Mask* cf			= dynamic_cast<CCC_Mask*>(cc);
@@ -27,7 +27,7 @@ bool CConsole::GetBool( LPCSTR cmd ) const
 	return false;
 }
 
-float CConsole::GetFloat( LPCSTR cmd, float& min, float& max ) const
+float ConsoleBase::GetFloat( LPCSTR cmd, float& min, float& max ) const
 {
 	min						= 0.0f;
 	max						= 0.0f;
@@ -41,7 +41,7 @@ float CConsole::GetFloat( LPCSTR cmd, float& min, float& max ) const
 	return 0.0f;
 }
 
-IConsole_Command* CConsole::GetCommand( LPCSTR cmd ) const
+IConsole_Command* ConsoleBase::GetCommand( LPCSTR cmd ) const
 {
 	vecCMD_CIT it = Commands.find( cmd );
 	if ( it == Commands.end() )
@@ -51,7 +51,7 @@ IConsole_Command* CConsole::GetCommand( LPCSTR cmd ) const
 }
 
 
-int CConsole::GetInteger( LPCSTR cmd, int& min, int& max ) const
+int ConsoleBase::GetInteger( LPCSTR cmd, int& min, int& max ) const
 {
 	min						= 0;
 	max						= 1;
@@ -73,7 +73,7 @@ int CConsole::GetInteger( LPCSTR cmd, int& min, int& max ) const
 	return 0;
 }
 
-LPCSTR CConsole::GetString( LPCSTR cmd ) const
+LPCSTR ConsoleBase::GetString( LPCSTR cmd ) const
 {
 	IConsole_Command* cc	= GetCommand(cmd);
 	if(!cc)
@@ -84,12 +84,12 @@ LPCSTR CConsole::GetString( LPCSTR cmd ) const
 	return					stat;
 }
 
-LPCSTR CConsole::GetToken( LPCSTR cmd ) const
+LPCSTR ConsoleBase::GetToken( LPCSTR cmd ) const
 {
 	return GetString( cmd );
 }
 
-xr_token* CConsole::GetXRToken( LPCSTR cmd ) const
+xr_token* ConsoleBase::GetXRToken( LPCSTR cmd ) const
 {
 	IConsole_Command* cc	= GetCommand(cmd);
 	
@@ -101,7 +101,7 @@ xr_token* CConsole::GetXRToken( LPCSTR cmd ) const
 	return					NULL;
 }
 
-Fvector* CConsole::GetFVectorPtr( LPCSTR cmd ) const
+Fvector* ConsoleBase::GetFVectorPtr( LPCSTR cmd ) const
 {
 	IConsole_Command* cc	= GetCommand(cmd);
 	CCC_Vector3* cf			= dynamic_cast<CCC_Vector3*>(cc);
@@ -112,7 +112,7 @@ Fvector* CConsole::GetFVectorPtr( LPCSTR cmd ) const
 	return					NULL;
 }
 
-Fvector CConsole::GetFVector( LPCSTR cmd ) const
+Fvector ConsoleBase::GetFVector( LPCSTR cmd ) const
 {
 	Fvector* pV = GetFVectorPtr( cmd );
 	if ( pV )

@@ -53,19 +53,16 @@ struct TipString
 	}
 };
 
-class ENGINE_API CConsole :
-	public pureRender,
-	public pureFrame,
-	public pureScreenResolutionChanged
+class ENGINE_API ConsoleBase
 {
-public:
 	struct str_pred
-	{	
+	{
 		IC bool operator()(const char* x, const char* y) const
 		{
-			return (xr_strcmp( x, y ) < 0);
+			return (xr_strcmp(x, y) < 0);
 		}
 	};
+public:
 	typedef  xr_map<LPCSTR,IConsole_Command*,str_pred>	vecCMD;
 	typedef  vecCMD::iterator							vecCMD_IT;
 	typedef  vecCMD::const_iterator						vecCMD_CIT;
@@ -74,8 +71,49 @@ public:
 	typedef  xr_vector<shared_str>						vecTips;
 	typedef  xr_vector<TipString>						vecTipsEx;
 
-	enum			{ CONSOLE_BUF_SIZE = 1024 };
-	enum			{ VIEW_TIPS_COUNT = 14, MAX_TIPS_COUNT = 220 };
+	enum					{ CONSOLE_BUF_SIZE = 1024 };
+	enum					{ VIEW_TIPS_COUNT = 14, MAX_TIPS_COUNT = 220 };
+
+public:
+
+	virtual					~ConsoleBase() = default;
+	virtual void			AddCommand(IConsole_Command* cc);
+	virtual void			RemoveCommand(IConsole_Command* cc);
+
+	virtual void			Show() {};
+	virtual void			Hide() {};
+
+	virtual void			Execute(LPCSTR cmd);
+	virtual void			ExecuteScript(LPCSTR str);
+	virtual void			ExecuteCommand(LPCSTR cmd, bool record_cmd = true);
+
+	virtual void			Initialize() {};
+	virtual void			Destroy() {};
+
+	virtual void			OnRender() {};
+	virtual void			OnFrame() {};
+
+	virtual bool			GetBool				( LPCSTR cmd ) const;
+	virtual float			GetFloat			( LPCSTR cmd, float& min, float& max) const;
+	virtual int				GetInteger			( LPCSTR cmd, int& min, int& max) const;
+	virtual LPCSTR			GetString			( LPCSTR cmd ) const;
+	virtual LPCSTR			GetToken			( LPCSTR cmd ) const;
+	virtual xr_token*		GetXRToken			( LPCSTR cmd ) const;
+	virtual Fvector			GetFVector			( LPCSTR cmd ) const;
+	virtual Fvector*		GetFVectorPtr		( LPCSTR cmd ) const;
+	virtual IConsole_Command* GetCommand		( LPCSTR cmd ) const;
+public:
+	string64		ConfigFile;
+	bool			bVisible;
+	vecCMD			Commands;
+};
+
+class ENGINE_API CConsole :
+	public pureRender,
+	public pureFrame,
+	public pureScreenResolutionChanged,
+	public ConsoleBase
+{
 
 protected:
 	int				scroll_delta;
@@ -105,6 +143,8 @@ private:
 
 public:
 					CConsole			();
+					CConsole			(CConsole&&) = delete;
+					CConsole			(CConsole&) = delete;
 	virtual			~CConsole			();
 	virtual	void	Initialize			();
 	virtual void	Destroy				();
@@ -112,30 +152,13 @@ public:
 	virtual void		OnRender			();
 	virtual void _BCL	OnFrame				();
 	virtual void	OnScreenResolutionChanged();
-	string64		ConfigFile;
-	bool			bVisible;
-	vecCMD			Commands;
-
-	void			AddCommand			( IConsole_Command* cc );
-	void			RemoveCommand		( IConsole_Command* cc );
 
 	void			Show				();
 	void			Hide				();
 
-	void			Execute				( LPCSTR cmd );
-	void			ExecuteScript		( LPCSTR str );
 	void			ExecuteCommand		( LPCSTR cmd, bool record_cmd = true );
 	void			SelectCommand		();
 
-	bool			GetBool				( LPCSTR cmd ) const;
-	float			GetFloat			( LPCSTR cmd, float& min, float& max) const;
-	int				GetInteger			( LPCSTR cmd, int& min, int& max) const;
-	LPCSTR			GetString			( LPCSTR cmd ) const;
-	LPCSTR			GetToken			( LPCSTR cmd ) const;
-	xr_token*		GetXRToken			( LPCSTR cmd ) const;
-	Fvector			GetFVector			( LPCSTR cmd ) const;
-	Fvector*		GetFVectorPtr		( LPCSTR cmd ) const;
-	IConsole_Command* GetCommand		( LPCSTR cmd ) const;
 protected:
 	text_editor::line_editor*			m_editor;
 	text_editor::line_edit_control&		ec();
@@ -214,6 +237,6 @@ protected:
 
 }; // class CConsole
 
-ENGINE_API extern CConsole* Console;
+ENGINE_API extern ConsoleBase* Console;
 
 #endif // XR_IOCONSOLE_H_INCLUDED
