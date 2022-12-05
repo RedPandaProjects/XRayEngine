@@ -16,7 +16,7 @@ m_control_blend( b )
 	CBoneInstance& B=m_pKinematicsC->LL_GetBoneInstance( m_pKinematicsC->LL_GetBoneRoot( ) );
 	VERIFY( !B.callback_param() && !B.callback());
 	B.set_callback( bctCustom, RootBoneCallback, this );
-	m_startRootXform.set(B.mTransform);
+	m_startRootXform.set(B.GetTransform());
 }
 
 animation_movement_controller::~animation_movement_controller( )
@@ -54,10 +54,10 @@ void animation_movement_controller::RootBoneCallback( CBoneInstance* B )
 
 	if(O->m_control_blend->playing)
 	{
-		Fmatrix m;m.mul_43(  B->mTransform, Fmatrix( ).invert( O->m_startRootXform ) );
+		Fmatrix m;m.mul_43(  B->GetTransform(), Fmatrix( ).invert( O->m_startRootXform ) );
 		O->m_pObjXForm.mul_43( O->m_startObjXForm, m );
 	} 
-	B->mTransform.set(O->m_startRootXform);
+	B->SetTransform(O->m_startRootXform);
 }
 
 bool	animation_movement_controller::isActive() const

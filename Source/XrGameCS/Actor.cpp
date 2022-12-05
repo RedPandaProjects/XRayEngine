@@ -1379,7 +1379,7 @@ void CActor::RenderIndicator			(Fvector dpos, float r1, float r2, const ui_shade
 	CBoneInstance& BI = CastToIKinematics(Visual())->LL_GetBoneInstance(u16(m_head));
 	Fmatrix M;
 	CastToIKinematics(Visual())->CalculateBones	();
-	M.mul						(XFORM(),BI.mTransform);
+	M.mul						(XFORM(),BI.GetTransform());
 
 	Fvector pos = M.c; pos.add(dpos);
 	const Fvector& T        = Device->vCameraTop;
@@ -1429,7 +1429,7 @@ void CActor::RenderText				(LPCSTR Text, Fvector dpos, float* pdup, u32 color)
 	CBoneInstance& BI = CastToIKinematics(Visual())->LL_GetBoneInstance(u16(m_head));
 	Fmatrix M;
 	CastToIKinematics(Visual())->CalculateBones	();
-	M.mul						(XFORM(),BI.mTransform);
+	M.mul						(XFORM(),BI.GetTransform());
 	//------------------------------------------------
 	Fvector v0, v1;
 	v0.set(M.c); v1.set(M.c);

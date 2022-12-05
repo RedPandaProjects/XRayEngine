@@ -291,7 +291,7 @@ void CTorch::UpdateCL()
 		if (H_Parent()->XFORM().c.distance_to_sqr(Device->vCameraPosition)<_sqr(OPTIMIZATION_DISTANCE) || GameID() != eGameIDSingle) {
 			// near camera
 			CastToIKinematics(H_Parent()->Visual())->CalculateBones	();
-			M.mul_43				(XFORM(),BI.mTransform);
+			M.mul_43				(XFORM(),BI.GetTransform());
 		} else {
 			// approximately the same
 			M		= H_Parent()->XFORM		();
@@ -363,7 +363,7 @@ void CTorch::UpdateCL()
 	{
 		if (getVisible() && m_pPhysicsShell) 
 		{
-			M.mul						(XFORM(),BI.mTransform);
+			M.mul						(XFORM(),BI.GetTransform());
 
 			m_switched_on			= false;
 			light_render->set_active(false);

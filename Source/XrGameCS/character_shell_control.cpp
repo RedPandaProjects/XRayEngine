@@ -111,7 +111,7 @@ void character_shell_control::TestForWounded(const Fmatrix& xform,  IKinematics*
 	CKA->CalculateBones( );
 	CBoneInstance CBI=CKA->LL_GetBoneInstance( CKA->LL_BoneID("bip01_pelvis") );
 	Fmatrix position_matrix;
-	position_matrix.mul( xform, CBI.mTransform );
+	position_matrix.mul( xform, CBI.GetTransform() );
 	
 	xrXRC						xrc;
 	xrc.ray_options				(0);

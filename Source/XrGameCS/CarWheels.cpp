@@ -188,8 +188,8 @@ void CCar::SWheelDrive::Init()
 {
 	pwheel->Init();
 	gear_factor=pwheel->radius/pwheel->car->m_ref_radius;
-	CBoneData& bone_data= CastToIKinematics(pwheel->car->Visual())->LL_GetData(u16(pwheel->bone_id));
-	switch(bone_data.IK_data.type)
+	const IBoneData& bone_data= CastToIKinematics(pwheel->car->Visual())->GetBoneData(u16(pwheel->bone_id));
+	switch(bone_data.get_IK_data().type)
 	{
 	case jtWheel:
 		pos_fvd=bone_map.find(pwheel->bone_id)->second.element->mXFORM.k.x;
@@ -227,8 +227,8 @@ void CCar::SWheelSteer::Init()
 	IKinematics* pKinematics=CastToIKinematics(pwheel->car->Visual());
 	pwheel->Init();
 	(bone_map.find(pwheel->bone_id))->second.joint->GetLimits(lo_limit,hi_limit,0);
-	CBoneData& bone_data= pKinematics->LL_GetData(u16(pwheel->bone_id));
-	switch(bone_data.IK_data.type)
+	const IBoneData& bone_data= pKinematics->GetBoneData(u16(pwheel->bone_id));
+	switch(bone_data.get_IK_data().type)
 	{
 	case jtWheel:	
 		pos_right=bone_map.find(pwheel->bone_id)->second.element->mXFORM.i.y;//.dotproduct(pwheel->car->m_root_transform.j);

@@ -89,7 +89,7 @@ void CAI_Trader::BoneCallback(CBoneInstance *B)
 	CAI_Trader*	this_class = static_cast<CAI_Trader*>(B->callback_param());
 
 	this_class->LookAtActor(B);
-	R_ASSERT2( _valid( B->mTransform ), "CAI_Trader::BoneCallback" );
+	R_ASSERT2( _valid( B->GetTransform() ), "CAI_Trader::BoneCallback" );
 }
 
 void CAI_Trader::LookAtActor(CBoneInstance *B)
@@ -109,7 +109,10 @@ void CAI_Trader::LookAtActor(CBoneInstance *B)
 
 	Fmatrix M;
 	M.setHPB (0.f, -dy, 0.f);
-	B->mTransform.mulB_43(M);
+	Fmatrix BoneMatrix = B->GetTransform();
+	BoneMatrix.mulB_43(M);
+	B->SetTransform(BoneMatrix);
+	
 }
 
 //////////////////////////////////////////////////////////////////////////

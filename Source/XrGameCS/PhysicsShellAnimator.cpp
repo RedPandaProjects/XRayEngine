@@ -90,7 +90,7 @@ void CPhysicsShellAnimator::OnFrame()
 		m_pPhysicsShell->PKinematics()->CalculateBones_Invalidate();
 		m_pPhysicsShell->PKinematics()->CalculateBones(TRUE);
 		
-		target_obj_posFmatrixS.mul_43(m_StartXFORM,B.mTransform);
+		target_obj_posFmatrixS.mul_43(m_StartXFORM,B.GetTransform());
 		dQuaternion target_obj_quat_dQuaternionS;
 		dMatrix3 ph_mat;
 		PHDynamicData::FMXtoDMX(target_obj_posFmatrixS,ph_mat);

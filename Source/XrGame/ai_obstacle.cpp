@@ -120,7 +120,7 @@ void ai_obstacle::compute_matrix(Fmatrix &result, const Fvector &additional)
 		if (!kinematics->LL_GetBoneVisible(i))
 			continue;
 		
-		const Fobb				&obb = kinematics->LL_GetData(i).obb;
+		const Fobb				&obb = kinematics->GetBoneData(i).get_obb();
 		if (fis_zero(obb.m_halfsize.square_magnitude())) {
 			VERIFY				(visible_bone_count > 1);
 			--visible_bone_count;
@@ -130,7 +130,7 @@ void ai_obstacle::compute_matrix(Fmatrix &result, const Fvector &additional)
 		Fmatrix					Mbox;
 		obb.xform_get			(Mbox);
 
-		const Fmatrix			&Mbone = kinematics->LL_GetBoneInstance(i).mTransform;
+		const Fmatrix			&Mbone = kinematics->LL_GetBoneInstance(i).GetTransform();
 		Fmatrix					X;
 		result.mul_43			(xform,X.mul_43(Mbone,Mbox));
 

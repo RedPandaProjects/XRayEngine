@@ -49,7 +49,7 @@ void CMaterialManager::reinit		()
 
 //		if (entity_alive->use_simplified_visual()) {
 //			IKinematics			*kinematics = CastToIKinematics(entity_alive->Visual());
-//			m_my_material_idx	= kinematics->LL_GetData(kinematics->LL_GetBoneRoot()).game_mtl_idx;
+//			m_my_material_idx	= kinematics->GetBoneData(kinematics->LL_GetBoneRoot()).game_mtl_idx;
 //		}
 
 		entity_alive->character_physics_support()->movement()->SetMaterial		(m_my_material_idx);

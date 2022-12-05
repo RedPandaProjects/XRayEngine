@@ -208,8 +208,8 @@ void CCharacterPhysicsSupport::in_NetSpawn( CSE_Abstract* e )
 	{
 		if( m_eType == etStalker )
 		{
-			//pK->LL_GetData( 0 ).shape.flags.set(SBoneShape::sfVisibilityIgnore,TRUE);
-			//pK->LL_GetData( pK->LL_BoneID("bip01") ).shape.flags.set(SBoneShape::sfVisibilityIgnore,TRUE);
+			//pK->GetBoneData( 0 ).shape.flags.set(SBoneShape::sfVisibilityIgnore,TRUE);
+			//pK->GetBoneData( pK->LL_BoneID("bip01") ).shape.flags.set(SBoneShape::sfVisibilityIgnore,TRUE);
 			ka->PlayCycle( "waunded_1_idle_0" );
 		}
 		else
@@ -976,7 +976,7 @@ void CCharacterPhysicsSupport::bone_chain_disable(u16 bone, u16 r_bone, IKinemat
 
 	while( bid!=r_bone && bid !=  K.LL_GetBoneRoot() )
 	{
-		CBoneData	&bd =	K.LL_GetData( bid );
+		const IBoneData	&bd =	K.GetBoneData( bid );
 		if( K.LL_GetBoneInstance( bid ).callback() != anim_bone_fix::callback )
 		{
 			m_weapon_bone_fixes.push_back( xr_new<anim_bone_fix>() );

@@ -485,8 +485,8 @@ float CVisualMemoryManager::feel_vision_mtl_transp(CObject* O, u32 element)
 	if (O){
 		IKinematics* V		= CastToIKinematics(O->Visual());
 		if (0!=V){
-			CBoneData& B	= V->LL_GetData((u16)element);
-			vis				= GameMaterialLibrary->GetMaterialByIdx(B.game_mtl_idx)->fVisTransparencyFactor;
+			const IBoneData& B	= V->GetBoneData((u16)element);
+			vis				= GameMaterialLibrary->GetMaterialByIdx(B.get_game_mtl_idx())->fVisTransparencyFactor;
 		}
 	}else{
 		CDB::TRI* T			= Level().ObjectSpace.GetStaticTris()+element;

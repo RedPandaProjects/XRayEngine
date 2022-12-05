@@ -187,8 +187,8 @@ ICF static BOOL grenade_hit_callback(collide::rq_result& result, LPVOID params)
 	if(result.O){
 		IKinematics* V  = 0;
 		if (0!=(V=CastToIKinematics(result.O->Visual()))){
-			CBoneData& B= V->LL_GetData((u16)result.element);
-			mtl_idx		= B.game_mtl_idx;
+			const IBoneData& B= V->GetBoneData((u16)result.element);
+			mtl_idx		= B.get_game_mtl_idx();
 		}
 	}else{
 		//�������� ����������� � ������ ��� ��������

@@ -38,7 +38,7 @@ static void interactive_motion_diag( LPCSTR message, const CBlend &b, CPhysicsSh
 	const MotionID & m = b.motionID;
 	VERIFY( m.valid() );
 	VERIFY( s );
-	IKinematicsAnimated* KA = CastToIKinematicsAnimated( s->PKinematics( ) );
+	IKinematicsAnimated* KA = s->PKinematics()->dcast_PKinematicsAnimated();
 	VERIFY( KA );
 	CPhysicsShellHolder* O = s->get_ElementByStoreOrder( 0 )->PhysicsRefObject();
 	VERIFY( O );
@@ -112,7 +112,7 @@ void imotion_position::state_start( )
 	IKinematics			*K	= shell->PKinematics();
 	saved_visual_callback = K->GetUpdateCallback();
 	K->SetUpdateCallback( 0 );
-	IKinematicsAnimated	*KA = CastToIKinematicsAnimated( shell->PKinematics() );
+	IKinematicsAnimated	*KA = shell->PKinematics()->dcast_PKinematicsAnimated();
 	VERIFY( KA );
 	KA->SetUpdateTracksCalback( &update_callback );
 	update_callback.motion = this;
@@ -269,7 +269,7 @@ void	imotion_position::state_end( )
 
 	VERIFY( K );
 
-	IKinematicsAnimated	*KA = CastToIKinematicsAnimated( shell->PKinematics() );
+	IKinematicsAnimated	*KA = shell->PKinematics()->dcast_PKinematicsAnimated();
 	VERIFY( KA );
 	update_callback.motion = 0;
 	KA->SetUpdateTracksCalback( 0 );
@@ -325,7 +325,7 @@ void imotion_position::move_update( )
 	VERIFY( K == smart_cast<IKinematics *>( &KA ) );
 	disable_bone_calculation( *K, false );
 
-	K->Bone_Calculate( &K->LL_GetData(0), &Fidentity );
+	K->Bone_Calculate( &K->GetBoneData(0), &Fidentity );
 
 	if( saved_visual_callback )
 	{
@@ -689,7 +689,7 @@ void	imotion_position::rootbone_callback	( CBoneInstance *BI )
 	IKinematicsAnimated *KA = smart_cast<IKinematicsAnimated *>( K );
 	VERIFY( KA );
 	SKeyTable	keys;
-	KA->LL_BuldBoneMatrixDequatize( &K->LL_GetData( 0 ), u8(-1), keys );
+	KA->LL_BuldBoneMatrixDequatize( &K->GetBoneData( 0 ), u8(-1), keys );
 	
 	CKey *key = 0;
 	for( int i = 0; i < keys.chanel_blend_conts[0]; ++i )
@@ -703,5 +703,5 @@ void	imotion_position::rootbone_callback	( CBoneInstance *BI )
 	}
 	KA->LL_BoneMatrixBuild( *BI, &Fidentity, keys );
 
-	R_ASSERT2( _valid(BI->mTransform), "imotion_position::rootbone_callback" );
+	R_ASSERT2( _valid(BI->GetTransform()), "imotion_position::rootbone_callback" );
 }

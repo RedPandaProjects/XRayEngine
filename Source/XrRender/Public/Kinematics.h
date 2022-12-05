@@ -6,7 +6,6 @@
 
 typedef void (* UpdateCallback)		(IKinematics*	P);
 
-class CBoneData;
 class IBoneData;
 class IKinematicsAnimated;
 class IRenderVisual;
@@ -27,7 +26,7 @@ public:
 		Fvector	tri[3];
 	};
 public:
-	virtual		void					Bone_Calculate		(CBoneData* bd, Fmatrix* parent) = 0;
+	virtual		void					Bone_Calculate		(const IBoneData* bd, Fmatrix* parent) = 0;
 	virtual		void					Bone_GetAnimPos(Fmatrix& pos,u16 id, u8 channel_mask, bool ignore_callbacks) = 0;
 
 	virtual		bool					PickBone			(const Fmatrix &parent_xform, pick_result &r, float dist, const Fvector& start, const Fvector& dir, u16 bone_id) = 0;
@@ -43,9 +42,7 @@ public:
 
 	virtual ICF CBoneInstance&	_BCL	LL_GetBoneInstance(u16 bone_id) = 0;
 
-	virtual CBoneData&			_BCL	LL_GetData(u16 bone_id) = 0;
-
-virtual	const IBoneData&		_BCL	GetBoneData(u16 bone_id) const = 0;
+	virtual	const IBoneData&		_BCL	GetBoneData(u16 bone_id) const = 0;
 
 	virtual u16					_BCL	LL_BoneCount()const = 0;
 	virtual u16							LL_VisibleBoneCount() = 0;

@@ -148,7 +148,7 @@ bool character_hit_animation_controller::IsEffected( u16	bi, IKinematics &ca )co
 	u16 root = ca.LL_GetBoneRoot();
 	for(;bi != root;)
 	{
-		CBoneData &bd	= ca.LL_GetData(bi);
+		const IBoneData &bd	= ca.GetBoneData(bi);
 		if(bi == base_bone)
 			return true;
 		bi = bd.GetParentID();

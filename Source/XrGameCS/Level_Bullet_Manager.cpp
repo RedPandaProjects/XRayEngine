@@ -700,8 +700,8 @@ BOOL CBulletManager::firetrace_callback	(collide::rq_result& result, LPVOID para
 	if (!kinematics)
 		return						(FALSE);
 
-	CBoneData const& bone_data		= kinematics->LL_GetData( (u16)result.element );
-	bullet_manager.RegisterEvent	( EVENT_HIT, TRUE, &bullet, collide_position, result, bone_data.game_mtl_idx );
+	IBoneData const& bone_data		= kinematics->GetBoneData( (u16)result.element );
+	bullet_manager.RegisterEvent	( EVENT_HIT, TRUE, &bullet, collide_position, result, bone_data.get_game_mtl_idx() );
 	return							(FALSE);
 }
 

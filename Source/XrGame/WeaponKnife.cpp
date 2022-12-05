@@ -518,7 +518,7 @@ void CWeaponKnife::GetVictimPos(CEntityAlive* victim, Fvector & pos_dest)
 		pos_dest.add(victim->Position());
 	}
 	
-	CBoneData& tmp_bone_data	= tmp_kinem->LL_GetData(hit_bone_id);
+	IBoneData& tmp_bone_data	= tmp_kinem->GetBoneData(hit_bone_id);
 	Fmatrix	& tmp_xform			= victim->XFORM();
 	CBoneInstance &bi			= tmp_kinem->LL_GetBoneInstance();
 

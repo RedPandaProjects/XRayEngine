@@ -47,7 +47,7 @@ m_poses_blending ( Fidentity, Fidentity, -1.f )
 	CBoneInstance& B=m_pKinematicsC->LL_GetBoneInstance( m_pKinematicsC->LL_GetBoneRoot( ) );
 	VERIFY( !B.callback() && !B.callback_param() );
 	B.set_callback( bctCustom, RootBoneCallback, this, TRUE );
-	B.mTransform = Fidentity;
+	B.SetTransform(Fidentity);
 	GetInitalPositionBlenSpeed	( );
 	//m_pKinematicsC->LL_VisBoxInvalidate();
 	m_pKinematicsA->SetBlendDestroyCallback( this );
@@ -182,7 +182,7 @@ static void get_animation_root_position( Fmatrix &pos, IKinematics* K, IKinemati
 	VERIFY(KA ->dcast_PKinematics() == K );
 
 	SKeyTable	keys;
-	KA->LL_BuldBoneMatrixDequatize( &K->LL_GetData( 0 ), u8(1<<0), keys );
+	KA->LL_BuldBoneMatrixDequatize( &K->GetBoneData( 0 ), u8(1<<0), keys );
 	
 //find
 	CKey *key = 0;
@@ -206,7 +206,7 @@ static void get_animation_root_position( Fmatrix &pos, IKinematics* K, IKinemati
 	CBoneInstance BI = K->LL_GetBoneInstance( 0 );
 
 	KA->LL_BoneMatrixBuild( BI, &Fidentity, keys );
-	pos.set( BI.mTransform );
+	pos.set( BI.GetTransform() );
 	control_blend->blendAmount = sv_amount;
 }
 void animation_movement_controller::animation_root_position	( Fmatrix &pos  )
@@ -376,13 +376,13 @@ void animation_movement_controller::RootBoneCallback( CBoneInstance* B )
 
 	//else
 	//	Msg("blending");
-	B->mTransform.set( Fidentity );
+	B->SetTransform( Fidentity );
 
 
 #if 0
 	VERIFY( cmp_matrix( O->DBG_previous_position, O->m_pObjXForm, 1.f, 1.f ) );
 #endif
-	R_ASSERT2( _valid( B->mTransform ), "animation_movement_controller::RootBoneCallback" );
+	R_ASSERT2( _valid( B->GetTransform() ), "animation_movement_controller::RootBoneCallback" );
 }
 
 bool	animation_movement_controller::IsActive() const

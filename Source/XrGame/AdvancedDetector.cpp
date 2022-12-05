@@ -175,7 +175,10 @@ void CUIArtefactDetectorAdv::BoneCallback(CBoneInstance *B)
 	CUIArtefactDetectorAdv *P		= static_cast<CUIArtefactDetectorAdv*>(B->callback_param());
 	Fmatrix							rY;		
 	rY.rotateY						(P->CurrentYRotation());
-	B->mTransform.mulB_43			(rY);
+
+	Fmatrix BoneMatrix=B->GetTransform();
+	BoneMatrix.mulB_43(rY);
+	B->SetTransform(BoneMatrix);
 }
 
 void CUIArtefactDetectorAdv::SetBoneCallbacks()
@@ -188,7 +191,7 @@ void CUIArtefactDetectorAdv::SetBoneCallbacks()
 	bi.set_callback					(bctCustom, BoneCallback, this);
 
 	float p,b;
-	bi.mTransform.getHPB			(m_cur_y_rot, p, b);
+	bi.GetTransform().getHPB			(m_cur_y_rot, p, b);
 }
 
 void CUIArtefactDetectorAdv::ResetBoneCallbacks()

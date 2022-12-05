@@ -77,7 +77,7 @@ void CStateGroupDragAbstract::initialize()
 				if ( std::find_if( use_bones, use_bones_end, cmp) != use_bones_end )
 					return	(true);
 
-				bi			= m_K->LL_GetData( bi ).GetParentID();
+				bi			= m_K->GetBoneData( bi ).GetParentID();
 			}
 			return			(false); 
 		}

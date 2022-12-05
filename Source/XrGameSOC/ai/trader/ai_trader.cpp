@@ -111,7 +111,10 @@ void CAI_Trader::LookAtActor(CBoneInstance *B)
 
 	Fmatrix M;
 	M.setHPB (0.f, -dy, 0.f);
-	B->mTransform.mulB_43(M);
+
+	Fmatrix BoneMatrix = B->GetTransform();
+	BoneMatrix.mulB_43(M);
+	B->SetTransform(BoneMatrix);
 }
 
 //////////////////////////////////////////////////////////////////////////

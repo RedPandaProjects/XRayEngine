@@ -195,10 +195,10 @@ BOOL CHelicopter::net_Spawn(CSE_Abstract*	DC)
 	biX.set_callback		(bctCustom,BoneMGunCallbackX,this);
 	CBoneInstance& biY		= CastToIKinematics(Visual())->LL_GetBoneInstance(m_rotate_y_bone);	
 	biY.set_callback		(bctCustom,BoneMGunCallbackY,this);
-	CBoneData& bdX			= K->LL_GetData(m_rotate_x_bone); VERIFY(bdX.IK_data.type==jtJoint);
-	m_lim_x_rot.set			(bdX.IK_data.limits[0].limit.x,bdX.IK_data.limits[0].limit.y);
-	CBoneData& bdY			= K->LL_GetData(m_rotate_y_bone); VERIFY(bdY.IK_data.type==jtJoint);
-	m_lim_y_rot.set			(bdY.IK_data.limits[1].limit.x,bdY.IK_data.limits[1].limit.y);
+	const IBoneData& bdX			= K->GetBoneData(m_rotate_x_bone); VERIFY(bdX.get_IK_data().type==jtJoint);
+	m_lim_x_rot.set			(bdX.get_IK_data().limits[0].limit.x,bdX.get_IK_data().limits[0].limit.y);
+	const IBoneData& bdY			= K->GetBoneData(m_rotate_y_bone); VERIFY(bdY.get_IK_data().type==jtJoint);
+	m_lim_y_rot.set			(bdY.get_IK_data().limits[1].limit.x,bdY.get_IK_data().limits[1].limit.y);
 
 	xr_vector<Fmatrix> matrices;
 	K->LL_GetBindTransform	(matrices);

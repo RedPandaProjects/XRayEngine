@@ -361,7 +361,7 @@ const Fmatrix CScriptEntity::GetUpdatedMatrix(shared_str caBoneName, const Fvect
 
 	if (xr_strlen(caBoneName)) {
 		CBoneInstance	&	l_tBoneInstance = CastToIKinematics(object().Visual())->LL_GetBoneInstance(CastToIKinematics(object().Visual())->LL_BoneID(caBoneName));
-		l_tMatrix.mulA_43	(l_tBoneInstance.mTransform);
+		l_tMatrix.mulA_43	(l_tBoneInstance.GetTransform());
 		l_tMatrix.mulA_43	(object().XFORM());
 	}
 

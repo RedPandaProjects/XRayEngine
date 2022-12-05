@@ -39,7 +39,10 @@ void  CProjector::BoneCallbackX(CBoneInstance *B)
 
 	Fmatrix M;
 	M.setHPB (0.0f, P->_current.pitch,0.0f);
-	B->mTransform.mulB_43(M);
+	Fmatrix BoneMatrix=B->GetTransform();
+	BoneMatrix.mulB_43(M);
+	B->SetTransform(BoneMatrix);
+	
 }
 
 void  CProjector::BoneCallbackY(CBoneInstance *B)
@@ -51,7 +54,9 @@ void  CProjector::BoneCallbackY(CBoneInstance *B)
 
 	Fmatrix M;
 	M.setHPB (-delta_yaw, 0.0, 0.0f);
-	B->mTransform.mulB_43(M);
+	Fmatrix BoneMatrix = B->GetTransform();
+	BoneMatrix.mulB_43(M);
+	B->SetTransform(BoneMatrix);
 }
 
 BOOL CProjector::net_Spawn(CSE_Abstract* DC)
@@ -155,7 +160,7 @@ void CProjector::UpdateCL	()
 		CBoneInstance& BI = CastToIKinematics(Visual())->LL_GetBoneInstance(guid_bone);
 		Fmatrix M;
 
-		M.mul(XFORM(),BI.mTransform);
+		M.mul(XFORM(),BI.GetTransform());
 
 		light_render->set_rotation	(M.k,M.i);
 		light_render->set_position	(M.c);

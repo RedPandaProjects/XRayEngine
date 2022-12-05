@@ -360,8 +360,9 @@ void CEntityAlive::BloodyWallmarks (float P, const Fvector &dir, s16 element,
 	Fvector start_pos = position_in_object_space;
 	if(V)
 	{
-		Fmatrix& m_bone = (V->LL_GetBoneInstance(u16(element))).mTransform;
+		Fmatrix m_bone = (V->LL_GetBoneInstance(u16(element))).GetTransform();
 		m_bone.transform_tiny(start_pos);
+		(V->LL_GetBoneInstance(u16(element))).SetTransform(m_bone);
 	}
 	XFORM().transform_tiny(start_pos);
 

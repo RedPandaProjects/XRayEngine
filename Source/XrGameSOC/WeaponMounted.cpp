@@ -25,7 +25,10 @@ void CWeaponMounted::BoneCallbackX(CBoneInstance *B)
 
 	if (P->Owner()){
 		Fmatrix rX;		rX.rotateX		(P->camera->pitch+P->m_dAngle.y);
-		B->mTransform.mulB_43(rX);
+		Fmatrix BoneMatrix = B->GetTransform();
+		BoneMatrix.mulB_43(rX);
+		B->SetTransform(BoneMatrix);
+
 	}
 }
 
@@ -35,7 +38,9 @@ void CWeaponMounted::BoneCallbackY(CBoneInstance *B)
 
 	if (P->Owner()){
 		Fmatrix rY;		rY.rotateY		(P->camera->yaw+P->m_dAngle.x);
-		B->mTransform.mulB_43(rY);
+		Fmatrix BoneMatrix = B->GetTransform();
+		BoneMatrix.mulB_43(rY);
+		B->SetTransform(BoneMatrix);
 	}
 }
 //----------------------------------------------------------------------------------------
@@ -92,10 +97,10 @@ BOOL	CWeaponMounted::net_Spawn(CSE_Abstract* DC)
 	rotate_y_bone			= K->LL_BoneID	(pUserData->r_string("mounted_weapon_definition","rotate_y_bone"));
 	camera_bone				= K->LL_BoneID	(pUserData->r_string("mounted_weapon_definition","camera_bone"));
 
-	CBoneData& bdX			= K->LL_GetData(rotate_x_bone); VERIFY(bdX.IK_data.type==jtJoint);
-	camera->lim_pitch.set	(bdX.IK_data.limits[0].limit.x,bdX.IK_data.limits[0].limit.y);
-	CBoneData& bdY			= K->LL_GetData(rotate_y_bone); VERIFY(bdY.IK_data.type==jtJoint);
-	camera->lim_yaw.set		(bdY.IK_data.limits[1].limit.x,bdY.IK_data.limits[1].limit.y);
+	const IBoneData& bdX			= K->GetBoneData(rotate_x_bone); VERIFY(bdX.get_IK_data().type==jtJoint);
+	camera->lim_pitch.set	(bdX.get_IK_data().limits[0].limit.x,bdX.get_IK_data().limits[0].limit.y);
+	const IBoneData& bdY			= K->GetBoneData(rotate_y_bone); VERIFY(bdY.get_IK_data().type==jtJoint);
+	camera->lim_yaw.set		(bdY.get_IK_data().limits[1].limit.x,bdY.get_IK_data().limits[1].limit.y);
 
 	U16Vec fixed_bones;
 	fixed_bones.push_back	(K->LL_GetBoneRoot());

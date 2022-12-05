@@ -43,11 +43,12 @@ void base::callback				(CBoneInstance* bone)
 	Fmatrix*				rotation = static_cast<Fmatrix*>(bone->callback_param());
 	VERIFY					(rotation);
 	VERIFY2					( _valid( *rotation ), "base::callback[rotation] " );
-
-	Fvector	position		= bone->mTransform.c;
-	bone->mTransform.mulA_43(*rotation);
-	bone->mTransform.c		= position;
-	VERIFY2					( _valid( bone->mTransform ), "base::callback " );
+	Fmatrix BoneMatrix = bone->GetTransform();
+	Fvector	position		= BoneMatrix.c;
+	BoneMatrix.mulA_43(*rotation);
+	BoneMatrix.c = position;
+	bone->SetTransform(BoneMatrix);
+	VERIFY2					( _valid( bone->GetTransform() ), "base::callback " );
 }
 
 void base::aim_at_position		(

@@ -382,21 +382,22 @@ void CPHSkeleton::RecursiveBonesCheck(u16 id)
 	if(!removable) return;
 	CPhysicsShellHolder* obj=PPhysicsShellHolder();
 	IKinematics* K		= CastToIKinematics(obj->Visual());
-	CBoneData& BD		= K->LL_GetData(u16(id));
+	const IBoneData& BD		= K->GetBoneData(u16(id));
 	//////////////////////////////////////////
 	BonesVisible mask = K->LL_GetBonesVisible();
 	///////////////////////////////////////////
 	if(
 		mask.is(1ui64<<(u64)id)&& 
-		!(BD.shape.flags.is(SBoneShape::sfRemoveAfterBreak))
+		!(BD.get_shape().flags.is(SBoneShape::sfRemoveAfterBreak))
 		) {
 			removable = false;
 			return;
 		}
 		///////////////////////////////////////////////
-		for (vecBonesIt it=BD.children.begin(); BD.children.end() != it; ++it){
-			RecursiveBonesCheck		((*it)->GetSelfID());
-		}
+	for (u16 i = 0; i < BD.GetNumChildren(); i++) 
+	{
+			RecursiveBonesCheck		(BD.GetChild(i).GetSelfID());
+	}
 }
 bool CPHSkeleton::ReadyForRemove()
 {

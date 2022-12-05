@@ -290,7 +290,7 @@ void CBulletManager::DynamicObjectHit	(CBulletManager::_event& E)
 	if(V)
 	{
 		VERIFY3(V->LL_GetBoneVisible(u16(E.R.element)),*E.R.O->cNameVisual(),V->LL_BoneName_dbg(u16(E.R.element)));
-		Fmatrix& m_bone = (V->LL_GetBoneInstance(u16(E.R.element))).mTransform;
+		const Fmatrix& m_bone = (V->LL_GetBoneInstance(u16(E.R.element))).GetTransform();
 		Fmatrix  m_inv_bone;
 		m_inv_bone.invert(m_bone);
 		m_inv_bone.transform_tiny(position_in_bone_space, p_in_object_space);

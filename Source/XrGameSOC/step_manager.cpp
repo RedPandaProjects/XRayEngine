@@ -190,7 +190,7 @@ Fvector	CStepManager::get_foot_position(ELegType leg_type)
 	R_ASSERT2(m_foot_bones[leg_type] != BI_NONE, "foot bone had not been set");
 
 	IKinematics *pK					= CastToIKinematics(m_object->Visual());
-	const Fmatrix& bone_transform = pK->LL_GetBoneInstance(m_foot_bones[leg_type]).mTransform;	
+	Fmatrix bone_transform = pK->LL_GetBoneInstance(m_foot_bones[leg_type]).GetTransform();	
 
 	Fmatrix					global_transform;
 	global_transform.mul_43	(m_object->XFORM(),bone_transform);

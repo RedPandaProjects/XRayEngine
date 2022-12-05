@@ -1241,7 +1241,7 @@ static Fmatrix aim_on_actor		(
 
 static void fill_bones				(CAI_Stalker& self, Fmatrix const& transform, IKinematicsAnimated* kinematics_animated, LPCSTR animation_id, bool const local)
 {
-	IKinematics*						kinematics = CastToIKinematics(kinematics_animated);
+	IKinematics*						kinematics = kinematics_animated->dcast_PKinematics();
 	u16									bone_count = kinematics->LL_BoneCount();
 	MotionID							animation = kinematics_animated->LL_MotionID(animation_id);
 	VERIFY								(animation.valid());
@@ -1307,9 +1307,11 @@ static void test_callback			(CBoneInstance *B)
 	callback_param*						params = static_cast<callback_param*>(B->callback_param());
 	VERIFY								(params);
 
-	Fvector const position				= B->mTransform.c;
-	B->mTransform.mulA_43				(params->transform);
-	B->mTransform.c						= position;
+	Fmatrix BoneMatrix = B->GetTransform();
+	Fvector const position = BoneMatrix.c;
+	BoneMatrix.mulA_43				(params->transform);
+	BoneMatrix.c						= position;
+	B->SetTransform(BoneMatrix);
 }
 
 #ifdef DEBUG_RENDER
@@ -1336,7 +1338,7 @@ static void draw_bones				(
 			box_color
 		);
 
-		CBoneData&						bone_data = kinematics.LL_GetData(i);
+	const	IBoneData&						bone_data = kinematics.GetBoneData(i);
 		u16								parent_bone_id = bone_data.GetParentID();
 		if (parent_bone_id == BI_NONE)
 			continue;
@@ -1358,7 +1360,7 @@ static void draw_bones				(
 
 static void draw_animation_bones	(CAI_Stalker& self, Fmatrix const& transform, IKinematicsAnimated* kinematics_animated, LPCSTR animation_id)
 {
-	IKinematics* kinematics				= CastToIKinematics(kinematics_animated);
+	IKinematics* kinematics				= kinematics_animated->dcast_PKinematics();
 
 	u16									spine_bone_id = 
 		(u16)kinematics->LL_BoneID(

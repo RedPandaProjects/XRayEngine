@@ -220,8 +220,8 @@ float CIKLimb::SwivelAngle( const Fmatrix &ihip, const SCalculateData& cd )
 	Fvector knee; knee.set( Kinematics()->LL_GetTransform( m_bones[1] ).c );
 	
 	Fmatrix ih;
-	CBoneData& BD = Kinematics()->LL_GetData( m_bones[0] );
-	ih.mul_43( Kinematics()->LL_GetTransform( BD.GetParentID()), BD.bind_transform );
+	const IBoneData& BD = Kinematics()->GetBoneData( m_bones[0] );
+	ih.mul_43( Kinematics()->LL_GetTransform( BD.GetParentID()), BD.get_bind_transform() );
 	ih.invert();
 
 	ih.transform_tiny( knee );
@@ -299,14 +299,14 @@ void	CIKLimb::Solve( SCalculateData& cd )
 if( ph_dbg_draw_mask.test( phDbgDrawIKGoal ) )
 	{
 		Fvector dbg_pos; m_foot.ToePosition( dbg_pos );
-		Kinematics()->LL_GetBoneInstance(m_bones[m_foot.ref_bone()]).mTransform.transform_tiny( dbg_pos );
+		Kinematics()->LL_GetBoneInstance(m_bones[m_foot.ref_bone()]).GetTransform().transform_tiny( dbg_pos );
 		cd.m_obj->transform_tiny( dbg_pos );
 		DBG_DrawPoint( dbg_pos, 0.02f, color_xrgb( 255, 255 , 0 ) );
 	}
 #endif
 }
 
-IC void set_limits( float &min, float &max, SJointLimit& l)
+IC void set_limits( float &min, float &max,const SJointLimit& l)
 {
 	min=-l.limit.y  ;max=-l.limit.x  ;
 	min += M_PI; max += M_PI;
@@ -375,7 +375,7 @@ void CIKLimb::Create( u16 id, IKinematicsAnimated* K, bool collide_ )
 	Matrix T,S;XM2IM(XT,T);XM2IM(XS,S);
 /////////////////////////////////////////////////////////////////////
 	float lmin[7],lmax[7];
-	SJointLimit* limits = CK->LL_GetData( m_bones[0] ).IK_data.limits;
+	const SJointLimit* limits = CK->GetBoneData( m_bones[0] ).get_IK_data().limits;
 	set_limits( lmin[0], lmax[0], limits[0] );
 	set_limits( lmin[1], lmax[1], limits[1] );
 	set_limits( lmin[2], lmax[2], limits[1] );
@@ -387,11 +387,11 @@ void CIKLimb::Create( u16 id, IKinematicsAnimated* K, bool collide_ )
 
 //  lmin[2]=-1.f;lmax[2]=1.f;
 
-	limits=CK->LL_GetData( m_bones[1] ).IK_data.limits;
+	limits=CK->GetBoneData( m_bones[1] ).get_IK_data().limits;
 	set_limits( lmin[3], lmax[3], limits[1] );
 	free_limits( lmin[3], lmax[3] );
 
-	limits=CK->LL_GetData( m_bones[2] ).IK_data.limits;
+	limits=CK->GetBoneData( m_bones[2] ).get_IK_data().limits;
 	set_limits( lmin[4], lmax[4], limits[0] );
 	set_limits( lmin[5], lmax[5], limits[1] );
 	set_limits( lmin[6], lmax[6], limits[2] );
@@ -1033,8 +1033,8 @@ struct ssaved_callback :
 };
 static void	_BCL get_matrix( CBoneInstance* P )
 {
-	VERIFY( _valid(  P->mTransform ) );
-	*((Fmatrix*)P->callback_param()) = P->mTransform;
+	VERIFY( _valid(  P->GetTransform() ) );
+	*((Fmatrix*)P->callback_param()) = P->GetTransform();
 
 }
 u16	CIKLimb::foot_matrix_predict ( Fmatrix& foot, Fmatrix& toe, float time, IKinematicsAnimated *K ) const 
@@ -1131,8 +1131,8 @@ if( ph_dbg_draw_mask1.test( phDbgDrawIKPredict ) )
 Fmatrix&	CIKLimb::GetHipInvert( Fmatrix &ihip, const SCalculateData& cd  )
 {
 	Fmatrix H;
-	CBoneData& bd=Kinematics()->LL_GetData( m_bones[0] );
-	H.set( bd.bind_transform );
+	const IBoneData& bd=Kinematics()->GetBoneData( m_bones[0] );
+	H.set( bd.get_bind_transform() );
 	H.mulA_43( Kinematics()->LL_GetTransform( bd.GetParentID() ) );
 	H.c.set( Kinematics()->LL_GetTransform( m_bones[0] ).c );
 	ihip.invert( H );
@@ -1192,7 +1192,7 @@ void CIKLimb::CalculateBones( SCalculateData &cd )
 	K->LL_GetBoneInstance( m_bones[1] ).set_callback( bctCustom, BonesCallback1, &cd, TRUE );
 	K->LL_GetBoneInstance( m_bones[2] ).set_callback( bctCustom, BonesCallback2, &cd, TRUE );
 
-	CBoneData &BD=K->LL_GetData( m_bones[0] );
+	const IBoneData &BD=K->GetBoneData( m_bones[0] );
 	K->Bone_Calculate( &BD, &K->LL_GetTransform( BD.GetParentID() ) );
 
 	sv0.restore( );
@@ -1250,8 +1250,8 @@ IC void ang_evaluate(Fmatrix& M, const float ang[3] )
 IC void CIKLimb::get_start( Fmatrix &start, SCalculateData &D, u16 bone )
 {
 	CIKLimb&	L	=*D.m_limb;
-	CBoneData	&BD	=L.Kinematics()->LL_GetData( L.m_bones[bone] );
-	start		.mul_43( L.Kinematics()->LL_GetTransform( BD.GetParentID( ) ), BD.bind_transform );
+	const IBoneData	&BD	=L.Kinematics()->GetBoneData( L.m_bones[bone] );
+	start		.mul_43( L.Kinematics()->LL_GetTransform( BD.GetParentID( ) ), BD.get_bind_transform() );
 }
 
 void 	CIKLimb::BonesCallback0( CBoneInstance* B )
@@ -1263,7 +1263,10 @@ void 	CIKLimb::BonesCallback0( CBoneInstance* B )
 	ang_evaluate	( bm, x );
 	Fmatrix start	; 
 	get_start		( start, *D, 0 );
-	B->mTransform.mul_43( start, bm );
+	Fmatrix BoneMatrix = B->GetTransform();
+	BoneMatrix.mul_43(start, bm);
+	B->SetTransform(BoneMatrix);
+	
 
 #ifdef DEBUG
 	CIKLimb&	L	=*D->m_limb;
@@ -1275,7 +1278,7 @@ void 	CIKLimb::BonesCallback0( CBoneInstance* B )
 		DBG_DrawMatrix( Fmatrix( ).mul_43( *D->m_obj, Fmatrix( ).mul_43( start, bm ) ), 0.75f );
 	}
 #endif
-	VERIFY2(  _valid( B->mTransform ), "CIKLimb::BonesCallback0" );
+	VERIFY2(  _valid( B->GetTransform() ), "CIKLimb::BonesCallback0" );
 }
 void 	CIKLimb::BonesCallback1				( CBoneInstance* B )
 {
@@ -1287,8 +1290,11 @@ void 	CIKLimb::BonesCallback1				( CBoneInstance* B )
 
 	Fmatrix start	; 
 	get_start		( start, *D, 1 );
-	B->mTransform.mul_43( start, bm );
-	VERIFY2(  _valid( B->mTransform ), "CIKLimb::BonesCallback1" );
+	Fmatrix BoneMatrix = B->GetTransform();
+	BoneMatrix.mul_43(start, bm);
+	B->SetTransform(BoneMatrix);
+	
+	VERIFY2(  _valid( B->GetTransform() ), "CIKLimb::BonesCallback1" );
 }
 void 	CIKLimb::BonesCallback2				( CBoneInstance* B )
 {
@@ -1304,7 +1310,10 @@ void 	CIKLimb::BonesCallback2				( CBoneInstance* B )
 	VERIFY2(  _valid( bm ), "CIKLimb::BonesCallback2" );
 	VERIFY2(  _valid( start ), "CIKLimb::BonesCallback2" );
 
-	B->mTransform.mul_43( start, bm );
+	Fmatrix BoneMatrix = B->GetTransform();
+	BoneMatrix.mul_43(start, bm);
+	B->SetTransform(BoneMatrix);
+	
 
 #ifdef DEBUG
 	CIKLimb&		L	=*D->m_limb;
@@ -1318,5 +1327,5 @@ void 	CIKLimb::BonesCallback2				( CBoneInstance* B )
 		DBG_DrawMatrix( Fmatrix( ).mul_43( *D->m_obj, start ), 0.3f );
 	}
 #endif
-	VERIFY2(  _valid( B->mTransform ), "CIKLimb::BonesCallback2" );
+	VERIFY2(  _valid( B->GetTransform() ), "CIKLimb::BonesCallback2" );
 }

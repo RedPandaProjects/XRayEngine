@@ -56,9 +56,9 @@ element_fracture CPHFracturesHolder::SplitFromEnd(CPHElement* element,u16 fractu
 
 
 	Fmatrix shift_pivot;
-	shift_pivot.set		(new_bi.mTransform);
+	shift_pivot.set		(new_bi.GetTransform());
 	shift_pivot.invert	();
-	shift_pivot.mulB_43	(old_bi.mTransform);
+	shift_pivot.mulB_43	(old_bi.GetTransform());
 	/////////////////////////////////////////////
 	float density=element->getDensity();
 	new_element->SetShell(element->PHShell());

@@ -199,9 +199,9 @@ void CPhysicObject::AddElement(CPhysicsElement* root_e, int id)
 		m_pPhysicsShell->add_Joint	(J);	
 	}
 
-	CBoneData& BD		= K->LL_GetData(u16(id));
-	for (vecBonesIt it=BD.children.begin(); BD.children.end() != it; ++it){
-		AddElement		(E,(*it)->GetSelfID());
+	const IBoneData& BD		= K->GetBoneData(u16(id));
+	for (u16 i = 0; i < BD.GetNumChildren(); i++) {
+		AddElement		(E,BD.GetSelfID());
 	}
 }
 

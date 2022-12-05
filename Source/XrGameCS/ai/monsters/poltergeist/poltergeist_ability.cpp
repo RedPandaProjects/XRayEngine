@@ -82,7 +82,7 @@ void CPolterSpecialAbility::on_hit(SHit* pHDS)
 			IKinematics* V = CastToIKinematics(m_object->Visual());
 
 			Fvector start_pos = pHDS->bone_space_position();
-			Fmatrix& m_bone = V->LL_GetBoneInstance(pHDS->bone()).mTransform;
+			const Fmatrix& m_bone = V->LL_GetBoneInstance(pHDS->bone()).GetTransform();
 			m_bone.transform_tiny	(start_pos);
 			m_object->XFORM().transform_tiny	(start_pos);
 

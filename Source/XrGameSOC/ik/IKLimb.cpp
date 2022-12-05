@@ -108,8 +108,8 @@ float		CIKLimb::SwivelAngle( const Fmatrix &ihip, const SCalculateData& cd )
 	Fvector knee; knee.set( cd.m_K->LL_GetTransform( m_bones[1] ).c );
 	
 	Fmatrix ih;
-	CBoneData& BD=cd.m_K->LL_GetData(m_bones[0]);
-	ih.mul_43(cd.m_K->LL_GetTransform(BD.GetParentID()),BD.bind_transform);
+	const IBoneData& BD=cd.m_K->GetBoneData(m_bones[0]);
+	ih.mul_43(cd.m_K->LL_GetTransform(BD.GetParentID()),BD.get_bind_transform());
 	ih.invert();
 
 	ih.transform_tiny( knee );
@@ -207,14 +207,14 @@ void	CIKLimb::Solve(SCalculateData& cd)
 		if( ph_dbg_draw_mask.test( phDbgDrawIKGoal ) )
 		{
 			Fvector dbg_pos;
-			cd.m_K->LL_GetBoneInstance(m_bones[2]).mTransform.transform_tiny( dbg_pos, m_toe_position );
+			cd.m_K->LL_GetBoneInstance(m_bones[2]).GetTransform().transform_tiny( dbg_pos, m_toe_position );
 			cd.m_obj.transform_tiny( dbg_pos );
 			DBG_DrawPoint( dbg_pos, 0.02f, color_xrgb( 255, 255 , 0 ) );
 		}
 #endif
 }
 
-IC void set_limits( float &min, float &max, SJointLimit& l)
+IC void set_limits( float &min, float &max, const SJointLimit& l)
 {
 	min=-l.limit.y  ;max=-l.limit.x  ;
 	min += M_PI; max += M_PI;
@@ -243,7 +243,7 @@ void CIKLimb::Create( u16 id, IKinematics* K, const u16 bones[4], const Fvector&
 	Matrix T,S;XM2IM(XT,T);XM2IM(XS,S);
 /////////////////////////////////////////////////////////////////////
 	float lmin[7],lmax[7];
-	SJointLimit* limits = K->LL_GetData( bones[0] ).IK_data.limits;
+	const  SJointLimit* limits = K->GetBoneData( bones[0] ).get_IK_data().limits;
 	set_limits( lmin[0], lmax[0], limits[0] );
 	set_limits( lmin[1], lmax[1], limits[1] );
 	set_limits( lmin[2], lmax[2], limits[1] );
@@ -255,11 +255,11 @@ void CIKLimb::Create( u16 id, IKinematics* K, const u16 bones[4], const Fvector&
 
 //  lmin[2]=-1.f;lmax[2]=1.f;
 
-	limits=K->LL_GetData( bones[1] ).IK_data.limits;
+	limits=K->GetBoneData( bones[1] ).get_IK_data().limits;
 	set_limits( lmin[3], lmax[3], limits[1] );
 	free_limits( lmin[3], lmax[3] );
 
-	limits=K->LL_GetData( bones[2] ).IK_data.limits;
+	limits=K->GetBoneData( bones[2] ).get_IK_data().limits;
 	set_limits( lmin[4], lmax[4], limits[0] );
 	set_limits( lmin[5], lmax[5], limits[1] );
 	set_limits( lmin[6], lmax[6], limits[2] );
@@ -689,8 +689,8 @@ Fmatrix&	CIKLimb::GetHipInvert( Fmatrix &ihip, const SCalculateData& cd  )
 {
 	IKinematics *K=cd.m_K;
 	Fmatrix H;
-	CBoneData& bd=K->LL_GetData(m_bones[0]);
-	H.set(bd.bind_transform);
+	const IBoneData& bd=K->GetBoneData(m_bones[0]);
+	H.set(bd.get_bind_transform());
 	H.mulA_43(K->LL_GetTransform(bd.GetParentID()));
 	H.c.set(K->LL_GetTransform(m_bones[0]).c);
 	ihip.invert( H );
@@ -743,7 +743,7 @@ void CIKLimb::CalculateBones(SCalculateData &cd)
 	K->LL_GetBoneInstance(m_bones[0]).set_callback_overwrite(true);
 	K->LL_GetBoneInstance(m_bones[1]).set_callback_overwrite(true);
 	K->LL_GetBoneInstance(m_bones[2]).set_callback_overwrite(true);
-	CBoneData &BD=K->LL_GetData(m_bones[0]);
+	const IBoneData &BD=K->GetBoneData(m_bones[0]);
 	K->Bone_Calculate(&BD,&K->LL_GetTransform(BD.GetParentID()));
 
 	K->LL_GetBoneInstance(m_bones[0]).set_callback(bctCustom,NULL,NULL);
@@ -800,8 +800,8 @@ IC void CIKLimb:: get_start( Fmatrix &start, SCalculateData &D, u16 bone )
 	IKinematics		*K	=D.m_K;
 	VERIFY( K );
 	CIKLimb&		L	=D.m_limb;
-	CBoneData		&BD	=K->LL_GetData( L.m_bones[bone] );
-	start.mul_43( K->LL_GetTransform( BD.GetParentID( ) ), BD.bind_transform );
+	const IBoneData		&BD	=K->GetBoneData( L.m_bones[bone] );
+	start.mul_43( K->LL_GetTransform( BD.GetParentID( ) ), BD.get_bind_transform() );
 }
 
 void 	CIKLimb::BonesCallback0				(CBoneInstance* B)
@@ -815,7 +815,10 @@ void 	CIKLimb::BonesCallback0				(CBoneInstance* B)
 	Fmatrix start	; 
 	get_start		( start, *D, 0 );
 
-	B->mTransform.mul_43( start, bm );
+	Fmatrix BoneMatrix = B->GetTransform();
+	BoneMatrix.mul_43(start, bm);
+	B->SetTransform(BoneMatrix);
+	
 
 #ifdef DEBUG
 	CIKLimb&	L	=D->m_limb;
@@ -839,7 +842,10 @@ void 	CIKLimb::BonesCallback1				(CBoneInstance* B)
 
 	Fmatrix start	; 
 	get_start		( start, *D, 1 );
-	B->mTransform.mul_43( start, bm );
+	Fmatrix BoneMatrix = B->GetTransform();
+	BoneMatrix.mul_43(start, bm);
+	B->SetTransform(BoneMatrix);
+	
 }
 void 	CIKLimb::BonesCallback2				(CBoneInstance* B)
 {
@@ -851,7 +857,10 @@ void 	CIKLimb::BonesCallback2				(CBoneInstance* B)
 
 	Fmatrix start	; 
 	get_start		( start, *D, 2 );
-	B->mTransform.mul_43( start, bm );
+	Fmatrix BoneMatrix = B->GetTransform();
+	BoneMatrix.mul_43(start, bm);
+	B->SetTransform(BoneMatrix);
+	
 
 #ifdef DEBUG
 	CIKLimb&		L	=D->m_limb;

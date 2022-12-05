@@ -191,7 +191,7 @@ IC BOOL material_callback(collide::rq_result& result, LPVOID params)
 		//CKinematics*K=PKinematics(result.O->renderable.visual);
 		IKinematics*K=PKinematics(result.O->renderable.visual);
 		if (K&&(result.element>0))
-			vis		= g_pGamePersistent->MtlTransparent(K->LL_GetData(u16(result.element)).game_mtl_idx);
+			vis		= g_pGamePersistent->MtlTransparent(K->GetBoneData(u16(result.element)).get_game_mtl_idx());
 	}else{
 		CDB::TRI* T	= g_pGameLevel->ObjectSpace.GetStaticTris()+result.element;
 		vis			= g_pGamePersistent->MtlTransparent(T->material);

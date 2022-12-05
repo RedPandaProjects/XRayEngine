@@ -114,24 +114,24 @@ CGamePersistent::~CGamePersistent(void)
 void CGamePersistent::RegisterModel(IRenderVisual* V)
 {
 	// Check types
-	switch (V->getType()){
-	case MT_SKELETON_ANIM:
-	case MT_SKELETON_RIGID:{
-		u16 def_idx		= GameMaterialLibrary->GetMaterialIdx("default_object");
-		R_ASSERT2		(GameMaterialLibrary->GetMaterialByIdx(def_idx)->Flags.is(SGameMtl::flDynamic),"'default_object' - must be dynamic");
-		IKinematics* K	= CastToIKinematics(V); VERIFY(K);
-		int cnt = K->LL_BoneCount();
-		for (u16 k=0; k<cnt; k++){
-			CBoneData& bd	= K->LL_GetData(k); 
-			if (*(bd.game_mtl_name)){
-				bd.game_mtl_idx	= GameMaterialLibrary->GetMaterialIdx(*bd.game_mtl_name);
-				R_ASSERT2(GameMaterialLibrary->GetMaterialByIdx(bd.game_mtl_idx)->Flags.is(SGameMtl::flDynamic),"Required dynamic game material");
-			}else{
-				bd.game_mtl_idx	= def_idx;
-			}
-		}
-	}break;
-	}
+	//switch (V->getType()){
+	//case MT_SKELETON_ANIM:
+	//case MT_SKELETON_RIGID:{
+	//	u16 def_idx		= GameMaterialLibrary->GetMaterialIdx("default_object");
+	//	R_ASSERT2		(GameMaterialLibrary->GetMaterialByIdx(def_idx)->Flags.is(SGameMtl::flDynamic),"'default_object' - must be dynamic");
+	//	IKinematics* K	= CastToIKinematics(V); VERIFY(K);
+	//	int cnt = K->LL_BoneCount();
+	//	for (u16 k=0; k<cnt; k++){
+	//		const IBoneData& bd	= K->GetBoneData(k); 
+	//		if (*(bd.game_mtl_name)){
+	//			bd.game_mtl_idx	= GameMaterialLibrary->GetMaterialIdx(*bd.game_mtl_name);
+	//			R_ASSERT2(GameMaterialLibrary->GetMaterialByIdx(bd.game_mtl_idx)->Flags.is(SGameMtl::flDynamic),"Required dynamic game material");
+	//		}else{
+	//			bd.game_mtl_idx	= def_idx;
+	//		}
+	//	}
+	//}break;
+	//}
 }
 
 extern void clean_game_globals	();

@@ -23,13 +23,15 @@ class ENGINE_API		CBoneInstance
 {
 public:
 	// data
-	Fmatrix				mTransform;							// final x-form matrix (local to model)
+	const Fmatrix&GetTransform() const { return mTransform; }
+	void SetTransform(const Fmatrix&val) { mTransform = val; }
 	Fmatrix				mRenderTransform;					// final x-form matrix (model_base -> bone -> model)
 private:
 	BoneCallback		Callback;
 	void*				Callback_Param;
 	BOOL				Callback_overwrite;					// performance hint - don't calc anims
 	u32					Callback_type;	
+	Fmatrix				mTransform;							// final x-form matrix (local to model)
 public:
 	float				param			[MAX_BONE_PARAMS];	// 
 	//
@@ -294,6 +296,7 @@ class 	IBoneData
 	virtual			u16			_BCL	GetParentID			( ) const	= 0;
 	virtual			float		_BCL	lo_limit			( u8 k )	const	= 0;
 	virtual			float		_BCL	hi_limit			( u8 k )	const	= 0;
+	virtual			shared_str		_BCL	GetName			()	const	= 0;
 	
 };
 
@@ -354,6 +357,7 @@ public:
 	void			    SetRestParams	(float length, const Fvector& offset, const Fvector& rotate){rest_offset.set(offset);rest_rotate.set(rotate);rest_length=length;};
 
 	shared_str		    Name			(){return name;}
+	shared_str			GetName			() const override{return name;}
 	shared_str		    ParentName		(){return parent_name;}
 	shared_str		    WMap			(){return wmap;}
 	IC CBone*		    Parent			(){return parent;}
@@ -369,8 +373,8 @@ public:
     IC Fmatrix&		    _LRTransform	(){return local_rest_transform;}
     IC Fmatrix&		    _MTransform		(){return mot_transform;}
     
-	IC Fmatrix&		    _LTransform		(){return mTransform;}//{return last_transform;}
-    IC const Fmatrix&	_LTransform		() const {return mTransform;}
+	//IC Fmatrix&		    _LTransform		(){return GetTransform();}//{return last_transform;}
+    IC const Fmatrix&	_LTransform		() const {return GetTransform();}
     
     IC Fmatrix&		    _RenderTransform(){return mRenderTransform;}//{return render_transform;}
 	IC Fvector&			_RestOffset		(){return rest_offset;}
@@ -490,6 +494,8 @@ public:
 	// Calculation
 	void				CalculateM2B	(const Fmatrix& Parent);
 private:
+
+				shared_str				GetName				() const override { return name; }
 				IBoneData&		_BCL	GetChild			( u16 id )			;
 		const	IBoneData&		_BCL	GetChild			( u16 id )	const	;
 				u16				_BCL	GetNumChildren		( )			const	;
@@ -526,7 +532,7 @@ enum EBoneCallbackType{
 IC void		CBoneInstance::construct	()
 {
 	ZeroMemory					(this,sizeof(*this));
-	mTransform.identity			();
+	SetTransform(Fidentity);
 
 	mRenderTransform.identity	();
 	Callback_overwrite			= FALSE;

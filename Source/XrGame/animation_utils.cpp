@@ -24,7 +24,10 @@ void anim_bone_fix::	callback	( CBoneInstance *BI )
 	VERIFY( fix->bone );
 	VERIFY( fix->parent );
 	//VERIFY( fix->bone == BI );
-	BI->mTransform.mul_43( fix->parent->mTransform, fix->matrix );
+	Fmatrix BoneMatrix = BI->GetTransform();
+	BoneMatrix.mul_43(fix->parent->GetTransform(), fix->matrix);
+	BI->SetTransform(BoneMatrix);
+	
 	
 	//Fmatrix diff  = Fmatrix().mul_43( Fmatrix().invert( m ) , BI->mTransform );
 
@@ -32,7 +35,7 @@ void anim_bone_fix::	callback	( CBoneInstance *BI )
 	//{
 	//	int i=0;i++;
 	//}
-	R_ASSERT2( _valid( BI->mTransform ), "anim_bone_fix::	callback" );
+	R_ASSERT2( _valid( BI->GetTransform() ), "anim_bone_fix::	callback" );
 }
 
 void anim_bone_fix::fix( u16 bone_id, IKinematics &K )
@@ -46,10 +49,10 @@ void anim_bone_fix::fix( u16 bone_id, IKinematics &K )
 	VERIFY(  !bi.callback() );
 
 	bone = &bi;
-	CBoneData &bd = K.LL_GetData( bone_id );
+	const IBoneData &bd = K.GetBoneData( bone_id );
 	
 	parent = &K.LL_GetBoneInstance( bd.GetParentID() );
-	matrix.mul_43( Fmatrix().invert( parent->mTransform ), bi.mTransform );
+	matrix.mul_43( Fmatrix().invert( parent->GetTransform() ), bi.GetTransform() );
 	bi.set_callback( bctCustom, callback, this, TRUE );
 }
 void	anim_bone_fix::refix		()
@@ -78,7 +81,7 @@ bool find_in_parents( const u16 bone_to_find, const u16 from_bone, IKinematics &
 	u16 bi		= from_bone;
 	for( ; bi != root && bi != BI_NONE ; )
 	{
-		const CBoneData &bd	= ca.LL_GetData(bi);
+		const IBoneData &bd	= ca.GetBoneData(bi);
 		if(bi == bone_to_find)
 			return true;
 		bi = bd.GetParentID();

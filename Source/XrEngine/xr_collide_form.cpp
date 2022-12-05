@@ -129,7 +129,7 @@ void CCF_Skeleton::BuildState()
 		bv_box.getsphere(bv_sphere.P,bv_sphere.R);
 		for (u16 i=0; i<K->LL_BoneCount(); i++){
 			if (!K->LL_GetBoneVisible(i))					continue;
-			SBoneShape&	shape	= K->LL_GetData(i).shape;
+			const SBoneShape&	shape	= K->GetBoneData(i).get_shape();
 			if (SBoneShape::stNone==shape.type)				continue;
 			if (shape.flags.is(SBoneShape::sfNoPickable))	continue;
 			elements.push_back	(SElement(i,shape.type));
@@ -138,7 +138,7 @@ void CCF_Skeleton::BuildState()
 
 	for (ElementVecIt I=elements.begin(); I!=elements.end(); I++){
 		if (!I->valid())		continue;
-		SBoneShape&	shape		= K->LL_GetData(I->elem_id).shape;
+		const 	SBoneShape&	shape		= K->GetBoneData(I->elem_id).get_shape();
 		Fmatrix					ME,T,TW;
 		const Fmatrix& Mbone	= K->LL_GetTransform(I->elem_id);
 

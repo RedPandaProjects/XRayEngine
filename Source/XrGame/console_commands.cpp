@@ -1608,7 +1608,7 @@ public:
 
 		Msg						("bones for model \"%s\"",arguments);
 		for (u16 i=0, n=kinematics->LL_BoneCount(); i<n; ++i)
-			Msg					("%s",*kinematics->LL_GetData(i).name);
+			Msg					("%s",*kinematics->GetBoneData(i).GetName().c_str());
 		
 		Render->model_Delete	(visual);
 	}

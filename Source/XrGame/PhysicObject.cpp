@@ -427,9 +427,10 @@ void CPhysicObject::AddElement(CPhysicsElement* root_e, int id)
 		m_pPhysicsShell->add_Joint	(J);	
 	}
 
-	CBoneData& BD		= K->LL_GetData(u16(id));
-	for (vecBonesIt it=BD.children.begin(); BD.children.end() != it; ++it){
-		AddElement		(E,(*it)->GetSelfID());
+	const IBoneData& BD = K->GetBoneData(u16(id));
+	for (u16 i = 0; i < BD.GetNumChildren(); i++)
+	{
+		AddElement		(E, BD.GetChild(i).GetSelfID());
 	}
 }
 
@@ -893,8 +894,8 @@ bool	CPhysicObject::get_door_vectors	( Fvector& closed, Fvector& open ) const
 	u16 door_bone = K->LL_BoneID("door");
 	if( door_bone==BI_NONE )
 		return false;
-	const CBoneData &bd = K->LL_GetData( door_bone );
-	const SBoneShape &shape = bd.shape;
+	const IBoneData &bd = K->GetBoneData( door_bone );
+	const SBoneShape &shape = bd.get_shape();
 	if( shape.type != SBoneShape::stBox )
 		return false;
 
@@ -925,7 +926,7 @@ bool	CPhysicObject::get_door_vectors	( Fvector& closed, Fvector& open ) const
 		//door_dir_bone.invert();
 	}
 
-	const SJointIKData &joint = bd.IK_data;
+	const SJointIKData &joint = bd.get_IK_data();
 
 	if( joint.type != jtJoint )
 		return false;

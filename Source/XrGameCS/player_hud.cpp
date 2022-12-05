@@ -352,7 +352,8 @@ u32 attachable_hud_item::anim_play(const shared_str& anm_name_b, BOOL bMixIn, co
 		u16 root_id						= m_model->LL_GetBoneRoot();
 		CBoneInstance& root_binst		= m_model->LL_GetBoneInstance(root_id);
 		root_binst.set_callback_overwrite(TRUE);
-		root_binst.mTransform.identity	();
+
+		root_binst.SetTransform(Fidentity);
 
 		u16 pc							= ka->partitions().count();
 		for(u16 pid=0; pid<pc; ++pid)

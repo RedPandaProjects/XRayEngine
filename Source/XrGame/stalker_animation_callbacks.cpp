@@ -18,7 +18,7 @@ typedef CStalkerAnimationManager::callback_params	callback_params;
 
 static void	_BCL callback_rotation		(CBoneInstance* bone)
 {
-	R_ASSERT						( _valid( bone->mTransform ) );
+	R_ASSERT						( _valid( bone->GetTransform() ) );
 	callback_params*				parameter = static_cast<callback_params*>( bone->callback_param() );
 	VERIFY							(parameter);
 	VERIFY							(parameter->m_rotation);
@@ -28,15 +28,22 @@ static void	_BCL callback_rotation		(CBoneInstance* bone)
 	if (!object->sight().enabled())
 		return;
 
-	Fvector	position				= bone->mTransform.c;
+	Fvector	position				= bone->GetTransform().c;
 	R_ASSERT						( _valid( *parameter->m_rotation ) );
-	bone->mTransform.mulA_43		(*parameter->m_rotation);
+
+	
+	Fmatrix BoneMatrix=bone->GetTransform();
+	BoneMatrix.mulA_43(*parameter->m_rotation);
+
 	CWeaponShotEffector&			effector = object->weapon_shot_effector();
-	if (!effector.IsActive()) {
-		bone->mTransform.c			= position;
-		R_ASSERT					( _valid( bone->mTransform ) );
+	if (!effector.IsActive())
+	{
+		BoneMatrix.c			= position;
+		R_ASSERT					( _valid( bone->GetTransform() ) );
+		bone->SetTransform(BoneMatrix);
 		return;
 	}
+
 
 	Fvector							angles;
 	effector.GetDeltaAngle			(angles);
@@ -52,14 +59,15 @@ static void	_BCL callback_rotation		(CBoneInstance* bone)
 	Fmatrix							effector_transform;
 	effector_transform.setXYZ		(angles);
 	R_ASSERT						( _valid( effector_transform ) );
-	bone->mTransform.mulA_43		(effector_transform);
-	bone->mTransform.c				= position;
-	R_ASSERT						( _valid( bone->mTransform ) );
+	BoneMatrix.mulA_43		(effector_transform);
+	BoneMatrix.c				= position;
+	bone->SetTransform(BoneMatrix);
+	R_ASSERT						( _valid( bone->GetTransform() ) );
 }
 
 static void	_BCL callback_rotation_blend	(CBoneInstance* const bone)
 {
-	R_ASSERT						( _valid( bone->mTransform ) );
+	R_ASSERT						( _valid( bone->GetTransform() ) );
 
 	callback_params*				parameter = static_cast<callback_params*>( bone->callback_param() );
 	VERIFY							(parameter);
@@ -98,11 +106,14 @@ static void	_BCL callback_rotation_blend	(CBoneInstance* const bone)
 	rotation.rotation				( result );
 #endif // #if 0
 
-	Fvector	position				= bone->mTransform.c;
+	Fmatrix BoneMatrix = bone->GetTransform();
+	Fvector	position				= BoneMatrix.c;
 	R_ASSERT						( _valid( rotation ) );
-	bone->mTransform.mulA_43		(rotation);
-	bone->mTransform.c				= position;
-	R_ASSERT						( _valid( bone->mTransform ) );
+	BoneMatrix.mulA_43(rotation);
+	BoneMatrix.c = position;
+	bone->SetTransform(BoneMatrix);
+
+	R_ASSERT						( _valid(BoneMatrix) );
 }
 
 void CStalkerAnimationManager::assign_bone_callbacks	()

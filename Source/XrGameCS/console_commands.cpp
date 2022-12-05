@@ -161,7 +161,7 @@ public:
 
 		//if (Device->Resources)	Device->Resources->_GetMemoryUsage	(m_base,c_base,m_lmaps,c_lmaps);
 		//	Resource check moved to m_pRender
-		if (Device->m_pRender) Device->m_pRender->ResourcesGetMemoryUsage(m_base,c_base,m_lmaps,c_lmaps);
+		//if (Device->m_pRender) Device->m_pRender->ResourcesGetMemoryUsage(m_base,c_base,m_lmaps,c_lmaps);
 		
 		log_vminfo	();
 		
@@ -1394,7 +1394,7 @@ public:
 
 		Msg						("bones for model \"%s\"",arguments);
 		for (u16 i=0, n=kinematics->LL_BoneCount(); i<n; ++i)
-			Msg					("%s",*kinematics->LL_GetData(i).name);
+			Msg					("%s",*kinematics->GetBoneData(i).GetName().c_str());
 		
 		Render->model_Delete	(visual);
 	}

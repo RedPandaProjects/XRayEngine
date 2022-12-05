@@ -122,7 +122,7 @@ CParticlesPlayer::SBoneInfo* CParticlesPlayer::get_nearest_bone_info(IKinematics
 	u16 play_bone	= bone_index;
 	while((BI_NONE!=play_bone)&&!(bone_mask&(u64(1)<<u64(play_bone))))
 	{
-		play_bone	= K->LL_GetData(play_bone).GetParentID();
+		play_bone	= K->GetBoneData(play_bone).GetParentID();
 	}
 	return get_bone_info(play_bone);
 }
@@ -290,7 +290,7 @@ void CParticlesPlayer::GetBonePos	(CObject* pObject, u16 bone_id, const Fvector&
 	CBoneInstance&		l_tBoneInstance = pKinematics->LL_GetBoneInstance(bone_id);
 
 	result = offset;
-	l_tBoneInstance.mTransform.transform_tiny(result);
+	l_tBoneInstance.GetTransform().transform_tiny(result);
 	pObject->XFORM().transform_tiny(result);
 }
 
@@ -306,7 +306,7 @@ u16 CParticlesPlayer::GetNearestBone	(IKinematics* K, u16 bone_id)
 
 	while((BI_NONE!=play_bone)&&!(bone_mask&(u64(1)<<u64(play_bone))))
 	{
-		play_bone	= K->LL_GetData(play_bone).GetParentID();
+		play_bone	= K->GetBoneData(play_bone).GetParentID();
 	}
 	return play_bone;
 }

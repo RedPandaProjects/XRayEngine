@@ -35,7 +35,7 @@ weapon::weapon				(
 	for (u32 i=0; i<4; ++i)
 		m_bones_ids[i]		= m_kinematics.LL_BoneID( bones[i] );
 
-	CBoneData const&		bone_data = m_kinematics.LL_GetData(m_bones_ids[weapon_bone_id0]);
+	IBoneData const&		bone_data = m_kinematics.GetBoneData(m_bones_ids[weapon_bone_id0]);
 	m_bones_ids[parent_weapon_bone_id0] = bone_data.GetParentID();
 	VERIFY				(m_bones_ids[parent_weapon_bone_id0] != BI_NONE);
 

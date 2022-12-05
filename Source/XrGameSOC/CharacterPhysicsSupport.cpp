@@ -888,7 +888,7 @@ void CCharacterPhysicsSupport::TestForWounded()
 	CKA->CalculateBones();
 	CBoneInstance CBI=CKA->LL_GetBoneInstance(0);
 	Fmatrix position_matrix;
-	position_matrix.mul(mXFORM,CBI.mTransform);
+	position_matrix.mul(mXFORM,CBI.GetTransform());
 	
 	xrXRC						xrc;
 	xrc.ray_options				(0);

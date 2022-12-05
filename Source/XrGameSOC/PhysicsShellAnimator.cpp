@@ -53,11 +53,14 @@ void CPhysicsShellAnimator::OnFrame()
 		Fmatrix target_obj_posFmatrixS;
 		CBoneInstance& B=m_pPhysicsShell->PKinematics()->LL_GetBoneInstance(i->m_element->m_SelfID);
 		
-		target_obj_posFmatrixS.mul_43((*(m_pPhysicsShell->Elements().begin()))->PhysicsRefObject()->XFORM(),B.mTransform);
+		target_obj_posFmatrixS.mul_43((*(m_pPhysicsShell->Elements().begin()))->PhysicsRefObject()->XFORM(),B.GetTransform());
 				
 		Fmatrix parent;
 		parent.invert		(m_pPhysicsShell->mXFORM);
-		B.mTransform.mul_43(parent,i->m_element->mXFORM);//restore actual physic position for display
+		Fmatrix BoneMatrix = B.GetTransform();
+		BoneMatrix.mul_43(parent, i->m_element->mXFORM);//restore actual physic position for display
+		B.SetTransform(BoneMatrix);
+		
 		
 		dQuaternion target_obj_quat_dQuaternionS;
 		dMatrix3 ph_mat;

@@ -51,7 +51,10 @@ void bonesBone::Apply()
 	// создать матрицу вращения и умножить на mTransform боны
 	Fmatrix M;
 	M.setHPB (-y, -x, -z);
-	bone->mTransform.mulB_43	(M);
+	Fmatrix BoneMatrix= bone->GetTransform();
+	BoneMatrix.mulB_43(M);
+	bone->SetTransform(BoneMatrix);
+	
 }
 
 //****************************************************************************************************

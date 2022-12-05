@@ -220,7 +220,7 @@ void	CIKLimbsController::ShiftObject( const SCalculateData cd[max_size] )
 		VERIFY( skeleton_animated );
 	//	u16 root = skeleton_animated->LL_GetBoneRoot( ) ;
 
-	//CBoneData &BD=skeleton_animated->LL_GetData(root);
+	//IBoneData &BD=skeleton_animated->GetBoneData(root);
 
 		const float y_shift = _object_shift.shift();
 		const u16 bones_count = skeleton_animated->LL_BoneCount();

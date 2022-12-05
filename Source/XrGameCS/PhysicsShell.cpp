@@ -246,7 +246,7 @@ void destroy_physics_shell(CPhysicsShell* &p)
 
 bool bone_has_pysics( IKinematics& K, u16 bone_id )
 {
-	return K.LL_GetBoneVisible( bone_id ) && shape_is_physic(K.LL_GetData( bone_id ).shape);
+	return K.LL_GetBoneVisible( bone_id ) && shape_is_physic(K.GetBoneData( bone_id ).get_shape());
 }
 
 bool has_physics_collision_shapes( IKinematics& K )

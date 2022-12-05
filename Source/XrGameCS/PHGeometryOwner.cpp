@@ -127,12 +127,12 @@ void CPHGeometryOwner::get_mc_kinematics(IKinematics* K,Fvector& mc,float& mass)
 	GEOM_I i_geom=m_geoms.begin(),e=m_geoms.end();
 	for(;i_geom!=e;++i_geom)
 	{
-		CBoneData& data=K->LL_GetData((*i_geom)->bone_id());
+		const IBoneData& data=K->GetBoneData((*i_geom)->bone_id());
 		Fvector add;
-		mass+=data.mass;
+		mass+=data.get_mass();
 		m_volume+=(*i_geom)->volume();
-		add.set(data.center_of_mass);
-		add.mul(data.mass);
+		add.set(data.get_center_of_mass());
+		add.mul(data.get_mass());
 		mc.add(add);
 	}
 	mc.mul(1.f/mass);

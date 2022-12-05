@@ -199,7 +199,7 @@ void	CPhysicObject::		anim_time_set					( float time )
 	if( time < 0.f || time > m_anim_blend->timeTotal )
 	{
 #ifdef	DEBUG	
-		Msg( " ! can not set blend time %f - it must be in range 0 - %f(timeTotal) obj: %s, model: %s, anim: %s", time, m_anim_blend->timeTotal, cName().c_str(), cNameVisual().c_str(), CastToIKinematicsAnimated( PPhysicsShell()->PKinematics() )->LL_MotionDefName_dbg( m_anim_blend->motionID ).first );
+		Msg( " ! can not set blend time %f - it must be in range 0 - %f(timeTotal) obj: %s, model: %s, anim: %s", time, m_anim_blend->timeTotal, cName().c_str(), cNameVisual().c_str(), PPhysicsShell()->PKinematics()->dcast_PKinematicsAnimated()->LL_MotionDefName_dbg( m_anim_blend->motionID ).first );
 #endif
 		return;
 	}
@@ -338,9 +338,10 @@ void CPhysicObject::AddElement(CPhysicsElement* root_e, int id)
 		m_pPhysicsShell->add_Joint	(J);	
 	}
 
-	CBoneData& BD		= K->LL_GetData(u16(id));
-	for (vecBonesIt it=BD.children.begin(); BD.children.end() != it; ++it){
-		AddElement		(E,(*it)->GetSelfID());
+	const IBoneData& BD		= K->GetBoneData(u16(id));
+	for (u16 i = 0; i < BD.GetNumChildren(); i++)
+	{
+		AddElement		(E,BD.GetChild(i).GetSelfID());
 	}
 }
 

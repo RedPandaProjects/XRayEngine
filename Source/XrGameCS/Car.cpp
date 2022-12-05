@@ -125,16 +125,17 @@ void CCar::reload		(LPCSTR section)
 
 void CCar::cb_Steer			(CBoneInstance* B)
 {
-	VERIFY2(fsimilar(DET(B->mTransform),1.f,DET_CHECK_EPS),"Bones receive returns 0 matrix");
+	VERIFY2(fsimilar(DET(B->GetTransform()),1.f,DET_CHECK_EPS),"Bones receive returns 0 matrix");
 	CCar*	C			= static_cast<CCar*>(B->callback_param());
 	Fmatrix m;
 
 
 	m.rotateZ(C->m_steer_angle);
-
-	B->mTransform.mulB_43	(m);
+	Fmatrix BoneMatrix = B->GetTransform();
+	BoneMatrix.mulB_43(m);
+	B->SetTransform(BoneMatrix);
 #ifdef DEBUG
-	if( !fsimilar(DET(B->mTransform),1.f,DET_CHECK_EPS) ){
+	if( !fsimilar(DET(B->GetTransform()),1.f,DET_CHECK_EPS) ){
 	
 		Log("RotatingZ angle=",C->m_steer_angle);	
 		VERIFY2(0,"Bones callback returns BAD!!! matrix");
@@ -640,7 +641,7 @@ bool CCar::attach_Actor(CGameObject* actor)
 		id=K->LL_GetBoneRoot();
 	}
 	CBoneInstance& instance=K->LL_GetBoneInstance				(u16(id));
-	m_sits_transforms.push_back(instance.mTransform);
+	m_sits_transforms.push_back(instance.GetTransform());
 	OnCameraChange(ectFirst);
 	PPhysicsShell()->Enable();
 	PPhysicsShell()->add_ObjectContactCallback(ActorObstacleCallback);
@@ -650,7 +651,7 @@ bool CCar::attach_Actor(CGameObject* actor)
 //	HUD().GetUI()->UIMainIngameWnd->CarPanel().Show(true);
 //	HUD().GetUI()->UIMainIngameWnd->CarPanel().SetCarHealth(fEntityHealth/100.f);
 	//HUD().GetUI()->UIMainIngameWnd.ShowBattery(true);
-	//CBoneData&	bone_data=K->LL_GetData(id);
+	//IBoneData&	bone_data=K->GetBoneData(id);
 	//Fmatrix driver_pos_tranform;
 	//driver_pos_tranform.setHPB(bone_data.bind_hpb.x,bone_data.bind_hpb.y,bone_data.bind_hpb.z);
 	//driver_pos_tranform.c.set(bone_data.bind_translate);

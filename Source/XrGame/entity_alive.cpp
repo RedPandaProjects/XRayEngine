@@ -373,8 +373,9 @@ void CEntityAlive::BloodyWallmarks (float P, const Fvector &dir, s16 element,
 	Fvector start_pos = position_in_object_space;
 	if(V)
 	{
-		Fmatrix& m_bone = (V->LL_GetBoneInstance(u16(element))).mTransform;
+		Fmatrix m_bone = (V->LL_GetBoneInstance(u16(element))).GetTransform();
 		m_bone.transform_tiny(start_pos);
+		(V->LL_GetBoneInstance(u16(element))).SetTransform(m_bone);
 	}
 	XFORM().transform_tiny(start_pos);
 
@@ -807,7 +808,7 @@ void CEntityAlive::fill_hit_bone_surface_areas		( ) const
 	m_hit_bone_surface_areas.clear_not_free	( );
 
 	for (u16 i=0, n=kinematics->LL_BoneCount(); i < n; ++i ) {
-		SBoneShape const& shape			= kinematics->LL_GetData(i).shape;
+		const SBoneShape & shape			= kinematics->GetBoneData(i).get_shape();
 		if ( SBoneShape::stNone == shape.type )
 			continue;
 
@@ -865,7 +866,7 @@ Fvector	CEntityAlive::get_new_local_point_on_mesh	( u16& bone_id ) const
 		if ( !kinematics->LL_GetBoneVisible((*i).first) )
 			continue;
 
-		SBoneShape const& shape			= kinematics->LL_GetData((*i).first).shape;
+		SBoneShape const& shape			= kinematics->GetBoneData((*i).first).get_shape();
 		VERIFY							( shape.type != SBoneShape::stNone );
 		VERIFY							( !shape.flags.is(SBoneShape::sfNoPickable) );
 
@@ -880,7 +881,7 @@ Fvector	CEntityAlive::get_new_local_point_on_mesh	( u16& bone_id ) const
 		if ( !kinematics->LL_GetBoneVisible((*i).first) )
 			continue;
 
-		SBoneShape const& shape			= kinematics->LL_GetData((*i).first).shape;
+		SBoneShape const& shape			= kinematics->GetBoneData((*i).first).get_shape();
 		VERIFY							( shape.type != SBoneShape::stNone );
 		VERIFY							( !shape.flags.is(SBoneShape::sfNoPickable) );
 
@@ -890,7 +891,7 @@ Fvector	CEntityAlive::get_new_local_point_on_mesh	( u16& bone_id ) const
 	}
 
 	VERIFY2								( i != e, make_string("m_hit_bone_surface_areas[%d]", m_hit_bone_surface_areas.size()) );
-	SBoneShape const& shape				= kinematics->LL_GetData((*i).first).shape;
+	SBoneShape const& shape				= kinematics->GetBoneData((*i).first).get_shape();
 	bone_id								= (*i).first;
 	Fvector result						= Fvector().set( flt_max, flt_max, flt_max );
 	switch ( shape.type ) {

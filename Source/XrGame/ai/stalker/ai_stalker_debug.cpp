@@ -1308,9 +1308,12 @@ static void	_BCL test_callback			(CBoneInstance *B)
 	callback_param*						params = static_cast<callback_param*>(B->callback_param());
 	VERIFY								(params);
 
-	Fvector const position				= B->mTransform.c;
-	B->mTransform.mulA_43				(params->transform);
-	B->mTransform.c						= position;
+	Fvector const position				= B->GetTransform().c;
+	Fmatrix BoneMatrix = B->GetTransform();
+	BoneMatrix.mulA_43(params->transform);
+	BoneMatrix.c = position;
+	B->SetTransform(BoneMatrix);
+	
 }
 
 #ifdef DEBUG_RENDER
@@ -1337,7 +1340,7 @@ static void draw_bones				(
 			box_color
 		);
 
-		CBoneData&						bone_data = kinematics.LL_GetData(i);
+		const IBoneData&						bone_data = kinematics.GetBoneData(i);
 		u16								parent_bone_id = bone_data.GetParentID();
 		if (parent_bone_id == BI_NONE)
 			continue;

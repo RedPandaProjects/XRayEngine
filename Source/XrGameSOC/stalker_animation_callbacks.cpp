@@ -46,8 +46,8 @@ TEMPLATE_SPECIALIZATION
 void _detail::callback		(CBoneInstance *B)
 {
 	CAI_Stalker*			A = static_cast<CAI_Stalker*>(B->callback_param());
-	VERIFY					(_valid(B->mTransform));
-	Fvector c				= B->mTransform.c;
+	VERIFY					(_valid(B->GetTransform()));
+	Fvector c				= B->GetTransform().c;
 	Fmatrix					spin;
 	float					yaw_factor = 0, pitch_factor = 0;
 	if (A->sight().use_torso_look()) {
@@ -80,8 +80,11 @@ void _detail::callback		(CBoneInstance *B)
 
 	spin.setXYZ				(pitch, yaw, 0);
 	VERIFY					(_valid(spin));
-	B->mTransform.mulA_43	(spin);
-	B->mTransform.c			= c;
+	Fmatrix BoneMatrix = B->GetTransform();
+	BoneMatrix.mulA_43(spin);
+	BoneMatrix.c = c;
+	B->SetTransform(BoneMatrix);
+	
 }
 
 #undef TEMPLATE_SPECIALIZATION

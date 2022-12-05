@@ -1432,7 +1432,7 @@ u16 CPHSimpleCharacter::RetriveContactBone()
 		for(u16 i=0;i<count;++i)
 		{
 			Fvector c_to_bone;
-			c_to_bone.sub(bone_instances[i].mTransform.c,pos_in_object);
+			c_to_bone.sub(bone_instances[i].GetTransform().c,pos_in_object);
 			float temp_sq_dist=c_to_bone.square_magnitude();
 			if(temp_sq_dist<sq_dist)
 			{
@@ -1906,8 +1906,8 @@ IC bool valide_res( u16& res_material_idx, const collide::rq_result	&R )
 	if( !V )
 		return false;
 	IKinematics *K = V->dcast_PKinematics();
-	CBoneData &bd = K->LL_GetData( (u16)R.element );
-	res_material_idx= bd.game_mtl_idx;
+	const IBoneData &bd = K->GetBoneData( (u16)R.element );
+	res_material_idx= bd.get_game_mtl_idx();
 	return true;
 }
 

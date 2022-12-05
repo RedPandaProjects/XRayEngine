@@ -1852,7 +1852,7 @@ void				CActor::OnCriticalHitHealthLoss			()
 			u16 ParentBone = u16(m_s16LastHittedElement);
 			while (ParentBone)
 			{
-				ParentBone = pKinematics->LL_GetData(ParentBone).GetParentID();
+				ParentBone = pKinematics->GetBoneData(ParentBone).GetParentID();
 				if (ParentBone && ParentBone == m_head)
 				{
 					SpecialHit = SKT_HEADSHOT;

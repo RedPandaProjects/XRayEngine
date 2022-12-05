@@ -88,8 +88,8 @@ void type_motion_diagnostic( LPCSTR message, type_motion::edirection dr, const C
 	LPCSTR bone_name = "not_definite";
 	if( H.bone() != BI_NONE )
 	{
-		CBoneData& bd = K->LL_GetData( H.bone() );
-		bone_name = bd.name.c_str();
+		const IBoneData& bd = K->GetBoneData( H.bone() );
+		bone_name = bd.GetName().c_str();
 	}
 	LPCSTR motion_name = "not_set";
 	if( m.valid() )
