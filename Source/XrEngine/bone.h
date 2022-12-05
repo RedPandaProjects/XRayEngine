@@ -283,6 +283,7 @@ class 	IBoneData
 	virtual const	IBoneData&	_BCL	GetChild		( u16 id )	const	= 0;
 	virtual			u16			_BCL	GetSelfID		( )			const	= 0;
 	virtual			u16			_BCL	GetNumChildren	( )			const	= 0;
+	virtual const	shared_str&			GetName			( )			const	= 0;
 
 	virtual const SJointIKData& _BCL	get_IK_data			( )const	= 0;
 	virtual const	Fmatrix&	_BCL	get_bind_transform	( )const	= 0;
@@ -294,7 +295,7 @@ class 	IBoneData
 	virtual			u16			_BCL	GetParentID			( ) const	= 0;
 	virtual			float		_BCL	lo_limit			( u8 k )	const	= 0;
 	virtual			float		_BCL	hi_limit			( u8 k )	const	= 0;
-	
+
 };
 
 //static const Fobb	dummy ;//= Fobb().identity();
@@ -414,6 +415,7 @@ IC	float	_BCL		editor_hi_limit ( u8 k ) const	{ return IK_data.limits[k].limit.y
     bool 			    ExportOGF		(IWriter& F);
 #endif
 private:
+		const	shared_str&		_BCL	GetName				( )			const	{return name;}
 				IBoneData&		_BCL	GetChild			( u16 id )			{return *children[id];}
 		const	IBoneData&		_BCL	GetChild			( u16 id )	const	{return *children[id];}
         		u16				_BCL	GetSelfID			( )			const	{return (u16)SelfID;}
@@ -502,6 +504,8 @@ private:
 				u16				_BCL	get_game_mtl_idx	( )			const	{return game_mtl_idx;}
 				float			_BCL	lo_limit			( u8 k )	const	{return IK_data.limits[k].limit.x;}
 				float			_BCL	hi_limit			( u8 k )	const	{return IK_data.limits[k].limit.y;}
+
+				const shared_str&		GetName				( )			const	{return name;}
 public:
 	virtual u32			mem_usage		()
 	{
