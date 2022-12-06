@@ -83,6 +83,7 @@ void CObject::cNameVisual_set	(shared_str N)
 		renderable.visual		= Render->model_Create	(*N);
 		VERIFY(renderable.visual->Renderable == nullptr);
 		renderable.visual->Renderable = this;
+		renderable.visual->Renderable->MySpatial = this;
 		IKinematics* old_k	= old_v?old_v->dcast_PKinematics():NULL;
 		IKinematics* new_k	= renderable.visual->dcast_PKinematics();
 

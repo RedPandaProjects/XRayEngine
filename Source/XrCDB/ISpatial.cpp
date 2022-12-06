@@ -334,7 +334,7 @@ void			ISpatial_DB::update		(u32 nodes/* =8 */)
 #ifdef DEBUG
 	if (0==m_root)	return;
 	cs.Enter		();
-	VERIFY			(verify());
+	VERIFY			(verify_self());
 	cs.Leave		();
 #endif
 }
