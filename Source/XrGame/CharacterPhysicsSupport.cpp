@@ -1070,7 +1070,7 @@ void	CCharacterPhysicsSupport::	CreateShell						( CObject* who, Fvector& dp, Fv
 	IKinematics* K=CastToIKinematics( m_EntityAlife.Visual( ) );
 	//animation movement controller issues
 	bool	anim_mov_ctrl =m_EntityAlife.animation_movement_controlled( );
-	CBoneInstance	&BR = K->LL_GetBoneInstance( K->LL_GetBoneRoot( ) );
+	IBoneInstance	&BR = K->LL_GetBoneInstance( K->LL_GetBoneRoot( ) );
 	Fmatrix start_xform; start_xform.identity( );
 	CBlend *anim_mov_blend = 0;
 	if( anim_mov_ctrl )

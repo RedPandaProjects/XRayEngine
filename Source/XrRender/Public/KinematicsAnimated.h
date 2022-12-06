@@ -9,7 +9,7 @@
 class	 IKinematics;
 class    CBlend;
 class 	 CKinematicsAnimated;
-class    CBoneInstanceAnimated;
+class    IBoneInstanceAnimated;
 struct	 CKey;
 class	 CInifile;
 class	 IKinematicsAnimated;
@@ -58,7 +58,7 @@ public:
 	virtual CMotion*				LL_GetMotion	(MotionID id, u16 bone_id) = 0;
 	//interface for procedural animations :)	
 	virtual	void					LL_BuldBoneMatrixDequatize	( const IBoneData* bd, u8 channel_mask,  SKeyTable& keys ) = 0;
-	virtual	void					LL_BoneMatrixBuild			( CBoneInstance &bi, const Fmatrix *parent, const SKeyTable& keys ) = 0;
+	virtual	void					LL_BoneMatrixBuild			( IBoneInstance &bi, const Fmatrix *parent, const SKeyTable& keys ) = 0;
 
 	virtual IBlendDestroyCallback	*GetBlendDestroyCallback	( ) = 0;
 	virtual void					SetBlendDestroyCallback		( IBlendDestroyCallback	*cb ) = 0;

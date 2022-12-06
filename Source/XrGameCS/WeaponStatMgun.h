@@ -21,8 +21,8 @@ private:
 private:
 	CCameraBase*			camera;
 	// 
-	static void				BoneCallbackX		(CBoneInstance *B);
-	static void				BoneCallbackY		(CBoneInstance *B);
+	static void				BoneCallbackX		(IBoneInstance *B);
+	static void				BoneCallbackY		(IBoneInstance *B);
 	void					SetBoneCallbacks	();
 	void					ResetBoneCallbacks	();
 

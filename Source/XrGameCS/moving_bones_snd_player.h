@@ -23,7 +23,7 @@ public:
 IC	bool	is_active(){ return true;/*!!sound._feedback();*/ }
 private:
 	void	load( IKinematics &K, CInifile& ini, LPCSTR section, const Fmatrix &object  );
-	Fmatrix	&bone_matrix( );
+	const Fmatrix	&bone_matrix( );
 };
 
 extern moving_bones_snd_player* create_moving_bones_snd_player( CGameObject &O );

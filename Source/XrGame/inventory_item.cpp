@@ -1261,8 +1261,8 @@ void CInventoryItem::UpdateXForm	()
 	//		boneL = boneR2;
 #pragma todo("TO ALL: serious performance problem")
 	V->CalculateBones	();
-	Fmatrix& mL			= V->LL_GetTransform(u16(boneL));
-	Fmatrix& mR			= V->LL_GetTransform(u16(boneR));
+	const Fmatrix& mL			= V->LL_GetTransform(u16(boneL));
+	const Fmatrix& mR			= V->LL_GetTransform(u16(boneR));
 	// Calculate
 	Fmatrix			mRes;
 	Fvector			R,D,N;

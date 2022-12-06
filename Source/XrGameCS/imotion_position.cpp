@@ -94,7 +94,7 @@ void disable_bone_calculation(IKinematics &K, bool v )
 	u16 bn = K.LL_BoneCount();
 	for(u16 i = 1; i< bn; ++i )//ommit real root
 	{
-		CBoneInstance &bi = K.LL_GetBoneInstance( i );
+		IBoneInstance &bi = K.LL_GetBoneInstance( i );
 		if( bi.callback_param()!=0 )
 			continue;
 #ifdef DEBUG
@@ -216,7 +216,7 @@ static void save_fixes( IKinematics *K  )
 	u16 nbb = K->LL_BoneCount();
 	for(u16 i = 0; i < nbb; ++i )
 	{
-		CBoneInstance	&bi = K->LL_GetBoneInstance( i );
+		IBoneInstance	&bi = K->LL_GetBoneInstance( i );
 		if( bi.callback() == anim_bone_fix::callback )
 		{	
 			VERIFY( bi.callback_param());
@@ -630,7 +630,7 @@ void imotion_position::	init_bones()
 	u16 bn = K.LL_BoneCount();
 	for(u16 i = 1; i< bn; ++i )//ommit real root
 	{
-		CBoneInstance &bi = K.LL_GetBoneInstance( i );
+		IBoneInstance &bi = K.LL_GetBoneInstance( i );
 		VERIFY(!bi.callback());
 		VERIFY(!bi.callback_param());
 		if(bi.callback_overwrite())
@@ -646,7 +646,7 @@ void imotion_position::	deinit_bones()
 	u16 bn = K.LL_BoneCount();
 	for(u16 i = 1; i< bn; ++i )//ommit real root
 	{
-		CBoneInstance &bi = K.LL_GetBoneInstance( i );
+		IBoneInstance &bi = K.LL_GetBoneInstance( i );
 		VERIFY( !bi.callback() );
 		VERIFY( !bi.callback_param() || bi.callback_overwrite() );
 		bi.reset_callback();
@@ -660,7 +660,7 @@ void	imotion_position::set_root_callback	()
 	VERIFY( shell );
 	IKinematics *K  = shell->PKinematics( );
 	VERIFY( K );
-	CBoneInstance &bi = K->LL_GetBoneInstance( 0 );
+	IBoneInstance &bi = K->LL_GetBoneInstance( 0 );
 	VERIFY(!bi.callback());
 	bi.set_callback( bctCustom, rootbone_callback, this, true );//root may be not "0" !
 	
@@ -671,13 +671,13 @@ void	imotion_position::remove_root_callback()
 	VERIFY( shell );
 	IKinematics *K  = shell->PKinematics( );
 	VERIFY( K );
-	CBoneInstance &bi = K->LL_GetBoneInstance( 0 );
+	IBoneInstance &bi = K->LL_GetBoneInstance( 0 );
 	VERIFY( bi.callback() == rootbone_callback );
 	VERIFY( bi.callback_param() == (void*) this );
 	bi.reset_callback();
 }
 
-void	imotion_position::rootbone_callback	( CBoneInstance *BI )
+void	imotion_position::rootbone_callback	( IBoneInstance *BI )
 {
 	imotion_position *im = ( imotion_position* )BI->callback_param();
 	VERIFY( im );

@@ -10,7 +10,7 @@
 #include "xr_ioc_cmd.h"
 
 
-bool ConsoleBase::GetBool( LPCSTR cmd ) const
+bool XRayConsoleInterface::GetBool( LPCSTR cmd ) const
 {
 	IConsole_Command* cc	= GetCommand(cmd);
 	CCC_Mask* cf			= dynamic_cast<CCC_Mask*>(cc);
@@ -27,7 +27,7 @@ bool ConsoleBase::GetBool( LPCSTR cmd ) const
 	return false;
 }
 
-float ConsoleBase::GetFloat( LPCSTR cmd, float& min, float& max ) const
+float XRayConsoleInterface::GetFloat( LPCSTR cmd, float& min, float& max ) const
 {
 	min						= 0.0f;
 	max						= 0.0f;
@@ -41,7 +41,7 @@ float ConsoleBase::GetFloat( LPCSTR cmd, float& min, float& max ) const
 	return 0.0f;
 }
 
-IConsole_Command* ConsoleBase::GetCommand( LPCSTR cmd ) const
+IConsole_Command* XRayConsoleInterface::GetCommand( LPCSTR cmd ) const
 {
 	vecCMD_CIT it = Commands.find( cmd );
 	if ( it == Commands.end() )
@@ -51,7 +51,7 @@ IConsole_Command* ConsoleBase::GetCommand( LPCSTR cmd ) const
 }
 
 
-int ConsoleBase::GetInteger( LPCSTR cmd, int& min, int& max ) const
+int XRayConsoleInterface::GetInteger( LPCSTR cmd, int& min, int& max ) const
 {
 	min						= 0;
 	max						= 1;
@@ -73,7 +73,7 @@ int ConsoleBase::GetInteger( LPCSTR cmd, int& min, int& max ) const
 	return 0;
 }
 
-LPCSTR ConsoleBase::GetString( LPCSTR cmd ) const
+LPCSTR XRayConsoleInterface::GetString( LPCSTR cmd ) const
 {
 	IConsole_Command* cc	= GetCommand(cmd);
 	if(!cc)
@@ -84,12 +84,12 @@ LPCSTR ConsoleBase::GetString( LPCSTR cmd ) const
 	return					stat;
 }
 
-LPCSTR ConsoleBase::GetToken( LPCSTR cmd ) const
+LPCSTR XRayConsoleInterface::GetToken( LPCSTR cmd ) const
 {
 	return GetString( cmd );
 }
 
-xr_token* ConsoleBase::GetXRToken( LPCSTR cmd ) const
+xr_token* XRayConsoleInterface::GetXRToken( LPCSTR cmd ) const
 {
 	IConsole_Command* cc	= GetCommand(cmd);
 	
@@ -101,7 +101,7 @@ xr_token* ConsoleBase::GetXRToken( LPCSTR cmd ) const
 	return					NULL;
 }
 
-Fvector* ConsoleBase::GetFVectorPtr( LPCSTR cmd ) const
+Fvector* XRayConsoleInterface::GetFVectorPtr( LPCSTR cmd ) const
 {
 	IConsole_Command* cc	= GetCommand(cmd);
 	CCC_Vector3* cf			= dynamic_cast<CCC_Vector3*>(cc);
@@ -112,7 +112,7 @@ Fvector* ConsoleBase::GetFVectorPtr( LPCSTR cmd ) const
 	return					NULL;
 }
 
-Fvector ConsoleBase::GetFVector( LPCSTR cmd ) const
+Fvector XRayConsoleInterface::GetFVector( LPCSTR cmd ) const
 {
 	Fvector* pV = GetFVectorPtr( cmd );
 	if ( pV )

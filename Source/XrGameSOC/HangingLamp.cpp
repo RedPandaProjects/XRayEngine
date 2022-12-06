@@ -203,7 +203,7 @@ void CHangingLamp::UpdateCL	()
 		// update T&R from light (main) bone
 		Fmatrix xf;
 		if (light_bone!=BI_NONE){
-			Fmatrix& M = CastToIKinematics(Visual())->LL_GetTransform(light_bone);
+			const Fmatrix& M = CastToIKinematics(Visual())->LL_GetTransform(light_bone);
 			xf.mul		(XFORM(),M);
 			VERIFY(!fis_zero(DET(xf)));
 		}else{
@@ -217,7 +217,7 @@ void CHangingLamp::UpdateCL	()
 		if (light_ambient){	
 			if (ambient_bone!=light_bone){
 				if (ambient_bone!=BI_NONE){
-					Fmatrix& M = CastToIKinematics(Visual())->LL_GetTransform(ambient_bone);
+					const Fmatrix& M = CastToIKinematics(Visual())->LL_GetTransform(ambient_bone);
 					xf.mul		(XFORM(),M);
 					VERIFY(!fis_zero(DET(xf)));
 				}else{

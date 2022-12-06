@@ -110,7 +110,7 @@ void SCarLight::Update()
 	VERIFY(!physics_world()->Processing());
 	if(!isOn()) return;
 	CCar* pcar=m_holder->PCar();
-	CBoneInstance& BI = CastToIKinematics(pcar->Visual())->LL_GetBoneInstance(bone_id);
+	IBoneInstance& BI = CastToIKinematics(pcar->Visual())->LL_GetBoneInstance(bone_id);
 	Fmatrix M;
 	M.mul(pcar->XFORM(),BI.GetTransform());
 	light_render->set_rotation	(M.k,M.i);

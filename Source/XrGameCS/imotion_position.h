@@ -35,7 +35,7 @@ private:
 	virtual	void	state_end	(  );
 	virtual	void	state_start (  );
 
-static	void	rootbone_callback	( CBoneInstance *BI );
+static	void	rootbone_callback	( IBoneInstance *BI );
 		void	init_bones			();
 		void	deinit_bones		();
 		void	set_root_callback	();

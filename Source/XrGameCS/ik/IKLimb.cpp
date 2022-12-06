@@ -1014,7 +1014,7 @@ float	CIKLimb::get_time_to_step_begin	( const CBlend& B )	const
 struct ssaved_callback :
 	private boost::noncopyable
 {
-	ssaved_callback( CBoneInstance &bi ):
+	ssaved_callback( IBoneInstance &bi ):
 		_bi					( bi						)		,
 		callback			( bi.callback()				)		,		
 		callback_param		( bi.callback_param()		)		,	
@@ -1029,9 +1029,9 @@ struct ssaved_callback :
 	void					*callback_param;		
 	const BOOL				callback_overwrite;	
 	const u32				callback_type;
-	CBoneInstance			&_bi;
+	IBoneInstance			&_bi;
 };
-static void get_matrix( CBoneInstance* P )
+static void get_matrix( IBoneInstance* P )
 {
 	VERIFY( _valid(  P->GetTransform() ) );
 	*((Fmatrix*)P->callback_param()) = P->GetTransform();
@@ -1057,8 +1057,8 @@ u16	CIKLimb::foot_matrix_predict ( Fmatrix& foot, Fmatrix& toe, float time, IKin
 				B.blendAmount = 0;
 	}
 
-	CBoneInstance &bi2 = Kinematics()->LL_GetBoneInstance( m_bones[2] );
-	CBoneInstance &bi3 = Kinematics()->LL_GetBoneInstance( m_bones[3] );
+	IBoneInstance &bi2 = Kinematics()->LL_GetBoneInstance( m_bones[2] );
+	IBoneInstance &bi3 = Kinematics()->LL_GetBoneInstance( m_bones[3] );
 	ssaved_callback cb2( bi2 );
 	ssaved_callback cb3( bi3 );
 	Fmatrix m_b2, m_b3;
@@ -1250,7 +1250,7 @@ IC void CIKLimb::get_start( Fmatrix &start, SCalculateData &D, u16 bone )
 	start		.mul_43( L.Kinematics()->LL_GetTransform( BD.GetParentID( ) ), BD.get_bind_transform() );
 }
 
-void 	CIKLimb::BonesCallback0( CBoneInstance* B )
+void 	CIKLimb::BonesCallback0( IBoneInstance* B )
 {
 	SCalculateData* D	=(SCalculateData*)B->callback_param();
 	VERIFY( D );
@@ -1276,7 +1276,7 @@ void 	CIKLimb::BonesCallback0( CBoneInstance* B )
 #endif
 	R_ASSERT2(  _valid( B->GetTransform() ), "CIKLimb::BonesCallback0" );
 }
-void 	CIKLimb::BonesCallback1				( CBoneInstance* B )
+void 	CIKLimb::BonesCallback1				( IBoneInstance* B )
 {
 	SCalculateData	*D	=(SCalculateData*)B->callback_param();
 
@@ -1292,7 +1292,7 @@ void 	CIKLimb::BonesCallback1				( CBoneInstance* B )
 	
 	R_ASSERT2(  _valid( B->GetTransform() ), "CIKLimb::BonesCallback1" );
 }
-void 	CIKLimb::BonesCallback2				( CBoneInstance* B )
+void 	CIKLimb::BonesCallback2				( IBoneInstance* B )
 {
 	SCalculateData	*D		=(SCalculateData*)B->callback_param();
 	

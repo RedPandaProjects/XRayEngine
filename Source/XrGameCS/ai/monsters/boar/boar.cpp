@@ -116,7 +116,7 @@ void CAI_Boar::reinit()
 }
 
 
-void  CAI_Boar::BoneCallback(CBoneInstance *B)
+void  CAI_Boar::BoneCallback(IBoneInstance *B)
 {
 	CAI_Boar	*P = static_cast<CAI_Boar*>(B->callback_param());
 
@@ -137,7 +137,7 @@ BOOL CAI_Boar::net_Spawn (CSE_Abstract* DC)
 	
 	if(!PPhysicsShell())//нельзя ставить колбеки, если создан физ шел - у него стоят свои колбеки!!!
 	{
-		CBoneInstance& BI = CastToIKinematics(Visual())->LL_GetBoneInstance(CastToIKinematics(Visual())->LL_BoneID("bip01_head"));
+		IBoneInstance& BI = CastToIKinematics(Visual())->LL_GetBoneInstance(CastToIKinematics(Visual())->LL_BoneID("bip01_head"));
 		BI.set_callback(bctCustom,BoneCallback,this);
 	}
 	

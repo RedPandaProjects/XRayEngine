@@ -35,7 +35,7 @@
 
 TEMPLATE_SPECIALIZATION
 struct detail {
-	static void callback	(CBoneInstance *B);
+	static void callback	(IBoneInstance *B);
 };
 
 typedef detail	<  25,   0,  50,  50>	spine;
@@ -43,7 +43,7 @@ typedef detail	<  25,   0,  50,  50>	shoulder;
 typedef detail	<  50, 100,   0,   0>	head;
 
 TEMPLATE_SPECIALIZATION
-void _detail::callback		(CBoneInstance *B)
+void _detail::callback		(IBoneInstance *B)
 {
 	CAI_Stalker*			A = static_cast<CAI_Stalker*>(B->callback_param());
 	VERIFY					(_valid(B->GetTransform()));

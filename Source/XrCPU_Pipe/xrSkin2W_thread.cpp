@@ -17,7 +17,7 @@ void Skin4W_Stream( LPVOID lpvParams )
 	vertRender*		D		= (vertRender*) sp->Dest;
 	vertBoned4W*	S		= (vertBoned4W*) sp->Src;
 	u32				vCount	= sp->Count;
-	CBoneInstance*	Bones	= (CBoneInstance*) sp->Data;
+	IBoneInstance*	Bones	= (IBoneInstance*) sp->Data;
 
 	skin4W_func( D , S , vCount, Bones );
 }
@@ -25,7 +25,7 @@ void Skin4W_Stream( LPVOID lpvParams )
 void  xrSkin4W_thread(	vertRender*		D,
 								vertBoned4W*	S,
 								u32				vCount,
-								CBoneInstance*	Bones)
+								IBoneInstance*	Bones)
 {
 	u32 nWorkers = ttapi_GetWorkersCount();
 

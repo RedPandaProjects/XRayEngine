@@ -17,7 +17,7 @@ CPhysicsShellAnimator::CPhysicsShellAnimator( CPhysicsShell* _pPhysicsShell ) : 
 	{
 		CPhysicsShellAnimatorBoneData PhysicsShellAnimatorBoneDataC;
 		PhysicsShellAnimatorBoneDataC.m_element=*i;
-		CBoneInstance& B=m_pPhysicsShell->PKinematics()->LL_GetBoneInstance(PhysicsShellAnimatorBoneDataC.m_element->m_SelfID);
+		IBoneInstance& B=m_pPhysicsShell->PKinematics()->LL_GetBoneInstance(PhysicsShellAnimatorBoneDataC.m_element->m_SelfID);
 		B.reset_callback();
 		PhysicsShellAnimatorBoneDataC.m_anim_fixed_dJointID=dJointCreateFixed(0,0);
 		((CPHShell*)(m_pPhysicsShell))->Island().DActiveIsland()->AddJoint(PhysicsShellAnimatorBoneDataC.m_anim_fixed_dJointID);				
@@ -51,7 +51,7 @@ void CPhysicsShellAnimator::OnFrame()
 	for (xr_vector<CPhysicsShellAnimatorBoneData>::iterator i=m_bones_data.begin();i!=m_bones_data.end();i++)
 	{
 		Fmatrix target_obj_posFmatrixS;
-		CBoneInstance& B=m_pPhysicsShell->PKinematics()->LL_GetBoneInstance(i->m_element->m_SelfID);
+		IBoneInstance& B=m_pPhysicsShell->PKinematics()->LL_GetBoneInstance(i->m_element->m_SelfID);
 		
 		target_obj_posFmatrixS.mul_43((*(m_pPhysicsShell->Elements().begin()))->PhysicsRefObject()->XFORM(),B.GetTransform());
 				

@@ -8,7 +8,7 @@ struct		vertBoned1W;
 struct		vertBoned2W;
 struct		vertBoned3W;
 struct		vertBoned4W;
-class		CBoneInstance;
+class		IBoneInstance;
 class	light;
 class	 XrDeviceInterface;
 
@@ -18,10 +18,10 @@ class	 XrDeviceInterface;
 // S: SysMem		non-aligned
 // Bones: SysMem	64b aligned
 
-typedef void		xrSkin1W		(vertRender* D, vertBoned1W* S, u32 vCount, CBoneInstance* Bones);
-typedef void		xrSkin2W		(vertRender* D, vertBoned2W* S, u32 vCount, CBoneInstance* Bones);
-typedef void		xrSkin3W		(vertRender* D, vertBoned3W* S, u32 vCount, CBoneInstance* Bones);
-typedef void		xrSkin4W		(vertRender* D, vertBoned4W* S, u32 vCount, CBoneInstance* Bones);
+typedef void		xrSkin1W		(vertRender* D, vertBoned1W* S, u32 vCount, IBoneInstance* Bones);
+typedef void		xrSkin2W		(vertRender* D, vertBoned2W* S, u32 vCount, IBoneInstance* Bones);
+typedef void		xrSkin3W		(vertRender* D, vertBoned3W* S, u32 vCount, IBoneInstance* Bones);
+typedef void		xrSkin4W		(vertRender* D, vertBoned4W* S, u32 vCount, IBoneInstance* Bones);
 
 typedef void		xrPLC_calc3		(int& c0, int& c1, int& c2, XrDeviceInterface& Device, Fvector* P, Fvector& N, light* L, float energy, Fvector& O);
 

@@ -134,8 +134,8 @@ void CWeapon::UpdateXForm	()
 			boneL = boneR2;
 #pragma todo("TO ALL: serious performance problem")
 		V->CalculateBones	();
-		Fmatrix& mL			= V->LL_GetTransform(u16(boneL));
-		Fmatrix& mR			= V->LL_GetTransform(u16(boneR));
+		const Fmatrix& mL			= V->LL_GetTransform(u16(boneL));
+		const Fmatrix& mR			= V->LL_GetTransform(u16(boneR));
 		// Calculate
 		Fmatrix				mRes;
 		Fvector				R,D,N;
@@ -178,8 +178,8 @@ void CWeapon::UpdateFireDependencies_internal()
 			V->CalculateBones		();
 
 			// fire point&direction
-			Fmatrix& fire_mat		= V->LL_GetTransform(u16(m_pHUD->FireBone()));
-			Fmatrix& parent			= m_pHUD->Transform	();
+			const Fmatrix& fire_mat		= V->LL_GetTransform(u16(m_pHUD->FireBone()));
+			const Fmatrix& parent			= m_pHUD->Transform	();
 
 			const Fvector& fp		= m_pHUD->FirePoint();
 			const Fvector& fp2		= m_pHUD->FirePoint2();

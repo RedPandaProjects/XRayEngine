@@ -844,7 +844,7 @@ void	DBG_DrawBones( const Fmatrix &xform,  IKinematics *K )
 	u16 nbb = K->LL_BoneCount();
 	for(u16 i = 0; i < nbb; ++i )
 	{
-		CBoneInstance	&bi = K->LL_GetBoneInstance( i );
+		IBoneInstance	&bi = K->LL_GetBoneInstance( i );
 		const IBoneData		&bd = K->GetBoneData( i );
 		
 		Fmatrix bone_pos = bi.GetTransform();
@@ -856,7 +856,7 @@ void	DBG_DrawBones( const Fmatrix &xform,  IKinematics *K )
 		u16 bp = bd.GetParentID();
 		if( BI_NONE != bp )
 		{
-			CBoneInstance	&pbi = K->LL_GetBoneInstance( bp );
+			IBoneInstance	&pbi = K->LL_GetBoneInstance( bp );
 			DBG_DrawLine( Fmatrix().mul_43( xform, bone_pos ).c, Fmatrix().mul_43( xform, pbi.GetTransform() ).c, color_xrgb( 255, 255, 0 ) );
 		}
 	}

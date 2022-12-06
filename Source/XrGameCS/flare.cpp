@@ -179,7 +179,7 @@ void CFlare::FirePoint(Fvector& _fp)
 	{
 		_fp.set							(0,0,0);
 		IKinematics* K					= CastToIKinematics(Visual());
-		Fmatrix& fire_mat				= K->LL_GetTransform(K->LL_BoneID("flare_point"));
+		const Fmatrix& fire_mat				= K->LL_GetTransform(K->LL_BoneID("flare_point"));
 		fire_mat.transform_tiny			(_fp);
 		XFORM().transform_tiny			(_fp);
 	}

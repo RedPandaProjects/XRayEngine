@@ -58,7 +58,7 @@ void BONE::compute_bones			(u32 const bone_id)
 	bone_matrix.setXYZ	(angles);
 	VERIFY			( _valid(bone_matrix) );
 
-	CBoneInstance&		bone = m_kinematics.LL_GetBoneInstance( m_bones_ids[bone_id] );
+	IBoneInstance&		bone = m_kinematics.LL_GetBoneInstance( m_bones_ids[bone_id] );
 	BoneCallback const&	old_callback = bone.callback();
 	void*				old_callback_param = bone.callback_param();
 	bone.set_callback	( bctCustom, &inherited::callback, &bone_matrix );

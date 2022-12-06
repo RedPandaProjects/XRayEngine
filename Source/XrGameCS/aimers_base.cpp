@@ -36,7 +36,7 @@ base::base						(
 	VERIFY				( _valid(m_start_transform) );
 }
 
-void base::callback				(CBoneInstance* bone)
+void base::callback				(IBoneInstance* bone)
 {
 	VERIFY					(bone);
 

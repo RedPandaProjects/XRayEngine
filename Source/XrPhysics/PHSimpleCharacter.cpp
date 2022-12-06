@@ -1455,7 +1455,7 @@ u16 CPHSimpleCharacter::RetriveContactBone()
 		//IKinematics* K=CastToIKinematics(m_phys_ref_object->ObjectVisual());
 		IKinematics* K=m_phys_ref_object->ObjectKinematics();
 		u16 count=K->LL_BoneCount();
-		CBoneInstance* bone_instances=&K->LL_GetBoneInstance(0);
+		IBoneInstance* bone_instances=&K->LL_GetBoneInstance(0);
 		Fvector pos_in_object;
 		pos_in_object.sub(m_collision_damage_info.HitPos(),m_phys_ref_object->ObjectPosition());//vector from object center to contact position currently in global frame
 		Fmatrix object_form;

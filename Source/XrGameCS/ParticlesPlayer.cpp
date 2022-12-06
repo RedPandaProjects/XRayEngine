@@ -287,7 +287,7 @@ void CParticlesPlayer::GetBonePos	(CObject* pObject, u16 bone_id, const Fvector&
 {
 	VERIFY(pObject);
 	IKinematics* pKinematics = CastToIKinematics(pObject->Visual()); VERIFY(pKinematics);
-	CBoneInstance&		l_tBoneInstance = pKinematics->LL_GetBoneInstance(bone_id);
+	IBoneInstance&		l_tBoneInstance = pKinematics->LL_GetBoneInstance(bone_id);
 
 	result = offset;
 	l_tBoneInstance.GetTransform().transform_tiny(result);

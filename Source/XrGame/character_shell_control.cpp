@@ -110,7 +110,7 @@ void character_shell_control::TestForWounded(const Fmatrix& xform,  IKinematics*
 	
 	//IKinematics* CKA=CastToIKinematics(m_EntityAlife.Visual());
 	CKA->CalculateBones( );
-	CBoneInstance CBI=CKA->LL_GetBoneInstance( CKA->LL_BoneID("bip01_pelvis") );
+	IBoneInstance&CBI=CKA->LL_GetBoneInstance( CKA->LL_BoneID("bip01_pelvis") );
 	Fmatrix position_matrix;
 	position_matrix.mul( xform, CBI.GetTransform() );
 	

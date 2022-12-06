@@ -10,7 +10,7 @@
 #include "xr_level_controller.h"
 #include "game_object_space.h"
 
-void CCarWeapon::BoneCallbackX		(CBoneInstance *B)
+void CCarWeapon::BoneCallbackX		(IBoneInstance *B)
 {
 	CCarWeapon	*P = static_cast<CCarWeapon*>(B->callback_param());
 	Fmatrix rX;		rX.rotateX		(P->m_cur_x_rot);
@@ -19,7 +19,7 @@ void CCarWeapon::BoneCallbackX		(CBoneInstance *B)
 	B->SetTransform(BoneMatrix);
 }
 
-void CCarWeapon::BoneCallbackY		(CBoneInstance *B)
+void CCarWeapon::BoneCallbackY		(IBoneInstance *B)
 {
 	CCarWeapon	*P = static_cast<CCarWeapon*>(B->callback_param());
 	Fmatrix rY;		rY.rotateY		(P->m_cur_y_rot);
@@ -134,17 +134,17 @@ void CCarWeapon::SetBoneCallbacks()
 {
 //	m_object->PPhysicsShell()->EnabledCallbacks(FALSE);
 	
-	CBoneInstance& biX		= CastToIKinematics(m_object->Visual())->LL_GetBoneInstance(m_rotate_x_bone);	
+	IBoneInstance& biX		= CastToIKinematics(m_object->Visual())->LL_GetBoneInstance(m_rotate_x_bone);	
 	biX.set_callback		(bctCustom,BoneCallbackX,this);
-	CBoneInstance& biY		= CastToIKinematics(m_object->Visual())->LL_GetBoneInstance(m_rotate_y_bone);	
+	IBoneInstance& biY		= CastToIKinematics(m_object->Visual())->LL_GetBoneInstance(m_rotate_y_bone);	
 	biY.set_callback		(bctCustom,BoneCallbackY,this);
 }
 
 void CCarWeapon::ResetBoneCallbacks()
 {
-	CBoneInstance& biX		= CastToIKinematics(m_object->Visual())->LL_GetBoneInstance(m_rotate_x_bone);	
+	IBoneInstance& biX		= CastToIKinematics(m_object->Visual())->LL_GetBoneInstance(m_rotate_x_bone);	
 	biX.reset_callback		();
-	CBoneInstance& biY		= CastToIKinematics(m_object->Visual())->LL_GetBoneInstance(m_rotate_y_bone);	
+	IBoneInstance& biY		= CastToIKinematics(m_object->Visual())->LL_GetBoneInstance(m_rotate_y_bone);	
 	biY.reset_callback		();
 
 //	m_object->PPhysicsShell()->EnabledCallbacks(TRUE);

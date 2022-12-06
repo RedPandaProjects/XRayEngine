@@ -155,16 +155,16 @@ public:																																				//
 ////////////////////////////////////////////////Updates///////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			bool						AnimToVel								( float dt, float l_limit,float a_limit );
-			void						BoneGlPos								(Fmatrix &m, const CBoneInstance* B)const;
-			void						ToBonePos								(const CBoneInstance* B);
+			void						BoneGlPos								(Fmatrix &m, const IBoneInstance* B)const;
+			void						ToBonePos								(const IBoneInstance* B);
 #ifdef		DEBUG
 	virtual void						dbg_draw_velocity						( float scale, u32 color );
 	virtual void						dbg_draw_force							( float scale, u32 color );
 	virtual void						dbg_draw_geometry						( float scale, u32 color, Flags32 flags = Flags32().assign( 0 ) ) const;
 #endif
 			void						SetBoneCallbackOverwrite				(bool v);
-			void						BonesCallBack							(CBoneInstance* B);																//called from updateCL visual influent
-			void						StataticRootBonesCallBack				(CBoneInstance* B);
+			void						BonesCallBack							(IBoneInstance* B);																//called from updateCL visual influent
+			void						StataticRootBonesCallBack				(IBoneInstance* B);
 			void						PhDataUpdate							(dReal step);																	//ph update
 			void						PhTune									(dReal step);																	//ph update
 	virtual void						Update									();																				//called update CL visual influence

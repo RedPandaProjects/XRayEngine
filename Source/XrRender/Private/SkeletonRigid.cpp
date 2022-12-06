@@ -117,12 +117,12 @@ void check_kinematics(CKinematics* _k, LPCSTR s)
 }
 #endif
 
-void	CKinematics::			BuildBoneMatrix			( const CBoneData* bd, CBoneInstance &bi, const Fmatrix *parent, u8 channel_mask/* = (1<<0)*/ )
+void	CKinematics::			BuildBoneMatrix			( const CBoneData* bd, IBoneInstance &bi, const Fmatrix *parent, u8 channel_mask/* = (1<<0)*/ )
 {
 	bi.mTransform.mul_43	(*parent,bd->bind_transform);
 }
 
-void CKinematics::CLBone( const CBoneData* bd, CBoneInstance &bi, const Fmatrix *parent, u8 channel_mask /*= (1<<0)*/)
+void CKinematics::CLBone( const CBoneData* bd, IBoneInstance &bi, const Fmatrix *parent, u8 channel_mask /*= (1<<0)*/)
 {
 	
 	u16							SelfID				= bd->GetSelfID();
@@ -151,7 +151,7 @@ void CKinematics::CLBone( const CBoneData* bd, CBoneInstance &bi, const Fmatrix 
 void	CKinematics::Bone_GetAnimPos(Fmatrix& pos,u16 id,u8 mask_channel, bool ignore_callbacks)
 {
 	R_ASSERT(id<LL_BoneCount());
-	CBoneInstance bi = LL_GetBoneInstance(id);
+	IBoneInstance bi = LL_GetBoneInstance(id);
 	BoneChain_Calculate(&LL_GetData(id),bi,mask_channel,ignore_callbacks);
 #ifndef MASTER_GOLD
 	R_ASSERT( _valid( bi.mTransform ) );
@@ -163,7 +163,7 @@ void CKinematics::Bone_Calculate(CBoneData* bd, Fmatrix *parent)
 {
 
 	u16							SelfID				= bd->GetSelfID();
-	CBoneInstance				&BONE_INST			= LL_GetBoneInstance(SelfID);
+	IBoneInstance				&BONE_INST			= LL_GetBoneInstance(SelfID);
 	CLBone( bd, BONE_INST, parent, u8(-1) );
 	// Calculate children
 	for (xr_vector<CBoneData*>::iterator C=bd->children.begin(); C!=bd->children.end(); C++)
@@ -171,7 +171,7 @@ void CKinematics::Bone_Calculate(CBoneData* bd, Fmatrix *parent)
 
 }
 
-void	CKinematics::BoneChain_Calculate		(const CBoneData* bd, CBoneInstance &bi, u8 mask_channel, bool ignore_callbacks)
+void	CKinematics::BoneChain_Calculate		(const CBoneData* bd, IBoneInstance &bi, u8 mask_channel, bool ignore_callbacks)
 {
 	u16 SelfID					= bd->GetSelfID();
 	//CBlendInstance& BLEND_INST	= LL_GetBlendInstance(SelfID);
@@ -194,7 +194,7 @@ void	CKinematics::BoneChain_Calculate		(const CBoneData* bd, CBoneInstance &bi, 
 	u16 ParentID				= bd->GetParentID();
 	R_ASSERT( ParentID != BI_NONE );
 	CBoneData* ParrentDT		= &LL_GetData(ParentID);
-	CBoneInstance parrent_bi	= LL_GetBoneInstance(ParentID);
+	IBoneInstance parrent_bi	= LL_GetBoneInstance(ParentID);
 	BoneChain_Calculate(ParrentDT, parrent_bi, mask_channel, ignore_callbacks);
 	CLBone( bd, bi, &parrent_bi.mTransform, mask_channel );
 	//restore callback

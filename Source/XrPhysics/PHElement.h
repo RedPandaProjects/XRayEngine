@@ -157,9 +157,9 @@ public:																																				//
 ////////////////////////////////////////////////Updates///////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			bool						AnimToVel								( float dt, float l_limit,float a_limit );
-			//void						BoneGlPos								(Fmatrix &m, const CBoneInstance* B)const;
+			//void						BoneGlPos								(Fmatrix &m, const IBoneInstance* B)const;
 			void						BoneGlPos								(Fmatrix &m, const Fmatrix &BoneTransform)const;
-			void						ToBonePos								(const CBoneInstance* B, motion_history_state history_state );
+			void						ToBonePos								(const IBoneInstance* B, motion_history_state history_state );
 			void						ToBonePos								(const Fmatrix &BoneTransform, motion_history_state history_state );
 	IC		void						ActivatingPos							(const Fmatrix &BoneTransform);
 	IC		void						CalculateBoneTransform					( Fmatrix &bone_transform )const;
@@ -170,8 +170,8 @@ public:																																				//
 	virtual void						dbg_draw_geometry						( float scale, u32 color, Flags32 flags = Flags32().assign( 0 ) ) const;
 #endif
 			void						SetBoneCallbackOverwrite				(bool v);
-			void		_BCL			BonesCallBack							(CBoneInstance* B);																//called from updateCL visual influent
-			void						StataticRootBonesCallBack				(CBoneInstance* B);
+			void		_BCL			BonesCallBack							(IBoneInstance* B);																//called from updateCL visual influent
+			void						StataticRootBonesCallBack				(IBoneInstance* B);
 			void						PhDataUpdate							(dReal step);																	//ph update
 			void						PhTune									(dReal step);																	//ph update
 	virtual void						Update									();																				//called update CL visual influence

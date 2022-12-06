@@ -16,7 +16,7 @@
 
 typedef CStalkerAnimationManager::callback_params	callback_params;
 
-static void callback_rotation		(CBoneInstance* bone)
+static void callback_rotation		(IBoneInstance* bone)
 {
 	R_ASSERT						( _valid( bone->GetTransform() ) );
 	callback_params*				parameter = static_cast<callback_params*>( bone->callback_param() );
@@ -62,7 +62,7 @@ static void callback_rotation		(CBoneInstance* bone)
 	R_ASSERT						( _valid( bone->GetTransform() ) );
 }
 
-static void callback_rotation_blend	(CBoneInstance* const bone)
+static void callback_rotation_blend	(IBoneInstance* const bone)
 {
 	R_ASSERT						( _valid( bone->GetTransform() ) );
 

@@ -5,13 +5,13 @@ struct dContactGeom;
 struct dContact;
 class SGameMtl;
 namespace	CDB{	class TRI;	}
-class		CBoneInstance;
+class		IBoneInstance;
 
 typedef void 	ContactCallbackFun(CDB::TRI* T,dContactGeom* c);
 typedef	void	ObjectContactCallbackFun(bool& do_colide,bool bo1,dContact& c,SGameMtl* material_1,SGameMtl* material_2);
 
 
-typedef void	_BCL	BoneCallbackFun(CBoneInstance* B);
+typedef void	_BCL	BoneCallbackFun(IBoneInstance* B);
 
 
 

@@ -56,7 +56,7 @@ bool can_capture( CPHCharacter   *a_character, IPhysicsShellHolder	*a_taget_obje
 	return true;
 }
 
-static CBoneInstance * get_capture_bone( CPHCharacter   *a_character )
+static IBoneInstance * get_capture_bone( CPHCharacter   *a_character )
 {
 	VERIFY( a_character );
 	VERIFY( a_character->PhysicsRefObject() );
@@ -89,7 +89,7 @@ float				m_capture_distance;
 float				m_pull_distance;
 u32					m_capture_time;
 u32					m_time_start;
-CBoneInstance		*m_capture_bone;
+IBoneInstance		*m_capture_bone;
 dBodyID				m_body;
 CPHIsland			m_island;
 //bool				b_failed;
@@ -177,7 +177,7 @@ CPHCapture::CPHCapture	( CPHCharacter   *a_character, IPhysicsShellHolder	*a_tag
 	IKinematics* K=	m_taget_object->ObjectKinematics( ) ;
 	VERIFY( K );
 
-	CBoneInstance& tag_bone=K->LL_GetBoneInstance( a_taget_element );
+	IBoneInstance& tag_bone=K->LL_GetBoneInstance( a_taget_element );
 	VERIFY( tag_bone.callback_param( ) );
 
 	m_taget_element					=(CPhysicsElement*)tag_bone.callback_param();

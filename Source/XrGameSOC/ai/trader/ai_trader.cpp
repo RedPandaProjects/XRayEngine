@@ -87,14 +87,14 @@ bool CAI_Trader::bfAssignSound(CScriptEntityAction *tpEntityAction)
 //////////////////////////////////////////////////////////////////////////
 // Look At Actor
 //////////////////////////////////////////////////////////////////////////
-void CAI_Trader::BoneCallback(CBoneInstance *B)
+void CAI_Trader::BoneCallback(IBoneInstance *B)
 {
 	CAI_Trader*	this_class = static_cast<CAI_Trader*>(B->callback_param());
 
 	this_class->LookAtActor(B);
 }
 
-void CAI_Trader::LookAtActor(CBoneInstance *B)
+void CAI_Trader::LookAtActor(IBoneInstance *B)
 {
 	Fvector dir;
 	dir.sub(Level().CurrentEntity()->Position(),Position());
@@ -138,7 +138,7 @@ BOOL CAI_Trader::net_Spawn			(CSE_Abstract* DC)
 	set_money				( l_tpTrader->m_dwMoney, false );
 
 	// ��������� callback �� �����
-	CBoneInstance			*bone_head =	&CastToIKinematics(Visual())->LL_GetBoneInstance(CastToIKinematics(Visual())->LL_BoneID("bip01_head"));
+	IBoneInstance			*bone_head =	&CastToIKinematics(Visual())->LL_GetBoneInstance(CastToIKinematics(Visual())->LL_BoneID("bip01_head"));
 	bone_head->set_callback	(bctCustom,BoneCallback,this);
 
 	shedule.t_min			= 100;

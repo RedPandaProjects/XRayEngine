@@ -89,75 +89,10 @@ CSMotion* CEditableObject::ResetSAnimation(bool bGotoBindPose)
     return M;
 }
 
-//----------------------------------------------------
-// Skeletal motion
-//----------------------------------------------------
-static void CalculateAnimBone(CBone* bone, CSMotion* motion, Fmatrix& parent)
-{
-        Flags8 flags; flags.zero();
-    if (motion)
-     flags 	= motion->GetMotionFlags(bone->SelfID);
-
-    Fmatrix& M 		= bone->_MTransform();
-    Fmatrix& L 		= bone->_LTransform();
-    
-    const Fvector& r = bone->_Rotate();
-    if( ! bone->callback_overwrite()  )
-    {
-        if ( flags.is(st_BoneMotion::flWorldOrient)){
-            M.setXYZi	(r.x,r.y,r.z);
-            M.c.set		(bone->_Offset());
-            L.mul		(parent,M);
-            L.i.set		(M.i);
-            L.j.set		(M.j);
-            L.k.set		(M.k);
-
-            Fmatrix		 LI; LI.invert(parent);
-            M.mulA_43	(LI);
-        }else{
-            M.setXYZi	(r.x,r.y,r.z);
-            M.c.set		(bone->_Offset());
-            L.mul		(parent,M);
-        }
-     }
-    if( bone->callback() )
-    {
-    	bone->callback()( bone );
-        M.mul_43( Fmatrix().invert(parent), L );
-       // bone->_Offset().set( M.c );
-    }
-
-	bone->_RenderTransform().mul_43(bone->_LTransform(),bone->_RITransform());
-}
-static void CalculateAnim(CBone* bone, CSMotion* motion, Fmatrix& parent)
-{
-
-	CalculateAnimBone( bone, motion, parent );
-    // Calculate children
-    for (BoneIt b_it=bone->children.begin(); b_it!=bone->children.end(); b_it++)
-    	CalculateAnim	(*b_it,motion,bone->_LTransform());
-}
-
-
-
-static void CalculateRest(CBone* bone, Fmatrix& parent)
-{
-    Fmatrix& R	= bone->_RTransform();
-    R.setXYZi	(bone->_RestRotate());
-    R.c.set		(bone->_RestOffset());
-    bone->_LRTransform() = R;
-    R.mulA_43	(parent);
-    bone->_RITransform().invert(bone->_RTransform());
-
-    // Calculate children
-    for (BoneIt b_it=bone->children.begin(); b_it!=bone->children.end(); b_it++)
-    	CalculateRest	(*b_it,bone->_RTransform());
-}
-
 void CEditableObject::CalculateAnimation(CSMotion* motion)
 {
-	if (!m_Bones.empty())
-		CalculateAnim(m_Bones.front(),motion,Fidentity);
+	//if (!m_Bones.empty())
+		//CalculateAnim(m_Bones.front(),motion,Fidentity);
 }
  float CEditableObject::GetBonesBottom()
  {
@@ -169,14 +104,6 @@ void CEditableObject::CalculateAnimation(CSMotion* motion)
     return bottom;
  }
 
- static void SetBoneTransform( CBone &bone, const Fmatrix &T, const Fmatrix & parent )
-{
-
-	bone._LTransform() = T;
-    Fmatrix		 LI; LI.invert(parent);
-    bone._MTransform().mul_43( LI, T );
-	bone._RenderTransform().mul_43(bone._LTransform(),bone._RITransform());
-}
 bool CEditableObject::AnimateRootObject( CSMotion* motion )
 {
   VERIFY( motion );
@@ -236,28 +163,28 @@ static void AlineYtoGlobalFrame(Fmatrix &in_out_m)
 }
 void CEditableObject::CalculateRootObjectAnimation(const Fmatrix &anchor)
 {
-	float 	bottom =   GetBonesBottom();
-			CBone	&root_bone 		= *m_Bones[GetRootBoneID()];
-            VERIFY( root_bone .children.size() == 1 );
-			CBone	&anchor_bone 	= *root_bone .children[0];
-	const	Fmatrix gl_anchor = Fmatrix().mul_43( anchor_bone._LTransform(), anchor );
+	//float 	bottom =   GetBonesBottom();
+	//		CBone	&root_bone 		= *m_Bones[GetRootBoneID()];
+ //           VERIFY( root_bone .children.size() == 1 );
+	//		CBone	&anchor_bone 	= *root_bone .children[0];
+	//const	Fmatrix gl_anchor = Fmatrix().mul_43( anchor_bone._LTransform(), anchor );
 
-  	Fmatrix root_transform  = gl_anchor;//gl_anchor;
-    AlineYtoGlobalFrame( root_transform );
+ // 	Fmatrix root_transform  = gl_anchor;//gl_anchor;
+ //   AlineYtoGlobalFrame( root_transform );
 
-    root_transform.c =  gl_anchor.c;
-    root_transform.c.y=bottom;
-    SetBoneTransform(   root_bone, root_transform, Fidentity );
-    
- 	SetBoneTransform(   anchor_bone, anchor_bone._LTransform(), root_transform );
+ //   root_transform.c =  gl_anchor.c;
+ //   root_transform.c.y=bottom;
+ //   SetBoneTransform(   root_bone, root_transform, Fidentity );
+ //   
+ //	SetBoneTransform(   anchor_bone, anchor_bone._LTransform(), root_transform );
     
   //  for (BoneIt b_it=root_bone .children.begin(); b_it!=root_bone .children.end(); b_it++)
   //  	SetBoneTransform(   *(*b_it), (*(*b_it))._LTransform(), root_transform );
 }
 void CEditableObject::CalculateBindPose()
 {
-	if (!m_Bones.empty())
-		CalculateRest(m_Bones.front(),Fidentity);
+	/*if (!m_Bones.empty())
+		CalculateRest(m_Bones.front(),Fidentity);*/
 }
 
 void CEditableObject::SetActiveSMotion(CSMotion* mot)

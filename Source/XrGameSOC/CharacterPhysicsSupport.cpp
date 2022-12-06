@@ -615,7 +615,7 @@ void CCharacterPhysicsSupport::ActivateShell			( CObject* who )
 
 	//animation movement controller issues
 	bool	anim_mov_ctrl =m_EntityAlife.animation_movement_controlled( );
-	CBoneInstance	&BR = K->LL_GetBoneInstance( K->LL_GetBoneRoot( ) );
+	IBoneInstance	&BR = K->LL_GetBoneInstance( K->LL_GetBoneRoot( ) );
 	Fmatrix start_xform; start_xform.identity( );
 	CBlend *anim_mov_blend = 0;
 	//float	blend_time = 0;
@@ -886,7 +886,7 @@ void CCharacterPhysicsSupport::TestForWounded()
 	
 	IKinematics* CKA=CastToIKinematics(m_EntityAlife.Visual());
 	CKA->CalculateBones();
-	CBoneInstance CBI=CKA->LL_GetBoneInstance(0);
+	IBoneInstance&CBI=CKA->LL_GetBoneInstance(0);
 	Fmatrix position_matrix;
 	position_matrix.mul(mXFORM,CBI.GetTransform());
 	

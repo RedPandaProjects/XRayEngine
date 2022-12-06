@@ -18,7 +18,7 @@
 
 //----------------------------------------------------------------------------------------
 
-void CWeaponMounted::BoneCallbackX(CBoneInstance *B)
+void CWeaponMounted::BoneCallbackX(IBoneInstance *B)
 {
 	CWeaponMounted	*P = static_cast<CWeaponMounted*>(B->callback_param());
 
@@ -28,7 +28,7 @@ void CWeaponMounted::BoneCallbackX(CBoneInstance *B)
 	}
 }
 
-void CWeaponMounted::BoneCallbackY(CBoneInstance *B)
+void CWeaponMounted::BoneCallbackY(IBoneInstance *B)
 {
 	CWeaponMounted	*P = static_cast<CWeaponMounted*>(B->callback_param());
 
@@ -57,11 +57,11 @@ void	CWeaponMounted::Load(LPCSTR section)
 
 	HUD_SOUND::LoadSound(section,"snd_shoot", sndShot, SOUND_TYPE_WEAPON_SHOOTING);
 
-	//тип используемых патронов
+	//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	m_sAmmoType = pSettings->r_string(section, "ammo_class");
 	m_CurrentAmmo.Load(*m_sAmmoType, 0);
 
-	//подбрасывание камеры во время отдачи
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	camMaxAngle			= pSettings->r_float		(section,"cam_max_angle"	); 
 	camMaxAngle			= deg2rad					(camMaxAngle);
 	camRelaxSpeed		= pSettings->r_float		(section,"cam_relax_speed"	); 
@@ -162,7 +162,7 @@ void	CWeaponMounted::shedule_Update(u32 dt)
 
 void	CWeaponMounted::renderable_Render()
 {
-	//нарисовать подсветку
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	RenderLight();
 
 	inherited::renderable_Render	();
@@ -243,13 +243,13 @@ bool	CWeaponMounted::attach_Actor		(CGameObject* actor)
 	m_dAngle.set(0.0f,0.0f);
 	CHolderCustom::attach_Actor(actor);
 	IKinematics* K		= CastToIKinematics(Visual());
-	// убрать оружие из рук	
+	// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ	
 	// disable shell callback
 	m_pPhysicsShell->EnabledCallbacks(FALSE);
 	// enable actor rotate callback
-	CBoneInstance& biX		= CastToIKinematics(Visual())->LL_GetBoneInstance(rotate_x_bone);	
+	IBoneInstance& biX		= CastToIKinematics(Visual())->LL_GetBoneInstance(rotate_x_bone);	
 	biX.set_callback		(bctCustom,BoneCallbackX,this);
-	CBoneInstance& biY		= CastToIKinematics(Visual())->LL_GetBoneInstance(rotate_y_bone);	
+	IBoneInstance& biY		= CastToIKinematics(Visual())->LL_GetBoneInstance(rotate_y_bone);	
 	biY.set_callback		(bctCustom,BoneCallbackY,this);
 	// set actor to mounted position
 	const Fmatrix& A	= K->LL_GetTransform(actor_bone);
@@ -264,14 +264,14 @@ void	CWeaponMounted::detach_Actor		()
 {
 	CHolderCustom::detach_Actor();
 	// disable actor rotate callback
-	CBoneInstance& biX		= CastToIKinematics(Visual())->LL_GetBoneInstance(rotate_x_bone);	
+	IBoneInstance& biX		= CastToIKinematics(Visual())->LL_GetBoneInstance(rotate_x_bone);	
 	biX.reset_callback		();
-	CBoneInstance& biY		= CastToIKinematics(Visual())->LL_GetBoneInstance(rotate_y_bone);	
+	IBoneInstance& biY		= CastToIKinematics(Visual())->LL_GetBoneInstance(rotate_y_bone);	
 	biY.reset_callback		();
 	// enable shell callback
 	m_pPhysicsShell->EnabledCallbacks(TRUE);
 	
-	//закончить стрельбу
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	FireEnd();
 
 	processing_deactivate		();
@@ -322,7 +322,7 @@ void CWeaponMounted::OnShot		()
 	bool b_hud_mode = (Level().CurrentEntity() == smart_cast<CObject*>(Owner()));
 	HUD_SOUND::PlaySound(sndShot, fire_pos, Owner(), b_hud_mode);
 
-	//добавить эффектор стрельбы
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	AddShotEffector		();
 	m_dAngle.set(	::Random.randF(-fireDispersionBase,fireDispersionBase),
 					::Random.randF(-fireDispersionBase,fireDispersionBase));

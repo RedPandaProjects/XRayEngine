@@ -145,12 +145,12 @@ public:																																				//
 ////////////////////////////////////////////////Updates///////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			bool						AnimToVel								( float dt, float l_limit,float a_limit );
-			void						BoneGlPos								(Fmatrix &m,CBoneInstance* B);
-			void						ToBonePos								(CBoneInstance* B);
+			void						BoneGlPos								(Fmatrix &m,IBoneInstance* B);
+			void						ToBonePos								(IBoneInstance* B);
 
 			void						SetBoneCallbackOverwrite				(bool v);
-			void						BonesCallBack							(CBoneInstance* B);																//called from updateCL visual influent
-			void						StataticRootBonesCallBack				(CBoneInstance* B);
+			void						BonesCallBack							(IBoneInstance* B);																//called from updateCL visual influent
+			void						StataticRootBonesCallBack				(IBoneInstance* B);
 			void						PhDataUpdate							(dReal step);																	//ph update
 			void						PhTune									(dReal step);																	//ph update
 	virtual void						Update									();																				//called update CL visual influence

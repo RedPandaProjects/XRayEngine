@@ -28,8 +28,8 @@ private:
 	Fvector					fire_pos, fire_dir;
 	Fmatrix					fire_bone_xform;
 	Fvector2				m_dAngle;
-	static void 			BoneCallbackX		(CBoneInstance *B);
-	static void				BoneCallbackY		(CBoneInstance *B);
+	static void 			BoneCallbackX		(IBoneInstance *B);
+	static void				BoneCallbackY		(IBoneInstance *B);
 public:
 							CWeaponMounted		();
 	virtual					~CWeaponMounted		();
@@ -39,7 +39,7 @@ public:
 	virtual const Fmatrix&	get_ParticlesXFORM()	;
 
 	//////////////////////////////////////////////////
-	// непосредственно обработка стрельбы
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	//////////////////////////////////////////////////
 protected:
 	virtual	void			FireStart	();
@@ -52,10 +52,10 @@ protected:
 	shared_str					m_sAmmoType;
 	CCartridge				m_CurrentAmmo;
 
-	//звук стрельбы
+	//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	HUD_SOUND				sndShot;
 
-	//для отдачи
+	//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	float					camRelaxSpeed;
 	float					camMaxAngle;
 

@@ -37,7 +37,7 @@ static u32 const tips_scroll_back_color  = color_rgba( 15, 15, 15, 230 );
 static u32 const tips_scroll_pos_color   = color_rgba( 70, 70, 70, 240 );
 
 
-ENGINE_API ConsoleBase*		Console		=	NULL;
+ENGINE_API XRayConsoleInterface*		Console		=	NULL;
 
 extern char const * const	ioc_prompt;
        char const * const	ioc_prompt	=	">>> ";
@@ -46,12 +46,12 @@ extern char const * const	ch_cursor;
        char const * const	ch_cursor	=	"_";
 
 
-void ConsoleBase::AddCommand( IConsole_Command* cc )
+void XRayConsoleInterface::AddCommand( IConsole_Command* cc )
 {
 	Commands[cc->Name()] = cc;
 }
 
-void ConsoleBase::RemoveCommand( IConsole_Command* cc )
+void XRayConsoleInterface::RemoveCommand( IConsole_Command* cc )
 {
 	vecCMD_IT it = Commands.find( cc->Name() );
 	if ( Commands.end() != it )
@@ -60,12 +60,12 @@ void ConsoleBase::RemoveCommand( IConsole_Command* cc )
 	}
 }
 
-void ConsoleBase::Execute( LPCSTR cmd )
+void XRayConsoleInterface::Execute( LPCSTR cmd )
 {
 	ExecuteCommand( cmd, false );
 }
 
-void ConsoleBase::ExecuteScript( LPCSTR str )
+void XRayConsoleInterface::ExecuteScript( LPCSTR str )
 {
 	u32  str_size = xr_strlen( str );
 	PSTR buf = (PSTR)_alloca( (str_size + 10) * sizeof(char) );
@@ -74,7 +74,7 @@ void ConsoleBase::ExecuteScript( LPCSTR str )
 	Execute( buf );
 }
 
-void ConsoleBase::ExecuteCommand(LPCSTR cmd_str, bool record_cmd)
+void XRayConsoleInterface::ExecuteCommand(LPCSTR cmd_str, bool record_cmd)
 {
 	u32  str_size = xr_strlen(cmd_str);
 	PSTR edt = (PSTR)_alloca((str_size + 1) * sizeof(char));

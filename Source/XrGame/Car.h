@@ -21,7 +21,7 @@
 #include "PHDestroyable.h"
 #include "DelayedActionFuse.h"
 // refs
-class ENGINE_API			CBoneInstance;
+class ENGINE_API			IBoneInstance;
 class						CActor;
 class						CInventory;
 class						CSE_PHSkeleton;
@@ -513,7 +513,7 @@ IC	size_t				CurrentTransmission					(){return m_current_transmission_num;}
 
 	bool					HUDview						( ) { return IsFocused(); }
 
-	static void	_BCL		cb_Steer					(CBoneInstance* B);
+	static void	_BCL		cb_Steer					(IBoneInstance* B);
 	virtual	void			Hit							(SHit* pHDS);
 	virtual void			Die							(CObject* who);
 	virtual void PHHit									(SHit &H);

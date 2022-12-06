@@ -170,7 +170,7 @@ void attachable_hud_item::setup_firedeps(firedeps& fd)
 	// fire point&direction
 	if(m_measures.m_prop_flags.test(hud_item_measures::e_fire_point))
 	{
-		Fmatrix& fire_mat								= m_model->LL_GetTransform(m_measures.m_fire_bone);
+		const Fmatrix& fire_mat								= m_model->LL_GetTransform(m_measures.m_fire_bone);
 		fire_mat.transform_tiny							(fd.vLastFP, m_measures.m_fire_point_offset);
 		m_item_transform.transform_tiny					(fd.vLastFP);
 
@@ -189,7 +189,7 @@ void attachable_hud_item::setup_firedeps(firedeps& fd)
 
 	if(m_measures.m_prop_flags.test(hud_item_measures::e_fire_point2))
 	{
-		Fmatrix& fire_mat			= m_model->LL_GetTransform(m_measures.m_fire_bone2);
+		const Fmatrix& fire_mat			= m_model->LL_GetTransform(m_measures.m_fire_bone2);
 		fire_mat.transform_tiny		(fd.vLastFP2,m_measures.m_fire_point2_offset);
 		m_item_transform.transform_tiny	(fd.vLastFP2);
 		VERIFY(_valid(fd.vLastFP2));
@@ -198,7 +198,7 @@ void attachable_hud_item::setup_firedeps(firedeps& fd)
 
 	if(m_measures.m_prop_flags.test(hud_item_measures::e_shell_point))
 	{
-		Fmatrix& fire_mat			= m_model->LL_GetTransform(m_measures.m_shell_bone);
+		const Fmatrix& fire_mat			= m_model->LL_GetTransform(m_measures.m_shell_bone);
 		fire_mat.transform_tiny		(fd.vLastSP,m_measures.m_shell_point_offset);
 		m_item_transform.transform_tiny	(fd.vLastSP);
 		VERIFY(_valid(fd.vLastSP));
@@ -350,7 +350,7 @@ u32 attachable_hud_item::anim_play(const shared_str& anm_name_b, BOOL bMixIn, co
 		R_ASSERT3(M2.valid(),"model has no motion [idle] ", pSettings->r_string(m_sect_name, "item_visual"));
 
 		u16 root_id						= m_model->LL_GetBoneRoot();
-		CBoneInstance& root_binst		= m_model->LL_GetBoneInstance(root_id);
+		IBoneInstance& root_binst		= m_model->LL_GetBoneInstance(root_id);
 		root_binst.set_callback_overwrite(TRUE);
 
 		root_binst.SetTransform(Fidentity);

@@ -320,7 +320,7 @@ void	CPHShell::	applyImpulseTrace		(const Fvector& pos, const Fvector& dir, floa
 void	CPHShell::	applyImpulseTrace		(const Fvector& pos, const Fvector& dir, float val,const u16 id){
 	if(!isActive()) return;
 	VERIFY(m_pKinematics);
-	CBoneInstance& instance=m_pKinematics->LL_GetBoneInstance				(id);
+	IBoneInstance& instance=m_pKinematics->LL_GetBoneInstance				(id);
 	if(instance.callback_type()!=bctPhysics || !instance.callback_param()) return;
 
 	((CPhysicsElement*)instance.callback_param())->applyImpulseTrace		( pos,  dir,  val, id);
@@ -369,7 +369,7 @@ CPhysicsElement* CPHShell::get_Element( u16 bone_id )
 {
 	if(m_pKinematics&& isActive())
 	{
-		CBoneInstance& instance=m_pKinematics->LL_GetBoneInstance				(bone_id);
+		IBoneInstance& instance=m_pKinematics->LL_GetBoneInstance				(bone_id);
 		if(instance.callback()==BonesCallback||instance.callback()==StataticRootBonesCallBack)
 		{
 			return (instance.callback_type()==bctPhysics)?(CPhysicsElement*)instance.callback_param():NULL;
@@ -431,7 +431,7 @@ void	CPHShell:: update_root_transforms			()
 
 }
 
-void  CPHShell:: BonesCallback				( CBoneInstance* B ){
+void  CPHShell:: BonesCallback				( IBoneInstance* B ){
 	///CPHElement*	E			= smart_cast<CPHElement*>	(static_cast<CPhysicsBase*>(B->Callback_Param));
 
 	CPHElement*	E	= cast_PHElement( B->callback_param() );
@@ -444,7 +444,7 @@ void  CPHShell:: BonesCallback				( CBoneInstance* B ){
 }
 
 
-void  CPHShell::StataticRootBonesCallBack			(CBoneInstance* B){
+void  CPHShell::StataticRootBonesCallBack			(IBoneInstance* B){
 	///CPHElement*	E			= smart_cast<CPHElement*>	(static_cast<CPhysicsBase*>(B->Callback_Param));
 
 	CPHElement*	E			= cast_PHElement(B->callback_param());
@@ -699,7 +699,7 @@ bool shape_is_physic( const SBoneShape& shape )
 void CPHShell::AddElementRecursive(CPhysicsElement* root_e, u16 id,Fmatrix global_parent,u16 element_number,bool* vis_check)
 {
 
-	//CBoneInstance& B	= m_pKinematics->LL_GetBoneInstance(u16(id));
+	//IBoneInstance& B	= m_pKinematics->LL_GetBoneInstance(u16(id));
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1121,7 +1121,7 @@ void CPHShell::ResetCallbacksRecursive(u16 id,u16 element,BonesVisible &mask)
 {
 
 	//if(elements.size()==element)	return;
-	CBoneInstance& B	= m_pKinematics->LL_GetBoneInstance(u16(id));
+	IBoneInstance& B	= m_pKinematics->LL_GetBoneInstance(u16(id));
 	const IBoneData& bone_data= m_pKinematics->GetBoneData(u16(id));
 	const SJointIKData& joint_data=bone_data.get_IK_data();
 
@@ -1155,7 +1155,7 @@ void CPHShell::EnabledCallbacks(BOOL val)
 		ELEMENT_I i,e;
 		i=elements.begin(); e=elements.end();
 		for( ;i!=e;++i){
-			CBoneInstance& B	= m_pKinematics->LL_GetBoneInstance((*i)->m_SelfID);
+			IBoneInstance& B	= m_pKinematics->LL_GetBoneInstance((*i)->m_SelfID);
 			B.set_callback_overwrite(TRUE);
 		}
 	}else		ZeroCallbacks();
@@ -1177,7 +1177,7 @@ CPHElement* get_physics_parent( IKinematics &k,  u16 id )
 	
 	while( true )
 	{
-		CBoneInstance	& B			= k.LL_GetBoneInstance( u16(id) );
+		IBoneInstance	& B			= k.LL_GetBoneInstance( u16(id) );
 		const IBoneData		& bone_data	= k.GetBoneData( u16(id) );
 		if( B.callback_type() == bctPhysics && B.callback_param() )
 			return cast_PHElement( B.callback_param() );
@@ -1207,7 +1207,7 @@ void CPHShell::SetCallbacks( )
 		set_bone_reference( IKinematics &K_ ): K( K_ ){}
 		void operator() ( u16 id )
 		{
-			CBoneInstance &bi  = K.LL_GetBoneInstance(id);
+			IBoneInstance &bi  = K.LL_GetBoneInstance(id);
 			if(!bi.callback() || bi.callback_type() != bctPhysics  )
 			{
 				CPHElement *root_e = get_physics_parent( K, id );
@@ -1229,7 +1229,7 @@ void CPHShell::SetCallbacksRecursive(u16 id,u16 element)
 {
 	VERIFY( false );
 	//if(elements.size()==element)	return;
-	CBoneInstance& B	= m_pKinematics->LL_GetBoneInstance(u16(id));
+	IBoneInstance& B	= m_pKinematics->LL_GetBoneInstance(u16(id));
 	const IBoneData& bone_data= m_pKinematics->GetBoneData(u16(id));
 	const SJointIKData& joint_data=bone_data.get_IK_data();
 	BonesVisible mask= m_pKinematics->LL_GetBonesVisible();
@@ -1257,7 +1257,7 @@ void CPHShell::ZeroCallbacks()
 }
 void CPHShell::ZeroCallbacksRecursive(u16 id)
 {
-	CBoneInstance& B	= m_pKinematics->LL_GetBoneInstance(u16(id));
+	IBoneInstance& B	= m_pKinematics->LL_GetBoneInstance(u16(id));
 	const IBoneData& bone_data= m_pKinematics->GetBoneData(u16(id));
 	if(B.callback_type() == bctPhysics)
 	{
@@ -1611,7 +1611,7 @@ void CPHShell::BonesBindCalculate(u16 id_from)
 void CPHShell::BonesBindCalculateRecursive(Fmatrix parent,u16 id)
 {
 
-	CBoneInstance& bone_instance=m_pKinematics->LL_GetBoneInstance(id);
+	IBoneInstance& bone_instance=m_pKinematics->LL_GetBoneInstance(id);
 	const IBoneData& bone_data= m_pKinematics->GetBoneData(u16(id));
 
 	Fmatrix BoneMatrix=bone_instance.GetTransform();

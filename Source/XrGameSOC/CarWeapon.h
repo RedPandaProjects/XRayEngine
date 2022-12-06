@@ -34,8 +34,8 @@ public:
 	};	
 							CCarWeapon			(CPhysicsShellHolder* obj);
 				virtual		~CCarWeapon			();
-	static void 			BoneCallbackX		(CBoneInstance *B);
-	static void				BoneCallbackY		(CBoneInstance *B);
+	static void 			BoneCallbackX		(IBoneInstance *B);
+	static void				BoneCallbackY		(IBoneInstance *B);
 				void		Load				(LPCSTR section);
 				void		UpdateCL			();
 			void			Action				(int id, u32 flags);

@@ -1999,7 +1999,7 @@ BOOL				CActor::BonePassBullet					(int boneID)
 	if(!pOutfit)
 	{
 		IKinematics* V		= CastToIKinematics(Visual()); VERIFY(V);
-		CBoneInstance			&bone_instance = V->LL_GetBoneInstance(u16(boneID));
+		IBoneInstance			&bone_instance = V->LL_GetBoneInstance(u16(boneID));
 		return (bone_instance.get_param(3)> 0.5f);
 	}
 	return pOutfit->BonePassBullet(boneID);

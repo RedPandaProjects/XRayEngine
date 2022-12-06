@@ -68,7 +68,7 @@ void CDamageManager::init_bones(LPCSTR section, CInifile const * ini)
 	VERIFY					(kinematics);
 	for(u16 i = 0; i<kinematics->LL_BoneCount(); i++)
 	{
-		CBoneInstance			&bone_instance = kinematics->LL_GetBoneInstance(i);
+		IBoneInstance			&bone_instance = kinematics->LL_GetBoneInstance(i);
 		bone_instance.set_param	(0,m_default_hit_factor);
 		bone_instance.set_param	(1,1.f);
 		bone_instance.set_param	(2,m_default_wound_factor);
@@ -84,7 +84,7 @@ void CDamageManager::load_section(LPCSTR section, CInifile const * ini)
 			VERIFY					(m_object);
 			int						bone = kinematics->LL_BoneID(i->first);
 			R_ASSERT2				(BI_NONE != bone, *(*i).first);
-			CBoneInstance			&bone_instance = kinematics->LL_GetBoneInstance(u16(bone));
+			IBoneInstance			&bone_instance = kinematics->LL_GetBoneInstance(u16(bone));
 			bone_instance.set_param	(0,(float)atof(_GetItem(*(*i).second,0,buffer)));
 			bone_instance.set_param	(1,(float)atoi(_GetItem(*(*i).second,1,buffer)));
 			bone_instance.set_param	(2,(float)atof(_GetItem(*(*i).second,2,buffer)));

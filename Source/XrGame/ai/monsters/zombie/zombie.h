@@ -30,15 +30,15 @@ public:
 
 	virtual void	shedule_Update		(u32 dt);
 	
-	static	void 	BoneCallback		(CBoneInstance *B);
+	static	void 	BoneCallback		(IBoneInstance *B);
 			void	vfAssignBones		();
 
 	virtual bool	use_center_to_aim				() const {return true;}
 	virtual	char*	get_monster_class_name () { return "zombie"; }
 
 
-	CBoneInstance			*bone_spine;
-	CBoneInstance			*bone_head;
+	IBoneInstance			*bone_spine;
+	IBoneInstance			*bone_head;
 
 	SAnimationTripleData	anim_triple_death[FAKE_DEATH_TYPES_COUNT];
 	u8				active_triple_idx;

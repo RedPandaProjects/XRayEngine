@@ -97,7 +97,7 @@ bool CAI_Stalker::bfAssignWatch(CScriptEntityAction *tpEntityAction)
 			if (!xr_strlen(l_tWatchAction.m_bone_to_watch))
 				l_tWatchAction.m_tpObjectToWatch->Center(l_tWatchAction.m_tWatchVector);
 			else {
-				CBoneInstance	&l_tBoneInstance = CastToIKinematics(l_tWatchAction.m_tpObjectToWatch->Visual())->LL_GetBoneInstance(CastToIKinematics(l_tWatchAction.m_tpObjectToWatch->Visual())->LL_BoneID(l_tWatchAction.m_bone_to_watch));
+				IBoneInstance	&l_tBoneInstance = CastToIKinematics(l_tWatchAction.m_tpObjectToWatch->Visual())->LL_GetBoneInstance(CastToIKinematics(l_tWatchAction.m_tpObjectToWatch->Visual())->LL_BoneID(l_tWatchAction.m_bone_to_watch));
 				Fmatrix			l_tMatrix;
 
 				l_tMatrix			= l_tBoneInstance.GetTransform();

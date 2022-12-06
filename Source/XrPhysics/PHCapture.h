@@ -42,7 +42,7 @@ float				m_capture_distance;
 float				m_pull_distance;
 u32					m_capture_time;
 u32					m_time_start;
-CBoneInstance		*m_capture_bone;
+IBoneInstance		*m_capture_bone;
 dBodyID				m_body;
 CPHIsland			m_island;
 //bool				b_failed;

@@ -1376,7 +1376,7 @@ void CActor::RenderIndicator			(Fvector dpos, float r1, float r2, const ui_shade
 
 	UIRender->StartPrimitive(4, IUIRender::ptTriStrip, IUIRender::pttLIT);
 
-	CBoneInstance& BI = CastToIKinematics(Visual())->LL_GetBoneInstance(u16(m_head));
+	IBoneInstance& BI = CastToIKinematics(Visual())->LL_GetBoneInstance(u16(m_head));
 	Fmatrix M;
 	CastToIKinematics(Visual())->CalculateBones	();
 	M.mul						(XFORM(),BI.GetTransform());
@@ -1426,7 +1426,7 @@ void CActor::RenderText				(LPCSTR Text, Fvector dpos, float* pdup, u32 color)
 {
 	if (!g_Alive()) return;
 	
-	CBoneInstance& BI = CastToIKinematics(Visual())->LL_GetBoneInstance(u16(m_head));
+	IBoneInstance& BI = CastToIKinematics(Visual())->LL_GetBoneInstance(u16(m_head));
 	Fmatrix M;
 	CastToIKinematics(Visual())->CalculateBones	();
 	M.mul						(XFORM(),BI.GetTransform());

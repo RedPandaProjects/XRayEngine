@@ -9,7 +9,7 @@ class	ENGINE_API CCameraBase;
 class	ENGINE_API C3DSound;
 class	ENGINE_API CMotionDef;
 class	ENGINE_API IKinematics;
-class	ENGINE_API CBoneInstance;
+class	ENGINE_API IBoneInstance;
 class	CWeaponList;
 class   CPHMovementControl;
 class	CHudItem;
@@ -24,7 +24,7 @@ private:
 	CEntityConditionSimple*			m_entity_condition;
 
 protected:
-	//время через которое мертвое тело убирется с уровня
+	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	ALife::_TIME_ID					m_dwBodyRemoveTime;	
 protected:
 	virtual	CEntityConditionSimple	*create_entity_condition	(CEntityConditionSimple* ec);

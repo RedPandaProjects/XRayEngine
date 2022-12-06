@@ -85,8 +85,8 @@ public:
 	virtual void			reinit					();
 	virtual void			reload					(LPCSTR section);
 
-	static	void			BoneCallback			(CBoneInstance *B);
-	void			LookAtActor				(CBoneInstance *B);
+	static	void			BoneCallback			(IBoneInstance *B);
+	void			LookAtActor				(IBoneInstance *B);
 
 	void			OnStartTrade			();
 	void			OnStopTrade				();

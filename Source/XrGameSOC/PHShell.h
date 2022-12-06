@@ -44,8 +44,8 @@ public:
 	virtual void			applyImpulseTrace		(const Fvector& pos, const Fvector& dir, float val,const u16 id);
 	virtual void			applyHit				(const Fvector& pos, const Fvector& dir, float val,const u16 id,ALife::EHitType hit_type);
 
-	static void 			BonesCallback				(CBoneInstance* B);
-	static void 			StataticRootBonesCallBack	(CBoneInstance* B);
+	static void 			BonesCallback				(IBoneInstance* B);
+	static void 			StataticRootBonesCallBack	(IBoneInstance* B);
 	virtual	BoneCallbackFun* GetBonesCallback		()	{return BonesCallback ;}
 	virtual BoneCallbackFun* GetStaticObjectBonesCallback()	{return StataticRootBonesCallBack;}
 	virtual	void			add_Element				(CPhysicsElement* E);

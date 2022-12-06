@@ -285,33 +285,3 @@ bool CEditableObject::Validate()
 }
 //----------------------------------------------------------------------------
 //#ifdef DEBUG
-
-LPCSTR	CEditableObject::LL_BoneName_dbg(u16 ID)
-{
-	return 	GetBone( ID )->Name().c_str();
-}
-
-//#endif
-CBoneInstance&	CEditableObject::LL_GetBoneInstance(u16 bone_id)
-{
-    return *GetBone(bone_id);
-}
-CBoneData&	CEditableObject::LL_GetData(u16 bone_id)
-{
-  VERIFY(false);
-  static   CBoneData   dummy_bone_data(0);
-  return dummy_bone_data;
-}
-
-Fmatrix&	CEditableObject::LL_GetTransform_R(u16 bone_id)
-{
-   //	VERIFY(false);
-   // static Fmatrix dummy_matrix;
-    return GetBone(bone_id)->_RenderTransform();
-}
-Fobb&	CEditableObject::LL_GetBox(u16 bone_id)
-{
-	VERIFY(false);
-    static  Fobb  dummy_box;
-    return dummy_box;
-}

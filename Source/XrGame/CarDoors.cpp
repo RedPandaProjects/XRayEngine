@@ -350,7 +350,7 @@ void CCar::SDoor::ClosedToOpening()
 	Fmatrix door_form,root_form;
 	IKinematics* pKinematics=CastToIKinematics(pcar->Visual());
 //	IBoneData& bone_data= pKinematics->GetBoneData(u16(bone_id));
-	CBoneInstance& bone_instance=pKinematics->LL_GetBoneInstance(u16(bone_id));
+	IBoneInstance& bone_instance=pKinematics->LL_GetBoneInstance(u16(bone_id));
 	bone_instance.set_callback(bctPhysics,pcar->PPhysicsShell()->GetBonesCallback(),joint->PSecond_element());
 	
 	door_form.set(bone_instance.GetTransform());
@@ -372,7 +372,7 @@ void CCar::SDoor::ClosingToClosed()
 //	Fmatrix door_form;
 	IKinematics* pKinematics=CastToIKinematics(pcar->Visual());
 //	IBoneData& bone_data= pKinematics->GetBoneData(u16(bone_id));
-	CBoneInstance& bone_instance=pKinematics->LL_GetBoneInstance(u16(bone_id));
+	IBoneInstance& bone_instance=pKinematics->LL_GetBoneInstance(u16(bone_id));
 	bone_instance.set_callback(bctPhysics,0,joint->PFirst_element(),FALSE);
 	//bone_instance.set_callback( bone_instance.callback_type(),bone_instance.callback(),bone_instance.callback_param(),FALSE);
 	//bone_instance.Callback_overwrite=FALSE;
@@ -399,7 +399,7 @@ static xr_vector<Fmatrix> bones_bind_forms;
 bool CCar::SDoor::IsFront(const Fvector& pos,const Fvector& dir)
 {
 	IKinematics* K=PKinematics(pcar->Visual());
-	//CBoneInstance bi=K->LL_GetBoneInstance(bone_id);
+	//IBoneInstance bi=K->LL_GetBoneInstance(bone_id);
 	//IBoneData& bd=K->GetBoneData(bone_id);
 	K->LL_GetBindTransform(bones_bind_forms);
 	//		Fobb bb=bd.obb;
@@ -422,7 +422,7 @@ bool CCar::SDoor::IsInArea(const Fvector& pos,const Fvector& dir)
 		if(!IsFront(pos,dir))return false;
 
 		IKinematics* K=PKinematics(pcar->Visual());
-		//CBoneInstance bi=K->LL_GetBoneInstance(bone_id);
+		//IBoneInstance bi=K->LL_GetBoneInstance(bone_id);
 		//IBoneData& bd=K->GetBoneData(bone_id);
 		K->LL_GetBindTransform(bones_bind_forms);
 		//		Fobb bb=bd.obb;
@@ -485,7 +485,7 @@ void CCar::SDoor::GetExitPosition(Fvector& pos)
 	if(!joint) 
 	{
 		IKinematics* K=PKinematics(pcar->Visual());
-		//CBoneInstance bi=K->LL_GetBoneInstance(bone_id);
+		//IBoneInstance bi=K->LL_GetBoneInstance(bone_id);
 		const IBoneData& bd=K->GetBoneData(bone_id);
 		K->LL_GetBindTransform(bones_bind_forms);
 		Fobb bb;//=bd.obb;
@@ -551,7 +551,7 @@ bool CCar::SDoor::TestPass(const Fvector& pos,const Fvector& dir)
 	if(!joint)
 	{
 		IKinematics* K=PKinematics(pcar->Visual());
-		//CBoneInstance bi=K->LL_GetBoneInstance(bone_id);
+		//IBoneInstance bi=K->LL_GetBoneInstance(bone_id);
 		//IBoneData& bd=K->GetBoneData(bone_id);
 		K->LL_GetBindTransform(bones_bind_forms);
 		//		Fobb bb=bd.obb;

@@ -149,7 +149,7 @@ void CBone::ClampByLimits()
 
 CBone::CBone()
 {
-	construct		();
+	//construct		();
 	flags.zero		();
     rest_length		= 0;
 	SelfID			= -1;

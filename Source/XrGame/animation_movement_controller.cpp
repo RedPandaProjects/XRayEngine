@@ -44,7 +44,7 @@ m_poses_blending ( Fidentity, Fidentity, -1.f )
 		DBG_ClosedCashedDraw( 50000 );
 	}
 #endif	
-	CBoneInstance& B=m_pKinematicsC->LL_GetBoneInstance( m_pKinematicsC->LL_GetBoneRoot( ) );
+	IBoneInstance& B=m_pKinematicsC->LL_GetBoneInstance( m_pKinematicsC->LL_GetBoneRoot( ) );
 	VERIFY( !B.callback() && !B.callback_param() );
 	B.set_callback( bctCustom, RootBoneCallback, this, TRUE );
 	B.SetTransform(Fidentity);
@@ -92,7 +92,7 @@ void	animation_movement_controller::	deinitialize					()
 #endif
 	
 	
-	CBoneInstance& B=m_pKinematicsC->LL_GetBoneInstance( m_pKinematicsC->LL_GetBoneRoot( ) );
+	IBoneInstance& B=m_pKinematicsC->LL_GetBoneInstance( m_pKinematicsC->LL_GetBoneRoot( ) );
 	VERIFY( B.callback() == RootBoneCallback );
 	VERIFY( B.callback_param() == (void*)this );
 	B.reset_callback( );
@@ -203,7 +203,7 @@ static void get_animation_root_position( Fmatrix &pos, IKinematics* K, IKinemati
 	for( int j = 1; j < MAX_CHANNELS; ++j )
 		keys.chanel_blend_conts[j] = 0;
 
-	CBoneInstance BI = K->LL_GetBoneInstance( 0 );
+	IBoneInstance&BI = K->LL_GetBoneInstance( 0 );
 
 	KA->LL_BoneMatrixBuild( BI, &Fidentity, keys );
 	pos.set( BI.GetTransform() );
@@ -360,7 +360,7 @@ void	animation_movement_controller::DBG_verify_position_not_chaged() const
 	VERIFY( !IsActive()||inital_position_blending || cmp_matrix( DBG_previous_position, m_pObjXForm, EPS, EPS ) );
 #endif
 }
-void animation_movement_controller::RootBoneCallback( CBoneInstance* B )
+void animation_movement_controller::RootBoneCallback( IBoneInstance* B )
 {
 	VERIFY( B );
 	VERIFY( B->callback_param() );

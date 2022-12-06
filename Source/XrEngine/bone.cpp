@@ -15,17 +15,31 @@ const	Fobb&		CBone::	get_obb				( )			const
 {
 	return dummy;
 }
+
+IBoneInstance::IBoneInstance()
+{
+	Callback = nullptr;
+	Callback_Param = nullptr;
+	Callback_overwrite = FALSE;
+	Callback_type = 0;
+}
+
+IBoneInstance::~IBoneInstance()
+{
+
+}
+
 //////////////////////////////////////////////////////////////////////////
 // BoneInstance methods
 
 
 
-void		CBoneInstance::set_param	(u32 idx, float data)
+void		IBoneInstance::set_param	(u32 idx, float data)
 {
 	VERIFY		(idx<MAX_BONE_PARAMS);
 	param[idx]	= data;
 }
-float		CBoneInstance::get_param	(u32 idx)
+float		IBoneInstance::get_param	(u32 idx)
 {
 	VERIFY		(idx<MAX_BONE_PARAMS);
 	return		param[idx];

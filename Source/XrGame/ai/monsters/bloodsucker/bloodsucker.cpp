@@ -319,7 +319,7 @@ void CAI_Bloodsucker::LoadVampirePPEffector(LPCSTR section)
 	sscanf(pSettings->r_string(section,"color_add"),	"%f,%f,%f", &pp_vampire_effector.color_add.r,  &pp_vampire_effector.color_add.g,  &pp_vampire_effector.color_add.b);
 }
 
-void  CAI_Bloodsucker::BoneCallback(CBoneInstance *B)
+void  CAI_Bloodsucker::BoneCallback(IBoneInstance *B)
 {
 	CAI_Bloodsucker*	this_class = static_cast<CAI_Bloodsucker*> (B->callback_param());
 

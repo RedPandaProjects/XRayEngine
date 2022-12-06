@@ -74,9 +74,9 @@ IC				void		AnimGoal			( Fmatrix &gl, IKinematics	&K );
 				void		GetPickDir			(Fvector &v, const Fmatrix &gl_bone ) ;
 IC		static	void		get_start			( Fmatrix &start, SCalculateData &D, u16 bone );
 private:
-		static	void 		BonesCallback0		( CBoneInstance* B );
-		static	void 		BonesCallback1		( CBoneInstance* B );
-		static	void 		BonesCallback2		( CBoneInstance* B );
+		static	void 		BonesCallback0		( IBoneInstance* B );
+		static	void 		BonesCallback1		( IBoneInstance* B );
+		static	void 		BonesCallback2		( IBoneInstance* B );
 
 private:
 	Limb		m_limb;

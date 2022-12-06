@@ -733,7 +733,7 @@ void CPHElement::RunSimulation(const Fmatrix& start_from)
 
 
 
-void CPHElement::StataticRootBonesCallBack(CBoneInstance* B)
+void CPHElement::StataticRootBonesCallBack(IBoneInstance* B)
 {
 	Fmatrix parent;
 	VERIFY2( isActive(),"the element is not active");
@@ -805,7 +805,7 @@ void CPHElement::StataticRootBonesCallBack(CBoneInstance* B)
 
 }
 
-void CPHElement::BoneGlPos(Fmatrix &m,CBoneInstance* B)
+void CPHElement::BoneGlPos(Fmatrix &m,IBoneInstance* B)
 {
 	VERIFY(m_shell);
 	m.mul_43(m_shell->mXFORM, B->GetTransform());
@@ -816,7 +816,7 @@ void CPHElement::GetAnimBonePos(Fmatrix &bp)
 	VERIFY(m_shell->PKinematics());
 	IKinematics *ak = m_shell->PKinematics();
 	VERIFY(ak);
-	CBoneInstance *BI = &ak->LL_GetBoneInstance(m_SelfID);
+	IBoneInstance *BI = &ak->LL_GetBoneInstance(m_SelfID);
 	if(!BI->callback())//.
 	{
 		bp.set(BI->GetTransform());
@@ -844,7 +844,7 @@ bool CPHElement::AnimToVel(float dt, float l_limit,float a_limit )
 {
 	VERIFY(m_shell);
 	VERIFY(m_shell->PKinematics());
-	//CBoneInstance *BI = &m_shell->PKinematics()->LL_GetBoneInstance(m_SelfID);
+	//IBoneInstance *BI = &m_shell->PKinematics()->LL_GetBoneInstance(m_SelfID);
 //
 //	Fmatrix bp;BoneGlPos(bp,BI);
 //
@@ -888,7 +888,7 @@ bool CPHElement::AnimToVel(float dt, float l_limit,float a_limit )
 	return ret;
 }
 
-void CPHElement::ToBonePos(CBoneInstance* B)
+void CPHElement::ToBonePos(IBoneInstance* B)
 {
 	VERIFY2(!ph_world->Processing(),*PhysicsRefObject()->cNameSect());
 	VERIFY(_valid(B->GetTransform()));
@@ -908,7 +908,7 @@ void	CPHElement::SetBoneCallbackOverwrite				(bool v)
 	VERIFY(m_shell->PKinematics());
 	m_shell->PKinematics()->LL_GetBoneInstance(m_SelfID).set_callback_overwrite(v) ;
 }
-void CPHElement::BonesCallBack(CBoneInstance* B)
+void CPHElement::BonesCallBack(IBoneInstance* B)
 {
 	Fmatrix parent;
 	VERIFY (isActive());
@@ -1417,7 +1417,7 @@ void CPHElement::PresetActive()
 {
 	if(isActive()) return;
 
-	CBoneInstance& B=m_shell->PKinematics()->LL_GetBoneInstance(m_SelfID);
+	IBoneInstance& B=m_shell->PKinematics()->LL_GetBoneInstance(m_SelfID);
 	mXFORM.set(B.GetTransform());
 	//m_start_time=Device->fTimeGlobal;
 	Fmatrix global_transform;

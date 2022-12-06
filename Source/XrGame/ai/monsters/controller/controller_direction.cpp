@@ -19,7 +19,7 @@ void CControllerDirection::reinit()
 	m_head_look_point.set	(0.f,0.f,0.f);
 }
 
-void CControllerDirection::bone_callback(CBoneInstance *B)
+void CControllerDirection::bone_callback(IBoneInstance *B)
 {
 	CControllerDirection *this_class = static_cast<CControllerDirection*> (B->callback_param());
 	this_class->m_bones.Update(B, time());

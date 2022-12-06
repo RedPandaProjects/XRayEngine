@@ -82,8 +82,12 @@ IC float lerp(float t, float  a, float b)
 void	y_shift_bones( IKinematics* K, float shift )
 {
 	u16 bc = K->LL_BoneCount();
-	for(u16 i = 0; bc > i ; ++i )
-		K->LL_GetTransform( i ).c.y +=shift ; 
+	for (u16 i = 0; bc > i; ++i)
+	{
+		Fmatrix Matrix = K->LL_GetTransform(i);
+		Matrix.c.y += shift;
+		K->LL_SetTransform(i,Matrix);
+	}
 }
 float	CIKLimbsController::LegLengthShiftLimit			( float current_shift, const SCalculateData cd[max_size] )
 {
@@ -200,14 +204,18 @@ void	CIKLimbsController::ShiftObject( const SCalculateData cd[max_size] )
 		const float y_shift = _object_shift.shift();
 		const u16 bones_count = skeleton_animated->LL_BoneCount();
 		for( u16 i = 0; i < bones_count; ++i )
-			skeleton_animated->LL_GetTransform( i ).c.y += y_shift;
+		{
+			Fmatrix Matrix = skeleton_animated->LL_GetTransform(i);
+			Matrix.c.y += y_shift;
+			skeleton_animated->LL_SetTransform(i,Matrix);
+		}
 		
 		for( u16 i = 0; i < bones_count; ++i )
 		{
-			CBoneInstance &bi = skeleton_animated->LL_GetBoneInstance( i );
+			IBoneInstance &bi = skeleton_animated->LL_GetBoneInstance( i );
 			if(bi.callback())
 				bi.callback()( &bi );
-			skeleton_animated->LL_GetTransform_R( i ).c.y += y_shift;
+			//skeleton_animated->LL_GetTransform_R( i ).c.y += y_shift;
 		}
 	//	skeleton_animated->LL_GetTransform(root).c.y += _object_shift.shift();
 	//	skeleton_animated->Bone_Calculate(&BD, &Fidentity );
@@ -238,7 +246,7 @@ void CIKLimbsController::Calculate( )
 
 	IKinematics *K = m_object->Visual()->dcast_PKinematics( );
 	u16 root = K->LL_GetBoneRoot( ) ;
-	CBoneInstance &root_bi = K->LL_GetBoneInstance(root);
+	IBoneInstance &root_bi = K->LL_GetBoneInstance(root);
 
 	BOOL sv_root_cb_ovwr = root_bi.callback_overwrite();
 	BoneCallback sv_root_cb =		root_bi.callback();

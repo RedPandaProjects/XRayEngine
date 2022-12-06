@@ -804,7 +804,7 @@ IC void CIKLimb:: get_start( Fmatrix &start, SCalculateData &D, u16 bone )
 	start.mul_43( K->LL_GetTransform( BD.GetParentID( ) ), BD.get_bind_transform() );
 }
 
-void 	CIKLimb::BonesCallback0				(CBoneInstance* B)
+void 	CIKLimb::BonesCallback0				(IBoneInstance* B)
 {
 	SCalculateData* D	=(SCalculateData*)B->callback_param();
 	VERIFY( D );
@@ -832,7 +832,7 @@ void 	CIKLimb::BonesCallback0				(CBoneInstance* B)
 #endif
 	
 }
-void 	CIKLimb::BonesCallback1				(CBoneInstance* B)
+void 	CIKLimb::BonesCallback1				(IBoneInstance* B)
 {
 	SCalculateData	*D	=(SCalculateData*)B->callback_param();
 
@@ -847,7 +847,7 @@ void 	CIKLimb::BonesCallback1				(CBoneInstance* B)
 	B->SetTransform(BoneMatrix);
 	
 }
-void 	CIKLimb::BonesCallback2				(CBoneInstance* B)
+void 	CIKLimb::BonesCallback2				(IBoneInstance* B)
 {
 	SCalculateData	*D		=(SCalculateData*)B->callback_param();
 	

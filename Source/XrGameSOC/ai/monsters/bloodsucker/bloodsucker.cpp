@@ -211,7 +211,7 @@ void CAI_Bloodsucker::LoadVampirePPEffector(LPCSTR section)
 }
 
 
-void  CAI_Bloodsucker::BoneCallback(CBoneInstance *B)
+void  CAI_Bloodsucker::BoneCallback(IBoneInstance *B)
 {
 	CAI_Bloodsucker*	this_class = static_cast<CAI_Bloodsucker*> (B->callback_param());
 

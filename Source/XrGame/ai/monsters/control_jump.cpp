@@ -397,7 +397,7 @@ void CControlJump::stop()
 Fvector CControlJump::get_target(CObject *obj)
 {
 	u16 bone_id			= CastToIKinematics(obj->Visual())->LL_GetBoneRoot			();
-	CBoneInstance &bone = CastToIKinematics(obj->Visual())->LL_GetBoneInstance		(bone_id);
+	IBoneInstance &bone = CastToIKinematics(obj->Visual())->LL_GetBoneInstance		(bone_id);
 
 	Fmatrix	global_transform;
 	global_transform.mul	(obj->XFORM(),bone.GetTransform());

@@ -15,7 +15,7 @@ anim_bone_fix::~anim_bone_fix()
 	VERIFY( !bone );
 	VERIFY( !parent );
 }
-void anim_bone_fix::	callback	( CBoneInstance *BI )
+void anim_bone_fix::	callback	( IBoneInstance *BI )
 {
 	
 //	Fmatrix	m = BI->mTransform;
@@ -44,7 +44,7 @@ void anim_bone_fix::fix( u16 bone_id, IKinematics &K )
 	VERIFY( &K );
 	VERIFY( K.LL_GetBoneRoot() != bone_id );
 	
-	CBoneInstance &bi = K.LL_GetBoneInstance( bone_id );
+	IBoneInstance &bi = K.LL_GetBoneInstance( bone_id );
 
 	VERIFY(  !bi.callback() );
 

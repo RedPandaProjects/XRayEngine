@@ -27,7 +27,7 @@ moving_bones_snd_player::~moving_bones_snd_player()
 {
 	sound.destroy();
 }
-Fmatrix& moving_bones_snd_player::bone_matrix( )
+const  Fmatrix& moving_bones_snd_player::bone_matrix( )
 {
 	VERIFY( kinematics );
 	VERIFY( bone_id!= BI_NONE );

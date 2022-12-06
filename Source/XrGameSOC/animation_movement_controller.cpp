@@ -13,7 +13,7 @@ m_control_blend( b )
 	VERIFY( _pKinematicsC );
 	VERIFY( _pObjXForm );
 	VERIFY( b );
-	CBoneInstance& B=m_pKinematicsC->LL_GetBoneInstance( m_pKinematicsC->LL_GetBoneRoot( ) );
+	IBoneInstance& B=m_pKinematicsC->LL_GetBoneInstance( m_pKinematicsC->LL_GetBoneRoot( ) );
 	VERIFY( !B.callback_param() && !B.callback());
 	B.set_callback( bctCustom, RootBoneCallback, this );
 	m_startRootXform.set(B.GetTransform());
@@ -26,7 +26,7 @@ animation_movement_controller::~animation_movement_controller( )
 }
 void	animation_movement_controller::	deinitialize					()
 {
-	CBoneInstance& B=m_pKinematicsC->LL_GetBoneInstance( m_pKinematicsC->LL_GetBoneRoot( ) );
+	IBoneInstance& B=m_pKinematicsC->LL_GetBoneInstance( m_pKinematicsC->LL_GetBoneRoot( ) );
 	VERIFY( B.callback() == RootBoneCallback );
 	VERIFY( B.callback_param() == (void*)this );
 	B.reset_callback( );
@@ -45,7 +45,7 @@ void animation_movement_controller::OnFrame( )
 			m_control_blend->timeCurrent =0;
 }
 
-void animation_movement_controller::RootBoneCallback( CBoneInstance* B )
+void animation_movement_controller::RootBoneCallback( IBoneInstance* B )
 {
 	VERIFY( B );
 	VERIFY( B->callback_param() );

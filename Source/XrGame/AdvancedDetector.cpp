@@ -170,7 +170,7 @@ void CAdvancedDetector::on_b_hud_detach()
 	ui().ResetBoneCallbacks			();
 }
 
-void CUIArtefactDetectorAdv::BoneCallback(CBoneInstance *B)
+void CUIArtefactDetectorAdv::BoneCallback(IBoneInstance *B)
 {
 	CUIArtefactDetectorAdv *P		= static_cast<CUIArtefactDetectorAdv*>(B->callback_param());
 	Fmatrix							rY;		
@@ -187,7 +187,7 @@ void CUIArtefactDetectorAdv::SetBoneCallbacks()
 	R_ASSERT						(itm);
 	m_bid							= itm->m_model->LL_BoneID("screen_bone");
 	
-	CBoneInstance& bi				= itm->m_model->LL_GetBoneInstance(m_bid);	
+	IBoneInstance& bi				= itm->m_model->LL_GetBoneInstance(m_bid);	
 	bi.set_callback					(bctCustom, BoneCallback, this);
 
 	float p,b;
@@ -200,7 +200,7 @@ void CUIArtefactDetectorAdv::ResetBoneCallbacks()
 	R_ASSERT						(itm);
 	u16 bid							= itm->m_model->LL_BoneID("screen_bone");
 	
-	CBoneInstance& bi				= itm->m_model->LL_GetBoneInstance(bid);	
+	IBoneInstance& bi				= itm->m_model->LL_GetBoneInstance(bid);	
 	bi.reset_callback				();
 }
 

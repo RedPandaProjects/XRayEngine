@@ -13,8 +13,8 @@ class CControllerDirection : public CControlDirectionBase {
 	CController						*m_controller;
 	
 	bonesManipulation				m_bones;
-	CBoneInstance					*m_bone_spine;
-	CBoneInstance					*m_bone_head;
+	IBoneInstance					*m_bone_spine;
+	IBoneInstance					*m_bone_head;
 
 	MonsterSpace::SBoneRotation		m_head_orient;
 	
@@ -30,7 +30,7 @@ public:
 	const MonsterSpace::SBoneRotation &get_head_orientation() const {return m_head_orient;}
 
 private:
-	static	void	_BCL	bone_callback			(CBoneInstance *B);
+	static	void	_BCL	bone_callback			(IBoneInstance *B);
 
 	void					assign_bones			();
 	void					update_head_orientation	();

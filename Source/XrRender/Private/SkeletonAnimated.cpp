@@ -223,7 +223,7 @@ void	CKinematicsAnimated::LL_FadeCycle(u16 part, float falloff, u8 mask_channel 
 		B.set_falloff_state();
 		B.blendFalloff		= falloff;
 		//B.blendAccrue		= B.timeCurrent;
-		if (B.stop_at_end)  B.stop_at_end_callback = FALSE;		// callback не должен приходить!
+		if (B.stop_at_end)  B.stop_at_end_callback = FALSE;		// callback пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!
 	}
 }
 void	CKinematicsAnimated::LL_CloseCycle(u16 part, u8 mask_channel /*= (1<<0)*/)
@@ -828,7 +828,7 @@ const	CBlendInstance::BlendSVec	&Blend				= BLEND_INST.blend_vector();
 }
 
 // calculate single bone with key blending 
-void	CKinematicsAnimated::LL_BoneMatrixBuild	( CBoneInstance &bi, const Fmatrix *parent, const SKeyTable	&keys )
+void	CKinematicsAnimated::LL_BoneMatrixBuild	( IBoneInstance &bi, const Fmatrix *parent, const SKeyTable	&keys )
 {
 	// Blend them together
 	CKey					channel_keys[MAX_CHANNELS];
@@ -873,7 +873,7 @@ void	CKinematicsAnimated::LL_BoneMatrixBuild	( CBoneInstance &bi, const Fmatrix 
 #endif
 }
 
-void	CKinematicsAnimated::BuildBoneMatrix			( const CBoneData* bd, CBoneInstance &bi, const Fmatrix *parent, u8 channel_mask /*= (1<<0)*/ )
+void	CKinematicsAnimated::BuildBoneMatrix			( const CBoneData* bd, IBoneInstance &bi, const Fmatrix *parent, u8 channel_mask /*= (1<<0)*/ )
 {
 			
 			//CKey				R						[MAX_CHANNELS][MAX_BLENDED];	//all keys 

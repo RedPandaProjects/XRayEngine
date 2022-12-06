@@ -11,40 +11,28 @@ class CBone;
 #define	MAX_BONE_PARAMS		4
 
 
-class ENGINE_API CBoneInstance;
+class ENGINE_API IBoneInstance;
 // callback
-typedef void  _BCL BoneCallbackFunction	(CBoneInstance* P);
+typedef void  _BCL BoneCallbackFunction	(IBoneInstance* P);
 typedef		BoneCallbackFunction*		BoneCallback;
-//typedef void  (* BoneCallback)		(CBoneInstance* P);
+//typedef void  (* BoneCallback)		(IBoneInstance* P);
 
 //*** Bone Instance *******************************************************************************
 #pragma pack(push,8)
-class ENGINE_API		CBoneInstance
+class ENGINE_API		IBoneInstance
 {
 public:
-	// data
-	const Fmatrix&GetTransform() const { return mTransform; }
-	void SetTransform(const Fmatrix&val) { mTransform = val; }
-	Fmatrix				mRenderTransform;					// final x-form matrix (model_base -> bone -> model)
-private:
-	BoneCallback		Callback;
-	void*				Callback_Param;
-	BOOL				Callback_overwrite;					// performance hint - don't calc anims
-	u32					Callback_type;	
-	Fmatrix				mTransform;							// final x-form matrix (local to model)
-public:
-	float				param			[MAX_BONE_PARAMS];	// 
-	//
-	// methods
-public:
-	IC	BoneCallback	_BCL	callback()					{ return  Callback; }
-	IC	void*			_BCL	callback_param()			{ return Callback_Param;	}
-	IC	BOOL			_BCL	callback_overwrite()		{ return Callback_overwrite; }					// performance hint - don't calc anims
-	IC	u32				_BCL	callback_type()				{ return Callback_type; }	
-public:
-	IC void				_BCL	construct();
+	IBoneInstance();
+	virtual ~IBoneInstance();
+	virtual const Fmatrix&GetTransform() const = 0;
+	virtual void SetTransform(const Fmatrix&val) = 0;
 
-	void	_BCL set_callback	(u32 Type, BoneCallback C, void* Param,  BOOL overwrite=FALSE)
+	IC	BoneCallback	callback()					{ return  Callback; }
+	IC	void*			callback_param()			{ return Callback_Param;	}
+	IC	BOOL			callback_overwrite()		{ return Callback_overwrite; }					// performance hint - don't calc anims
+	IC	u32				callback_type()				{ return Callback_type; }	
+
+	void	set_callback	(u32 Type, BoneCallback C, void* Param,  BOOL overwrite=FALSE)
 	{	
 		Callback			= C; 
 		Callback_Param		= Param; 
@@ -52,19 +40,25 @@ public:
 		Callback_type		= Type;
 	}
 
-	void	_BCL reset_callback()
+	void	reset_callback()
 	{
 		Callback			= 0; 
 		Callback_Param		= 0; 
 		Callback_overwrite	= FALSE;
 		Callback_type		= 0;
 	}
-	void		_BCL		set_callback_overwrite(BOOL v){ Callback_overwrite = v; }
+	IC void				set_callback_overwrite(BOOL v){ Callback_overwrite = v; }
 
 	void				set_param		(u32 idx, float data);
 	float				get_param		(u32 idx);
 
-	u32					mem_usage		(){return sizeof(*this);}
+	IC u32					mem_usage		(){return sizeof(*this);}
+	float					param[MAX_BONE_PARAMS];	
+protected:
+	BoneCallback		Callback;
+	void* Callback_Param;
+	BOOL				Callback_overwrite;					// performance hint - don't calc anims
+	u32					Callback_type;
 };
 #pragma pack(pop)
 
@@ -306,7 +300,7 @@ class CBone;
 DEFINE_VECTOR		    (CBone*,BoneVec,BoneIt);
 
 class ENGINE_API CBone:
-	public CBoneInstance,
+	public IBoneInstance,
 	public IBoneData
 {
 	shared_str			name;
@@ -376,7 +370,6 @@ public:
 	//IC Fmatrix&		    _LTransform		(){return GetTransform();}//{return last_transform;}
     IC const Fmatrix&	_LTransform		() const {return GetTransform();}
     
-    IC Fmatrix&		    _RenderTransform(){return mRenderTransform;}//{return render_transform;}
 	IC Fvector&			_RestOffset		(){return rest_offset;}
 	IC Fvector&		    _RestRotate		(){return rest_rotate;}
     
@@ -438,6 +431,8 @@ private:
 				u16				_BCL	GetParentID			( )			const	{if(parent) return u16(parent->SelfID); else return u16(-1);};
 				float			_BCL	lo_limit			( u8 k )	const	{ return engine_lo_limit(k); }
 				float			_BCL	hi_limit			( u8 k )	const	{ return engine_hi_limit(k); }
+				virtual const Fmatrix& GetTransform() const {return Fidentity;}
+				virtual void SetTransform(const Fmatrix& val){}
 };
 
 //*** Shared Bone Data ****************************************************************************
@@ -528,15 +523,6 @@ enum EBoneCallbackType{
 	bctForceU32			= u32(-1),
 };
 
-
-IC void		CBoneInstance::construct	()
-{
-	ZeroMemory					(this,sizeof(*this));
-	SetTransform(Fidentity);
-
-	mRenderTransform.identity	();
-	Callback_overwrite			= FALSE;
-}
 
 
 #endif

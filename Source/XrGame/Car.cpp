@@ -121,7 +121,7 @@ void CCar::reload		(LPCSTR section)
 		m_memory->reload	(section);
 }
 
-void CCar::cb_Steer			(CBoneInstance* B)
+void CCar::cb_Steer			(IBoneInstance* B)
 {
 	VERIFY2(fsimilar(DET(B->GetTransform()),1.f,DET_CHECK_EPS),"Bones receive returns 0 matrix");
 	CCar*	C			= static_cast<CCar*>(B->callback_param());
@@ -640,7 +640,7 @@ bool CCar::attach_Actor(CGameObject* actor)
 		Owner()->setVisible(0);
 		id=K->LL_GetBoneRoot();
 	}
-	CBoneInstance& instance=K->LL_GetBoneInstance				(u16(id));
+	IBoneInstance& instance=K->LL_GetBoneInstance				(u16(id));
 	m_sits_transforms.push_back(instance.GetTransform());
 	OnCameraChange(ectFirst);
 	PPhysicsShell()->Enable();

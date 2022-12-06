@@ -70,7 +70,7 @@ void CCustomMonster::SAnimState::Create(IKinematicsAnimated* K, LPCSTR base)
 	rs		= K->ID_Cycle_Safe(strconcat(sizeof(buf),buf,base,"_rs"));
 }
 
-//void  CCustomMonster::TorsoSpinCallback(CBoneInstance* B)
+//void  CCustomMonster::TorsoSpinCallback(IBoneInstance* B)
 //{
 //	CCustomMonster*		M = static_cast<CCustomMonster*> (B->Callback_Param);
 //
@@ -574,7 +574,7 @@ void CCustomMonster::eye_pp_s0			( )
 	// Eye matrix
 	IKinematics* V							= CastToIKinematics(Visual());
 	V->CalculateBones						();
-	Fmatrix&	mEye						= V->LL_GetTransform(u16(eye_bone));
+	const Fmatrix&	mEye						= V->LL_GetTransform(u16(eye_bone));
 	Fmatrix		X;							X.mul_43	(XFORM(),mEye);
 	VERIFY									(_valid(mEye));
 

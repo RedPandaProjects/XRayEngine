@@ -53,7 +53,7 @@ struct TipString
 	}
 };
 
-class ENGINE_API ConsoleBase
+class ENGINE_API XRayConsoleInterface
 {
 	struct str_pred
 	{
@@ -76,7 +76,7 @@ public:
 
 public:
 
-	virtual					~ConsoleBase() = default;
+	virtual					~XRayConsoleInterface() = default;
 	virtual void			AddCommand(IConsole_Command* cc);
 	virtual void			RemoveCommand(IConsole_Command* cc);
 
@@ -112,7 +112,7 @@ class ENGINE_API CConsole :
 	public pureRender,
 	public pureFrame,
 	public pureScreenResolutionChanged,
-	public ConsoleBase
+	public XRayConsoleInterface
 {
 
 protected:
@@ -237,6 +237,6 @@ protected:
 
 }; // class CConsole
 
-ENGINE_API extern ConsoleBase* Console;
+ENGINE_API extern XRayConsoleInterface* Console;
 
 #endif // XR_IOCONSOLE_H_INCLUDED

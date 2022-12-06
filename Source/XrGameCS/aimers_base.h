@@ -48,7 +48,7 @@ protected:
 								Fvector const& object_direction,
 								Fmatrix& result
 							);
-	static	void			callback		(CBoneInstance* bone);
+	static	void			callback		(IBoneInstance* bone);
 
 protected:
 	Fmatrix					m_start_transform;

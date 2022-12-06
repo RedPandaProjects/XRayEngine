@@ -20,7 +20,7 @@ inline void aimers::base::fill_bones	(
 	STATIC_CHECK						(bone_count0 <= bone_count1, invalid_arrays_passed);
 
 	u16 const root_bone_id				= m_kinematics.LL_GetBoneRoot();
-	CBoneInstance& root_bone			= m_kinematics.LL_GetBoneInstance(root_bone_id);
+	IBoneInstance& root_bone			= m_kinematics.LL_GetBoneInstance(root_bone_id);
 	BoneCallback callback				= root_bone.callback();
 	void* callback_params				= root_bone.callback_param();
 

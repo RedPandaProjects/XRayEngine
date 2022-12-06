@@ -4,26 +4,26 @@
 
 using namespace luabind;
 
-CConsole*	console()
+XRayConsoleInterface*	console()
 {
 	return Console;
 }
 
-int get_console_integer(CConsole* c, LPCSTR cmd)
+int get_console_integer(XRayConsoleInterface* c, LPCSTR cmd)
 {
 	int val=0,min=0,max=0;
 	max = c->GetInteger ( cmd, val, min);
 	return val;
 }
 
-float get_console_float(CConsole* c, LPCSTR cmd)
+float get_console_float(XRayConsoleInterface* c, LPCSTR cmd)
 {
 	float val=0,min=0,max=0;
 	max = c->GetFloat ( cmd, val, min);
 	return val;
 }
 
-bool get_console_bool(CConsole* c, LPCSTR cmd)
+bool get_console_bool(XRayConsoleInterface* c, LPCSTR cmd)
 {
 	BOOL val;
 	val = c->GetBool (cmd);
@@ -36,18 +36,18 @@ void console_registrator::script_register(lua_State *L)
 	module(L)
 	[
 		def("get_console",					&console),
-		class_<CConsole>("CConsole")
-		.def("execute",						&CConsole::Execute)
-		.def("execute_script",				&CConsole::ExecuteScript)
-		.def("show",						&CConsole::Show)
-		.def("hide",						&CConsole::Hide)
-//		.def("save",						&CConsole::Save)
-		.def("get_string",					&CConsole::GetString)
+		class_<XRayConsoleInterface>("CConsole")
+		.def("execute",						&XRayConsoleInterface::Execute)
+		.def("execute_script",				&XRayConsoleInterface::ExecuteScript)
+		.def("show",						&XRayConsoleInterface::Show)
+		.def("hide",						&XRayConsoleInterface::Hide)
+//		.def("save",						&XRayConsoleBase::Save)
+		.def("get_string",					&XRayConsoleInterface::GetString)
 		.def("get_integer",					&get_console_integer)
 		.def("get_bool",					&get_console_bool)
 		.def("get_float",					&get_console_float)
-		.def("get_token",					&CConsole::GetToken)
-//		.def("",				&CConsole::)
+		.def("get_token",					&XRayConsoleInterface::GetToken)
+//		.def("",				&XRayConsoleBase::)
 
 	];
 }

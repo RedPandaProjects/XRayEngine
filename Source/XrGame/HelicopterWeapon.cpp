@@ -6,7 +6,7 @@
 #include "Level.h"
 
 void  
-CHelicopter::BoneMGunCallbackX(CBoneInstance *B)
+CHelicopter::BoneMGunCallbackX(IBoneInstance *B)
 {
 	CHelicopter	* P = static_cast<CHelicopter*>(B->callback_param());
 	Fmatrix rX;		rX.rotateX		(P->m_cur_rot.x);
@@ -17,7 +17,7 @@ CHelicopter::BoneMGunCallbackX(CBoneInstance *B)
 }
 
 void  
-CHelicopter::BoneMGunCallbackY(CBoneInstance *B)
+CHelicopter::BoneMGunCallbackY(IBoneInstance *B)
 {
 	CHelicopter	* P = static_cast<CHelicopter*>(B->callback_param());
 	Fmatrix rY;		rY.rotateY		(P->m_cur_rot.y);

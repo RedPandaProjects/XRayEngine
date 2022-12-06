@@ -28,7 +28,7 @@ class CGameNewsRegistryWrapper;
 class CCharacterPhysicsSupport;
 // refs
 class ENGINE_API CCameraBase;
-class ENGINE_API CBoneInstance;
+class ENGINE_API IBoneInstance;
 class ENGINE_API CBlend;
 class CWeaponList;
 class CEffectorBobbing;
@@ -313,11 +313,11 @@ public:
 	// callback �� �������� ������ ������
 	void					SetCallbacks		();
 	void					ResetCallbacks		();
-	static void				Spin0Callback		(CBoneInstance*);
-	static void				Spin1Callback		(CBoneInstance*);
-	static void				ShoulderCallback	(CBoneInstance*);
-	static void				HeadCallback		(CBoneInstance*);
-	static void				VehicleHeadCallback	(CBoneInstance*);
+	static void				Spin0Callback		(IBoneInstance*);
+	static void				Spin1Callback		(IBoneInstance*);
+	static void				ShoulderCallback	(IBoneInstance*);
+	static void				HeadCallback		(IBoneInstance*);
+	static void				VehicleHeadCallback	(IBoneInstance*);
 
 	virtual const SRotation	Orientation			()	const	{ return r_torso; };
 	SRotation				&Orientation		()			 { return r_torso; };

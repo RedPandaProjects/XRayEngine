@@ -43,15 +43,15 @@ public:
 	// Bones
 	//--------------------------------------------------------------------
 private:
-	static	void			BoneCallback			(CBoneInstance *B);
+	static	void			BoneCallback			(IBoneInstance *B);
 			void			vfAssignBones			();
 			void			LookDirection			(Fvector to_dir, float bone_turn_speed);
 
 
 	bonesManipulation		Bones;
 
-	CBoneInstance			*bone_spine;
-	CBoneInstance			*bone_head;
+	IBoneInstance			*bone_spine;
+	IBoneInstance			*bone_head;
 
 	//--------------------------------------------------------------------
 	// Invisibility

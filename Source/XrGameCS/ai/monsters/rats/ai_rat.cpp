@@ -431,7 +431,7 @@ void CAI_Rat::CreateSkeleton(){
 
 	//get bone instance
 	int id=M->LL_BoneID("bip01_pelvis");
-	CBoneInstance& instance=M->LL_GetBoneInstance				(id);
+	IBoneInstance& instance=M->LL_GetBoneInstance				(id);
 
 	//create root element
 	CPhysicsElement* element=P_create_Element				();

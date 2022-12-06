@@ -42,7 +42,7 @@ __asm	shufps		SW3, SW3, _MM_SHUFFLE(1,0,0,0)
 void __stdcall xrSkin4W_SSE(vertRender*		D,
 							vertBoned4W*	S,
 							u32				vCount,
-							CBoneInstance*	Bones) 
+							IBoneInstance*	Bones) 
 {
 __m128 P0,P1,P2,P3; DWORD One;
 __asm{
@@ -133,7 +133,7 @@ __asm	shufps		SW2, SW2, _MM_SHUFFLE(1,0,0,0)
 void __stdcall xrSkin3W_SSE(vertRender*		D,
 							vertBoned3W*	S,
 							u32				vCount,
-							CBoneInstance*	Bones) 
+							IBoneInstance*	Bones) 
 {
 __m128 P0,P1; DWORD One;
 __asm{
@@ -225,7 +225,7 @@ __asm	addps		res, XMMWORD PTR [edx][eax][112]
 void __stdcall xrSkin2W_SSE(vertRender*		D,
 							vertBoned2W*	S,
 							u32				vCount,
-							CBoneInstance*	Bones) 
+							IBoneInstance*	Bones) 
 {__asm{
 // ------------------------------------------------------------------
 	mov			edi, DWORD PTR [D]			; edi = D
@@ -286,7 +286,7 @@ void __stdcall xrSkin2W_SSE(vertRender*		D,
 void __stdcall xrSkin1W_SSE(vertRender*		D,
 							vertBoned1W*	S,
 							u32				vCount,
-							CBoneInstance*	Bones) 
+							IBoneInstance*	Bones) 
 {__asm{
 // ------------------------------------------------------------------
 	mov			edi, DWORD PTR [D]			; edi = D

@@ -172,7 +172,7 @@ void CPhysicObject::AddElement(CPhysicsElement* root_e, int id)
 	IKinematics* K		= CastToIKinematics(Visual());
 
 	CPhysicsElement* E	= P_create_Element();
-	CBoneInstance& B	= K->LL_GetBoneInstance(u16(id));
+	IBoneInstance& B	= K->LL_GetBoneInstance(u16(id));
 	E->mXFORM.set		(K->LL_GetTransform(u16(id)));
 	Fobb bb			= K->LL_GetBox(u16(id));
 

@@ -33,7 +33,7 @@ void CProjector::Load(LPCSTR section)
 }
 
 
-void  CProjector::BoneCallbackX(CBoneInstance *B)
+void  CProjector::BoneCallbackX(IBoneInstance *B)
 {
 	CProjector	*P = static_cast<CProjector*>(B->callback_param());
 
@@ -45,7 +45,7 @@ void  CProjector::BoneCallbackX(CBoneInstance *B)
 	
 }
 
-void  CProjector::BoneCallbackY(CBoneInstance *B)
+void  CProjector::BoneCallbackY(IBoneInstance *B)
 {
 	CProjector	*P = static_cast<CProjector*>(B->callback_param());
 
@@ -94,10 +94,10 @@ BOOL CProjector::net_Spawn(CSE_Abstract* DC)
 	TurnOn		();
 	
 	//////////////////////////////////////////////////////////////////////////
-	CBoneInstance& b_x = CastToIKinematics(Visual())->LL_GetBoneInstance(bone_x.id);	
+	IBoneInstance& b_x = CastToIKinematics(Visual())->LL_GetBoneInstance(bone_x.id);	
 	b_x.set_callback(bctCustom,BoneCallbackX,this);
 
-	CBoneInstance& b_y = CastToIKinematics(Visual())->LL_GetBoneInstance(bone_y.id);	
+	IBoneInstance& b_y = CastToIKinematics(Visual())->LL_GetBoneInstance(bone_y.id);	
 	b_y.set_callback(bctCustom,BoneCallbackY,this);
 	
 	Direction().getHP(_current.yaw,_current.pitch);
@@ -157,7 +157,7 @@ void CProjector::UpdateCL	()
 			glow_render->set_color(fclr);
 		}
 
-		CBoneInstance& BI = CastToIKinematics(Visual())->LL_GetBoneInstance(guid_bone);
+		IBoneInstance& BI = CastToIKinematics(Visual())->LL_GetBoneInstance(guid_bone);
 		Fmatrix M;
 
 		M.mul(XFORM(),BI.GetTransform());

@@ -191,7 +191,7 @@ CPHCapture::CPHCapture(CPHCharacter   *a_character,CPhysicsShellHolder	*a_taget_
 		return;
 	}
 
-	CBoneInstance& tag_bone=K->LL_GetBoneInstance(a_taget_element);
+	IBoneInstance& tag_bone=K->LL_GetBoneInstance(a_taget_element);
 
 	if(!tag_bone.callback_param())
 	{

@@ -30,7 +30,7 @@ class CCharacterPhysicsSupport;
 class CActorCameraManager;
 // refs
 class ENGINE_API CCameraBase;
-class ENGINE_API CBoneInstance;
+class ENGINE_API IBoneInstance;
 class ENGINE_API CBlend;
 class CWeaponList;
 class CEffectorBobbing;
@@ -287,11 +287,11 @@ public:
 	// callback на анимации модели актера
 	void					SetCallbacks		();
 	void					ResetCallbacks		();
-	static void		_BCL	Spin0Callback		(CBoneInstance*);
-	static void		_BCL	Spin1Callback		(CBoneInstance*);
-	static void		_BCL	ShoulderCallback	(CBoneInstance*);
-	static void		_BCL	HeadCallback		(CBoneInstance*);
-	static void		_BCL	VehicleHeadCallback	(CBoneInstance*);
+	static void		_BCL	Spin0Callback		(IBoneInstance*);
+	static void		_BCL	Spin1Callback		(IBoneInstance*);
+	static void		_BCL	ShoulderCallback	(IBoneInstance*);
+	static void		_BCL	HeadCallback		(IBoneInstance*);
+	static void		_BCL	VehicleHeadCallback	(IBoneInstance*);
 
 	virtual const SRotation	Orientation			()	const	{ return r_torso; };
 	SRotation				&Orientation		()			 { return r_torso; };

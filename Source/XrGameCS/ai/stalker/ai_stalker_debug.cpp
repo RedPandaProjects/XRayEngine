@@ -1247,7 +1247,7 @@ static void fill_bones				(CAI_Stalker& self, Fmatrix const& transform, IKinemat
 	VERIFY								(animation.valid());
 
 	u16 const root_bone_id				= kinematics->LL_GetBoneRoot();
-	CBoneInstance& root_bone			= kinematics->LL_GetBoneInstance(root_bone_id);
+	IBoneInstance& root_bone			= kinematics->LL_GetBoneInstance(root_bone_id);
 	BoneCallback callback				= root_bone.callback();
 	void* callback_params				= root_bone.callback_param();
 	root_bone.set_callback				( bctCustom, 0, 0 );
@@ -1300,7 +1300,7 @@ struct callback_param {
 	u16				bone_id;
 };
 
-static void test_callback			(CBoneInstance *B)
+static void test_callback			(IBoneInstance *B)
 {
 	VERIFY								(B);
 

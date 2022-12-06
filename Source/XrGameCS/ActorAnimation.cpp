@@ -37,7 +37,7 @@ static const float r_shoulder_factor	= 0.2f;
 static const float r_head_factor		= 0.2f;
 
 
-void  CActor::Spin0Callback(CBoneInstance* B)
+void  CActor::Spin0Callback(IBoneInstance* B)
 {
 	CActor*	A			= static_cast<CActor*>(B->callback_param());	VERIFY	(A);
 
@@ -53,7 +53,7 @@ void  CActor::Spin0Callback(CBoneInstance* B)
 	B->SetTransform(BoneMatrix);
 	
 }
-void  CActor::Spin1Callback(CBoneInstance* B)
+void  CActor::Spin1Callback(IBoneInstance* B)
 {
 	CActor*	A			= static_cast<CActor*>(B->callback_param());	VERIFY	(A);
 
@@ -68,7 +68,7 @@ void  CActor::Spin1Callback(CBoneInstance* B)
 	BoneMatrix.c = c;
 	B->SetTransform(BoneMatrix);
 }
-void  CActor::ShoulderCallback(CBoneInstance* B)
+void  CActor::ShoulderCallback(IBoneInstance* B)
 {
 	CActor*	A			= static_cast<CActor*>(B->callback_param());	VERIFY	(A);
 	Fmatrix				spin;
@@ -82,7 +82,7 @@ void  CActor::ShoulderCallback(CBoneInstance* B)
 	BoneMatrix.c = c;
 	B->SetTransform(BoneMatrix);
 }
-void  CActor::HeadCallback(CBoneInstance* B)
+void  CActor::HeadCallback(IBoneInstance* B)
 {
 	CActor*	A			= static_cast<CActor*>(B->callback_param());	VERIFY	(A);
 	Fmatrix				spin;
@@ -97,7 +97,7 @@ void  CActor::HeadCallback(CBoneInstance* B)
 	B->SetTransform(BoneMatrix);
 }
 
-void  CActor::VehicleHeadCallback(CBoneInstance* B)
+void  CActor::VehicleHeadCallback(IBoneInstance* B)
 {
 	CActor*	A			= static_cast<CActor*>(B->callback_param());	VERIFY	(A);
 	Fmatrix				spin;

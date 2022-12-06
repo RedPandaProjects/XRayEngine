@@ -94,13 +94,13 @@ public:
 	BOOL						dbg_single_use_marker;
 #endif
 			void				Bone_Calculate		(CBoneData* bd, Fmatrix* parent);
-			void				CLBone				(const CBoneData* bd, CBoneInstance &bi, const Fmatrix *parent, u8 mask_channel = (1<<0));
+			void				CLBone				(const CBoneData* bd, IBoneInstance &bi, const Fmatrix *parent, u8 mask_channel = (1<<0));
 
-			void				BoneChain_Calculate	(const CBoneData* bd, CBoneInstance &bi,u8 channel_mask, bool ignore_callbacks);
+			void				BoneChain_Calculate	(const CBoneData* bd, IBoneInstance &bi,u8 channel_mask, bool ignore_callbacks);
 			void				Bone_GetAnimPos		(Fmatrix& pos,u16 id, u8 channel_mask, bool ignore_callbacks);
 
 
-	virtual	void				BuildBoneMatrix		( const CBoneData* bd, CBoneInstance &bi, const Fmatrix *parent, u8 mask_channel = (1<<0) );
+	virtual	void				BuildBoneMatrix		( const CBoneData* bd, IBoneInstance &bi, const Fmatrix *parent, u8 mask_channel = (1<<0) );
 	virtual void				OnCalculateBones	(){}
 	
 public:
@@ -113,7 +113,7 @@ protected:
 
 	// Globals
     CInifile*					pUserData;
-	CBoneInstance*				bone_instances;	// bone instances
+	IBoneInstance*				bone_instances;	// bone instances
 	vecBones*					bones;			// all bones	(shared)
 	u16							iRoot;			// Root bone index
 
@@ -161,8 +161,8 @@ public:
 
 				CInifile*		_BCL	LL_UserData			()						{return pUserData;}
 				accel*					LL_Bones			()						{return bone_map_N;}
-	ICF			CBoneInstance&	_BCL	LL_GetBoneInstance	(u16 bone_id)			{	VERIFY(bone_id<LL_BoneCount()); VERIFY(bone_instances); return bone_instances[bone_id];	}
-	ICF const	CBoneInstance&	_BCL	LL_GetBoneInstance	(u16 bone_id) const		{	VERIFY(bone_id<LL_BoneCount()); VERIFY(bone_instances); return bone_instances[bone_id];	}
+	ICF			IBoneInstance&	_BCL	LL_GetBoneInstance	(u16 bone_id)			{	VERIFY(bone_id<LL_BoneCount()); VERIFY(bone_instances); return bone_instances[bone_id];	}
+	ICF const	IBoneInstance&	_BCL	LL_GetBoneInstance	(u16 bone_id) const		{	VERIFY(bone_id<LL_BoneCount()); VERIFY(bone_instances); return bone_instances[bone_id];	}
 	CBoneData&					_BCL	LL_GetData			(u16 bone_id)
     {
     	VERIFY(bone_id<LL_BoneCount());

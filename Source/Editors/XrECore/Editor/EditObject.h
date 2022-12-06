@@ -131,9 +131,7 @@ DEFINE_VECTOR(SBonePart,BPVec,BPIt);
 
 const u32 FVF_SV	= D3DFVF_XYZ | D3DFVF_TEX1 | D3DFVF_NORMAL;
 
-class ECORE_API CEditableObject:
-public IKinematics,
-public CPhysicsShellHolderEditorBase
+class ECORE_API CEditableObject
 {
 	friend class CSceneObject;
 	friend class CEditableMesh;
@@ -423,66 +421,8 @@ public:
     void 			GetAnchorForRootObjectAnimation( Fmatrix &anchor );
     bool 			AnimateRootObject(CSMotion* motion);
 private:
-	virtual		void			Bone_Calculate		(CBoneData* bd, Fmatrix* parent) 									{ VERIFY(false); }
-	virtual		void			Bone_GetAnimPos(Fmatrix& pos,u16 id, u8 channel_mask, bool ignore_callbacks) 			{ VERIFY(false); }
-
-	virtual		bool			PickBone			(const Fmatrix &parent_xform, pick_result &r, float dist, const Fvector& start, const Fvector& dir, u16 bone_id) { VERIFY(false); return false;}
-	virtual		void			EnumBoneVertices	(SEnumVerticesCallback &C, u16 bone_id) 							{ VERIFY(false); }
-
-	// Low level interface
-	virtual u16			_BCL	LL_BoneID(LPCSTR  B)																   	{ int id = FindBoneByNameIdx( B ); VERIFY(id<u16(-1)); return (u16)id; }
-	virtual u16			_BCL	LL_BoneID(const shared_str& B)                                                          { return LL_BoneID( B.c_str() ); }
-	virtual LPCSTR		_BCL	LL_BoneName_dbg(u16 ID) 																;
-
-	virtual CInifile*	_BCL	LL_UserData() 																			{ return 0; }
-	virtual accel*				LL_Bones() 																				{ VERIFY(false); return 0; }
-
-	virtual  CBoneInstance&	_BCL LL_GetBoneInstance(u16 bone_id);
-
-	virtual CBoneData&	_BCL	LL_GetData(u16 bone_id);
-
-virtual	const IBoneData&_BCL	GetBoneData(u16 bone_id) const 															{ return *GetBone( bone_id ); }
-
-	virtual u16			_BCL	LL_BoneCount()const 																	{ return (u16)BoneCount(); }
-	virtual u16					LL_VisibleBoneCount() 																	{ VERIFY(false); return 0; }
-	virtual ICF Fmatrix& _BCL	LL_GetTransform(u16 bone_id) 															{ return GetBone( bone_id )->_LTransform(); }
-    virtual ICF const Fmatrix& _BCL	LL_GetTransform(u16 bone_id) const 													{ return GetBone( bone_id )->_LTransform(); }
-	virtual ICF Fmatrix&		LL_GetTransform_R(u16 bone_id);
-	virtual Fobb&				LL_GetBox(u16 bone_id);
-	virtual void				LL_GetBindTransform(xr_vector<Fmatrix>& matrices) 										{ VERIFY(false); }
-	virtual int 				LL_GetBoneGroups(xr_vector<xr_vector<u16> >& groups) 									{ VERIFY(false); return 0; }
-
-	virtual u16			_BCL	LL_GetBoneRoot() 																		{ u16 root_id = (u16)GetRootBoneID(); VERIFY( root_id < u16(-1) ); return root_id; }
-	virtual void				LL_SetBoneRoot(u16 bone_id) 															{ VERIFY(false); }
-
-	virtual BOOL		_BCL	LL_GetBoneVisible(u16 bone_id) 															{ return TRUE; }
-	virtual void				LL_SetBoneVisible(u16 bone_id, BOOL val, BOOL bRecursive) 								{ VERIFY(false); }
-	virtual BonesVisible			_BCL	LL_GetBonesVisible() 																	{ return BonesVisible(-1); }
-	virtual void				LL_SetBonesVisible(BonesVisible mask) 															{ VERIFY(false); }
-
-	// Main functionality
-	virtual void				CalculateBones(BOOL bForceExact	= FALSE) 												{ } // Recalculate skeleton
-	virtual void				CalculateBones_Invalidate()																{ }
-	virtual void				Callback(UpdateCallback C, void* Param) 												{ VERIFY(false); }
-
-	//	Callback: data manipulation
-	virtual void				SetUpdateCallback(UpdateCallback pCallback) 											{ VERIFY(false); }
-	virtual void				SetUpdateCallbackParam(void* pCallbackParam)											{ VERIFY(false); }
-
-	virtual UpdateCallback		GetUpdateCallback() 																	{ VERIFY(false); return 0; }
-	virtual void*				GetUpdateCallbackParam() 																{ VERIFY(false); return 0; }
-	//UpdateCallback				Update_Callback;
-	//void*						Update_Callback_Param;
-	virtual IRenderVisual* _BCL dcast_RenderVisual()																	{ 	return 0; }
-	virtual IKinematicsAnimated* dcast_PKinematicsAnimated() 															{ VERIFY(false); return 0; }
-
-	// debug
-#ifdef DEBUG
-	virtual void						DebugRender			(Fmatrix& XFORM) 											{VERIFY(false);}
-	virtual shared_str	_BCL			getDebugName		() 															{return m_ModifName;}
-#endif
+	
 private:
-   	virtual	IKinematics*	 	_BCL	ObjectKinematics		()				 										{ return this;}
     int m_FaceCount;
     int m_VertexCount;
 
