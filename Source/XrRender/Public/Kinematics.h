@@ -38,7 +38,6 @@ public:
 	virtual LPCSTR					LL_BoneName_dbg(u16 ID) = 0;
 
 	virtual CInifile*				LL_UserData() = 0;
-	virtual accel*						LL_Bones() = 0;
 
 	virtual  IBoneInstance&		LL_GetBoneInstance(u16 bone_id) = 0;
 	virtual	const IBoneData&		GetBoneData(u16 bone_id) const = 0;

@@ -21,6 +21,7 @@ public:
 	virtual	IKinematicsAnimated*	dcast_PKinematicsAnimated	()				{ return 0;	}
 	virtual IParticleCustom*		dcast_ParticleCustom		()				{ return 0;	}
 	virtual class XRaySkeletonVisual*CastToRaySkeletonVisual	()				{ return 0;	}
+	virtual class AStalkerKinematics*   CastToAStalkerKinematics()				{ return 0; }
 	class IRenderable* Renderable = nullptr;
 };
 

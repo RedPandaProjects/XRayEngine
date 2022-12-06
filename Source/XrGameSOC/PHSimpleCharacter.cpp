@@ -1384,8 +1384,9 @@ u16 CPHSimpleCharacter::RetriveContactBone()
 		float sq_dist=dInfinity;
 		for(u16 i=0;i<count;++i)
 		{
+			bone_instances = &K->LL_GetBoneInstance(i);
 			Fvector c_to_bone;
-			c_to_bone.sub(bone_instances[i].GetTransform().c,pos_in_object);
+			c_to_bone.sub(bone_instances->GetTransform().c,pos_in_object);
 			float temp_sq_dist=c_to_bone.square_magnitude();
 			if(temp_sq_dist<sq_dist)
 			{

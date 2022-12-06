@@ -552,11 +552,7 @@ u32 CWeaponKnife::get_entity_bones_count(CEntityAlive const * entity)
 	if (!tmp_kinem)
 		return 0;
 
-	IKinematics::accel* tmp_accel = tmp_kinem->LL_Bones();
-	if (!tmp_accel)
-		return 0;
-
-	return tmp_accel->size();
+	return tmp_kinem->LL_BoneCount();
 };
 
 void CWeaponKnife::fill_shapes_list(CEntityAlive const * entity,
