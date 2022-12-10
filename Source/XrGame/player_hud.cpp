@@ -204,6 +204,8 @@ void attachable_hud_item::setup_firedeps(firedeps& fd)
 		VERIFY(_valid(fd.vLastSP));
 		VERIFY(_valid(fd.vLastSP));
 	}
+
+	m_model->dcast_RenderVisual()->XFormMatrix = m_item_transform;
 }
 
 bool  attachable_hud_item::need_renderable()
@@ -428,6 +430,7 @@ void player_hud::load(const shared_str& player_hud_sect)
 	bool b_reload = (m_model!=NULL);
 	if(m_model)
 	{
+		m_model->dcast_RenderVisual()->SetRenderMode(EVisualRenderMode::None);
 		IRenderVisual* v			= m_model->dcast_RenderVisual();
 		::Render->model_Delete		(v);
 	}
@@ -435,6 +438,7 @@ void player_hud::load(const shared_str& player_hud_sect)
 	m_sect_name					= player_hud_sect;
 	const shared_str& model_name= pSettings->r_string(player_hud_sect, "visual");
 	m_model						= CastToIKinematicsAnimated(::Render->model_Create(model_name.c_str()));
+	m_model->dcast_RenderVisual()->SetRenderMode(EVisualRenderMode::FromSelfXForm);
 	Msg("%d",sizeof(IKinematicsAnimated));
 	CInifile::Sect& _sect		= pSettings->r_section(player_hud_sect);
 	CInifile::SectCIt _b		= _sect.Data.begin();
@@ -444,7 +448,7 @@ void player_hud::load(const shared_str& player_hud_sect)
 		if(strstr(_b->first.c_str(), "ancor_")==_b->first.c_str())
 		{
 			const shared_str& _bone	= _b->second;
-			auto PKinematics =  m_model->dcast_PKinematics();
+			auto PKinematics =		m_model->dcast_PKinematics();
 			m_ancors.push_back		(PKinematics->LL_BoneID(_bone));
 		}
 	}
@@ -567,6 +571,8 @@ void player_hud::update(const Fmatrix& cam_trans)
 	m_transform.mul					(trans, m_attach_offset);
 	// insert inertion here
 
+	m_model->dcast_RenderVisual()->XFormMatrix = m_transform;
+	//m_model->dcast_PKinematics()->XFormMatrix = m_transform;
 	m_model->UpdateTracks				();
 	m_model->dcast_PKinematics()->CalculateBones_Invalidate	();
 	m_model->dcast_PKinematics()->CalculateBones				(TRUE);
@@ -576,6 +582,8 @@ void player_hud::update(const Fmatrix& cam_trans)
 
 	if(m_attached_items[1])
 		m_attached_items[1]->update(true);
+
+	
 }
 
 u32 player_hud::anim_play(u16 part, const MotionID& M, BOOL bMixIn, const CMotionDef*& md, float speed)
@@ -683,19 +691,22 @@ void player_hud::attach_item(CHudItem* item)
 {
 	attachable_hud_item* pi			= create_hud_item(item->HudSection());
 	int item_idx					= pi->m_attach_place_idx;
-	
 	if(	m_attached_items[item_idx] != pi)
 	{
 		if(m_attached_items[item_idx])
 			m_attached_items[item_idx]->m_parent_hud_item->on_b_hud_detach();
 
+
 		m_attached_items[item_idx]						= pi;
 		pi->m_parent_hud_item							= item;
+
 
 		if(item_idx==0 && m_attached_items[1])
 			m_attached_items[1]->m_parent_hud_item->CheckCompatibility(item);
 
 		item->on_a_hud_attach();
+
+		m_attached_items[item_idx]->m_model->dcast_RenderVisual()->SetRenderMode(EVisualRenderMode::FromSelfXForm);
 	}
 	pi->m_parent_hud_item							= item;
 }
@@ -705,7 +716,7 @@ void player_hud::detach_item_idx(u16 idx)
 	if( NULL==attached_item(idx) )					return;
 
 	m_attached_items[idx]->m_parent_hud_item->on_b_hud_detach();
-
+	m_attached_items[idx]->m_model->dcast_RenderVisual()->SetRenderMode(EVisualRenderMode::None);
 	m_attached_items[idx]->m_parent_hud_item		= NULL;
 	m_attached_items[idx]							= NULL;
 

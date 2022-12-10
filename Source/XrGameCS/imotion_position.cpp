@@ -322,7 +322,7 @@ void imotion_position::move_update( )
 {
 	IKinematics *K = shell->PKinematics();
 	VERIFY( K );
-	VERIFY( K == smart_cast<IKinematics *>( &KA ) );
+	VERIFY( K == CastToIKinematics( KA.dcast_RenderVisual() ) );
 	disable_bone_calculation( *K, false );
 
 	K->Bone_Calculate( &K->GetBoneData(0), &Fidentity );
@@ -686,7 +686,7 @@ void	imotion_position::rootbone_callback	( IBoneInstance *BI )
 	VERIFY( im->shell );
 	IKinematics *K  = im->shell->PKinematics( );
 	VERIFY( K );
-	IKinematicsAnimated *KA = smart_cast<IKinematicsAnimated *>( K );
+	IKinematicsAnimated *KA = K->dcast_PKinematicsAnimated();
 	VERIFY( KA );
 	SKeyTable	keys;
 	KA->LL_BuldBoneMatrixDequatize( &K->GetBoneData( 0 ), u8(-1), keys );

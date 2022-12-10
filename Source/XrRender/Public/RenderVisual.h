@@ -6,23 +6,31 @@ class IKinematics;
 class IKinematicsAnimated;
 class IParticleCustom;
 struct vis_data;
-
+enum class EVisualRenderMode
+{
+	None,
+	FromRenderable,
+	FromSelfXForm,
+};
 class IRenderVisual
 {
 public:
 	virtual ~IRenderVisual() {;}
 
-	virtual vis_data&	_BCL	getVisData() = 0;
-	virtual u32					getType() = 0;
+	virtual vis_data&	_BCL			getVisData() = 0;
+	virtual u32							getType() = 0;
 
-	virtual shared_str	_BCL	getDebugName() = 0;
+	virtual shared_str	_BCL			getDebugName() = 0;
 
-	virtual	IKinematics*	_BCL	dcast_PKinematics			()				{ return 0;	}
-	virtual	IKinematicsAnimated*	dcast_PKinematicsAnimated	()				{ return 0;	}
-	virtual IParticleCustom*		dcast_ParticleCustom		()				{ return 0;	}
-	virtual class XRaySkeletonVisual*CastToRaySkeletonVisual	()				{ return 0;	}
+	virtual	IKinematics*	_BCL		dcast_PKinematics			()				{ return 0;	}
+	virtual	IKinematicsAnimated*		dcast_PKinematicsAnimated	()				{ return 0;	}
+	virtual IParticleCustom*			dcast_ParticleCustom		()				{ return 0;	}
+	virtual class XRaySkeletonVisual*	CastToRaySkeletonVisual	()				{ return 0;	}
 	virtual class AStalkerKinematics*   CastToAStalkerKinematics()				{ return 0; }
-	class IRenderable* Renderable = nullptr;
+
+	virtual void						SetRenderMode(EVisualRenderMode RenderMode) = 0;
+	Fmatrix								XFormMatrix;
+	class IRenderable*					Renderable = nullptr;
 };
 
 ICF IKinematics* CastToIKinematics(IRenderVisual*Visual)

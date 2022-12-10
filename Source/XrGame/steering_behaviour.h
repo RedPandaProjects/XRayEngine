@@ -235,7 +235,7 @@ public:
 		float turn_factor;
 		vec   thrust_factor;
 
-		typedef std::vector<vec> Probes;
+		typedef xr_vector<vec> Probes;
 		Probes probes; // obstacle-scanners (vectors in local (dir,up) space)
 
 		params(float turn_factor, vec_arg thrust_factor,
@@ -318,7 +318,7 @@ protected:
 	void        remove_scheduled ();
 	static void deleter (base* p);
 	
-	typedef std::set<base*> Behaviours;
+	typedef xr_set<base*> Behaviours;
 
 	Behaviours  m_behaviours;
 	Behaviours  m_schedule_remove;

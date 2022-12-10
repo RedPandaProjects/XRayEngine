@@ -13,10 +13,10 @@
 
 XRCORE_API	char* 	xr_strdup	(const char* string);
 #if !__UNREAL__
-IC void* operator new		(size_t size) { R_ASSERT(false);return nullptr; }
-IC void		operator delete		(void* p) { R_ASSERT(false); }
-IC void* operator new[](size_t size) {	R_ASSERT(false);	return nullptr;	}
-IC void		operator delete[](void* p) {	R_ASSERT(false);}
+IC void* operator new		(size_t size) { return MemoryInterface->mem_alloc(size); }
+IC void		operator delete		(void* p) { return MemoryInterface->mem_free(p); }
+IC void* operator new[](size_t size) {		return MemoryInterface->mem_alloc(size);	}
+IC void		operator delete[](void* p) {	return MemoryInterface->mem_free(p); }
 #endif
 // POOL-ing
 const		u32			mem_pools_count			=	54;

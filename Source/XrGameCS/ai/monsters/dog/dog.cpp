@@ -418,7 +418,7 @@ bool  CAI_Dog::can_use_agressive_jump (const CObject* enemy)
 #ifdef _DEBUG
 void CAI_Dog::debug_on_key(int key)
 {
-	IKinematicsAnimated *skel = smart_cast<IKinematicsAnimated *>(Visual());
+	IKinematicsAnimated *skel = CastToIKinematicsAnimated(Visual());
 
 	switch (key){
 	case DIK_1:

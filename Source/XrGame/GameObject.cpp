@@ -967,8 +967,8 @@ void CGameObject::create_anim_mov_ctrl	( CBlend *b, Fmatrix *start_pose, bool lo
 			start_pose,
 			make_string(
 				"start pose hasn't been specified for animation [%s][%s]",
-				smart_cast<IKinematicsAnimated&>(*Visual()).LL_MotionDefName_dbg(b->motionID).first,
-				smart_cast<IKinematicsAnimated&>(*Visual()).LL_MotionDefName_dbg(b->motionID).second
+				CastToIKinematicsAnimated(Visual())->LL_MotionDefName_dbg(b->motionID).first,
+				CastToIKinematicsAnimated(Visual())->LL_MotionDefName_dbg(b->motionID).second
 			)
 		);
 
@@ -976,8 +976,8 @@ void CGameObject::create_anim_mov_ctrl	( CBlend *b, Fmatrix *start_pose, bool lo
 			!animation_movement(),
 			make_string(
 				"start pose hasn't been specified for animation [%s][%s]",
-				smart_cast<IKinematicsAnimated&>(*Visual()).LL_MotionDefName_dbg(b->motionID).first,
-				smart_cast<IKinematicsAnimated&>(*Visual()).LL_MotionDefName_dbg(b->motionID).second
+				CastToIKinematicsAnimated(Visual())->LL_MotionDefName_dbg(b->motionID).first,
+				CastToIKinematicsAnimated(Visual())->LL_MotionDefName_dbg(b->motionID).second
 			)
 		);
 		

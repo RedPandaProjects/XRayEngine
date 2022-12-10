@@ -830,7 +830,7 @@ static void DBG_DrawTarckObj()
 	if( !v )
 		return;
 	DBG_OutText( "visual name: %s ", *trace_object->cNameVisual() );
-	IKinematics *k = smart_cast<IKinematics *>( v );
+	IKinematics *k = CastToIKinematics( v );
 	if( !k )
 		return;
 	IKinematicsAnimated* ka = CastToIKinematicsAnimated( v);
