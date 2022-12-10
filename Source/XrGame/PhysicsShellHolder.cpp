@@ -611,7 +611,7 @@ void	CPhysicsShellHolder::BonceDamagerCallback(float &damage_factor)
 }
 
 #ifdef	DEBUG
-std::string	CPhysicsShellHolder::dump(EDumpType type) const
+xr_string	CPhysicsShellHolder::dump(EDumpType type) const
 {
 	switch(type)
 	{
@@ -621,7 +621,7 @@ std::string	CPhysicsShellHolder::dump(EDumpType type) const
 	case	props:				return dbg_object_props_dump_string( this );					break;
 	case	full:				return dbg_object_full_dump_string( this);						break;
 	case	full_capped:		return dbg_object_full_capped_dump_string( this );				break;
-	default: NODEFAULT;			return std::string("fail!");
+	default: NODEFAULT;			return xr_string("fail!");
 	}
 
 }

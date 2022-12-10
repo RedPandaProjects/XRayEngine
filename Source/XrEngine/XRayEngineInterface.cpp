@@ -681,6 +681,8 @@ void XRayEngineInterface::Level_Scan()
 	Levels.clear	();
 
 	Level_Append("labx8\\");
+	Level_Append("zaton\\");
+	Level_Append("test5\\");
 
 	
 

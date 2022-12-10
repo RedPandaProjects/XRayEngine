@@ -27,12 +27,11 @@ public:
 
 	IC	bool	operator()		(const CStalkerAnimationDataStorage::OBJECT &object) const
 	{
-		if (m_object->LL_MotionsSlotCount() != object.first->LL_MotionsSlotCount())
-			return			(false);
 
-		for (u16 i=0, n=m_object->LL_MotionsSlotCount(); i<n; ++i)
-			if (!(m_object->LL_MotionsSlot(i) == object.first->LL_MotionsSlot(i)))
-				return		(false);
+		if (!m_object->AnimsEqual(object.first))
+		{
+			return false;
+		}
 
 		return				(true);
 	}

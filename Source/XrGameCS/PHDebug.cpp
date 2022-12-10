@@ -1031,7 +1031,7 @@ void DBG_ObjAfterPhDataUpdate	( CPHObject *obj )
 }
 
 
-std::string dump_string( LPCSTR name, const Fvector &v )
+xr_string dump_string( LPCSTR name, const Fvector &v )
 {
 	return make_string( "%s : (%f,%f,%f) ", name, v.x, v.y, v.z );
 }
@@ -1041,7 +1041,7 @@ void dump( LPCSTR name, const Fvector &v )
 	Msg( "%s", dump_string( name, v ).c_str() );
 }
 
-std::string dump_string( LPCSTR name, const Fmatrix &form )
+xr_string dump_string( LPCSTR name, const Fmatrix &form )
 {
 	return 
 	make_string( "%s, _14_=%f \n", dump_string( make_string( "%s.i, ", name ).c_str(), form.i ).c_str( ) , form._14_ )	+ 

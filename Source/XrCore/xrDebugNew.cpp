@@ -70,7 +70,7 @@ void xrDebug::gather_info		(const char *expression, const char *description, con
 	
 }
 
-void xrDebug::do_exit	(const std::string &message)
+void xrDebug::do_exit	(const xr_string&message)
 {
 	MessageBox			(NULL,message.c_str(),"Error",MB_OK|MB_ICONERROR|MB_SYSTEMMODAL);
 	TerminateProcess	(GetCurrentProcess(),1);
@@ -134,7 +134,7 @@ void xrDebug::fail		(const char *e1, const char *file, int line, const char *fun
 	backend		("assertion failed",e1,0,0,file,line,function,ignore_always);
 }
 
-void xrDebug::fail		(const char *e1, const std::string &e2, const char *file, int line, const char *function, bool &ignore_always)
+void xrDebug::fail		(const char *e1, const xr_string&e2, const char *file, int line, const char *function, bool &ignore_always)
 {
 	backend		(e1,e2.c_str(),0,0,file,line,function,ignore_always);
 }

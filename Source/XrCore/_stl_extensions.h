@@ -134,6 +134,17 @@ public:
 	}
 };
 
+IC xr_string __cdecl	make_string(LPCSTR format, ...)
+{
+	va_list		args;
+	va_start(args, format);
+
+	char		temp[4096];
+	vsprintf(temp, format, args);
+
+	return		xr_string(temp);
+}
+
 // vector
 template	<typename T, typename allocator = xalloc<T> >
 class xr_vector : public std::vector<T,allocator> {

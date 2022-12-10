@@ -22,15 +22,15 @@ bool valid_pos( const Fvector &P )
 
 
 #ifdef	DEBUG
-std::string dbg_valide_pos_string( const Fvector &pos,const Fbox &bounds, const CObject *obj, LPCSTR msg )
+xr_string dbg_valide_pos_string( const Fvector &pos,const Fbox &bounds, const CObject *obj, LPCSTR msg )
 {
-	return	std::string( msg ) +
+	return	xr_string( msg ) +
 			make_string( "\n pos: %s , seems to be invalid ", get_string( pos ).c_str() ) +
 			make_string( "\n Level box: %s ", get_string( bounds ).c_str() ) +
-			std::string( "\n object dump: \n" ) +
+			xr_string( "\n object dump: \n" ) +
 			dbg_object_full_dump_string( obj );
 }
-std::string dbg_valide_pos_string( const Fvector &pos, const CObject *obj, LPCSTR msg )
+xr_string dbg_valide_pos_string( const Fvector &pos, const CObject *obj, LPCSTR msg )
 {
 	return dbg_valide_pos_string( pos, phBoundaries, obj, msg );
 }

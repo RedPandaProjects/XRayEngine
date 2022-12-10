@@ -354,7 +354,7 @@ u32 attachable_hud_item::anim_play(const shared_str& anm_name_b, BOOL bMixIn, co
 		root_binst.set_callback_overwrite(TRUE);
 		root_binst.SetTransform(Fidentity);
 
-		u16 pc							= ka->partitions().count();
+		u16 pc							= ka->BonesPartsCount();
 		for(u16 pid=0; pid<pc; ++pid)
 		{
 			CBlend* B					= ka->PlayCycle(pid, M2, bMixIn);
@@ -528,8 +528,7 @@ u32 player_hud::motion_length(const MotionID& M, const CMotionDef*& md, float sp
 	VERIFY				(md);
 	if (md->flags & esmStopAtEnd) 
 	{
-		CMotion*			motion		= m_model->LL_GetRootMotion(M);
-		return				iFloor( 0.5f + 1000.f*motion->GetLength() / (md->Dequantize(md->speed) * speed) );
+		return				iFloor( 0.5f + 1000.f* (m_model->LL_GetMotionTime(M) / speed));
 	}
 	return					0;
 }
@@ -584,9 +583,9 @@ u32 player_hud::anim_play(u16 part, const MotionID& M, BOOL bMixIn, const CMotio
 
 	u16 part_id							= u16(-1);
 	if(attached_item(0) && attached_item(1))
-		part_id = m_model->partitions().part_id((part==0)?"right_hand":"left_hand");
+		part_id = m_model->LL_PartID((part==0)?"right_hand":"left_hand");
 
-	u16 pc					= m_model->partitions().count();
+	u16 pc					= m_model->BonesPartsCount();
 	for(u16 pid=0; pid<pc; ++pid)
 	{
 		if(pid==0 || pid==part_id || part_id==u16(-1))
@@ -712,7 +711,7 @@ void player_hud::detach_item_idx(u16 idx)
 
 	if(idx==1 && attached_item(0))
 	{
-		u16 part_idR			= m_model->partitions().part_id("right_hand");
+		u16 part_idR			= m_model->LL_PartID("right_hand");
 		u32 bc					= m_model->LL_PartBlendsCount(part_idR);
 		for(u32 bidx=0; bidx<bc; ++bidx)
 		{
@@ -722,7 +721,7 @@ void player_hud::detach_item_idx(u16 idx)
 
 			MotionID M			= BR->motionID;
 
-			u16 pc					= m_model->partitions().count();
+			u16 pc					= m_model->BonesPartsCount();
 			for(u16 pid=0; pid<pc; ++pid)
 			{
 				if(pid!=part_idR)

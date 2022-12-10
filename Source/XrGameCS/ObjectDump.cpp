@@ -2,7 +2,7 @@
 
 #ifdef DEBUG
 
-std::string dbg_object_base_dump_string( const CObject *obj )
+xr_string dbg_object_base_dump_string( const CObject *obj )
 {
 	if( !obj )
 		return make_string("object: NULL ptr");
@@ -11,11 +11,11 @@ std::string dbg_object_base_dump_string( const CObject *obj )
 						 obj->cNameSect().c_str(), 
 						 obj->Visual() ? obj->cNameVisual().c_str() : "none" );
 }
-std::string get_string( const Fvector& v )
+xr_string get_string( const Fvector& v )
 {
 	return make_string	("( %f, %f, %f )", v.x, v.y, v.z );
 }
-std::string get_string( const Fmatrix& dop )
+xr_string get_string( const Fmatrix& dop )
 {
 	return make_string	("\n%f,%f,%f,%f\n%f,%f,%f,%f\n%f,%f,%f,%f\n%f,%f,%f,%f\n",
 		dop.i.x, dop.i.y, dop.i.z, dop._14_,
@@ -24,17 +24,17 @@ std::string get_string( const Fmatrix& dop )
 		dop.c.x, dop.c.y, dop.c.z, dop._44_
 	);
 }
-std::string get_string(const Fbox &box)
+xr_string get_string(const Fbox &box)
 {
 	return make_string( "[ min: %s - max: %s ]", get_string( box.min ).c_str(), get_string( box.max ).c_str() );
 }
-std::string dbg_object_poses_dump_string( const CObject *obj )
+xr_string dbg_object_poses_dump_string( const CObject *obj )
 {
 	if(!obj)
-		return std::string("");
+		return xr_string("");
 	
 	u32 ps_size = obj->ps_Size();
-	std::string buf("");
+	xr_string buf("");
 	for (u32 i = 0; i < ps_size; ++i )
 	{
 		const CObject::SavedPosition &svp = obj->ps_Element( i );
@@ -44,19 +44,19 @@ std::string dbg_object_poses_dump_string( const CObject *obj )
 	return make_string( "\n XFORM: %s \n position stack : %s \n,  ", get_string(obj->XFORM()).c_str(), buf.c_str() );
 }
 
-std::string dbg_object_visual_geom_dump_string( const CObject *obj )
+xr_string dbg_object_visual_geom_dump_string( const CObject *obj )
 {
 	if( !obj || !obj->Visual() )
-			return std::string("");
+			return xr_string("");
 	const Fbox &box = obj->BoundingBox();
 	Fvector c;obj->Center( c );
 
 	return make_string( "\n visual box: %s \n visual center: %s \n visual radius: %f ", 
 		get_string(box).c_str(), get_string( c ).c_str(), obj->Radius() );
 }
-std::string get_string( bool v )
+xr_string get_string( bool v )
 {
-	return v ? std::string( "true" ) : std::string( "false" );
+	return v ? xr_string( "true" ) : xr_string( "false" );
 }
 /*
 		struct 
@@ -77,10 +77,10 @@ std::string get_string( bool v )
 	u32									dwFrame_UpdateCL;
 	u32									dwFrame_AsCrow;
 */
-std::string dbg_object_props_dump_string( const CObject *obj )
+xr_string dbg_object_props_dump_string( const CObject *obj )
 {
 	if( !obj )
-		return  std::string("");
+		return  xr_string("");
 	CObject::ObjectProperties props;
 	obj->DBGGetProps( props );
 
@@ -93,7 +93,7 @@ std::string dbg_object_props_dump_string( const CObject *obj )
 		make_string( "\n dbg_update_cl: %d, dwFrame_UpdateCL: %d, dwFrame_AsCrow :%d, Device->dwFrame :%d, Device->dwTimeGlobal: %d  \n",
 		obj->dbg_update_cl, obj->dwFrame_UpdateCL, obj->dwFrame_AsCrow, Device->dwFrame, Device->dwTimeGlobal );
 }
-std::string dbg_object_full_dump_string( const CObject *obj )
+xr_string dbg_object_full_dump_string( const CObject *obj )
 {
 	return	dbg_object_base_dump_string( obj ) + 
 			dbg_object_props_dump_string( obj )+
@@ -101,9 +101,9 @@ std::string dbg_object_full_dump_string( const CObject *obj )
 			dbg_object_visual_geom_dump_string( obj );
 			 
 }
-std::string dbg_object_full_capped_dump_string( const CObject *obj )
+xr_string dbg_object_full_capped_dump_string( const CObject *obj )
 {
-	return	std::string("\n object dump: \n" ) +
+	return	xr_string("\n object dump: \n" ) +
 			dbg_object_full_dump_string( obj );
 }
 #endif

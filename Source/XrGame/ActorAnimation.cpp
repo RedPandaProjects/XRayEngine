@@ -310,11 +310,7 @@ void CActor::g_SetSprintAnimation( u32 mstate_rl,MotionID &head,MotionID &torso,
 	else if (mstate_rl & mcRStrafe)	legs = (!jump) ? sprint.legs_rs		: sprint.legs_jump_rs;	
 }
 
-CMotion*        FindMotionKeys(MotionID motion_ID,IRenderVisual* V)
-{
-	IKinematicsAnimated* VA = CastToIKinematicsAnimated(V);
-	return (VA && motion_ID.valid())?VA->LL_GetRootMotion(motion_ID):0;
-}
+
 
 #ifdef DEBUG
 BOOL	g_ShowAnimationInfo = TRUE;

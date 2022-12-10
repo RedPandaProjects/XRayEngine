@@ -72,7 +72,7 @@ xr_string member_to_string			(luabind::object const& e, LPCSTR function_signatur
 // #ifdef BOOST_NO_STRINGSTREAM
 // 		std::strstream s;
 // #else
-// 		std::stringstream s;
+// 		xr_stringstream s;
 // #endif
 		xr_string s = "";
 
