@@ -11,20 +11,20 @@ public class XRayEngineModules : ModuleRules
 		PublicIncludePaths.Add(Path.Combine(ModuleDirectory,"Source"));
         PublicIncludePaths.Add(Path.Combine(ModuleDirectory, "SDK","Include"));
         PublicIncludePaths.Add(Path.Combine(ModuleDirectory, "Source", "External","Public"));
-        string Prefix = "_Release";
-		bool bOnlyDebug = true;
+        string ConfigureName = "Release";
+		bool bOnlyDebug = false;
 		if (Target.Configuration== UnrealTargetConfiguration.Debug||bOnlyDebug)
 		{
-            Prefix = "_Debug";
+            ConfigureName = "Debug";
         }
         if (Target.Platform == UnrealTargetPlatform.Win64)
 		{
-			string LibPath = Path.Combine(ModuleDirectory,"Lib", "x64","Debug");
-			string BinPath = Path.Combine(ModuleDirectory,"Bin", "x64","Debug");
-			PublicAdditionalLibraries.Add(Path.Combine(LibPath,"XrCore"+ Prefix+".lib"));
-            PublicAdditionalLibraries.Add(Path.Combine(LibPath,"XrEngine" + Prefix + ".lib"));
-			PublicAdditionalLibraries.Add(Path.Combine(LibPath,"XrCDB" + Prefix + ".lib"));
-			PublicAdditionalLibraries.Add(Path.Combine(LibPath,"XrAPI" + Prefix + ".lib"));
+			string LibPath = Path.Combine(ModuleDirectory,"Lib", "x64", ConfigureName);
+			string BinPath = Path.Combine(ModuleDirectory,"Bin", "x64", ConfigureName);
+			PublicAdditionalLibraries.Add(Path.Combine(LibPath,"XrCore_"+ ConfigureName + ".lib"));
+            PublicAdditionalLibraries.Add(Path.Combine(LibPath,"XrEngine_" + ConfigureName + ".lib"));
+			PublicAdditionalLibraries.Add(Path.Combine(LibPath,"XrCDB_" + ConfigureName + ".lib"));
+			PublicAdditionalLibraries.Add(Path.Combine(LibPath,"XrAPI_" + ConfigureName + ".lib"));
 
 		} 
 	}

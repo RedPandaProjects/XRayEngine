@@ -30,7 +30,7 @@ extern	void msCreate		(LPCSTR name);
 #ifdef _DEBUG
 	 hPSGP = LoadLibrary("xrCPU_Pipe_Debug.dll");
 #else
-	 hPSGP = LoadLibrary("xrCPU_Pip_Release.dll");
+	 hPSGP = LoadLibrary("xrCPU_Pipe_Release.dll");
 #endif
 	// Bind PSGP
 	

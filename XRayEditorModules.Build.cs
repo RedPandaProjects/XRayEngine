@@ -9,17 +9,17 @@ public class XRayEditorModules : ModuleRules
     {
         PublicIncludePaths.Add(Path.Combine(ModuleDirectory, "Source", "Editors"));
         Type = ModuleType.External;
-        string Prefix = "_Release";
-		bool bOnlyDebug = true;
-		if (Target.Configuration== UnrealTargetConfiguration.Debug||bOnlyDebug)
-		{
-            Prefix = "_Debug";
+        string ConfigureName = "Release";
+        bool bOnlyDebug = false;
+        if (Target.Configuration == UnrealTargetConfiguration.Debug || bOnlyDebug)
+        {
+            ConfigureName = "Debug";
         }
         if (Target.Platform == UnrealTargetPlatform.Win64)
 		{
-			string LibPath = Path.Combine(ModuleDirectory,"Lib", "x64","Debug");
-			string BinPath = Path.Combine(ModuleDirectory,"Bin", "x64","Debug");
-			PublicAdditionalLibraries.Add(Path.Combine(LibPath,"XrECore"+ Prefix+".lib"));
+			string LibPath = Path.Combine(ModuleDirectory,"Lib", "x64", ConfigureName);
+			string BinPath = Path.Combine(ModuleDirectory,"Bin", "x64", ConfigureName);
+			PublicAdditionalLibraries.Add(Path.Combine(LibPath,"XrECore_"+ ConfigureName + ".lib"));
 		} 
 	}
 }
