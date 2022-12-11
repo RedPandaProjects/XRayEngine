@@ -280,7 +280,8 @@ void CHUDTarget::Render()
 	//отрендерить кружочек или крестик
 	if(!m_bShowCrosshair)
 	{
-		
+
+		UIRender->SetShader(*hShader);
 		UIRender->StartPrimitive	(6, IUIRender::ptTriList, UI().m_currentPointType);
 		
 		Fvector2		scr_size;
@@ -308,7 +309,6 @@ void CHUDTarget::Render()
 		UIRender->PushPoint(cx + size_x, cy - size_y, 0, C, 1, 0);
 
 		// unlock VB and Render it as triangle LIST
-		UIRender->SetShader(*hShader);
 		UIRender->FlushPrimitive();
 
 	}else{

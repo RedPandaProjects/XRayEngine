@@ -824,6 +824,7 @@ void CUICellContainer::Draw()
 
 	GetCellsInRange(tgt_cells,m_cells_to_draw);
 
+	UIRender->SetShader(*hShader);
 	// fill cell buffer
 	u32 max_prim_cnt = ((tgt_cells.width()+1)*(tgt_cells.height()+1)*6);
 	UIRender->StartPrimitive	(max_prim_cnt, IUIRender::ptTriList, UI()->m_currentPointType);
@@ -871,7 +872,6 @@ void CUICellContainer::Draw()
 	}// for x
 	UI()->PushScissor					(clientArea);
 
-	UIRender->SetShader( *hShader );
 	UIRender->FlushPrimitive();
 
 	//draw shown items in range

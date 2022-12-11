@@ -936,6 +936,7 @@ void CBulletManager::Render	()
 	//u32	vOffset			=	0	;
 	u32 bullet_num		=	m_BulletsRendered.size();
 
+	UIRender->SetShader(*tracers.sh_Tracer);
 	UIRender->StartPrimitive((u32)bullet_num*12, IUIRender::ptTriList, IUIRender::pttLIT);
 
 	for(BulletVecIt it = m_BulletsRendered.begin(); it!=m_BulletsRendered.end(); it++){
@@ -984,7 +985,6 @@ void CBulletManager::Render	()
 	
 	UIRender->CacheSetCullMode		(IUIRender::cmNONE);
 	UIRender->CacheSetXformWorld	(Fidentity);
-	UIRender->SetShader				(*tracers.sh_Tracer);
 	UIRender->FlushPrimitive		();
 	UIRender->CacheSetCullMode		(IUIRender::cmCCW);
 }

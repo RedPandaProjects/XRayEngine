@@ -52,9 +52,7 @@ public:
 	//motion->GetLength() / (md->Dequantize(md->speed)
 	virtual	float						LL_GetMotionTime			(MotionID id) = 0;
 
-	//interface for procedural animations :)	
-	virtual	void						LL_BuldBoneMatrixDequatize	( const IBoneData* bd, u8 channel_mask,  SKeyTable& keys ) = 0;
-	virtual	void						LL_BoneMatrixBuild			( IBoneInstance &bi, const Fmatrix *parent, const SKeyTable& keys ) = 0;
+	virtual	void						GetBoneInMotion(Fmatrix& OutPosition, u16 BoneID, CBlend* InBlend) = 0;
 
 	virtual IBlendDestroyCallback		*GetBlendDestroyCallback	( ) = 0;
 	virtual void						SetBlendDestroyCallback		( IBlendDestroyCallback	*cb ) = 0;

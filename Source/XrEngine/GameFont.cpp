@@ -38,7 +38,9 @@ void CGameFont::Initialize		(LPCSTR font, float size)
 
 	strings.reserve				(128);
 	fCurrentHeight				= 1;
-
+	fSize = size;
+	fCurrentX =0;
+	fCurrentY =0;
 
 	// Shading
 	pFontRender->Initialize(font, size);
@@ -174,7 +176,7 @@ float CGameFont::GetTextSize( const wide_char *wsStr )
 
 float CGameFont::CurrentHeight_	()
 {
-	return fCurrentHeight ;
+	return fCurrentHeight * fSize;
 }
 
 void CGameFont::SetHeightI(float S)

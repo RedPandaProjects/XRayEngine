@@ -679,29 +679,17 @@ void	imotion_position::remove_root_callback()
 
 void	imotion_position::rootbone_callback	( IBoneInstance *BI )
 {
-	imotion_position *im = ( imotion_position* )BI->callback_param();
-	VERIFY( im );
-	if( !im->update_callback.update )
+	imotion_position* im = (imotion_position*)BI->callback_param();
+	VERIFY(im);
+	if (!im->update_callback.update)
 		return;
-	VERIFY( im->shell );
-	IKinematics *K  = im->shell->PKinematics( );
-	VERIFY( K );
-	IKinematicsAnimated *KA = K->dcast_PKinematicsAnimated();
-	VERIFY( KA );
-	SKeyTable	keys;
-	KA->LL_BuldBoneMatrixDequatize( &K->GetBoneData( 0 ), u8(-1), keys );
-	
-	CKey *key = 0;
-	for( int i = 0; i < keys.chanel_blend_conts[0]; ++i )
-	{
-		if ( keys.blends[0][i] == im->blend)
-			key = &keys.keys[0][i];
-	}
-	if( key )
-	{
-		key->Q.rotation( Fvector().set( 0, 1, 0 ), im->angle );
-	}
-	KA->LL_BoneMatrixBuild( *BI, &Fidentity, keys );
-
-	R_ASSERT2( _valid(BI->GetTransform()), "imotion_position::rootbone_callback" );
+	VERIFY(im->shell);
+	IKinematics* K = im->shell->PKinematics();
+	VERIFY(K);
+	IKinematicsAnimated* KA = CastToIKinematicsAnimated(K->dcast_RenderVisual());
+	VERIFY(KA);
+	Fmatrix Matrix = BI->GetTransform();
+	Matrix.rotation(Fvector().set(0, 1, 0), im->angle);
+	BI->SetTransform(Matrix);
+	R_ASSERT2(_valid(BI->GetTransform()), "imotion_position::rootbone_callback");
 }

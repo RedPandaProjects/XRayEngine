@@ -1468,6 +1468,7 @@ void CActor::RenderIndicator			(Fvector dpos, float r1, float r2, const ui_shade
 	if (!g_Alive()) return;
 
 
+	UIRender->SetShader(*IndShader);
 	UIRender->StartPrimitive(4, IUIRender::ptTriStrip, IUIRender::pttLIT);
 
 	IBoneInstance& BI = CastToIKinematics(Visual())->LL_GetBoneInstance(u16(m_head));
@@ -1506,7 +1507,6 @@ void CActor::RenderIndicator			(Fvector dpos, float r1, float r2, const ui_shade
 
 	UIRender->CacheSetXformWorld(Fidentity);
 	//RCache.set_xform_world		(Fidentity);
-	UIRender->SetShader(*IndShader);
 	//RCache.set_Shader			(IndShader);
 	//RCache.set_Geometry			(hFriendlyIndicator);
 	//RCache.Render	   			(D3DPT_TRIANGLESTRIP,dwOffset,0, dwCount, 0, 2);

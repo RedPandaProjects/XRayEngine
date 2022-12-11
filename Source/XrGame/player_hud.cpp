@@ -693,8 +693,12 @@ void player_hud::attach_item(CHudItem* item)
 	int item_idx					= pi->m_attach_place_idx;
 	if(	m_attached_items[item_idx] != pi)
 	{
+		m_model->dcast_RenderVisual()->SetRenderMode(EVisualRenderMode::FromSelfXForm);
 		if(m_attached_items[item_idx])
+		{
+			m_attached_items[item_idx]->m_model->dcast_RenderVisual()->SetRenderMode(EVisualRenderMode::None);
 			m_attached_items[item_idx]->m_parent_hud_item->on_b_hud_detach();
+		}
 
 
 		m_attached_items[item_idx]						= pi;
@@ -751,6 +755,10 @@ void player_hud::detach_item_idx(u16 idx)
 	if(idx==0 && attached_item(1))
 	{
 		OnMovementChanged(mcAnyMove);
+	}
+	if (m_attached_items[0] == nullptr && m_attached_items[1] == nullptr)
+	{
+		m_model->dcast_RenderVisual()->SetRenderMode(EVisualRenderMode::None);
 	}
 }
 

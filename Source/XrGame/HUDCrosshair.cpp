@@ -64,6 +64,7 @@ void CHUDCrosshair::OnRenderFirstBulletDispertion()
 	scr_size.set	(float(::Render->getTarget()->get_width()), float(::Render->getTarget()->get_height()));
 	center.set		(scr_size.x/2.0f, scr_size.y/2.0f);
 
+	UIRender->SetShader(*hShader);
 	UIRender->StartPrimitive		(10, IUIRender::ptLineList, UI().m_currentPointType);
 
 	u32	fb_cross_color				= color_rgba(255, 0, 0, 255); //red
@@ -100,7 +101,6 @@ void CHUDCrosshair::OnRenderFirstBulletDispertion()
 
 
 	// render	
-	UIRender->SetShader						(*hShader);
 	UIRender->FlushPrimitive				();
 }
 #endif
@@ -114,6 +114,7 @@ void CHUDCrosshair::OnRender ()
 	scr_size.set	(float(::Render->getTarget()->get_width()), float(::Render->getTarget()->get_height()));
 	center.set		(scr_size.x/2.0f, scr_size.y/2.0f);
 
+	UIRender->SetShader(*hShader);
 	UIRender->StartPrimitive		(10, IUIRender::ptLineList, UI().m_currentPointType);
 	
 
@@ -148,7 +149,6 @@ void CHUDCrosshair::OnRender ()
 
 
 	// render	
-	UIRender->SetShader(*hShader);
 	UIRender->FlushPrimitive		();
 
 

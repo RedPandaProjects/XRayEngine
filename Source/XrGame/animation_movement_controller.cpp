@@ -180,34 +180,7 @@ static void get_animation_root_position( Fmatrix &pos, IKinematics* K, IKinemati
 	VERIFY( KA );
 	VERIFY( K );
 	VERIFY(KA ->dcast_PKinematics() == K );
-
-	SKeyTable	keys;
-	KA->LL_BuldBoneMatrixDequatize( &K->GetBoneData( 0 ), u8(1<<0), keys );
-	
-//find
-	CKey *key = 0;
-	for( int i = 0; i < keys.chanel_blend_conts[0]; ++i )
-	{
-		if ( keys.blends[0][i] == control_blend )
-			key = &keys.keys[0][i];
-	}
-	VERIFY( key );
-
-	float sv_amount = control_blend->blendAmount;
-	control_blend->blendAmount = 1.f;
-	keys.blends[0][0] = control_blend;
-	keys.chanel_blend_conts[0] = 1;
-	keys.keys[0][0] = *key;
-
-
-	for( int j = 1; j < MAX_CHANNELS; ++j )
-		keys.chanel_blend_conts[j] = 0;
-
-	IBoneInstance&BI = K->LL_GetBoneInstance( 0 );
-
-	KA->LL_BoneMatrixBuild( BI, &Fidentity, keys );
-	pos.set( BI.GetTransform() );
-	control_blend->blendAmount = sv_amount;
+	KA->GetBoneInMotion(pos,0, control_blend);
 }
 void animation_movement_controller::animation_root_position	( Fmatrix &pos  )
 {

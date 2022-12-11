@@ -62,7 +62,7 @@ public:
 	IC void					SetHeightI		(float S);
 	IC void					SetHeight		(float S);
 
-	IC float				GetHeight		(){return fCurrentHeight;};
+	IC float				GetHeight		(){return fCurrentHeight*fSize;};
 	IC void					SetAligment		(EAligment aligment){ eCurrentAlignment=aligment; }
 
 	float					GetTextSize			( LPCSTR s );
