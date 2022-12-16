@@ -592,9 +592,7 @@ void CLevel::OnFrame	()
 	else								psDeviceFlags.set(rsDisableObjectsAsCrows,false);
 
 	// commit events from bullet manager from prev-frame
-	Device->Statistic->TEST0.Begin		();
 	BulletManager().CommitEvents		();
-	Device->Statistic->TEST0.End			();
 
 	// Client receive
 	if (net_isDisconnected())	
@@ -739,9 +737,7 @@ void CLevel::OnFrame	()
 //	autosave_manager().update			();
 
 	//  
-	Device->Statistic->TEST0.Begin		();
 	BulletManager().CommitRenderSet		();
-	Device->Statistic->TEST0.End			();
 
 	// update static sounds
 	if(!g_dedicated_server)

@@ -31,14 +31,14 @@ void CParticlesObject::Init	(LPCSTR p_name, IRender_Sector* S, BOOL bAutoRemove)
 	{
 		// create visual
 		renderable.visual = Render->model_CreateParticles(p_name);
-#ifdef DEBUG
+#ifndef MASTER_GOLD
 		if (renderable.visual)
 		{
 #endif
 			VERIFY(renderable.visual);
 			IParticleCustom* V = smart_cast<IParticleCustom*>(renderable.visual);  VERIFY(V);
 			time_limit = V->GetTimeLimit();
-#ifdef DEBUG
+#ifndef MASTER_GOLD
 		}
 		else
 		{
@@ -95,7 +95,7 @@ void CParticlesObject::UpdateSpatial()
 	if(g_dedicated_server)		return;
 
 	// spatial	(+ workaround occasional bug inside particle-system)
-#ifdef DEBUG
+#ifndef MASTER_GOLD
 	if (!renderable.visual)return;
 #endif
 	vis_data &vis = renderable.visual->getVisData();
@@ -124,7 +124,7 @@ void CParticlesObject::UpdateSpatial()
 const shared_str CParticlesObject::Name()
 {
 	if(g_dedicated_server)	return "";
-#ifdef DEBUG
+#ifndef MASTER_GOLD
 	if (!renderable.visual)return "";
 #endif
 	IParticleCustom* V	= smart_cast<IParticleCustom*>(renderable.visual); VERIFY(V);
@@ -135,7 +135,7 @@ const shared_str CParticlesObject::Name()
 void CParticlesObject::Play		(bool bHudMode)
 {
 	if(g_dedicated_server)		return;
-#ifdef DEBUG
+#ifndef MASTER_GOLD
 	if (!renderable.visual)return ;
 #endif
 	IParticleCustom* V			= smart_cast<IParticleCustom*>(renderable.visual); VERIFY(V);
@@ -152,7 +152,7 @@ void CParticlesObject::Play		(bool bHudMode)
 void CParticlesObject::play_at_pos(const Fvector& pos, BOOL xform)
 {
 	if(g_dedicated_server)		return;
-#ifdef DEBUG
+#ifndef MASTER_GOLD
 	if (!renderable.visual)return ;
 #endif
 	IParticleCustom* V			= smart_cast<IParticleCustom*>(renderable.visual); VERIFY(V);
@@ -168,7 +168,7 @@ void CParticlesObject::play_at_pos(const Fvector& pos, BOOL xform)
 void CParticlesObject::Stop		(BOOL bDefferedStop)
 {
 	if(g_dedicated_server)		return;
-#ifdef DEBUG
+#ifndef MASTER_GOLD
 	if (!renderable.visual)return ;
 #endif
 	IParticleCustom* V			= smart_cast<IParticleCustom*>(renderable.visual); VERIFY(V);
@@ -179,7 +179,7 @@ void CParticlesObject::Stop		(BOOL bDefferedStop)
 void CParticlesObject::shedule_Update	(u32 _dt)
 {
 	inherited::shedule_Update		(_dt);
-#ifdef DEBUG
+#ifndef MASTER_GOLD
 	if (!renderable.visual)return ;
 #endif
 	if(g_dedicated_server)		return;
@@ -204,7 +204,7 @@ void CParticlesObject::shedule_Update	(u32 _dt)
 
 void CParticlesObject::PerformAllTheWork(u32 _dt)
 {
-#ifdef DEBUG
+#ifndef MASTER_GOLD
 	if (!renderable.visual)return ;
 #endif
 	if(g_dedicated_server)		return;
@@ -221,7 +221,7 @@ void CParticlesObject::PerformAllTheWork(u32 _dt)
 
 void CParticlesObject::PerformAllTheWork_mt()
 {
-#ifdef DEBUG
+#ifndef MASTER_GOLD
 	if (!renderable.visual)return;
 #endif
 	if(g_dedicated_server)		return;
@@ -234,7 +234,7 @@ void CParticlesObject::PerformAllTheWork_mt()
 
 void CParticlesObject::SetXFORM			(const Fmatrix& m)
 {
-#ifdef DEBUG
+#ifndef MASTER_GOLD
 	if (!renderable.visual)return;
 #endif
 	if(g_dedicated_server)		return;
@@ -247,7 +247,7 @@ void CParticlesObject::SetXFORM			(const Fmatrix& m)
 
 void CParticlesObject::UpdateParent		(const Fmatrix& m, const Fvector& vel)
 {
-#ifdef DEBUG
+#ifndef MASTER_GOLD
 	if (!renderable.visual)return;
 #endif
 	if(g_dedicated_server)		return;
@@ -259,7 +259,7 @@ void CParticlesObject::UpdateParent		(const Fmatrix& m, const Fvector& vel)
 
 Fvector& CParticlesObject::Position		()
 {
-#ifdef DEBUG
+#ifndef MASTER_GOLD
 	if (!renderable.visual)
 	{
 		static Fvector _pos = Fvector().set(0, 0, 0);
@@ -277,7 +277,7 @@ Fvector& CParticlesObject::Position		()
 
 float CParticlesObject::shedule_Scale		()	
 {
-#ifdef DEBUG
+#ifndef MASTER_GOLD
 	if (!renderable.visual)return 5.0f;
 #endif
 	if(g_dedicated_server)		return 5.0f;
@@ -287,7 +287,7 @@ float CParticlesObject::shedule_Scale		()
 
 void CParticlesObject::renderable_Render	()
 {
-#ifdef DEBUG
+#ifndef MASTER_GOLD
 	if (!renderable.visual)return;
 #endif
 	VERIFY					(renderable.visual);
@@ -317,7 +317,7 @@ void CParticlesObject::SetAutoRemove		(bool auto_remove)
 //остановки Stop партиклы могут еще доигрывать анимацию IsPlaying = true
 bool CParticlesObject::IsPlaying()
 {
-#ifdef DEBUG
+#ifndef MASTER_GOLD
 	if (!renderable.visual)return false;
 #endif
 	if(g_dedicated_server)		return false;

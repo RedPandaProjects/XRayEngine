@@ -234,7 +234,7 @@ void CScriptEngine::setup_callbacks		()
 	lua_atpanic							(lua(),CScriptEngine::lua_panic);
 }
 
-#ifdef DEBUG
+#ifdef PRINT_CALL_STACK
 #	include "script_thread.h"
 void CScriptEngine::lua_hook_call		(lua_State *L, lua_Debug *dbg)
 {
@@ -304,7 +304,7 @@ void CScriptEngine::init				()
 	export_classes						(lua());
 	setup_auto_load						();
 
-#ifdef DEBUG
+#ifdef PRINT_CALL_STACK
 	m_stack_is_ready					= true;
 #endif
 

@@ -55,8 +55,8 @@ CStats::CStats	()
 	fMem_calls			= 0;
 	RenderDUMP_DT_Count = 0;
 	Device->seqRender.Add		(this,REG_PRIORITY_LOW-1000);
+	pFont = new CGameFont("stat_font",CGameFont::fsDeviceIndependent);
 }
-
 CStats::~CStats()
 {
 	Device->seqRender.Remove		(this);
@@ -160,6 +160,7 @@ void CStats::Show()
 	////////////////////////////////////////////////
 	if (g_dedicated_server) return;
 	////////////////////////////////////////////////
+
 	int frm = 2000;
 	div_t ddd = div(Device->dwFrame,frm);
 	if( ddd.rem < frm/2.0f ){
@@ -172,18 +173,18 @@ void CStats::Show()
 	}
 
 	CGameFont& F = *pFont;
-	float		f_base_size	= 0.01f;
+	float		f_base_size	= 0.024f;
 				F.SetHeightI	(f_base_size);
 
-	if (vtune.enabled())	{
-		float sz		= pFont->GetHeight();
-		pFont->SetHeightI(0.02f);
-		pFont->SetColor	(0xFFFF0000	);
-		pFont->OutSet	(Device->dwWidth/2.0f+(pFont->GetTextSize("--= tune =--")/2.0f),Device->dwHeight/2.0f);
-		pFont->OutNext	("--= tune =--");
-		pFont->OnRender	();
-		pFont->SetHeight(sz);
-	};
+	//if (vtune.enabled())	{
+	//	float sz		= pFont->GetHeight();
+	//	pFont->SetHeightI(0.02f);
+	//	pFont->SetColor	(0xFFFF0000	);
+	//	pFont->OutSet	(Device->dwWidth/2.0f+(pFont->GetTextSize("--= tune =--")/2.0f),Device->dwHeight/2.0f);
+	//	pFont->OutNext	("--= tune =--");
+	//	pFont->OnRender	();
+	//	pFont->SetHeight(sz);
+	//};
 
 	// Show them
 	if (psDeviceFlags.test(rsStatistic))
@@ -240,26 +241,6 @@ void CStats::Show()
 								   
 #undef  PPP
 #define PPP(a) (100.f*float(a)/float(RenderTOTAL.result))
-		F.OutNext	("*** RENDER:  %2.2fms",RenderTOTAL.result);
-		F.OutNext	("R_CALC:      %2.2fms, %2.1f%%",RenderCALC.result,	PPP(RenderCALC.result));	
-		F.OutNext	("  HOM:       %2.2fms, %d",RenderCALC_HOM.result,	RenderCALC_HOM.count);
-		F.OutNext	("  Skeletons: %2.2fms, %d",Animation.result,		Animation.count);
-		F.OutNext	("R_DUMP:      %2.2fms, %2.1f%%",RenderDUMP.result,	PPP(RenderDUMP.result));	
-		F.OutNext	("  Wait-L:    %2.2fms",RenderDUMP_Wait.result);	
-		F.OutNext	("  Wait-S:    %2.2fms",RenderDUMP_Wait_S.result);	
-		F.OutNext	("  Skinning:  %2.2fms",RenderDUMP_SKIN.result);	
-		F.OutNext	("  DT_Vis/Cnt:%2.2fms/%d",RenderDUMP_DT_VIS.result,RenderDUMP_DT_Count);	
-		F.OutNext	("  DT_Render: %2.2fms",RenderDUMP_DT_Render.result);	
-		F.OutNext	("  DT_Cache:  %2.2fms",RenderDUMP_DT_Cache.result);	
-		F.OutNext	("  Wallmarks: %2.2fms, %d/%d - %d",RenderDUMP_WM.result,RenderDUMP_WMS_Count,RenderDUMP_WMD_Count,RenderDUMP_WMT_Count);
-		F.OutNext	("  Glows:     %2.2fms",RenderDUMP_Glows.result);	
-		F.OutNext	("  Lights:    %2.2fms, %d",RenderDUMP_Lights.result,RenderDUMP_Lights.count);
-		F.OutNext	("  RT:        %2.2fms, %d",RenderDUMP_RT.result,RenderDUMP_RT.count);
-		F.OutNext	("  HUD:       %2.2fms",RenderDUMP_HUD.result);	
-		F.OutNext	("  P_calc:    %2.2fms",RenderDUMP_Pcalc.result);
-		F.OutNext	("  S_calc:    %2.2fms",RenderDUMP_Scalc.result);
-		F.OutNext	("  S_render:  %2.2fms, %d",RenderDUMP_Srender.result,RenderDUMP_Srender.count);
-		F.OutSkip	();
 		F.OutNext	("*** SOUND:   %2.2fms",Sound.result);
 		F.OutNext	("  TGT/SIM/E: %d/%d/%d",  snd_stat._rendered, snd_stat._simulated, snd_stat._events);
 		F.OutNext	("  HIT/MISS:  %d/%d",  snd_stat._cache_hits, snd_stat._cache_misses);

@@ -333,7 +333,7 @@ int CScriptStorage::vscript_log		(ScriptStorage::ELuaMessageType tLuaMessageType
 #	endif
 #endif
 
-#ifndef PRINT_CALL_STACK
+#if 0
 	return		(0);
 #else // #ifdef PRINT_CALL_STACK
 #	ifndef NO_XRGAME_SCRIPT_ENGINE
@@ -545,16 +545,15 @@ bool CScriptStorage::load_buffer	(lua_State *L, LPCSTR caBuffer, size_t tSize, L
 //		}
 	}
 
-	if (l_iErrorCode) {
-#ifdef DEBUG
+	if (l_iErrorCode) 
+	{
 		print_output	(L,caScriptName,l_iErrorCode);
-#endif
 		on_error		(L);
 		return			(false);
 	}
 	return				(true);
 }
-
+#pragma optimize("",off)
 bool CScriptStorage::do_file	(LPCSTR caScriptName, LPCSTR caNameSpaceName)
 {
 	int				start = lua_gettop(lua());
@@ -565,7 +564,6 @@ bool CScriptStorage::do_file	(LPCSTR caScriptName, LPCSTR caNameSpaceName)
 		return		(false);
 	}
 	strconcat		(sizeof(l_caLuaFileName),l_caLuaFileName,"@",caScriptName);
-	
 	if (!load_buffer(lua(),static_cast<LPCSTR>(l_tpFileReader->pointer()),(size_t)l_tpFileReader->length(),l_caLuaFileName,caNameSpaceName)) {
 //		VERIFY		(lua_gettop(lua()) >= 4);
 //		lua_pop		(lua(),4);
@@ -612,6 +610,7 @@ bool CScriptStorage::do_file	(LPCSTR caScriptName, LPCSTR caNameSpaceName)
 	return			(true);
 }
 
+#pragma optimize("",on)
 bool CScriptStorage::load_file_into_namespace(LPCSTR caScriptName, LPCSTR caNamespaceName)
 {
 	int				start = lua_gettop(lua());

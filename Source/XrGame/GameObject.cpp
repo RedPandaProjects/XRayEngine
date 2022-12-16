@@ -832,9 +832,12 @@ void CGameObject::shedule_Update	(u32 dt)
 
 	// Msg							("-SUB-:[%x][%s] CGameObject::shedule_Update",smart_cast<void*>(this),*cName());
 	inherited::shedule_Update	(dt);
-	
+
+	Device->Statistic->TEST0.Begin();
 	if(!g_dedicated_server)
 		CScriptBinder::shedule_Update(dt);
+
+	Device->Statistic->TEST0.End();
 }
 
 BOOL CGameObject::net_SaveRelevant	()

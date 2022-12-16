@@ -94,7 +94,8 @@ void CGameFont::MasterOut(
 {
 	if ( bCheckDevice && ( ! Device->b_is_Active ) )
 		return;
-
+	if(fmt==nullptr)
+		return;
 	String rs;
 
 	rs.x = ( bUseCoords ? ( bScaleCoords ? ( DI2PX( _x ) ) : _x ) : fCurrentX );

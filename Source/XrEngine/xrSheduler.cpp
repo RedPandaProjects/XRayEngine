@@ -342,8 +342,8 @@ void CSheduler::ProcessStep			()
 		
 
 		m_current_step_obj = T.Object;
-//			try {
-			T.Object->shedule_Update	(clampr(Elapsed,u32(1),u32(_max(u32(T.Object->shedule.t_max),u32(1000)))) );
+		//			try {
+		T.Object->shedule_Update(clampr(Elapsed, u32(1), u32(_max(u32(T.Object->shedule.t_max), u32(1000)))));
 			if (!m_current_step_obj)
 			{
 #ifdef DEBUG_SCHEDULER
@@ -456,6 +456,7 @@ void CSheduler::Update				()
 
 	// Normal (sheduled)
 	ProcessStep						();
+
 	m_processing_now				= false;
 #ifdef DEBUG_SCHEDULER
 	Msg								("SCHEDULER: PROCESS STEP FINISHED %d",Device->dwFrame);
