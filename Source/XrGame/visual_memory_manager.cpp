@@ -158,7 +158,7 @@ void CVisualMemoryManager::reload				(LPCSTR section)
 	}
 }
 
-IC	const CVisionParameters &CVisualMemoryManager::current_state() const
+const CVisionParameters &CVisualMemoryManager::current_state() const
 {
 	if ( m_stalker ) {
 		return			(m_stalker->movement().mental_state() == eMentalStateDanger) ? m_danger : m_free;

@@ -136,7 +136,7 @@ class CHelicopter : 	public CEntity,
 						public CHitImmunity,
 						public CExplosive
 					#ifdef DEBUG
-						,public pureRender
+						,public pureRenderDebug
 					#endif
 
 {
@@ -347,7 +347,7 @@ public:
 
 #ifdef DEBUG
 public:
-	virtual void			OnRender						();
+	virtual void			OnRenderDebug					();
 #endif
 
 	DECLARE_SCRIPT_REGISTER_FUNCTION

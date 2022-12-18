@@ -46,18 +46,51 @@ extern char const * const	ch_cursor;
        char const * const	ch_cursor	=	"_";
 
 
+
+
+	  
+
 void XRayConsoleInterface::AddCommand( IConsole_Command* cc )
 {
 	Commands[cc->Name()] = cc;
 }
 
+void XRayConsoleInterface::AddGameCommand(IConsole_Command* cc)
+{
+	AddCommand(cc);
+	GameCommands.push_back(cc);
+}
+
+XRayConsoleInterface::~XRayConsoleInterface()
+{
+	vecCMD CommandsTemp = Commands;
+	for (auto I= CommandsTemp.begin();I!= CommandsTemp.end();I++)
+	{
+		RemoveCommand(I->second);
+	}
+	VERIFY(Commands.size() == 0);
+}
 void XRayConsoleInterface::RemoveCommand( IConsole_Command* cc )
 {
 	vecCMD_IT it = Commands.find( cc->Name() );
 	if ( Commands.end() != it )
 	{
 		Commands.erase(it);
+		xr_delete(cc);
 	}
+	else
+	{
+		R_ASSERT(false);
+	}
+}
+
+void XRayConsoleInterface::RemoveGameCommands()
+{
+	for (auto I = GameCommands.begin(); I != GameCommands.end(); I++)
+	{
+		RemoveCommand(*I);
+	}
+	GameCommands.clear();
 }
 
 void XRayConsoleInterface::Execute( LPCSTR cmd )
@@ -289,156 +322,6 @@ void CConsole::OnScreenResolutionChanged()
 {
 	xr_delete( pFont );
 	xr_delete( pFont2 );
-}
-
-void CConsole::OnRender()
-{
-	if ( !bVisible )
-	{
-		return;
-	}
-
-	if ( !m_hShader_back )
-	{
-		m_hShader_back = xr_new< FactoryPtr<IUIShader> >();
-		(*m_hShader_back)->create( "hud\\default", "ui\\ui_console" ); // "ui\\ui_empty"
-	}
-	
-	if ( !pFont )
-	{
-		pFont = xr_new<CGameFont>( "hud_font_di", CGameFont::fsDeviceIndependent );
-		pFont->SetHeightI(  0.025f );
-	}
-	if( !pFont2 )
-	{
-		pFont2 = xr_new<CGameFont>( "hud_font_di2", CGameFont::fsDeviceIndependent );
-		pFont2->SetHeightI( 0.025f );
-	}
-
-	bool bGame = false;	
-	if ( ( g_pGameLevel && g_pGameLevel->bReady ) ||
-		 ( g_pGamePersistent && g_pGamePersistent->m_pMainMenu && g_pGamePersistent->m_pMainMenu->IsActive() ) )
-	{
-		 bGame = true;
-	}
-	if ( g_dedicated_server )
-	{
-		bGame = false;
-	}
-	
-	DrawBackgrounds( bGame );
-
-	float fMaxY;
-	float dwMaxY = (float)Device->dwHeight;
-	// float dwMaxX=float(Device->dwWidth/2);
-	if ( bGame )
-	{
-		fMaxY  = 0.0f;
-		dwMaxY /= 2;
-	}
-	else
-	{
-		fMaxY = 1.0f;
-	}
-
-	float ypos  = fMaxY - LDIST * 1.1f;
-	float scr_x = 1.0f / Device->fWidth_2;
-
-	//---------------------------------------------------------------------------------
-	float scr_width  = 1.9f * Device->fWidth_2;
-	float ioc_d      = pFont->GetTextSize(ioc_prompt);
-	float d1         = pFont->GetTextSize( "_" );
-
-	LPCSTR s_cursor = ec().str_before_cursor();
-	LPCSTR s_b_mark = ec().str_before_mark();
-	LPCSTR s_mark   = ec().str_mark();
-	LPCSTR s_mark_a = ec().str_after_mark();
-
-	//	strncpy_s( buf1, cur_pos, editor, MAX_LEN );
-	float str_length = ioc_d + pFont->GetTextSize( s_cursor );
-	float out_pos    = 0.0f;
-	if( str_length > scr_width )
-	{
-		out_pos -= (str_length - scr_width);
-		str_length = scr_width;
-	}
-
-	pFont->SetColor( prompt_font_color );
-	pFont->OutI( -1.0f + out_pos * scr_x, ypos, "%s", ioc_prompt );
-	out_pos += ioc_d;
-
-	if ( !m_disable_tips && m_tips.size() )
-	{
-		pFont->SetColor( tips_font_color );
-
-		float shift_x = 0.0f;
-		switch ( m_tips_mode )
-		{
-		case 0: shift_x = scr_x * 1.0f;			break;
-		case 1: shift_x = scr_x * out_pos;		break;
-		case 2: shift_x = scr_x * ( ioc_d + pFont->GetTextSize(m_cur_cmd.c_str()) + d1 );	break;
-		case 3: shift_x = scr_x * str_length;	break;
-		}
-
-		vecTipsEx::iterator itb = m_tips.begin() + m_start_tip;
-		vecTipsEx::iterator ite = m_tips.end();
-		for ( u32 i = 0; itb != ite ; ++itb, ++i ) // tips
-		{
-			pFont->OutI( -1.0f + shift_x, fMaxY + i*LDIST, "%s", (*itb).text.c_str() );
-			if ( i >= VIEW_TIPS_COUNT-1 )
-			{
-				break; //for
-			}
-		}	
-	}
-
-	// ===== ==============================================
-	pFont->SetColor ( cmd_font_color );
-	pFont2->SetColor( cmd_font_color );
-
-	pFont->OutI(  -1.0f + out_pos * scr_x, ypos, "%s", s_b_mark );		out_pos += pFont->GetTextSize(s_b_mark);
-	pFont2->OutI( -1.0f + out_pos * scr_x, ypos, "%s", s_mark );		out_pos += pFont2->GetTextSize(s_mark);
-	pFont->OutI(  -1.0f + out_pos * scr_x, ypos, "%s", s_mark_a );
-
-	//pFont2->OutI( -1.0f + ioc_d * scr_x, ypos, "%s", editor=all );
-	
-	if( ec().cursor_view() )
-	{
-		pFont->SetColor( cursor_font_color );
-		pFont->OutI( -1.0f + str_length * scr_x, ypos, "%s", ch_cursor );
-	}
-	
-	// ---------------------
-	u32 log_line = 0;//LogFile->size()-1;
-	ypos -= LDIST;
-	//for( int i = log_line - scroll_delta; i >= 0; --i ) 
-	//{
-	//	ypos -= LDIST;
-	//	if ( ypos < -1.0f )
-	//	{
-	//		break;
-	//	}
-	//	LPCSTR ls = ((*LogFile)[i]).c_str();
-	//	
-	//	if ( !ls )
-	//	{
-	//		continue;
-	//	}
-	//	Console_mark cm = (Console_mark)ls[0];
-	//	pFont->SetColor( get_mark_color( cm ) );
-	//	//u8 b = (is_mark( cm ))? 2 : 0;
-	//	//OutFont( ls + b, ypos );
-	//	OutFont( ls, ypos );
-	//}
-	
-	string16 q;
-	itoa( log_line, q, 10 );
-	u32 qn = xr_strlen( q );
-	pFont->SetColor( total_font_color );
-	pFont->OutI( 0.95f - 0.03f * qn, fMaxY - 2.0f * LDIST, "[%d]", log_line );
-		
-	pFont->OnRender();
-	pFont2->OnRender();
 }
 
 void CConsole::DrawBackgrounds( bool bGame )
@@ -701,7 +584,6 @@ void CConsole::Show()
 	update_tips();
 
 	m_editor->IR_Capture();
-	Device->seqRender.Add( this, 1 );
 	Device->seqFrame.Add( this );
 
 	SECUROM_MARKER_HIGH_SECURITY_OFF(11)
@@ -732,7 +614,6 @@ void CConsole::Hide()
 	update_tips();
 
 	Device->seqFrame.Remove( this );
-	Device->seqRender.Remove( this );
 	m_editor->IR_Release();
 }
 

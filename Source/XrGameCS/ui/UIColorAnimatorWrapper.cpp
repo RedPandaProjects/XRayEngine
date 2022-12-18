@@ -43,7 +43,7 @@ CUIColorAnimatorWrapper::CUIColorAnimatorWrapper(u32 *colorToModify)
 //////////////////////////////////////////////////////////////////////////
 
 CUIColorAnimatorWrapper::CUIColorAnimatorWrapper(const shared_str &animationName)
-	:	colorAnimation		(LALib.FindItem(*animationName)),
+	:	colorAnimation		(LALib->FindItem(*animationName)),
 		animationTime		(0),
 		color				(NULL),
 		isDone				(false),
@@ -59,7 +59,7 @@ void CUIColorAnimatorWrapper::SetColorAnimation(const shared_str &animationName)
 {
 	if (animationName.size() != 0)
 	{
-		colorAnimation	= LALib.FindItem(*animationName);
+		colorAnimation	= LALib->FindItem(*animationName);
 		R_ASSERT2(colorAnimation, *animationName);
 	}
 	else

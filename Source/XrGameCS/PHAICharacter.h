@@ -24,7 +24,7 @@ public:
 private:
 	//virtual		EEnvironment CheckInvironment					();
 #ifdef DEBUG
-	virtual		void		OnRender							()																													;
+	virtual		void		OnRenderDebug							()																													;
 #endif
 
 };

@@ -13,7 +13,7 @@
 #define CHUNK_ITEM_KEYS		0x0002
 //---------------------------------------------------------------------------
 
-ELightAnimLibrary LALib;
+ELightAnimLibrary *LALib;
 
 CLAItem::CLAItem()
 {

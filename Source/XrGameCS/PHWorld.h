@@ -25,7 +25,7 @@ public:
 
 class CPHWorld	: public pureFrame
 #ifdef DEBUG
-, public pureRender
+, public pureRenderDebug
 #endif
 {
 	double						m_start_time												;
@@ -99,7 +99,7 @@ IC	u16							StepsShortCnt					()							{return m_steps_short_num;}
 	void						NetRelcase						(CPhysicsShell* s)			;
 	void						AddCall							(CPHCondition*c,CPHAction*a);
 #ifdef DEBUG
-	virtual void 				OnRender						()							;
+	virtual void 				OnRenderDebug						()							;
 #endif
 	virtual void				OnFrame							()							;
 

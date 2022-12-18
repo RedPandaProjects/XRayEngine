@@ -5,6 +5,7 @@
 #include "stdafx.h"
 #include "Engine.h"
 #include "dedicated_server_only.h"
+#include "XR_IOConsole.h"
 
 CEngine			*	Engine = nullptr;;
 xrDispatchTable		*PSGP = nullptr;
@@ -51,6 +52,7 @@ typedef void __cdecl ttapi_Done_func(void);
 
 void CEngine::Destroy	()
 {
+	Console->RemoveGameCommands();
 	Engine->Sheduler.Destroy				( );
 #ifdef DEBUG_MEMORY_MANAGER
 	extern void	dbg_dump_leaks_prepare	( );

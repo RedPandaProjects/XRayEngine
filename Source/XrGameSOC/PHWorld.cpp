@@ -47,7 +47,7 @@ dGeomID plane;
 
 #ifdef DEBUG 
 
-void CPHWorld::OnRender()
+void CPHWorld::OnRenderDebug()
 {
 
 	PH_DBG_Render();

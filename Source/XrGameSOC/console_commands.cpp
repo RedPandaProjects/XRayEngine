@@ -1158,9 +1158,9 @@ void	CCC_RadioMask::Execute	(LPCSTR args)
 
 #define CMD_RADIOGROUPMASK2(p1,p2,p3,p4,p5,p6)		\
 {\
-static CCC_RadioMask x##CCC_RadioMask1(p1,p2,p3);		Console->AddCommand(&x##CCC_RadioMask1);\
-static CCC_RadioMask x##CCC_RadioMask2(p4,p5,p6);		Console->AddCommand(&x##CCC_RadioMask2);\
-static CCC_RadioGroupMask2 x##CCC_RadioGroupMask2(&x##CCC_RadioMask1,&x##CCC_RadioMask2);\
+CCC_RadioMask *x##CCC_RadioMask1 = xr_new<CCC_RadioMask>(p1,p2,p3);		Console->AddGameCommand(x##CCC_RadioMask1 );\
+CCC_RadioMask *x##CCC_RadioMask2 = xr_new<CCC_RadioMask>(p4,p5,p6);		Console->AddGameCommand(x##CCC_RadioMask2);\
+static CCC_RadioGroupMask2 x##CCC_RadioGroupMask2(x##CCC_RadioMask1,x##CCC_RadioMask2);\
 }
 
 struct CCC_DbgBullets : public CCC_Integer {

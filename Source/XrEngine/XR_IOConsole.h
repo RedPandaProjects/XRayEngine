@@ -76,9 +76,11 @@ public:
 
 public:
 
-	virtual					~XRayConsoleInterface() = default;
+	virtual					~XRayConsoleInterface();
 	virtual void			AddCommand(IConsole_Command* cc);
+	void					AddGameCommand(IConsole_Command* cc);
 	virtual void			RemoveCommand(IConsole_Command* cc);
+	virtual void			RemoveGameCommands();
 
 	virtual void			Show() {};
 	virtual void			Hide() {};
@@ -106,10 +108,10 @@ public:
 	string64		ConfigFile;
 	bool			bVisible;
 	vecCMD			Commands;
+	xr_vector<IConsole_Command*>GameCommands;
 };
 
 class ENGINE_API CConsole :
-	public pureRender,
 	public pureFrame,
 	public pureScreenResolutionChanged,
 	public XRayConsoleInterface
@@ -149,7 +151,6 @@ public:
 	virtual	void	Initialize			();
 	virtual void	Destroy				();
 
-	virtual void		OnRender			();
 	virtual void _BCL	OnFrame				();
 	virtual void	OnScreenResolutionChanged();
 

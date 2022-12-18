@@ -62,7 +62,7 @@ void CHitMarker::Hit(int id, const Fvector& dir){
 SHitMark::SHitMark		(const ui_shader& sh, const Fvector& dir)
 {
 	m_StartTime							= Device->fTimeGlobal;
-	m_lanim								= LALib.FindItem("hud_hit_mark");
+	m_lanim								= LALib->FindItem("hud_hit_mark");
 	m_HitDirection						= dir.getH();
 	m_UIStaticItem						= xr_new<CUIStaticItem>();
 	m_UIStaticItem->SetShader			(sh);

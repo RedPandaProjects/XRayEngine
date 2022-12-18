@@ -5,17 +5,19 @@
 #include "soundrender_emitter.h"
 #include "soundrender_source.h"
 
-xr_vector<u8> g_target_temp_data;
+xr_vector<u8>* g_target_temp_data;
 
 CSoundRender_TargetA::CSoundRender_TargetA():CSoundRender_Target()
 {
     cache_gain			= 0.f;
     cache_pitch			= 1.f;
     pSource				= 0;
+	g_target_temp_data = xr_new< xr_vector<u8>>();
 }
 
 CSoundRender_TargetA::~CSoundRender_TargetA()
 {
+	xr_delete(g_target_temp_data);
 }
 
 BOOL	CSoundRender_TargetA::_initialize		()
@@ -58,7 +60,7 @@ void CSoundRender_TargetA::start			(CSoundRender_Emitter* E)
 
 	// Calc storage
 	buf_block		= sdef_target_block * E->source()->m_wformat.nAvgBytesPerSec / 1000;
-    g_target_temp_data.resize(buf_block);
+    g_target_temp_data->resize(buf_block);
 }
 
 void	CSoundRender_TargetA::render		()
@@ -168,9 +170,9 @@ void	CSoundRender_TargetA::fill_block	(ALuint BufferID)
 {
 	R_ASSERT			(m_pEmitter);
 
-	m_pEmitter->fill_block(&g_target_temp_data.front(),buf_block);
+	m_pEmitter->fill_block(&g_target_temp_data->front(),buf_block);
 	ALuint format 		= (m_pEmitter->source()->m_wformat.nChannels==1)?AL_FORMAT_MONO16:AL_FORMAT_STEREO16;
-    A_CHK				(alBufferData(BufferID, format, &g_target_temp_data.front(), buf_block, m_pEmitter->source()->m_wformat.nSamplesPerSec));
+    A_CHK				(alBufferData(BufferID, format, &g_target_temp_data->front(), buf_block, m_pEmitter->source()->m_wformat.nSamplesPerSec));
 }
 void CSoundRender_TargetA::source_changed()
 {

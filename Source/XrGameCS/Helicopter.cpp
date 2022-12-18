@@ -121,7 +121,7 @@ void CHelicopter::Load(LPCSTR section)
 	m_light_color.a						= 1.f;
 	m_light_color.mul_rgb				(m_light_brightness);
 	LPCSTR lanim						= pSettings->r_string	(section,"light_color_animmator");
-	m_lanim								= LALib.FindItem(lanim);
+	m_lanim								= LALib->FindItem(lanim);
 
 
 }
@@ -240,7 +240,7 @@ BOOL CHelicopter::net_Spawn(CSE_Abstract*	DC)
 	if(pUserData->section_exist("destroyed"))
 		CPHDestroyable::Load(pUserData,"destroyed");
 #ifdef DEBUG
-	Device->seqRender.Add(this,REG_PRIORITY_LOW-1);
+	Device->seqRenderDebug.Add(this,REG_PRIORITY_LOW-1);
 #endif
 
 	return TRUE;
@@ -260,7 +260,7 @@ void CHelicopter::net_Destroy()
 	m_light_render.destroy				();
 	m_movement.net_Destroy				();
 #ifdef DEBUG
-	Device->seqRender.Remove(this);
+	Device->seqRenderDebug.Remove(this);
 #endif
 
 }

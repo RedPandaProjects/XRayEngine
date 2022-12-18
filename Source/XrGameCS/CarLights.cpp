@@ -66,7 +66,7 @@ void SCarLight::ParseDefinitions(LPCSTR section)
 	light_render->set_active(false);
 	pKinematics->LL_SetBoneVisible(bone_id,FALSE,TRUE);
 
-	//lanim					= LALib.FindItem(ini->r_string(section,"animator"));
+	//lanim					= LALib->FindItem(ini->r_string(section,"animator"));
 	
 }
 

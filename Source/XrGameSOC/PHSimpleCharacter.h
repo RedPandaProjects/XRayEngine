@@ -225,7 +225,7 @@ IC	void		foot_material_update				(u16	tri_material,u16	foot_material_idx);
 	static void	TestPathCallback(bool& do_colide,bool bo1,dContact& c,SGameMtl * /*material_1*/,SGameMtl * /*material_2*/);
 public:	
 #ifdef DEBUG
-	virtual		void		OnRender							()					;
+	virtual		void		OnRenderDebug		()					;
 #endif
 };
 

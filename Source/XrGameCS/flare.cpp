@@ -60,7 +60,7 @@ void CFlare::OnStateSwitch(u32 S)
 		}break;
 	case eFlareIdle:
 		{
-			light_lanim					= LALib.FindItem("flare_lanim_idle");
+			light_lanim					= LALib->FindItem("flare_lanim_idle");
 			SetPending					(FALSE);
 		}break;
 	case eFlareHidden:
@@ -100,7 +100,7 @@ void CFlare::SwitchOn()
 	light_render				= ::Render->light_create();
 	light_render->set_type		( (IRender_Light::LT)lt);
 	light_render->set_shadow	(ls);
-	light_lanim					= LALib.FindItem("flare_lanim_showing");
+	light_lanim					= LALib->FindItem("flare_lanim_showing");
 
 	light_render->set_active	(true);
 

@@ -88,7 +88,6 @@ BOOL CLevelEditor::net_Start(LPCSTR op_server, LPCSTR op_client)
 		map_data.m_map_loaded = true;
 
 		deny_m_spawn = FALSE;
-		Device->seqRender.Add(this);
 		Device->seqFrame.Add(this);
 		R_ASSERT(Load_GameSpecific_Before());
 		Objects.Load();

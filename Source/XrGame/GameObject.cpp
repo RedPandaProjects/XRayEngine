@@ -1120,7 +1120,7 @@ void render_box						(IRenderVisual *visual, const Fmatrix &xform, const Fvector
 	renderer.draw_obb			(result,color);
 }
 
-void CGameObject::OnRender			()
+void CGameObject::OnRenderDebug			()
 {
 	if (!ai().get_level_graph())
 		return;

@@ -421,7 +421,8 @@ void XRayEngineInterface::Initialize()
 		}
 
 		// Initialize APP
-		LALib.OnCreate();
+		LALib = xr_new<ELightAnimLibrary>();
+		LALib->OnCreate();
 		g_pGamePersistent = (IGame_Persistent*)NEW_INSTANCE(CLSID_GAME_PERSISTANT);
 		g_SpatialSpace = xr_new<ISpatial_DB>();
 		g_SpatialSpacePhysic = xr_new<ISpatial_DB>();
@@ -443,8 +444,8 @@ void XRayEngineInterface::Destroy()
 
 	destroySettings();
 
-	LALib.OnDestroy();
-
+	LALib->OnDestroy();
+	xr_delete(LALib);
 	destroyConsole();
 
 	destroySound();
@@ -574,10 +575,8 @@ void XRayEngineInterface::destroySettings()
 
 void XRayEngineInterface::destroyConsole()
 {
-
 	Console->Execute("cfg_save");
 	Console->Destroy();
-	xr_delete(Console);
 }
 
 void XRayEngineInterface::destroySound()

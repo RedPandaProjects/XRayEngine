@@ -208,9 +208,6 @@
     <ProjectReference Include="..\XrGame\XrGame.vcxproj">
       <Project>{a95ce1ff-9f86-4f4d-b5c4-6d505bf7a56c}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\XrRender\R4_PC\XrRender_R4.vcxproj">
-      <Project>{61ea3c25-c6eb-4518-b407-d8806ab47f9f}</Project>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />

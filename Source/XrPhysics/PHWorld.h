@@ -33,7 +33,7 @@ class CPHWorld	:	public	pureFrame,
 					public	cphysics_scripted,
 					private	boost::noncopyable
 					#ifdef DEBUG
-					, public pureRender
+					, public pureRenderDebug
 					#endif
 {
 	double						m_start_time												;
@@ -128,7 +128,7 @@ ContactCallbackFun				*default_character_contact_shotmark()						{ return m_defa
 	
 //	void						AddCall							(CPHCondition*c,CPHAction*a);
 #ifdef DEBUG
-	virtual void 				OnRender						()							;
+	virtual void 				OnRenderDebug					()							;
 #endif
 	virtual void	_BCL		OnFrame							()							;
 private:

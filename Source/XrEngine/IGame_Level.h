@@ -42,7 +42,7 @@ public:
 class ENGINE_API	IGame_Level	:
 	public DLL_Pure,
 	public IInputReceiver,
-	public pureRender,
+	public pureRenderDebug,
 	public pureFrame,
 	public IEventReceiver
 {
@@ -94,7 +94,7 @@ public:
 	virtual void				Load_GameSpecific_CFORM	( CDB::TRI* T, u32 count )				= 0;
 
 	virtual void	_BCL		OnFrame					( void );
-	virtual void				OnRender				( void );
+	virtual void				OnRenderDebug			( void );
 
 	virtual	shared_str			OpenDemoFile			(LPCSTR demo_file_name) = 0;
 	virtual void				net_StartPlayDemo		() = 0;

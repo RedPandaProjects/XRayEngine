@@ -23,7 +23,7 @@ class CPHCharacter :
 	public CPHSynchronize,
 	public CPHDisablingTranslational
 #ifdef DEBUG
-	,public pureRender
+	,public pureRenderDebug
 #endif
 {
 public:

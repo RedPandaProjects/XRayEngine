@@ -352,7 +352,7 @@ void CClimableObject::ObjectContactCallback(bool&	do_colide,bool bo1,dContact& c
 }
 #ifdef DEBUG
 extern	Flags32	dbg_net_Draw_Flags;
-void CClimableObject ::OnRender()
+void CClimableObject ::OnRenderDebug()
 {
 	if (!dbg_net_Draw_Flags.test(1<<10)&&!ph_dbg_draw_mask.test(phDbgLadder)) return;
 

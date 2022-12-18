@@ -8,8 +8,7 @@
 
 class ENGINE_API CDemoRecord :
 	public CEffectorCam,
-	public IInputReceiver,
-	public pureRender
+	public IInputReceiver
 {
 private:
 	static struct force_position 

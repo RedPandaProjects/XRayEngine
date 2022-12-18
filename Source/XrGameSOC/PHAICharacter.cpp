@@ -181,9 +181,9 @@ void CPHAICharacter::InitContact(dContact* c,bool	&do_collide,u16 material_idx_1
 #endif
 }
 #ifdef DEBUG
-void	CPHAICharacter::OnRender()	
+void	CPHAICharacter::OnRenderDebug()
 {
-	inherited::OnRender();
+	inherited::OnRenderDebug();
 
 	if(!b_exist) return;
 

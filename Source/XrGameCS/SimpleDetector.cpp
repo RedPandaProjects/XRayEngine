@@ -147,8 +147,8 @@ void CUIArtefactDetectorSimple::setup_internals()
 	K->LL_SetBoneVisible			(m_flash_bone,	FALSE, TRUE);
 	K->LL_SetBoneVisible			(m_on_off_bone, TRUE, TRUE);
 
-	m_pOnOfLAnim					= LALib.FindItem("det_on_off");
-	m_pFlashLAnim					= LALib.FindItem("det_flash");
+	m_pOnOfLAnim					= LALib->FindItem("det_on_off");
+	m_pFlashLAnim					= LALib->FindItem("det_flash");
 }
 
 void CUIArtefactDetectorSimple::update()

@@ -15,7 +15,7 @@ typedef void  RP_FUNC		(void *obj);
 #define DECLARE_RP(name) void  rp_##name(void *p) { ((pure##name *)p)->On##name(); }
 
 DECLARE_MESSAGE_CL(Frame,_BCL);
-DECLARE_MESSAGE(Render);
+DECLARE_MESSAGE(RenderDebug);
 DECLARE_MESSAGE(RenderUI);
 DECLARE_MESSAGE(AppActivate);
 DECLARE_MESSAGE(AppDeactivate);

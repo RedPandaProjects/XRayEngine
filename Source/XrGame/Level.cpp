@@ -780,24 +780,24 @@ extern	Flags32	dbg_net_Draw_Flags;
 
 extern void draw_wnds_rects();
 
-void CLevel::OnRender()
+void CLevel::OnRenderDebug()
 {
-	inherited::OnRender	();
+	inherited::OnRenderDebug();
 
 	if (!game)
 		return;
 
-	Game().OnRender();
+	//Game().OnRender();
 	//  
 	//Device->Statistic->TEST1.Begin();
-	BulletManager().Render();
+	BulletManager().RenderDebug();
 	//Device->Statistic->TEST1.End();
 	// c 
-	HUD().RenderUI();
+	//HUD().RenderUI();
 
 #ifdef DEBUG
 	draw_wnds_rects();
-	physics_world()->OnRender	();
+	physics_world()->OnRenderDebug	();
 #endif // DEBUG
 
 #ifdef DEBUG
@@ -818,30 +818,30 @@ void CLevel::OnRender()
 
 			CAI_Stalker*		stalker = smart_cast<CAI_Stalker*>(_O);
 			if (stalker)
-				stalker->OnRender	();
+				stalker->OnRenderDebug();
 
 			CCustomMonster*		monster = smart_cast<CCustomMonster*>(_O);
 			if (monster)
-				monster->OnRender	();
+				monster->OnRenderDebug();
 
 			CPhysicObject		*physic_object = smart_cast<CPhysicObject*>(_O);
 			if (physic_object)
-				physic_object->OnRender();
+				physic_object->OnRenderDebug();
 
 			CSpaceRestrictor	*space_restrictor = smart_cast<CSpaceRestrictor*>	(_O);
 			if (space_restrictor)
-				space_restrictor->OnRender();
+				space_restrictor->OnRenderDebug();
 			CClimableObject		*climable		  = smart_cast<CClimableObject*>	(_O);
 			if(climable)
-				climable->OnRender();
+				climable->OnRenderDebug();
 			CTeamBaseZone	*team_base_zone = smart_cast<CTeamBaseZone*>(_O);
 			if (team_base_zone)
-				team_base_zone->OnRender();
+				team_base_zone->OnRenderDebug();
 			
 			if (GameID() != eGameIDSingle)
 			{
 				CInventoryItem* pIItem = smart_cast<CInventoryItem*>(_O);
-				if (pIItem) pIItem->OnRender();
+				if (pIItem) pIItem->OnRenderDebug();
 			}
 
 			
@@ -858,7 +858,7 @@ void CLevel::OnRender()
 			};
 		}
 		//  [7/5/2005]
-		if (Server && Server->game) Server->game->OnRender();
+		if (Server && Server->game) Server->game->OnRenderDebug();
 		//  [7/5/2005]
 		ObjectSpace.dbgRender	();
 

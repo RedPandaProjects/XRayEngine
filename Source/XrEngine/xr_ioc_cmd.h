@@ -1,10 +1,17 @@
 #pragma once
-
-#define CMD0(cls)					{ static cls x##cls();				Console->AddCommand(&x##cls);}
-#define CMD1(cls,p1)				{ static cls x##cls(p1);			Console->AddCommand(&x##cls);}
-#define CMD2(cls,p1,p2)				{ static cls x##cls(p1,p2);			Console->AddCommand(&x##cls);}
-#define CMD3(cls,p1,p2,p3)			{ static cls x##cls(p1,p2,p3);		Console->AddCommand(&x##cls);}
-#define CMD4(cls,p1,p2,p3,p4)		{ static cls x##cls(p1,p2,p3,p4);	Console->AddCommand(&x##cls);}
+#ifdef ENGINE_BUILD
+#define CMD0(cls)					{ Console->AddCommand(xr_new<cls>());}
+#define CMD1(cls,p1)				{ Console->AddCommand(xr_new< cls>(p1));}
+#define CMD2(cls,p1,p2)				{ Console->AddCommand(xr_new< cls>(p1,p2));}
+#define CMD3(cls,p1,p2,p3)			{ Console->AddCommand(xr_new< cls>(p1,p2,p3));}
+#define CMD4(cls,p1,p2,p3,p4)		{ Console->AddCommand(xr_new< cls>(p1,p2,p3,p4));}
+#else
+#define CMD0(cls)					{ Console->AddGameCommand(xr_new<cls>());}
+#define CMD1(cls,p1)				{ Console->AddGameCommand(xr_new< cls>(p1));}
+#define CMD2(cls,p1,p2)				{ Console->AddGameCommand(xr_new< cls>(p1,p2));}
+#define CMD3(cls,p1,p2,p3)			{ Console->AddGameCommand(xr_new< cls>(p1,p2,p3));}
+#define CMD4(cls,p1,p2,p3,p4)		{ Console->AddGameCommand(xr_new< cls>(p1,p2,p3,p4));}
+#endif
 
 #include "xrSASH.h"
 
@@ -40,8 +47,6 @@ public		:
 	  }
 	virtual ~IConsole_Command()
 	{
-		if(Console)
-			Console->RemoveCommand(this);
 	};
 
 	BENCH_SEC_SCRAMBLEVTBL3
@@ -146,10 +151,10 @@ protected	:
 	u32*			value;
 	xr_token*		tokens;
 public		:
-	CCC_Token(LPCSTR N, u32* V, xr_token* T) :
+	CCC_Token(LPCSTR N,const u32* V, const xr_token* T) :
 	  IConsole_Command(N),
-	  value(V),
-	  tokens(T)
+	  value(const_cast<u32*>(V)),
+	  tokens(const_cast<xr_token*>(T))
 	{};
 
 	virtual void	Execute	(LPCSTR args)
@@ -343,12 +348,12 @@ public		:
 class ENGINE_API	CCC_String : public IConsole_Command
 {
 protected:
-	LPSTR			value;
+	char*			value;
 	int				size;
 public:
-	CCC_String(LPCSTR N, LPSTR V, int _size=2) :
+	CCC_String(const char* N, const char* V, int _size=2) :
 		IConsole_Command(N),
-		value	(V),
+		value	(const_cast<char*>(V)),
 		size	(_size)
 	{
 		bLowerCaseArgs	=	FALSE;

@@ -31,7 +31,7 @@ class CPHCharacter :
 	public CPHDisablingTranslational,
 	public IPhysicsElement
 #ifdef DEBUG
-	,public pureRender
+	,public pureRenderDebug
 #endif
 {
 public:

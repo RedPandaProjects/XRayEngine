@@ -157,7 +157,7 @@ void CHitMarker::net_Relcase( CObject* obj )
 SHitMark::SHitMark( const ui_shader& sh, const Fvector& dir )
 {
 	m_StartTime						= Device->fTimeGlobal;
-	m_lanim							= LALib.FindItem( "hud_hit_mark" );
+	m_lanim							= LALib->FindItem( "hud_hit_mark" );
 	m_HitDirection					= dir.getH();
 	m_UIStaticItem					= xr_new<CUIStaticItem>();
 	m_UIStaticItem->SetShader		( sh );
@@ -191,7 +191,7 @@ SGrenadeMark::SGrenadeMark( const ui_shader& sh, CGrenade* grn )
 	p_grenade						= grn;
 	removed_grenade					= false;
 	m_LastTime						= Device->fTimeGlobal;
-	m_LightAnim						= LALib.FindItem( "hud_hit_mark" );
+	m_LightAnim						= LALib->FindItem( "hud_hit_mark" );
 	m_Angle							= 0.0f;
 
 	m_UIStaticItem					= xr_new<CUIStaticItem>();

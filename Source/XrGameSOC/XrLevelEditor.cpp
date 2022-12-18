@@ -117,7 +117,7 @@ BOOL CLevelEditor::net_Start(LPCSTR op_server, LPCSTR op_client)
 			pLevel = xr_new<CInifile>(&F);
 		}
 		{
-			Device->seqRender.Add(this);
+			Device->seqRenderDebug.Add(this);
 			Device->seqFrame.Add(this);
 			R_ASSERT(Load_GameSpecific_Before());
 			Objects.Load();

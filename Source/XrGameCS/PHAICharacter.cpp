@@ -190,9 +190,9 @@ EEnvironment CPHAICharacter::CheckInvironment()
 }
 */
 #ifdef DEBUG
-void	CPHAICharacter::OnRender()	
+void	CPHAICharacter::OnRenderDebug()	
 {
-	inherited::OnRender();
+	inherited::OnRenderDebug();
 
 	if(!b_exist) return;
 

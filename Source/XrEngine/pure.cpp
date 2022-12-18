@@ -11,7 +11,7 @@
 //}
 
 DECLARE_RP(Frame);
-DECLARE_RP(Render);
+DECLARE_RP(RenderDebug);
 DECLARE_RP(AppActivate);
 DECLARE_RP(AppDeactivate);
 DECLARE_RP(AppStart);

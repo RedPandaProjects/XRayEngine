@@ -62,7 +62,7 @@ void SThunderboltDesc::load						(CInifile& pIni, shared_str const& sect)
 	create_center_gradient		(pIni, sect);
 
 	name						= sect;
-	color_anim					= LALib.FindItem (pIni.r_string ( sect,"color_anim" ));
+	color_anim					= LALib->FindItem (pIni.r_string ( sect,"color_anim" ));
 	VERIFY						(color_anim);
 	color_anim->fFPS			= (float)color_anim->iFrameCount;
 

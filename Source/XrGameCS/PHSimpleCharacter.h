@@ -247,7 +247,7 @@ virtual	void	get_Box								( Fvector&	sz, Fvector& c )const;
 virtual	void	update_last_material						();
 public:	
 #ifdef DEBUG
-	virtual		void		OnRender						();
+	virtual		void		OnRenderDebug						();
 #endif
 };
 

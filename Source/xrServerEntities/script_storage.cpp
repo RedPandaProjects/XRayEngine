@@ -333,7 +333,7 @@ int CScriptStorage::vscript_log		(ScriptStorage::ELuaMessageType tLuaMessageType
 #	endif
 #endif
 
-#if 0
+#if MASTER_GOLD
 	return		(0);
 #else // #ifdef PRINT_CALL_STACK
 #	ifndef NO_XRGAME_SCRIPT_ENGINE
@@ -733,9 +733,11 @@ struct raii_guard : private boost::noncopyable {
 	raii_guard	(int error_code, LPCSTR const& m_description) : m_error_code(error_code), m_error_description(m_description) {}
 	~raii_guard	()
 	{
-#ifdef DEBUG
+#ifdef USE_DEBUGGER
+#	ifndef USE_LUA_STUDIO
 		bool lua_studio_connected = !!ai().script_engine().debugger();
 		if (!lua_studio_connected)
+#	endif
 #endif //#ifdef DEBUG
 		{
 #ifdef DEBUG

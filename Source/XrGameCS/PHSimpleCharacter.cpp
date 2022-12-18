@@ -1134,7 +1134,7 @@ void CPHSimpleCharacter::SetMas(dReal mass){
 	dBodySetMass(m_body,&m);
 }
 #ifdef DEBUG
-void CPHSimpleCharacter::OnRender(){
+void CPHSimpleCharacter::OnRenderDebug(){
 	if(!b_exist) return;
 	Fmatrix m;
 	m.identity();

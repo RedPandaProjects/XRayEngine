@@ -38,6 +38,7 @@ void xrCore::Initialize	(XRayMemoryInterface* InMemoryInterface, XRayLogInterfac
 	xr_strcpy					(ApplicationName,"XRay2UnrealEnigne");
 	if (0==init_counter) 
 	{
+		g_pauseMngr = xr_new< pauseMngr>();
 		g_pStringContainer = xr_new<str_container>();
 		g_pSharedMemoryContainer = xr_new<smem_container>();
 		LogCS = xr_new < xrCriticalSection>();
@@ -181,7 +182,7 @@ void xrCore::Destroy		()
 		xr_delete(g_pStringContainer);
 		xr_delete(g_pSharedMemoryContainer);
 		xr_delete(LogCS);
-
+		xr_delete(g_pauseMngr);
 	}
 }
 

@@ -234,6 +234,7 @@ public:
 
 	void					CommitEvents		();	// @ the start of frame
 	void					CommitRenderSet		();	// @ the end of frame
+	void 					RenderDebug			();
 	void 					Render				();
 };
 

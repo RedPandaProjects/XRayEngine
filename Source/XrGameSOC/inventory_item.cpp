@@ -230,11 +230,11 @@ void CInventoryItem::UpdateCL()
 	if(bDebug){
 		if (dbg_net_Draw_Flags.test(1<<4) )
 		{
-			Device->seqRender.Remove(this);
-			Device->seqRender.Add(this);
+			Device->seqRenderDebug.Remove(this);
+			Device->seqRenderDebug.Add(this);
 		}else
 		{
-			Device->seqRender.Remove(this);
+			Device->seqRenderDebug.Remove(this);
 		}
 	}
 
@@ -966,7 +966,7 @@ void CInventoryItem::UpdateXForm	()
 
 #ifdef DEBUG
 
-void CInventoryItem::OnRender()
+void CInventoryItem::OnRenderDebug()
 {
 	if (bDebug && object().Visual())
 	{

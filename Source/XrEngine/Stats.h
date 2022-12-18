@@ -20,7 +20,6 @@ public:
 };
 
 class ENGINE_API CStats: 
-	public pureRender,
 	public CStatsPhysics
 {
 public:
@@ -102,7 +101,6 @@ public:
 	shared_str	eval_line_3;
 
 	virtual void			Show			(void);
-	virtual void 	OnRender		();
 	virtual void			OnDeviceCreate	(void);
 	virtual void			OnDeviceDestroy	(void);
 public:

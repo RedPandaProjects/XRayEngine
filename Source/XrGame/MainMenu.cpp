@@ -207,7 +207,7 @@ void CMainMenu::Activate	(bool bActivate)
 			if(b_is_single){
 				Device->seqFrame.Remove		(g_pGameLevel);
 			}
-			Device->seqRender.Remove			(g_pGameLevel);
+			Device->seqRenderDebug.Remove			(g_pGameLevel);
 			CCameraManager::ResetPP			();
 		};
 		Device->seqRenderUI.Add				(this, 4); // 1-console 2-cursor 3-tutorial
@@ -240,7 +240,7 @@ void CMainMenu::Activate	(bool bActivate)
 				Device->seqFrame.Add			(g_pGameLevel);
 
 			}
-			Device->seqRender.Add			(g_pGameLevel);
+			Device->seqRenderDebug.Add			(g_pGameLevel);
 		};
 		if(m_Flags.test(flRestoreConsole))
 			Console->Show			();
@@ -458,7 +458,7 @@ void CMainMenu::OnFrame()
 		if(g_pGameLevel && m_Flags.test(flActive))
 		{
 			Device->seqFrame.Remove	(g_pGameLevel);
-			Device->seqRender.Remove	(g_pGameLevel);
+			Device->seqRenderDebug.Remove	(g_pGameLevel);
 		};
 
 		if(m_Flags.test(flRestoreConsole))
@@ -498,7 +498,7 @@ void CMainMenu::Screenshot(IRender_interface::ScreenshotMode mode, LPCSTR name)
 		xr_strcpy(m_screenshot_name,name);
 		if(g_pGameLevel && m_Flags.test(flActive)){
 			Device->seqFrame.Add		(g_pGameLevel);
-			Device->seqRender.Add	(g_pGameLevel);
+			Device->seqRenderDebug.Add	(g_pGameLevel);
 		};
 		m_screenshotFrame			= Device->dwFrame+1;
 		m_Flags.set					(flRestoreConsole,		Console->bVisible);

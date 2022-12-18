@@ -46,7 +46,7 @@ CUIStatic::~CUIStatic()
 void CUIStatic::SetXformLightAnim(LPCSTR lanim, bool bCyclic)
 {
 	if(lanim && lanim[0]!=0)
-		m_lanim_xform.m_lanim			= LALib.FindItem(lanim);
+		m_lanim_xform.m_lanim			= LALib->FindItem(lanim);
 	else
 		m_lanim_xform.m_lanim			= NULL;
 	

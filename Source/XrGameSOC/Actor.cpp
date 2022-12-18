@@ -151,7 +151,7 @@ CActor::CActor() : CEntityAlive()
 
 
 #ifdef DEBUG
-	Device->seqRender.Add	(this,REG_PRIORITY_LOW);
+	Device->seqRenderDebug.Add	(this,REG_PRIORITY_LOW);
 #endif
 
 	//��������� ������������� ����� � inventory
@@ -204,7 +204,7 @@ CActor::~CActor()
 	xr_delete				(encyclopedia_registry);
 	xr_delete				(game_news_registry);
 #ifdef DEBUG
-	Device->seqRender.Remove(this);
+	Device->seqRenderDebug.Remove(this);
 #endif
 	//xr_delete(Weapons);
 	for (int i=0; i<eacMaxCam; ++i) xr_delete(cameras[i]);

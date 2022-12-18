@@ -2143,9 +2143,9 @@ void game_sv_Deathmatch::OnPlayerFire (ClientID id_who, NET_Packet &P)
 
 #ifdef DEBUG
 xr_vector<u32> xPath;
-void game_sv_Deathmatch::OnRender				()
+void game_sv_Deathmatch::OnRenderDebug()
 {
-	inherited::OnRender();
+	inherited::OnRenderDebug();
 	/*
 	for (int i0 = 0; i0<int(rpoints[0].size())-1; i0++)
 	{

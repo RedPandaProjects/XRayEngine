@@ -115,9 +115,9 @@ void CExplosiveRocket::PH_Ch_CrPr			()
 	inherited::PH_Ch_CrPr		();
 }
 
-void CExplosiveRocket::OnRender				()
+void CExplosiveRocket::OnRenderDebug				()
 {
-	inherited::OnRender			();
+	inherited::OnRenderDebug();
 }
 #endif
 

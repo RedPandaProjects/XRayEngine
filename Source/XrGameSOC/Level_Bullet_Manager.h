@@ -188,6 +188,7 @@ public:
 	void					CommitEvents		();	// @ the start of frame
 	void					CommitRenderSet		();	// @ the end of frame
 	void 					Render				();
+	void 					RenderDebug			();
 };
 
 struct bullet_test_callback_data

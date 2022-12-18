@@ -175,7 +175,7 @@ namespace ChoseEvents
     //---------------------------------------------------------------------------
     void   FillLAnim(ChooseItemVec& items, void* param)
     {
-        LAItemVec& lst = LALib.Objects();
+        LAItemVec& lst = LALib->Objects();
         LAItemIt it = lst.begin();
         LAItemIt _E = lst.end();
         for (; it != _E; it++)			items.push_back(SChooseItem(*(*it)->cName, ""));
@@ -183,7 +183,7 @@ namespace ChoseEvents
     void   UpdateLAnim(LPCSTR name, ImTextureID& Texture)
     {
         int frame;
-        CLAItem* item = LALib.FindItem(name);
+        CLAItem* item = LALib->FindItem(name);
         if (item)
         {
 

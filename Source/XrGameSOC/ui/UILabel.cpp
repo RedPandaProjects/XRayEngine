@@ -40,7 +40,7 @@ void CUILabel::SetHeight(float height){
 void CUILabel::SetLightAnim(LPCSTR lanim)
 {
 	if(lanim&&xr_strlen(lanim))
-		m_lanim	= LALib.FindItem(lanim);
+		m_lanim	= LALib->FindItem(lanim);
 	else
 		m_lanim	= NULL;
 }

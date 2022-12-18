@@ -73,7 +73,7 @@ BOOL CProjector::net_Spawn(CSE_Abstract* DC)
 	IKinematics* K			= CastToIKinematics(Visual());
 	CInifile* pUserData		= K->LL_UserData(); 
 	R_ASSERT3				(pUserData,"Empty Projector user data!",slight->get_visual());
-	lanim					= LALib.FindItem(pUserData->r_string("projector_definition","color_animator"));
+	lanim					= LALib->FindItem(pUserData->r_string("projector_definition","color_animator"));
 	guid_bone				= K->LL_BoneID	(pUserData->r_string("projector_definition","guide_bone"));		VERIFY(guid_bone!=BI_NONE);
 	bone_x.id				= K->LL_BoneID	(pUserData->r_string("projector_definition","rotation_bone_x"));VERIFY(bone_x.id!=BI_NONE);
 	bone_y.id				= K->LL_BoneID	(pUserData->r_string("projector_definition","rotation_bone_y"));VERIFY(bone_y.id!=BI_NONE);

@@ -157,7 +157,7 @@ public:
 	virtual		u32					RP_2_Use				(CSE_Abstract* E);
 
 #ifdef DEBUG
-	virtual		void				OnRender				();
+	virtual		void				OnRenderDebug				();
 #endif
 
 	virtual		void				SetSkin					(CSE_Abstract* E, u16 Team, u16 ID);//	{};

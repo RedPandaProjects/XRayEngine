@@ -69,7 +69,7 @@ class	CActor:
 	public CStepManager,
 	public Feel::Sound
 #ifdef DEBUG
-	,public pureRender
+	,public pureRenderDebug
 #endif
 {
 	friend class CActorCondition;
@@ -107,7 +107,7 @@ public:
 	virtual	Feel::Sound*				dcast_FeelSound				()	{ return this;	}
 			float						m_snd_noise;
 #ifdef DEBUG
-	virtual void						OnRender			();
+	virtual void						OnRenderDebug			();
 
 #endif
 

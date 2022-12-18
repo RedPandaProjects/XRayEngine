@@ -61,7 +61,7 @@ CUIStatic::~ CUIStatic()
 void CUIStatic::SetXformLightAnim(LPCSTR lanim, bool bCyclic)
 {
 	if(lanim && lanim[0]!=0)
-		m_lanim_xform.m_lanim			= LALib.FindItem(lanim);
+		m_lanim_xform.m_lanim			= LALib->FindItem(lanim);
 	else
 		m_lanim_xform.m_lanim			= NULL;
 	
@@ -74,7 +74,7 @@ void CUIStatic::SetXformLightAnim(LPCSTR lanim, bool bCyclic)
 void CUIStatic::SetClrLightAnim(LPCSTR lanim, bool bCyclic, bool bOnlyAlpha, bool bTextColor, bool bTextureColor)
 {
 	if(lanim && lanim[0]!=0)
-		m_lanim_clr.m_lanim	= LALib.FindItem(lanim);
+		m_lanim_clr.m_lanim	= LALib->FindItem(lanim);
 	else
 		m_lanim_clr.m_lanim	= NULL;
 	

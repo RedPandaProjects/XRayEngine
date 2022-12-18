@@ -98,7 +98,7 @@ bool CLight::LoadLTX(CInifile& ini, LPCSTR sect_name)
 	LPCSTR anm		= ini.r_string		(sect_name,"anim_ref_name");
     if(anm)
     {
-        m_pAnimRef	= LALib.FindItem(anm);
+        m_pAnimRef	= LALib->FindItem(anm);
         if (!m_pAnimRef)
         	ELog.Msg(mtError, "Can't find light animation: %s",anm);
     }
@@ -204,7 +204,7 @@ bool CLight::LoadStream(IReader& F)
     if (F.find_chunk(LIGHT_CHUNK_ANIMREF))
     {
     	F.r_stringZ(buf,sizeof(buf));
-        m_pAnimRef	= LALib.FindItem(buf);
+        m_pAnimRef	= LALib->FindItem(buf);
         if (!m_pAnimRef) ELog.Msg(mtError, "Can't find light animation: %s",buf);
     }
 

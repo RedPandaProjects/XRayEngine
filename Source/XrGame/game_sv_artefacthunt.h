@@ -137,7 +137,7 @@ public:
 
 	//  [7/5/2005]
 #ifdef DEBUG
-	virtual		void				OnRender				();
+	virtual		void				OnRenderDebug				();
 #endif
 	//  [7/5/2005]
 protected:

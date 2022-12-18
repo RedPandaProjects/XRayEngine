@@ -183,9 +183,9 @@ void CInventoryItemObject::PH_A_CrPr		()
 }
 
 #ifdef DEBUG
-void CInventoryItemObject::OnRender			()
+void CInventoryItemObject::OnRenderDebug()
 {
-	CInventoryItem::OnRender			();
+	CInventoryItem::OnRenderDebug			();
 }
 #endif
 

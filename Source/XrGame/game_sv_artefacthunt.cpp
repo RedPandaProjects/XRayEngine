@@ -1408,7 +1408,7 @@ void game_sv_ArtefactHunt::ConsoleCommands_Clear	()
 
 extern	Flags32	dbg_net_Draw_Flags;
 
-void game_sv_ArtefactHunt::OnRender				()
+void game_sv_ArtefactHunt::OnRenderDebug()
 {
 
 	if (dbg_net_Draw_Flags.test(dbg_draw_rp))
@@ -1431,7 +1431,7 @@ void game_sv_ArtefactHunt::OnRender				()
 			Level().debug_renderer().draw_ellipse(T, color_xrgb(0, 255, 255));
 		}
 	};
-	inherited::OnRender();
+	inherited::OnRenderDebug();
 }
 #endif
 	//  [7/5/2005]

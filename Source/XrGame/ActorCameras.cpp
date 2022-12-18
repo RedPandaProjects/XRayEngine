@@ -424,11 +424,11 @@ void dbg_draw_frustum (float FOV, float _FAR, float A, Fvector &P, Fvector &D, F
 extern	Flags32	dbg_net_Draw_Flags;
 extern	BOOL g_bDrawBulletHit;
 
-void CActor::OnRender	()
+void CActor::OnRenderDebug	()
 {
 #ifdef DEBUG
 	if (inventory().ActiveItem())
-		inventory().ActiveItem()->OnRender();
+		inventory().ActiveItem()->OnRenderDebug();
 #endif
 	if (!bDebug)				return;
 
@@ -439,6 +439,6 @@ void CActor::OnRender	()
 
 	OnRender_Network();
 
-	inherited::OnRender();
+	inherited::OnRenderDebug();
 }
 #endif

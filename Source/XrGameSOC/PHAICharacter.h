@@ -22,7 +22,7 @@ public:
 	virtual		bool		ForcedPhysicsControl				(){return m_forced_physics_control;}
 	virtual		void		Create								(dVector3 sizes)																									;
 #ifdef DEBUG
-	virtual		void		OnRender							()																													;
+	virtual		void		OnRenderDebug							()																													;
 #endif
 
 };

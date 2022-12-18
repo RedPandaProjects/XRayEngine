@@ -148,7 +148,7 @@ public:
 #ifdef DEBUG
 	void				dbg_Draw(){
 		if(m_character)
-			m_character->OnRender();
+			m_character->OnRenderDebug();
 	};
 #endif
 

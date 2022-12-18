@@ -20,7 +20,7 @@ public:
 			lanim_wrapper	(LPCSTR name){load(name);}
 	void	load			(LPCSTR name)
 	{
-		item				= LALib.FindItem(name);
+		item				= LALib->FindItem(name);
 		R_ASSERT3			(item,"Can't find color anim:",name);
 	}
 	u32		length			()

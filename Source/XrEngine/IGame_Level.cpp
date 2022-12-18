@@ -39,7 +39,7 @@ IGame_Level::~IGame_Level	()
 	Render->level_Unload		();
 	xr_delete					(m_pCameras);
 	// Unregister
-	Device->seqRender.Remove		(this);
+	Device->seqRenderDebug.Remove		(this);
 	Device->seqFrame.Remove		(this);
 	CCameraManager::ResetPP		();
 ///////////////////////////////////////////
@@ -130,7 +130,7 @@ BOOL IGame_Level::Load			(u32 dwNum)
 	bReady						= true;
 	if (!g_dedicated_server)	IR_Capture();
 #ifndef DEDICATED_SERVER
-	Device->seqRender.Add		(this);
+	Device->seqRenderDebug.Add		(this);
 #endif
 
 	Device->seqFrame.Add			(this);
@@ -141,17 +141,17 @@ BOOL IGame_Level::Load			(u32 dwNum)
 }
 
 int		psNET_DedicatedSleep	= 5;
-void	IGame_Level::OnRender		( ) 
+void	IGame_Level::OnRenderDebug()		
 {
 #ifndef DEDICATED_SERVER
 //	if (_abs(Device->fTimeDelta)<EPS_S) return;
 
 	// Level render, only when no client output required
 	if (!g_dedicated_server)	{
-		Render->Calculate			();
-		Render->Render				();
+	/*	Render->Calculate			();
+		Render->Render				();*/
 	} else {
-		Sleep						(psNET_DedicatedSleep);
+	//	Sleep						(psNET_DedicatedSleep);
 	}
 
 	// Font

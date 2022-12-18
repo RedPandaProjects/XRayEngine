@@ -125,7 +125,6 @@ CDemoRecord::~CDemoRecord()
 	}
 	g_bDisableRedText	= stored_red_text;
 
-	Device->seqRender.Remove		( this		);
 }
 
 //								+X,				-X,				+Y,				-Y,			+Z,				-Z

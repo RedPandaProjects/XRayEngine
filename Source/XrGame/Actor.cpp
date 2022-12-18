@@ -160,7 +160,7 @@ CActor::CActor() : CEntityAlive(),current_ik_cam_shift(0)
 
 
 #ifdef DEBUG
-	Device->seqRender.Add	(this,REG_PRIORITY_LOW);
+	Device->seqRenderDebug.Add	(this,REG_PRIORITY_LOW);
 #endif
 
 	//разрешить использование пояса в inventory
@@ -215,7 +215,7 @@ CActor::~CActor()
 	xr_delete				(m_memory);
 	xr_delete				(game_news_registry);
 #ifdef DEBUG
-	Device->seqRender.Remove(this);
+	Device->seqRenderDebug.Remove(this);
 #endif
 	//xr_delete(Weapons);
 	for (int i=0; i<eacMaxCam; ++i) xr_delete(cameras[i]);

@@ -43,7 +43,7 @@ public:
 	void	SetColorAnimation(LPCSTR lanim, u8 const& flags, float delay=0.0f)
 	{
 		if(lanim && lanim[0]!=0)
-			m_lanim_clr.m_lanim	= LALib.FindItem(lanim);
+			m_lanim_clr.m_lanim	= LALib->FindItem(lanim);
 		else
 		{
 			m_lanim_clr.m_lanim	= NULL;

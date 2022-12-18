@@ -922,47 +922,8 @@ float SqrDistancePointToSegment(const Fvector& pt, const Fvector& orig, const Fv
 
 	return diff.square_magnitude();
 }
-
 void CBulletManager::Render	()
 {
-#ifdef DEBUG
-	if (g_bDrawBulletHit && !m_bullet_points.empty()) {
-		VERIFY							(!(m_bullet_points.size() % 2));
-		CDebugRenderer& renderer		= Level().debug_renderer();
-		Fmatrix	sphere					= Fmatrix().scale(.05f, .05f, .05f);
-		BulletPoints::const_iterator	i = m_bullet_points.begin();
-		BulletPoints::const_iterator	e = m_bullet_points.end();
-		for ( ; i != e; i+=2) {
-			sphere.c					= *i;
-			renderer.draw_ellipse		(sphere, color_xrgb(255, 0, 0));
-
-			renderer.draw_line			(Fidentity, *i, *(i + 1), color_xrgb(0, 255, 0));
-
-			sphere.c					= *(i + 1);
-			renderer.draw_ellipse		(sphere, color_xrgb(255, 0, 0));
-		}
-
-		if (m_bullet_points.size() > 32768)
-			m_bullet_points.clear_not_free	();
-	}
-	else
-		m_bullet_points.clear_not_free	();
-
-	//0-рикошет
-	//1-застрявание пули в материале
-	//2-пробивание материала
-	if (g_bDrawBulletHit) {
-		extern FvectorVec g_hit[];
-		FvectorIt it;
-		u32 C[3] = {0xffff0000,0xff00ff00,0xff0000ff};
-		//RCache.set_xform_world(Fidentity);
-		DRender->CacheSetXformWorld(Fidentity);
-		for(int i=0; i<3; ++i)
-			for(it=g_hit[i].begin();it!=g_hit[i].end();++it){
-				Level().debug_renderer().draw_aabb(*it,0.01f,0.01f,0.01f,C[i]);
-			}
-	}
-#endif
 
 	if(m_BulletsRendered.empty()) return;
 
@@ -1031,6 +992,50 @@ void CBulletManager::CommitRenderSet		()	// @ the end of frame
 		UpdateWorkload						();
 	}
 }
+
+void CBulletManager::RenderDebug()
+{
+
+#ifdef DEBUG
+	if (g_bDrawBulletHit && !m_bullet_points.empty()) {
+		VERIFY(!(m_bullet_points.size() % 2));
+		CDebugRenderer& renderer = Level().debug_renderer();
+		Fmatrix	sphere = Fmatrix().scale(.05f, .05f, .05f);
+		BulletPoints::const_iterator	i = m_bullet_points.begin();
+		BulletPoints::const_iterator	e = m_bullet_points.end();
+		for (; i != e; i += 2) {
+			sphere.c = *i;
+			renderer.draw_ellipse(sphere, color_xrgb(255, 0, 0));
+
+			renderer.draw_line(Fidentity, *i, *(i + 1), color_xrgb(0, 255, 0));
+
+			sphere.c = *(i + 1);
+			renderer.draw_ellipse(sphere, color_xrgb(255, 0, 0));
+		}
+
+		if (m_bullet_points.size() > 32768)
+			m_bullet_points.clear_not_free();
+	}
+	else
+		m_bullet_points.clear_not_free();
+
+	//0-рикошет
+	//1-застрявание пули в материале
+	//2-пробивание материала
+	if (g_bDrawBulletHit) {
+		extern FvectorVec g_hit[];
+		FvectorIt it;
+		u32 C[3] = { 0xffff0000,0xff00ff00,0xff0000ff };
+		//RCache.set_xform_world(Fidentity);
+		DRender->CacheSetXformWorld(Fidentity);
+		for (int i = 0; i < 3; ++i)
+			for (it = g_hit[i].begin(); it != g_hit[i].end(); ++it) {
+				Level().debug_renderer().draw_aabb(*it, 0.01f, 0.01f, 0.01f, C[i]);
+			}
+	}
+#endif
+}
+
 void CBulletManager::CommitEvents			()	// @ the start of frame
 {
 	if (m_Events.size() > 1000)

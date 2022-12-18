@@ -272,7 +272,7 @@ extern	void	WriteCDKey_ToRegistry		(LPSTR cdkey);
 
 class CCC_GSCDKey: public CCC_String{
 public:
-						CCC_GSCDKey		(LPCSTR N, LPSTR V, int _size) : CCC_String(N, V, _size)  { bEmptyArgsHandled = true; };
+						CCC_GSCDKey		(LPCSTR N, LPCSTR V, int _size) : CCC_String(N, V, _size)  { bEmptyArgsHandled = true; };
 	virtual void		Execute			(LPCSTR arguments)
 	{
 		string64 cdkey;

@@ -30,7 +30,7 @@ CUIOptConCom::CUIOptConCom()
 
 class CCC_UserName: public CCC_String{
 public:
-	CCC_UserName(LPCSTR N, LPSTR V, int _size) : CCC_String(N, V, _size)  { bEmptyArgsHandled = false; };	
+	CCC_UserName(LPCSTR N, LPCSTR V, int _size) : CCC_String(N, V, _size)  { bEmptyArgsHandled = false; };
 	virtual void Execute(LPCSTR arguments)
 	{
 		string512 str;

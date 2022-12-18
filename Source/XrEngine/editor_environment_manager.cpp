@@ -181,7 +181,7 @@ manager::light_animator_ids_type const& manager::light_animator_ids	() const
 		return								(m_light_animator_ids);
 
 	typedef LAItemVec						container_type;
-	container_type const&					light_animators = LALib.Objects();
+	container_type const&					light_animators = LALib->Objects();
 	m_light_animator_ids.resize				(light_animators.size());
 	container_type::const_iterator			i = light_animators.begin();
 	container_type::const_iterator			e = light_animators.end();

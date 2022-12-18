@@ -122,7 +122,7 @@ protected:
 public:
 
 	// Registrators
-	CRegistrator	<pureRender			>			seqRender;
+	CRegistrator	<pureRenderDebug	>			seqRenderDebug;
 	CRegistrator	<pureRenderUI		>			seqRenderUI;
 	CRegistrator	<pureAppActivate	>			seqAppActivate;
 	CRegistrator	<pureAppDeactivate	>			seqAppDeactivate;

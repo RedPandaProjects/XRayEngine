@@ -278,7 +278,7 @@ void CEnvironment::OnDeviceDestroy()
 			for (EnvIt it=_I->second.begin(); it!=_I->second.end(); it++)
 				(*it)->on_device_destroy();
 	}
-	CurrentEnv->destroy();
+	if(CurrentEnv)CurrentEnv->destroy();
 
 }
 

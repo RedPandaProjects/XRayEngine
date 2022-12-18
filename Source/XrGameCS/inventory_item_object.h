@@ -69,7 +69,7 @@ public:
 
 protected:
 #ifdef DEBUG
-	virtual void	OnRender				();
+	virtual void	OnRenderDebug();
 #endif
 
 public:

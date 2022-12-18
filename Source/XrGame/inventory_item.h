@@ -58,7 +58,7 @@ class CInventoryItem :
 	public CAttachableItem,
 	public CHitImmunity
 #ifdef DEBUG
-	, public pureRender
+	, public pureRenderDebug
 #endif
 {
 private:
@@ -231,7 +231,7 @@ public:
 	virtual bool				ready_to_kill			() const;
 	IC		bool				useful_for_NPC			() const;
 #ifdef DEBUG
-	virtual void				OnRender					();
+	virtual void				OnRenderDebug			();
 #endif
 
 public:

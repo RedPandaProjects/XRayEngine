@@ -10,7 +10,7 @@ class CClimableObject:
 public CPhysicsShellHolder,
 public IClimableObject
 #ifdef DEBUG
-,public pureRender
+,public pureRenderDebug
 #endif
 {
 	typedef	CPhysicsShellHolder		inherited;
@@ -36,7 +36,7 @@ public:
 	virtual IPhysicsShellHolder			*cast_IPhysicsShellHolder	(){ return this; }
 
 #ifdef DEBUG
-	virtual void	OnRender			();
+	virtual void	OnRenderDebug		();
 #endif
 protected:
 	virtual BOOL	UsedAI_Locations	();

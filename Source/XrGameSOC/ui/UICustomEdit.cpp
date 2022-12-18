@@ -66,7 +66,7 @@ void CUICustomEdit::Init(float x, float y, float width, float height){
 void CUICustomEdit::SetLightAnim(LPCSTR lanim)
 {
 	if(lanim&&xr_strlen(lanim))
-		m_lanim	= LALib.FindItem(lanim);
+		m_lanim	= LALib->FindItem(lanim);
 	else
 		m_lanim	= NULL;
 }

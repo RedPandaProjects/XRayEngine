@@ -132,7 +132,7 @@ BOOL CHangingLamp::net_Spawn(CSE_Abstract* DC)
 
 	fHealth					= lamp->m_health;
 
-	lanim					= LALib.FindItem(*lamp->color_animator);
+	lanim					= LALib->FindItem(*lamp->color_animator);
 
 	CPHSkeleton::Spawn(e);
 	if (CastToIKinematicsAnimated(Visual()))	CastToIKinematicsAnimated	(Visual())->PlayCycle("idle");

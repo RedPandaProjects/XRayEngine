@@ -163,7 +163,7 @@ const animation_movement_controller*animation_movement		( ) const	{ return	m_ani
 			BOOL			TestServerFlag					(u32 Flag) const;
 	virtual	bool			can_validate_position_on_spawn	(){return true;}
 #ifdef DEBUG
-	virtual void			OnRender			();
+	virtual void			OnRenderDebug			();
 #endif
 
 			void			init				();

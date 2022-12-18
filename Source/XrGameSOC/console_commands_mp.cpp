@@ -277,7 +277,7 @@ public:
 
 class CCC_GSCDKey: public CCC_String{
 public:
-						CCC_GSCDKey		(LPCSTR N, LPSTR V, int _size) : CCC_String(N, V, _size)  { bEmptyArgsHandled = false; };
+						CCC_GSCDKey		(LPCSTR N, LPCSTR V, int _size) : CCC_String(N, V, _size)  { bEmptyArgsHandled = false; };
 	virtual void		Execute			(LPCSTR arguments)
 	{
 		CCC_String::Execute(arguments);	

@@ -6,7 +6,7 @@ struct dContact;
 class SGameMtl;
 class CClimableObject: public CPhysicsShellHolder 
 #ifdef DEBUG
-,public pureRender
+,public pureRenderDebug
 #endif
 {
 	typedef	CPhysicsShellHolder		inherited;
@@ -27,7 +27,7 @@ public:
 	virtual void	Center				(Fvector &C) const;
 	virtual float	Radius				() const;
 #ifdef DEBUG
-	virtual void	OnRender			();
+	virtual void	OnRenderDebug			();
 #endif
 protected:
 	virtual BOOL	UsedAI_Locations	();

@@ -215,7 +215,7 @@ BOOL CTorch::net_Spawn(CSE_Abstract* DC)
 	IKinematics* K			= CastToIKinematics(Visual());
 	CInifile* pUserData		= K->LL_UserData(); 
 	R_ASSERT3				(pUserData,"Empty Torch user data!",torch->get_visual());
-	lanim					= LALib.FindItem(pUserData->r_string("torch_definition","color_animator"));
+	lanim					= LALib->FindItem(pUserData->r_string("torch_definition","color_animator"));
 	guid_bone				= K->LL_BoneID	(pUserData->r_string("torch_definition","guide_bone"));	VERIFY(guid_bone!=BI_NONE);
 
 	Fcolor clr				= pUserData->r_fcolor				("torch_definition",(b_r2)?"color_r2":"color");

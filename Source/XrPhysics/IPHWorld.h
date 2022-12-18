@@ -35,7 +35,7 @@ class IPHWorld:
 #ifdef DEBUG
 	virtual  u16						ObjectsNumber					()									= 0;
 	virtual  u16						UpdateObjectsNumber				()									= 0;
-	virtual  void 						OnRender						()									= 0;
+	virtual  void 						OnRenderDebug					()									= 0;
 #endif
 
 };
