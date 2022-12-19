@@ -112,12 +112,12 @@ void CAI_Space::load				(LPCSTR level_name)
 
 	const IGameGraph::SLevel &current_level = game_graph().header().level(level_name);
 
-	if(Device->IsEditorMode())
+	if(Device->IsEditorMode()&& EditorScene)
 		m_level_graph = EditorScene->GetLevelGraph();
 	else
 		m_level_graph			= xr_new<CLevelGraph>();
 #ifndef PRIQUEL
-	if(!Device->IsEditorMode())
+	if(!Device->IsEditorMode()||!EditorScene)
 		m_cross_table			= xr_new<CGameLevelCrossTable>();
 	else
 		m_cross_table = const_cast<IGameLevelCrossTable*>(&EditorScene->GetGameGraph()->cross_table());
@@ -159,10 +159,10 @@ void CAI_Space::unload				(bool reload)
 
 	script_engine().unload	();
 	xr_delete				(m_graph_engine);
-	if(!Device->IsEditorMode())
+	if(!Device->IsEditorMode()||!EditorScene)
 	xr_delete				(m_level_graph);
 #ifndef PRIQUEL
-	if(!Device->IsEditorMode())
+	if(!Device->IsEditorMode()||!EditorScene)
 	xr_delete				(m_cross_table);
 #endif // PRIQUEL
 	if (

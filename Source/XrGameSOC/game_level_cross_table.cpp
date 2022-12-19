@@ -11,7 +11,7 @@
 
 CGameLevelCrossTable::CGameLevelCrossTable()
 {
-	VERIFY(Device->IsEditorMode() == false);
+	VERIFY(EditorScene == nullptr);
 	string_path			fName;
 	FS.update_path		(fName,"$level$",CROSS_TABLE_NAME);
 
@@ -32,7 +32,8 @@ CGameLevelCrossTable::CGameLevelCrossTable()
 
 CGameLevelCrossTable::~CGameLevelCrossTable	()
 {
-	VERIFY(Device->IsEditorMode() == false);
+
+	VERIFY(EditorScene == nullptr);
 	VERIFY				(m_chunk);
 	m_chunk->close		();
 	

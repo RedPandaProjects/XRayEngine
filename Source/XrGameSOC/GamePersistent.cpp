@@ -299,7 +299,7 @@ void CGamePersistent::update_logo_intro			()
 void CGamePersistent::start_game_intro		()
 {
 #if 1//def DEBUG
-	if (0!=strstr(Core.Params,"-nointro")){
+	if (0!=strstr(Core.Params,"-nointro")|| Device->IsEditorMode()){
 		m_intro_event			= 0;
 		return;
 	}
