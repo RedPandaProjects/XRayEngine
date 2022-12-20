@@ -9,7 +9,7 @@ CF1::~CF1(void) {
 
 using namespace luabind;
 
-#pragma optimize("s",on)
+
 void CF1::script_register	(lua_State *L)
 {
 	module(L)

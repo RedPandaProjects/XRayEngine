@@ -5,7 +5,7 @@
 
 using namespace luabind;
 
-#pragma optimize("s",on)
+
 void CPHWorld::script_register(lua_State *L)
 {
 	module(L)

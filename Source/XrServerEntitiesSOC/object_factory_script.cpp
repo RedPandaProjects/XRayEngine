@@ -83,7 +83,7 @@ void CObjectFactory::register_script	() const
 	luabind::module				(ai().script_engine().lua())[instance];
 }
 
-#pragma optimize("s",on)
+
 void CObjectFactory::script_register(lua_State *L)
 {
 	module(L)

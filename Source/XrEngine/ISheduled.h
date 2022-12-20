@@ -11,10 +11,8 @@ public:
 		u32		b_locked	:	1;
 	}	shedule;
 
-#ifdef DEBUG
 	u32									dbg_startframe;
 	u32									dbg_update_shedule;
-#endif
 
 				ISheduled				();
 	virtual ~	ISheduled				();

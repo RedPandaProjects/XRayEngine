@@ -44,7 +44,7 @@ void CHangingLamp::RespawnInit()
 		IKinematics* K = CastToIKinematics(Visual());
 		K->LL_SetBonesVisible(u64(-1));
 		K->CalculateBones_Invalidate();
-		K->CalculateBones	();
+		K->CalculateBones	(TRUE);
 	}
 }
 
@@ -134,7 +134,7 @@ BOOL CHangingLamp::net_Spawn(CSE_Abstract* DC)
 	if (CastToIKinematicsAnimated(Visual()))	CastToIKinematicsAnimated	(Visual())->PlayCycle("idle");
 	if (CastToIKinematics(Visual())){
 		CastToIKinematics			(Visual())->CalculateBones_Invalidate	();
-		CastToIKinematics			(Visual())->CalculateBones();
+		CastToIKinematics			(Visual())->CalculateBones(TRUE);
 		//.intepolate_pos
 	}
 	if (lamp->flags.is(CSE_ALifeObjectHangingLamp::flPhysic)&&!Visual())
@@ -159,7 +159,7 @@ void	CHangingLamp::SpawnInitPhysics	(CSE_Abstract	*D)
 	if (lamp->flags.is(CSE_ALifeObjectHangingLamp::flPhysic))		CreateBody(lamp);
 	if (CastToIKinematics(Visual())){
 		CastToIKinematics			(Visual())->CalculateBones_Invalidate	();
-		CastToIKinematics			(Visual())->CalculateBones();
+		CastToIKinematics			(Visual())->CalculateBones(TRUE);
 		//.intepolate_pos
 	}
 }
@@ -253,7 +253,7 @@ void CHangingLamp::TurnOn	()
 		IKinematics* K				= CastToIKinematics(Visual());
 		K->LL_SetBoneVisible		(light_bone, TRUE, TRUE);
 		K->CalculateBones_Invalidate();
-		K->CalculateBones			();
+		K->CalculateBones			(TRUE);
 	}
 	processing_activate		();
 }
@@ -356,7 +356,7 @@ BOOL CHangingLamp::UsedAI_Locations()
 	return					(FALSE);
 }
 
-#pragma optimize("s",on)
+
 void CHangingLamp::script_register(lua_State *L)
 {
 	luabind::module(L)

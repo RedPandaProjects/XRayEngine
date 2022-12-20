@@ -84,7 +84,7 @@ void SCarLight::TurnOn()
 	IKinematics* K=CastToIKinematics(m_holder->PCar()->Visual());
 	K->LL_SetBoneVisible(bone_id,TRUE,TRUE);
 	K->CalculateBones_Invalidate	();
-	K->CalculateBones();	
+	K->CalculateBones(TRUE);
 	glow_render ->set_active(true);
 	light_render->set_active(true);
 	Update();

@@ -33,7 +33,7 @@ u32 time_global(const XrDeviceInterface *self)
 	return		(self->dwTimeGlobal);
 }
 
-#pragma optimize("s",on)
+
 void CScriptRenderDevice::script_register(lua_State *L)
 {
 	module(L)

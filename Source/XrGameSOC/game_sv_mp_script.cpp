@@ -183,7 +183,7 @@ struct CWrapperBase : public T, public luabind::wrap_base {
 
 #pragma warning(pop)
 
-#pragma optimize("s",on)
+
 void game_sv_mp::script_register(lua_State *L)
 {
 	module(L)

@@ -14,7 +14,7 @@ CRGD5::~CRGD5(void)
 
 using namespace luabind;
 
-#pragma optimize("s",on)
+
 void CRGD5::script_register	(lua_State *L)
 {
 	module(L)

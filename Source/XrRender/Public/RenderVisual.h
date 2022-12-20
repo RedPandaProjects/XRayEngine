@@ -26,11 +26,7 @@ public:
 	virtual	IKinematicsAnimated*		dcast_PKinematicsAnimated	()				{ return 0;	}
 	virtual IParticleCustom*			dcast_ParticleCustom		()				{ return 0;	}
 	virtual class XRaySkeletonVisual*	CastToRaySkeletonVisual	()				{ return 0;	}
-	virtual class AStalkerKinematics*   CastToAStalkerKinematics()				{ return 0; }
-
-	virtual void						SetRenderMode(EVisualRenderMode RenderMode) = 0;
-	Fmatrix								XFormMatrix;
-	class IRenderable*					Renderable = nullptr;
+	virtual class UStalkerKinematicsComponent*   CastToStalkerKinematicsComponent()				{ return 0; }
 };
 
 ICF IKinematics* CastToIKinematics(IRenderVisual*Visual)

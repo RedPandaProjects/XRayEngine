@@ -68,7 +68,7 @@ TEX_INFO	get_texture_info(LPCSTR name, LPCSTR def_name)
 
 using namespace luabind;
 
-#pragma optimize("s",on)
+
 void CUIWindow::script_register(lua_State *L)
 {
 	module(L)

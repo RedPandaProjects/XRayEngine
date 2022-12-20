@@ -13,7 +13,7 @@ CWeaponUSP45::~CWeaponUSP45(void)
 
 using namespace luabind;
 
-#pragma optimize("s",on)
+
 void CWeaponUSP45::script_register	(lua_State *L)
 {
 	module(L)

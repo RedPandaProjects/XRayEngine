@@ -24,7 +24,7 @@ CALifeMonsterPatrolPathManager *get_patrol(const CALifeMonsterMovementManager *s
 	return	(&self->patrol());
 }
 
-#pragma optimize("s",on)
+
 void CALifeMonsterMovementManager::script_register	(lua_State *L)
 {
 	module(L)

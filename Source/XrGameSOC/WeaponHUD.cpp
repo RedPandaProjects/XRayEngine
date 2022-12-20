@@ -149,7 +149,7 @@ void CWeaponHUD::animPlay			(MotionID M,	BOOL bMixIn, CHudItem* W, u32 state)
 	}else{
 		m_pCallbackItem				= NULL;
 	}
-}
+} 
 
 void CWeaponHUD::Update				()
 {

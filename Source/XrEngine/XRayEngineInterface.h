@@ -70,6 +70,9 @@ public:
 	virtual	void			destroy_loading_shaders();
 	virtual void					Initialize();
 	virtual void					Destroy();
+
+	virtual class XRayUnrealProxyInterface*	CreateUnrealProxy	(class CObject*) = 0;
+	virtual void							Destroy				(class XRayUnrealProxyInterface*) = 0;
 private:
 	void InitEngine();
 	void InitSettings();

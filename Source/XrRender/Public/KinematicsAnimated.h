@@ -46,7 +46,7 @@ public:
 	virtual u32							LL_PartBlendsCount			( u32 bone_part_id )=0;
 	virtual CBlend						*LL_PartBlend				( u32 bone_part_id, u32 n )=0;
 	virtual void						LL_IterateBlends			( IterateBlendsCallback &callback )=0;
-	virtual bool						AnimsEqual					(IKinematicsAnimated* Animated) = 0;
+	virtual shared_str					GetNameData					() = 0;
 
 	virtual CMotionDef*					LL_GetMotionDef				(MotionID id) = 0;
 	//motion->GetLength() / (md->Dequantize(md->speed)

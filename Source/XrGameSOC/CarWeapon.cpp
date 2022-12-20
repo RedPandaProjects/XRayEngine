@@ -97,7 +97,7 @@ void CCarWeapon::UpdateCL()
 	UpdateBarrelDir				();
 	IKinematics* K				= CastToIKinematics(m_object->Visual());
 	K->CalculateBones_Invalidate();
-	K->CalculateBones			();
+	K->CalculateBones			(TRUE);
 	UpdateFire					();
 }
 

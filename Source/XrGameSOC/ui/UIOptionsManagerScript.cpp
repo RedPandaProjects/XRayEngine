@@ -32,7 +32,7 @@ void CUIOptionsManagerScript::SendMessage2Group(const char* group, const char* m
 	CUIOptionsItem::GetOptionsManager()->SendMessage2Group(group, message);
 }
 
-#pragma optimize("s",on)
+
 void CUIOptionsManagerScript::script_register(lua_State *L)
 {
 	module(L)

@@ -10,8 +10,7 @@ public class XRayEditorModules : ModuleRules
         PublicIncludePaths.Add(Path.Combine(ModuleDirectory, "Source", "Editors"));
         Type = ModuleType.External;
         string ConfigureName = "Release";
-        bool bOnlyDebug = false;
-        if (Target.Configuration == UnrealTargetConfiguration.Debug || bOnlyDebug)
+        if (Target.Configuration == UnrealTargetConfiguration.Debug || Target.Configuration == UnrealTargetConfiguration.DebugGame)
         {
             ConfigureName = "Debug";
         }

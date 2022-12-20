@@ -283,7 +283,7 @@ CUIEditBox* CScriptXmlInit::InitCDkey(LPCSTR path, CUIWindow* parent){
 	return							pWnd;	
 }
 
-#pragma optimize("s",on)
+
 void CScriptXmlInit::script_register(lua_State *L){
 	module(L)
 	[

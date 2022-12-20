@@ -13,7 +13,7 @@ CWeaponGroza::~CWeaponGroza(void)
 
 using namespace luabind;
 
-#pragma optimize("s",on)
+
 void CWeaponGroza::script_register	(lua_State *L)
 {
 	module(L)

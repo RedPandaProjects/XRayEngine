@@ -19,7 +19,7 @@ void matrix_transform (Fmatrix* self, Fvector* v)
 	self->transform (*v);
 }
 
-#pragma optimize("s",on)
+
 void CScriptFmatrix::script_register(lua_State *L)
 {
 	module(L)

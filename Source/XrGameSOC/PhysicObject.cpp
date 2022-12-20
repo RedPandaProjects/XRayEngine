@@ -43,8 +43,8 @@ BOOL CPhysicObject::net_Spawn(CSE_Abstract* DC)
 		default: NODEFAULT; 
 	}
 
+	setVisible(TRUE); 
 	CPHSkeleton::Spawn(e);
-	setVisible(TRUE);
 	setEnabled(TRUE);
 
 	if (!PPhysicsShell()->isBreakable()&&!CScriptBinder::object()&&!CPHSkeleton::IsRemoving())
@@ -82,7 +82,7 @@ void CPhysicObject::RunStartupAnim(CSE_Abstract *D)
 			PKinematicsAnimated->PlayCycle(*visual->startup_animation);
 		}
 		CastToIKinematics(Visual())->CalculateBones_Invalidate();
-		CastToIKinematics(Visual())->CalculateBones	();
+		CastToIKinematics(Visual())->CalculateBones	(TRUE);
 
 	}
 }

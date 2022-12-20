@@ -328,7 +328,7 @@ bool dont_has_info								(const CALifeSimulator *self, const ALife::_OBJECT_ID 
 //	THROW								(self);
 //}
 
-#pragma optimize("s",on)
+
 void CALifeSimulator::script_register			(lua_State *L)
 {
 	module(L)

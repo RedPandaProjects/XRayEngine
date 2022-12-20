@@ -627,7 +627,7 @@ void CMissile::activate_physic_shell()
 	IKinematics							*kinematics = CastToIKinematics(Visual());
 	VERIFY								(kinematics);
 	kinematics->CalculateBones_Invalidate();
-	kinematics->CalculateBones			();
+	kinematics->CalculateBones			(TRUE);
 }
 void	CMissile::net_Relcase(CObject* O)
 {
@@ -656,7 +656,7 @@ void CMissile::setup_physic_shell	()
 	IKinematics					*kinematics = CastToIKinematics(Visual());
 	VERIFY						(kinematics);
 	kinematics->CalculateBones_Invalidate();
-	kinematics->CalculateBones			();
+	kinematics->CalculateBones			(TRUE);
 }
 
 u32	CMissile::ef_weapon_type		() const

@@ -522,7 +522,7 @@ void g_change_community_goodwill(LPCSTR _community, int _entity_id, int val)
 	RELATION_REGISTRY().ChangeCommunityGoodwill(c.index(), u16(_entity_id), val);
 }
 
-#pragma optimize("s",on)
+
 void CLevel::script_register(lua_State *L)
 {
 	class_<IEnvDescriptorMixer>("CEnvDescriptor")

@@ -3,7 +3,7 @@
 
 using namespace luabind;
 
-#pragma optimize("s",on)
+
 void CUIMapInfo::script_register(lua_State *L){
 	module(L)
 	[

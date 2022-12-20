@@ -13,7 +13,7 @@ CWeaponVintorez::~CWeaponVintorez(void)
 
 using namespace luabind;
 
-#pragma optimize("s",on)
+
 void CWeaponVintorez::script_register	(lua_State *L)
 {
 	module(L)

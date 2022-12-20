@@ -3,7 +3,7 @@
 
 using namespace luabind;
 
-#pragma optimize("s",on)
+
 void CWeaponBM16::script_register	(lua_State *L)
 {
 	module(L)

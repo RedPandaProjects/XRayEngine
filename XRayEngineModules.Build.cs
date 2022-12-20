@@ -12,8 +12,7 @@ public class XRayEngineModules : ModuleRules
         PublicIncludePaths.Add(Path.Combine(ModuleDirectory, "SDK","Include"));
         PublicIncludePaths.Add(Path.Combine(ModuleDirectory, "Source", "External","Public"));
         string ConfigureName = "Release";
-		bool bOnlyDebug = false;
-		if (Target.Configuration== UnrealTargetConfiguration.Debug||bOnlyDebug)
+		if (Target.Configuration== UnrealTargetConfiguration.Debug|| Target.Configuration == UnrealTargetConfiguration.DebugGame)
 		{
             ConfigureName = "Debug";
         }

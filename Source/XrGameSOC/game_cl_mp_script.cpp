@@ -81,7 +81,7 @@ LPCSTR game_cl_mp_script::GetRoundTime()
 }
 
 
-#pragma optimize("s",on)
+
 void game_cl_mp::script_register(lua_State *L)
 {
 	module(L)

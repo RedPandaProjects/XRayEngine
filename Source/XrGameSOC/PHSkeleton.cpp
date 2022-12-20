@@ -51,7 +51,7 @@ void CPHSkeleton::RespawnInit()
 		K->LL_SetBoneRoot(0);
 		K->LL_SetBonesVisible(0xffffffffffffffffL);
 		K->CalculateBones_Invalidate();
-		K->CalculateBones();
+		K->CalculateBones(TRUE);
 	}
 	Init();
 	ClearUnsplited();
@@ -322,7 +322,7 @@ void CPHSkeleton::UnsplitSingle(CPHSkeleton* SO)
 	pKinematics->LL_SetBoneVisible(split_bone,FALSE,TRUE);
 
 	pKinematics->CalculateBones_Invalidate	();
-	pKinematics->CalculateBones				();
+	pKinematics->CalculateBones				(TRUE);
 
 	mask0 = pKinematics->LL_GetBonesVisible();
 	VERIFY2(mask0.test(),"mask0 -Zero");
@@ -335,7 +335,7 @@ void CPHSkeleton::UnsplitSingle(CPHSkeleton* SO)
 	newKinematics->LL_SetBonesVisible	(mask1);
 
 	newKinematics->CalculateBones_Invalidate	();
-	newKinematics->CalculateBones				();
+	newKinematics->CalculateBones				(TRUE);
 
 	newPhysicsShell->set_Kinematics(newKinematics);
 	VERIFY(_valid(newPhysicsShell->mXFORM));

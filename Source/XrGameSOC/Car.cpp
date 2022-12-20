@@ -162,13 +162,13 @@ BOOL	CCar::net_Spawn				(CSE_Abstract* DC)
 	BOOL							R = inherited::net_Spawn(DC);
 
 	PKinematics(Visual())->CalculateBones_Invalidate();
-	PKinematics(Visual())->CalculateBones();
+	PKinematics(Visual())->CalculateBones(TRUE);
 
 	CPHSkeleton::Spawn(e);
 	setEnabled						(TRUE);
 	setVisible						(TRUE);
 	PKinematics(Visual())->CalculateBones_Invalidate();
-	PKinematics(Visual())->CalculateBones();
+	PKinematics(Visual())->CalculateBones(TRUE);
 	m_fSaveMaxRPM					= m_max_rpm;
 	SetfHealth						(co->health);
 
@@ -211,7 +211,7 @@ void CCar::SpawnInitPhysics	(CSE_Abstract	*D)
 	CreateSkeleton					(D);//creates m_pPhysicsShell & fill in bone_map
 	IKinematics *K					=CastToIKinematics(Visual());
 	K->CalculateBones_Invalidate();//this need to call callbacks
-	K->CalculateBones	();
+	K->CalculateBones	(TRUE);
 	Init							();//inits m_driving_wheels,m_steering_wheels,m_breaking_wheels values using recieved in ParceDefinitions & from bone_map
 	//PPhysicsShell()->add_ObjectContactCallback(ActorObstacleCallback);
 	SetDefaultNetState				(so);
@@ -833,7 +833,7 @@ void CCar::CreateSkeleton(CSE_Abstract	*po)
 	if(K)
 	{
 		K->PlayCycle		("idle");
-		K->OnCalculateBones	();
+		K->dcast_PKinematics()->CalculateBones	(TRUE);
 	}
 
 #pragma todo(" replace below by P_build_Shell or call inherited")

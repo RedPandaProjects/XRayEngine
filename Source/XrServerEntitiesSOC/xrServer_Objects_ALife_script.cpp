@@ -12,7 +12,7 @@
 
 using namespace luabind;
 
-#pragma optimize("s",on)
+
 void CSE_ALifeSchedulable::script_register(lua_State *L)
 {
 	module(L)[

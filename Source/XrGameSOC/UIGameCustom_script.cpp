@@ -10,7 +10,7 @@ CUIGameCustom* get_hud(){
 	return HUD().GetUI()->UIGame();
 }
 
-#pragma optimize("s",on)
+
 void CUIGameCustom::script_register(lua_State *L)
 {
 	module(L)

@@ -395,6 +395,7 @@
     <ClInclude Include="vertex_path_inline.h" />
     <ClInclude Include="vis_common.h" />
     <ClInclude Include="WaveForm.h" />
+    <ClInclude Include="XRayUnrealProxyInterface.h" />
     <ClInclude Include="XrDeviceInterface.h" />
     <ClInclude Include="XrEditorSceneInterface.h" />
     <ClInclude Include="XrGameEditorInterface.h" />

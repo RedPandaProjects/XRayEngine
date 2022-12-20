@@ -17,7 +17,7 @@
 #include "ai_monster_space.h"
 using namespace luabind;
 
-#pragma optimize("s",on)
+
 void CScriptMovementAction::script_register(lua_State *L)
 {
 	module(L)

@@ -44,7 +44,7 @@ Fvector CVertex__game_point				(const IGameGraph::CVertex *vertex)
 	return				(vertex->game_point());
 }
 
-#pragma optimize("s",on)
+
 void CGameGraph::script_register		(lua_State *L)
 {
 	module(L)

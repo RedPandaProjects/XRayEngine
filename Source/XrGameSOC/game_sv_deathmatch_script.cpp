@@ -13,7 +13,7 @@ struct CWrapperBase : public T, public luabind::wrap_base {
 //	DEFINE_LUA_WRAPPER_METHOD_1(Money_SetStart, void, u32)
 };
 
-#pragma optimize("s",on)
+
 void game_sv_Deathmatch::script_register(lua_State *L)
 {
 	typedef CWrapperBase<game_sv_Deathmatch> WrapType;

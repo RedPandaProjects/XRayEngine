@@ -17,7 +17,7 @@ LPCSTR profile_name_script (CSE_ALifeTraderAbstract* ta)
 	return *ta->character_profile();
 }
 
-#pragma optimize("s",on)
+
 void CSE_ALifeTraderAbstract::script_register(lua_State *L)
 {
 	module(L)[

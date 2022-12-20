@@ -14,7 +14,7 @@ struct CWrapperBase : public T, public luabind::wrap_base {
 	DEFINE_LUA_WRAPPER_METHOD_V1(SetClGame, game_cl_GameState*)
 };
 
-#pragma optimize("s",on)
+
 void UIGame_custom_script::script_register(lua_State *L)
 {
 	typedef CWrapperBase<UIGame_custom_script> WrapType;

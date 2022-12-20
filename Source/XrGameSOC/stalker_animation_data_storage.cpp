@@ -14,28 +14,6 @@
 
 CStalkerAnimationDataStorage	*g_stalker_animation_data_storage = 0;
 
-class data_predicate {
-private:
-	IKinematicsAnimated			*m_object;
-
-public:
-	IC			data_predicate	(IKinematicsAnimated *skeleton_animated)
-	{
-		VERIFY				(skeleton_animated);
-		m_object			= skeleton_animated;
-	}
-
-	IC	bool	operator()		(const CStalkerAnimationDataStorage::OBJECT &object) const
-	{
-
-		if (!m_object->AnimsEqual(object.first))
-		{
-			return false;
-		}
-
-		return				(true);
-	}
-};
 
 CStalkerAnimationDataStorage::~CStalkerAnimationDataStorage	()
 {
@@ -52,10 +30,10 @@ void CStalkerAnimationDataStorage::clear					()
 
 const CStalkerAnimationData *CStalkerAnimationDataStorage::object	(IKinematicsAnimated *skeleton_animated)
 {
-	OBJECTS::const_iterator	I = std::find_if(m_objects.begin(),m_objects.end(),data_predicate(skeleton_animated));
+	OBJECTS::const_iterator	I = std::find_if(m_objects.begin(),m_objects.end(),[skeleton_animated](const OBJECT&obj){return obj.first ==skeleton_animated->GetNameData();});
 	if (I != m_objects.end())
 		return				((*I).second);
 
-	m_objects.push_back		(std::make_pair(skeleton_animated,xr_new<CStalkerAnimationData>(skeleton_animated)));
+	m_objects.push_back		(std::make_pair(skeleton_animated->GetNameData(),xr_new<CStalkerAnimationData>(skeleton_animated)));
 	return					(m_objects.back().second);
 }

@@ -11,7 +11,7 @@ CWeaponLR300::~CWeaponLR300		()
 
 using namespace luabind;
 
-#pragma optimize("s",on)
+
 void CWeaponLR300::script_register	(lua_State *L)
 {
 	module(L)

@@ -108,7 +108,7 @@ float evaluate(CEF_Storage *ef_storage, LPCSTR function, CSE_ALifeObject *_0)
 	return			(evaluate(ef_storage,function,_0,0,0,0));
 }
 
-#pragma optimize("s",on)
+
 void CEF_Storage::script_register(lua_State *L)
 {
 	module(L)

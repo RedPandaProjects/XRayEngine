@@ -181,7 +181,7 @@ void CBreakableObject::ActivateBroken()
 	m_pPhysicsShell->RunSimulation();
 	m_pPhysicsShell->SetCallbacks(m_pPhysicsShell->GetBonesCallback());
 	K->CalculateBones_Invalidate();
-	K->CalculateBones();
+	K->CalculateBones(TRUE);
 	m_pPhysicsShell->GetGlobalTransformDynamic(&XFORM());
 }
 

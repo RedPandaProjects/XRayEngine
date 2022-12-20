@@ -949,6 +949,9 @@
       <Filter>Game API\Server</Filter>
     </ClInclude>
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="XRayUnrealProxyInterface.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="defines.cpp">

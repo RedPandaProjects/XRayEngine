@@ -180,7 +180,7 @@ ICF	u32	script_time_global	()	{ return Device->dwTimeGlobal; }
 ICF	u32	script_time_global	()	{ return 0; }
 #endif
 
-#pragma optimize("s",on)
+
 void CScriptEngine::script_register(lua_State *L)
 {
 	module(L)[

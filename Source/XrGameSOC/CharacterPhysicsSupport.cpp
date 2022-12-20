@@ -177,11 +177,11 @@ void CCharacterPhysicsSupport::in_NetSpawn(CSE_Abstract* e)
 		IKinematics*	ka=CastToIKinematics(m_EntityAlife.Visual());
 		VERIFY(ka);
 		ka->CalculateBones_Invalidate();
-		ka->CalculateBones();
+		ka->CalculateBones(TRUE);
 		CollisionCorrectObjPos(m_EntityAlife.Position());
 		m_pPhysicsShell		= P_build_Shell(&m_EntityAlife,false);
 		ka->CalculateBones_Invalidate();
-		ka->CalculateBones();
+		ka->CalculateBones(TRUE);
 		return;
 	}
 
@@ -204,7 +204,7 @@ void CCharacterPhysicsSupport::in_NetSpawn(CSE_Abstract* e)
 									  ///�������� ����� �����, ����� ���� ������ �� ���������
 	}
 	k->CalculateBones_Invalidate();
-	k->CalculateBones();
+	k->CalculateBones(TRUE);
 	
 	CPHSkeleton::Spawn(e);
 	movement()->EnableCharacter();
@@ -657,7 +657,7 @@ void CCharacterPhysicsSupport::ActivateShell			( CObject* who )
 			BR.set_callback_overwrite( TRUE);
 
 	K->CalculateBones_Invalidate();
-	K->CalculateBones	();
+	K->CalculateBones	(TRUE);
 ////////////////////////////////////////////////////////////////////////////
 	if( m_pPhysicsShell ) return;
 	Fvector velocity;
@@ -695,7 +695,7 @@ void CCharacterPhysicsSupport::ActivateShell			( CObject* who )
 	}
 	m_pPhysicsShell->set_LinearVel(velocity);
 	K->CalculateBones_Invalidate();
-	K->CalculateBones	();
+	K->CalculateBones	(TRUE);
 	m_flags.set(fl_death_anim_on,FALSE);
 	m_eState=esDead;
 	m_flags.set(fl_skeleton_in_shell,TRUE);

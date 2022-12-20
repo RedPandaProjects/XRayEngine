@@ -10,7 +10,7 @@ Fmatrix	global_transform(CPhysicsElement* E)
 	return m;
 }
 
-#pragma optimize("s",on)
+
 void CPhysicsShell::script_register(lua_State *L)
 {
 	module(L)

@@ -210,7 +210,7 @@ void CTorch::Switch	(bool light_on)
 		u16 bi								= pVisual->LL_BoneID(light_trace_bone);
 
 		pVisual->LL_SetBoneVisible			(bi,	light_on,	TRUE);
-		pVisual->CalculateBones				();
+		pVisual->CalculateBones				(TRUE);
 
 		pVisual->LL_SetBoneVisible			(bi,	light_on,	TRUE); //hack
 	}

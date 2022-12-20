@@ -18,6 +18,7 @@
 #pragma warning(push)
 #pragma warning(disable:4995)
 #include <intrin.h>
+#include "XRayUnrealProxyInterface.h"
 #pragma warning(pop)
 
 #pragma intrinsic(_InterlockedCompareExchange)
@@ -75,17 +76,8 @@ void CObject::cNameVisual_set	(shared_str N)
 	if (*N && N[0]) 
 	{
 		IRenderVisual			*old_v = renderable.visual;
-		if (old_v)
-		{
-			old_v->Renderable = nullptr;
-			old_v->SetRenderMode(EVisualRenderMode::None);
-		}
 		NameVisual				= N;
 		renderable.visual		= Render->model_Create	(*N);
-		VERIFY(renderable.visual->Renderable == nullptr);
-		renderable.visual->Renderable = this;
-		renderable.visual->SetRenderMode(EVisualRenderMode::FromRenderable);
-		renderable.visual->Renderable->MySpatial = this;
 		IKinematics* old_k	= old_v?old_v->dcast_PKinematics():NULL;
 		IKinematics* new_k	= renderable.visual->dcast_PKinematics();
 
@@ -100,7 +92,14 @@ void CObject::cNameVisual_set	(shared_str N)
 			new_k->SetUpdateCallback(old_k->GetUpdateCallback());
 			new_k->SetUpdateCallbackParam(old_k->GetUpdateCallbackParam());
 		}
-
+		if (old_k&&UnrealProxy)
+		{
+			UnrealProxy->Detach(old_v);
+		}
+		if (new_k && UnrealProxy)
+		{
+			UnrealProxy->Attach(renderable.visual);
+		}
 		::Render->model_Delete	(old_v);
 	} 
 	else 
@@ -137,12 +136,31 @@ void CObject::setEnabled			(BOOL _enabled)
 }
 void CObject::setVisible			(BOOL _visible)
 {
-	if (_visible){				// Parent should control object visibility itself (??????)
+	if (Props.bVisible == (_visible ? 1 : 0))
+	{
+		return;
+	}
+
+	if (_visible)
+	{				// Parent should control object visibility itself (??????)
+		R_ASSERT(UnrealProxy == nullptr);
 		Props.bVisible							= 1;
 		if (renderable.visual)	spatial.type	|=	STYPE_RENDERABLE;
-	}else{
+		UnrealProxy = g_Engine->CreateUnrealProxy(this);
+		if (renderable.visual)
+		{
+			UnrealProxy->Attach(renderable.visual);
+		}
+	
+
+	}
+	else
+	{
+		g_Engine->Destroy	(UnrealProxy);
+		UnrealProxy = nullptr;
 		Props.bVisible							= 0;
 		spatial.type							&=	~STYPE_RENDERABLE;
+
 	}
 }
 
@@ -174,10 +192,15 @@ CObject::CObject		( )		:
 	dbg_update_shedule			= u32(-1)/2;
 	dbg_update_cl				= u32(-1)/2;
 #endif
+	UnrealProxy = nullptr;
 }
 
 CObject::~CObject				( )
 {
+	if (UnrealProxy)
+	{
+		g_Engine->Destroy(UnrealProxy);
+	}
 	cNameVisual_set				( 0 );
 	cName_set					( 0 );
 	cNameSect_set				( 0 );
