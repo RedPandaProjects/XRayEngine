@@ -95,7 +95,7 @@ void CPHCommander::update	()
 		delete_call(*(m_calls.begin() + m_calls_as_delete_buffer[i - 1]));
 		m_calls.erase(m_calls.begin() + m_calls_as_delete_buffer[i - 1]);
 	}
-	m_calls_as_delete_buffer.clear_not_free();
+	m_calls_as_delete_buffer.clear();
 }
 void CPHCommander::update_threadsafety 			()
 {

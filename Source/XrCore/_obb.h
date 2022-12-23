@@ -116,15 +116,16 @@ public:
         }
         return false;
     }
+
+	template <class T>
+	BOOL	_valid(const _obb<T>& m)
+	{
+		return _valid(m_rotate) && _valid(m_translate) && _valid(m_halfsize);
+	}
 };
 
 typedef		_obb<float>		Fobb;
 typedef		_obb<double>	Dobb;
 
-template <class T>
-BOOL	_valid			(const _obb<T>& m)		
-{ 
-	return _valid(m_rotate) && _valid(m_translate) && _valid(m_halfsize);
-}
 
 #endif

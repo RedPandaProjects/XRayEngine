@@ -150,6 +150,7 @@
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>.;..\xrServerEntities\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -1397,7 +1398,6 @@
     <ClInclude Include="script_binder_object_wrapper.h" />
     <ClInclude Include="script_bind_macroses.h" />
     <ClInclude Include="script_callback_ex.h" />
-    <ClInclude Include="script_callback_ex_generators.h" />
     <ClInclude Include="script_callback_ex_inline.h" />
     <ClInclude Include="script_callback_ex_nonvoid.h" />
     <ClInclude Include="script_callback_ex_void.h" />

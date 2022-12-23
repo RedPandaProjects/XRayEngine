@@ -19,13 +19,11 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
 // OR OTHER DEALINGS IN THE SOFTWARE.
-
 #include "pch.h"
-
-#include "luabind/lua_include.hpp"
-
-#include "luabind/luabind.hpp"
-#include "luabind/function.hpp"
+#include <luabind/lua_include.hpp>
+#include <luabind/luabind.hpp>
+#include <luabind/function.hpp>
+#include <luabind/detail/garbage_collector.hpp>
 
 namespace luabind {
 
@@ -33,26 +31,20 @@ namespace luabind {
     {
         // get the global class registry, or create one if it doesn't exist
         // (it's global within a lua state)
-        detail::class_registry* r = 0;
+        detail::class_registry* r = nullptr;
 
         // If you hit this assert it's because you have called luabind::open()
         // twice on the same lua_State.
-        assert((detail::class_registry::get_registry(L) == 0) 
+        assert((!detail::class_registry::get_registry(L)) 
             && "you cannot call luabind::open() twice");
 
         lua_pushstring(L, "__luabind_classes");
-        r = static_cast<detail::class_registry*>(
-            lua_newuserdata(L, sizeof(detail::class_registry)));
+        r = static_cast<detail::class_registry*>(lua_newuserdata(L, sizeof(detail::class_registry)));
 
         // set gc metatable
         lua_newtable(L);
         lua_pushstring(L, "__gc");
-        lua_pushcclosure(
-            L
-          , detail::garbage_collector_s<
-                detail::class_registry
-            >::apply
-          , 0);
+        lua_pushcclosure(L, detail::garbage_collector_s<detail::class_registry>::apply, 0);
 
         lua_settable(L, -3);
         lua_setmetatable(L, -2);

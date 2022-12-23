@@ -126,6 +126,7 @@
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
       <ExceptionHandling>Async</ExceptionHandling>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -380,9 +381,6 @@
     </ProjectReference>
     <ProjectReference Include="..\XrEngine\XrEngine.vcxproj">
       <Project>{2820680f-79fe-4477-a14c-007f273a5fa8}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\XrWeatherEditorControls\XrWeatherEditorControls.vcxproj">
-      <Project>{a170d052-a69e-48b4-a5a6-1e0ebacde726}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

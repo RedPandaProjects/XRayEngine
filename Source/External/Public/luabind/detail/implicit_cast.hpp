@@ -20,12 +20,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
 // OR OTHER DEALINGS IN THE SOFTWARE.
 
+#pragma once
 
-#ifndef LUABIND_IMPLICIT_CAST_HPP_INCLUDED
-#define LUABIND_IMPLICIT_CAST_HPP_INCLUDED
-
-#include "../luabind/config.hpp"
-#include "../luabind/detail/class_rep.hpp"
+#include <luabind/config.hpp>
+#include <luabind/detail/class_rep.hpp>
 
 namespace luabind { namespace detail
 {
@@ -43,9 +41,6 @@ namespace luabind { namespace detail
 	// the this-pointer is const, there's no problem, since the non-const function
 	// will not match at all.
 
-	LUABIND_API int implicit_cast(const class_rep*, LUABIND_TYPE_INFO const&, int&);
+	LUABIND_API int implicit_cast(const class_rep*, LUABIND_TYPE_INFO const&, ptrdiff_t&);
 
 }}
-
-#endif // LUABIND_IMPLICIT_CAST_HPP_INCLUDED
-

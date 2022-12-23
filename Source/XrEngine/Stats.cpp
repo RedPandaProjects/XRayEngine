@@ -9,6 +9,19 @@
 
 #include "DrawUtils.h"
 
+template<>
+void FactoryPtr<IStatsRender>::CreateObject(void)
+{
+	m_pObject = RenderFactory->CreateStatsRender();
+}
+
+template<>
+void FactoryPtr<IStatsRender>::DestroyObject(void)
+{
+	RenderFactory->DestroyStatsRender(m_pObject);
+	m_pObject = NULL;
+}
+
 int		g_ErrorLineCount	= 15;
 Flags32 g_stats_flags		= {0};
 

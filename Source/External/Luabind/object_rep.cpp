@@ -19,18 +19,19 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
 // OR OTHER DEALINGS IN THE SOFTWARE.
-
 #include "pch.h"
+#include <luabind/detail/class_rep.hpp>
+#include <luabind/detail/object_rep.hpp>
+#include <luabind/detail/method_rep.hpp>
 
-#include "luabind/detail/object_rep.hpp"
-#include "luabind/detail/class_rep.hpp"
+#include <luabind/detail/overload_rep_impl.hpp>
 
 //#define TEST_GARBAGE_COLLECTOR
 
 #ifdef TEST_GARBAGE_COLLECTOR
 #	include "pch.h"
 	string256	debug_test_constructor, debug_test_destructor;
-	LPCSTR		debug_class = "AttackError";//"stateAttackThreaten";
+	const char*		debug_class = "AttackError";//"stateAttackThreaten";
 #endif
 
 namespace luabind { namespace detail

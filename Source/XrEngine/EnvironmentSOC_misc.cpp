@@ -247,7 +247,7 @@ IEnvAmbient* CEnvironmentSOC::AppendEnvAmb(const shared_str& sect)
 
 void	CEnvironmentSOC::mods_load			()
 {
-	Modifiers.clear_and_free			();
+	Modifiers.clear			();
 	string_path							path;
 	if (FS.exist(path,"$level$","level.env_mod"))	
 	{
@@ -269,7 +269,7 @@ void	CEnvironmentSOC::mods_unload		()
 	{
 		xr_delete(i);
 	}
-	Modifiers.clear_and_free			();
+	Modifiers.clear			();
 }
 
 void CEnvironmentSOC::load		()

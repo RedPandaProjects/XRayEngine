@@ -48,7 +48,8 @@
 extern ENGINE_API CInifile *pGameIni;
 
 #include "lua/library_linkage.h"
-#include "luabind/library_linkage.h"
+#include <luabind/boost_legacy.h>
+#define LUABIND_API
 
 #ifndef DEBUG
 #	define LUABIND_NO_ERROR_CHECKING

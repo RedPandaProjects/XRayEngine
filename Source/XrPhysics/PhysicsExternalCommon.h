@@ -24,16 +24,16 @@ struct dContactGeom;
 XRPHYSICS_API	bool ContactShotMarkGetEffectPars(dContactGeom *c, dxGeomUserData* &data, float &vel_cret, bool &b_invert_normal );
 
 template <typename geom_type>
-void	t_get_box( const geom_type*	shell, const	Fmatrix& form,	Fvector&	sz, Fvector&	c )
+void	t_get_box(const geom_type* shell, const	Fmatrix& form, Fvector& sz, Fvector& c)
 {
-	c.set(0,0,0);
-	VERIFY( sizeof( form.i ) + sizeof( form._14_ ) == 4* sizeof( float ) );
-	for(int i=0;3>i;++i)
-	{	
-		float lo,hi;
-		const	Fvector &ax=cast_fv(((const	float*)&form+i*4));
-		shell->get_Extensions(ax,0,lo,hi);
-		sz[i]=hi-lo;c.add(Fvector().mul(ax,(lo+hi)/2));
+	c.set(0, 0, 0);
+	VERIFY(sizeof(form.i) + sizeof(form._14_) == 4 * sizeof(float));
+	for (int i = 0; 3 > i; ++i)
+	{
+		float lo, hi;
+		const	Fvector& ax = *((const Fvector*)((const float*)(& form + i * 4)));
+		shell->get_Extensions(ax, 0, lo, hi);
+		sz[i] = hi - lo; c.add(Fvector().mul(ax, (lo + hi) / 2));
 	}
 }
 

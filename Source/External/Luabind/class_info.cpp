@@ -19,12 +19,12 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
 // OR OTHER DEALINGS IN THE SOFTWARE.
-
 #include "pch.h"
-#include "luabind/lua_include.hpp"
+#include <luabind/lua_include.hpp>
 
-#include "luabind/luabind.hpp"
-#include "luabind/class_info.hpp"
+#include <luabind/luabind.hpp>
+#include <luabind/detail/decorate_type.hpp>
+#include <luabind/class_info.hpp>
 
 namespace luabind
 {
@@ -32,17 +32,17 @@ namespace luabind
 	{
 		lua_State* L = o.lua_state();
 	
-		class_info Result(L);
+		class_info ciResult(L);
 	
 		o.pushvalue();
 		detail::object_rep* obj = static_cast<detail::object_rep*>(lua_touserdata(L, -1));
 		lua_pop(L, 1);
 
-		Result.name = obj->crep()->name();
+		ciResult.name = obj->crep()->name();
 		obj->crep()->get_table(L);
-		Result.methods.set();
+		ciResult.methods.set();
 
-		Result.attributes = newtable(L);
+		ciResult.attributes = newtable(L);
 
 		typedef detail::class_rep::property_map map_type;
 		
@@ -51,10 +51,10 @@ namespace luabind
 		for (map_type::const_iterator i = obj->crep()->properties().begin();
 				i != obj->crep()->properties().end(); ++i)
 		{
-			Result.attributes[index] = i->first;
+			ciResult.attributes[index] = i->first;
 		}
 
-		return Result;
+		return ciResult;
 	}
 
 	void bind_class_info(lua_State* L)

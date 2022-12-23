@@ -19,14 +19,13 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
 // OR OTHER DEALINGS IN THE SOFTWARE.
-
 #include "pch.h"
-
-#include "luabind/config.hpp"
-#include "luabind/lua_include.hpp"
-#include "luabind/detail/object_rep.hpp"
-#include "luabind/detail/class_rep.hpp"
-#include "luabind/detail/stack_utils.hpp"
+#include <luabind/config.hpp>
+#include <luabind/lua_include.hpp>
+#include <luabind/detail/class_rep.hpp>
+#include <luabind/detail/stack_utils.hpp>
+#include <luabind/detail/object_rep.hpp>
+#include <luabind/detail/method_rep.hpp>
 
 
 namespace luabind { namespace detail
@@ -42,8 +41,7 @@ namespace luabind { namespace detail
 		lua_remove(L, -2); // remove the crep table
 
 		{
-			if (!lua_iscfunction(L, -1)) return;
-			if (lua_getupvalue(L, -1, 3) == 0) return;
+			if (!lua_iscfunction(L, -1) || !lua_getupvalue(L, -1, 3)) return;
 			detail::stack_pop p(L, 1);
 			if (lua_touserdata(L, -1) != reinterpret_cast<void*>(0x1337)) return;
 		}

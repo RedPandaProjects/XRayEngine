@@ -16,6 +16,7 @@
 extern "C" {
 	#include <lua/lua.h>
 };
+#include <luabind/luabind.hpp>
 
 //#define DBG_DISABLE_SCRIPTS
 

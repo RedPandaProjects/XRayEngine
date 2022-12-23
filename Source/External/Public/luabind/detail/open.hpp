@@ -20,11 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
 // OR OTHER DEALINGS IN THE SOFTWARE.
 
+#pragma once
 
-#ifndef LUABIND_OPEN_HPP_INCLUDED
-#define LUABIND_OPEN_HPP_INCLUDED
-
-#include "../luabind/config.hpp"
+#include <luabind/config.hpp>
 
 namespace luabind
 {
@@ -40,6 +38,3 @@ namespace luabind
 
 	LUABIND_API void open(lua_State* L);
 }
-
-#endif // LUABIND_OPEN_HPP_INCLUDED
-

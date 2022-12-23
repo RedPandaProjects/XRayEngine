@@ -47,13 +47,13 @@ public:
 /*
 			int				quantity;
 			float			afT[2];
-			Fsphere::ERP_Result	result	= sS.intersect(ray.pos,ray.fwd_dir,range,quantity,afT);
+			_sphere<T>::ERP_Result	result	= sS.intersect(ray.pos,ray.fwd_dir,range,quantity,afT);
 
-			if (Fsphere::rpOriginInside || ((result==Fsphere::rpOriginOutside)&&(afT[0]<range))){
+			if (_sphere<T>::rpOriginInside || ((result==_sphere<T>::rpOriginOutside)&&(afT[0]<range))){
 				if (b_nearest)				{ 
 					switch(result){
-					case Fsphere::rpOriginInside:	range	= afT[0]<range?afT[0]:range;	break;
-					case Fsphere::rpOriginOutside:	range	= afT[0];						break;
+					case _sphere<T>::rpOriginInside:	range	= afT[0]<range?afT[0]:range;	break;
+					case _sphere<T>::rpOriginOutside:	range	= afT[0];						break;
 					}
 					range2			=range*range; 
 				}
@@ -62,12 +62,12 @@ public:
 	{
 		int				quantity;
 		float			afT[2];
-		Fsphere::ERP_Result	result	= intersect(start,dir,dist,quantity,afT);
+		_sphere<T>::ERP_Result	result	= intersect(start,dir,dist,quantity,afT);
 
-		if (result == Fsphere::rpOriginInside || ((result==Fsphere::rpOriginOutside)&&(afT[0]<dist))){
+		if (result == _sphere<T>::rpOriginInside || ((result==_sphere<T>::rpOriginOutside)&&(afT[0]<dist))){
 			switch(result){
-				case Fsphere::rpOriginInside:	dist	= afT[0]<dist?afT[0]:dist;		break;
-				case Fsphere::rpOriginOutside:	dist	= afT[0];						break;
+				case _sphere<T>::rpOriginInside:	dist	= afT[0]<dist?afT[0]:dist;		break;
+				case _sphere<T>::rpOriginOutside:	dist	= afT[0];						break;
 			}
 		}
 		return			result;
@@ -143,8 +143,8 @@ public:
 	}
 };
 
-typedef _sphere<float>	Fsphere;
-typedef _sphere<double> Dsphere;
+using Fsphere = _sphere<float>;
+using Dsphere = _sphere<double>;
 
 template <class T>
 BOOL	_valid			(const _sphere<T>& s)		{ return _valid(s.P) && _valid(s.R);	}

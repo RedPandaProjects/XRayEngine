@@ -37,12 +37,25 @@ ENGINE_API CInifile* pGameIni		= NULL;
 XRCORE_API extern	LPCSTR	build_date;
 XRCORE_API	extern u32		build_id;
 
+FACTORY_PTR_INSTANCIATE(FontRender)
+FACTORY_PTR_INSTANCIATE(FlareRender)
+FACTORY_PTR_INSTANCIATE(ThunderboltRender)
+FACTORY_PTR_INSTANCIATE(ThunderboltDescRender)
+FACTORY_PTR_INSTANCIATE(LensFlareRender)
+FACTORY_PTR_INSTANCIATE(RainRender)
+FACTORY_PTR_INSTANCIATE(EnvironmentRender)
+FACTORY_PTR_INSTANCIATE(EnvDescriptorRender)
+FACTORY_PTR_INSTANCIATE(EnvDescriptorMixerRender)
+FACTORY_PTR_INSTANCIATE(UIShader)
+FACTORY_PTR_INSTANCIATE(WallMarkArray)
+FACTORY_PTR_INSTANCIATE(StatGraphRender)
+
 #ifdef MASTER_GOLD
 #	define NO_MULTI_INSTANCES
 #endif // #ifdef MASTER_GOLD
 
 
-static LPSTR month_id[12] = {
+static const char* month_id[12] = {
 	"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"
 };
 
@@ -125,7 +138,7 @@ struct path_excluder_predicate
 
 LPCSTR _GetFontTexName (LPCSTR section)
 {
-	static char* tex_names[]={"texture800","texture","texture1600"};
+	static const char* tex_names[]={"texture800","texture","texture1600"};
 	int def_idx		= 1;//default 1024x768
 	int idx			= def_idx;
 

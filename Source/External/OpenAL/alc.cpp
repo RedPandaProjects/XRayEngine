@@ -57,7 +57,7 @@
 #endif
 #include <objbase.h>
 #ifndef MINGW
-inline LPSTR T2A(LPTSTR lp) { return const_cast<char*>(lp); }
+inline char* T2A(const char* lp) { return const_cast<char*>(lp); }
 #else
 #define T2A(x) x
 #endif
@@ -811,7 +811,7 @@ ALboolean FillOutAlFunctions(ALCcontext* context)
 // FindDllWithMatchingSpecifier
 //*****************************************************************************
 //
-HINSTANCE FindDllWithMatchingSpecifier(TCHAR* dllSearchPattern, char* specifier, bool partialName = false, char *actualName = NULL, bool captureDevice = false)
+HINSTANCE FindDllWithMatchingSpecifier(const char* dllSearchPattern, char* specifier, bool partialName = false, char *actualName = NULL, bool captureDevice = false)
 {
     WIN32_FIND_DATA findData;
     HANDLE searchHandle = INVALID_HANDLE_VALUE;

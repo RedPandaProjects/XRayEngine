@@ -148,11 +148,13 @@ IC	void _associative_vector::swap															(self_type &right)
 	inherited::swap		(right);
 }
 
+#if 0
 TEMPLATE_SPECIALIZATION
 IC	void swap																				(_associative_vector &left, _associative_vector &right)
 {
 	left.swap			(right);
 }
+#endif
 
 TEMPLATE_SPECIALIZATION
 IC	typename _associative_vector::key_compare _associative_vector::key_comp					() const
@@ -232,7 +234,7 @@ IC	typename _associative_vector::insert_result _associative_vector::insert					(
 	actualize			();
 	bool				found = true;
 	iterator			I = lower_bound(value.first);
-	if (I == end() || operator()(value.first,(*I).first)) {
+	if (I == end() || this->operator()(value.first,(*I).first)) {
 		I				= inherited::insert(I,value);
 		found			= false;
 	}
@@ -246,14 +248,14 @@ IC	typename _associative_vector::iterator _associative_vector::insert						(iter
 {
 	if	(
 			(where != end()) && 
-			(operator()(*where,value)) &&
+			(this->operator()(*where,value)) &&
 			((where - begin()) == size()) &&
-			(!operator()(value,*(where + 1))) &&
-			(operator()(*(where + 1),value))
+			(!this->operator()(value,*(where + 1))) &&
+			(this->operator()(*(where + 1),value))
 		)
 			return		(inherited::insert(where,value));
 
-	return				(insert(val).first);
+	return				(insert(inherited::val).first);
 }
 
 TEMPLATE_SPECIALIZATION
@@ -279,7 +281,7 @@ IC	typename _associative_vector::iterator _associative_vector::find						(const 
 	if (I == end())
 		return			(end());
 
-	if (operator()(key,(*I).first))
+	if (this->operator()(key,(*I).first))
 		return			(end());
 
 	return				(I);
@@ -293,7 +295,7 @@ IC	typename _associative_vector::const_iterator _associative_vector::find					(c
 	if (I == end())
 		return			(end());
 
-	if (operator()(key,(*I).first))
+	if (this->operator()(key,(*I).first))
 		return			(end());
 
 	return				(I);
@@ -314,10 +316,10 @@ IC	typename _associative_vector::equal_range_result _associative_vector::equal_r
 	if (I == end())
 		return			(equal_range_result(end(),end()));
 
-	if (operator()(key,(*I).first))
+	if (this->operator()(key,(*I).first))
 		return			(equal_range_result(I,I));
 
-	VERIFY				(!operator()(key,(*I).first));
+	VERIFY				(!this->operator()(key,(*I).first));
 	return				(equal_range_result(I,I+1));
 }
 
@@ -329,10 +331,10 @@ IC	typename _associative_vector::const_equal_range_result _associative_vector::e
 	if (I == end())
 		return			(const_equal_range_result(end(),end()));
 
-	if (operator()(key,(*I).first))
+	if (this->operator()(key,(*I).first))
 		return			(const_equal_range_result(I,I));
 
-	VERIFY				(!operator()(key,(*I).first));
+	VERIFY				(!this->operator()(key,(*I).first));
 	return				(const_equal_range_result(I,I+1));
 }
 
@@ -349,6 +351,7 @@ IC	bool _associative_vector::operator<														(const self_type &right) con
 	return				(((const inherited &)(*this)) < right);
 }
 
+#if 0
 TEMPLATE_SPECIALIZATION
 IC	bool _associative_vector::operator<=													(const self_type &right) const
 {
@@ -368,15 +371,16 @@ IC	bool _associative_vector::operator>=													(const self_type &right) con
 }
 
 TEMPLATE_SPECIALIZATION
+IC	bool _associative_vector::operator!=													(const self_type& right) const
+{
+	return				!(left == right);
+}
+#endif
+
+TEMPLATE_SPECIALIZATION
 IC	bool _associative_vector::operator==													(const self_type &right) const
 {
 	return				(((const inherited &)(*this)) == right);
-}
-
-TEMPLATE_SPECIALIZATION
-IC	bool _associative_vector::operator!=													(const self_type &right) const
-{
-	return				!(left == right);
 }
 
 #undef TEMPLATE_SPECIALIZATION

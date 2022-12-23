@@ -1,4 +1,6 @@
 #pragma once
+#include "../XrEngine/object_interfaces.h"
+#include "../XrEngine/object_destroyer.h"
 
 #ifdef XRGAME_EXPORTS
 #	include "ui/xrUIXmlParser.h"
@@ -52,7 +54,7 @@ public:
 	static const ITEM_DATA*			GetById		(const shared_str& str_id, bool no_assert = false);
 	static const ITEM_DATA*			GetByIndex	(int index, bool no_assert = false);
 
-	static const int			IdToIndex	(const shared_str& str_id, int default_index = T_INDEX(-1), bool no_assert = false)
+	static const int			IdToIndex	(const shared_str& str_id, int default_index = T_INIT(-1), bool no_assert = false)
 {
 		const ITEM_DATA* item = GetById(str_id, no_assert);
 		return item?item->index:default_index;

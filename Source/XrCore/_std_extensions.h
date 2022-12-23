@@ -259,9 +259,9 @@ inline int __cdecl xr_sprintf	( char (&destination)[count], LPCSTR format_string
 	return						vsnprintf_s( destination, count, count - 1, format_string, args );
 }
 #endif // #ifndef MASTER_GOLD
-
+#if 0
 #	pragma deprecated( strcpy, strcpy_s, sprintf, sprintf_s, strcat, strcat_s )
-
+#endif
 template <int count>
 inline errno_t xr_strcpy	( char (&destination)[count], LPCSTR source )
 {

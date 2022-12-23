@@ -394,7 +394,7 @@ bool CSceneObject::Validate(bool bMsg)
 void CSceneObject::ClearSurface()
 {
     for (CSurface* i : m_Surfaces) { i->OnDeviceDestroy(); xr_delete(i); }
-    m_Surfaces.clear_and_free();
+    m_Surfaces.clear();
     if (m_pReference)
     {
         for (size_t i = 0; i < m_pReference->SurfaceCount(); i++)

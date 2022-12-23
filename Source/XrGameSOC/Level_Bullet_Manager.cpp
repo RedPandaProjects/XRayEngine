@@ -191,7 +191,7 @@ void CBulletManager::UpdateWorkload()
 	m_dwTimeRemainder	=	delta_time%m_dwStepTime;
 	
 	rq_storage.r_clear			();
-	rq_spatial.clear_not_free	();
+	rq_spatial.clear	();
 
 	for(int k=m_Bullets.size()-1; k>=0; k--){
 		SBullet& bullet = m_Bullets[k];

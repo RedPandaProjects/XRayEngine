@@ -248,9 +248,9 @@ void EScene::OnFrame( float dT )
         {
 			ShowCursor(TRUE);
 			g_pGameLevel->IR_Release();
-			Device->seqParallel.clear_not_free();
+			Device->seqParallel.clear();
 			g_pGameLevel->net_Stop();
-			Device->seqParallel.clear_not_free();
+			Device->seqParallel.clear();
 			DEL_INSTANCE(g_pGameLevel);
 			DEL_INSTANCE(g_hud);
 			GetTool(OBJCLASS_SPAWNPOINT)->m_EditFlags.set(ESceneToolBase::flVisible, true);

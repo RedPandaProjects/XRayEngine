@@ -480,7 +480,7 @@ bool valid_saved_game_name(LPCSTR file_name)
 void get_files_list( xr_vector<shared_str>& files, LPCSTR dir, LPCSTR file_ext )
 {
 	VERIFY( dir && file_ext );
-	files.clear_not_free();
+	files.clear();
 	CLocatorAPI* RealFS = dynamic_cast<CLocatorAPI*>(xr_FS);
 	VERIFY(RealFS);
 	FS_Path* P = FS.get_path( dir );
@@ -736,7 +736,7 @@ class CCC_ClearLog : public IConsole_Command {
 public:
 	CCC_ClearLog(LPCSTR N) : IConsole_Command(N)  { bEmptyArgsHandled = true; };
 	virtual void Execute(LPCSTR) {
-		//LogFile->clear_not_free	();
+		//LogFile->clear	();
 		Msg						("* Log file has been cleaned successfully!");
 	}
 };

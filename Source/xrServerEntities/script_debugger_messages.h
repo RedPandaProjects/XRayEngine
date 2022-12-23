@@ -45,7 +45,7 @@ struct SScriptThread{
 
 
 #define DEBUGGER_MAIL_SLOT		"\\\\.\\mailslot\\script_debugger_mailslot"
-#define IDE_MAIL_SLOT			"\\\\.\\mailslot\\script_ide_mailslot"
+#define IDE_MAIL_SLOT			(char*)"\\\\.\\mailslot\\script_ide_mailslot"
 
 enum dbg_messages{
 	_DMSG_FIRST_MSG						=WM_USER+1,

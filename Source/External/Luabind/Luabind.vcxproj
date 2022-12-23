@@ -118,20 +118,13 @@
     <ClCompile Include="find_best_match.cpp" />
     <ClCompile Include="function.cpp" />
     <ClCompile Include="implicit_cast.cpp" />
-    <ClCompile Include="library_linkage.cpp" />
     <ClCompile Include="link_compatibility.cpp" />
-    <ClCompile Include="luabind_memory.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="object_rep.cpp" />
     <ClCompile Include="open.cpp" />
     <ClCompile Include="pcall.cpp" />
     <ClCompile Include="pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Shipping|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Shipping|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ref.cpp" />
     <ClCompile Include="scope.cpp" />
@@ -253,6 +246,8 @@
       <PreprocessorDefinitions>DEBUG;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <AdditionalIncludeDirectories>./;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

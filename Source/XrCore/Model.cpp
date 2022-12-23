@@ -491,7 +491,8 @@ static inline void UpdateModel( PPM_CONTEXT* MinContext)
     PPM_CONTEXT*        FSuccessor  = FoundState->Successor;
     PPM_CONTEXT*        pc          = MinContext->Suffix;
     PPM_CONTEXT*        pc1         = MaxContext;
-    
+    PPM_CONTEXT* Successor = nullptr;
+
     UINT ns1, ns, cf, sf, s0, FFreq=FoundState->Freq;
     BYTE Flag, sym, FSymbol=FoundState->Symbol;
 
@@ -531,7 +532,7 @@ static inline void UpdateModel( PPM_CONTEXT* MinContext)
 
     *pText++ = FSymbol;                     
 
-    PPM_CONTEXT*    Successor = (PPM_CONTEXT*) pText;
+    Successor = (PPM_CONTEXT*) pText;
     
     if (pText >= UnitsStart)                
         goto RESTART_MODEL;

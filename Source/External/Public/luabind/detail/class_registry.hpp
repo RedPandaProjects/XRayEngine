@@ -20,15 +20,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
 // OR OTHER DEALINGS IN THE SOFTWARE.
 
-
-#ifndef LUABIND_CLASS_REGISTRY_HPP_INCLUDED
-#define LUABIND_CLASS_REGISTRY_HPP_INCLUDED
+#pragma once
 
 #include <typeinfo>
 #include <map>
 
-#include "../config.hpp"
-#include "../open.hpp"
+#include <luabind/config.hpp>
+#include <luabind/open.hpp>
 
 namespace luabind { namespace detail
 {
@@ -106,6 +104,3 @@ namespace luabind { namespace detail
 	};
 
 }}
-
-#endif // LUABIND_CLASS_REGISTRY_HPP_INCLUDED
-

@@ -19,18 +19,22 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
 // OR OTHER DEALINGS IN THE SOFTWARE.
-
 #include "pch.h"
-
-#include "luabind/lua_include.hpp"
-
-#include "luabind/luabind.hpp"
-#include "luabind/detail/implicit_cast.hpp"
+#include <luabind/lua_include.hpp>
+#include <luabind/luabind.hpp>
+#include <luabind/detail/implicit_cast.hpp>
 
 using namespace luabind::detail;
 
 namespace luabind
 {
+	LUABIND_API lua_State* GetFuckingLuaStateByObject(object** pObj)
+	{
+		lua_State* L = (*pObj)->lua_state();
+		(*pObj)->pushvalue();
+		return L;
+	}
+
 	namespace detail
 	{
 
@@ -85,8 +89,6 @@ LUABIND_PROXY_ASSIGNMENT_OPERATOR(proxy_array_object)
 
 		// *************************************
 		// PROXY ARRAY OBJECT
-
-
 
 #define LUABIND_ARRAY_PROXY_ASSIGNMENT_OPERATOR(rhs)\
 		proxy_array_object& proxy_array_object::operator=(const rhs& p) \
@@ -211,9 +213,9 @@ LUABIND_RAW_PROXY_ASSIGNMENT_OPERATOR(proxy_array_object)
 		lua_State* L = lhs.lua_state(); \
 		lhs.pushvalue(); \
 		rhs.pushvalue(); \
-		bool result_ = lua_equal(L, -1, -2) != 0; \
+		bool result = lua_equal(L, -1, -2) != 0; \
 		lua_pop(L, 2); \
-		return result_; \
+		return result; \
 	}
 
 	LUABIND_DECLARE_OPERATOR(LUABIND_EQUALITY_OPERATOR)
@@ -254,9 +256,9 @@ LUABIND_RAW_PROXY_ASSIGNMENT_OPERATOR(proxy_array_object)
 		lua_State* L = lhs.lua_state(); \
 		lhs.pushvalue(); \
 		rhs.pushvalue(); \
-		bool result_ = lua_lessthan(L, -1, -2) != 0; \
+		bool result = lua_lessthan(L, -1, -2) != 0; \
 		lua_pop(L, 2); \
-		return result_; \
+		return result; \
 	}
 
 	LUABIND_DECLARE_OPERATOR(LUABIND_LESSTHAN_OPERATOR)
