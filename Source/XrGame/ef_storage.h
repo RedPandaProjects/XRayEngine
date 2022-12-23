@@ -7,7 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-
+#include "ai_space.h"
 #include "script_export_space.h"
 
 #define AI_MAX_EVALUATION_FUNCTION_COUNT	128
@@ -118,9 +118,9 @@ struct CEnemyFunction : public T {
 
 	virtual float	ffGetValue		()
 	{
-		if (ef_storage().non_alife().member())
-			return	(get_value(ef_storage().non_alife()));
-		return		(get_value(ef_storage().alife()));
+		if (ai().ef_storage().non_alife().member())
+			return	(get_value(ai().ef_storage().non_alife()));
+		return		(get_value(ai().ef_storage().alife()));
 	}
 };
 

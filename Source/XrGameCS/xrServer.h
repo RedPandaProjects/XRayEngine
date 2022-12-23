@@ -24,7 +24,7 @@ class CSE_Abstract;
 const u32	NET_Latency		= 50;		// time in (ms)
 
 // t-defs
-typedef xr_hash_map<u16, CSE_Abstract*>	xrS_entities;
+typedef x_unordered_map<u16, CSE_Abstract*>	xrS_entities;
 
 class xrClientData	: public IClient
 {
