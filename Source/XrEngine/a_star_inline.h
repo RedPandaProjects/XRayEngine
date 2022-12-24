@@ -243,7 +243,7 @@ IC	bool CSAStar::find				(_PathManager &path_manager)
 		// check if we reached limit
 		if (path_manager.is_limit_reached(i)) {
 			// so we reached limit, return failure
-			finalize	(path_manager);
+			this->finalize	(path_manager);
 			return		(false);
 		}
 		
@@ -251,13 +251,13 @@ IC	bool CSAStar::find				(_PathManager &path_manager)
 		// check if new step will get us success
 		if (step(path_manager)) {
 			// so this step reached the goal, return success
-			finalize	(path_manager);
+			this->finalize	(path_manager);
 			return		(true);
 		}
 	}
 
 	// so, opened list is empty, return failure
-	finalize			(path_manager);
+	this->finalize			(path_manager);
 	return				(false);
 }
 
