@@ -55,7 +55,7 @@ public:
 		m_cpp_delegate.bind(ptr_this, func_ptr);
 	}
 	
-	void bind(lua_object_type ptr_this, lua_function_type func_ptr)
+	void lbind(lua_object_type ptr_this, lua_function_type func_ptr)
 	{
 		m_lua_delegate.set(func_ptr, ptr_this);
 	}
@@ -113,7 +113,7 @@ private:
 			class_<type>(name_str)\
 				.def(						constructor<>())\
 				.def(						constructor<type::lua_object_type, type::lua_function_type>())\
-				.def("bind",				&type::bind)\
+				.def("bind",				&type::lbind)\
 				.def("clear",				&type::clear)\
 		];\
 	};
