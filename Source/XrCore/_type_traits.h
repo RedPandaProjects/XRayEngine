@@ -45,10 +45,7 @@ struct is_pm_classify<false>	{
 	struct _detail				{	enum { result = false };								};
 };
 template<typename T>	
-struct	is_polymorphic			{
-	enum						{
-		result	= is_pm_classify<is_class<T>::result> :: _detail<T> :: result
-	};
-};
+using	is_polymorphic	= std::is_polymorphic<T>;
+
 
 #endif

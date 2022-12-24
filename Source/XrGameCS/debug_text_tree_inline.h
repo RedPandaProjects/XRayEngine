@@ -5,7 +5,7 @@
 //	Author		: Lain
 //	Description : Text tree for onscreen debugging 
 ////////////////////////////////////////////////////////////////////////////
-
+#include "ai/monsters/state_defs.h"
 
 template <class Type1>
 void   text_tree::add_text (const Type1& a)

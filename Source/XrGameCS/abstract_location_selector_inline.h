@@ -9,6 +9,8 @@
 #pragma once
 
 #include "profiler.h"
+#include "ai_space.h"
+#include "graph_engine.h"
 
 #define TEMPLATE_SPECIALIZATION template <\
 	typename _Graph,\

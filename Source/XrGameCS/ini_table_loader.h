@@ -47,7 +47,7 @@ private:
 	template <typename T_CONVERT_ITEM>
         T_ITEM				convert			(LPCSTR)
 	{
-		STATIC_CHECK(false, Specialization_for_convert_in_CIni_Table_not_found);
+		//STATIC_CHECK(false, Specialization_for_convert_in_CIni_Table_not_found);
 		NODEFAULT;
 	}
 
@@ -121,7 +121,7 @@ typename CSIni_Table::ITEM_TABLE& CSIni_Table::table	()
 		(*m_pTable)[cur_index].resize(cur_table_width);
 		for(std::size_t j=0; j<cur_table_width; j++)
 		{
-			(*m_pTable)[cur_index][j] = convert<typename T_ITEM>(_GetItem(*(*i).second,(int)j,buffer));
+			(*m_pTable)[cur_index][j] = convert<T_ITEM>(_GetItem(*(*i).second,(int)j,buffer));
 		}
 	}
 

@@ -128,7 +128,7 @@ public:
 	virtual bool				GetInfo		(shared_str info_id, INFO_DATA&) const;
 
 	#ifdef DEBUG
-	void CInventoryOwner::DumpInfo() const;
+	void DumpInfo() const;
 	#endif
 
 	CInfoPortionWrapper			*m_known_info_registry;
@@ -184,7 +184,7 @@ public:
 	virtual bool			use_bolts				() const {return(true);}
 	virtual	void			spawn_supplies			();
 
-	CInventoryItem* CInventoryOwner::GetCurrentOutfit() const;
+	CInventoryItem* GetCurrentOutfit() const;
 
 	//////////////////////////////////////////////////////////////////////////
 	// связь со скриптами

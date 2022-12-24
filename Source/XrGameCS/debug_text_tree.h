@@ -81,7 +81,6 @@ void   draw_text_tree (text_tree& tree,
 
 void   log_text_tree  (text_tree& tree);
 
-#include "debug_text_tree_inline.h"
 
 } // namespace debug
 
@@ -102,7 +101,9 @@ IC	xr_string __cdecl	make_xrstr (s32   d) { return make_xrstr("%i", d); }
 IC	xr_string __cdecl	make_xrstr (u32   d) { return make_xrstr("%u", d); }
 IC	xr_string __cdecl	make_xrstr (Fvector3 v) { return make_xrstr("[%f][%f][%f]", v.x, v.y, v.z); }
 IC	xr_string __cdecl	make_xrstr (const xr_string& s) { return s; }
-
+namespace debug {
+#include "debug_text_tree_inline.h"
+}
 
 #endif // defined(AI_DEBUG_TEXT_TREE_H_INCLUDED)
 

@@ -101,15 +101,7 @@
 		};
 
 		template <typename T>
-		struct is_void {
-			template <typename P>
-			struct select		{enum { value = false}; };
-			
-			template <>
-			struct select<void> {enum { value = true}; };
-			
-			enum { value = select<T>::value};
-		};
+		using is_void = std::is_void<T>;
 
 		template <typename T> struct is_const{
 			enum { value = false}; 
