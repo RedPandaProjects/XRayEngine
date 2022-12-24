@@ -25,32 +25,33 @@ void CStateMonsterAttackRunAbstract::execute()
 	
 	u32 const level_vertex				=	object->EnemyMan.get_enemy()->ai_location().level_vertex_id();
 	Fvector const level_pos				=	ai().level_graph().vertex_position(level_vertex);
-	object->path().set_target_point			(level_pos, level_vertex);
+	this->object->path().set_target_point			(level_pos, level_vertex);
 
 	if ( level_vertex == object->ai_location().level_vertex_id() )
-		object->set_action					(ACT_STAND_IDLE);
+		this->object->set_action					(ACT_STAND_IDLE);
 	else
-		object->set_action					(ACT_RUN);
+		this->object->set_action					(ACT_RUN);
 
-	object->path().set_rebuild_time			(object->get_attack_rebuild_time());
-	object->path().set_use_covers			();
-	object->path().set_cover_params			(0.1f, 30.f, 1.f, 30.f);
-	object->path().set_try_min_time			(false);
-	object->set_state_sound					(MonsterSound::eMonsterSoundAggressive);
-	object->path().extrapolate_path			(true);
+	this->object->path().set_rebuild_time			(this->object->get_attack_rebuild_time());
+	this->object->path().set_use_covers			();
+	this->object->path().set_cover_params			(0.1f, 30.f, 1.f, 30.f);
+	this->object->path().set_try_min_time			(false);
+	this->object->set_state_sound					(MonsterSound::eMonsterSoundAggressive);
+	this->object->path().extrapolate_path			(true);
 	
 	// обработать squad инфо	
-	object->path().set_use_dest_orient		(false);
+	this->object->path().set_use_dest_orient		(false);
 
-	CMonsterSquad *squad	= monster_squad().get_squad(object);
-	if (squad && squad->SquadActive()) {
+	CMonsterSquad *squad	= monster_squad().get_squad(this->object);
+	if (squad && squad->SquadActive())
+	{
 		// Получить команду
 		SSquadCommand command;
 		squad->GetCommand(object, command);
 		
 		if (command.type == SC_ATTACK) {
-			object->path().set_use_dest_orient	(true);
-			object->path().set_dest_direction	(command.direction);
+			this->object->path().set_use_dest_orient	(true);
+			this->object->path().set_dest_direction	(command.direction);
 		} 
 	}
 }

@@ -5,7 +5,7 @@
 //	Author		: Dmitriy Iassenev
 //	Description : Cover manager class inline functions
 ////////////////////////////////////////////////////////////////////////////
-
+#include "cover_point.h"
 #pragma once
 
 IC	CCoverManager::CPointQuadTree &CCoverManager::covers		() const
