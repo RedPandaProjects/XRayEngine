@@ -146,11 +146,15 @@ void CObject::setVisible			(BOOL _visible)
 		R_ASSERT(UnrealProxy == nullptr);
 		Props.bVisible							= 1;
 		if (renderable.visual)	spatial.type	|=	STYPE_RENDERABLE;
-		UnrealProxy = g_Engine->CreateUnrealProxy(this);
-		if (renderable.visual)
+		if(g_pGameLevel->bReady)
 		{
-			UnrealProxy->Attach(renderable.visual);
+			UnrealProxy = g_Engine->CreateUnrealProxy(this);
+			if (renderable.visual)
+			{
+				UnrealProxy->Attach(renderable.visual);
+			}
 		}
+		
 	
 
 	}

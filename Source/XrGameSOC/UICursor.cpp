@@ -79,19 +79,16 @@ Fvector2 CUICursor::GetCursorPositionDelta()
 	return res_delta;
 }
 
-void CUICursor::UpdateCursorPosition()
+void CUICursor::UpdateCursorPosition(int _dx, int _dy)
 {
 
-	POINT		p;
-	BOOL r		= GetCursorPos(&p);
-	R_ASSERT	(r);
-
+	Fvector2	p;
 	vPrevPos = vPos;
-
-	vPos.x			= (float)p.x * (UI_BASE_WIDTH/(float)Device->dwWidth);
-	vPos.y			= (float)p.y * (UI_BASE_HEIGHT/(float)Device->dwHeight);
-	clamp			(vPos.x, 0.f, UI_BASE_WIDTH);
-	clamp			(vPos.y, 0.f, UI_BASE_HEIGHT);
+	float sens = 1.0f;
+	vPos.x += _dx * sens;
+	vPos.y += _dy * sens;
+	clamp(vPos.x, 0.f, UI_BASE_WIDTH);
+	clamp(vPos.y, 0.f, UI_BASE_HEIGHT);
 }
 
 void CUICursor::SetUICursorPosition(Fvector2 pos)
