@@ -7,6 +7,8 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include "ai_space.h"
+#include "level_graph.h"
 
 IC	CSpaceRestrictionBridge::CSpaceRestrictionBridge		(CSpaceRestrictionBase *object)
 {
@@ -32,14 +34,8 @@ IC	u32	CSpaceRestrictionBridge::accessible_nearest	(T &restriction, const Fvecto
 	u32								selected = u32(-1);
 	xr_vector<u32>::const_iterator	I = restriction->accessible_neighbour_border(restriction,out_restriction).begin();
 	xr_vector<u32>::const_iterator	E = restriction->accessible_neighbour_border(restriction,out_restriction).end();
-	for ( ; I != E; ++I) {
-		VERIFY2						(
-			ai().level_graph().valid_vertex_id(*I),
-			make_string(
-				"%d",
-				*I
-			)
-		);
+	for ( ; I != E; ++I) 
+	{
 		float						distance_sqr = ai().level_graph().vertex_position(*I).distance_to_sqr(position);
 		if (distance_sqr < min_dist_sqr) {
 			min_dist_sqr			= distance_sqr;
@@ -59,7 +55,7 @@ IC	u32	CSpaceRestrictionBridge::accessible_nearest	(T &restriction, const Fvecto
 	{
 		min_dist_sqr = flt_max;
 		u32	new_selected = u32(-1);
-		ILevelGraph::const_iterator	I, E;
+		typename ILevelGraph::const_iterator	I, E;
 		ai().level_graph().begin(selected,I,E);
 		for ( ; I != E; ++I) {
 			u32	current = ai().level_graph().value(selected,I);

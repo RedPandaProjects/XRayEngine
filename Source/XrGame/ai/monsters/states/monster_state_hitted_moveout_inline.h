@@ -20,7 +20,7 @@ TEMPLATE_SPECIALIZATION
 void CStateMonsterHittedMoveOutAbstract::execute()
 {
 	// проверить на завершение пути
-	if (this->object->control().path_builder().detail().time_path_built() > time_state_started)
+	if (this->object->control().path_builder().detail().time_path_built() > this->time_state_started)
 	{
 		if (this->object->control().path_builder().is_path_end(DIST_TO_PATH_END))
 			select_target		();
@@ -55,7 +55,7 @@ bool CStateMonsterHittedMoveOutAbstract::check_completion()
 TEMPLATE_SPECIALIZATION
 void CStateMonsterHittedMoveOutAbstract::select_target()
 {
-	if (!this->object->GetCoverCloseToPoint(object->HitMemory.get_last_hit_position(), 10.f, 20.f, 0.f, 15.f, target.position, target.node)){
+	if (!this->object->GetCoverCloseToPoint(this->object->HitMemory.get_last_hit_position(), 10.f, 20.f, 0.f, 15.f, target.position, target.node)){
 		target.node = u32(-1);
 	}
 }

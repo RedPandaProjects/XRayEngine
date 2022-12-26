@@ -39,7 +39,7 @@ void CStateMonsterSquadRestFollowAbstract::initialize()
 TEMPLATE_SPECIALIZATION
 void CStateMonsterSquadRestFollowAbstract::reselect_state()
 {
-	SSquadCommand &command = monster_squad().get_squad(this->object)->GetCommand(object);
+	SSquadCommand &command = monster_squad().get_squad(this->object)->GetCommand(this->object);
 	if (command.position.distance_to(this->object->Position()) < Random.randF(STOP_DISTANCE, STAY_DISTANCE)) {
 		this->select_state(eStateSquad_RestFollow_Idle);
 	} else {

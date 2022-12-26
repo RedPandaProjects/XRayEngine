@@ -19,7 +19,7 @@ TEMPLATE_SPECIALIZATION
 void CStateMonsterRestMoveToHomePointAbstract::execute()
 {
 	this->object->path().set_target_point		(ai().level_graph().vertex_position(m_target_node), m_target_node);
-	this->object->anim().accel_activate		(EAccelType(object->Home->is_aggressive() ? eAT_Aggressive : eAT_Calm));
+	this->object->anim().accel_activate		(EAccelType(this->object->Home->is_aggressive() ? eAT_Aggressive : eAT_Calm));
 	this->object->anim().accel_set_braking	(true);
 	this->object->path().set_rebuild_time		(0);
 	this->object->path().set_distance_to_end	(0.f);
