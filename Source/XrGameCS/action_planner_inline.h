@@ -125,7 +125,7 @@ IC	void CPlanner::finalize							()
 TEMPLATE_SPECIALIZATION
 IC	typename CPlanner::COperator &CPlanner::action	(const _action_id_type &action_id)
 {
-	return					(*get_operator(action_id));
+	return					(*this->get_operator(action_id));
 }
 
 TEMPLATE_SPECIALIZATION
