@@ -25,14 +25,14 @@
 #	include "operator_abstract.h"
 #endif // AI_COMPILER
 
-namespace hash_fixed_vertex_manager {
-	
-IC	u32 to_u32	(GraphEngineSpace::CWorldState const &other)
-{
-	return	(other.hash_value());
-}
-
-} // namespace hash_fixed_vertex_manager
+//namespace hash_fixed_vertex_manager {
+//	
+//IC	u32 to_u32	(GraphEngineSpace::CWorldState const &other)
+//{
+//	return	(other.hash_value());
+//}
+//
+//} // namespace hash_fixed_vertex_manager
 
 using namespace GraphEngineSpace;
 

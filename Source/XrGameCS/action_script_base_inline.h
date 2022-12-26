@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include "script_game_object.h"
 
 #define TEMPLATE_SPECIALIZATION template <typename _object_type>
 #define CScriptBaseAction		CActionScriptBase<_object_type>
@@ -42,7 +43,7 @@ void CScriptBaseAction::setup		(CScriptGameObject *object, CPropertyStorage *sto
 {
 	VERIFY				(object);
 	inherited::setup	(object,storage);
-	setup				(smart_cast<_object_type*>(&this->object->object()),storage);
+	setup				(smart_cast<_object_type*>(&object->object()),storage);
 }
 
 #undef TEMPLATE_SPECIALIZATION

@@ -11,7 +11,10 @@
 #include "property_evaluator.h"
 
 template <typename _object_type>
-class CPropertyEvaluatorConst : public CPropertyEvaluator<_object_type> {
+class CPropertyEvaluatorConst : public CPropertyEvaluator<_object_type> 
+{
+public:
+	using _value_type = CPropertyEvaluator<_object_type>::_value_type;
 protected:
 	typedef CPropertyEvaluator<_object_type>		inherited;
 
