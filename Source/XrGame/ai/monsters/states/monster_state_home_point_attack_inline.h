@@ -6,7 +6,7 @@
 #include "../../../cover_point.h"
 #include "../monster_cover_manager.h"
 #include "../monster_home.h"
-
+#include "monster_state_attack_on_run.h"
 
 #define TEMPLATE_SPECIALIZATION template <\
 	typename _Object\
@@ -56,7 +56,7 @@ void CStateMonsterAttackMoveToHomePointAbstract::select_target()
 		}
 	}
 
-	m_selected_target_time				= this->current_time();
+	m_selected_target_time				= current_time();
 
 	if ( m_target_node == u32(-1) )
 		this->object->control().path_builder().get_node_in_radius(self_node, 5, 25, 10, m_target_node);
@@ -84,7 +84,7 @@ void CStateMonsterAttackMoveToHomePointAbstract::execute()
 {
 	if ( m_target_node == u32(-1) )
 	{
-		if (this->current_time() > m_selected_target_time + 500 )
+		if (current_time() > m_selected_target_time + 500 )
 			select_target					();
 	}
 	else

@@ -22,19 +22,19 @@
 TEMPLATE_SPECIALIZATION
 CStateGroupAttackAbstract::CStateGroupAttack(_Object *obj) : inherited(obj)
 {
-	add_state	(eStateAttack_Run,				xr_new<CStateGroupAttackRun<_Object> >				(obj));
-	add_state	(eStateAttack_Melee,			xr_new<CStateMonsterAttackMelee<_Object> >			(obj));
-	add_state	(eStateAttack_RunAttack,		xr_new<CStateMonsterAttackRunAttack<_Object> >		(obj));
-	add_state	(eStateAttack_Attack_On_Run,	xr_new<CStateMonsterAttackOnRun<_Object> >			(obj));
-	add_state	(eStateAttack_RunAway,			xr_new<CStateMonsterHideFromPoint<_Object> >		(obj));
-	add_state	(eStateAttack_FindEnemy,		xr_new<CStateMonsterFindEnemy<_Object> >			(obj));	
-	add_state	(eStateAttack_MoveToHomePoint,	xr_new<CStateMonsterAttackMoveToHomePoint<_Object> >(obj));	
+	this->add_state	(eStateAttack_Run,				xr_new<CStateGroupAttackRun<_Object> >				(obj));
+	this->add_state	(eStateAttack_Melee,			xr_new<CStateMonsterAttackMelee<_Object> >			(obj));
+	this->add_state	(eStateAttack_RunAttack,		xr_new<CStateMonsterAttackRunAttack<_Object> >		(obj));
+	this->add_state	(eStateAttack_Attack_On_Run,	xr_new<CStateMonsterAttackOnRun<_Object> >			(obj));
+	this->add_state	(eStateAttack_RunAway,			xr_new<CStateMonsterHideFromPoint<_Object> >		(obj));
+	this->add_state	(eStateAttack_FindEnemy,		xr_new<CStateMonsterFindEnemy<_Object> >			(obj));	
+	this->add_state	(eStateAttack_MoveToHomePoint,	xr_new<CStateMonsterAttackMoveToHomePoint<_Object> >(obj));	
 	
-	add_state	(eStateCustom,					xr_new<CStateGroupSquadMoveToRadius<_Object> >		(obj));
-	add_state	(eStateAttack_AttackHidden,		xr_new<CStateGroupSquadMoveToRadius<_Object> >		(obj));
-	add_state	(eStateAttackCamp,				xr_new<CStateGroupSquadMoveToRadius<_Object> >		(obj));
-	add_state	(eStateAttack_Steal,			xr_new<CStateGroupSquadMoveToRadiusEx<_Object> >		(obj));
-	add_state	(eStateAttack_ControlFire,		xr_new<CStateCustomGroup<_Object> >					(obj));
+	this->add_state	(eStateCustom,					xr_new<CStateGroupSquadMoveToRadius<_Object> >		(obj));
+	this->add_state	(eStateAttack_AttackHidden,		xr_new<CStateGroupSquadMoveToRadius<_Object> >		(obj));
+	this->add_state	(eStateAttackCamp,				xr_new<CStateGroupSquadMoveToRadius<_Object> >		(obj));
+	this->add_state	(eStateAttack_Steal,			xr_new<CStateGroupSquadMoveToRadiusEx<_Object> >		(obj));
+	this->add_state	(eStateAttack_ControlFire,		xr_new<CStateCustomGroup<_Object> >					(obj));
 }
 
 TEMPLATE_SPECIALIZATION
