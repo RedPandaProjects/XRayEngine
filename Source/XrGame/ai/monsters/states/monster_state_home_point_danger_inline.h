@@ -6,7 +6,8 @@
 #include "../../../cover_point.h"
 #include "../monster_cover_manager.h"
 #include "../monster_home.h"
-
+#include "../ai_monster_squad.h"
+#include "../ai_monster_squad_manager.h"
 
 #define TEMPLATE_SPECIALIZATION template <\
 	typename _Object\
@@ -113,7 +114,7 @@ void CStateMonsterDangerMoveToHomePointAbstract::reselect_state()
 TEMPLATE_SPECIALIZATION
 void CStateMonsterDangerMoveToHomePointAbstract::setup_substates()
 {
-	state_ptr state = get_state_current();
+	state_ptr state = this->get_state_current();
 
 	if (this->current_substate == eStatePanic_HomePoint_Hide) {
 		SStateDataMoveToPointEx data;
@@ -139,7 +140,7 @@ void CStateMonsterDangerMoveToHomePointAbstract::setup_substates()
 		SStateDataLookToPoint	data;
 
 		Fvector dir;
-		object->CoverMan->less_cover_direction(dir);
+		this->object->CoverMan->less_cover_direction(dir);
 
 		data.point.mad			(this->object->Position(),dir,10.f);
 		data.action.action		= ACT_STAND_IDLE;

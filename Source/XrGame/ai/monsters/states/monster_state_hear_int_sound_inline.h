@@ -1,5 +1,6 @@
 #pragma once
-
+#include "ai_space.h"
+#include "level_graph.h"
 #include "state_custom_action_look.h"
 
 #define TEMPLATE_SPECIALIZATION template <\
@@ -52,15 +53,15 @@ void CStateMonsterHearInterestingSoundAbstract::setup_substates()
 		return;
 	}
 
-	if (current_substate == eStateHearInterestingSound_LookAround) {
+	if (this->current_substate == eStateHearInterestingSound_LookAround) {
 		SStateDataActionLook	data;
 		data.action				= ACT_LOOK_AROUND;
 		data.sound_type			= MonsterSound::eMonsterSoundIdle;
-		data.sound_delay		= object->db().m_dwIdleSndDelay;
+		data.sound_delay		= this->object->db().m_dwIdleSndDelay;
 		
 		Fvector dir;
-		object->CoverMan->less_cover_direction(dir);
-		data.point.mad			(object->Position(),dir,10.f);
+		this->object->CoverMan->less_cover_direction(dir);
+		data.point.mad			(this->object->Position(),dir,10.f);
 
 		state->fill_data_with(&data, sizeof(SStateDataActionLook));
 
@@ -71,7 +72,7 @@ void CStateMonsterHearInterestingSoundAbstract::setup_substates()
 TEMPLATE_SPECIALIZATION
 Fvector	CStateMonsterHearInterestingSoundAbstract::get_target_position()
 {
-	Fvector snd_pos = object->SoundMemory.GetSound().position;
+	Fvector snd_pos = this->object->SoundMemory.GetSound().position;
 	if (!this->object->Home->has_home() )
 		return snd_pos;
 

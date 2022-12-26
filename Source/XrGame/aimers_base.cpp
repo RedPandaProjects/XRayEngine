@@ -7,10 +7,10 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
-#include "aimers_base.h"
 #include "gameobject.h"
 #include "kinematics.h"
 #include "animation_movement_controller.h"
+#include "aimers_base.h"
 
 using aimers::base;
 

@@ -8,10 +8,7 @@
 
 #pragma once
 
-IC	u32 to_u32(GraphEngineSpace::CWorldState const& other)
-{
-	return	(other.hash_value());
-}
+#define to_u32(other) (other.hash_value())
 
 template <
 	typename _path_id_type,

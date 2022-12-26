@@ -40,7 +40,7 @@ TEMPLATE_SPECIALIZATION
 bool CStateMonsterSmartTerrainTaskGraphWalkAbstract::check_completion()
 {
 	// if we get to the graph point - work complete
-	if (object->ai_location().game_vertex_id() == m_task->game_vertex_id()) return true;
+	if (this->object->ai_location().game_vertex_id() == m_task->game_vertex_id()) return true;
 	return false;
 }
 

@@ -13,21 +13,21 @@ TEMPLATE_SPECIALIZATION
 void CStateMonsterAttackRunAbstract::initialize()
 {
 	inherited::initialize();
-	object->path().prepare_builder	();	
+	this->object->path().prepare_builder	();
 }
 
 TEMPLATE_SPECIALIZATION
 void CStateMonsterAttackRunAbstract::execute()
 {
 	// установка параметров функциональных блоков
-	object->anim().accel_activate			(eAT_Aggressive);
-	object->anim().accel_set_braking		(false);
+	this->object->anim().accel_activate			(eAT_Aggressive);
+	this->object->anim().accel_set_braking		(false);
 	
-	u32 const level_vertex				=	object->EnemyMan.get_enemy()->ai_location().level_vertex_id();
+	u32 const level_vertex				= this->object->EnemyMan.get_enemy()->ai_location().level_vertex_id();
 	Fvector const level_pos				=	ai().level_graph().vertex_position(level_vertex);
 	this->object->path().set_target_point			(level_pos, level_vertex);
 
-	if ( level_vertex == object->ai_location().level_vertex_id() )
+	if ( level_vertex == this->object->ai_location().level_vertex_id() )
 		this->object->set_action					(ACT_STAND_IDLE);
 	else
 		this->object->set_action					(ACT_RUN);
@@ -47,7 +47,7 @@ void CStateMonsterAttackRunAbstract::execute()
 	{
 		// Получить команду
 		SSquadCommand command;
-		squad->GetCommand(object, command);
+		squad->GetCommand(this->object, command);
 		
 		if (command.type == SC_ATTACK) {
 			this->object->path().set_use_dest_orient	(true);
@@ -60,21 +60,21 @@ TEMPLATE_SPECIALIZATION
 void CStateMonsterAttackRunAbstract::finalize()
 {
 	inherited::finalize					();
-	object->path().extrapolate_path	(false);
+	this->object->path().extrapolate_path	(false);
 }
 
 TEMPLATE_SPECIALIZATION
 void CStateMonsterAttackRunAbstract::critical_finalize()
 {
 	inherited::critical_finalize		();
-	object->path().extrapolate_path	(false);
+	this->object->path().extrapolate_path	(false);
 }
 
 TEMPLATE_SPECIALIZATION
 bool CStateMonsterAttackRunAbstract::check_completion()
 {
-	float m_fDistMin	= object->MeleeChecker.get_min_distance		();
-	float dist			= object->MeleeChecker.distance_to_enemy	(object->EnemyMan.get_enemy());
+	float m_fDistMin	= this->object->MeleeChecker.get_min_distance		();
+	float dist			= this->object->MeleeChecker.distance_to_enemy	(this->object->EnemyMan.get_enemy());
 
 	if (dist < m_fDistMin)	
 		return true;
@@ -85,8 +85,8 @@ bool CStateMonsterAttackRunAbstract::check_completion()
 TEMPLATE_SPECIALIZATION
 bool CStateMonsterAttackRunAbstract::check_start_conditions()
 {
-	float m_fDistMax	= object->MeleeChecker.get_max_distance		();
-	float dist			= object->MeleeChecker.distance_to_enemy	(object->EnemyMan.get_enemy());
+	float m_fDistMax	= this->object->MeleeChecker.get_max_distance		();
+	float dist			= this->object->MeleeChecker.distance_to_enemy	(this->object->EnemyMan.get_enemy());
 
 	if (dist > m_fDistMax)	return true;
 

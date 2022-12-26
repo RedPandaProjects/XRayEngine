@@ -7,7 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-
+#include "space_restriction.h"
 #ifdef DEBUG
 IC	const CSpaceRestrictionManager::SPACE_RESTRICTIONS &CSpaceRestrictionManager::restrictions	() const
 {
