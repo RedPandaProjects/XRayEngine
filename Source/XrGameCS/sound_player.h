@@ -45,8 +45,8 @@ public:
 	};
 
 	struct CSoundCollectionParamsFull : 
-		public CSoundParams,
-		public CSoundCollectionParams
+		public CSoundPlayer::CSoundParams,
+		public CSoundPlayer::CSoundCollectionParams
 	{
 		CSound_UserDataPtr	m_data;
 	};

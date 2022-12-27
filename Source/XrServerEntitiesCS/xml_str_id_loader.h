@@ -6,6 +6,7 @@
 #	include "../XrGameCS/ui/xrUIXmlParser.h"
 #	include "../XrEngine/object_broker.h"
 #endif // XRGAME_EXPORTS
+#include "../XrEngine/object_destroyer.h"
 
 
 //T_ID    - уникальный текстовый идентификатор (аттрибут id в XML файле)

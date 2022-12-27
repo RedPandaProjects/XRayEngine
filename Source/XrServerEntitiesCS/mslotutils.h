@@ -73,7 +73,7 @@ public:
 	};
 };
 
-inline HANDLE CreateMailSlotByName(LPSTR slotName)
+inline HANDLE CreateMailSlotByName(const char* slotName)
 {
   HANDLE  hSlot = CreateMailslot(slotName, 
         0,                             // no maximum message size 

@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include "graph_engine_space.h"
 
 #define TEMPLATE_SPECIALIZATION template<\
 	typename _operator_condition,\

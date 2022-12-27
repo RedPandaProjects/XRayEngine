@@ -1614,7 +1614,7 @@ bool game_cl_CaptureTheArtefact::CanActivateArtefact()	const
 	return m_bCanActivateArtefact;
 }
 
-char* game_cl_CaptureTheArtefact::getTeamSection(int Team)
+const char* game_cl_CaptureTheArtefact::getTeamSection(int Team)
 {
 		switch (Team)
 	{

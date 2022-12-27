@@ -8,6 +8,7 @@
 
 #pragma once
 #include <queue>
+#include "object_interfaces.h"
 
 struct CDestroyer {
 	IC	static void delete_data(LPCSTR data)

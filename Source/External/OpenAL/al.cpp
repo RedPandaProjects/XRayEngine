@@ -28,7 +28,7 @@
 
 typedef struct ALfunction_struct
 {
-	ALchar		*funcName;
+	const ALchar		*funcName;
 	ALvoid		*address;
 } ALfunction;
 

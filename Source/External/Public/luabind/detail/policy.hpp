@@ -34,6 +34,7 @@
 #include <luabind/detail/class_registry.hpp>
 #include <luabind/detail/class_cache.hpp>
 #include <luabind/detail/implicit_cast.hpp>
+#include <luabind/detail/object_rep.hpp>
 
 namespace luabind
 {

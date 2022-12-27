@@ -249,7 +249,6 @@ IC int dcTriListCollider::dSortTriPrimitiveCollide (
 	}
 
 	//if(intersect) ret=0;
-	xr_vector<Triangle>::iterator i;
 
 	if(intersect)
 	{
@@ -258,7 +257,7 @@ IC int dcTriListCollider::dSortTriPrimitiveCollide (
 	{
 		bool include = true;
 		if(no_last_pos)
-			for(i=pos_tries.begin();pos_tries.end() != i;++i)
+			for(auto i=pos_tries.begin();pos_tries.end() != i;++i)
 			{	
 				VERIFY(neg_tri.T);
 				if(TriContainPoint(
@@ -313,7 +312,7 @@ IC int dcTriListCollider::dSortTriPrimitiveCollide (
 
 		bool include = true;
 		if(no_last_pos)
-			for(i=pos_tries.begin();pos_tries.end() != i;++i){
+			for(auto i=pos_tries.begin();pos_tries.end() != i;++i){
 				VERIFY(b_neg_tri.T&&b_neg_tri.dist!=-dInfinity);
 				if(
 					!((dDOT(b_neg_tri.norm,(dReal*)&V_array[i->T->verts[0]])-b_neg_tri.pos)>0.f)||

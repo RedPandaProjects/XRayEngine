@@ -122,7 +122,7 @@ private:
 
 
 
-	s32	GetMoneyAmount(const shared_str& caSection, char* caMoneyStr);
+	s32 GetMoneyAmount(const shared_str& caSection, const char* caMoneyStr);
 	void OnPlayerChangeSkin(ClientID id_who, s8 skin);
 	void OnPlayerChangeTeam(game_PlayerState *playerState, s8 team);
 	void ProcessPlayerDeath(game_PlayerState *playerState);
