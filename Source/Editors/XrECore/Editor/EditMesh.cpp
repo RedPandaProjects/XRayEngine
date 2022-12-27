@@ -221,19 +221,21 @@ void CEditableMesh::GenerateVNormals(const Fmatrix* parent_xform)
 	{
 		for (u32 f_i = 0; f_i < m_FaceCount; f_i++)
 		{
+			u32 sg = m_SmoothGroups[f_i];
 
 			for (int k = 0; k < 3; k++)
 			{
 				Fvector& N = m_VertexNormals[f_i * 3 + k];
 				xr_vector<s32>& a_lst = (*m_Adjs)[m_Faces[f_i].pv[k].pindex];
 
-				auto face_adj_it = std::find(a_lst.begin(), a_lst.end(), f_i);
-				VERIFY(face_adj_it != a_lst.end());
-				//
-
-				using  iterate_adj = itterate_adjacents< itterate_adjacents_params_dynamic<st_FaceVert> >;
-				iterate_adj::recurse_tri_params p(N,m_SmoothGroups, m_FaceNormals,a_lst, m_Faces, m_FaceCount);
-				iterate_adj::RecurseTri(face_adj_it - a_lst.begin(), p);
+				N.set(0, 0, 0);
+				for (IntIt i_it = a_lst.begin(); i_it != a_lst.end(); i_it++)
+				{
+					if (sg & m_SmoothGroups[*i_it])
+					{	
+						N.add(m_FaceNormals[*i_it]);
+					}
+				}
 				float len = N.magnitude();
 				if (len > EPS_S)
 				{
@@ -241,7 +243,7 @@ void CEditableMesh::GenerateVNormals(const Fmatrix* parent_xform)
 				}
 				else
 				{
-					Msg("!Invalid smooth group found (Maya type). Object: '%s'. Vertex: [%3.2f, %3.2f, %3.2f]", m_Parent->GetName(), VPUSH(m_Vertices[m_Faces[f_i].pv[k].pindex]));
+					Msg("! Invalid smooth group found (Maya type). Object: '%s'. Vertex: [%3.2f, %3.2f, %3.2f]", m_Parent->GetName(), VPUSH(m_Vertices[m_Faces[f_i].pv[k].pindex]));
 					N.set(m_FaceNormals[a_lst.front()]);
 				}
 
@@ -251,36 +253,66 @@ void CEditableMesh::GenerateVNormals(const Fmatrix* parent_xform)
 	}
 	else
 	{
+		float CosA = cosf(deg2rad(60.f));
+
 		for (u32 f_i = 0; f_i < m_FaceCount; f_i++)
 		{
-
+			u32 sg = m_SmoothGroups[f_i];
+			Fvector& FN = m_FaceNormals[f_i];
 			for (int k = 0; k < 3; k++)
 			{
 				Fvector& N = m_VertexNormals[f_i * 3 + k];
-				xr_vector<s32>& a_lst = (*m_Adjs)[m_Faces[f_i].pv[k].pindex];
-
-				auto face_adj_it = std::find(a_lst.begin(), a_lst.end(), f_i);
-				VERIFY(face_adj_it != a_lst.end());
-				//
-
-				using  iterate_adj = itterate_adjacents< itterate_adjacents_params_dynamic_without_smoothgroups<st_FaceVert> >;
-				iterate_adj::recurse_tri_params p(N, m_FaceNormals, a_lst, m_Faces, m_FaceCount, cosf(deg2rad(60.f)));
-				iterate_adj::RecurseTri(face_adj_it - a_lst.begin(), p);
-				float len = N.magnitude();
-				if (len > EPS_S)
+				if (sg != -1)
 				{
-					N.div(len);
+					N.set(0, 0, 0);
+					IntVec& a_lst = (*m_Adjs)[m_Faces[f_i].pv[k].pindex];
+					VERIFY(a_lst.size());
+					for (IntIt i_it = a_lst.begin(); i_it != a_lst.end(); i_it++)
+					{
+						if (sg != m_SmoothGroups[*i_it])
+							continue;
+						N.add(m_FaceNormals[*i_it]);
+					}
+					float len = N.magnitude();
+					if (len > EPS_S)
+					{
+						N.div(len);
+					}
+					else
+					{
+						Msg("! Invalid smooth group found (Max type). Object: '%s'. Vertex: [%3.2f, %3.2f, %3.2f]", m_Parent->GetName(), VPUSH(m_Vertices[m_Faces[f_i].pv[k].pindex]));
+						N.set(m_FaceNormals[a_lst.front()]);
+					}
 				}
 				else
 				{
-					Msg("!Invalid smooth group found (Maya type). Object: '%s'. Vertex: [%3.2f, %3.2f, %3.2f]", m_Parent->GetName(), VPUSH(m_Vertices[m_Faces[f_i].pv[k].pindex]));
-					N.set(m_FaceNormals[a_lst.front()]);
+					Fvector& N = m_VertexNormals[f_i * 3 + k];
+					N.set(0, 0, 0);
+					xr_vector<s32>& a_lst = (*m_Adjs)[m_Faces[f_i].pv[k].pindex];
+					for (s32& FaceNormalID : a_lst)
+					{
+						Fvector& FaceNormal = m_FaceNormals[FaceNormalID];
+						if (CosA <= FaceNormal.dotproduct(FN))
+						{
+							N.add(FaceNormal);
+						}
+					}
+					float len = N.magnitude();
+					if (len > EPS_S)
+					{
+						N.div(len);
+					}
+					else
+					{
+						Msg("! Invalid normal. Object: '%s'. Vertex: [%3.2f, %3.2f, %3.2f]", m_Parent->GetName(), VPUSH(m_Vertices[m_Faces[f_i].pv[k].pindex]));
+						N.set(m_FaceNormals[a_lst.front()]);
+					}
+
 				}
 			}
 		}
+
 	}
-
-
 	UnloadFNormals();
 	UnloadAdjacency();
 }
@@ -485,7 +517,12 @@ void CEditableMesh::GenerateAdjacency()
     m_Adjs->resize	(m_VertCount);
 //.	Log				(".. Update adjacency");
 	for (u32 f_id=0; f_id<m_FaceCount; f_id++)
-		for (int k=0; k<3; k++) (*m_Adjs)[m_Faces[f_id].pv[k].pindex].push_back(f_id);
+	{
+		for (int k=0; k<3; k++) 
+		{
+			(*m_Adjs)[m_Faces[f_id].pv[k].pindex].push_back(f_id);
+		}
+	}
 }
 
 CSurface*	CEditableMesh::GetSurfaceByFaceID(u32 fid)
