@@ -108,16 +108,16 @@ public:
 
 	virtual		void				OnEvent					(NET_Packet &tNetPacket, u16 type, u32 time, ClientID sender );
 
-	virtual		void				OnTeamScore				(u32 /**team/**/, bool)						;		// команда выиграла
-	virtual		void				OnTeamsInDraw			()								{};		// ничья
+	virtual		void				OnTeamScore				(u32 /**team/**/, bool)						;		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	virtual		void				OnTeamsInDraw			()								{};		// пїЅпїЅпїЅпїЅпїЅ
 
 	// Events
-	virtual		void				OnRoundStart			();												// старт раунда
-	virtual		void				OnRoundEnd				();	// round_end_reason							// конец раунда
+	virtual		void				OnRoundStart			();												// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+	virtual		void				OnRoundEnd				();	// round_end_reason							// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	virtual		void				OnDelayedRoundEnd		( ERoundEnd_Result reason );
 	virtual		void				OnDelayedTeamEliminated();
 
-	virtual		void				OnPlayerHitPlayer		(u16 id_hitter, u16 id_hitted, NET_Packet& P); //игрок получил Hit
+	virtual		void				OnPlayerHitPlayer		(u16 id_hitter, u16 id_hitted, NET_Packet& P); //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ Hit
 	virtual		void				OnPlayerHitPlayer_Case	(game_PlayerState* ps_hitter, game_PlayerState* ps_hitted, SHit* pHitS);	
 
 	virtual		BOOL				OnTouch					(u16 eid_who, u16 eid_what, BOOL bForced = FALSE);
@@ -170,7 +170,7 @@ public:
 	virtual		void				LoadSkinsForTeam		(const shared_str& caSection, TEAM_SKINS_NAMES* pTeamSkins);
 	virtual		void				LoadDefItemsForTeam		(const shared_str& caSection, /*TEAM_WPN_LIST *pWpnList,*/ DEF_ITEMS_LIST* pDefItems);
 
-	virtual		char*				GetAnomalySetBaseName	() {return (char*)"deathmatch_game_anomaly_sets";};
+	virtual const char* GetAnomalySetBaseName () {return (char*)"deathmatch_game_anomaly_sets";};
 	virtual		void				LoadAnomalySets			();
 				
 				void				LoadItemRespawns		();

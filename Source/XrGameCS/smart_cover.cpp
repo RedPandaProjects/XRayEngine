@@ -14,16 +14,12 @@
 #include "ai_space.h"
 #include "level_graph.h"
 #include "graph_engine.h"
-
-namespace hash_fixed_vertex_manager {
-	
-IC	u32 to_u32	(shared_str const &string)
+IC	u32 to_u32(shared_str const& string)
 {
-	const str_value	*get = string._get();
+	const str_value* get = string._get();
 	return			(*(u32 const*)&get);
 }
 
-} // namespace hash_fixed_vertex_manager
 
 namespace smart_cover {
 	shared_str	transform_vertex(shared_str const &vertex_id, bool const &in);

@@ -224,7 +224,7 @@ void xrServer::ProcessClientDigest(xrClientData* xrCL, NET_Packet* P)
 		Msg("--- Client [%s][%s] tried to connect - rejecting connection (he is banned by %s) ...",
 			tmp_client->m_cAddress.to_string().c_str(), tmp_client->name.c_str(),
 			admin_name.size() ? admin_name.c_str() : "Server");
-		LPSTR message_to_user;
+		const char* message_to_user = "";
 		if (admin_name.size())
 		{
 			STRCONCAT(message_to_user, "You have been banned by ", admin_name.c_str());

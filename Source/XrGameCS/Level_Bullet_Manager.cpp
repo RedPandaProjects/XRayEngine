@@ -1024,7 +1024,7 @@ void CBulletManager::CommitEvents			()	// @ the start of frame
 			}break;
 		}		
 	}
-	m_Events.clear_and_reserve	()	;
+	m_Events.clear	()	;
 }
 
 void CBulletManager::RegisterEvent			(EventType Type, BOOL _dynamic, SBullet* bullet, const Fvector& end_point, collide::rq_result& R, u16 tgt_material)

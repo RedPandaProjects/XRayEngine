@@ -373,7 +373,7 @@ u32 attachable_hud_item::anim_play(const shared_str& anm_name_b, BOOL bMixIn, co
 
 	if (IsGameTypeSingle() && parent_object.H_Parent() == Level().CurrentControlEntity())
 	{
-		CActor* current_actor	= static_cast_checked<CActor*>(Level().CurrentControlEntity());
+		CActor* current_actor	= smart_cast<CActor*>(Level().CurrentControlEntity());
 		VERIFY					(current_actor);
 		CEffectorCam* ec		= current_actor->Cameras().GetCamEffector(eCEWeaponAction);
 

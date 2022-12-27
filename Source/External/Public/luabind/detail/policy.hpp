@@ -34,7 +34,6 @@
 #include <luabind/detail/class_cache.hpp>
 #include <luabind/detail/implicit_cast.hpp>
 #include <luabind/detail/object_rep.hpp>
-
 #undef max
 #undef min
 

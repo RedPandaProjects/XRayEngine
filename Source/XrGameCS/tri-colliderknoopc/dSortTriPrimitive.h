@@ -129,21 +129,21 @@ IC int dcTriListCollider::dSortTriPrimitiveCollide (
 		dbg_saved_tries_for_active_objects++;
 #endif
 		//if(ignored_tries[I-B])continue;
-		CDB::TRI* T = T_array + *I;
-		const Point vertices[3]={Point((dReal*)&V_array[T->verts[0]]),Point((dReal*)&V_array[T->verts[1]]),Point((dReal*)&V_array[T->verts[2]])};
+		CDB::TRI* Tris = T_array + *I;
+		const Point vertices[3]={Point((dReal*)&V_array[Tris->verts[0]]),Point((dReal*)&V_array[Tris->verts[1]]),Point((dReal*)&V_array[Tris->verts[2]])};
 		if(!aabb_tri_aabb(Point(p),Point((float*)&AABB),vertices))
 																continue;
 #ifdef DEBUG
 		if(ph_dbg_draw_mask.test(phDBgDrawIntersectedTries))
-										DBG_DrawTri(T,V_array,color_xrgb(0,255,0));
+										DBG_DrawTri(Tris,V_array,color_xrgb(0,255,0));
 		dbg_tries_num++;
 #endif
 		Triangle	tri;	
-		CalculateTri(T,p,tri,vertices);
+		CalculateTri(Tris,p,tri,vertices);
 		if(tri.dist<0.f){
 #ifdef DEBUG
 			if(ph_dbg_draw_mask.test(phDBgDrawNegativeTries))
-				DBG_DrawTri(T,V_array,color_xrgb(0,0,255));
+				DBG_DrawTri(Tris,V_array,color_xrgb(0,0,255));
 #endif
 			float last_pos_dist=dDOT(last_pos,tri.norm)-tri.pos;
 #ifdef _M_AMD64
@@ -156,7 +156,7 @@ IC int dcTriListCollider::dSortTriPrimitiveCollide (
 				{
 #ifdef DEBUG
 					if(ph_dbg_draw_mask.test(phDBgDrawTriesChangesSign))
-						DBG_DrawTri(T,V_array,color_xrgb(0,255,0));
+						DBG_DrawTri(Tris,V_array,color_xrgb(0,255,0));
 #endif
 					bool contain_pos=TriContainPoint(
 						vertices[0],
@@ -229,7 +229,7 @@ IC int dcTriListCollider::dSortTriPrimitiveCollide (
 		else{
 #ifdef DEBUG
 			if(ph_dbg_draw_mask.test(phDBgDrawPositiveTries))
-				DBG_DrawTri(T,V_array,color_xrgb(255,0,0));
+				DBG_DrawTri(Tris,V_array,color_xrgb(255,0,0));
 #endif	
 				if(ret>flags-10) 
 							continue;
@@ -249,7 +249,6 @@ IC int dcTriListCollider::dSortTriPrimitiveCollide (
 	}
 
 	//if(intersect) ret=0;
-	xr_vector<Triangle>::iterator i;
 
 	if(intersect)
 	{
@@ -258,7 +257,7 @@ IC int dcTriListCollider::dSortTriPrimitiveCollide (
 	{
 		bool include = true;
 		if(no_last_pos)
-			for(i=pos_tries.begin();pos_tries.end() != i;++i)
+			for(auto i=pos_tries.begin();pos_tries.end() != i;++i)
 			{	
 				VERIFY(neg_tri.T);
 				if(TriContainPoint(
@@ -313,7 +312,7 @@ IC int dcTriListCollider::dSortTriPrimitiveCollide (
 
 		bool include = true;
 		if(no_last_pos)
-			for(i=pos_tries.begin();pos_tries.end() != i;++i){
+			for(auto i=pos_tries.begin();pos_tries.end() != i;++i){
 				VERIFY(b_neg_tri.T&&b_neg_tri.dist!=-dInfinity);
 				if(
 					!((dDOT(b_neg_tri.norm,(dReal*)&V_array[i->T->verts[0]])-b_neg_tri.pos)>0.f)||
