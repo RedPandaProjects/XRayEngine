@@ -374,7 +374,7 @@ void	game_cl_Deathmatch::OnSpectatorSelect		()
 };
 
 
-char*	game_cl_Deathmatch::getTeamSection(int Team)
+const char*	game_cl_Deathmatch::getTeamSection(int Team)
 {
 	return "deathmatch_team0";
 };
@@ -1133,7 +1133,7 @@ void game_cl_Deathmatch::OnTeamChanged()
 	ChangeItemsCosts				(pCurBuyMenu);
 };
 
-void game_cl_Deathmatch::LoadPlayerDefItems(char* TeamName, IBuyWnd* pBuyMenu)
+void game_cl_Deathmatch::LoadPlayerDefItems(const char* TeamName, IBuyWnd* pBuyMenu)
 {
 	if (!local_player)				return;
 	LoadTeamDefaultPresetItems		(TeamName, pBuyMenu, &PlayerDefItems);

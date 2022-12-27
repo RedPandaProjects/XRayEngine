@@ -28,18 +28,18 @@ void CUIDialogWndEx::script_register(lua_State *L)
 
 	module(L)
 	[
-		script_register_ui_window2(
+		std::move(script_register_ui_window2(
 			script_register_ui_window1(
 				instance
 			)
-		)
+		))
 		.def("Load",			&BaseType::Load)
 	];
 }
 
 export_class &script_register_ui_window1(export_class &instance)
 {
-	instance
+	instance = std::move(instance)
 		.def(					constructor<>())
 
 		.def("AddCallback",		(void(BaseType::*)(LPCSTR, s16, const luabind::functor<void>&))&BaseType::AddCallback)

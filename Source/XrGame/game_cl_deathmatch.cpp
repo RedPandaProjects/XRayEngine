@@ -1148,7 +1148,7 @@ void game_cl_Deathmatch::OnTeamChanged()
 	ChangeItemsCosts				(pCurBuyMenu);
 };
 
-void game_cl_Deathmatch::LoadPlayerDefItems(char* TeamName, IBuyWnd* pBuyMenu)
+void game_cl_Deathmatch::LoadPlayerDefItems(const char* TeamName, IBuyWnd* pBuyMenu)
 {
 	if (!local_player)				return;
 	LoadTeamDefaultPresetItems		(TeamName, pBuyMenu, &PlayerDefItems);

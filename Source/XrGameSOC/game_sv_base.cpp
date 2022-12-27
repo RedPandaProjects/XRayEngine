@@ -198,7 +198,7 @@ float					game_sv_GameState::get_option_f				(LPCSTR lst, LPCSTR name, float def
 		return def;
 }
 
-string64&			game_sv_GameState::get_option_s				(LPCSTR lst, LPCSTR name, LPCSTR def)
+const char* game_sv_GameState::get_option_s(LPCSTR lst, LPCSTR name, LPCSTR def /*= 0*/)
 {
 	static string64	ret;
 

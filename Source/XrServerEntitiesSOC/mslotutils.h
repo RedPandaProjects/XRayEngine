@@ -82,7 +82,7 @@ inline HANDLE CreateMailSlotByName(const char* slotName)
  
     return hSlot; 
 }
-inline BOOL CheckExisting(LPSTR slotName)
+inline BOOL CheckExisting(const char*slotName)
 {
 	HANDLE hFile; 
 	BOOL res;
@@ -101,7 +101,7 @@ hFile = CreateFile(slotName,
 	
 	return res;
 }
-inline BOOL SendMailslotMessage(LPSTR slotName, CMailSlotMsg& msg){
+inline BOOL SendMailslotMessage(const char*slotName, CMailSlotMsg& msg){
 	BOOL fResult; 
 	HANDLE hFile; 
 	DWORD cbWritten; 

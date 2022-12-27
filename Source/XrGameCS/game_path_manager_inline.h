@@ -31,7 +31,7 @@ IC	void CGameManagerTemplate::reinit(const IGameGraph *graph)
 TEMPLATE_SPECIALIZATION
 IC	bool CGameManagerTemplate::actual() const
 {
-	return				(inherited::actual(this->m_object->object().ai_location().game_vertex_id(),dest_vertex_id()));
+	return				(inherited::actual(this->m_object->object().ai_location().game_vertex_id(),this->dest_vertex_id()));
 }
 
 TEMPLATE_SPECIALIZATION
@@ -59,7 +59,7 @@ IC	void CGameManagerTemplate::select_intermediate_vertex	()
 	if (this->m_intermediate_index != _index_type(-1))
 		++this->m_intermediate_index;
 	else
-		if (path().size() < 2)
+		if (this->path().size() < 2)
 			this->m_intermediate_index = 0;
 		else
 			this->m_intermediate_index = 1;
