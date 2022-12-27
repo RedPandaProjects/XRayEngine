@@ -101,6 +101,8 @@
 #ifdef _MSC_VER
 #pragma warning(push)
 #pragma warning(disable: 4355)
+#undef min
+#undef max
 #endif
 
 namespace luabind

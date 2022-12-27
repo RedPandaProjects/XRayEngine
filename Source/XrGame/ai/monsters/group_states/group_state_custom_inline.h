@@ -12,7 +12,7 @@
 TEMPLATE_SPECIALIZATION
 CStateCustomGroupAbstract::CStateCustomGroup(_Object *obj) : inherited(obj)
 {
-	add_state(eStateCustom,				xr_new<CStateMonsterCustomAction<_Object> >		(obj));
+	this->add_state(eStateCustom,				xr_new<CStateMonsterCustomAction<_Object> >		(obj));
 }
 
 TEMPLATE_SPECIALIZATION

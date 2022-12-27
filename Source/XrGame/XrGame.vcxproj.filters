@@ -10968,9 +10968,6 @@
     <ClCompile Include="physics_world_scripted.cpp">
       <Filter>Physics\scripts</Filter>
     </ClCompile>
-    <ClCompile Include="..\External\Public\luabind\LuaMemoryController.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="XrGameEditor.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
@@ -10982,6 +10979,9 @@
     </ClCompile>
     <ClCompile Include="game_graph.cpp">
       <Filter>AI\ANavigation\GameGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="stalker_movement_manager_smart_cover2.cpp">
+      <Filter>AI\AMonsters\humans\stalker\MovementManager\smart_covers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,5 @@
 #pragma once
+#include "../states/monster_state_attack_on_run.h"
 
 template <typename Object>
 CStateBurerAttackGravi<Object>::CStateBurerAttackGravi(Object *obj) : inherited(obj)
@@ -14,7 +15,7 @@ void CStateBurerAttackGravi<Object>::initialize()
 	m_action						=	ACTION_GRAVI_STARTED;
 	m_time_gravi_started			=	0;
 	m_anim_end_tick					=	0;
-	m_next_gravi_allowed_tick		= this->current_time() + this->object->m_gravi.cooldown;
+	m_next_gravi_allowed_tick		= current_time() + this->object->m_gravi.cooldown;
 	this->object->set_force_gravi_attack		(false);
 	this->object->set_script_capture			(false);
 }
@@ -38,7 +39,7 @@ void CStateBurerAttackGravi<Object>::execute()
 			break;
 
 		case ACTION_WAIT_ANIM_END:
-			if (this->current_time() > m_anim_end_tick )
+			if (current_time() > m_anim_end_tick )
 			{
 				m_action			=	ACTION_COMPLETED; 
 			}
@@ -49,7 +50,7 @@ void CStateBurerAttackGravi<Object>::execute()
 
 	this->object->face_enemy						();
 	
-	if (this->current_time() < m_anim_end_tick )
+	if (current_time() < m_anim_end_tick )
 	{
 		this->object->anim().set_override_animation	(eAnimGraviFire);
 	}
@@ -79,7 +80,7 @@ bool CStateBurerAttackGravi<Object>::check_start_conditions()
 	// обработать объекты
 	if (this->object->get_force_gravi_attack() ) return true;
 	float dist = this->object->Position().distance_to(this->object->EnemyMan.get_enemy()->Position());
-	if (this->current_time() < m_next_gravi_allowed_tick ) return false;
+	if (current_time() < m_next_gravi_allowed_tick ) return false;
 	if ( dist < this->object->m_gravi.min_dist ) return false;
 	if ( dist > this->object->m_gravi.max_dist ) return false;
 	if ( !this->object->EnemyMan.see_enemy_now() ) return false;
@@ -100,7 +101,7 @@ template <typename Object>
 void CStateBurerAttackGravi<Object>::ExecuteGraviStart()
 {
 	float const time				= this->object->anim().get_animation_length (eAnimGraviFire, 0);
-	m_anim_end_tick					= this->current_time() + TTime(time*1000);
+	m_anim_end_tick					= current_time() + TTime(time*1000);
 	m_action						=	ACTION_GRAVI_CONTINUE;
 	m_time_gravi_started			=	Device->dwTimeGlobal;
 	this->object->StartGraviPrepare			();

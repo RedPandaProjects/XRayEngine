@@ -29,7 +29,7 @@ public:
 	void						merge_sake_to_ltx_best_scores	();
 	
 	static int const			fields_count = bst_score_types_count;
-	typedef char* best_fields_names_t[fields_count];
+	typedef const char* best_fields_names_t[fields_count];
 
 	best_fields_names_t const &	get_field_names				() const { return m_field_names_store; }
 	void						process_scores_out_response	(SAKEGetMyRecordsOutput* tmp_out, int const out_fields_count);

@@ -20,16 +20,16 @@ class CScriptGameObject;
 template <
 	typename _object_type,
 	bool	 _reverse_search = false,
-	typename _world_operator = CActionBase<_object_type>,
+	typename world_operator = CActionBase<_object_type>,
 	typename _condition_evaluator = CPropertyEvaluator<_object_type>,
-	typename _world_operator_ptr = _world_operator*,
+	typename _world_operator_ptr = world_operator*,
 	typename _condition_evaluator_ptr = _condition_evaluator*
 >
 class CActionPlanner : 
 	public CProblemSolver<
 		GraphEngineSpace::CWorldProperty,
 		GraphEngineSpace::CWorldState,
-		_world_operator,
+		world_operator,
 		_condition_evaluator,
 		u32,
 		_reverse_search,
@@ -41,7 +41,7 @@ public:
 	typedef CProblemSolver<
 		GraphEngineSpace::CWorldProperty,
 		GraphEngineSpace::CWorldState,
-		_world_operator,
+		world_operator,
 		_condition_evaluator,
 		u32,
 		_reverse_search,
@@ -59,7 +59,7 @@ public:
 
 	typedef GraphEngineSpace::CWorldProperty CWorldProperty;
 	typedef GraphEngineSpace::CWorldState CWorldState;
-	typedef _world_operator _world_operator;
+	using _world_operator = world_operator;
 
 protected:
 	bool						m_initialized;

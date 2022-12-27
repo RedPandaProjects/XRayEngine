@@ -5,6 +5,7 @@
 //	Author		: Dmitriy Iassenev
 //	Description : Object item client and server class inline functions
 ////////////////////////////////////////////////////////////////////////////
+#include "Level.h"
 
 #ifndef object_item_client_server_inlineH
 #define object_item_client_server_inlineH

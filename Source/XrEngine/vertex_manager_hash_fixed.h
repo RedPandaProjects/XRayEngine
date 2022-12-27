@@ -7,8 +7,18 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-
-#define to_u32(other) (other.hash_value())
+template<class C>
+IC	u32 to_u32(C const& Value)
+{
+	if constexpr (std::is_same_v<C, shared_str>)
+	{
+		return *(u32*)Value._get();
+	}
+	else
+	{
+		return Value.hash_value();
+	}
+}
 
 template <
 	typename _path_id_type,

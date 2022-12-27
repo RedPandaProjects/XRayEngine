@@ -7,6 +7,8 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include "ai_space.h"
+#include "level_graph.h"
 
 IC	CSpaceRestrictionAbstract::CSpaceRestrictionAbstract						()
 {

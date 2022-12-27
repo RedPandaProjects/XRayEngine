@@ -1,5 +1,5 @@
 #pragma once
-
+#include "../states/monster_state_attack_run.h"
 #include "../../../level.h"
 
 #define GOOD_DISTANCE_FOR_TELE	15.f
@@ -26,7 +26,7 @@ void CStateBurerAttackTele<Object>::initialize()
 	m_anim_end_tick				= 	0;
 	m_last_grenade_scan			=	0;
 	m_initial_health			=	this->object->conditions().GetHealth();
-	m_end_tick					= this->current_time() + this->object->m_tele_max_time;
+	m_end_tick					= current_time() + this->object->m_tele_max_time;
 
 	// запретить взятие скриптом
 	this->object->set_script_capture		(false);
@@ -48,12 +48,12 @@ void CStateBurerAttackTele<Object>::execute()
 			if ( !time_started )
 			{
 				float const time				=	this->object->anim().get_animation_length (eAnimTelekinesis, 0);
-				m_anim_end_tick					= this->current_time() + TTime(time*1000);
+				m_anim_end_tick					= current_time() + TTime(time*1000);
 				time_started					=	Device->dwTimeGlobal;
 			}
 			else
 			{
-				if (this->current_time() > m_anim_end_tick )
+				if (current_time() > m_anim_end_tick )
 				{
 					m_action					=	ACTION_TELE_CONTINUE;
 				}
@@ -70,14 +70,14 @@ void CStateBurerAttackTele<Object>::execute()
 			this->object->anim().set_override_animation	(eAnimTeleFire, 0);
 			ExecuteTeleFire							();
 			float const time					=	this->object->anim().get_animation_length (eAnimTeleFire, 0);
-			m_anim_end_tick						= this->current_time() + TTime(time*1000);
+			m_anim_end_tick						= current_time() + TTime(time*1000);
 			m_action							=	ACTION_WAIT_FIRE_END;
 			break;
 		}
 
 		case ACTION_WAIT_FIRE_END:
 			this->object->anim().set_override_animation	(eAnimTeleFire, 0);
-			if (this->current_time() > m_anim_end_tick )
+			if (current_time() > m_anim_end_tick )
 			{
 				if ( IsActiveObjects() )
 				{
@@ -173,7 +173,7 @@ bool CStateBurerAttackTele<Object>::check_completion()
 		return									true;
 	}
 
-	if (this->current_time() > m_end_tick )
+	if (current_time() > m_end_tick )
 	{
 		return									true;
 	}
@@ -218,7 +218,7 @@ template <typename Object>
 void CStateBurerAttackTele<Object>::FindObjects	()
 {
 	u32	res_size					= tele_objects.size		();
-	tele_objects.clear_and_reserve	();
+	tele_objects.clear();
 
 	// получить список объектов вокруг врага
 	m_nearest.clear		();
@@ -464,7 +464,7 @@ void  CStateBurerAttackTele<Object>::OnGrenadeDestroyed (CGrenade* const grenade
 template <typename Object>
 void CStateBurerAttackTele<Object>::HandleGrenades ()
 {	
-	if (this->current_time() < m_last_grenade_scan + 1000 )
+	if (current_time() < m_last_grenade_scan + 1000 )
 	{
 		return;
 	}

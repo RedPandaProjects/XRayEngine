@@ -181,7 +181,7 @@ public:
 	void							RemoveItemFromActor		(CSE_Abstract* pItem);
 	//----- Money routines -----------------------------------------------------------------
 	virtual		void				Money_SetStart			(ClientID	id_who);
-	virtual		s32					GetMoneyAmount			(const shared_str& caSection, char* caMoneyStr);
+	virtual		s32					GetMoneyAmount			(const shared_str& caSection, const char* caMoneyStr);
 				int					GetTeamScore			(u32 idx);
 				void				SetTeamScore			(u32 idx, int val);
 				game_PlayerState*	GetWinningPlayer		();

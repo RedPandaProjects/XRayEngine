@@ -1,4 +1,5 @@
 #pragma once
+#include "../states/monster_state_attack_on_run.h"
 
 template <class Object>
 CStateBurerShield<Object>::CStateBurerShield (Object *obj) : inherited(obj)
@@ -13,7 +14,7 @@ void   CStateBurerShield<Object>::initialize()
 {
 	inherited::initialize				();
 	this->object->set_script_capture			(false);
-	m_last_shield_started			= this->current_time();
+	m_last_shield_started			= current_time();
 	m_next_particle_allowed			=	0;
 	m_started						=	false;
 
@@ -32,7 +33,7 @@ void   CStateBurerShield<Object>::execute()
 
 	if ( m_started && 
 		 this->object->m_shield_keep_particle != 0 && 
-		this->current_time() > m_next_particle_allowed )
+		current_time() > m_next_particle_allowed )
 	{
 		this->object->CParticlesPlayer::StartParticles	(this->object->m_shield_keep_particle, 
 													 Fvector().set(0,1,0), 
@@ -40,7 +41,7 @@ void   CStateBurerShield<Object>::execute()
 													 -1, 
 													 true);
 
-		m_next_particle_allowed		= this->current_time() + this->object->m_shield_keep_particle_period;
+		m_next_particle_allowed		= current_time() + this->object->m_shield_keep_particle_period;
 	}
 
 	this->object->face_enemy					();
@@ -68,7 +69,7 @@ void   CStateBurerShield<Object>::critical_finalize()
 template <class Object>
 bool   CStateBurerShield<Object>::check_start_conditions()
 {
-	if (this->current_time() < m_last_shield_started + this->object->m_shield_time + this->object->m_shield_cooldown )
+	if (current_time() < m_last_shield_started + this->object->m_shield_time + this->object->m_shield_cooldown )
 		return							false;
 	
 	if ( !this->object->EnemyMan.enemy_see_me_now() )
@@ -80,7 +81,7 @@ bool   CStateBurerShield<Object>::check_start_conditions()
 template <class Object>
 bool   CStateBurerShield<Object>::check_completion()
 {
-	if (this->current_time() > m_last_shield_started + this->object->m_shield_time )
+	if (current_time() > m_last_shield_started + this->object->m_shield_time )
 		return							true;
 
 	CEntityAlive const* enemy		=	this->object->EnemyMan.get_enemy();

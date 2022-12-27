@@ -21,7 +21,6 @@
 // OR OTHER DEALINGS IN THE SOFTWARE.
 
 #pragma once
-
 #include <luabind/config.hpp>
 
 #include <typeinfo>
@@ -34,6 +33,10 @@
 #include <luabind/detail/class_registry.hpp>
 #include <luabind/detail/class_cache.hpp>
 #include <luabind/detail/implicit_cast.hpp>
+#include <luabind/detail/object_rep.hpp>
+
+#undef max
+#undef min
 
 namespace luabind
 {
@@ -314,7 +317,7 @@ namespace luabind { namespace detail
 			(void)L;
 			//return std::numeric_limits<int>::max() / LUABIND_MAX_ARITY;
             constexpr const int kMaxArity = 1000;
-            return std::numeric_limits<int>::max() / kMaxArity;
+            return INT_MAX / kMaxArity;
 		}
 
 		PRIMITIVE_CONVERTER(luabind::weak_ref)

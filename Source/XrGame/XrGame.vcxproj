@@ -1867,7 +1867,6 @@
     <ClInclude Include="ZudaArtifact.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\External\Public\luabind\LuaMemoryController.cpp" />
     <ClCompile Include="..\xrGameSpy\gamespy\md5c.c">
       <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Sync</ExceptionHandling>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
@@ -5296,6 +5295,9 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Shipping|x64'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Shipping|x64'">4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Shipping|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="script_entity.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
@@ -6357,6 +6359,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Shipping|x64'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
+    <ClCompile Include="stalker_movement_manager_smart_cover2.cpp" />
     <ClCompile Include="stalker_movement_manager_smart_cover_fov_range.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
