@@ -501,8 +501,7 @@ void CLevel::OnFrame	()
 				F->OutNext("sv_urate/cl_urate : %4d/%4d", psNET_ServerUpdate, psNET_ClientUpdate);
 
 				F->SetColor(color_xrgb(255, 255, 255));
-
-				Server->ForEachClientDo([&](IClient* C) {
+				auto Lambda = [&](IClient* C) {
 					Server->UpdateClientStatistic(C);
 					F->OutNext("0x%08x: P(%d), BPS(%2.1fK), MRR(%2d), MSR(%2d), Retried(%2d), Blocked(%2d)",
 						//Server->game->get_option_s(*C->Name,"name",*C->Name),
@@ -514,7 +513,8 @@ void CLevel::OnFrame	()
 						C->stats.getRetriedCount(),
 						C->stats.dwTimesBlocked
 					);
-					});
+				};
+				Server->ForEachClientDo(Lambda);
 			}
 			if (IsClient())
 			{
@@ -1050,31 +1050,11 @@ GlobalFeelTouch::~GlobalFeelTouch()
 {
 }
 
-struct delete_predicate_by_time : public std::binary_function<Feel::Touch::DenyTouch, DWORD, bool>
-{
-	bool operator () (Feel::Touch::DenyTouch const & left, DWORD const expire_time) const
-	{
-		if (left.Expire <= expire_time)
-			return true;
-		return false;
-	};
-};
-struct objects_ptrs_equal : public std::binary_function<Feel::Touch::DenyTouch, CObject const *, bool>
-{
-	bool operator() (Feel::Touch::DenyTouch const & left, CObject const * const right) const
-	{
-		if (left.O == right)
-			return true;
-		return false;
-	}
-};
 
 void GlobalFeelTouch::update()
 {
-	//we ignore P and R arguments, we need just delete evaled denied objects...
-	xr_vector<Feel::Touch::DenyTouch>::iterator new_end = 
-		std::remove_if(feel_touch_disable.begin(), feel_touch_disable.end(), 
-			std::bind2nd(delete_predicate_by_time(), Device->dwTimeGlobal));
+	xr_vector<Feel::Touch::DenyTouch>::iterator new_end =
+		std::remove_if(feel_touch_disable.begin(), feel_touch_disable.end(), [](Feel::Touch::DenyTouch const& left) {if (left.Expire <= Device->dwTimeGlobal)	return true;	return false; });
 	feel_touch_disable.erase(new_end, feel_touch_disable.end());
 }
 
@@ -1083,7 +1063,7 @@ bool GlobalFeelTouch::is_object_denied(CObject const * O)
 	/*Fvector temp_vector;
 	feel_touch_update(temp_vector, 0.f);*/
 	if (std::find_if(feel_touch_disable.begin(), feel_touch_disable.end(),
-		std::bind2nd(objects_ptrs_equal(), O)) == feel_touch_disable.end())
+		[O](Feel::Touch::DenyTouch const& left) {return left.O == O; }) == feel_touch_disable.end())
 	{
 		return false;
 	}

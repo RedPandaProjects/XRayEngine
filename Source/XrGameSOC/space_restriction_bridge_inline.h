@@ -7,6 +7,8 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include "ai_space.h"
+#include "../XrEngine/level_graph.h"
 
 IC	CSpaceRestrictionBridge::CSpaceRestrictionBridge		(CSpaceRestrictionBase *object)
 {
@@ -44,7 +46,7 @@ IC	u32	CSpaceRestrictionBridge::accessible_nearest	(T restriction, const Fvector
 	{
 		min_dist_sqr = flt_max;
 		u32	new_selected = u32(-1);
-		ILevelGraph::const_iterator	I, E;
+		typename ILevelGraph::const_iterator	I, E;
 		ai().level_graph().begin(selected,I,E);
 		for ( ; I != E; ++I) {
 			u32	current = ai().level_graph().value(selected,I);

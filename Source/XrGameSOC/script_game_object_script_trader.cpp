@@ -13,7 +13,7 @@ using namespace luabind;
 
 class_<CScriptGameObject> &script_register_game_object_trader(class_<CScriptGameObject> &instance)
 {
-	instance
+	instance = std::move(instance)
 		.def("set_trader_global_anim",	&CScriptGameObject::set_trader_global_anim)
 		.def("set_trader_head_anim",	&CScriptGameObject::set_trader_head_anim)
 		.def("set_trader_sound",		&CScriptGameObject::set_trader_sound)

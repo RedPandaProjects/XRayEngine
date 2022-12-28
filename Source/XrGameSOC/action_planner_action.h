@@ -28,7 +28,7 @@ protected:
 
 public:
 	typedef typename inherited_action::COperatorCondition	COperatorCondition;
-
+	using _world_operator = inherited_planner::_world_operator;
 #ifdef LOG_ACTION
 public:
 	virtual	void		set_use_log				(bool value);

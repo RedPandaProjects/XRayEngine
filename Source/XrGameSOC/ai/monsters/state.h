@@ -44,7 +44,7 @@ protected:
 
 	u32					time_state_started;
 
-	_Object				*object;
+	_Object				*this->object;
 	
 	void				*_data;
 
@@ -64,7 +64,7 @@ public:
 	virtual 			~CStateMove	(){}
 	virtual void initialize() {
 		inherited::initialize();
-		object->path().prepare_builder();
+		this->object->path().prepare_builder();
 	}
 };
 

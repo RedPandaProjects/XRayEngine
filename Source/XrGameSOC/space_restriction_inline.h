@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include "ai_space.h"
 
 IC	CSpaceRestriction::CSpaceRestriction			(CSpaceRestrictionManager *space_restriction_manager, shared_str out_restrictions, shared_str in_restrictions)
 {

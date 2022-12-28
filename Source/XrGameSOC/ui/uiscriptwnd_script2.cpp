@@ -22,7 +22,7 @@ using namespace luabind;
 
 export_class &script_register_ui_window2(export_class &instance)
 {
-	instance
+	instance = std::move(instance)
 		.def("GetStatic",		(CUIStatic* (BaseType::*)(LPCSTR)) &BaseType::GetControl<CUIStatic>)
 		.def("GetEditBox",		(CUIEditBox* (BaseType::*)(LPCSTR)) &BaseType::GetControl<CUIEditBox>)
 		.def("GetDialogWnd",	(CUIDialogWnd* (BaseType::*)(LPCSTR)) &BaseType::GetControl<CUIDialogWnd>)
