@@ -124,6 +124,7 @@ bool RedImage::LoadDDSFromMemory(void* pointer, size_t size)
 				{
 					data = reinterpret_cast<u8*>(pointer)+sizeof(u32);
 					memcpy(&Header, data,size += sizeof(DDSHeader10));
+					data += size;
 				}
 				switch (Header.Header10.dxgiFormat)
 				{
