@@ -25,6 +25,7 @@
 #include <luabind/luabind.hpp>
 #include <utility>
 #include <luabind/detail/find_best_match.hpp>
+#include <luabind/detail/overload_rep_impl.hpp>
 
 using namespace luabind::detail;
 

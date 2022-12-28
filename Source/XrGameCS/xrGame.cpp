@@ -14,6 +14,20 @@
 
 #include "lua/library_linkage.h"
 
+FACTORY_PTR_INSTANCIATE(FontRender)
+FACTORY_PTR_INSTANCIATE(FlareRender)
+FACTORY_PTR_INSTANCIATE(ThunderboltRender)
+FACTORY_PTR_INSTANCIATE(ThunderboltDescRender)
+FACTORY_PTR_INSTANCIATE(LensFlareRender)
+FACTORY_PTR_INSTANCIATE(RainRender)
+FACTORY_PTR_INSTANCIATE(EnvironmentRender)
+FACTORY_PTR_INSTANCIATE(EnvDescriptorRender)
+FACTORY_PTR_INSTANCIATE(EnvDescriptorMixerRender)
+FACTORY_PTR_INSTANCIATE(UIShader)
+FACTORY_PTR_INSTANCIATE(WallMarkArray)
+FACTORY_PTR_INSTANCIATE(StatGraphRender)
+FACTORY_PTR_INSTANCIATE(UISequenceVideoItem)
+
 void CCC_RegisterCommands();
 void setup_luabind_allocator();
 

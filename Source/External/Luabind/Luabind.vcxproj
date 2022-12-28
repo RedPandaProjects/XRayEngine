@@ -119,6 +119,7 @@
     <ClCompile Include="function.cpp" />
     <ClCompile Include="implicit_cast.cpp" />
     <ClCompile Include="link_compatibility.cpp" />
+    <ClCompile Include="Memory.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="object_rep.cpp" />
     <ClCompile Include="open.cpp" />
