@@ -1140,7 +1140,7 @@ struct CCC_LuaHelp : public IConsole_Command {
 	CCC_LuaHelp(LPCSTR N) : IConsole_Command(N)  { bEmptyArgsHandled = true; };
 
 	virtual void Execute(LPCSTR args) {
-		print_help(ai().script_engine().lua());
+		//print_help(ai().script_engine().lua());
 	}
 };
 

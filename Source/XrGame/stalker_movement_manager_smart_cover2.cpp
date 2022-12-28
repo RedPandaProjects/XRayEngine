@@ -76,7 +76,7 @@ void stalker_movement_manager_smart_cover::loophole_path(smart_cover::cover cons
 		)
 	);
 }
-#if 0
+#if 1
 
 bool stalker_movement_manager_smart_cover::exit_transition()
 {

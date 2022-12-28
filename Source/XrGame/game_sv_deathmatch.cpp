@@ -1453,7 +1453,7 @@ void	game_sv_Deathmatch::LoadAnomalySets			()
 	//-----------------------------------------------------------
 	if (!g_pGameLevel || !Level().pLevel) return;
 
-	char* ASetBaseName = GetAnomalySetBaseName();
+	const char* ASetBaseName = GetAnomalySetBaseName();
 
 	string1024 SetName, AnomaliesNames, AnomalyName;
 	ANOMALIES		AnomalySingleSet;
