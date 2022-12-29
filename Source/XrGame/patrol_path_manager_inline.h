@@ -7,6 +7,8 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include "ai_space.h"
+#include "patrol_path.h"
 
 IC	CPatrolPathManager::CPatrolPathManager			(CRestrictedObject *object, CGameObject *game_object)
 {

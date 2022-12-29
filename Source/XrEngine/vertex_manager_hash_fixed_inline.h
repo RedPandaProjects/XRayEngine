@@ -89,12 +89,6 @@ IC	bool CHashFixedVertexManager::is_opened	(const CGraphVertex &vertex) const
 }
 
 TEMPLATE_SPECIALIZATION
-IC	u32	 CHashFixedVertexManager::hash_index(const _index_type &vertex_id) const
-{
-	return					(hash_fixed_vertex_manager::to_u32(vertex_id) % hash_size);
-}
-
-TEMPLATE_SPECIALIZATION
 IC	bool CHashFixedVertexManager::is_visited	(const _index_type &vertex_id) const
 {
 	u32						index = hash_index(vertex_id);
@@ -151,15 +145,15 @@ IC	typename CHashFixedVertexManager::CGraphVertex &CHashFixedVertexManager::crea
 	vertex.index()					= vertex_id;
 	
 	u32								index = hash_index(vertex_id);
-	CGraphIndexVertex				*_vertex = m_hash[index];
-	if (!_vertex || (_vertex->m_path_id != current_path_id()) || (_vertex->m_hash != index))
-		_vertex						= 0;
+	CGraphIndexVertex				*pVertex = m_hash[index];
+	if (!pVertex || (pVertex->m_path_id != current_path_id()) || (pVertex->m_hash != index))
+		pVertex = 0;
 
 	m_hash[index]					= index_vertex;
-	index_vertex->m_next			= _vertex;
+	index_vertex->m_next			= pVertex;
 	index_vertex->m_prev			= 0;
-	if (_vertex)
-		_vertex->m_prev				= index_vertex;
+	if (pVertex)
+		pVertex->m_prev				= index_vertex;
 	index_vertex->m_hash			= index;
 	return							(vertex);
 }

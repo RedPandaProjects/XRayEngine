@@ -75,16 +75,17 @@ public:
 		return		(TRUE);
 	}
 
+	template <class T>
+	BOOL	_valid(const _rect<T>& m)
+	{
+		return lt._valid() && rb._valid();
+	}
+
+
 };
 
 typedef _rect<float>	Frect;
 typedef _rect<double>	Drect;
 typedef _rect<int>		Irect;
-
-template <class T>
-BOOL	_valid			(const _rect<T>& m)		
-{ 
-	return lt._valid() && rb._valid();
-}
 
 #endif

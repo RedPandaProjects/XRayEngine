@@ -45,15 +45,15 @@ private:
 	};
 	typedef std::pair<ETeam, MyTeam> TeamPair;
 	// For balancing team players count
-	struct MinPlayersFunctor : public std::binary_function<TeamPair, TeamPair, bool>
+	struct MinPlayersFunctor 
 	{
 		bool operator()(const TeamPair & left, const TeamPair & right) const;
 	};
-	struct SearchArtefactIdFunctor : public std::binary_function<TeamPair, u16, bool>
+	struct SearchArtefactIdFunctor 
 	{
 		bool operator()(const TeamPair & tr, u16 artefactId) const;
 	};
-	struct SearchOwnerIdFunctor : public std::binary_function<TeamPair, u16, bool>
+	struct SearchOwnerIdFunctor 
 	{
 		bool operator()(const TeamPair & tr, u16 actorId) const;
 	};
@@ -122,7 +122,7 @@ private:
 
 
 
-	s32	GetMoneyAmount(const shared_str& caSection, char* caMoneyStr);
+	s32 GetMoneyAmount(const shared_str& caSection, const char* caMoneyStr);
 	void OnPlayerChangeSkin(ClientID id_who, s8 skin);
 	void OnPlayerChangeTeam(game_PlayerState *playerState, s8 team);
 	void ProcessPlayerDeath(game_PlayerState *playerState);

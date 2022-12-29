@@ -14,6 +14,7 @@
 #include "smart_cover_object.h"
 #include "ai_monster_space.h"
 #include "smart_cover_transition.hpp"
+#include "../XrEngine/graph_abstract.h"
 
 using namespace MonsterSpace;
 using smart_cover::description;
@@ -247,24 +248,22 @@ template <typename _data_type,
 		  typename _edge_data_type>
 IC void delete_data (const CGraphAbstract<_data_type, _edge_weight_type, _vertex_id_type, _edge_data_type>& graph_)
 {
-	typedef CGraphAbstract<_data_type, _edge_weight_type, _vertex_id_type, _edge_data_type> Graph;
+	using Graph =  CGraphAbstract<_data_type, _edge_weight_type, _vertex_id_type, _edge_data_type> ;
 
 	Graph& graph = const_cast<Graph&>(graph_);
 
-	typedef Graph::VERTICES Vertices;
-	typedef Graph::EDGES	Edges;
 
-	Vertices& verts = graph.vertices();
+	typename Graph::VERTICES& verts = graph.vertices();
 
-	for ( Vertices::iterator vi=verts.begin(); vi!=verts.end(); ++vi )
+	for ( auto vi=verts.begin(); vi!=verts.end(); ++vi )
 	{
-		Graph::CVertex* vert = (*vi).second;
+		typename Graph::CVertex* vert = (*vi).second;
 		delete_data(vert->data());
 
-		Edges& edges = const_cast<Edges&>(vert->edges());
-		for ( Edges::iterator ei=edges.begin(); ei!=edges.end(); ++ei )
+		typename Graph::EDGES& edges = const_cast<typename Graph::EDGES&>(vert->edges());
+		for ( auto ei=edges.begin(); ei!=edges.end(); ++ei )
 		{
-			Graph::CEdge& edge = (*ei);
+			typename Graph::CEdge& edge = (*ei);
 			delete_data(edge.data());
 		}
 	}

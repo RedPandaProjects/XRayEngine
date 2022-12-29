@@ -11,7 +11,7 @@ CStateAbstract::CState(_Object *obj, void *data)
 {
 	reset		();
 
-	object		= obj;
+	this->object		= obj;
 	_data		= data;
 }
 

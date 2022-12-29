@@ -54,7 +54,7 @@ void xrServer::Perform_connect_spawn(CSE_Abstract* E, xrClientData* CL, NET_Pack
 
 void xrServer::SendConnectionData(IClient* _CL)
 {
-	g_perform_spawn_ids.clear_not_free();
+	g_perform_spawn_ids.clear();
 	xrClientData*	CL				= (xrClientData*)_CL;
 	NET_Packet		P;
 	u32			mode				= net_flags(TRUE,TRUE);
@@ -89,7 +89,7 @@ void xrServer::OnCL_Connected		(IClient* _CL)
 	game->ProcessDelayedEvent		();
 }
 
-void	xrServer::SendConnectResult(IClient* CL, u8 res, u8 res1, char* ResultStr)
+void xrServer::SendConnectResult(IClient* CL, u8 res, u8 res1, const char* ResultStr)
 {
 	NET_Packet	P;
 	P.w_begin	(M_CLIENT_CONNECT_RESULT);

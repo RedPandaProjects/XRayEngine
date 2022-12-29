@@ -25,7 +25,7 @@ public:
 
 	virtual		void				OnEvent					(NET_Packet &tNetPacket, u16 type, u32 time, ClientID sender );
 
-	virtual		LPCSTR				type_name			() const { return "teamdeathmatch";};
+	virtual		const char*			type_name			() const { return "teamdeathmatch";};
 
 	virtual		void				Update					();
 	virtual		void				net_Export_State		(NET_Packet& P, ClientID id_to);				// full state
@@ -55,7 +55,7 @@ public:
 
 	virtual		void				LoadTeams				();
 
-	virtual		char*				GetAnomalySetBaseName	()	{return "teamdeathmatch_game_anomaly_sets";};	
+	virtual		const char*			GetAnomalySetBaseName	()	{return "teamdeathmatch_game_anomaly_sets";};	
 	virtual		BOOL				CanHaveFriendlyFire		()	{return TRUE;}
 	virtual		void				OnFraglimitExceed		();
 	virtual		void				OnTimelimitExceed		();

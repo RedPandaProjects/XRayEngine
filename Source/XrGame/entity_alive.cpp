@@ -725,11 +725,11 @@ CPHSoundPlayer* CEntityAlive::ph_sound_player()
 	}
 }
 
-ICollisionHitCallback*	CEntityAlive::	get_collision_hit_callback		()
+ICollisionHitCallback* CEntityAlive::get_collision_hit_callback()
 {
-  CCharacterPhysicsSupport *cs=character_physics_support();
-  if(cs)return cs->get_collision_hit_callback();
-  else return false;
+	CCharacterPhysicsSupport* cs = character_physics_support();
+	if (cs)return cs->get_collision_hit_callback();
+	else return nullptr;
 }
 
 void					CEntityAlive::	set_collision_hit_callback		(ICollisionHitCallback *cc)
@@ -805,7 +805,7 @@ void CEntityAlive::fill_hit_bone_surface_areas		( ) const
 	VERIFY								( kinematics );
 	VERIFY								( kinematics->LL_BoneCount() );
 
-	m_hit_bone_surface_areas.clear_not_free	( );
+	m_hit_bone_surface_areas.clear	( );
 
 	for (u16 i=0, n=kinematics->LL_BoneCount(); i < n; ++i ) {
 		const SBoneShape & shape			= kinematics->GetBoneData(i).get_shape();

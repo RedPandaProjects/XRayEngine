@@ -6,100 +6,89 @@
 //	Description : luabind memory allocator template class inline functions
 ////////////////////////////////////////////////////////////////////////////
 
-#ifndef LUABIND_MEMORY_ALLOCATOR_INLINE_H_INCLUDED
-#define LUABIND_MEMORY_ALLOCATOR_INLINE_H_INCLUDED
+#pragma once
 
-#define TEMPLATE_SPECIALIZATION	template <class T>
-#define MEMORY_ALLOCATOR		luabind::memory_allocator<T>
-
-TEMPLATE_SPECIALIZATION
-MEMORY_ALLOCATOR::memory_allocator										()
+template <typename T>
+luabind::memory_allocator<T>::memory_allocator										()
 {
 }
 
-TEMPLATE_SPECIALIZATION
-MEMORY_ALLOCATOR::memory_allocator										(self_type const&)
+template <typename T>
+luabind::memory_allocator<T>::memory_allocator										(self_type const&)
 {
 }
 
-TEMPLATE_SPECIALIZATION
+template <typename T>
 template<class other>
-MEMORY_ALLOCATOR::memory_allocator										(memory_allocator<other> const&)
+luabind::memory_allocator<T>::memory_allocator										(memory_allocator<other> const&)
 {
 }
 
-TEMPLATE_SPECIALIZATION
+template <typename T>
 template<class other>
-MEMORY_ALLOCATOR &MEMORY_ALLOCATOR::operator=							(memory_allocator<other> const&)
+luabind::memory_allocator<T> &luabind::memory_allocator<T>::operator=							(memory_allocator<other> const&)
 {
 	return			(*this);
 }
 
-TEMPLATE_SPECIALIZATION
-typename MEMORY_ALLOCATOR::pointer MEMORY_ALLOCATOR::address			(reference value) const
+template <typename T>
+typename luabind::memory_allocator<T>::pointer luabind::memory_allocator<T>::address			(reference value) const
 {
 	return			(&value);
 }
 
-TEMPLATE_SPECIALIZATION
-typename MEMORY_ALLOCATOR::const_pointer MEMORY_ALLOCATOR::address		(const_reference value) const
+template <typename T>
+typename luabind::memory_allocator<T>::const_pointer luabind::memory_allocator<T>::address		(const_reference value) const
 {
 	return			(&value);
 }
-
-TEMPLATE_SPECIALIZATION
-typename MEMORY_ALLOCATOR::pointer MEMORY_ALLOCATOR::allocate			(size_type const n, void const* const p) const
+#pragma warning(push)
+#pragma warning(disable: 5037)
+template <typename T>
+typename luabind::memory_allocator<T>::pointer luabind::memory_allocator<T>::allocate(size_type const n, void const* const p) const
 {
-	pointer			Result = (pointer)call_allocator(p,n*sizeof(T));
+	pointer pResult = (pointer)luabind::call_allocator(p, n * sizeof(T));
 	if (!n)
-		Result = (pointer)call_allocator(p,1*sizeof(T));
+		pResult = (pointer)luabind::call_allocator(p, 1 * sizeof(T));
 
-	return			(Result);
+	return (pResult);
 }
-
-TEMPLATE_SPECIALIZATION
-char *MEMORY_ALLOCATOR::__charalloc										(size_type const n)
+#pragma warning(pop)
+template <typename T>
+char *luabind::memory_allocator<T>::__charalloc										(size_type const n)
 {
-	return 			((char _FARQ *)allocate(n));
+	return 			((char*)allocate(n));
 }
 
-TEMPLATE_SPECIALIZATION
-void MEMORY_ALLOCATOR::deallocate										(pointer const p, size_type const n) const
+template <typename T>
+void luabind::memory_allocator<T>::deallocate										(pointer const p, size_type const n) const
 {
-	(void)n;
-	call_allocator	(p,0);
+	luabind::call_allocator	(p,0);
 }
 
-TEMPLATE_SPECIALIZATION
-void MEMORY_ALLOCATOR::deallocate										(void *p, size_type n) const
+template <typename T>
+void luabind::memory_allocator<T>::deallocate										(void *p, size_type n) const
 {
-	call_allocator	(p,0);
+	luabind::call_allocator	(p,0);
 }
 
-TEMPLATE_SPECIALIZATION
-void MEMORY_ALLOCATOR::construct										(pointer const p, T const& value)
+template <typename T>
+void luabind::memory_allocator<T>::construct										(pointer const p, T const& value)
 {
 	new(p) T		(value);
 }
 
-TEMPLATE_SPECIALIZATION
-void MEMORY_ALLOCATOR::destroy											(pointer const p)
+template <typename T>
+void luabind::memory_allocator<T>::destroy											(pointer const p)
 {
 	p->~T			();
 }
 
-TEMPLATE_SPECIALIZATION
-typename MEMORY_ALLOCATOR::size_type MEMORY_ALLOCATOR::max_size			() const
+template <typename T>
+typename luabind::memory_allocator<T>::size_type luabind::memory_allocator<T>::max_size			() const
 {
-	size_type		count = ((size_type)(-1))/sizeof(T);
-	if (count)
-		return		(count);
-
-	return			(1);
+	return ((size_type)(-1)) / sizeof(T);
 }
-
-#undef TEMPLATE_SPECIALIZATION
-#undef MEMORY_ALLOCATOR
 
 namespace luabind {
 
@@ -116,5 +105,3 @@ inline bool operator!=	(memory_allocator<_0> const&, memory_allocator<_1> const&
 }
 
 } // namespace luabind
-
-#endif // #ifndef LUABIND_MEMORY_ALLOCATOR_INLINE_H_INCLUDED

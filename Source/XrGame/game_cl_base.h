@@ -71,7 +71,7 @@ public:
 
 				void				OnGameMessage			(NET_Packet& P);
 
-	virtual		char*				getTeamSection			(int Team){return NULL;};
+	virtual const char* getTeamSection (int Team){return NULL;};
 
 				game_PlayerState*	GetPlayerByGameID		(u32 GameID);
 				game_PlayerState*	GetPlayerByOrderID		(u32 id);

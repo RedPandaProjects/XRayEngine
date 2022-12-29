@@ -64,7 +64,7 @@ public:
 	virtual 			~CStateMove	(){}
 	virtual void initialize() {
 		inherited::initialize();
-		object->path().prepare_builder();
+		this->object->path().prepare_builder();
 	}
 };
 

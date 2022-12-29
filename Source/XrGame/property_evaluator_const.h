@@ -15,10 +15,10 @@ class CPropertyEvaluatorConst : public CPropertyEvaluator<_object_type> {
 protected:
 	typedef CPropertyEvaluator<_object_type>		inherited;
 
-protected:
+public:
+	using _value_type = inherited::_value_type;
 	_value_type			m_value;
 
-public:
 	IC					CPropertyEvaluatorConst	(_value_type value, LPCSTR evaluator_name = "");
 	virtual _value_type	evaluate				();
 };

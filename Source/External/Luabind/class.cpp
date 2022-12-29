@@ -19,13 +19,11 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
 // OR OTHER DEALINGS IN THE SOFTWARE.
-
 #include "pch.h"
-
-#include "luabind/lua_include.hpp"
-
-#include "luabind/config.hpp"
-#include "luabind/class.hpp"
+#include <luabind/lua_include.hpp>
+#include <luabind/config.hpp>
+#include <luabind/class.hpp>
+#include <luabind/detail/class_registry.hpp>
 
 #include <cstring>
 //#include <iostream>
@@ -95,9 +93,6 @@ namespace luabind { namespace detail {
 
     void class_registration::register_(lua_State* L) const
     {
-		{
-			LUABIND_CHECK_STACK(L);
-		}
         assert(lua_type(L, -1) == LUA_TTABLE);
 
         lua_pushstring(L, m_name);
@@ -143,7 +138,7 @@ namespace luabind { namespace detail {
             // but only for the base class, if it already
             // exists, we don't have to register it
             detail::class_rep* c = r->find_class(m_holder_type);
-            if (c == 0)
+            if (c == nullptr)
             {
                 r->add_class(m_holder_type, crep);
                 r->add_class(m_const_holder_type, crep);
@@ -168,8 +163,6 @@ namespace luabind { namespace detail {
         for (vector_class<class_base::base_desc>::iterator i = m_bases.begin();
             i != m_bases.end(); ++i)
         {
-            LUABIND_CHECK_STACK(L);
-
             // the baseclass' class_rep structure
             detail::class_rep* bcrep = registry->find_class(i->type);
 
@@ -211,8 +204,7 @@ namespace luabind { namespace detail {
         for (list_class<detail::method_rep>::iterator i 
             = m_methods.begin(); i != m_methods.end(); ++i)
         {
-            LUABIND_CHECK_STACK(L);
-			crep->add_method(*i);
+			crep->add_method(std::move(*i));
 		}
 
 		crep->register_methods(L);
@@ -229,9 +221,13 @@ namespace luabind { namespace detail {
     // -- interface ---------------------------------------------------------
 
     class_base::class_base(char const* name)
-        : scope(luabind::auto_ptr<registration>(
-				m_registration = luabind_new<class_registration>(name))
-          )
+        : class_base(luabind_new<class_registration>(name))
+    {
+    }
+
+    class_base::class_base(class_registration* reg)
+        : scope(reg),
+          m_registration(reg)
     {
     }
 
@@ -269,31 +265,28 @@ namespace luabind { namespace detail {
         m_registration->m_holder_alignment = holder_alignment;
     }
 
-    void class_base::add_getter(
-		const char* name, const boost::function2<int, lua_State*, int, luabind::memory_allocator<boost::function_base> >& g)
+    void class_base::add_getter(const char* name, std::function<int(lua_State*, ptrdiff_t)> g)
     {
         detail::class_rep::callback c;
-        c.func = g;
+        c.func = std::move(g);
         c.pointer_offset = 0;
 
         const char* key = name;
-        m_registration->m_getters[key] = c;
+        m_registration->m_getters[key] = std::move(c);
     }
 
 #ifdef LUABIND_NO_ERROR_CHECKING
-    void class_base::add_setter(
-        const char* name
-        , const boost::function2<int, lua_State*, int, luabind::memory_allocator<boost::function_base> >& s)
+    void class_base::add_setter(const char* name, std::function<int(lua_State*, ptrdiff_t)> s)
 #else
     void class_base::add_setter(
         const char* name
-        , const boost::function2<int, lua_State*, int, luabind::memory_allocator<boost::function_base> >& s
+        , std::function<int(lua_State*, int)> s
         , int (*match)(lua_State*, int)
         , void (*get_sig_ptr)(lua_State*, string_class&))
 #endif
     {
         detail::class_rep::callback c;
-        c.func = s;
+        c.func = std::move(s);
         c.pointer_offset = 0;
 
 #ifndef LUABIND_NO_ERROR_CHECKING
@@ -301,9 +294,8 @@ namespace luabind { namespace detail {
         c.sig = get_sig_ptr;
 #endif
 
-
         const char* key = name;
-        m_registration->m_setters[key] = c;
+        m_registration->m_setters[key] = std::move(c);
     }
 
     void class_base::add_base(const base_desc& b)
@@ -316,24 +308,35 @@ namespace luabind { namespace detail {
         m_registration->m_constructor.overloads.push_back(o);
     }
 
+    void class_base::add_constructor(detail::construct_rep::overload_t&& o)
+    {
+        m_registration->m_constructor.overloads.push_back(std::move(o));
+    }
+
     void class_base::add_method(const char* name, const detail::overload_rep& o)
     {
-		typedef list_class<detail::method_rep> methods_t;
+        auto copy = o;
+        add_method(name, std::move(copy));
+    }
 
-		methods_t::iterator m = std::find_if(
-			m_registration->m_methods.begin()
-			, m_registration->m_methods.end()
-			, method_name(name));
-		if (m == m_registration->m_methods.end())
-		{
-			m_registration->m_methods.push_back(method_rep());
-			m = m_registration->m_methods.end();
-			std::advance(m, -1);
-			m->name = name;
-		}
-		
-        m->add_overload(o);
-        m->crep = 0;
+    void class_base::add_method(const char* name, detail::overload_rep&& o)
+    {
+        using methods_t = list_class<detail::method_rep>;
+
+        auto m = std::find_if(
+            m_registration->m_methods.begin()
+            , m_registration->m_methods.end()
+            , method_name(name));
+        if (m == m_registration->m_methods.end())
+        {
+            m_registration->m_methods.push_back(method_rep());
+            m = m_registration->m_methods.end();
+            std::advance(m, -1);
+            m->name = name;
+        }
+
+        m->add_overload(std::move(o));
+        m->crep = nullptr;
     }
 
 #ifndef LUABIND_NO_ERROR_CHECKING
@@ -369,9 +372,9 @@ namespace luabind { namespace detail {
         m_registration->m_static_constants[name] = val;
     }
 
-    void class_base::add_inner_scope(scope& s)
+    void class_base::add_inner_scope(scope&& s)
     {
-        m_registration->m_scope.operator,(s);
+        m_registration->m_scope = std::move(m_registration->m_scope).operator,(std::move(s));
     }
 
 	template<class T>

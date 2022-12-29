@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "pch_script.h"
 #include <dinput.h>
 #include "HUDmanager.h"
 #include "../xrEngine/xr_ioconsole.h"

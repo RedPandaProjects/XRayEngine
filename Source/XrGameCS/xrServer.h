@@ -24,7 +24,7 @@ class CSE_Abstract;
 const u32	NET_Latency		= 50;		// time in (ms)
 
 // t-defs
-typedef xr_hash_map<u16, CSE_Abstract*>	xrS_entities;
+typedef x_unordered_map<u16, CSE_Abstract*>	xrS_entities;
 
 class xrClientData	: public IClient
 {
@@ -174,7 +174,7 @@ public:
 	void					Process_event_activate	(NET_Packet& P, const ClientID sender, const u32 time, const u16 id_parent, const u16 id_entity, bool send_message = true);
 	
 	xrClientData*			SelectBestClientToMigrateTo		(CSE_Abstract* E, BOOL bForceAnother=FALSE);
-	void					SendConnectResult		(IClient* CL, u8 res, u8 res1, char* ResultStr);
+	void SendConnectResult (IClient* CL, u8 res, u8 res1, const char* ResultStr);
 
 	void					AttachNewClient			(IClient* CL);
 	virtual void			OnBuildVersionRespond				(IClient* CL, NET_Packet& P);

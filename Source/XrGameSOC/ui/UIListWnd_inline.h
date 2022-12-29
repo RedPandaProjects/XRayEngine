@@ -6,25 +6,25 @@
 //  Реализация темплейтовых функций листбокса
 //=============================================================================
 
-template <class Element>
-bool CUIListWnd::AddItem(const char*  str, const float shift, void* pData,
-						 int value, int insertBeforeIdx)
-{
-	//создать новый элемент и добавить его в список
-	Element* pItem = NULL;
-	pItem = xr_new<Element>();
-
-	VERIFY(pItem);
-
-	pItem->Init(str, shift, m_bVertFlip?GetHeight()-GetSize()* m_iItemHeight-m_iItemHeight:GetSize()* m_iItemHeight, 
-		m_iItemWidth, m_iItemHeight);
-
-	pItem->SetData(pData);
-	pItem->SetValue(value);
-	pItem->SetTextColor(m_dwFontColor);
-
-	return AddItem<Element>(pItem, insertBeforeIdx);
-}
+//template <class Element>
+//bool CUIListWnd::AddItem(const char*  str, const float shift, void* pData,
+//						 int value, int insertBeforeIdx)
+//{
+//	//создать новый элемент и добавить его в список
+//	Element* pItem = NULL;
+//	pItem = xr_new<Element>();
+//
+//	VERIFY(pItem);
+//
+//	pItem->Init(str, shift, m_bVertFlip?GetHeight()-GetSize()* m_iItemHeight-m_iItemHeight:GetSize()* m_iItemHeight, 
+//		m_iItemWidth, m_iItemHeight);
+//
+//	pItem->SetData(pData);
+//	pItem->SetValue(value);
+//	pItem->SetTextColor(m_dwFontColor);
+//
+//	return AddItem<Element>(pItem, insertBeforeIdx);
+//}
 
 
 template <class Element>

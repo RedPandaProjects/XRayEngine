@@ -20,10 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
 // OR OTHER DEALINGS IN THE SOFTWARE.
 #include "pch.h"
-
-#include "luabind/lua_include.hpp"
-
-#include "luabind/luabind.hpp"
+#include <luabind/lua_include.hpp>
+#include <luabind/luabind.hpp>
 
 namespace luabind { namespace detail
 {
@@ -64,15 +62,19 @@ namespace luabind { namespace detail
 
 	int create_class::stage2(lua_State* L)
 	{
-		class_rep* crep = static_cast<class_rep*>(lua_touserdata(L, lua_upvalueindex(1)));
-		assert((crep != 0) && "internal error, please report");
+		class_rep* cl_rep = static_cast<class_rep*>(lua_touserdata(L, lua_upvalueindex(1)));
+		assert((cl_rep != 0) && "internal error, please report");
 		assert((is_class_rep(L, lua_upvalueindex(1))) && "internal error, please report");
 
 	#ifndef LUABIND_NO_ERROR_CHECKING
 
 		if (!is_class_rep(L, 1))
 		{
-			lua_pushstring(L, "expected class to derive from or a newline");
+			// Added class name to error info
+			string_class err_line("expected class '");
+			err_line += cl_rep->name();
+			err_line += "' to derive from or a newline";
+			lua_pushstring(L, err_line.c_str());
 			lua_error(L);
 		}
 
@@ -83,23 +85,23 @@ namespace luabind { namespace detail
 
 		binfo.pointer_offset = 0;
 		binfo.base = base;
-		crep->add_base_class(binfo);
+		cl_rep->add_base_class(binfo);
 
 		// set holder size and alignment so that we can class_rep::allocate
 		// can return the correctly sized buffers
-		crep->derived_from(base);
+		cl_rep->derived_from(base);
 		
 		// copy base class members
 
-		crep->get_table(L);
+		cl_rep->get_table(L);
 		base->get_table(L);
 		copy_member_table(L);
 
-		crep->get_default_table(L);
+		cl_rep->get_default_table(L);
 		base->get_default_table(L);
 		copy_member_table(L);
 
-		crep->set_type(base->type());
+		cl_rep->set_type(base->type());
 
 		return 0;
 	}
@@ -134,10 +136,10 @@ namespace luabind { namespace detail
 		lua_Debug ar;
 		if ( lua_getstack (L, 1, &ar) )
 		{
-			int i = 1;
-			const char *name_;
-			while ((name_ = lua_getlocal(L, &ar, i++)) != NULL) {
-				if (!strcmp("this", name_)) {
+			unsigned int i = 1;
+			const char *cname;
+			while ((cname = lua_getlocal(L, &ar, i++)) != nullptr) {
+				if (!strcmp("this", cname)) {
 					if (lua_istable(L,-1))
 						index = lua_gettop(L);
 					else

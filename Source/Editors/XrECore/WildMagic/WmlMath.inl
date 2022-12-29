@@ -9,6 +9,10 @@
 // that agreement.
 
 //----------------------------------------------------------------------------
+
+#ifndef  M_PI
+# define M_PI           3.14159265358979323846 
+#endif
 template <class Real>
 Real Math<Real>::ACos (Real fValue)
 {
@@ -21,7 +25,7 @@ Real Math<Real>::ACos (Real fValue)
     }
     else
     {
-        return PI;
+        return M_PI;
     }
 }
 //----------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////
-//	Module 		: ef_storage.cpp
+//	Module 		: this->ef_storage.cpp
 //	Created 	: 25.03.2002
 //  Modified 	: 11.10.2002
 //	Author		: Dmitriy Iassenev

@@ -16,7 +16,7 @@ struct CSaver {
 		template <bool a>
 		IC	static void save_data(const T &data, M &stream, const P &p)
 		{
-			STATIC_CHECK				(!is_polymorphic<T>::result,Cannot_save_polymorphic_classes_as_binary_data);
+			STATIC_CHECK				(!is_polymorphic<T>::value,Cannot_save_polymorphic_classes_as_binary_data);
 			stream.w					(&data,sizeof(T));
 		}
 
@@ -54,8 +54,8 @@ struct CSaver {
 		IC	static void save_data(const T &data, M &stream, const P &p)
 		{
 			stream.w_u32					((u32)data.size());
-			T::const_iterator				I = data.begin();
-			T::const_iterator				E = data.end();
+			typename T::const_iterator				I = data.begin();
+			typename T::const_iterator				E = data.end();
 			for ( ; I != E; ++I)
 				if (p(data,*I))
 					CSaver<M,P>::save_data	(*I,stream,p);
@@ -109,8 +109,8 @@ struct CSaver {
 	IC	static void save_data(const xr_vector<bool> &data, M &stream, const P &p)
 	{
 		stream.w_u32					((u32)data.size());
-		xr_vector<bool>::const_iterator I = data.begin();
-		xr_vector<bool>::const_iterator E = data.end();
+		typename xr_vector<bool>::const_iterator I = data.begin();
+		typename xr_vector<bool>::const_iterator E = data.end();
 		u32								mask = 0;
 		if (I != E) {
 			for (int j=0; I != E; ++I, ++j) {
@@ -130,8 +130,8 @@ struct CSaver {
 	IC	static void save_data(const svector<T,size> &data, M &stream, const P &p)
 	{
 		stream.w_u32					((u32)data.size());
-		svector<T,size>::const_iterator	I = data.begin();
-		svector<T,size>::const_iterator	E = data.end();
+		typename svector<T,size>::const_iterator	I = data.begin();
+		typename svector<T,size>::const_iterator	E = data.end();
 		for ( ; I != E; ++I)
 			if (p(data,*I))
 				CSaver<M,P>::save_data	(*I,stream,p);

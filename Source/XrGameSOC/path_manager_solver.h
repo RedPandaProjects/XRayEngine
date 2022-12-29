@@ -40,6 +40,15 @@ template <
 			_iteration_type
 		>
 {
+public:
+	using  const_iterator = CPathManagerGeneric <
+		CProblemSolver<T1, T2, T3, T4, T5, T6, T7, T8>,
+		_DataStorage,
+		_Parameters,
+		_dist_type,
+		_index_type,
+		_iteration_type
+	>::const_iterator;
 protected:
 	typedef CProblemSolver<T1,T2,T3,T4,T5,T6,T7,T8>	_Graph;
 	typedef typename _Graph::_edge_type				_edge_type;

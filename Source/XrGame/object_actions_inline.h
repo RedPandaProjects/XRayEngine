@@ -9,6 +9,8 @@
 #pragma once
 
 #include "object_handler.h"
+#include "object_handler_space.h"
+#include "hud_item_object.h"
 
 //////////////////////////////////////////////////////////////////////////
 // CObjectActionBase
@@ -25,7 +27,6 @@ IC	CObjectActionBase<_item_type>::CObjectActionBase(_item_type *item, CAI_Stalke
 template <typename _item_type>
 IC	void CObjectActionBase<_item_type>::set_property	(_condition_type condition_id, _value_type value)
 {
-	VERIFY					(m_storage);
 	m_storage->set_property	(condition_id,value);
 }
 
@@ -40,8 +41,7 @@ void CObjectActionBase<_item_type>::initialize	()
 template <typename _item_type>
 IC	CAI_Stalker &CObjectActionBase<_item_type>::object	() const
 {
-	VERIFY					(m_object);
-	return					(*m_object);
+	return					(*this->m_object);
 }
 
 template <typename _item_type>
@@ -56,7 +56,7 @@ template <typename _item_type>
 void CObjectActionBase<_item_type>::stop_hiding_operation_if_any	( ) const
 {
 	CHudItem* const hud_item					= smart_cast<CHudItem*>( object().inventory().ActiveItem() );
-	VERIFY										( hud_item );
+
 	if ( !hud_item->IsHidden() ) {
 		hud_item->StopCurrentAnimWithoutCallback( );
 		hud_item->SetState						( CHUDState::eIdle);
@@ -80,6 +80,6 @@ template <typename _item_type>
 void CObjectActionMember<_item_type>::execute			()
 {
 	inherited::execute		();
-	if (completed())
-		set_property		(m_condition_id,m_value);
+	if (this->completed())
+		this->set_property		(m_condition_id,m_value);
 }

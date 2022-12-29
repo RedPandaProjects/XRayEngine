@@ -6,8 +6,7 @@
 //	Description : luabind memory allocator template class
 ////////////////////////////////////////////////////////////////////////////
 
-#ifndef LUABIND_MEMORY_ALLOCATOR_H_INCLUDED
-#define LUABIND_MEMORY_ALLOCATOR_H_INCLUDED
+#pragma once
 
 namespace luabind {
 
@@ -62,6 +61,4 @@ public:
 	inline	bool				operator!=			(const memory_allocator<_0>&, const memory_allocator<_1>&);
 } // namespace luabind
 
-#include "luabind_memory_allocator_inline.h"
-
-#endif // #ifndef LUABIND_MEMORY_ALLOCATOR_H_INCLUDED
+#include <luabind/luabind_memory_allocator_inline.h>

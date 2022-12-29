@@ -19,16 +19,14 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
 // OR OTHER DEALINGS IN THE SOFTWARE.
-
 #include "pch.h"
-
-#include "luabind/detail/pcall.hpp"
-#include "luabind/error.hpp"
-#include "luabind/lua_include.hpp"
+#include <luabind/detail/pcall.hpp>
+#include <luabind/error.hpp>
+#include <luabind/lua_include.hpp>
 
 namespace luabind { namespace detail
 {
-	LUABIND_API int pcall(lua_State *L, int nargs, int nresults)
+	int pcall(lua_State *L, int nargs, int nresults)
 	{
 		pcall_callback_fun e = get_pcall_callback();
 		int en = 0;
@@ -39,13 +37,13 @@ namespace luabind { namespace detail
 			lua_insert(L, base);  // push pcall_callback under chunk and args
 			en = base;
   		}
-		int result_ = lua_pcall(L, nargs, nresults, en);
+		int result = lua_pcall(L, nargs, nresults, en);
 		if ( en )
 			lua_remove(L, en);  // remove pcall_callback
-		return result_;
+		return result;
 	}
 
-	LUABIND_API 	int resume_impl(lua_State *L, int nargs, int)
+	int resume_impl(lua_State *L, int nargs, int)
 	{
 		return lua_resume(L, nargs);
 	}

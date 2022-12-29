@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include "cover_point.h"
 
 IC	CCoverManager::CPointQuadTree &CCoverManager::covers		() const
 {
@@ -76,8 +77,8 @@ IC	const CCoverPoint *CCoverManager::best_cover				(const Fvector &position, flo
 
 	float					radius_sqr = _sqr(radius);
 
-	xr_vector<CCoverPoint*>::const_iterator	I = m_nearest.begin();
-	xr_vector<CCoverPoint*>::const_iterator	E = m_nearest.end();
+	auto	I = m_nearest.begin();
+	auto	E = m_nearest.end();
 	for ( ; I != E; ++I) {
 		if (radius_sqr < position.distance_to_sqr((*I)->position()))
 			continue;

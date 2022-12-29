@@ -4,6 +4,7 @@
 #include "StatGraph.h"
 //---------------------------------------------
 
+
 CStatGraph::CStatGraph()
 {
 	OnDeviceCreate();

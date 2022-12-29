@@ -56,8 +56,8 @@ struct CComparer {
 		if (_1.size() != _2.size())
 			return					(p());
 		
-		svector<T,size>::const_iterator	I = _1.begin(), J = _2.begin();
-		svector<T,size>::const_iterator	E = _1.end();
+		typename svector<T,size>::const_iterator	I = _1.begin(), J = _2.begin();
+		typename svector<T,size>::const_iterator	E = _1.end();
 		for ( ; I != E; ++I, ++J)
 			if (!compare(*I,*J,p))
 				return				(false);
@@ -128,8 +128,8 @@ struct CComparer {
 			if (_1.size() != _2.size())
 				return					(p());
 
-			T::const_iterator			I = _1.begin(), J = _2.begin();
-			T::const_iterator			E = _1.end();
+			typename T::const_iterator			I = _1.begin(), J = _2.begin();
+			typename T::const_iterator			E = _1.end();
 			for ( ; I != E; ++I, ++J)
 				if (!CComparer::compare(*I,*J,p))
 					return				(false);
@@ -199,11 +199,32 @@ namespace object_comparer {
 		return			(compare(p0,p1,object_comparer::detail::comparer<b>()));\
 	}
 
+namespace std_legacy
+{
+	struct logical_and
+	{
+		template <typename T>
+		constexpr inline bool operator()(const T& lhs, const T& rhs) const
+		{
+			return lhs && rhs;
+		}
+	};
+
+	struct logical_or
+	{
+		template <typename T>
+		constexpr inline bool operator()(const T& lhs, const T& rhs) const
+		{
+			return lhs && rhs;
+		}
+	};
+}
+
 declare_comparer(equal,			std::equal_to);
 declare_comparer(greater_equal,	std::greater_equal);
 declare_comparer(greater,		std::greater);
 declare_comparer(less_equal,	std::less_equal);
 declare_comparer(less,			std::less);
 declare_comparer(not_equal,		std::not_equal_to);
-declare_comparer(logical_and,	std::logical_and);
-declare_comparer(logical_or,	std::logical_or);
+declare_comparer(logical_and,	std_legacy::logical_and);
+declare_comparer(logical_or,	std_legacy::logical_or);

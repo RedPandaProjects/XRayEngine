@@ -117,58 +117,42 @@ void ESoundThumbnail::Save(int age, LPCSTR path)
 
 bool ESoundThumbnail::OnMaxAIDistAfterEdit(PropValue* sender, float& edit_val)
 {
-    UIPropertiesForm* P	= sender->Owner()->Owner(); 		VERIFY(P);
+  /*  UIPropertiesForm* P	= sender->Owner()->Owner(); 		VERIFY(P);
     PropItem* S 	= P->FindItemOfName("Max Dist"); 			VERIFY(S);
     FloatValue* V 	= dynamic_cast<FloatValue*>(S->GetFrontValue());VERIFY(V);
     float max_val 	= V->GetValue	();
-	return edit_val<max_val;
+	return edit_val<max_val;*/
     return false;
 }
 void ESoundThumbnail::OnMaxDistChange(PropValue* sender)
 {
-    FloatValue* SV 	= dynamic_cast<FloatValue*>(sender);VERIFY(SV);
-    UIPropertiesForm* P	= sender->Owner()->Owner(); 		VERIFY(P);
-    PropItem* S 	= P->FindItemOfName("Max AI Dist"); 		VERIFY(S);
-    bool bChanged 	= false;
-    for (PropItem::PropValueIt it=S->Values().begin(); S->Values().end() != it; ++it){
-	    FloatValue* CV = dynamic_cast<FloatValue*>(*it);VERIFY(CV);
-        CV->lim_mx	= *SV->value;
-        if (*CV->value>CV->lim_mx){ 
-        	ELog.DlgMsg	(mtInformation,"'Max AI Dist' <= 'Max Dist'. 'Max AI Dist' will be clamped.");
-        	bChanged	= true;
-        	*CV->value 	= CV->lim_mx;
-        }
-        if (!CV->Equal(S->Values().front()))
-            S->m_Flags.set(PropItem::flMixed,TRUE);
-    }
-	if (bChanged){ 
-    	/*P->Modified		();
-        P->RefreshForm	();*//*TODO:Это теперь не нужно*/
-    }
+ //   FloatValue* SV 	= dynamic_cast<FloatValue*>(sender);VERIFY(SV);
+ //   UIPropertiesForm* P	= sender->Owner()->Owner(); 		VERIFY(P);
+ //   PropItem* S 	= P->FindItemOfName("Max AI Dist"); 		VERIFY(S);
+ //   bool bChanged 	= false;
+ //   for (PropItem::PropValueIt it=S->Values().begin(); S->Values().end() != it; ++it){
+	//    FloatValue* CV = dynamic_cast<FloatValue*>(*it);VERIFY(CV);
+ //       CV->lim_mx	= *SV->value;
+ //       if (*CV->value>CV->lim_mx){ 
+ //       	ELog.DlgMsg	(mtInformation,"'Max AI Dist' <= 'Max Dist'. 'Max AI Dist' will be clamped.");
+ //       	bChanged	= true;
+ //       	*CV->value 	= CV->lim_mx;
+ //       }
+ //       if (!CV->Equal(S->Values().front()))
+ //           S->m_Flags.set(PropItem::flMixed,TRUE);
+ //   }
+	//if (bChanged){ 
+ //   	/*P->Modified		();
+ //       P->RefreshForm	();*//*TODO:Это теперь не нужно*/
+ //   }
 }
 
 void ESoundThumbnail::FillProp(PropItemVec& items)
-{                                    
-	FloatValue* V	= 0;  
-    PHelper().CreateFloat		(items, "Quality", 		&m_fQuality);
-    PHelper().CreateFloat		(items, "Min Dist",		&m_fMinDist, 	0.01f,1000.f);
-    V = PHelper().CreateFloat	(items, "Max Dist",		&m_fMaxDist, 	0.1f,1000.f);
-    V->OnChangeEvent.bind		(this,&ESoundThumbnail::OnMaxDistChange);
-    V = PHelper().CreateFloat	(items, "Max AI Dist",	&m_fMaxAIDist, 	0.1f,1000.f);
-    V->OnAfterEditEvent.bind	(this,&ESoundThumbnail::OnMaxAIDistAfterEdit);
-    PHelper().CreateFloat		(items, "Base Volume",	&m_fBaseVolume, 0.f,2.f);
-    PHelper().CreateToken32		(items, "Game Type",	&m_uGameType, 	anomaly_type_token);
+{
 }
 //------------------------------------------------------------------------------
 
-void ESoundThumbnail::FillInfo(PropItemVec& items)
-{
-    PHelper().CreateCaption		(items, "Quality", 		xr_string().Printf("%3.2f",m_fQuality).c_str());
-    PHelper().CreateCaption		(items, "Min Dist", 	xr_string().Printf("%3.2f",m_fMinDist).c_str());
-    PHelper().CreateCaption		(items, "Max Dist",		xr_string().Printf("%3.2f",m_fMaxDist).c_str());
-    PHelper().CreateCaption		(items, "Max AI Dist",	xr_string().Printf("%3.2f",m_fMaxAIDist).c_str());
-    PHelper().CreateCaption		(items, "Base Volume",	xr_string().Printf("%3.2f",m_fBaseVolume).c_str());
-    PHelper().CreateCaption		(items, "Game Type",	get_token_name(anomaly_type_token,m_uGameType));
+void ESoundThumbnail::FillInfo(PropItemVec& items){
 }
 //------------------------------------------------------------------------------
 

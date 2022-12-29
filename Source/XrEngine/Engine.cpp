@@ -8,7 +8,6 @@
 #include "XR_IOConsole.h"
 
 CEngine			*	Engine = nullptr;;
-xrDispatchTable		*PSGP = nullptr;
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -28,18 +27,6 @@ extern	void msCreate		(LPCSTR name);
 
  void CEngine::Initialize	(void)
 {
-#ifdef _DEBUG
-	 hPSGP = LoadLibrary("xrCPU_Pipe_Debug.dll");
-#else
-	 hPSGP = LoadLibrary("xrCPU_Pipe_Release.dll");
-#endif
-	// Bind PSGP
-	
-	R_ASSERT	(hPSGP);
-	xrBinder*	bindCPU	= (xrBinder*)	GetProcAddress(hPSGP,"xrBind_PSGP");	R_ASSERT(bindCPU);
-	PSGP = xr_new<xrDispatchTable>();
-	bindCPU		(PSGP, CPU::ID.feature);
-
 	// Other stuff
 	Engine->Sheduler.Initialize			( );
 	// 
@@ -60,15 +47,4 @@ void CEngine::Destroy	()
 #endif // DEBUG_MEMORY_MANAGER
 	Engine->External.Destroy				( );
 	
-	if (hPSGP)	
-	{ 
-		ttapi_Done_func*  ttapi_Done = (ttapi_Done_func*) GetProcAddress(hPSGP,"ttapi_Done");	R_ASSERT(ttapi_Done);
-		if (ttapi_Done)
-			ttapi_Done();
-
-		FreeLibrary	(hPSGP); 
-		hPSGP		=0; 
-		ZeroMemory	(&PSGP,sizeof(PSGP));
-		xr_delete(PSGP);
-	}
 }

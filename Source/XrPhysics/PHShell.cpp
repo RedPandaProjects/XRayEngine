@@ -1408,7 +1408,8 @@ void CPHShell::applyGravityAccel(const Fvector& accel)
 
 void CPHShell::PlaceBindToElForms()
 {
-	PlaceBindToElFormsRecursive(Fidentity,m_pKinematics->LL_GetBoneRoot(),0, m_pKinematics->LL_GetBonesVisible());
+	auto BoneVisMask = m_pKinematics->LL_GetBonesVisible();
+	PlaceBindToElFormsRecursive(Fidentity,m_pKinematics->LL_GetBoneRoot(),0, BoneVisMask);
 }
 void	CPHShell::		setTorque				(const Fvector& torque)
 {

@@ -19,15 +19,13 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
 // OR OTHER DEALINGS IN THE SOFTWARE.
-
 #include "pch.h"
-
-#include "luabind/lua_include.hpp"
-
-#include "luabind/luabind.hpp"
-#include "luabind/detail/class_registry.hpp"
-#include "luabind/detail/class_rep.hpp"
-#include "luabind/detail/operator_id.hpp"
+#include <luabind/lua_include.hpp>
+#include <luabind/luabind.hpp>
+#include <luabind/detail/class_registry.hpp>
+#include <luabind/detail/class_rep.hpp>
+#include <luabind/detail/operator_id.hpp>
+#include <luabind/detail/garbage_collector.hpp>
 
 namespace luabind { namespace detail {
 
@@ -54,12 +52,7 @@ namespace luabind { namespace detail {
             lua_rawset(L, -3);
 
             lua_pushstring(L, "__gc");
-            lua_pushcclosure(
-                L
-              , &garbage_collector_s<
-                    detail::class_rep
-                >::apply
-                , 0);
+            lua_pushcclosure(L, &garbage_collector_s<detail::class_rep>::apply, 0);
 
             lua_rawset(L, -3);
 
@@ -127,12 +120,7 @@ namespace luabind { namespace detail {
             lua_rawset(L, -3);
 
             lua_pushstring(L, "__gc");
-            lua_pushcclosure(
-                L
-              , &detail::garbage_collector_s<
-                    detail::class_rep
-                >::apply
-                , 0);
+            lua_pushcclosure(L, &detail::garbage_collector_s<detail::class_rep>::apply, 0);
 
             lua_rawset(L, -3);
 
@@ -185,13 +173,7 @@ namespace luabind { namespace detail {
             lua_newtable(L);
 
             lua_pushstring(L, "__gc");
-            lua_pushcclosure(
-                L 
-              , detail::garbage_collector_s<
-                    detail::free_functions::function_rep
-                >::apply
-              , 0);
-
+            lua_pushcclosure(L, detail::garbage_collector_s<detail::free_functions::function_rep>::apply, 0);
             lua_rawset(L, -3);
 
             return detail::ref(L);
@@ -242,8 +224,10 @@ namespace luabind { namespace detail {
     void class_registry::add_class(LUABIND_TYPE_INFO info, class_rep* crep)
     {
         // class is already registered
-        assert((m_classes.find(info) == m_classes.end()) 
-            && "you are trying to register a class twice");
+		if (m_classes.find(info) != m_classes.end())
+			//Msg("*FATAL*: you are trying to register a class twice [%s]", crep->name()); //To XRay Log
+
+        assert((m_classes.find(info) == m_classes.end()) && "you are trying to register a class twice");
         m_classes[info] = crep;
     }
 
@@ -252,8 +236,7 @@ namespace luabind { namespace detail {
         map_class<LUABIND_TYPE_INFO, class_rep*, cmp>::const_iterator i(
             m_classes.find(info));
 
-        if (i == m_classes.end()) return 0; // the type is not registered
-        return i->second;
+        return (i == m_classes.end()) ? nullptr /* the type is not registered */ : i->second /* else */;
     }
 
 }} // namespace luabind::detail

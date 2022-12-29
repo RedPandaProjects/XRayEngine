@@ -803,7 +803,7 @@ void   CBaseMonster::add_debug_info (debug::text_tree& root_s)
 	if ( movement().path_type() == MovementManager::ePathTypeGamePath ) 
 	{
 		movement_s.add_line("Completed", movement().game_path().completed());
-		movement_s.add_line("Path_Size", movement().game_path().path().size());
+		movement_s.add_line("Path_Size", u32(movement().game_path().path().size()));
 		movement_s.add_line("Current_Point", movement().game_path().intermediate_index());
 	}
 

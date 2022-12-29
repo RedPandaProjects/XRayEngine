@@ -1,4 +1,5 @@
 #pragma once
+#include "basemonster/base_monster.h"
 
 #define TEMPLATE_SPECIALIZATION template <\
 	typename _Object\
@@ -167,7 +168,7 @@ void   CStateAbstract::add_debug_info (debug::text_tree& root_s)
 	}
 	else
 	{
-		for ( SubStates::const_iterator i=substates.begin(), e=substates.end();
+		for (auto i=substates.begin(), e=substates.end();
 			  i!=e; ++i )
 		{
 			TextTree& current_state_s = root_s.add_line(EMonsterState((*i).first));
@@ -210,8 +211,8 @@ EMonsterState CStateAbstract::get_state_type()
 TEMPLATE_SPECIALIZATION
 void CStateAbstract::remove_links	(CObject* object)
 {
-	SubStates::iterator	i = substates.begin();
-	SubStates::iterator	e = substates.end();
+	auto	i = substates.begin();
+	auto	e = substates.end();
 	for ( ; i != e; ++i)
 		(*i).second->remove_links	(object);
 }

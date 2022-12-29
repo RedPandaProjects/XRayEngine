@@ -25,7 +25,7 @@ public:
 	void		reset_awards				();
 
 	static int const		fields_count = at_awards_count * ap_award_params_count;
-	typedef char* award_fields_names_t[fields_count];
+	typedef const char* award_fields_names_t[fields_count];
 
 	all_awards_t &					get_player_awards		();
 	void							merge_sake_to_ltx_awards();

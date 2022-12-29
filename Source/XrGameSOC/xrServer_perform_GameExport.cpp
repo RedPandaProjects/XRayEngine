@@ -13,15 +13,15 @@ void xrServer::Perform_game_export()
 	u32				mode = net_flags(TRUE, TRUE);
 
 	// Game config (all, info includes _new_ player)
-
-	ForEachClientDoSender([&](IClient* cl) {
+	auto Lamda = [&](IClient* cl) {
 		ClientID ID = cl->ID;
 		xrClientData* CL = (xrClientData*)cl;
 		if (!CL->net_Accepted) return;
 		P.w_begin(M_SV_CONFIG_GAME);
 		game->net_Export_State(P, ID);
 		SendTo(ID, P, mode);
-		});
+	};
+	ForEachClientDoSender(Lamda);
 	game->sv_force_sync	= FALSE;
 }
 

@@ -16,7 +16,7 @@ CStatePsyDogPsyAttackAbstract::CStatePsyDogPsyAttack(_Object *obj) : inherited(o
 TEMPLATE_SPECIALIZATION
 void CStatePsyDogPsyAttackAbstract::reselect_state()
 {
-	select_state(eStateAttack_HideInCover);
+	this->select_state(eStateAttack_HideInCover);
 }
 
 

@@ -105,6 +105,7 @@
       <PreprocessorDefinitions>;XRGAMESPY_EXPORTS;XRAY_DISABLE_GAMESPY_WARNINGS;_DEBUG;XRGAMESPY_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

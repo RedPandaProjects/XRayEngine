@@ -180,7 +180,7 @@ CInifile::~CInifile( )
 	if (!m_flags.test(eReadOnly) && m_flags.test(eSaveAtEnd)) 
 	{
 		if (!save_as())
-			Log		("!Can't save inifile:",m_file_name);
+			LogFormat		("!Can't save inifile: {}", m_file_name);
 	}
 
 	RootIt			I = DATA.begin();

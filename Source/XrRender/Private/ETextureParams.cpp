@@ -187,77 +187,7 @@ void STextureParams::OnTypeChange(PropValue* prop)
 
 void STextureParams::FillProp(LPCSTR base_name, PropItemVec& items, PropValue::TOnChange on_type_change)
 {                             
-	OnTypeChangeEvent	            = on_type_change;
-    PropValue* P		            = PHelper().CreateToken32	(items, "Type",		(u32*)&type,		ttype_token);
-    P->OnChangeEvent.bind           (this,&STextureParams::OnTypeChange);
-    PHelper().CreateCaption			(items, "Source\\Width",			shared_str().printf("%d",width));
-    PHelper().CreateCaption			(items, "Source\\Height",			shared_str().printf("%d",height));
-    PHelper().CreateCaption			(items, "Source\\Alpha",			HasAlpha	()?"present":"absent"); 
-	switch (type){
-    case ttImage:	
-    case ttCubeMap:	
-	    PHelper().CreateToken32		(items, "Format",	   				(u32*)&fmt, 		tfmt_token);
-
-	    PHelper().CreateFlag32		(items, "MipMaps\\Enabled",			&flags,				flGenerateMipMaps);
-    	PHelper().CreateToken32		(items, "MipMaps\\Filter",			(u32*)&mip_filter,	tparam_token);
-
-    	P = PHelper().CreateToken32	(items, "Bump\\Mode",				(u32*)&bump_mode,	tbmode_token);
-        P->OnChangeEvent.bind(this,&STextureParams::OnTypeChange);
-        if (tbmUse==bump_mode || tbmUseParallax==bump_mode)
-        {
-        	xr_string path;
-            path = base_name;
-        	PHelper().CreateChoose	(items, "Bump\\Texture",			&bump_name,			smTexture, path.c_str());
-        }
-        
-        PHelper().CreateFlag32		(items, "Details\\Use As Diffuse",	&flags,				flDiffuseDetail);
-        PHelper().CreateFlag32		(items, "Details\\Use As Bump (R2)",&flags,				flBumpDetail);
-        PHelper().CreateChoose		(items, "Details\\Texture",			&detail_name,		smTexture);
-        PHelper().CreateFloat	   	(items, "Details\\Scale",			&detail_scale,		0.1f,10000.f,0.1f,2);
-
-        PHelper().CreateToken32		(items, "Material\\Base",			(u32*)&material,	tmtl_token);
-        PHelper().CreateFloat	   	(items, "Material\\Weight",			&material_weight	);
-        
-//		PHelper().CreateFlag32		(items, "Flags\\Binary Alpha",		&flags,				flBinaryAlpha);
-        PHelper().CreateFlag32		(items, "Flags\\Dither",			&flags,				flDitherColor);
-        PHelper().CreateFlag32		(items, "Flags\\Dither Each MIP",	&flags,				flDitherEachMIPLevel);
-        PHelper().CreateFlag32		(items, "Flags\\Implicit Lighted",	&flags,				flImplicitLighted);
-
-        PHelper().CreateFlag32		(items, "Fade\\Enable Color",		&flags,				flFadeToColor);
-		PHelper().CreateFlag32		(items, "Fade\\Enabled Alpha",		&flags,				flFadeToAlpha);
-		PHelper().CreateU8			(items,	"Fade\\Delay 'n' MIP",		&fade_delay,		0,255);
-		PHelper().CreateU32			(items, "Fade\\% of color to fade in",&fade_amount,		0,100,0);
-        PHelper().CreateColor	   	(items, "Fade\\Color",				&fade_color			);
-		PHelper().CreateU8			(items,	"Fade\\Alpha",				((u8*)&fade_color)+3,0,255);
-
-        PHelper().CreateFlag32		(items, "Border\\Enabled Color",	&flags,				flColorBorder);
-        PHelper().CreateFlag32		(items, "Border\\Enabled Alpha",	&flags,				flAlphaBorder);
-        PHelper().CreateColor	   	(items, "Border\\Color",			&border_color		);
-    break;
-    case ttBumpMap:	
-        PHelper().CreateChoose		(items, "Bump\\Special NormalMap",	&ext_normal_map_name,smTexture,base_name);
-        PHelper().CreateFloat	   	(items, "Bump\\Virtual Height (m)",	&bump_virtual_height, 0.f, 0.1f, 0.001f, 3);
-    break;
-    case ttNormalMap:	
-	    P = PHelper().CreateToken32	(items, "Format",	   				(u32*)&fmt, 		tfmt_token); P->Owner()->Enable(false);
-
-	    PHelper().CreateFlag32		(items, "MipMaps\\Enabled",			&flags,				flGenerateMipMaps);
-    	PHelper().CreateToken32		(items, "MipMaps\\Filter",			(u32*)&mip_filter,	tparam_token);
-    break;
-    case ttTerrain:	
-	    P = PHelper().CreateToken32	(items, "Format",	   				(u32*)&fmt, 		tfmt_token); P->Owner()->Enable(false);
-
-        PHelper().CreateFlag32		(items, "Details\\Use As Diffuse",	&flags,				flDiffuseDetail);
-        PHelper().CreateFlag32		(items, "Details\\Use As Bump (R2)",&flags,				flBumpDetail);
-        PHelper().CreateChoose		(items, "Details\\Texture",			&detail_name,		smTexture);
-        PHelper().CreateFloat	   	(items, "Details\\Scale",			&detail_scale,		0.1f,10000.f,0.1f,2);
-
-        PHelper().CreateToken32		(items, "Material\\Base",			(u32*)&material,	tmtl_token);
-        PHelper().CreateFloat	   	(items, "Material\\Weight",			&material_weight	);
-
-        P = PHelper().CreateFlag32	(items, "Flags\\Implicit Lighted",	&flags,				flImplicitLighted);  P->Owner()->Enable(false);
-    break;
-    }
+	
 }
 
 BOOL STextureParams::similar(STextureParams& tp1, xr_vector<xr_string>& sel_params)

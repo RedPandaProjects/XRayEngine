@@ -88,8 +88,8 @@ game_cl_mp::~game_cl_mp()
 	if (m_BloodLossIconsShader)
 		m_BloodLossIconsShader.destroy();
 	*/
-	m_pSndMessagesInPlay.clear_and_free();
-	m_pSndMessages.clear_and_free();
+	m_pSndMessagesInPlay.clear();
+	m_pSndMessages.clear();
 
 //	xr_delete(m_pSpeechMenu);
 	DestroyMessagesMenus();
@@ -298,7 +298,7 @@ bool	game_cl_mp::OnKeyboardRelease		(int key)
 
 char	Color_Weapon[]	= "%c[255,255,1,1]";
 u32		Color_Teams_u32[3]	= {color_rgba(255,240,190,255), color_rgba(64,255,64,255), color_rgba(64,64,255,255)};
-LPSTR	Color_Teams[3]	= {"%c[255,255,240,190]", "%c[255,64,255,64]", "%c[255,64,64,255]"};
+const char*	Color_Teams[3]	= {"%c[255,255,240,190]", "%c[255,64,255,64]", "%c[255,64,64,255]"};
 char	Color_Main[]	= "%c[255,192,192,192]";
 char	Color_Radiation[]	= "%c[255,0,255,255]";
 char	Color_Neutral[]	= "%c[255,255,0,255]";

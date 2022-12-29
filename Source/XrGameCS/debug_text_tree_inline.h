@@ -5,12 +5,28 @@
 //	Author		: Lain
 //	Description : Text tree for onscreen debugging 
 ////////////////////////////////////////////////////////////////////////////
-
+#include "ai/monsters/state_defs.h"
 
 template <class Type1>
 void   text_tree::add_text (const Type1& a)
 {
-	strings.push_back(make_xrstr(a));
+	if constexpr (std::is_same_v<Type1, const char*>)
+	{
+
+	}
+	if constexpr (std::is_same_v<Type1, const char*>)
+	{
+
+	}
+	else if constexpr (std::is_enum_v<Type1>)
+	{
+		strings.push_back(::make_xrstr((u32)a));
+	}
+	else
+	{
+		strings.push_back(::make_xrstr(a));
+
+	}
 }
 
 template <class Type1, class Type2>

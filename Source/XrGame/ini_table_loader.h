@@ -47,7 +47,7 @@ private:
 	template <typename T_CONVERT_ITEM>
         T_ITEM				convert			(LPCSTR)
 	{
-		STATIC_CHECK(false, Specialization_for_convert_in_CIni_Table_not_found);
+		static_assert(!std::is_same_v<T_CONVERT_ITEM, T_CONVERT_ITEM>, "Specialization for convert in CIni_Table not found");
 		NODEFAULT;
 	}
 
@@ -113,7 +113,7 @@ typename CSIni_Table::ITEM_TABLE& CSIni_Table::table	()
 
 	for (CInifile::SectCIt i = table_ini.Data.begin(); table_ini.Data.end() != i; ++i)
 	{
-		T_INI_LOADER::index_type cur_index = T_INI_LOADER::IdToIndex((*i).first, type_max(T_INI_LOADER::index_type));
+		typename T_INI_LOADER::index_type cur_index = T_INI_LOADER::IdToIndex((*i).first, type_max(T_INI_LOADER::index_type));
 
 		if(type_max(T_INI_LOADER::index_type) == cur_index)
 			Debug.fatal(DEBUG_INFO,"wrong community %s in section [%s]", (*i).first, table_sect);
@@ -121,7 +121,7 @@ typename CSIni_Table::ITEM_TABLE& CSIni_Table::table	()
 		(*m_pTable)[cur_index].resize(cur_table_width);
 		for(std::size_t j=0; j<cur_table_width; j++)
 		{
-			(*m_pTable)[cur_index][j] = convert<typename T_ITEM>(_GetItem(*(*i).second,(int)j,buffer));
+			(*m_pTable)[cur_index][j] = convert<T_ITEM>(_GetItem(*(*i).second,(int)j,buffer));
 		}
 	}
 

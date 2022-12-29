@@ -38,8 +38,8 @@ public:
 			xr_vector			(size_t _count, const T& _value): std::vector<T>	(_count,_value)	{}
 	explicit xr_vector			(size_t _count)					: std::vector<T> 	(_count)		{}
 	void	clear				()								{ erase(begin(),end());				} 
-	void	clear_and_free		()								{ std::vector<T>::clear();			}
-	void	clear_not_free		()								{ erase(begin(),end());	}
+	void	clear		()								{ std::vector<T>::clear();			}
+	void	clear		()								{ erase(begin(),end());	}
 	ICF		const_reference	operator[]	(size_type _Pos) const	{ {VERIFY(_Pos<size());} return (*(begin() + _Pos)); }
 	ICF		reference		operator[]	(size_type _Pos)		{ {VERIFY(_Pos<size());} return (*(begin() + _Pos)); }
 };
@@ -147,53 +147,7 @@ IC xr_string __cdecl	make_string(LPCSTR format, ...)
 
 // vector
 template	<typename T, typename allocator = xalloc<T> >
-class xr_vector : public std::vector<T,allocator> {
-private:
-	typedef std::vector<T,allocator>	inherited;
-
-public:
-	typedef allocator					allocator_type;
-
-public:
-			xr_vector			()									: inherited	()					{}
-			xr_vector			(size_t _count, const T& _value)	: inherited	(_count,_value)		{}
-	explicit xr_vector			(size_t _count)						: inherited (_count)			{}
-	u32		size				() const							{ return (u32)inherited::size();} 
-
-	void	clear_and_free		()									{ inherited::clear();			}
-	void	clear_not_free		()									{ erase(begin(),end());			}
-	void	clear_and_reserve	()									{ if ( capacity() <= (size()+size()/4) ) clear_not_free(); else { u32 old=size(); clear_and_free(); reserve(old); } }
-
-#ifdef M_DONTDEFERCLEAR_EXT
-	void	clear				()									{ clear_and_free	();			}
-#else
-	void	clear				()									{ clear_not_free	();			}
-#endif
-
-	/*const_reference operator[]	(size_type _Pos) const { {VERIFY2(_Pos<size(), make_string("index is out of range: index requested[%d], size of container[%d]", _Pos, size()).c_str()); } return (*(begin() + _Pos)); }
-	reference operator[]		(size_type _Pos)					{ {VERIFY2(_Pos<size(),make_string("index is out of range: index requested[%d], size of container[%d]", _Pos, size()).c_str());} return (*(begin() + _Pos)); }*/
-};
-
-// vector<bool>
-template <>
-class xr_vector<bool,xalloc<bool> >	: public std::vector<bool,xalloc<bool> > {
-private:
-	typedef std::vector<bool,xalloc<bool> > inherited;
-
-public: 
-	u32		size				() const							{ return (u32)inherited::size();} 
-	void	clear				()									{ erase(begin(),end());			} 
-};
-
-template <typename allocator>
-class xr_vector<bool,allocator>	: public std::vector<bool,allocator> {
-private:
-	typedef std::vector<bool,allocator> inherited;
-
-public: 
-	u32		size				() const							{ return (u32)inherited::size();} 
-	void	clear				()									{ erase(begin(),end());			} 
-};
+using xr_vector = std::vector<T, allocator>;
 
 // deque
 template <typename T, typename allocator = xalloc<T> >
@@ -245,7 +199,10 @@ template	<typename K, class V, class P=std::less<K>, typename allocator = xalloc
 	template	<typename K, class V, class _HashFcn=std::hash<K>, class _EqualKey=std::equal_to<K>, typename allocator = xalloc<std::pair<K,V> > >	class	xr_hash_map		: public std::hash_map<K,V,_HashFcn,_EqualKey,allocator>		{ public: u32 size() const {return (u32)__super::size(); } };
 	template	<typename K, class V, class _HashFcn=std::hash<K>, class _EqualKey=std::equal_to<K>, typename allocator = xalloc<std::pair<K,V> > >	class	xr_hash_multimap: public std::hash_multimap<K,V,_HashFcn,_EqualKey,allocator>	{ public: u32 size() const {return (u32)__super::size(); } };
 #else 
-	template	<typename K, class V, class _Traits=stdext::hash_compare<K, std::less<K> >, typename allocator = xalloc<std::pair<const K, V>>>	class	xr_hash_map		: public stdext::hash_map<K,V,_Traits, allocator>	{ public: u32 size() const {return (u32)stdext::hash_map<K, V, _Traits, allocator>::size(); } };
+
+template <typename K, class V, class Hasher = std::hash<K>, class Traits = std::equal_to<K>, typename allocator = xalloc<std::pair<const K, V>>>
+using x_unordered_map = std::unordered_map<K, V, Hasher, Traits, allocator>;
+
 #endif // #ifdef STLPORT
 
 #endif

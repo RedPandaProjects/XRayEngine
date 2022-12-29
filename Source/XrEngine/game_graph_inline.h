@@ -32,7 +32,7 @@ IC	bool IGameGraph::mask											(const _LOCATION_ID M[GameGraph::LOCATION_TYP
 
 IC	float IGameGraph::distance										(const _GRAPH_ID tGraphID0, const _GRAPH_ID tGraphID1) const
 {
-	const_iterator				i, e;
+	IGameGraph::const_iterator				i, e;
 	begin						(tGraphID0,i,e);
 	for ( ; i != e; ++i)
 		if (value(tGraphID0,i) == tGraphID1)

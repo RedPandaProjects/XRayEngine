@@ -304,7 +304,7 @@ BOOL CGameObject::net_Spawn		(CSE_Abstract*	DC)
 #pragma warning(push)
 #pragma warning(disable:4238)
 		m_ini_file					= xr_new<CInifile>(
-			&IReader				(
+			new IReader				(
 				(void*)(*(O->m_ini_string)),
 				O->m_ini_string.size()
 			),

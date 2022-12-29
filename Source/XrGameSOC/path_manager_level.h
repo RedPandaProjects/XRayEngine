@@ -54,7 +54,8 @@ protected:
 				_index_type,
 				_iteration_type
 			> inherited;
-
+public:
+	using const_iterator = inherited::const_iterator;
 protected:
 	int					x1;
 //	float				y1;

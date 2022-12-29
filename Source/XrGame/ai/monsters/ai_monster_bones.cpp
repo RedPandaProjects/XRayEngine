@@ -2,6 +2,7 @@
 #include "ai_monster_bones.h"
 #include "Kinematics.h"
 #include "../../../xrEngine/bone.h"
+#include "ai/monsters/ai_monster_bones.h"
 
 
 //****************************************************************************************************

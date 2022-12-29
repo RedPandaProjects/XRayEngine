@@ -73,7 +73,7 @@ private:
 
 
 	static unsigned int const merged_fields_count = best_scores_store::fields_count + awards_store::fields_count;
-	typedef	char*		merged_fields_names_t[merged_fields_count];
+	typedef	const char*		merged_fields_names_t[merged_fields_count];
 
 	void				load_profile				(store_operation_cb progress_indicator_cb);
 	void				merge_fields				(best_scores_store::best_fields_names_t const & best_results,

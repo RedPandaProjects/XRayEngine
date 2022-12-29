@@ -93,7 +93,7 @@ protected:
 
 	virtual		const shared_str	GetTeamMenu				(s16 team);
 	virtual		void				LoadTeamDefaultPresetItems	(const shared_str& caSection, IBuyWnd* pBuyMenu, PRESET_ITEMS* pPresetItems);
-	virtual		void				LoadPlayerDefItems			(char* TeamName, IBuyWnd* pBuyMenu);
+	virtual void LoadPlayerDefItems (const char* TeamName, IBuyWnd* pBuyMenu);
 	virtual		void				LoadDefItemsForRank			(IBuyWnd* pBuyMenu);
 	virtual		void				ChangeItemsCosts			(IBuyWnd* pBuyMenu);
 ///	virtual		s16					GetBuyMenuItemIndex			(u8 SlotID, u8 ItemID);
@@ -110,7 +110,7 @@ protected:
 public:
 	virtual s16						ModifyTeam				(s16 Team);
 
-	virtual		char*				getTeamSection			(int Team);
+	virtual const char* getTeamSection (int Team);
 	virtual	void					SetCurrentBuyMenu		();
 	virtual	void					SetCurrentSkinMenu		();//	{pCurSkinMenu = pSkinMenuTeam0; };
 

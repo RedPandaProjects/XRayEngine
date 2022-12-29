@@ -12,7 +12,6 @@
 #include "face_smoth_flags.h"
 #include "itterate_adjacents.h"
 #include "itterate_adjacents_dynamic.h"
-#include "..\XrETools\ETools.h"
 
 CEditableMesh::~CEditableMesh(){
 	Clear();
@@ -63,7 +62,7 @@ void CEditableMesh::Clear()
 
 void CEditableMesh::UnloadCForm     ()
 {
-	ETOOLS::destroy_model			(m_CFModel);
+	//ETOOLS::destroy_model			(m_CFModel);
 }
 
 void CEditableMesh::UnloadFNormals  (bool force)

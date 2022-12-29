@@ -26,7 +26,6 @@ class CDUInterface;
     #endif
 #endif
 
-#include "..\Editors\Public\xrEProps.h"
 #include "DrawUtils.h"
 
 #include "..\XrServerEntities\xrServer_Objects_Abstract_Base.h"

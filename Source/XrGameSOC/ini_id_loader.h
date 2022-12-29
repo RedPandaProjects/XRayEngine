@@ -33,7 +33,7 @@ protected:
 	template <u32 NUM>
 	static void						LoadItemData	(u32, LPCSTR)
 	{
-		STATIC_CHECK(false, Specialization_for_LoadItemData_in_CIni_IdToIndex_not_found);
+		//STATIC_CHECK(false, Specialization_for_LoadItemData_in_CIni_IdToIndex_not_found);
 		NODEFAULT;
 	}
 
@@ -122,7 +122,7 @@ CSINI_IdToIndex::~CIni_IdToIndex()
 TEMPLATE_SPECIALIZATION
 const typename ITEM_DATA* CSINI_IdToIndex::GetById (const T_ID& str_id, bool no_assert)
 {
-	T_VECTOR::iterator it = m_pItemDataVector->begin();
+	auto it = m_pItemDataVector->begin();
 	for(;
 		m_pItemDataVector->end() != it; it++)
 	{

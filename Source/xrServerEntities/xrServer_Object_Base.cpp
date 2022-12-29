@@ -37,6 +37,14 @@ IPropHelper& PHelper()
 #		include "ai_space.h"
 #		include "alife_simulator.h"
 #	endif // #ifdef XRGAME_EXPORTS
+#else
+IPropHelper& PHelper()
+{
+	NODEFAULT;
+#	ifdef DEBUG
+	return(*(IPropHelper*)0);
+#	endif
+}
 #endif
 
 LPCSTR script_section = "script";
@@ -182,7 +190,7 @@ CInifile& CSE_Abstract::spawn_ini()
 #pragma warning(push)
 #pragma warning(disable:4238)
 		m_ini_file = xr_new<CInifile>(
-			&IReader(
+			new IReader(
 				(void*)(*(m_ini_string)),
 				m_ini_string.size()
 			),

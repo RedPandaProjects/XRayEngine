@@ -27,7 +27,7 @@ void CSE_ALifeObject::spawn_supplies		(LPCSTR ini_string)
 #pragma warning(push)
 #pragma warning(disable:4238)
 	CInifile					ini(
-		&IReader				(
+		new IReader				(
 			(void*)(ini_string),
 			xr_strlen(ini_string)
 		),

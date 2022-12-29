@@ -3,7 +3,7 @@
 
 #include "DisablingParams.h"
 #include "ode_include.h"
-
+#include "../XrEngine/bone.h"
 extern const dReal	default_l_limit									;
 extern const dReal	default_w_limit									;
 extern const dReal	default_k_l										;

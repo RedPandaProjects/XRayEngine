@@ -359,7 +359,7 @@ bool game_cl_TeamDeathmatch::CanBeReady				()
 	return inherited::CanBeReady();
 };
 
-char*	game_cl_TeamDeathmatch::getTeamSection(int Team)
+const char* game_cl_TeamDeathmatch::getTeamSection(int Team)
 {
 	switch (Team)
 	{
