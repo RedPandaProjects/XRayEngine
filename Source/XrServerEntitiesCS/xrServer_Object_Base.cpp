@@ -32,6 +32,14 @@
 		return(*(IPropHelper*)0);
 #	endif
 	}
+#else
+IPropHelper& PHelper()
+{
+	NODEFAULT;
+#	ifdef DEBUG
+	return(*(IPropHelper*)0);
+#	endif
+}
 #endif
 
 LPCSTR script_section = "script";

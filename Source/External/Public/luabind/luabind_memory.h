@@ -8,11 +8,11 @@
 
 #pragma once
 
-#ifdef DEBUG
-#	ifdef NDEBUG
-        static_assert(false, "Do not define NDEBUG macros in DEBUG configuration since luabind classes are sensisitve to it")
-#	endif // #ifdef NDEBUG
-#endif // #ifdef DEBUG
+//#ifdef DEBUG
+//#	ifdef NDEBUG
+//        static_assert(false, "Do not define NDEBUG macros in DEBUG configuration since luabind classes are sensisitve to it")
+//#	endif // #ifdef NDEBUG
+//#endif // #ifdef DEBUG
 
 #include <luabind/luabind_types.h>
 

@@ -24,3 +24,5 @@ public:
 	IC		void	clear					();
 	IC		void	add						(CScriptValue *value);
 };
+
+#include "script_value_container_impl.h"
