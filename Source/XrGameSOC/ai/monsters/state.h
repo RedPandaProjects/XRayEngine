@@ -44,7 +44,7 @@ protected:
 
 	u32					time_state_started;
 
-	_Object				*this->object;
+	_Object				*object;
 	
 	void				*_data;
 

@@ -170,7 +170,7 @@ public:
 	virtual		void				LoadSkinsForTeam		(const shared_str& caSection, TEAM_SKINS_NAMES* pTeamSkins);
 	virtual		void				LoadDefItemsForTeam		(const shared_str& caSection, /*TEAM_WPN_LIST *pWpnList,*/ DEF_ITEMS_LIST* pDefItems);
 
-	virtual const char* GetAnomalySetBaseName () {return (char*)"deathmatch_game_anomaly_sets";};
+	virtual char*  GetAnomalySetBaseName () {return (char*)"deathmatch_game_anomaly_sets";};
 	virtual		void				LoadAnomalySets			();
 				
 				void				LoadItemRespawns		();
@@ -181,7 +181,7 @@ public:
 	void							RemoveItemFromActor		(CSE_Abstract* pItem);
 	//----- Money routines -----------------------------------------------------------------
 	virtual		void				Money_SetStart			(ClientID	id_who);
-	virtual		s32					GetMoneyAmount			(const shared_str& caSection, const char* caMoneyStr);
+	virtual s32 GetMoneyAmount (const shared_str& caSection, const char* caMoneyStr);
 				int					GetTeamScore			(u32 idx);
 				void				SetTeamScore			(u32 idx, int val);
 				game_PlayerState*	GetWinningPlayer		();

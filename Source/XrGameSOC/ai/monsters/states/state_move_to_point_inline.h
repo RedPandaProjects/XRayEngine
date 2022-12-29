@@ -1,4 +1,5 @@
 #pragma once
+#include "ai_space.h"
 
 #define TEMPLATE_SPECIALIZATION template <\
 	typename _Object\
@@ -37,7 +38,7 @@ TEMPLATE_SPECIALIZATION
 bool CStateMonsterMoveToPointAbstract::check_completion()
 {	
 	if (data.action.time_out !=0) {
-		if (time_state_started + data.action.time_out < Device->dwTimeGlobal) return true;
+		if (this->time_state_started + data.action.time_out < Device->dwTimeGlobal) return true;
 	} 
 	
 	bool real_path_end = ((fis_zero(data.completion_dist)) ? (data.point.distance_to_xz(this->object->Position()) < ai().level_graph().header().cell_size()) : true);
@@ -86,7 +87,7 @@ TEMPLATE_SPECIALIZATION
 bool CStateMonsterMoveToPointExAbstract::check_completion()
 {	
 	if (data.action.time_out !=0) {
-		if (time_state_started + data.action.time_out < Device->dwTimeGlobal) return true;
+		if (this->time_state_started + data.action.time_out < Device->dwTimeGlobal) return true;
 	} 
 
 	bool real_path_end = ((fis_zero(data.completion_dist)) ? (data.point.distance_to_xz(this->object->Position()) < ai().level_graph().header().cell_size()) : true);

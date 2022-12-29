@@ -49,7 +49,7 @@ public :
 	virtual			CUIGameCustom*		createGameUI			();
 	virtual			void				net_import_state		(NET_Packet& P);
 	virtual			void				GetMapEntities(xr_vector<SZoneMapEntityData>& dst);
-	virtual			const  char*				getTeamSection			(int Team);
+	virtual const char* getTeamSection (int Team);
 	virtual			bool				PlayerCanSprint			(CActor* pActor);
 
 	virtual	void						SetScore				();

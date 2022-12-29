@@ -266,31 +266,32 @@ bool game_sv_ArtefactHunt::assign_rp_tmp(	game_PlayerState* ps_who,
 		RPoint rp = rps[p];
 		
 		bool Blocked = false;
-		m_server->ForEachClientDoSender([&](IClient* client)
+		auto Lambda = [&](IClient* client)
+		{
+			game_PlayerState* PS = ((xrClientData*)client)->ps;
+			if (!PS)
+				return;
+
+			if (PS->testFlag(GAME_PLAYER_FLAG_VERY_VERY_DEAD))
+				return;
+
+			CObject* pPlayer = Level().Objects.net_Find(PS->GameID);
+			if (!pPlayer)
+				return;
+
+			if (rp.P.distance_to(pPlayer->Position()) <= 0.4f && !force_find)
 			{
-				game_PlayerState* PS = ((xrClientData*)client)->ps;
-				if (!PS)
-					return;
+				Blocked = true;
 
-				if (PS->testFlag(GAME_PLAYER_FLAG_VERY_VERY_DEAD))
-					return;
-
-				CObject* pPlayer = Level().Objects.net_Find(PS->GameID);
-				if (!pPlayer)
-					return;
-
-				if (rp.P.distance_to(pPlayer->Position()) <= 0.4f && !force_find)
+				if ((ps_who->team != PS->team) && !teams.empty())
 				{
-					Blocked = true;
-
-					if ((ps_who->team != PS->team) && !teams.empty())
-					{
-						rpIDEnemy.push_back(p);
-						EnemyIt.push_back(client->ID.value());
-					}
-					return;
+					rpIDEnemy.push_back(p);
+					EnemyIt.push_back(client->ID.value());
 				}
-			});
+				return;
+			}
+		};
+		m_server->ForEachClientDoSender(Lambda);
 
 		if (Blocked || rp.Blocked) 
 		{
@@ -453,19 +454,19 @@ BOOL	game_sv_ArtefactHunt::OnTouch				(u16 eid_who, u16 eid_what, BOOL bForced)
 					TeamStruct* pTeam		= GetTeamData(u8(ps_who->team));
 					if (pTeam)
 					{					
+						auto Lamda = [&](IClient* client)
+						{
+							xrClientData* l_pC = static_cast<xrClientData*>(client);
+							game_PlayerState* pstate = l_pC->ps;
+							if (!pstate)
+								return;
 
-							m_server->ForEachClientDo([&](IClient* client)
-								{	
-									xrClientData* l_pC = static_cast<xrClientData*>(client);
-									game_PlayerState* pstate = l_pC->ps;
-									if (!pstate)
-										return;
+							if (!l_pC->net_Ready || pstate->IsSkip() || pstate->team != ps_who->team)
+								return;
 
-									if (!l_pC->net_Ready || pstate->IsSkip() || pstate->team != ps_who->team)
-										return;
-
-									this->Player_AddExperience(pstate, READ_IF_EXISTS(pSettings, r_float, "mp_bonus_exp", "af_first_take_all", 0));
-								});
+							this->Player_AddExperience(pstate, READ_IF_EXISTS(pSettings, r_float, "mp_bonus_exp", "af_first_take_all", 0));
+						};
+							m_server->ForEachClientDo(Lamda);
 							// init
 
 						}
@@ -595,28 +596,29 @@ void game_sv_ArtefactHunt::OnArtefactOnBase(ClientID id_who)
 
 		// Add money to players in this team
 			// init
-			m_server->ForEachClientDo([&](IClient* client)
-				{
-					xrClientData* l_pC = static_cast<xrClientData*>(client);
-					game_PlayerState* pstate = l_pC->ps;
-					if (!pstate)
-						return;
+		auto Lamda = [&](IClient* client)
+		{
+			xrClientData* l_pC = static_cast<xrClientData*>(client);
+			game_PlayerState* pstate = l_pC->ps;
+			if (!pstate)
+				return;
 
-					if (!l_pC->net_Ready || pstate->IsSkip() || pstate == ps) return;
-					if (pstate->team == ps->team)
-					{
-						this->Player_AddMoney(pstate, pTeam->m_iM_TargetSucceedAll);
-						this->Player_AddExperience(pstate, READ_IF_EXISTS(pSettings, r_float, "mp_bonus_exp", "target_succeed_all", 0));
-					}
-					else
-					{
-						this->Player_AddMoney(pstate, pTeam->m_iM_TargetFailed);
-						if (!m_bArtefactWasDropped)
-							pstate->experience_New *= READ_IF_EXISTS(pSettings, r_float, "mp_bonus_exp", "target_failed_all_mul", 1.0f);
-					};
-					this->Player_AddExperience(pstate, 0);
-					this->Player_ExperienceFin(pstate);
-				});
+			if (!l_pC->net_Ready || pstate->IsSkip() || pstate == ps) return;
+			if (pstate->team == ps->team)
+			{
+				this->Player_AddMoney(pstate, pTeam->m_iM_TargetSucceedAll);
+				this->Player_AddExperience(pstate, READ_IF_EXISTS(pSettings, r_float, "mp_bonus_exp", "target_succeed_all", 0));
+			}
+			else
+			{
+				this->Player_AddMoney(pstate, pTeam->m_iM_TargetFailed);
+				if (!m_bArtefactWasDropped)
+					pstate->experience_New *= READ_IF_EXISTS(pSettings, r_float, "mp_bonus_exp", "target_failed_all_mul", 1.0f);
+			};
+			this->Player_AddExperience(pstate, 0);
+			this->Player_ExperienceFin(pstate);
+		};
+			m_server->ForEachClientDo(Lamda);
 		}
 	Set_RankUp_Allowed(false);
 
@@ -776,7 +778,7 @@ bool game_sv_ArtefactHunt::ArtefactSpawn_Allowed()
 		// Check if all players ready
 
 	u32		TeamAlived[2] = { 0, 0 };
-	m_server->ForEachClientDo([&](IClient* client)
+	auto Lamda = [&](IClient* client)
 	{
 		xrClientData* l_pC = static_cast<xrClientData*>(client);
 		game_PlayerState* ps = l_pC->ps;
@@ -795,7 +797,8 @@ bool game_sv_ArtefactHunt::ArtefactSpawn_Allowed()
 			);
 			TeamAlived[ps->team - 1]++;
 		}
-	});
+	};
+	m_server->ForEachClientDo(Lamda);
 	if (TeamAlived[0] == 0 || TeamAlived[1] == 0) return FALSE;
 
 	return TRUE;
@@ -952,21 +955,22 @@ bool				game_sv_ArtefactHunt::Artefact_MissCheck	()
 
 void game_sv_ArtefactHunt::RespawnAllNotAlivePlayers()
 {
-	m_server->ForEachClientDo([&](IClient* client)
+	auto Lamda = [&](IClient* client)
+	{
+		xrClientData* l_pC = static_cast<xrClientData*>(client);
+		game_PlayerState* ps = l_pC->ps;
+
+		if (!l_pC->net_Ready || ps->IsSkip()) return;
+
+		if (ps->testFlag(GAME_PLAYER_FLAG_VERY_VERY_DEAD) && !ps->testFlag(GAME_PLAYER_FLAG_SPECTATOR))
 		{
-			xrClientData* l_pC = static_cast<xrClientData*>(client);
-			game_PlayerState* ps = l_pC->ps;
+			RespawnPlayer(l_pC->ID, true);
+			SpawnWeaponsForActor(l_pC->owner, ps);
+			Check_ForClearRun(ps);
+		};
 
-			if (!l_pC->net_Ready || ps->IsSkip()) return;
-
-			if (ps->testFlag(GAME_PLAYER_FLAG_VERY_VERY_DEAD) && !ps->testFlag(GAME_PLAYER_FLAG_SPECTATOR))
-			{
-				RespawnPlayer(l_pC->ID, true);
-				SpawnWeaponsForActor(l_pC->owner, ps);
-				Check_ForClearRun(ps);
-			};
-
-		});
+	};
+	m_server->ForEachClientDo(Lamda);
 	signal_Syncronize();
 
 	m_dwNextReinforcementTime = Level().timeServer() + Get_ReinforcementTime() * 1000;
@@ -974,15 +978,16 @@ void game_sv_ArtefactHunt::RespawnAllNotAlivePlayers()
 
 void game_sv_ArtefactHunt::CheckForAnyAlivePlayer()
 {
-	m_server->ForEachClientDo([&](IClient* client)
-		{
-			xrClientData* l_pC = static_cast<xrClientData*>(client);
-			game_PlayerState* ps = l_pC->ps;
+	auto Lamda = [&](IClient* client)
+	{
+		xrClientData* l_pC = static_cast<xrClientData*>(client);
+		game_PlayerState* ps = l_pC->ps;
 
-			if (!l_pC->net_Ready || ps->testFlag(GAME_PLAYER_FLAG_VERY_VERY_DEAD) || ps->IsSkip())	return;
-			// found at least one alive player
-			return;
-		});
+		if (!l_pC->net_Ready || ps->testFlag(GAME_PLAYER_FLAG_VERY_VERY_DEAD) || ps->IsSkip())	return;
+		// found at least one alive player
+		return;
+	};
+	m_server->ForEachClientDo(Lamda);
 
 	// no alive players found
 	RespawnAllNotAlivePlayers();
@@ -992,17 +997,18 @@ bool game_sv_ArtefactHunt::CheckAlivePlayersInTeam(s16 Team)
 {
 	u32		cnt_alive = 0;
 	u32		cnt_exist = 0;
-	m_server->ForEachClientDo([&](IClient* client)
-		{
-			xrClientData* l_pC = static_cast<xrClientData*>(client);
-			if (!l_pC->net_Ready) return;
-			game_PlayerState* ps = l_pC->ps;
-			if (ps->IsSkip() || ps->testFlag(GAME_PLAYER_FLAG_SPECTATOR)) return;
-			if (ps->team != Team) return;
-			cnt_exist++;
-			if (ps->testFlag(GAME_PLAYER_FLAG_VERY_VERY_DEAD))	return;
-			cnt_alive++;
-		});
+	auto Lamda = [&](IClient* client)
+	{
+		xrClientData* l_pC = static_cast<xrClientData*>(client);
+		if (!l_pC->net_Ready) return;
+		game_PlayerState* ps = l_pC->ps;
+		if (ps->IsSkip() || ps->testFlag(GAME_PLAYER_FLAG_SPECTATOR)) return;
+		if (ps->team != Team) return;
+		cnt_exist++;
+		if (ps->testFlag(GAME_PLAYER_FLAG_VERY_VERY_DEAD))	return;
+		cnt_alive++;
+	};
+	m_server->ForEachClientDo(Lamda);
 	if (cnt_exist == 0) return true;
 	return cnt_alive != 0;
 };
@@ -1011,40 +1017,40 @@ void	game_sv_ArtefactHunt::MoveAllAlivePlayers()
 {
 	u8 AliveCount = 0;
 	NET_Packet tmpP; tmpP.B.count = 0;
+	auto Lamda = [&](IClient* client)
+	{
+		xrClientData* l_pC = static_cast<xrClientData*>(client);
+		game_PlayerState* ps = l_pC->ps;
+		if (!l_pC->net_Ready || ps->testFlag(GAME_PLAYER_FLAG_VERY_VERY_DEAD) || ps->IsSkip())	return;
+		CSE_ALifeCreatureActor* pA = smart_cast<CSE_ALifeCreatureActor*>(l_pC->owner);
+		CActor* pActor = smart_cast<CActor*> (Level().Objects.net_Find(ps->GameID));
+		if (!pA || !pActor) return;
 
-	m_server->ForEachClientDo([&](IClient* client)
-		{
-			xrClientData* l_pC = static_cast<xrClientData*>(client);
-			game_PlayerState* ps = l_pC->ps;
-			if (!l_pC->net_Ready || ps->testFlag(GAME_PLAYER_FLAG_VERY_VERY_DEAD) || ps->IsSkip())	return;
-			CSE_ALifeCreatureActor* pA = smart_cast<CSE_ALifeCreatureActor*>(l_pC->owner);
-			CActor* pActor = smart_cast<CActor*> (Level().Objects.net_Find(ps->GameID));
-			if (!pA || !pActor) return;
-
-			if (!ps->testFlag(GAME_PLAYER_FLAG_ONBASE)) assign_RP(l_pC->owner, ps);
-			//-----------------------------------------------
-			Fvector Pos = pA->o_Position;
-			Fvector Angle = pA->o_Angle;
-			//		pA->o_Position	= Pos;
-			//		pA->o_Angle		= Angle;
-					//------------------------------------------------
-			pActor->SetfHealth(pActor->GetMaxHealth());
-			pActor->MoveActor(Pos, Angle);
-			pActor->StopAnyMove();
-			//------------------------------------------------		
-			NET_Packet	P;
-			u_EventGen(P, GE_ACTOR_MAX_POWER, ps->GameID);
-			m_server->SendTo(l_pC->ID, P, net_flags(TRUE, TRUE));
-			//------------------------------------------------
-			P.B.count = 0;
-			tmpP.w_u16(pA->ID);
-			tmpP.w_vec3(pA->o_Position);
-			tmpP.w_vec3(pA->o_Angle);
-			//------------------------------------------------
-			AliveCount++;
-			l_pC->net_PassUpdates = FALSE;
-			l_pC->net_LastMoveUpdateTime = Level().timeServer();
-		});
+		if (!ps->testFlag(GAME_PLAYER_FLAG_ONBASE)) assign_RP(l_pC->owner, ps);
+		//-----------------------------------------------
+		Fvector Pos = pA->o_Position;
+		Fvector Angle = pA->o_Angle;
+		//		pA->o_Position	= Pos;
+		//		pA->o_Angle		= Angle;
+				//------------------------------------------------
+		pActor->SetfHealth(pActor->GetMaxHealth());
+		pActor->MoveActor(Pos, Angle);
+		pActor->StopAnyMove();
+		//------------------------------------------------		
+		NET_Packet	P;
+		u_EventGen(P, GE_ACTOR_MAX_POWER, ps->GameID);
+		m_server->SendTo(l_pC->ID, P, net_flags(TRUE, TRUE));
+		//------------------------------------------------
+		P.B.count = 0;
+		tmpP.w_u16(pA->ID);
+		tmpP.w_vec3(pA->o_Position);
+		tmpP.w_vec3(pA->o_Angle);
+		//------------------------------------------------
+		AliveCount++;
+		l_pC->net_PassUpdates = FALSE;
+		l_pC->net_LastMoveUpdateTime = Level().timeServer();
+	};
+	m_server->ForEachClientDo(Lamda);
 	if (AliveCount == 0) return;
 
 	NET_Packet MovePacket;
@@ -1057,8 +1063,7 @@ void	game_sv_ArtefactHunt::MoveAllAlivePlayers()
 
 void	game_sv_ArtefactHunt::UpdatePlayersNotSendedMoveRespond()
 {
-
-	m_server->ForEachClientDo([&](IClient* client)
+	auto Lamda = [&](IClient* client)
 	{
 		xrClientData* l_pC = static_cast<xrClientData*>(client);
 		if (!l_pC) return;
@@ -1069,14 +1074,15 @@ void	game_sv_ArtefactHunt::UpdatePlayersNotSendedMoveRespond()
 		ReplicatePlayersStateToPlayer(l_pC->ID);
 		l_pC->net_PassUpdates = FALSE;
 		l_pC->net_LastMoveUpdateTime = Level().timeServer();
-	});
+	};
+	m_server->ForEachClientDo(Lamda);
 }
 
 void	game_sv_ArtefactHunt::ReplicatePlayersStateToPlayer(ClientID CID)
 {
 	u8 AliveCount = 0;
-	NET_Packet tmpP; tmpP.B.count = 0;	
-	m_server->ForEachClientDo([&](IClient* client)
+	NET_Packet tmpP; tmpP.B.count = 0;
+	auto Lamda = [&](IClient* client)
 	{
 		xrClientData* l_pC = static_cast<xrClientData*>(client);
 		game_PlayerState* ps = l_pC->ps;
@@ -1091,7 +1097,8 @@ void	game_sv_ArtefactHunt::ReplicatePlayersStateToPlayer(ClientID CID)
 		tmpP.w_vec3(pA->o_Angle);
 		//------------------------------------------------
 		AliveCount++;
-	});
+	};
+	m_server->ForEachClientDo(Lamda);
 	NET_Packet MovePacket;
 	MovePacket.w_begin(M_MOVE_PLAYERS);
 	MovePacket.w_u8(AliveCount);
@@ -1114,13 +1121,14 @@ void	game_sv_ArtefactHunt::CheckForTeamElimination()
 	TeamStruct* pWTeam		= GetTeamData(WinTeam);
 	if (pWTeam)
 	{
-		m_server->ForEachClientDo([&](IClient* client)
-			{
-				xrClientData* l_pC = static_cast<xrClientData*>(client);
-				game_PlayerState* pstate = l_pC->ps;
-				if (!l_pC->net_Ready || pstate->IsSkip() || pstate->team != WinTeam) return;
-				Player_AddMoney(pstate, pWTeam->m_iM_RivalsWipedOut);
-			});
+		auto Lamda = [&](IClient* client)
+		{
+			xrClientData* l_pC = static_cast<xrClientData*>(client);
+			game_PlayerState* pstate = l_pC->ps;
+			if (!l_pC->net_Ready || pstate->IsSkip() || pstate->team != WinTeam) return;
+			Player_AddMoney(pstate, pWTeam->m_iM_RivalsWipedOut);
+		};
+		m_server->ForEachClientDo(Lamda);
 	};
 	//-----------------------------------------------------------------------------
 	m_phase = u16((WinTeam == 1)?GAME_PHASE_TEAM2_ELIMINATED:GAME_PHASE_TEAM1_ELIMINATED);

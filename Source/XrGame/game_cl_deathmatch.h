@@ -110,7 +110,7 @@ protected:
 public:
 	virtual s16						ModifyTeam				(s16 Team);
 
-	virtual	const char*				getTeamSection			(int Team);
+	virtual const char* getTeamSection (int Team);
 	virtual	void					SetCurrentBuyMenu		();
 	virtual	void					SetCurrentSkinMenu		();//	{pCurSkinMenu = pSkinMenuTeam0; };
 

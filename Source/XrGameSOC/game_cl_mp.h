@@ -140,12 +140,12 @@ protected:
 	virtual ui_shader		GetBloodLossIconsShader	();
 	virtual ui_shader		GetRankIconsShader();
 
-	virtual void			OnPlayerKilled			(NET_Packet& P);
+	virtual		void			OnPlayerKilled			(NET_Packet& P);
 
-	virtual bool			NeedToSendReady_Actor			(int key, game_PlayerState* ps);
-	virtual bool			NeedToSendReady_Spectator		(int key, game_PlayerState* ps);
+	virtual		bool			NeedToSendReady_Actor			(int key, game_PlayerState* ps);
+	virtual		bool			NeedToSendReady_Spectator		(int key, game_PlayerState* ps);
 
-	virtual	void			LoadSndMessage			(LPCSTR caSection, LPCSTR caLine, u32 ID);
+	virtual		void			LoadSndMessage			(LPCSTR caSection, LPCSTR caLine, u32 ID);
 	virtual		void				LoadSndMessages				();
 	virtual		void				PlaySndMessage			(u32 ID);	
 	virtual		void				UpdateSndMessages		();

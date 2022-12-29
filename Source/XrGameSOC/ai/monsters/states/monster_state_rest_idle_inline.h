@@ -5,6 +5,8 @@
 #include "state_custom_action.h"
 #include "../../../cover_point.h"
 #include "../monster_cover_manager.h"
+#include "../ai_monster_squad.h"
+#include "../../../ai/monsters/ai_monster_squad_manager.h"
 
 
 #define TEMPLATE_SPECIALIZATION template <\
@@ -16,9 +18,9 @@
 TEMPLATE_SPECIALIZATION
 CStateMonsterRestIdleAbstract::CStateMonsterRestIdle(_Object *obj) : inherited(obj)
 {
-	add_state	(eStateRest_WalkToCover,	xr_new<CStateMonsterMoveToPointEx<_Object> >	(obj));
-	add_state	(eStateRest_LookOpenPlace,	xr_new<CStateMonsterLookToPoint<_Object> >		(obj));
-	add_state	(eStateRest_Idle,			xr_new<CStateMonsterCustomAction<_Object> >		(obj));
+	this->add_state	(eStateRest_WalkToCover,	xr_new<CStateMonsterMoveToPointEx<_Object> >	(obj));
+	this->add_state	(eStateRest_LookOpenPlace,	xr_new<CStateMonsterLookToPoint<_Object> >		(obj));
+	this->add_state	(eStateRest_Idle,			xr_new<CStateMonsterCustomAction<_Object> >		(obj));
 }
 
 TEMPLATE_SPECIALIZATION
@@ -62,25 +64,25 @@ void CStateMonsterRestIdleAbstract::critical_finalize()
 TEMPLATE_SPECIALIZATION
 void CStateMonsterRestIdleAbstract::reselect_state()
 {
-	if ((prev_substate == u32(-1)) && (m_target_node != u32(-1))) {
-		select_state(eStateRest_WalkToCover);
+	if ((this->prev_substate == u32(-1)) && (m_target_node != u32(-1))) {
+		this->select_state(eStateRest_WalkToCover);
 		return;
 	} 
 
-	if ((prev_substate == eStateRest_WalkToCover) || (prev_substate == u32(-1))) {
-		select_state(eStateRest_LookOpenPlace);
+	if ((this->prev_substate == eStateRest_WalkToCover) || (this->prev_substate == u32(-1))) {
+		this->select_state(eStateRest_LookOpenPlace);
 		return;
 	}
 
-	select_state(eStateRest_Idle);
+	this->select_state(eStateRest_Idle);
 }
 
 TEMPLATE_SPECIALIZATION
 void CStateMonsterRestIdleAbstract::setup_substates()
 {
-	state_ptr state = get_state_current();
+	state_ptr state = this->get_state_current();
 
-	if (current_substate == eStateRest_WalkToCover) {
+	if (this->current_substate == eStateRest_WalkToCover) {
 		SStateDataMoveToPointEx data;
 
 		data.vertex				= m_target_node;
@@ -99,7 +101,7 @@ void CStateMonsterRestIdleAbstract::setup_substates()
 		return;
 	}
 
-	if (current_substate == eStateRest_LookOpenPlace) {
+	if (this->current_substate == eStateRest_LookOpenPlace) {
 
 		SStateDataLookToPoint	data;
 
@@ -117,7 +119,7 @@ void CStateMonsterRestIdleAbstract::setup_substates()
 		return;
 	}
 
-	if (current_substate == eStateRest_Idle) {
+	if (this->current_substate == eStateRest_Idle) {
 		SStateDataAction data;
 
 		data.action		= ACT_REST;

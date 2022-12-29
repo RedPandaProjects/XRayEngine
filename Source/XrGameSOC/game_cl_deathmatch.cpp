@@ -355,7 +355,7 @@ void	game_cl_Deathmatch::OnSpectatorSelect		()
 };
 
 
-char*	game_cl_Deathmatch::getTeamSection(int Team)
+const char* game_cl_Deathmatch::getTeamSection(int Team)
 {
 	return "deathmatch_team0";
 };

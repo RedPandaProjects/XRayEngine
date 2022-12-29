@@ -5003,9 +5003,6 @@
     <ProjectReference Include="..\XrNetServer\XrNetServer.vcxproj">
       <Project>{5a93a01a-05bd-4bf8-8d6e-2a5ae2e0bf14}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\XrParticles\XrParticles.vcxproj">
-      <Project>{c50a948d-9175-4388-ae07-0cdab7fb69c8}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\XrSound\XrSound.vcxproj">
       <Project>{57601b62-902a-4ec8-bcc7-b6a2e30b0676}</Project>
     </ProjectReference>
