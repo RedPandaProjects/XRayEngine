@@ -243,7 +243,7 @@ void CEditableMesh::GenerateVNormals(const Fmatrix* parent_xform)
 				}
 				else
 				{
-					Msg("! Invalid smooth group found (Maya type). Object: '%s'. Vertex: [%3.2f, %3.2f, %3.2f]", m_Parent->GetName(), VPUSH(m_Vertices[m_Faces[f_i].pv[k].pindex]));
+					Msg("! Invalid smooth group found (Max type). Object: '%s'. Vertex: [%3.2f, %3.2f, %3.2f]", m_Parent->GetName(), VPUSH(m_Vertices[m_Faces[f_i].pv[k].pindex]));
 					N.set(m_FaceNormals[a_lst.front()]);
 				}
 
@@ -251,7 +251,7 @@ void CEditableMesh::GenerateVNormals(const Fmatrix* parent_xform)
 			}
 		}
 	}
-	else
+	else if(xrGameManager::GetGame()==EGame::SHOC)
 	{
 		float CosA = cosf(deg2rad(60.f));
 
@@ -280,7 +280,7 @@ void CEditableMesh::GenerateVNormals(const Fmatrix* parent_xform)
 					}
 					else
 					{
-						Msg("! Invalid smooth group found (Max type). Object: '%s'. Vertex: [%3.2f, %3.2f, %3.2f]", m_Parent->GetName(), VPUSH(m_Vertices[m_Faces[f_i].pv[k].pindex]));
+						Msg("! Invalid smooth group found (Maya type). Object: '%s'. Vertex: [%3.2f, %3.2f, %3.2f]", m_Parent->GetName(), VPUSH(m_Vertices[m_Faces[f_i].pv[k].pindex]));
 						N.set(m_FaceNormals[a_lst.front()]);
 					}
 				}
@@ -312,6 +312,38 @@ void CEditableMesh::GenerateVNormals(const Fmatrix* parent_xform)
 			}
 		}
 
+	}
+	else 
+	{
+		for (u32 f_i = 0; f_i < m_FaceCount; f_i++)
+		{
+			for (int k = 0; k < 3; k++)
+			{
+				Fvector& N = m_VertexNormals[f_i * 3 + k];
+				IntVec& a_lst = (*m_Adjs)[m_Faces[f_i].pv[k].pindex];
+
+				IntIt face_adj_it = std::find(a_lst.begin(), a_lst.end(), f_i);
+				VERIFY(face_adj_it != a_lst.end());
+				//
+				N.set(m_FaceNormals[a_lst.front()]);
+				//if (m_bDraftMeshMode)
+				//	continue;
+
+				typedef itterate_adjacents< itterate_adjacents_params_dynamic<st_FaceVert> > iterate_adj;
+				iterate_adj::recurse_tri_params p(N, m_SmoothGroups, m_FaceNormals, a_lst, m_Faces, m_FaceCount);
+				iterate_adj::RecurseTri(face_adj_it - a_lst.begin(), p);
+				float len = N.magnitude();
+				if (len > EPS_S)
+				{
+					N.div(len);
+				}
+				else
+				{
+					Msg("! Invalid smooth group found (Maya type). Object: '%s'. Vertex: [%3.2f, %3.2f, %3.2f]", m_Parent->GetName(), VPUSH(m_Vertices[m_Faces[f_i].pv[k].pindex]));
+					N.set(m_FaceNormals[a_lst.front()]);
+				}
+			}
+		}
 	}
 	UnloadFNormals();
 	UnloadAdjacency();
