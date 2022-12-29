@@ -33,9 +33,9 @@ using namespace luabind;
 
 extern CScriptActionPlanner *script_action_planner(CScriptGameObject *obj);
 
-class_<CScriptGameObject> &script_register_game_object1(class_<CScriptGameObject> &instance)
+class_<CScriptGameObject> script_register_game_object1(class_<CScriptGameObject> &&instance)
 {
-	instance = std::move(instance)
+	return std::move(instance)
 		.enum_("relation")
 		[
 			value("friend",					int(ALife::eRelationTypeFriend)),
@@ -251,5 +251,5 @@ class_<CScriptGameObject> &script_register_game_object1(class_<CScriptGameObject
 		.def("invulnerable",				(bool (CScriptGameObject::*)() const)&CScriptGameObject::invulnerable)
 		.def("invulnerable",				(void (CScriptGameObject::*)(bool))&CScriptGameObject::invulnerable)
 
-	;return	(instance);
+	;
 }

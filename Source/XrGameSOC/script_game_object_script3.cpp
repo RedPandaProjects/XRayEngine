@@ -32,9 +32,9 @@
 #include "sight_manager_space.h"
 using namespace luabind;
 
-class_<CScriptGameObject> &script_register_game_object2(class_<CScriptGameObject> &instance)
+class_<CScriptGameObject> script_register_game_object2(class_<CScriptGameObject> &&instance)
 {
-	instance = std::move(instance)
+		return std::move(instance)
 		.def("add_sound",					(u32 (CScriptGameObject::*)(LPCSTR,u32,ESoundTypes,u32,u32,u32))(&CScriptGameObject::add_sound))
 		.def("add_sound",					(u32 (CScriptGameObject::*)(LPCSTR,u32,ESoundTypes,u32,u32,u32,LPCSTR))(&CScriptGameObject::add_sound))
 		.def("remove_sound",				&CScriptGameObject::remove_sound)
@@ -262,5 +262,5 @@ class_<CScriptGameObject> &script_register_game_object2(class_<CScriptGameObject
 
 		.def("critically_wounded",			&CScriptGameObject::critically_wounded)
 
-	;return	(instance);
+	;
 }

@@ -249,11 +249,13 @@ BOOL CGameObject::net_Spawn		(CSE_Abstract*	DC)
 	VERIFY							(_valid(renderable.xform));
 	VERIFY							(!fis_zero(DET(renderable.xform)));
 	CSE_ALifeObject					*O = smart_cast<CSE_ALifeObject*>(E);
-	IReader INIReader(
-		(void*)(*(O->m_ini_string)),
-		O->m_ini_string.size()
-	);
-	if (O && xr_strlen(O->m_ini_string)) {
+	
+	if (O && xr_strlen(O->m_ini_string)) 
+	{
+		IReader INIReader(
+			(void*)(*(O->m_ini_string)),
+			O->m_ini_string.size()
+		);
 #pragma warning(push)
 #pragma warning(disable:4238)
 		m_ini_file					= xr_new<CInifile>(
