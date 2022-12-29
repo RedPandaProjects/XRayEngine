@@ -154,15 +154,11 @@ public:
     Flags32				m_Flags;
 public:
 						PropItem		(EPropType _type):type(_type),prop_color(0),val_color(0),item(0),key(0),OnClickEvent(0),OnDrawTextEvent(0),OnItemFocused(0){m_Flags.zero();}
-	virtual 			~PropItem		()
-    {
-#if !__UNREAL__
-    	for (PropValueIt it=values.begin(); values.end() != it; ++it)
-        	xr_delete	(*it);
-#else
-        R_ASSERT(false);
-#endif
-    };
+	virtual 			~PropItem		(){}
+		/*{
+			for (PropValueIt it=values.begin(); values.end() != it; ++it)
+				xr_delete	(*it);
+		};*/
     IC UIPropertiesForm*		Owner			(){return m_Owner;}
     void				SetName			(const shared_str& name)
     {
@@ -459,15 +455,15 @@ public:
 public:
 						NumericValue	(T* val):CustomValue<T>(val)
 	{
-        CustomValue<T>::value			= val;
-        CustomValue<T>::init_value		= *CustomValue<T>::value;
+        this->value			= val;
+        this->init_value		= *this->value;
         dec				= 0;
     };
 						NumericValue	(T* val, T mn, T mx, T increm, int decim):CustomValue<T>(val),lim_mn(mn),lim_mx(mx),inc(increm),dec(decim)
 	{
     	clamp			(*val,lim_mn,lim_mx);
-        CustomValue<T>::value			= val;
-        CustomValue<T>::init_value		= *CustomValue<T>::value;
+        this->value			= val;
+        this->init_value		= *this->value;
     };
     bool				ApplyValue		(const T& _val)
     {
@@ -479,7 +475,7 @@ public:
 	{
         xr_string		draw_val;
         if (!OnDrawText.empty())	OnDrawText(this, draw_val);
-        else			draw_sprintf	(draw_val,*CustomValue<T>::value,dec);
+        else			draw_sprintf	(draw_val,*this->value,dec);
         return draw_val;
     }
 };
@@ -568,14 +564,14 @@ public:
         else 			return HaveCaption()?caption[GetValueEx()?1:0].c_str():"";
         return			draw_val;
     }
-    virtual bool		Equal			(PropValue* val){return !!CustomValue<T>::value->equal(*((FlagValue<T>*)val)->value,mask);}
-    virtual const T&	GetValue		()				{return *CustomValue<T>::value; }
-    virtual void		ResetValue		()				{ CustomValue<T>::value->set(mask, CustomValue<T>::init_value.is(mask));}
-    virtual bool		GetValueEx		()				{return !!CustomValue<T>::value->is(mask);}
+    virtual bool		Equal			(PropValue* val){return !!this->value->equal(*((FlagValue<T>*)val)->value,mask);}
+    virtual const T&	GetValue		()				{return *this->value; }
+    virtual void		ResetValue		()				{ this->value->set(mask, this->init_value.is(mask));}
+    virtual bool		GetValueEx		()				{return !!this->value->is(mask);}
     bool				ApplyValue		(const T& val)
     {
-        if (!val.equal(*CustomValue<T>::value,mask)){
-            CustomValue<T>::value->set	(mask,val.is(mask));
+        if (!val.equal(*this->value,mask)){
+            this->value->set	(mask,val.is(mask));
             return		true;
         }
         return 			false;
@@ -604,7 +600,7 @@ public:
     {
         xr_string		draw_val;
         if (!OnDrawText.empty())	OnDrawText(this, draw_val);
-        else			for(int i=0; token[i].name; i++) if (token[i].id==(int)CustomValue<T>::GetValue()) return token[i].name;
+        else			for(int i=0; token[i].name; i++) if (token[i].id==(int)this->GetValue()) return token[i].name;
         return draw_val;
     }
 };
@@ -629,7 +625,7 @@ public:
     {
         xr_string draw_val;
         if (!OnDrawText.empty())	OnDrawText(this, draw_val);
-        else			for(u32 k=0; k<token_count; k++) if ((T)token[k].id== CustomValue<T>::GetValue()) return *token[k].name;
+        else			for(u32 k=0; k<token_count; k++) if ((T)token[k].id==this->GetValue()) return *token[k].name;
         return draw_val;
     }
 };

@@ -37,6 +37,14 @@ IPropHelper& PHelper()
 #		include "ai_space.h"
 #		include "alife_simulator.h"
 #	endif // #ifdef XRGAME_EXPORTS
+#else
+IPropHelper& PHelper()
+{
+	NODEFAULT;
+#	ifdef DEBUG
+	return(*(IPropHelper*)0);
+#	endif
+}
 #endif
 
 LPCSTR script_section = "script";

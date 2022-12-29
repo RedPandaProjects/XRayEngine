@@ -214,9 +214,6 @@
     <ProjectReference Include="..\..\XrEngine\XrEngine.vcxproj">
       <Project>{2820680f-79fe-4477-a14c-007f273a5fa8}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\XrParticles\XrParticles.vcxproj">
-      <Project>{c50a948d-9175-4388-ae07-0cdab7fb69c8}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\..\XrPhysics\XrPhysics.vcxproj">
       <Project>{3d3cc439-aabc-4565-99c8-9c53f425380c}</Project>
     </ProjectReference>
@@ -225,18 +222,6 @@
     </ProjectReference>
     <ProjectReference Include="..\FreeMagic\FreeMagic.vcxproj">
       <Project>{dcc5b76d-be13-4d1f-be14-75d0fa678340}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\XrDXT\XrDXT.vcxproj">
-      <Project>{7c119635-1963-4547-b345-cb7ed7eb2ee4}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\XrEProps\XrEProps.vcxproj">
-      <Project>{6d47afc7-0557-4bbf-8902-b248f3621419}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\XrETools\XrETools.vcxproj">
-      <Project>{fb040f9f-8344-43da-a4d6-1c8a9d5dbc59}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\XrEUI\XrEUI.vcxproj">
-      <Project>{7e28883c-db86-4ee8-813a-991ba20c68c9}</Project>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -329,6 +314,7 @@
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>.;..\..\XrEngine\;..\..\XrRender\Public;..\FreeMagic;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

@@ -42,4 +42,5 @@ IC	xr_string string2xr_string(LPCSTR s) {return s ? s : "";}
 #	define	THROW3					VERIFY3
 #endif
 
-#include "..\XrEProps\stdafx.h"
+#include "../../XrEngine/stdafx.h"
+#include "../Public/xrEProps.h"

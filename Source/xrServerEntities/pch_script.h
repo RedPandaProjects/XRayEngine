@@ -11,16 +11,15 @@
 
 #include "stdafx.h"
 
-extern "C" {
+extern "C" 
+{
 	#include <lua/lua.h>
 	#include <lua/lualib.h>
 	#include <lua/lauxlib.h>
 };
-
-#pragma warning(push)
-#pragma warning(disable:4995)
+#define LUABIND_API 
+#include <luabind/boost_legacy.h>
 #include <luabind/luabind.hpp>
-#pragma warning(pop)
 
 #include <luabind/object.hpp>
 #include <luabind/functor.hpp>

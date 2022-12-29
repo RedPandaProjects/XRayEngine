@@ -9,7 +9,6 @@
 #include "EditObject.h"
 //#include "cl_collector.h"
 #include "pick_defs.h"
-#include "../XrETools/ETools.h"
 
 /*
 void CEditableMesh::CHullPickFaces(PlaneVec& pl, Fmatrix& parent, U32Vec& fl){
@@ -39,28 +38,28 @@ void CEditableMesh::GenerateCFModel()
 {
 	UnloadCForm		();
 	// Collect faces
-	CDB::Collector* CL = ETOOLS::create_collector();
-	// double sided
-	for (SurfFacesPairIt sp_it=m_SurfFaces.begin(); sp_it!=m_SurfFaces.end(); sp_it++){
-		IntVec& face_lst = sp_it->second;
-		for (IntIt it=face_lst.begin(); it!=face_lst.end(); it++){
-			st_Face&	F = m_Faces[*it];
-            ETOOLS::collector_add_face_d(CL,m_Vertices[F.pv[0].pindex],m_Vertices[F.pv[1].pindex],m_Vertices[F.pv[2].pindex], *it);
-			if (sp_it->first->m_Flags.is(CSurface::sf2Sided))
-				ETOOLS::collector_add_face_d(CL,m_Vertices[F.pv[2].pindex],m_Vertices[F.pv[1].pindex],m_Vertices[F.pv[0].pindex], *it);
-		}
-	}
-	m_CFModel 		= ETOOLS::create_model_cl(CL);
-	ETOOLS::destroy_collector(CL);
+	//CDB::Collector* CL = ETOOLS::create_collector();
+	//// double sided
+	//for (SurfFacesPairIt sp_it=m_SurfFaces.begin(); sp_it!=m_SurfFaces.end(); sp_it++){
+	//	IntVec& face_lst = sp_it->second;
+	//	for (IntIt it=face_lst.begin(); it!=face_lst.end(); it++){
+	//		st_Face&	F = m_Faces[*it];
+ //           ETOOLS::collector_add_face_d(CL,m_Vertices[F.pv[0].pindex],m_Vertices[F.pv[1].pindex],m_Vertices[F.pv[2].pindex], *it);
+	//		if (sp_it->first->m_Flags.is(CSurface::sf2Sided))
+	//			ETOOLS::collector_add_face_d(CL,m_Vertices[F.pv[2].pindex],m_Vertices[F.pv[1].pindex],m_Vertices[F.pv[0].pindex], *it);
+	//	}
+	//}
+	//m_CFModel 		= ETOOLS::create_model_cl(CL);
+	//ETOOLS::destroy_collector(CL);
 }
 
 void CEditableMesh::RayQuery(SPickQuery& pinf)
 {
     if (!m_CFModel) GenerateCFModel();
 
-	ETOOLS::ray_query	(m_CFModel, pinf.m_Start, pinf.m_Direction, pinf.m_Dist);
-	for (int r=0; r<ETOOLS::r_count(); r++)
-		pinf.append		(ETOOLS::r_begin()+r,m_Parent,this);
+	//ETOOLS::ray_query	(m_CFModel, pinf.m_Start, pinf.m_Direction, pinf.m_Dist);
+	//for (int r=0; r<ETOOLS::r_count(); r++)
+	//	pinf.append		(ETOOLS::r_begin()+r,m_Parent,this);
 /*
 	XRC.ray_query	(m_CFModel, pinf.m_Start, pinf.m_Direction, pinf.m_Dist);
     for (int r=0; r<XRC.r_count(); r++)
@@ -71,9 +70,9 @@ void CEditableMesh::RayQuery(SPickQuery& pinf)
 void CEditableMesh::RayQuery(const Fmatrix& parent, const Fmatrix& inv_parent, SPickQuery& pinf)
 {
     if (!m_CFModel) GenerateCFModel();
-    ETOOLS::ray_query_m	(inv_parent, m_CFModel, pinf.m_Start, pinf.m_Direction, pinf.m_Dist);
-	for (int r=0; r<ETOOLS::r_count(); r++)
-		pinf.append_mtx(parent,ETOOLS::r_begin()+r,m_Parent,this);
+	/*  ETOOLS::ray_query_m	(inv_parent, m_CFModel, pinf.m_Start, pinf.m_Direction, pinf.m_Dist);
+	  for (int r=0; r<ETOOLS::r_count(); r++)
+		  pinf.append_mtx(parent,ETOOLS::r_begin()+r,m_Parent,this);*/
 /*
 	XRC.ray_query	(inv_parent, m_CFModel, pinf.m_Start, pinf.m_Direction, pinf.m_Dist);
     for (int r=0; r<XRC.r_count(); r++)
@@ -84,9 +83,9 @@ void CEditableMesh::RayQuery(const Fmatrix& parent, const Fmatrix& inv_parent, S
 void CEditableMesh::BoxQuery(const Fmatrix& parent, const Fmatrix& inv_parent, SPickQuery& pinf)
 {
     if (!m_CFModel) GenerateCFModel();
-    ETOOLS::box_query_m(inv_parent, m_CFModel, pinf.m_BB);
-    for (int r=0; r<ETOOLS::r_count(); r++)
-        pinf.append_mtx(parent,ETOOLS::r_begin()+r,m_Parent,this);
+	/*   ETOOLS::box_query_m(inv_parent, m_CFModel, pinf.m_BB);
+	   for (int r=0; r<ETOOLS::r_count(); r++)
+		   pinf.append_mtx(parent,ETOOLS::r_begin()+r,m_Parent,this);*/
 }
 
 static const float _sqrt_flt_max = _sqrt(flt_max*0.5f);
@@ -98,7 +97,7 @@ bool CEditableMesh::RayPick(float& distance, const Fvector& start, const Fvector
     if (!m_CFModel) GenerateCFModel();
 //.	float m_r 		= pinf?pinf->inf.range+EPS_L:UI->ZFar();// (bugs: не всегда выбирает) //S ????
 
-	ETOOLS::ray_options	(CDB::OPT_ONLYNEAREST | CDB::OPT_CULL);
+	/*ETOOLS::ray_options	(CDB::OPT_ONLYNEAREST | CDB::OPT_CULL);
 	ETOOLS::ray_query_m	(inv_parent, m_CFModel, start, direction, _sqrt_flt_max);
 
     if (ETOOLS::r_count()){
@@ -114,7 +113,7 @@ bool CEditableMesh::RayPick(float& distance, const Fvector& start, const Fvector
             distance = I->range;
             return true;
 		}
-    }
+    }*/
 	return false;
 }
 //----------------------------------------------------
@@ -183,14 +182,14 @@ bool CEditableMesh::BoxPick(const Fbox& box, const Fmatrix& inv_parent, SBoxPick
 {
     if (!m_CFModel) GenerateCFModel();
 
-   ETOOLS::box_query_m(inv_parent, m_CFModel, box);
+   /*ETOOLS::box_query_m(inv_parent, m_CFModel, box);
     if (ETOOLS::r_count()){
     	pinf.push_back(SBoxPickInfo());
 		pinf.back().e_obj 	= m_Parent;
 	    pinf.back().e_mesh	= this;
 	    for (CDB::RESULT* I=ETOOLS::r_begin(); I!=ETOOLS::r_end(); I++) pinf.back().AddRESULT(m_CFModel,I);
         return true;
-    }
+    }*/
 
     return false;
 }

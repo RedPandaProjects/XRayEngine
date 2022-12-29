@@ -71,7 +71,7 @@ bool CBaseMonster::AssignGamePathIfNeeded (Fvector const target_pos, u32 const l
 
 	if ( !level_vertex_is_valid )
 	{
-		if ( m_action_target_pos == target_pos && m_action_target_node != u32(-1) )
+		if ( m_action_target_pos.x == target_pos.x && m_action_target_pos.y == target_pos.y && m_action_target_pos.z == target_pos.z && m_action_target_node != u32(-1) )
 		{
 			target_level_vertex			=	m_action_target_node;
 			level_vertex_is_valid		=	true;
@@ -80,7 +80,9 @@ bool CBaseMonster::AssignGamePathIfNeeded (Fvector const target_pos, u32 const l
 		{
 			u32 const path_node			=	path().get_target_found_node();
 			if ( path().is_target_actual() && 
-				 path().get_target_set() == target_pos && 
+				 path().get_target_set().x == target_pos.x && 
+				path().get_target_set().y == target_pos.y &&
+				path().get_target_set().z == target_pos.z &&
 				 path_node != u32(-1) )
 			{
 				target_level_vertex		=	path_node;

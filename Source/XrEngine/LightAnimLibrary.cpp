@@ -1,7 +1,6 @@
 //---------------------------------------------------------------------------
 #include "stdafx.h"
 #pragma hdrstop
-#include "..\Editors\Public\xrEProps.h"
 #include "LightAnimLibrary.h"
 //---------------------------------------------------------------------------
 #define LANIM_VERSION		0x0001
@@ -284,30 +283,13 @@ CLAItem* ELightAnimLibrary::AppendItem(LPCSTR name, CLAItem* src)
 #ifndef MASTER_GOLD 
 void ELightAnimLibrary::RemoveObject(LPCSTR _fname, EItemType type, bool& res)   
 {
-	if (TYPE_FOLDER==type){
-        res = true;
-		return;
-    }else if (TYPE_OBJECT==type){
-        LAItemIt it=FindItemI(_fname); 
-        if (it!=Items.end()){
-	        xr_delete(*it);
-    	    Items.erase(it);
-            res = true;
-            return;
-        }
-    }
-    else R_ASSERT(0);;
-    res = false;
+	R_ASSERT(false);
 }
 //---------------------------------------------------------------------------
 
 void ELightAnimLibrary::RenameObject(LPCSTR nm0, LPCSTR nm1, EItemType type)
 {
-	if (TYPE_FOLDER==type){
-    }else if (TYPE_OBJECT==type){
-		CLAItem* I=FindItem(nm0); R_ASSERT(I);
-		I->cName	= nm1;
-	}
+    R_ASSERT(false);
 }
 //---------------------------------------------------------------------------
 #endif

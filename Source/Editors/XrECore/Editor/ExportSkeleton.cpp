@@ -342,39 +342,39 @@ void CExportSkeleton::SSplit::Save(IWriter& F)
 
 void CExportSkeleton::SSplit::MakeProgressive()
 {
-	VIPM_Init	();
-    for (SkelVertIt vert_it=m_Verts.begin(); vert_it!=m_Verts.end(); vert_it++)
-    	VIPM_AppendVertex(vert_it->offs,vert_it->uv);
-    for (SkelFaceIt f_it=m_Faces.begin(); f_it!=m_Faces.end(); f_it++)
-    	VIPM_AppendFace(f_it->v[0],f_it->v[1],f_it->v[2]);       
+	//VIPM_Init	();
+ //   for (SkelVertIt vert_it=m_Verts.begin(); vert_it!=m_Verts.end(); vert_it++)
+ //   	VIPM_AppendVertex(vert_it->offs,vert_it->uv);
+ //   for (SkelFaceIt f_it=m_Faces.begin(); f_it!=m_Faces.end(); f_it++)
+ //   	VIPM_AppendFace(f_it->v[0],f_it->v[1],f_it->v[2]);       
 
-    VIPM_Result* R = VIPM_Convert(u32(-1),1.f,1);
+ //   VIPM_Result* R = VIPM_Convert(u32(-1),1.f,1);
 
-    if (R){
-        // Permute vertices
-        SkelVertVec temp_list = m_Verts;
-        for(u32 i=0; i<temp_list.size(); i++)
-            m_Verts[R->permute_verts[i]]=temp_list[i];
-    
-        // Fill indices
-        m_Faces.resize	(R->indices.size()/3);
-        for (u32 f_idx=0; f_idx<m_Faces.size(); f_idx++){
-            SSkelFace& F= m_Faces[f_idx];
-            F.v[0]			= R->indices[f_idx*3+0];
-            F.v[1]			= R->indices[f_idx*3+1];
-            F.v[2]			= R->indices[f_idx*3+2];
-        }
+ //   if (R){
+ //       // Permute vertices
+ //       SkelVertVec temp_list = m_Verts;
+ //       for(u32 i=0; i<temp_list.size(); i++)
+ //           m_Verts[R->permute_verts[i]]=temp_list[i];
+ //   
+ //       // Fill indices
+ //       m_Faces.resize	(R->indices.size()/3);
+ //       for (u32 f_idx=0; f_idx<m_Faces.size(); f_idx++){
+ //           SSkelFace& F= m_Faces[f_idx];
+ //           F.v[0]			= R->indices[f_idx*3+0];
+ //           F.v[1]			= R->indices[f_idx*3+1];
+ //           F.v[2]			= R->indices[f_idx*3+2];
+ //       }
 
-        // Fill SWR
-        m_SWR.resize		(R->swr_records.size());
-        for (u32 swr_idx=0; swr_idx!=m_SWR.size(); swr_idx++)
-            m_SWR[swr_idx]	= R->swr_records[swr_idx];
-	}else{
-    	Log("!..Can't make progressive.");
-    }
-    
-    // cleanup
-    VIPM_Destroy		();
+ //       // Fill SWR
+ //       m_SWR.resize		(R->swr_records.size());
+ //       for (u32 swr_idx=0; swr_idx!=m_SWR.size(); swr_idx++)
+ //           m_SWR[swr_idx]	= R->swr_records[swr_idx];
+	//}else{
+ //   	Log("!..Can't make progressive.");
+ //   }
+ //   
+ //   // cleanup
+ //   VIPM_Destroy		();
 }
 
 void CExportSkeleton::SSplit::MakeStripify()
