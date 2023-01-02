@@ -193,6 +193,9 @@
     <ClCompile Include="..\..\XrRender\Private\ETextureParams.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\GameMtlLib.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WildMagic\WmlMath.h">
@@ -354,6 +357,9 @@
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Engine\guid_generator.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GameMtlLib.h">
       <Filter>Engine</Filter>
     </ClInclude>
   </ItemGroup>

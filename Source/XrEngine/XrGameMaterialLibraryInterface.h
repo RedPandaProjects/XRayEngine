@@ -38,7 +38,6 @@ class ENGINE_API SGameMtl
     friend class XrGameMaterialLibraryEditors;
     friend class CGameMtlLibrary;
 protected:
-    int 				ID; 	// auto number
 public:
     enum {
         flBreakable = (1ul << 0ul),
@@ -64,6 +63,7 @@ public:
         flSlowDown = (1ul << 31ul) // flSlowDown = (fFlotationFactor<1.f)
     };
 public:
+	int 				ID; 	// auto number
     shared_str			m_Name;
     shared_str			m_Desc;
 
@@ -119,12 +119,16 @@ public:
         flCollideMarks = (1 << 6)
     };
     Flags32				OwnProps;
-    //	properties
-    SoundVec			BreakingSounds;
-    SoundVec			StepSounds;
-    SoundVec			CollideSounds;
-    PSVec				CollideParticles;
-    FactoryPtr<IWallMarkArray> m_pCollideMarks;
+	//	properties
+	xr_vector<shared_str>       BreakingSoundsNames;
+	SoundVec			        BreakingSounds;
+	xr_vector<shared_str>       StepSoundsNames;
+	SoundVec			        StepSounds;
+	xr_vector<shared_str>       CollideSoundsNames;
+    SoundVec			        CollideSounds;
+
+    PSVec				        CollideParticles;
+    FactoryPtr<IWallMarkArray>  m_pCollideMarks;
 public:
     SGameMtlPair(XrGameMaterialLibraryInterface* owner);
     virtual ~SGameMtlPair();
@@ -149,24 +153,18 @@ public:
 	virtual ~XrGameMaterialLibraryInterface();
 	virtual void				Unload()=0;
 	// material routine
-	virtual GameMtlIt 		GetMaterialIt(LPCSTR name)=0;
-	virtual GameMtlIt 		GetMaterialIt(shared_str& name)=0;
-	virtual GameMtlIt 		GetMaterialItByID(int id)=0;
 	virtual u32				GetMaterialID(LPCSTR name)=0;
 	// game
-	virtual SGameMtl* GetMaterialByID(s32 id) = 0;
+	virtual SGameMtl*       GetMaterialByID(s32 id) = 0;
 	virtual u16				GetMaterialIdx(int ID) = 0;
 	virtual u16				GetMaterialIdx(LPCSTR name) = 0;
-	virtual SGameMtl* GetMaterialByIdx(u16 idx) = 0;
+	virtual SGameMtl*       GetMaterialByIdx(u16 idx) = 0;
 
 
-	virtual GameMtlIt		FirstMaterial() = 0;
-	virtual GameMtlIt		LastMaterial() = 0;
+
 	virtual u32				CountMaterial() = 0;
 	// game
-	virtual SGameMtlPair* GetMaterialPair(u16 idx0, u16 idx1) = 0;
-	virtual GameMtlPairIt	FirstMaterialPair() = 0;
-	virtual GameMtlPairIt	LastMaterialPair() = 0;
+	virtual SGameMtlPair*   GetMaterialPair(u16 idx0, u16 idx1) = 0;
 
 	// IO routines
 	virtual void				Load() = 0;

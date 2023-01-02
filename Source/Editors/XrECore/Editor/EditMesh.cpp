@@ -213,28 +213,77 @@ void CEditableMesh::GenerateVNormals(const Fmatrix* parent_xform)
 	if (m_VertexNormals)		return;
 	m_VertexNormals = xr_alloc<Fvector>(m_FaceCount * 3);
 
+	float CosA = cosf(deg2rad(75.f));
 	// gen req    
 	GenerateFNormals();
 	GenerateAdjacency();
-	if (m_Flags.is(flSGMask))
+	const bool HardSmoth = true;
+	if (xrGameManager::GetGame() == EGame::SHOC&& HardSmoth)
 	{
 		for (u32 f_i = 0; f_i < m_FaceCount; f_i++)
 		{
 			u32 sg = m_SmoothGroups[f_i];
-
+			Fvector& FN = m_FaceNormals[f_i];
+			for (int k = 0; k < 3; k++)
+			{
+				Fvector& N = m_VertexNormals[f_i * 3 + k];
+				N.set(0, 0, 0);
+				xr_vector<s32>& a_lst = (*m_Adjs)[m_Faces[f_i].pv[k].pindex];
+				for (s32& FaceNormalID : a_lst)
+				{
+					Fvector& FaceNormal = m_FaceNormals[FaceNormalID];
+					if (CosA <= FaceNormal.dotproduct(FN))
+					{
+						N.add(FaceNormal);
+					}
+				}
+				float len = N.magnitude();
+				if (len > EPS_S)
+				{
+					N.div(len);
+				}
+				else
+				{
+					Msg("! Invalid normal. Object: '%s'. Vertex: [%3.2f, %3.2f, %3.2f]", m_Parent->GetName(), VPUSH(m_Vertices[m_Faces[f_i].pv[k].pindex]));
+					N.set(FN);
+				}
+			}
+		}
+	}
+	else if (m_Flags.is(flSGMask))
+	{
+		for (u32 f_i = 0; f_i < m_FaceCount; f_i++)
+		{
+			u32 sg = m_SmoothGroups[f_i];
+			Fvector& FN = m_FaceNormals[f_i];
 			for (int k = 0; k < 3; k++)
 			{
 				Fvector& N = m_VertexNormals[f_i * 3 + k];
 				xr_vector<s32>& a_lst = (*m_Adjs)[m_Faces[f_i].pv[k].pindex];
-
 				N.set(0, 0, 0);
-				for (IntIt i_it = a_lst.begin(); i_it != a_lst.end(); i_it++)
+				if (sg)
 				{
-					if (sg & m_SmoothGroups[*i_it])
-					{	
-						N.add(m_FaceNormals[*i_it]);
+					for (IntIt i_it = a_lst.begin(); i_it != a_lst.end(); i_it++)
+					{
+						if (sg & m_SmoothGroups[*i_it])
+						{	
+							N.add(m_FaceNormals[*i_it]);
+						}
 					}
 				}
+				else
+				{
+					xr_vector<s32>& a_lst = (*m_Adjs)[m_Faces[f_i].pv[k].pindex];
+					for (s32& FaceNormalID : a_lst)
+					{
+						Fvector& FaceNormal = m_FaceNormals[FaceNormalID];
+						if (CosA <= FaceNormal.dotproduct(FN))
+						{
+							N.add(FaceNormal);
+						}
+					}
+				}
+
 				float len = N.magnitude();
 				if (len > EPS_S)
 				{
@@ -245,14 +294,11 @@ void CEditableMesh::GenerateVNormals(const Fmatrix* parent_xform)
 					Msg("! Invalid smooth group found (Max type). Object: '%s'. Vertex: [%3.2f, %3.2f, %3.2f]", m_Parent->GetName(), VPUSH(m_Vertices[m_Faces[f_i].pv[k].pindex]));
 					N.set(m_FaceNormals[a_lst.front()]);
 				}
-
-			
 			}
 		}
 	}
 	else if(xrGameManager::GetGame()==EGame::SHOC)
 	{
-		float CosA = cosf(deg2rad(60.f));
 
 		for (u32 f_i = 0; f_i < m_FaceCount; f_i++)
 		{

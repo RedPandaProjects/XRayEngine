@@ -39,7 +39,9 @@ namespace CDB
 	public:
 		TRI() {}
 		u32				verts	[3];		// 3*4 = 12b
-		union	{
+
+		union	
+		{
 			
 			struct
 			{
@@ -47,10 +49,7 @@ namespace CDB
 			};
 			struct 
 			{
-				u32		material:14;		// 
-				u32		suppress_shadows:1;	// 
-				u32		suppress_wm:1;		// 
-				u32		sector:16;			// 
+				u32			material;		// 
 			};
 
 			void* pointer;

@@ -139,16 +139,18 @@ void CLevel::Load_GameSpecific_CFORM	( CDB::TRI* tris, u32 count )
 	u16									index = 0, static_mtl_count = 1;
 	int max_ID							= 0;
 	int max_static_ID					= 0;
-	for (GameMtlIt I=GameMaterialLibrary->FirstMaterial(); GameMaterialLibrary->LastMaterial()!=I; ++I, ++index) {
-		if (!(*I)->Flags.test(SGameMtl::flDynamic)) {
+	for (int i=0; i< GameMaterialLibrary->CountMaterial(); ++i, ++index)
+	{
+		if (!GameMaterialLibrary->GetMaterialByIdx(i)->Flags.test(SGameMtl::flDynamic))
+		{
 			++static_mtl_count;
 			if(Device->IsEditorMode()&&EditorScene)
-				translator.push_back(translation_pair((*I)->GetID(), (*I)->GetID()));
+				translator.push_back(translation_pair(GameMaterialLibrary->GetMaterialByIdx(i)->GetID(), GameMaterialLibrary->GetMaterialByIdx(i)->GetID()));
 			else
-				translator.push_back		(translation_pair((*I)->GetID(),index));
-			if ((*I)->GetID()>max_static_ID)	max_static_ID	= (*I)->GetID(); 
+				translator.push_back		(translation_pair(GameMaterialLibrary->GetMaterialByIdx(i)->GetID(),index));
+			if (GameMaterialLibrary->GetMaterialByIdx(i)->GetID()>max_static_ID)	max_static_ID	= GameMaterialLibrary->GetMaterialByIdx(i)->GetID();
 		}
-		if ((*I)->GetID()>max_ID)				max_ID			= (*I)->GetID(); 
+		if (GameMaterialLibrary->GetMaterialByIdx(i)->GetID()>max_ID)				max_ID			= GameMaterialLibrary->GetMaterialByIdx(i)->GetID();
 	}
 	// Msg("* Material remapping ID: [Max:%d, StaticMax:%d]",max_ID,max_static_ID);
 	VERIFY(max_static_ID<0xFFFF);
@@ -161,8 +163,6 @@ void CLevel::Load_GameSpecific_CFORM	( CDB::TRI* tris, u32 count )
 			if (i != translator.end()) {
 				(*I).material			= (*i).m_index;
 				SGameMtl* mtl			= GameMaterialLibrary->GetMaterialByIdx	((*i).m_index);
-				(*I).suppress_shadows	= mtl->Flags.is(SGameMtl::flSuppressShadows);
-				(*I).suppress_wm		= mtl->Flags.is(SGameMtl::flSuppressWallmarks);
 				continue;
 			}
 			if (Device->IsEditorMode() == false)
@@ -180,8 +180,6 @@ void CLevel::Load_GameSpecific_CFORM	( CDB::TRI* tris, u32 count )
 			if ((i != translator.end()) && ((*i).m_id == (*I).material)) {
 				(*I).material			= (*i).m_index;
 				SGameMtl* mtl			= GameMaterialLibrary->GetMaterialByIdx	((*i).m_index);
-				(*I).suppress_shadows	= mtl->Flags.is(SGameMtl::flSuppressShadows);
-				(*I).suppress_wm		= mtl->Flags.is(SGameMtl::flSuppressWallmarks);
 				continue;
 			}
 			if (Device->IsEditorMode() == false)

@@ -19,8 +19,11 @@ public class XRayEngineModules : ModuleRules
         if (Target.Platform == UnrealTargetPlatform.Win64)
 		{
 			string LibPath = Path.Combine(ModuleDirectory,"Lib", "x64", ConfigureName);
-			string BinPath = Path.Combine(ModuleDirectory,"Bin", "x64", ConfigureName);
-			PublicAdditionalLibraries.Add(Path.Combine(LibPath,"XrCore_"+ ConfigureName + ".lib"));
+			string BinPath = Path.Combine(ModuleDirectory,"Bin", "x64", ConfigureName); 
+
+
+            PublicAdditionalLibraries.Add(Path.Combine(LibPath, "XrCore_" + ConfigureName + ".lib"));
+            PublicAdditionalLibraries.Add(Path.Combine(LibPath,"XrSound_"+ ConfigureName + ".lib"));
             PublicAdditionalLibraries.Add(Path.Combine(LibPath,"XrEngine_" + ConfigureName + ".lib"));
 			PublicAdditionalLibraries.Add(Path.Combine(LibPath,"XrCDB_" + ConfigureName + ".lib"));
 			PublicAdditionalLibraries.Add(Path.Combine(LibPath,"XrAPI_" + ConfigureName + ".lib"));

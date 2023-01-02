@@ -45,13 +45,15 @@ void DestroyPSs(PSVec& lst)
     //		Device->Resources->Delete(*it);
 }
 
-void CreateSounds(SoundVec& lst, LPCSTR buf)
+void CreateSounds(xr_vector<shared_str>& lst, LPCSTR buf)
 {
     string128 tmp;
     int cnt = _GetItemCount(buf);	R_ASSERT(cnt <= GAMEMTL_SUBITEM_COUNT + 2);
     lst.resize(cnt);
     for (int k = 0; k < cnt; ++k)
-        lst[k].create(_GetItem(buf, k, tmp), st_Effect, sg_SourceType);
+        lst[k] = shared_str(_GetItem(buf, k, tmp));
+  //  for (int k = 0; k < cnt; ++k)
+       // lst[k].create(_GetItem(buf, k, tmp), st_Effect, sg_SourceType);
 }
 /*
 void CreateMarks(ShaderVec& lst, LPCSTR buf)
@@ -108,13 +110,13 @@ void SGameMtlPair::Load(IReader& fs)
     OwnProps.assign(fs.r_u32());
 
     R_ASSERT(fs.find_chunk(GAMEMTLPAIR_CHUNK_BREAKING));
-    fs.r_stringZ(buf); 		CreateSounds(BreakingSounds, *buf);
+    fs.r_stringZ(buf); 		CreateSounds(BreakingSoundsNames, *buf);
 
     R_ASSERT(fs.find_chunk(GAMEMTLPAIR_CHUNK_STEP));
-    fs.r_stringZ(buf);		CreateSounds(StepSounds, *buf);
+    fs.r_stringZ(buf);		CreateSounds(StepSoundsNames, *buf);
 
     R_ASSERT(fs.find_chunk(GAMEMTLPAIR_CHUNK_COLLIDE));
-    fs.r_stringZ(buf);		CreateSounds(CollideSounds, *buf);
+    fs.r_stringZ(buf);		CreateSounds(CollideSoundsNames, *buf);
     fs.r_stringZ(buf);		CreatePSs(CollideParticles, *buf);
     fs.r_stringZ(buf);
     //CreateMarks			(CollideMarks,*buf);

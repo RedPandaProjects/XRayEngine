@@ -39,7 +39,6 @@ namespace CDB
 		T.verts	[1]		= verts.size()+1;
 		T.verts	[2]		= verts.size()+2;
 		T.material		= material;
-		T.sector		= sector;
 
 		verts.push_back(v0);
 		verts.push_back(v1);
@@ -58,7 +57,6 @@ namespace CDB
 		T.verts	[1]		= VPack(v1,eps);
 		T.verts	[2]		= VPack(v2,eps);
 		T.material		= material;
-		T.sector		= sector;
 		faces.push_back(T);
 	}
 
@@ -310,7 +308,6 @@ namespace CDB
 		T.verts	[1] = VPack(v1);
 		T.verts	[2] = VPack(v2);
 		T.material		= material;
-		T.sector		= sector;
 		flags.push_back(_flags);
 		faces.push_back(T);
 

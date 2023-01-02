@@ -73,6 +73,7 @@ public:
 
 	virtual class XRayUnrealProxyInterface*	CreateUnrealProxy	(class CObject*) = 0;
 	virtual void							Destroy				(class XRayUnrealProxyInterface*) = 0;
+	virtual void			LoadCFormFormCurrentWorld(class CObjectSpace&ObjectSpace,CDB::build_callback build_callback)= 0 ;
 private:
 	void InitEngine();
 	void InitSettings();

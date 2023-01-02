@@ -470,7 +470,7 @@ extern XRCDB_API BOOL* cdb_bDebug;
 
 void XRayEngineInterface::InitEngine()
 {
-	GameMaterialLibrary = xr_new<CGameMtlLibrary>();
+	VERIFY(GameMaterialLibrary); 
 	Engine->Initialize();
 
 	Device->Statistic = xr_new<CStats>();
@@ -605,7 +605,6 @@ void XRayEngineInterface::destroySound()
 void XRayEngineInterface::destroyEngine()
 {
 	Engine->Destroy();
-	xr_delete(GameMaterialLibrary);
 	xr_delete(Device->Statistic);
 }
 

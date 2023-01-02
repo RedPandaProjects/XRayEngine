@@ -98,8 +98,8 @@ BOOL IGame_Level::Load			(u32 dwNum)
 
 	// CForms
 //	g_pGamePersistent->LoadTitle	("st_loading_cform");
-	g_pGamePersistent->LoadTitle	();
-	ObjectSpace.Load			( build_callback );
+	g_pGamePersistent->LoadTitle();
+	g_Engine->LoadCFormFormCurrentWorld(ObjectSpace, build_callback);
 	//Sound->set_geometry_occ		( &Static );
 	Sound->set_geometry_occ		(ObjectSpace.GetStaticModel	());
 	Sound->set_handler			( _sound_event );

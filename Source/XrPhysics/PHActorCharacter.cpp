@@ -56,9 +56,9 @@ void CPHActorCharacter::Create(dVector3 sizes)
 	}
 	if(slide_material_index == GAMEMTL_NONE_IDX)
 	{
-		GameMtlIt mi = GMLibrary().GetMaterialIt("materials\\earth_slide");
-		if( mi != GMLibrary().LastMaterial	())
-			slide_material_index =u16( mi - GMLibrary().FirstMaterial() );
+		u32 MatID = GameMaterialLibrary->GetMaterialID("materials\\earth_slide");
+		if (MatID != GAMEMTL_NONE_IDX)
+			slide_material_index = u16(GameMaterialLibrary->GetMaterialIdx(MatID));
 		//slide_material_index = GMLibrary().GetMaterialIdx("earth_slide");
 	}
 }
