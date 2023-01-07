@@ -11,7 +11,6 @@
 
 #include "dedicated_server_only.h"
 #include "no_single.h"
-#include "../xrNetServer/NET_AuthCheck.h"
 
 #include "xr_input.h"
 #include "xr_ioconsole.h"
@@ -117,22 +116,6 @@ ENGINE_API	XRayEngineInterface*	g_Engine			= NULL;
 
 // -------------------------------------------
 // startup point
-
-struct path_excluder_predicate
-{
-	explicit path_excluder_predicate(xr_auth_strings_t const * ignore) :
-		m_ignore(ignore)
-	{
-	}
-	bool xr_stdcall is_allow_include(LPCSTR path)
-	{
-		if (!m_ignore)
-			return true;
-		
-		return allow_to_include_path(*m_ignore, path);
-	}
-	xr_auth_strings_t const *	m_ignore;
-};
 
 #include "xr_ioc_cmd.h"
 
@@ -496,22 +479,6 @@ void XRayEngineInterface::InitSettings()
 #endif // #ifdef DEBUG
 	pSettings = xr_new<CInifile>(fname, TRUE);
 	CHECK_OR_EXIT(0 != pSettings->section_count(), make_string("Cannot find file %s.\nReinstalling application may fix this problem.", fname));
-
-	xr_auth_strings_t			tmp_ignore_pathes;
-	xr_auth_strings_t			tmp_check_pathes;
-	fill_auth_check_params(tmp_ignore_pathes, tmp_check_pathes);
-
-	path_excluder_predicate			tmp_excluder(&tmp_ignore_pathes);
-	CInifile::allow_include_func_t	tmp_functor;
-	tmp_functor.bind(&tmp_excluder, &path_excluder_predicate::is_allow_include);
-	pSettingsAuth = xr_new<CInifile>(
-		fname,
-		TRUE,
-		TRUE,
-		FALSE,
-		0,
-		tmp_functor
-		);
 
 	FS.update_path(fname, "$game_config$", "game.ltx");
 	pGameIni = xr_new<CInifile>(fname, TRUE);

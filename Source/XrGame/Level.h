@@ -1,10 +1,7 @@
-#if !defined(AFX_LEVEL_H__38F63863_DB0C_494B_AFAB_C495876EC671__INCLUDED_)
-#define AFX_LEVEL_H__38F63863_DB0C_494B_AFAB_C495876EC671__INCLUDED_
 #pragma once
 
 #include "../xrEngine/igame_level.h"
 #include "../xrEngine/IGame_Persistent.h"
-#include "../xrNetServer/net_client.h"
 #include "script_export_space.h"
 #include "../xrEngine/StatGraph.h"
 #include "xrMessages.h"
@@ -144,7 +141,7 @@ private:
 	OBJECTS_LIST				pActors4CrPr;
 
 	CObject*					pCurrentControlEntity;
-	xrServer::EConnect			m_connect_server_err;
+	int							m_connect_server_err;
 public:
 	void						AddObject_To_Objects4CrPr	(CGameObject* pObj);
 	void						AddActor_To_Actors4CrPr		(CGameObject* pActor);
@@ -459,7 +456,3 @@ IC bool		IsGameTypeSingle()	{ return (g_pGamePersistent->GameType() == eGameIDSi
 //class  CPHWorld;
 //extern CPHWorld*				ph_world;
 extern BOOL						g_bDebugEvents;
-
-// -------------------------------------------------------------------------------------------------
-
-#endif // !defined(AFX_LEVEL_H__38F63863_DB0C_494B_AFAB_C495876EC671__INCLUDED_)

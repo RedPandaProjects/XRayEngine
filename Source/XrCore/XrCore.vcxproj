@@ -136,7 +136,6 @@
     <ClCompile Include="Interface\XRayLogInterface.cpp" />
     <ClCompile Include="Interface\XRayMemoryInterface.cpp" />
     <ClCompile Include="LocatorAPI.cpp" />
-    <ClCompile Include="LocatorAPI_auth.cpp" />
     <ClCompile Include="LocatorAPI_defs.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="LzHuf.cpp" />

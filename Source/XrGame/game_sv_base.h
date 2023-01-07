@@ -7,7 +7,6 @@
 #include "game_sv_base_console_vars.h"
 #include "game_sv_event_queue.h"
 #include "game_sv_item_respawner.h"
-#include "../xrNetServer/NET_Server.h"
 
 #define MAX_PLAYERS_COUNT 32
 
@@ -71,9 +70,6 @@ public:
 	virtual		void				SaveMapList				();
 	virtual		bool				HasMapRotation			() {return m_bMapRotation; };
 
-				bool				FindPlayerName			(char const * name, IClient const * to_exclude);
-				void				GenerateNewName			(char const * old_name, char * dest, u32 const dest_size);
-				void				CheckPlayerName			(xrClientData* CL);
 public:
 	virtual		void				OnPlayerConnect			(ClientID id_who);
 	virtual		void				OnPlayerDisconnect		(ClientID id_who, LPSTR Name, u16 GameID);

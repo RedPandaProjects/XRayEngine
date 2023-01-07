@@ -83,7 +83,7 @@ LPCSTR				game_sv_GameState::get_player_name_id				(ClientID id)
 
 u32					game_sv_GameState::get_players_count		()
 {
-	return				m_server->GetClientsCount();
+	return				1;
 }
 
 u16					game_sv_GameState::get_id_2_eid				(ClientID id)
@@ -114,7 +114,7 @@ game_PlayerState*	game_sv_GameState::get_eid (u16 id) //if exist
 	struct id_searcher
 	{
 		u16 id_to_search;
-		bool operator()(IClient* client)
+		bool operator()(void* client)
 		{
 			xrClientData* tmp_client = static_cast<xrClientData*>(client);
 			if (!tmp_client->ps)
