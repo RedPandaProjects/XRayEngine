@@ -1,6 +1,4 @@
 #include "stdafx.h"
-#include "game_sv_mp.h"
-#include "game_cl_mp.h"
 #include "level.h"
 #include "DemoInfo.h"
 #include "../xrCore/stream_reader.h"
@@ -76,18 +74,7 @@ void demo_player_info::load_from_player(game_PlayerState* player_state)
 	m_spots		= m_frags - (player_state->m_iTeamKills * 2) - player_state->m_iSelfKills + (m_artefacts * 3);
 	m_rank		= player_state->rank;
 
-	game_cl_mp*	tmp_game = smart_cast<game_cl_mp*>(&Game());
-	R_ASSERT(tmp_game);
-	s16			tmp_team = tmp_game->ModifyTeam(player_state->team);
-	if (tmp_team < 0)
-	{
-		tmp_team = 2;	//spectator
-	}
-	if ((tmp_game->Type() == eGameIDDeathmatch) && (tmp_team != 2))
-	{
-		tmp_team = 0;	//in deathmatch if player is not spectator, he is in green team
-	}
-	m_team		= static_cast<u8>(tmp_team);
+	m_team		= static_cast<u8>(0);
 }
 
 u32 const demo_info::max_demo_info_size = 
@@ -152,31 +139,6 @@ void demo_info::load_from_game()
 {
 	m_map_name		= Level().name();
 	m_map_version	= Level().version();
-	game_cl_mp*		tmp_game = smart_cast<game_cl_mp*>(&Game());
-	R_ASSERT2		(tmp_game, "client game not present");
-	m_game_type		= GameTypeToString(tmp_game->Type(), true);
-	string32		tmp_score_dest;
-	m_game_score	= tmp_game->GetGameScore(tmp_score_dest);
-	if (tmp_game->local_player && (xr_strlen(tmp_game->local_player->getName()) > 0))
-	{
-		m_author_name	= tmp_game->local_player->getName();
-	} else
-	{
-		m_author_name	= "unknown";
-	}
-	
-	u32	pcount		= tmp_game->GetPlayersCount();
-	
-	delete_data			(m_players);
-	m_players.reserve	(pcount);
-	for (u32 i = 0; i < pcount; ++i)
-	{
-		game_PlayerState* tmp_player = tmp_game->GetPlayerByOrderID(i);
-		R_ASSERT2(tmp_player, "player not exist");
-		demo_player_info* new_player = xr_new<demo_player_info>();
-		new_player->load_from_player(tmp_player);
-		m_players.push_back(new_player);
-	}
 }
 
 demo_player_info const * demo_info::get_player(u32 player_index) const
@@ -185,6 +147,7 @@ demo_player_info const * demo_info::get_player(u32 player_index) const
 	return m_players[player_index];
 }
 
+#include <luabind/luabind.hpp>
 
 using namespace luabind;
 

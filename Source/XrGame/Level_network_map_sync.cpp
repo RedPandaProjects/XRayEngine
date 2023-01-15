@@ -92,7 +92,7 @@ bool	CLevel::synchronize_client()
 		NET_Packet	P;
 		P.w_begin	(M_CLIENT_REQUEST_CONNECTION_DATA);
 		
-		Send		(P, net_flags(TRUE, TRUE, TRUE, TRUE));
+		Send		(P);
 		sended_request_connection_data = TRUE;
 	}
 //---------------------------------------------------------------------------
@@ -123,7 +123,7 @@ void LevelMapSyncData::CheckToSendMapSync()
 		P.w_stringZ	(m_name);
 		P.w_stringZ	(m_map_version);
 		P.w_u32		(m_level_geom_crc32);
-		Level().Send(P, net_flags(TRUE, TRUE, TRUE, TRUE));
+		Level().Send(P);
 		m_sended_map_name_request = true;
 		invalid_geom_checksum = false;
 		m_map_sync_received = false;

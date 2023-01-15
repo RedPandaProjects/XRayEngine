@@ -276,7 +276,7 @@ void CEntity::KillEntity(u16 whoID)
 		P.w_u16			(u16(whoID));
 		P.w_u32			(0);
 		if (OnServer())
-			u_EventSend	(P, net_flags(TRUE, TRUE, FALSE, TRUE));
+			u_EventSend	(P);
 	}
 };
 

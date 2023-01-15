@@ -2,7 +2,6 @@
 #include "Level.h"
 #include "../xrCore/ppmd_compressor.h"
 #include "../xrphysics/iphworld.h"
-#include "xrServer_updates_compressor.h"
 
 void CLevel::ProcessCompressedUpdate(NET_Packet& P, u8 const compress_type)
 {
@@ -51,18 +50,8 @@ void CLevel::ProcessCompressedUpdate(NET_Packet& P, u8 const compress_type)
 	Device->Statistic->netClientCompressor.End();
 
 	if (OnClient()) UpdateDeltaUpd(timeServer());
-	IClientStatistic pStat = Level().GetStatistic();
-	u32 dTime = 0;
-	
-	if ((Level().timeServer() + pStat.getPing()) < P.timeReceive)
-	{
-		dTime = pStat.getPing();
-	}
-	else
-	{
-		dTime = Level().timeServer() - P.timeReceive + pStat.getPing();
-	}
-	u32 NumSteps = physics_world()->CalcNumSteps(dTime);
+
+	u32 NumSteps = physics_world()->CalcNumSteps(10);
 	SetNumCrSteps(NumSteps);
 }
 

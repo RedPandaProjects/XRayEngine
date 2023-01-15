@@ -2077,68 +2077,17 @@
     <Filter Include="Core\Server\Games\client">
       <UniqueIdentifier>{76353365-4d4d-4ecf-865e-40785aa5d78e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Server\Games\client\artefact_hunt">
-      <UniqueIdentifier>{1bb85f6d-9e38-4b86-946b-bb1ad88b9128}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Server\Games\client\deathmatch">
-      <UniqueIdentifier>{89dc2ce7-634c-4157-95cc-63d1f858cb0a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Server\Games\client\team_deathmatch">
-      <UniqueIdentifier>{0f434ca8-0f01-4aec-ba77-ad3d78bfcc5b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core\Server\Games\client\single">
       <UniqueIdentifier>{d80a16d6-8e5c-45dd-8071-8d0d9d910507}</UniqueIdentifier>
     </Filter>
     <Filter Include="Core\Server\Games\client\base">
       <UniqueIdentifier>{bc92d823-8801-41fc-897d-ea40f283b7c5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Server\Games\client\mp">
-      <UniqueIdentifier>{bddd0276-1bfb-4ade-ae80-a0f4b559d1f8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Server\Games\client\mp\screenshots">
-      <UniqueIdentifier>{8b04fec2-d66c-4a8c-a6a6-05e2cb3c27be}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Server\Games\client\mp\anticheat">
-      <UniqueIdentifier>{437a0841-4ca6-4c02-923a-8ffa6dac00d6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Server\Games\client\mp\award_system">
-      <UniqueIdentifier>{b389266b-c4ab-40df-9e30-ba491fe26488}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Server\Games\client\mp\award_system\event_handlers">
-      <UniqueIdentifier>{1b0eae4f-0765-48cf-93a2-0f4fe481d1d4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Server\Games\client\mp\award_system\player_state">
-      <UniqueIdentifier>{18c97db1-c165-47ea-9e2c-fa3c0f62817b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Server\Games\client\mp\award_system\player_state\state_parameters">
-      <UniqueIdentifier>{576b0735-178e-481c-88ef-430b2bedcfb4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Server\Games\client\capture_the_artefact">
-      <UniqueIdentifier>{4becacad-bead-4bfe-8e60-4049a610c6a3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core\Server\Games\server">
       <UniqueIdentifier>{dc427dd4-5091-459f-a291-8eb35e9c136c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Server\Games\server\artefact_hunt">
-      <UniqueIdentifier>{26cda51e-8318-41b1-ad4c-dde40eb473fd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Server\Games\server\deathmatch">
-      <UniqueIdentifier>{4c390889-a9d8-41ce-9428-4ff4b30b28db}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core\Server\Games\server\single">
       <UniqueIdentifier>{1beab3ea-4a9f-446b-a7dc-ee2858a36c84}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Server\Games\server\team_deathmatch">
-      <UniqueIdentifier>{c51be10d-9695-438b-a610-a85c98826476}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Server\Games\server\mp">
-      <UniqueIdentifier>{47d9236c-d038-4962-bcca-1fdaec2647d0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Server\Games\server\capture_the_artefact">
-      <UniqueIdentifier>{4e4665b0-0a81-4a3c-93e0-c7f3226afee6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Server\Games\PlayerAccounts">
-      <UniqueIdentifier>{5c762e47-2ace-4070-927b-68ce80ca86c6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Core\Server\GameSpy">
       <UniqueIdentifier>{ee6919ab-ff52-4760-930a-2adf69acf082}</UniqueIdentifier>
@@ -2154,12 +2103,6 @@
     </Filter>
     <Filter Include="Core\Server\ServerProcess">
       <UniqueIdentifier>{0a95dc7f-64b2-47a7-bbe0-cf5923258560}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Server\xrGameSpyServer">
-      <UniqueIdentifier>{aee1729e-08ce-4d0b-9061-3d5a9fa2f866}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Server\filetransfer">
-      <UniqueIdentifier>{b371c1dc-9490-49dd-b913-eff0e2005d28}</UniqueIdentifier>
     </Filter>
     <Filter Include="UI">
       <UniqueIdentifier>{d5e937c8-f211-49db-9f7f-11ba7827ed0d}</UniqueIdentifier>
@@ -5844,12 +5787,6 @@
     <ClInclude Include="GalantineArtifact.h">
       <Filter>Core\Client\Objects\items &amp; weapons\Artifacts\GalantineArtifact</Filter>
     </ClInclude>
-    <ClInclude Include="cta_game_artefact.h">
-      <Filter>Core\Client\Objects\items &amp; weapons\Artifacts\CtaGameArtefact</Filter>
-    </ClInclude>
-    <ClInclude Include="cta_game_artefact_activation.h">
-      <Filter>Core\Client\Objects\items &amp; weapons\Artifacts\CtaGameArtefact</Filter>
-    </ClInclude>
     <ClInclude Include="ui\ArtefactDetectorUI.h">
       <Filter>Core\Client\Objects\items &amp; weapons\Devices\Detectors</Filter>
     </ClInclude>
@@ -6171,9 +6108,6 @@
     <ClInclude Include="static_cast_checked.hpp">
       <Filter>Core\Common\debug\static_cast_checked</Filter>
     </ClInclude>
-    <ClInclude Include="screenshot_server.h">
-      <Filter>Core\Server</Filter>
-    </ClInclude>
     <ClInclude Include="xrClientsPool.h">
       <Filter>Core\Server</Filter>
     </ClInclude>
@@ -6184,9 +6118,6 @@
       <Filter>Core\Server</Filter>
     </ClInclude>
     <ClInclude Include="..\xrServerEntities\xrServer_Space.h">
-      <Filter>Core\Server</Filter>
-    </ClInclude>
-    <ClInclude Include="xrServer_updates_compressor.h">
       <Filter>Core\Server</Filter>
     </ClInclude>
     <ClInclude Include="xrServerMapSync.h">
@@ -6222,24 +6153,6 @@
     <ClInclude Include="..\xrServerEntities\game_base_space.h">
       <Filter>Core\Server\Games</Filter>
     </ClInclude>
-    <ClInclude Include="game_cl_artefacthunt.h">
-      <Filter>Core\Server\Games\client\artefact_hunt</Filter>
-    </ClInclude>
-    <ClInclude Include="game_cl_artefacthunt_snd_msg.h">
-      <Filter>Core\Server\Games\client\artefact_hunt</Filter>
-    </ClInclude>
-    <ClInclude Include="game_cl_deathmatch.h">
-      <Filter>Core\Server\Games\client\deathmatch</Filter>
-    </ClInclude>
-    <ClInclude Include="game_cl_deathmatch_snd_messages.h">
-      <Filter>Core\Server\Games\client\deathmatch</Filter>
-    </ClInclude>
-    <ClInclude Include="game_cl_teamdeathmatch.h">
-      <Filter>Core\Server\Games\client\team_deathmatch</Filter>
-    </ClInclude>
-    <ClInclude Include="game_cl_teamdeathmatch_snd_messages.h">
-      <Filter>Core\Server\Games\client\team_deathmatch</Filter>
-    </ClInclude>
     <ClInclude Include="game_cl_single.h">
       <Filter>Core\Server\Games\client\single</Filter>
     </ClInclude>
@@ -6248,192 +6161,6 @@
     </ClInclude>
     <ClInclude Include="game_cl_base_weapon_usage_statistic.h">
       <Filter>Core\Server\Games\client\base</Filter>
-    </ClInclude>
-    <ClInclude Include="game_cl_mp.h">
-      <Filter>Core\Server\Games\client\mp</Filter>
-    </ClInclude>
-    <ClInclude Include="game_cl_mp_messages_menu.h">
-      <Filter>Core\Server\Games\client\mp</Filter>
-    </ClInclude>
-    <ClInclude Include="game_cl_mp_snd_messages.h">
-      <Filter>Core\Server\Games\client\mp</Filter>
-    </ClInclude>
-    <ClInclude Include="screenshot_manager.h">
-      <Filter>Core\Server\Games\client\mp\screenshots</Filter>
-    </ClInclude>
-    <ClInclude Include="screenshots_common.h">
-      <Filter>Core\Server\Games\client\mp\screenshots</Filter>
-    </ClInclude>
-    <ClInclude Include="screenshots_writer.h">
-      <Filter>Core\Server\Games\client\mp\screenshots</Filter>
-    </ClInclude>
-    <ClInclude Include="configs_common.h">
-      <Filter>Core\Server\Games\client\mp\anticheat</Filter>
-    </ClInclude>
-    <ClInclude Include="configs_dump_verifyer.h">
-      <Filter>Core\Server\Games\client\mp\anticheat</Filter>
-    </ClInclude>
-    <ClInclude Include="configs_dumper.h">
-      <Filter>Core\Server\Games\client\mp\anticheat</Filter>
-    </ClInclude>
-    <ClInclude Include="mp_config_sections.h">
-      <Filter>Core\Server\Games\client\mp\anticheat</Filter>
-    </ClInclude>
-    <ClInclude Include="ammunition_groups.h">
-      <Filter>Core\Server\Games\client\mp\award_system</Filter>
-    </ClInclude>
-    <ClInclude Include="bone_groups.h">
-      <Filter>Core\Server\Games\client\mp\award_system</Filter>
-    </ClInclude>
-    <ClInclude Include="event_conditions_collection.h">
-      <Filter>Core\Server\Games\client\mp\award_system</Filter>
-    </ClInclude>
-    <ClInclude Include="game_events_handler.h">
-      <Filter>Core\Server\Games\client\mp\award_system</Filter>
-    </ClInclude>
-    <ClInclude Include="reward_event_generator.h">
-      <Filter>Core\Server\Games\client\mp\award_system</Filter>
-    </ClInclude>
-    <ClInclude Include="reward_manager.h">
-      <Filter>Core\Server\Games\client\mp\award_system</Filter>
-    </ClInclude>
-    <ClInclude Include="reward_snd_messages.h">
-      <Filter>Core\Server\Games\client\mp\award_system</Filter>
-    </ClInclude>
-    <ClInclude Include="rewarding_events_handlers.h">
-      <Filter>Core\Server\Games\client\mp\award_system</Filter>
-    </ClInclude>
-    <ClInclude Include="rewarding_state_events.h">
-      <Filter>Core\Server\Games\client\mp\award_system</Filter>
-    </ClInclude>
-    <ClInclude Include="state_arguments_functions.h">
-      <Filter>Core\Server\Games\client\mp\award_system</Filter>
-    </ClInclude>
-    <ClInclude Include="best_scores_helper.h">
-      <Filter>Core\Server\Games\client\mp\award_system\event_handlers</Filter>
-    </ClInclude>
-    <ClInclude Include="reward_event_handler.h">
-      <Filter>Core\Server\Games\client\mp\award_system\event_handlers</Filter>
-    </ClInclude>
-    <ClInclude Include="accumulative_states.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state</Filter>
-    </ClInclude>
-    <ClInclude Include="game_state_accumulator.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state</Filter>
-    </ClInclude>
-    <ClInclude Include="game_state_accumulator_inline.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state</Filter>
-    </ClInclude>
-    <ClInclude Include="hits_store.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state</Filter>
-    </ClInclude>
-    <ClInclude Include="hits_store_inline.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state</Filter>
-    </ClInclude>
-    <ClInclude Include="kills_store.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state</Filter>
-    </ClInclude>
-    <ClInclude Include="kills_store_inline.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state</Filter>
-    </ClInclude>
-    <ClInclude Include="obsolete_queue.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state</Filter>
-    </ClInclude>
-    <ClInclude Include="obsolete_queue_inline.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state</Filter>
-    </ClInclude>
-    <ClInclude Include="player_state_param.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state</Filter>
-    </ClInclude>
-    <ClInclude Include="black_list.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="command_switch_counter.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="double_shot_double_kill.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="faster_than_bullets_time.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="harvest_time.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="invincible_fury.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="killer_victim_velocity_angle.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="player_spot_params.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="player_state_achilles_heel.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="player_state_ambassador.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="player_state_ammo_elapsed.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="player_state_avenger.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="player_state_blitzkrieg.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="player_state_cherub.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="player_state_climber.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="player_state_mad.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="player_state_marksman.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="player_state_multichampion.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="player_state_opener.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="player_state_params.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="player_state_remembrance.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="player_state_skewer.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="player_state_toughy.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="player_team_win_score.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="silent_shots.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="sprinter_stopper.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="stalker_flair.h">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClInclude>
-    <ClInclude Include="game_cl_capture_the_artefact.h">
-      <Filter>Core\Server\Games\client\capture_the_artefact</Filter>
-    </ClInclude>
-    <ClInclude Include="game_cl_capture_the_artefact_captions_manager.h">
-      <Filter>Core\Server\Games\client\capture_the_artefact</Filter>
-    </ClInclude>
-    <ClInclude Include="game_cl_capturetheartefact_snd_msg.h">
-      <Filter>Core\Server\Games\client\capture_the_artefact</Filter>
     </ClInclude>
     <ClInclude Include="game_sv_base.h">
       <Filter>Core\Server\Games\server</Filter>
@@ -6450,77 +6177,8 @@
     <ClInclude Include="xr_time.h">
       <Filter>Core\Server\Games\server</Filter>
     </ClInclude>
-    <ClInclude Include="game_sv_artefacthunt.h">
-      <Filter>Core\Server\Games\server\artefact_hunt</Filter>
-    </ClInclude>
-    <ClInclude Include="game_sv_deathmatch.h">
-      <Filter>Core\Server\Games\server\deathmatch</Filter>
-    </ClInclude>
     <ClInclude Include="game_sv_single.h">
       <Filter>Core\Server\Games\server\single</Filter>
-    </ClInclude>
-    <ClInclude Include="game_sv_teamdeathmatch.h">
-      <Filter>Core\Server\Games\server\team_deathmatch</Filter>
-    </ClInclude>
-    <ClInclude Include="cdkey_ban_list.h">
-      <Filter>Core\Server\Games\server\mp</Filter>
-    </ClInclude>
-    <ClInclude Include="game_sv_mp.h">
-      <Filter>Core\Server\Games\server\mp</Filter>
-    </ClInclude>
-    <ClInclude Include="game_sv_mp_team.h">
-      <Filter>Core\Server\Games\server\mp</Filter>
-    </ClInclude>
-    <ClInclude Include="game_sv_mp_vote_flags.h">
-      <Filter>Core\Server\Games\server\mp</Filter>
-    </ClInclude>
-    <ClInclude Include="game_sv_capture_the_artefact.h">
-      <Filter>Core\Server\Games\server\capture_the_artefact</Filter>
-    </ClInclude>
-    <ClInclude Include="account_manager.h">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClInclude>
-    <ClInclude Include="account_manager_console.h">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClInclude>
-    <ClInclude Include="atlas_stalkercoppc_v1.h">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClInclude>
-    <ClInclude Include="atlas_submit_queue.h">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClInclude>
-    <ClInclude Include="awards_store.h">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClInclude>
-    <ClInclude Include="best_scores_store.h">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClInclude>
-    <ClInclude Include="gsc_dsigned_ltx.h">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClInclude>
-    <ClInclude Include="login_manager.h">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClInclude>
-    <ClInclude Include="mixed_delegate.h">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClInclude>
-    <ClInclude Include="mixed_delegate_unique_tags.h">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClInclude>
-    <ClInclude Include="player_account.h">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClInclude>
-    <ClInclude Include="profile_data_types.h">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClInclude>
-    <ClInclude Include="profile_store.h">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClInclude>
-    <ClInclude Include="queued_async_method.h">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClInclude>
-    <ClInclude Include="stats_submitter.h">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
     </ClInclude>
     <ClInclude Include="id_generator.h">
       <Filter>Core\Server\ID_Generator</Filter>
@@ -6566,24 +6224,6 @@
     </ClInclude>
     <ClInclude Include="xrServer_svclient_validation.h">
       <Filter>Core\Server\ServerProcess</Filter>
-    </ClInclude>
-    <ClInclude Include="xrGameSpyServer.h">
-      <Filter>Core\Server\xrGameSpyServer</Filter>
-    </ClInclude>
-    <ClInclude Include="xrGameSpyServer_callbacks.h">
-      <Filter>Core\Server\xrGameSpyServer</Filter>
-    </ClInclude>
-    <ClInclude Include="file_transfer.h">
-      <Filter>Core\Server\filetransfer</Filter>
-    </ClInclude>
-    <ClInclude Include="filereceiver_node.h">
-      <Filter>Core\Server\filetransfer</Filter>
-    </ClInclude>
-    <ClInclude Include="filetransfer_common.h">
-      <Filter>Core\Server\filetransfer</Filter>
-    </ClInclude>
-    <ClInclude Include="filetransfer_node.h">
-      <Filter>Core\Server\filetransfer</Filter>
     </ClInclude>
     <ClInclude Include="ui_base.h">
       <Filter>UI</Filter>
@@ -9360,12 +9000,6 @@
     <ClCompile Include="GalantineArtifact.cpp">
       <Filter>Core\Client\Objects\items &amp; weapons\Artifacts\GalantineArtifact</Filter>
     </ClCompile>
-    <ClCompile Include="cta_game_artefact.cpp">
-      <Filter>Core\Client\Objects\items &amp; weapons\Artifacts\CtaGameArtefact</Filter>
-    </ClCompile>
-    <ClCompile Include="cta_game_artefact_activation.cpp">
-      <Filter>Core\Client\Objects\items &amp; weapons\Artifacts\CtaGameArtefact</Filter>
-    </ClCompile>
     <ClCompile Include="ui\ArtefactDetectorUI.cpp">
       <Filter>Core\Client\Objects\items &amp; weapons\Devices\Detectors</Filter>
     </ClCompile>
@@ -9672,9 +9306,6 @@
     <ClCompile Include="static_cast_checked_test.cpp">
       <Filter>Core\Common\debug\static_cast_checked</Filter>
     </ClCompile>
-    <ClCompile Include="screenshot_server.cpp">
-      <Filter>Core\Server</Filter>
-    </ClCompile>
     <ClCompile Include="xrClientsPool.cpp">
       <Filter>Core\Server</Filter>
     </ClCompile>
@@ -9690,26 +9321,11 @@
     <ClCompile Include="xrServer_info.cpp">
       <Filter>Core\Server</Filter>
     </ClCompile>
-    <ClCompile Include="xrServer_updates_compressor.cpp">
-      <Filter>Core\Server</Filter>
-    </ClCompile>
     <ClCompile Include="xrServerMapSync.cpp">
       <Filter>Core\Server</Filter>
     </ClCompile>
     <ClCompile Include="game_base.cpp">
       <Filter>Core\Server\Games</Filter>
-    </ClCompile>
-    <ClCompile Include="game_cl_artefacthunt.cpp">
-      <Filter>Core\Server\Games\client\artefact_hunt</Filter>
-    </ClCompile>
-    <ClCompile Include="game_cl_deathmatch.cpp">
-      <Filter>Core\Server\Games\client\deathmatch</Filter>
-    </ClCompile>
-    <ClCompile Include="game_cl_deathmatch_buywnd.cpp">
-      <Filter>Core\Server\Games\client\deathmatch</Filter>
-    </ClCompile>
-    <ClCompile Include="game_cl_teamdeathmatch.cpp">
-      <Filter>Core\Server\Games\client\team_deathmatch</Filter>
     </ClCompile>
     <ClCompile Include="game_cl_single.cpp">
       <Filter>Core\Server\Games\client\single</Filter>
@@ -9722,165 +9338,6 @@
     </ClCompile>
     <ClCompile Include="game_cl_base_weapon_usage_statistic_save.cpp">
       <Filter>Core\Server\Games\client\base</Filter>
-    </ClCompile>
-    <ClCompile Include="game_cl_mp.cpp">
-      <Filter>Core\Server\Games\client\mp</Filter>
-    </ClCompile>
-    <ClCompile Include="game_cl_mp_messages_menu.cpp">
-      <Filter>Core\Server\Games\client\mp</Filter>
-    </ClCompile>
-    <ClCompile Include="game_cl_mp_snd_messages.cpp">
-      <Filter>Core\Server\Games\client\mp</Filter>
-    </ClCompile>
-    <ClCompile Include="screenshot_manager.cpp">
-      <Filter>Core\Server\Games\client\mp\screenshots</Filter>
-    </ClCompile>
-    <ClCompile Include="screenshots_common.cpp">
-      <Filter>Core\Server\Games\client\mp\screenshots</Filter>
-    </ClCompile>
-    <ClCompile Include="screenshots_writer.cpp">
-      <Filter>Core\Server\Games\client\mp\screenshots</Filter>
-    </ClCompile>
-    <ClCompile Include="configs_common.cpp">
-      <Filter>Core\Server\Games\client\mp\anticheat</Filter>
-    </ClCompile>
-    <ClCompile Include="configs_dump_verifyer.cpp">
-      <Filter>Core\Server\Games\client\mp\anticheat</Filter>
-    </ClCompile>
-    <ClCompile Include="configs_dumper.cpp">
-      <Filter>Core\Server\Games\client\mp\anticheat</Filter>
-    </ClCompile>
-    <ClCompile Include="mp_config_sections.cpp">
-      <Filter>Core\Server\Games\client\mp\anticheat</Filter>
-    </ClCompile>
-    <ClCompile Include="ammunition_groups.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system</Filter>
-    </ClCompile>
-    <ClCompile Include="bone_groups.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system</Filter>
-    </ClCompile>
-    <ClCompile Include="event_conditions_collection.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system</Filter>
-    </ClCompile>
-    <ClCompile Include="reward_event_generator.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system</Filter>
-    </ClCompile>
-    <ClCompile Include="reward_manager.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system</Filter>
-    </ClCompile>
-    <ClCompile Include="rewarding_events_handlers.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system</Filter>
-    </ClCompile>
-    <ClCompile Include="rewarding_state_events.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system</Filter>
-    </ClCompile>
-    <ClCompile Include="state_arguments_functions.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system</Filter>
-    </ClCompile>
-    <ClCompile Include="best_scores_helper.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\event_handlers</Filter>
-    </ClCompile>
-    <ClCompile Include="game_state_accumulator.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state</Filter>
-    </ClCompile>
-    <ClCompile Include="game_state_accumulator_state_register.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state</Filter>
-    </ClCompile>
-    <ClCompile Include="hits_store.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state</Filter>
-    </ClCompile>
-    <ClCompile Include="kills_store.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state</Filter>
-    </ClCompile>
-    <ClCompile Include="black_list.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="double_shot_double_kill.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="faster_than_bullets_time.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="harvest_time.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="invincible_fury.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="killer_victim_velocity_angle.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="player_spot_params.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="player_state_achilles_heel.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="player_state_ambassador.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="player_state_ammo_elapsed.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="player_state_avenger.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="player_state_blitzkrieg.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="player_state_cherub.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="player_state_climber.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="player_state_mad.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="player_state_marksman.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="player_state_multichampion.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="player_state_opener.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="player_state_params.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="player_state_remembrance.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="player_state_skewer.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="player_state_toughy.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="player_team_win_score.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="silent_shots.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="sprinter_stopper.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="stalker_flair.cpp">
-      <Filter>Core\Server\Games\client\mp\award_system\player_state\state_parameters</Filter>
-    </ClCompile>
-    <ClCompile Include="game_cl_capture_the_artefact.cpp">
-      <Filter>Core\Server\Games\client\capture_the_artefact</Filter>
-    </ClCompile>
-    <ClCompile Include="game_cl_capture_the_artefact_captions_manager.cpp">
-      <Filter>Core\Server\Games\client\capture_the_artefact</Filter>
-    </ClCompile>
-    <ClCompile Include="game_cl_capture_the_artefact_messages_menu.cpp">
-      <Filter>Core\Server\Games\client\capture_the_artefact</Filter>
-    </ClCompile>
-    <ClCompile Include="game_cl_capturetheartefact_buywnd.cpp">
-      <Filter>Core\Server\Games\client\capture_the_artefact</Filter>
     </ClCompile>
     <ClCompile Include="game_sv_base.cpp">
       <Filter>Core\Server\Games\server</Filter>
@@ -9897,95 +9354,8 @@
     <ClCompile Include="xr_time.cpp">
       <Filter>Core\Server\Games\server</Filter>
     </ClCompile>
-    <ClCompile Include="game_sv_artefacthunt.cpp">
-      <Filter>Core\Server\Games\server\artefact_hunt</Filter>
-    </ClCompile>
-    <ClCompile Include="game_sv_artefacthunt_process_event.cpp">
-      <Filter>Core\Server\Games\server\artefact_hunt</Filter>
-    </ClCompile>
-    <ClCompile Include="game_sv_deathmatch.cpp">
-      <Filter>Core\Server\Games\server\deathmatch</Filter>
-    </ClCompile>
-    <ClCompile Include="game_sv_deathmatch_process_event.cpp">
-      <Filter>Core\Server\Games\server\deathmatch</Filter>
-    </ClCompile>
     <ClCompile Include="game_sv_single.cpp">
       <Filter>Core\Server\Games\server\single</Filter>
-    </ClCompile>
-    <ClCompile Include="game_sv_teamdeathmatch.cpp">
-      <Filter>Core\Server\Games\server\team_deathmatch</Filter>
-    </ClCompile>
-    <ClCompile Include="game_sv_teamdeathmatch_process_event.cpp">
-      <Filter>Core\Server\Games\server\team_deathmatch</Filter>
-    </ClCompile>
-    <ClCompile Include="cdkey_ban_list.cpp">
-      <Filter>Core\Server\Games\server\mp</Filter>
-    </ClCompile>
-    <ClCompile Include="game_sv_mp.cpp">
-      <Filter>Core\Server\Games\server\mp</Filter>
-    </ClCompile>
-    <ClCompile Include="game_sv_capture_the_artefact.cpp">
-      <Filter>Core\Server\Games\server\capture_the_artefact</Filter>
-    </ClCompile>
-    <ClCompile Include="game_sv_capture_the_artefact_buy_event.cpp">
-      <Filter>Core\Server\Games\server\capture_the_artefact</Filter>
-    </ClCompile>
-    <ClCompile Include="game_sv_capture_the_artefact_myteam_impl.cpp">
-      <Filter>Core\Server\Games\server\capture_the_artefact</Filter>
-    </ClCompile>
-    <ClCompile Include="game_sv_capture_the_artefact_process_event.cpp">
-      <Filter>Core\Server\Games\server\capture_the_artefact</Filter>
-    </ClCompile>
-    <ClCompile Include="account_manager.cpp">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClCompile>
-    <ClCompile Include="account_manager_console.cpp">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClCompile>
-    <ClCompile Include="account_manager_script.cpp">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClCompile>
-    <ClCompile Include="atlas_stalkercoppc_v1.c">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClCompile>
-    <ClCompile Include="atlas_submit_queue.cpp">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClCompile>
-    <ClCompile Include="awards_store.cpp">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClCompile>
-    <ClCompile Include="best_scores_store.cpp">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClCompile>
-    <ClCompile Include="gsc_dsigned_ltx.cpp">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClCompile>
-    <ClCompile Include="login_manager.cpp">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClCompile>
-    <ClCompile Include="login_manager_script.cpp">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClCompile>
-    <ClCompile Include="player_account.cpp">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClCompile>
-    <ClCompile Include="profile_data_types.cpp">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClCompile>
-    <ClCompile Include="profile_data_types_script.cpp">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClCompile>
-    <ClCompile Include="profile_store.cpp">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClCompile>
-    <ClCompile Include="profile_store_script.cpp">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClCompile>
-    <ClCompile Include="stats_submitter.cpp">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
-    </ClCompile>
-    <ClCompile Include="stats_submitter_dsa_params.cpp">
-      <Filter>Core\Server\Games\PlayerAccounts</Filter>
     </ClCompile>
     <ClCompile Include="..\xrServerEntities\xrServer_Factory.cpp">
       <Filter>Core\Server\ServerEntities</Filter>
@@ -10100,24 +9470,6 @@
     </ClCompile>
     <ClCompile Include="xrServer_svclient_validation.cpp">
       <Filter>Core\Server\ServerProcess</Filter>
-    </ClCompile>
-    <ClCompile Include="xrGameSpy_GameSpyFuncs.cpp">
-      <Filter>Core\Server\xrGameSpyServer</Filter>
-    </ClCompile>
-    <ClCompile Include="xrGameSpyServer.cpp">
-      <Filter>Core\Server\xrGameSpyServer</Filter>
-    </ClCompile>
-    <ClCompile Include="xrGameSpyServer_callbacks.cpp">
-      <Filter>Core\Server\xrGameSpyServer</Filter>
-    </ClCompile>
-    <ClCompile Include="file_transfer.cpp">
-      <Filter>Core\Server\filetransfer</Filter>
-    </ClCompile>
-    <ClCompile Include="filereceiver_node.cpp">
-      <Filter>Core\Server\filetransfer</Filter>
-    </ClCompile>
-    <ClCompile Include="filetransfer_node.cpp">
-      <Filter>Core\Server\filetransfer</Filter>
     </ClCompile>
     <ClCompile Include="xrServer_CL_connect.cpp">
       <Filter>Core\Server\ID_Generator\ServerConnect</Filter>

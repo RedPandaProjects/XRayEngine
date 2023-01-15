@@ -13,7 +13,7 @@
 #include "Level_network_map_sync.h"
 #include "secure_messaging.h"
 #include "traffic_optimization.h"
-
+#include "../XrEngine/NET_Client.h"
 
 class	CHUDManager;
 class	CParticlesObject;

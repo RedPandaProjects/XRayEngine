@@ -952,6 +952,8 @@
     <ClInclude Include="XRayUnrealProxyInterface.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="net_server.h" />
+    <ClInclude Include="NET_Client.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="defines.cpp">
@@ -1318,6 +1320,8 @@
       <Filter>Game API\Server</Filter>
     </ClCompile>
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="net_server.cpp" />
+    <ClCompile Include="NET_Client.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc">

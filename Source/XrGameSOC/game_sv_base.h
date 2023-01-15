@@ -6,10 +6,6 @@
 #include "../XrCore/client_id.h"
 #include "game_sv_base_console_vars.h"
 
-#ifndef DPNSEND_GUARANTEED
-#define DPNSEND_GUARANTEED						0x0008
-#endif
-
 enum ERoundEnd_Result
 {
 	eRoundEnd_Finish		= u32(0),
