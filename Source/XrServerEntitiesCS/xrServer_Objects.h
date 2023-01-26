@@ -157,7 +157,11 @@
 //										added property	m_exit_min_enemy_distance
 // 121 - GameTypeChooser				m_gameType using instead og u8 value;
 // 122 - CSE_ALifeItemWeapon			appended with count of grenades to spawn in grenade launcher (if it attached)
-// 123 - CSE_ALifeInventoryItem			added functions has_upgrade & add_upgrade, xr_vector<shared_str> m_upgrades;
+// 123 - CSE_ALifeInventoryItem			added functions has_upgrade & add_upgrade, xr_vector<shared_str> m_upgrades
+// 124 - CSE_ALifeInventoryBox			added property m_can_take, m_closed
+//       CSE_ALifeTraderAbstract		added property m_deadbody_can_take, m_deadbody_closed
+// 127	 CSE_ALifeObjectClimable		added material;
+// 128	 CSE_ALifeObjectClimable		added can_fire in smart covers;
 //------------------------------------------------------------------------------
 #define SPAWN_VERSION	u16(124)
 
@@ -221,7 +225,7 @@ SERVER_ENTITY_DECLARE_BEGIN2(CSE_AbstractVisual,CSE_Abstract,CSE_Visual)
 
 	CSE_AbstractVisual										(LPCSTR caSection);
 	virtual	~CSE_AbstractVisual								();
-	virtual CSE_Visual* 	visual					();
+	virtual ISE_Visual* 	visual					();
 	LPCSTR							getStartupAnimation		();
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_AbstractVisual)

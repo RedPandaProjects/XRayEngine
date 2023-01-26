@@ -1,8 +1,14 @@
+////////////////////////////////////////////////////////////////////////////
+//	Module 		: xrServer_Objects_Abstract.h
+//	Created 	: 19.09.2002
+//  Modified 	: 18.06.2004
+//	Author		: Oles Shyshkovtsov, Alexander Maksimchuk, Victor Reutskiy and Dmitriy Iassenev
+//	Description : Server objects
+////////////////////////////////////////////////////////////////////////////
 #pragma once
+#pragma pack(push,4)
 #include "xrServer_Space.h"
 #	include "../xrCDB/xrCDB.h"
-#include "../XrEngine/ShapeData.h"
-#include "../XrEngine/gametype_chooser.h"
 
 class NET_Packet;
 class CDUInterface;
@@ -14,12 +20,17 @@ class CDUInterface;
 #endif
 
 
+
 #ifndef XRGAME_EXPORTS
-	#include "..\..\xrRender/Public\DrawUtils.h"
+	#include "DrawUtils.h"
 #else
-	#include "..\xrRender/Public\DrawUtils.h"
+	#include "DrawUtils.h"
 #endif
 #pragma warning(push)
 #pragma warning(disable:4005)
-#include "..\XrServerEntities\xrServer_Objects_Abstract_Base.h"
+
+
+#include "xrServer_Objects_Abstract_Base.h"
 #pragma warning(pop)
+
+#pragma pack(pop)

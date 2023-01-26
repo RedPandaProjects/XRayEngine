@@ -1,6 +1,6 @@
 #pragma once
 
-#if XRGAME_EXPORTS | XRSEFACTORY_EXPORTS;
+#if XRGAME_EXPORTS | XRSEFACTORY_EXPORTS
 #	define	_memcpy CopyMemory
 #	define	_memset memset
 #	define	_strlen xr_strlen

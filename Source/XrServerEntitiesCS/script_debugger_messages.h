@@ -36,8 +36,8 @@ struct SScriptThread{
 		active			= other.active;
 		name[0]			=0;
 		process[0]	=0;
-		strcat(name,other.name);
-		strcat(process,other.process);
+		xr_strcat(name,other.name);
+		xr_strcat(process,other.process);
 
 		return *this;
 	}
@@ -45,7 +45,7 @@ struct SScriptThread{
 
 
 #define DEBUGGER_MAIL_SLOT		"\\\\.\\mailslot\\script_debugger_mailslot"
-#define IDE_MAIL_SLOT			"\\\\.\\mailslot\\script_ide_mailslot"
+#define IDE_MAIL_SLOT			(char*)"\\\\.\\mailslot\\script_ide_mailslot"
 
 enum dbg_messages{
 	_DMSG_FIRST_MSG						=WM_USER+1,

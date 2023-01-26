@@ -11,12 +11,13 @@
 
 #include "stdafx.h"
 
-extern "C" {
+extern "C" 
+{
 	#include <lua/lua.h>
 	#include <lua/lualib.h>
 	#include <lua/lauxlib.h>
 };
-
+#define LUABIND_API 
 #include <luabind/boost_legacy.h>
 #include <luabind/luabind.hpp>
 

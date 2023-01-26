@@ -90,6 +90,7 @@ SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeGraphPoint,ISE_ALifeGraphPoint, CSE_Abstra
 public:
 	shared_str						m_caConnectionLevelName;
 	shared_str						m_caConnectionPointName;
+	u8								m_tLocations[GameGraph::LOCATION_TYPE_COUNT];
 
 	CSE_ALifeGraphPoint(LPCSTR caSection);
 	virtual							~CSE_ALifeGraphPoint();

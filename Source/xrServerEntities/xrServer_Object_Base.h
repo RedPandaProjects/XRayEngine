@@ -9,6 +9,7 @@
 #pragma once
 
 #include "xrServer_Objects_Abstract.h"
+#include "../XrEngine/object_interfaces.h"
 #include "../XrEngine/object_broker.h"
 #include "script_value_container.h"
 #include "../XrEngine/alife_space.h"

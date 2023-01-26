@@ -12,6 +12,7 @@
 #include "script_export_space.h"
 #include "script_engine_export.h"
 
+#undef SCRIPT_REGISTRATOR
 #pragma optimize("s",on)
 template <typename TList> struct Register
 {
@@ -30,4 +31,3 @@ void export_classes(lua_State* L)
 {
 	Register<script_type_list>::_Register(L);
 }
-

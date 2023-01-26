@@ -7,7 +7,6 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-
 #include "../XrEngine/game_graph_space.h"
 #include "xrserver_space.h"
 #include "../XrEngine/alife_space.h"
