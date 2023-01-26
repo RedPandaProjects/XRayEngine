@@ -103,7 +103,7 @@ CSE_Abstract *CALifeSimulatorBase::spawn_item	(LPCSTR section, const Fvector &po
 	abstract->s_name			= section;
 //.	abstract->s_gameid			= u8(GAME_SINGLE);
 	abstract->s_RP				= 0xff;
-	abstract->ID				= server().PerformIDgen(0xffff);
+	abstract->ID				= server().GenerateIndex(0xffff);
 	abstract->ID_Parent			= parent_id;
 	abstract->ID_Phantom		= 0xffff;
 	abstract->o_Position		= position;
@@ -161,7 +161,7 @@ CSE_Abstract *CALifeSimulatorBase::create(CSE_ALifeGroupAbstract *tpALifeGroupAb
 	k->UPDATE_Read				(tNetPacket);
 	k->s_name					= S;
 	k->m_tSpawnID				= j->m_tSpawnID;
-	k->ID						= server().PerformIDgen(0xffff);
+	k->ID						= server().GenerateIndex(0xffff);
 	k->m_bDirectControl			= false;
 	k->m_bALifeControl			= true;
 	
@@ -205,7 +205,7 @@ void CALifeSimulatorBase::create(CSE_ALifeDynamicObject *&i, CSE_ALifeDynamicObj
 	if (!graph().actor() && smart_cast<CSE_ALifeCreatureActor*>(i))
 		i->ID					= 0;
 	else
-		i->ID					= server().PerformIDgen(0xffff);
+		i->ID					= server().GenerateIndex(0xffff);
 
 	register_object				(i,true);
 	i->m_bALifeControl			= true;

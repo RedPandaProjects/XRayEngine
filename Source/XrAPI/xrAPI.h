@@ -30,7 +30,6 @@ extern XRAPI_API xr_token*	vid_mode_token;
 class IUIRender;
 extern XRAPI_API IUIRender*	UIRender;
 
-extern XRAPI_API	bool g_dedicated_server;
 class IGame_Persistent;
 extern XRAPI_API	IGame_Persistent* g_pGamePersistent;
 

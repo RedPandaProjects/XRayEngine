@@ -237,7 +237,7 @@ void add_offline_impl						(CSE_ALifeDynamicObject *object, const xr_vector<ALif
 #endif
 		
 		ALife::_OBJECT_ID				item_id = inventory_item->base()->ID;
-		inventory_item->base()->ID		= object->alife().server().PerformIDgen(item_id);
+		inventory_item->base()->ID		= object->alife().server().GenerateIndex(item_id);
 
 		if (!child->can_save()) {
 			object->alife().release		(child);

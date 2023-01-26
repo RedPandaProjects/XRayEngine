@@ -128,7 +128,7 @@ BOOL IGame_Level::Load			(u32 dwNum)
 	// Done
 	FS.r_close					( LL_Stream );
 	bReady						= true;
-	if (!g_dedicated_server)	IR_Capture();
+		IR_Capture();
 #ifndef DEDICATED_SERVER
 	Device->seqRenderDebug.Add		(this);
 #endif
@@ -147,12 +147,7 @@ void	IGame_Level::OnRenderDebug()
 //	if (_abs(Device->fTimeDelta)<EPS_S) return;
 
 	// Level render, only when no client output required
-	if (!g_dedicated_server)	{
-	/*	Render->Calculate			();
-		Render->Render				();*/
-	} else {
-	//	Sleep						(psNET_DedicatedSleep);
-	}
+	
 
 	// Font
 //	pApp->pFontSystem->SetSizeI(0.023f);

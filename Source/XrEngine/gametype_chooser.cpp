@@ -41,19 +41,6 @@ bool GameTypeChooser::LoadLTX(CInifile& ini, LPCSTR sect_name, bool bOldFormat)
         {
             case rpgtGameAny:
                 m_GameType.one();
-                break;
-            case rpgtGameDeathmatch:
-                m_GameType.set(eGameIDDeathmatch,TRUE);
-                break;
-            case rpgtGameTeamDeathmatch:
-                m_GameType.set(eGameIDTeamDeathmatch,TRUE);
-                break;
-            case rpgtGameArtefactHunt:
-                m_GameType.set(eGameIDArtefactHunt,TRUE);
-                break;
-            case rpgtGameCaptureTheArtefact:
-                m_GameType.set(eGameIDCaptureTheArtefact,TRUE);
-                break;
         }
     }else
         m_GameType.assign		(ini.r_u16	(sect_name, "game_type"));

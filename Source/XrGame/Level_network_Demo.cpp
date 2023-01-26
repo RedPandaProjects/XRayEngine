@@ -7,7 +7,6 @@
 #include "game_cl_base.h"
 #include "../xrCore/stream_reader.h"
 #include "Message_Filter.h"
-#include "DemoPlay_Control.h"
 #include "DemoInfo.h"
 #include "../xrEngine/CameraManager.h"
 

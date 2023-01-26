@@ -585,9 +585,6 @@ void XRayEngineInterface::destroyEngine()
 
 	if(!Device->Begin () )		return;
 
-	if	(g_dedicated_server)
-		Console->OnRender			();
-	else
 		load_draw_internal			();
 
 	Device->End					();

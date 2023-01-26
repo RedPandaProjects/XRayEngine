@@ -239,11 +239,11 @@ void xrServer::Process_event	(NET_Packet& P, ClientID sender)
 	case GE_ADDON_ATTACH:
 	case GE_ADDON_DETACH:
 		{
-			SendBroadcast	(BroadcastCID, P, net_flags(TRUE, TRUE));
+			SendBroadcast	( P);
 		}break;
 	case GE_CHANGE_POS:
 		{			
-			SendTo		(SV_Client->ID, P, net_flags(TRUE, TRUE));
+			SendTo		(SV_Client->ID, P);
 		}break;
 	case GE_INSTALL_UPGRADE:
 		{
@@ -291,7 +291,7 @@ void xrServer::Process_event	(NET_Packet& P, ClientID sender)
 	case GEG_PLAYER_DISABLE_SPRINT:
 	case GEG_PLAYER_WEAPON_HIDE_STATE:
 		{
-			SendTo		(SV_Client->ID, P, net_flags(TRUE, TRUE));
+			SendTo		(SV_Client->ID, P);
 
 #	ifdef SLOW_VERIFY_ENTITIES
 			VERIFY					(verify_entities());
@@ -300,7 +300,7 @@ void xrServer::Process_event	(NET_Packet& P, ClientID sender)
 	case GEG_PLAYER_ACTIVATE_SLOT:
 	case GEG_PLAYER_ITEM_EAT:
 		{
-			SendTo(SV_Client->ID, P, net_flags(TRUE, TRUE));
+			SendTo(SV_Client->ID, P);
 #	ifdef SLOW_VERIFY_ENTITIES
 			VERIFY					(verify_entities());
 #	endif
@@ -311,7 +311,7 @@ void xrServer::Process_event	(NET_Packet& P, ClientID sender)
 			{
 				NET_Packet tmp_packet;
 				CGameObject::u_EventGen(tmp_packet, GEG_PLAYER_USE_BOOSTER, receiver->ID);
-				SendTo(receiver->owner->ID, P, net_flags(TRUE, TRUE));
+				SendTo(receiver->owner->ID, P);
 			}
 		}break;
 	case GEG_PLAYER_ITEM_SELL:

@@ -156,7 +156,7 @@ void CMissile::spawn_fake_missile()
 		CSE_Abstract		*object = Level().spawn_item(
 			*cNameSect(),
 			Position(),
-			(g_dedicated_server)?u32(-1):ai_location().level_vertex_id(),
+			ai_location().level_vertex_id(),
 			ID(),
 			true
 		);
@@ -167,7 +167,7 @@ void CMissile::spawn_fake_missile()
 
 		NET_Packet			P;
 		object->Spawn_Write	(P,TRUE);
-		Level().Send		(P,net_flags(TRUE));
+		Level().Send		(P);
 		F_entity_Destroy	(object);
 	}
 }

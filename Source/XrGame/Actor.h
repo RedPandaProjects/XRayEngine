@@ -664,10 +664,6 @@ protected:
 public:
 	virtual void				SetHitInfo						(CObject* who, CObject* weapon, s16 element, Fvector Pos, Fvector Dir);
 
-	virtual	void				OnHitHealthLoss					(float NewHealth);	
-	virtual	void				OnCriticalHitHealthLoss			();
-	virtual	void				OnCriticalWoundHealthLoss		();
-	virtual void				OnCriticalRadiationHealthLoss	();
 
 	virtual	bool				InventoryAllowSprint			();
 	virtual void				OnNextWeaponSlot				();

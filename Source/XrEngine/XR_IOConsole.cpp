@@ -597,10 +597,7 @@ void CConsole::Hide()
 	{
 		return;
 	}
-	if ( g_pGamePersistent && g_dedicated_server )
-	{
-		return;
-	}
+	
 //	if  ( g_pGameLevel || 
 //		( g_pGamePersistent && g_pGamePersistent->m_pMainMenu && g_pGamePersistent->m_pMainMenu->IsActive() ))
 

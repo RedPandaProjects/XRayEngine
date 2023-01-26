@@ -104,7 +104,6 @@ public:
 	virtual		game_PlayerState*	get_eid					(u16 id);
 	virtual		void*				get_client				(u16 id); //if exist
 	//virtual		game_PlayerState*	get_it					(u32 it);
-	virtual		game_PlayerState*	get_id					(ClientID id);
 	
 	//virtual		LPCSTR				get_name_it				(u32 it);
 	virtual		LPCSTR				get_name_id				(ClientID id);								
@@ -117,7 +116,6 @@ public:
 				u32					getRPcount				(u16 team_idx);
 	// Signals
 	virtual		void				signal_Syncronize		();
-	virtual		void				assign_RP				(CSE_Abstract* E, game_PlayerState* ps_who);
 	virtual		bool				IsPointFreezed			(RPoint* rp);
 	virtual		void				SetPointFreezed			(RPoint* rp);
 
@@ -135,8 +133,6 @@ public:
 	const char*get_option_s (LPCSTR lst, LPCSTR name, LPCSTR def = 0);
 	virtual		u32					get_alive_count			(u32 team);
 	virtual		xr_vector<u16>*		get_children			(ClientID id_who);
-	void							u_EventGen				(NET_Packet& P, u16 type, u16 dest	);
-	void							u_EventSend				(NET_Packet& P, u32 dwFlags = DPNSEND_GUARANTEED);
 
 	// Events
 	virtual		BOOL				OnPreCreate				(CSE_Abstract* E)				{return TRUE;};
@@ -188,5 +184,4 @@ public:
 
 	virtual		void				DumpOnlineStatistic		(){};
 				
-				bool				CheckNewPlayer			(xrClientData* CL);
 };

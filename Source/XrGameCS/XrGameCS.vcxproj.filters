@@ -6126,9 +6126,6 @@
     <ClInclude Include="NET_Queue.h">
       <Filter>Core\Common\NET Shared</Filter>
     </ClInclude>
-    <ClInclude Include="..\XrServerEntitiesCS\xrMessages.h">
-      <Filter>Core\Common\NET Shared</Filter>
-    </ClInclude>
     <ClInclude Include="secure_messaging.h">
       <Filter>Core\Common\NET Shared\SecureMessages</Filter>
     </ClInclude>

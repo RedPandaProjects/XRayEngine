@@ -55,13 +55,6 @@ void CActor::IR_OnKeyboardPress(int cmd)
 			if(inventory().ActiveItem() && (slot==INV_SLOT_3 || slot==INV_SLOT_2) )
 				mstate_wishful &=~mcSprint;
 			//-----------------------------
-			if (OnServer())
-			{
-				NET_Packet P;
-				P.w_begin(M_PLAYER_FIRE); 
-				P.w_u16(ID());
-				u_EventSend(P);
-			}
 		}break;
 	default:
 		{

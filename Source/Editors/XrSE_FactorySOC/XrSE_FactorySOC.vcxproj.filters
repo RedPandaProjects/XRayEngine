@@ -444,9 +444,6 @@
     <ClInclude Include="..\..\xrServerEntitiesSOC\xml_str_id_loader.h">
       <Filter>ServerStuff\Common\ServerStuff</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\xrServerEntitiesSOC\xrMessages.h">
-      <Filter>ServerStuff\Common\ServerStuff</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\xrServerEntitiesSOC\xrServer_Space.h">
       <Filter>ServerStuff\Common\ServerStuff</Filter>
     </ClInclude>

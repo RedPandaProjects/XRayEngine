@@ -230,8 +230,7 @@ void CHUDTarget::Render()
 				{
 					if (pCurEnt && GameID() == eGameIDSingle)
 					{
-						if (GameID() == eGameIDDeathmatch)			C = C_ON_ENEMY;
-						else
+						
 						{	
 							if (E->g_Team() != pCurEnt->g_Team())	C = C_ON_ENEMY;
 							else									C = C_ON_FRIEND;

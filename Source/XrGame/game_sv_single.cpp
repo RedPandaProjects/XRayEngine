@@ -340,7 +340,7 @@ void game_sv_Single::restart_simulator			(LPCSTR saved_game_name)
 	shared_str				&options = *alife().server_command_line();
 
 	delete_data				(m_alife_simulator);
-	server().clear_ids		();
+	server().ClearIndexes	();
 
 	xr_strcpy					(g_pGamePersistent->m_game_params.m_game_or_spawn,saved_game_name);
 	xr_strcpy					(g_pGamePersistent->m_game_params.m_new_or_load,"load");

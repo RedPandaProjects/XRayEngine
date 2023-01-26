@@ -21,7 +21,8 @@ BOOL CLevel::Load_GameSpecific_Before()
 	g_pGamePersistent->LoadTitle		();
 	string_path							fn_game;
 	
-	if (!g_dedicated_server && !ai().get_alife() && ai().get_game_graph() && FS.exist(fn_game, "$level$", "level.game")) {
+	if ( !ai().get_alife() && ai().get_game_graph() && FS.exist(fn_game, "$level$", "level.game")) 
+	{
 		IReader							*stream = FS.r_open		(fn_game);
 		ai().patrol_path_storage_raw	(*stream);
 		FS.r_close						(stream);
@@ -77,7 +78,6 @@ BOOL CLevel::Load_GameSpecific_After()
 		FS.r_close		(F);
 	}
 	
-	if	(!g_dedicated_server)
 	{
 		// loading static sounds
 		VERIFY								(m_level_sound_manager);
@@ -133,7 +133,7 @@ BOOL CLevel::Load_GameSpecific_After()
 		}
 	}	
 
-	if (!g_dedicated_server) {
+	{
 		// loading scripts
 		ai().script_engine().remove_script_process(ScriptEngine::eScriptProcessorLevel);
 
@@ -211,8 +211,6 @@ void CLevel::Load_GameSpecific_CFORM	( CDB::TRI* tris, u32 count )
 			if (i != translator.end()) {
 				(*I).material			= (*i).m_index;
 				SGameMtl* mtl			= GameMaterialLibrary->GetMaterialByIdx	((*i).m_index);
-				(*I).suppress_shadows	= mtl->Flags.is(SGameMtl::flSuppressShadows);
-				(*I).suppress_wm		= mtl->Flags.is(SGameMtl::flSuppressWallmarks);
 				continue;
 			}
 			if(Device->IsEditorMode()==false)
@@ -230,8 +228,6 @@ void CLevel::Load_GameSpecific_CFORM	( CDB::TRI* tris, u32 count )
 			if ((i != translator.end()) && ((*i).m_id == (*I).material)) {
 				(*I).material			= (*i).m_index;
 				SGameMtl* mtl			= GameMaterialLibrary->GetMaterialByIdx	((*i).m_index);
-				(*I).suppress_shadows	= mtl->Flags.is(SGameMtl::flSuppressShadows);
-				(*I).suppress_wm		= mtl->Flags.is(SGameMtl::flSuppressWallmarks);
 				continue;
 			}
 			if (Device->IsEditorMode() == false)

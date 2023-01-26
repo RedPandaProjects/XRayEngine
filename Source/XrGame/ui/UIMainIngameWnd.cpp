@@ -50,7 +50,6 @@
 #include "../game_news.h"
 
 #include "static_cast_checked.hpp"
-#include "game_cl_capture_the_artefact.h"
 #include "UIHudStatesWnd.h"
 #include "UIActorMenu.h"
 
@@ -189,11 +188,7 @@ void CUIMainIngameWnd::Init()
 	UIInvincibleIcon->Show		(false);
 
 
-	if ( (GameID() == eGameIDArtefactHunt) || (GameID() == eGameIDCaptureTheArtefact) )
-	{
-		UIArtefactIcon			= UIHelper::CreateStatic(uiXml, "artefact_static", NULL);
-		UIArtefactIcon->Show		(false);
-	}
+
 	
 	shared_str warningStrings[7] = 
 	{	
@@ -358,41 +353,7 @@ void CUIMainIngameWnd::Update()
 	if (IsGameTypeSingle())
 		return;
 
-	// ewiArtefact
-	if ( GameID() == eGameIDArtefactHunt )
-	{
-		bool b_Artefact = !!( pActor->inventory().ItemFromSlot(ARTEFACT_SLOT) );
-		if ( b_Artefact )
-		{
-			SetWarningIconColor( ewiArtefact, 0xffffff00 );
-		}
-		else
-		{
-			SetWarningIconColor( ewiArtefact, 0x00ffffff );
-		}
-	}
-	else if ( GameID() == eGameIDCaptureTheArtefact )
-	{
-		//this is a bad style... It left for backward compatibility
-		//need to move this logic into UIGameCTA class
-		//bool b_Artefact = (NULL != m_pActor->inventory().ItemFromSlot(ARTEFACT_SLOT));
-		game_cl_CaptureTheArtefact* cta_game = static_cast<game_cl_CaptureTheArtefact*>(&Game());
-		R_ASSERT(lookat_player);
-		
-		if ( ( pActor->ID() == cta_game->GetGreenArtefactOwnerID() ) ||
-			 ( pActor->ID() == cta_game->GetBlueArtefactOwnerID()  ) )
-		{
-			SetWarningIconColor( ewiArtefact, 0xffff0000 );
-		}
-		else if ( pActor->inventory().ItemFromSlot(ARTEFACT_SLOT) ) //own artefact
-		{
-			SetWarningIconColor( ewiArtefact, 0xff00ff00 );
-		}
-		else
-		{
-			SetWarningIconColor(ewiArtefact, 0x00ffffff );
-		}
-	}
+	
 }//update
 
 

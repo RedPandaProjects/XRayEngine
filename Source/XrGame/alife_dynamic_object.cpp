@@ -185,7 +185,7 @@ void CSE_ALifeInventoryBox::add_online	(const bool &update_registries)
 		R_ASSERT2				(l_tpALifeInventoryItem,"Non inventory item object has parent?!");
 		l_tpALifeInventoryItem->base()->s_flags.bor(M_SPAWN_UPDATE);
 		CSE_Abstract			*l_tpAbstract = smart_cast<CSE_Abstract*>(l_tpALifeInventoryItem);
-		object->alife().server().entity_Destroy(l_tpAbstract);
+		object->alife().server().DestroyEntity(l_tpAbstract);
 
 #ifdef DEBUG
 //		if (psAI_Flags.test(aiALife))
@@ -204,7 +204,7 @@ void CSE_ALifeInventoryBox::add_online	(const bool &update_registries)
 
 		l_tpALifeDynamicObject->o_Position		= object->o_Position;
 		l_tpALifeDynamicObject->m_tNodeID		= object->m_tNodeID;
-		object->alife().server().Process_spawn	(tNetPacket,clientID,FALSE,l_tpALifeInventoryItem->base());
+		object->alife().server().ProcessSpawn	(tNetPacket,l_tpALifeInventoryItem->base());
 		l_tpALifeDynamicObject->s_flags.band		(u16(-1) ^ M_SPAWN_UPDATE);
 		l_tpALifeDynamicObject->m_bOnline		= true;
 	}
@@ -239,7 +239,7 @@ void CSE_ALifeInventoryBox::add_offline	(const xr_vector<ALife::_OBJECT_ID> &sav
 #endif
 		
 		ALife::_OBJECT_ID				item_id = inventory_item->base()->ID;
-		inventory_item->base()->ID		= object->alife().server().PerformIDgen(item_id);
+		inventory_item->base()->ID		= object->alife().server().GenerateIndex(item_id);
 
 		if (!child->can_save()) {
 			object->alife().release		(child);

@@ -11,7 +11,6 @@
 #pragma pack(push,4)
 
 #include "xrServer_Objects_Abstract.h"
-#include "xrMessages.h"
 
 ////////////////////////////////////////////////////////////////////////////
 // CSE_Visual

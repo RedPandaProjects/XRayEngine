@@ -138,15 +138,7 @@ void CActor::SelectBestWeapon	(CObject* O)
 	if ((pWeapon || pGrenade || pArtefact) && pIItem)
 	{
 		NeedToSelectBestWeapon = true;
-		if ((GameID() == eGameIDArtefactHunt) || (GameID() == eGameIDCaptureTheArtefact)) //only for test...
-		{
-			if (pIItem->BaseSlot() == INV_SLOT_2 || pIItem->BaseSlot() == INV_SLOT_3)
-			{
-				CInventoryItem* pIItemInSlot = inventory().ItemFromSlot(pIItem->BaseSlot());
-				if (pIItemInSlot != NULL && pIItemInSlot != pIItem)				
-					NeedToSelectBestWeapon = false;
-			}
-		}
+		
 	}
 	if (!NeedToSelectBestWeapon) return;
 	//-------------------------------------------------

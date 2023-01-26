@@ -13,7 +13,6 @@
 #include "string_table.h"
 
 #include "debug_renderer.h"
-#include "xrGameSpyServer.h"
 
 
 #define			MAPROT_LIST_NAME		"maprot_list.ltx"
@@ -36,38 +35,6 @@ xr_token	round_end_result_str[]=
 	{ "Unknown",				eRoundEnd_Force				},
 	{ 0,						0							}
 };
-
-// Main
-/*game_PlayerState*	game_sv_GameState::get_it					(u32 it)
-{
-	xrClientData*	C	= (xrClientData*)m_server->client_Get			(it);
-	if (0==C)			return 0;
-	else				return C->ps;
-}*/
-
-game_PlayerState*	game_sv_GameState::get_id					(ClientID id)							
-{
-	xrClientData*	C	= (xrClientData*)m_server->ID_to_client	(id);
-	if (0==C)			return NULL;
-	else				return C->ps;
-}
-
-/*ClientID				game_sv_GameState::get_it_2_id				(u32 it)
-{
-	xrClientData*	C	= (xrClientData*)m_server->client_Get		(it);
-	if (0==C){
-		ClientID clientID;clientID.set(0);
-		return clientID;
-	}
-	else				return C->ID;
-}
-
-LPCSTR				game_sv_GameState::get_name_it				(u32 it)
-{
-	xrClientData*	C	= (xrClientData*)m_server->client_Get		(it);
-	if (0==C)			return 0;
-	else				return *C->name;
-}*/
 
 LPCSTR				game_sv_GameState::get_name_id				(ClientID id)							
 {
@@ -322,19 +289,6 @@ void game_sv_GameState::net_Export_State						(NET_Packet& P, ClientID to)
 
 void game_sv_GameState::net_Export_Update(NET_Packet& P, ClientID id_to, ClientID id)
 {
-	game_PlayerState* A			= get_id(id);
-	if (A)
-	{
-		u16 bk_flags			= A->flags__;
-		if (id==id_to)	
-		{
-			A->setFlag(GAME_PLAYER_FLAG_LOCAL);
-		}
-
-		P.w_clientID			(id);
-		A->net_Export			(P);
-		A->flags__				= bk_flags;
-	};
 	net_Export_GameTime			(P);
 };
 
@@ -391,24 +345,7 @@ void game_sv_GameState::Create					(shared_str &options)
 				if(type==rptItemSpawn)
 					O->r_stringZ		(rp_profile);
 
-				if (GameType != EGameIDs(u16(-1)))
-				{
-					if ((Type() == eGameIDCaptureTheArtefact) && (GameType & eGameIDCaptureTheArtefact))
-					{
-						team = team - 1;
-						R_ASSERT2( ((team >= 0) && (team < 4)) || 
-							(type != rptActorSpawn), 
-							"Problem with CTA Team indexes. Propably you have added rpoint of team 0 for cta game type.");
-					}
-					if ((!(GameType & eGameIDDeathmatch) && (Type() == eGameIDDeathmatch)) ||
-						(!(GameType & eGameIDTeamDeathmatch) && (Type() == eGameIDTeamDeathmatch))	||
-						(!(GameType & eGameIDArtefactHunt) && (Type() == eGameIDArtefactHunt)) ||
-						(!(GameType & eGameIDCaptureTheArtefact) && (Type() == eGameIDCaptureTheArtefact))
-						)
-					{
-						continue;
-					};
-				};
+		
 				switch (type)
 				{
 				case rptActorSpawn:
@@ -437,7 +374,6 @@ void game_sv_GameState::Create					(shared_str &options)
 		FS.r_close	(F);
 	}
 
-	if (!g_dedicated_server)
 	{
 		// loading scripts
 		ai().script_engine().remove_script_process(ScriptEngine::eScriptProcessorGame);
@@ -506,74 +442,6 @@ void	game_sv_GameState::ConsoleCommands_Clear	()
 {
 };
 
-void	game_sv_GameState::assign_RP				(CSE_Abstract* E, game_PlayerState* ps_who)
-{
-	VERIFY				(E);
-
-	u8					l_uc_team = u8(-1);
-	CSE_Spectator		*tpSpectator = smart_cast<CSE_Spectator*>(E);
-	if (tpSpectator)
-	{
-		l_uc_team = tpSpectator->g_team();
-#ifdef DEBUG
-		Msg("--- game_sv_GameState RPoint for Spectators uses team [%d]", l_uc_team);
-#endif // #ifdef DEBUG
-	} else
-	{
-		CSE_ALifeCreatureAbstract	*tpTeamed = smart_cast<CSE_ALifeCreatureAbstract*>(E);
-		if (tpTeamed)
-		{
-			l_uc_team = tpTeamed->g_team();
-#ifdef DEBUG
-		Msg("--- game_sv_GameState RPoint for AlifeCreature uses team [%d]", l_uc_team);
-#endif // #ifdef DEBUG
-		} else
-		{
-			R_ASSERT2(false/*tpTeamed*/,"Non-teamed object is assigning to respawn point!");
-		}
-	}
-	R_ASSERT2(l_uc_team < TEAM_COUNT, make_string("not found rpoint for team [%d]",
-		l_uc_team).c_str());
-	
-	xr_vector<RPoint>&	rp	= rpoints[l_uc_team];
-#ifdef DEBUG
-	Msg("---Size of rpoints of team [%d] is [%d]", l_uc_team, rp.size());
-#endif
-	//-----------------------------------------------------------
-	xr_vector<u32>	xrp;//	= rpoints[l_uc_team];
-	for (u32 i=0; i<rp.size(); i++)
-	{
-		if (rp[i].TimeToUnfreeze < Level().timeServer())
-			xrp.push_back(i);
-	}
-	u32 rpoint = 0;
-	if (xrp.size() && !tpSpectator)
-	{
-		rpoint = xrp[::Random.randI((int)xrp.size())];
-	}
-	else
-	{
-		if (!tpSpectator)
-		{
-			for (u32 i=0; i<rp.size(); i++)
-			{
-				rp[i].TimeToUnfreeze = 0;
-			};
-		};
-		rpoint = ::Random.randI((int)rp.size());
-	}
-	//-----------------------------------------------------------
-#ifdef DEBUG
-	Msg("--- Result rpoint is [%d]", rpoint);
-#endif // #ifdef DEBUG
-	RPoint&				r	= rp[rpoint];
-	if (!tpSpectator)
-	{
-		r.TimeToUnfreeze	= Level().timeServer() + g_sv_base_dwRPointFreezeTime;
-	};
-	E->o_Position.set	(r.P);
-	E->o_Angle.set		(r.A);
-}
 
 bool				game_sv_GameState::IsPointFreezed			(RPoint* rp)
 {
@@ -616,40 +484,8 @@ void game_sv_GameState::GenerateGameMessage (NET_Packet &P)
 	P.w_begin(M_GAMEMESSAGE); 
 };
 
-void game_sv_GameState::u_EventGen(NET_Packet& P, u16 type, u16 dest)
-{
-	P.w_begin	(M_EVENT);
-	P.w_u32		(Level().timeServer());//Device->TimerAsync());
-	P.w_u16		(type);
-	P.w_u16		(dest);
-}
-
-void game_sv_GameState::u_EventSend(NET_Packet& P, u32 dwFlags)
-{
-	m_server->SendBroadcast(BroadcastCID,P,dwFlags);
-}
-
 void game_sv_GameState::Update		()
 {
-	struct ping_filler
-	{
-		void operator()(IClient* client)
-		{
-			xrClientData*	C			= static_cast<xrClientData*>(client);
-			if (!C->ps)
-				return;
-			C->ps->ping					= u16(C->stats.getPing());
-		}
-	};
-	ping_filler tmp_functor;
-	m_server->ForEachClientDo(tmp_functor);
-	
-	if (!IsGameTypeSingle() && (Phase() == GAME_PHASE_INPROGRESS))
-	{
-		m_item_respawner.update(Level().timeServer());
-	}
-	
-	if (!g_dedicated_server)
 	{
 		if (Level().game) {
 			CScriptProcess				*script_process = ai().script_engine().script_process(ScriptEngine::eScriptProcessorGame);
@@ -680,8 +516,8 @@ game_sv_GameState::game_sv_GameState()
 
 game_sv_GameState::~game_sv_GameState()
 {
-	if (!g_dedicated_server)
-		ai().script_engine().remove_script_process(ScriptEngine::eScriptProcessorGame);
+
+	ai().script_engine().remove_script_process(ScriptEngine::eScriptProcessorGame);
 	xr_delete(m_event_queue);
 
 	SaveMapList();
@@ -733,26 +569,7 @@ void game_sv_GameState::OnEvent (NET_Packet &tNetPacket, u16 type, u32 time, Cli
 {
 	switch	(type)
 	{	
-	case GAME_EVENT_PLAYER_CONNECTED:
-		{
-			ClientID ID;
-			tNetPacket.r_clientID(ID);
-			OnPlayerConnect(ID);
-		}break;
 
-	case GAME_EVENT_PLAYER_DISCONNECTED:
-		{
-			ClientID ID;
-			tNetPacket.r_clientID(ID);
-			string1024 PlayerName;
-			tNetPacket.r_stringZ(PlayerName);
-			u16		GameID = tNetPacket.r_u16();
-			OnPlayerDisconnect(ID, PlayerName, GameID);
-		}break;
-
-	case GAME_EVENT_PLAYER_KILLED:
-		{
-		}break	;
 	case GAME_EVENT_ON_HIT:
 		{
 			u16		id_dest				= tNetPacket.r_u16();
@@ -769,45 +586,9 @@ void game_sv_GameState::OnEvent (NET_Packet &tNetPacket, u16 type, u32 time, Cli
 			}
 
 			OnHit(id_src, id_dest, tNetPacket);
-			m_server->SendBroadcast		(BroadcastCID,tNetPacket,net_flags(TRUE,TRUE));
+			m_server->SendBroadcast		(tNetPacket);
 		}break;
-	case GAME_EVENT_CREATE_CLIENT:
-		{
-			IClient* CL					= (IClient*)m_server->ID_to_client(sender);
-			VERIFY2(CL, "bad create client message GAME_EVENT_CREATE_CLIENT");
-			if ( CL == NULL ) { break; }
-			
-			CL->flags.bConnected		= TRUE;
-			m_server->AttachNewClient	(CL);
-		}break;
-	case GAME_EVENT_PLAYER_AUTH:
-		{
-			IClient* CL				=	m_server->ID_to_client		(sender);
-			m_server->OnBuildVersionRespond(CL, tNetPacket);
-		}break;
-	case GAME_EVENT_CREATE_PLAYER_STATE:
-		{
-			xrClientData* CL		=	m_server->ID_to_client(sender);
-			R_ASSERT2(CL,
-				make_string("M_CREATE_PLAYER_STATE: client 0x%08x not found", 
-					sender.value()
-				).c_str()
-			);
-			CL->ps					= createPlayerState(&tNetPacket);
-			CL->ps->m_online_time	= Level().timeServer();
-			CL->ps->DeathTime		= Device->dwTimeGlobal;
-			
-			if (psNET_direct_connect) //IsGameTypeSingle())
-				break;
 
-			if (Level().IsDemoPlay())
-				break;
-
-			if (g_dedicated_server && (CL == m_server->GetServerClient()))
-				break;
-
-			CheckNewPlayer(CL);
-		}break;
 	default:
 		{
 			string16 tmp;
@@ -816,46 +597,6 @@ void game_sv_GameState::OnEvent (NET_Packet &tNetPacket, u16 type, u32 time, Cli
 	};
 }
 
-bool game_sv_GameState::CheckNewPlayer(xrClientData* CL)
-{
-	xrGameSpyServer*		gs_server = smart_cast<xrGameSpyServer*>(m_server);
-	R_ASSERT				(gs_server);
-	
-	char const *			error_msg = NULL;
-	ClientID				tmp_client_id(CL->ID);
-	
-	if (gs_server->IsPublicServer())
-	{
-		if (!CL->ps->m_account.is_online())
-		{
-			error_msg = "mp_please_login";
-		} else
-		{
-			if (FindPlayerName(CL->ps->getName(), CL))
-			{
-				error_msg = "mp_already_logged_in";
-			}
-		}
-	} else
-	{
-		if (CL->ps->m_account.is_online())
-		{
-			error_msg = "mp_use_offline_mode";
-		} else
-		{
-			CheckPlayerName(CL);
-		}
-	}
-
-	if (error_msg)
-	{
-		m_server->SendProfileCreationError(CL, error_msg);
-		if (CL != m_server->GetServerClient()) //CL can be NULL
-			CleanDelayedEventFor(tmp_client_id);
-		return false;
-	}
-	return true;
-}
 
 void game_sv_GameState::OnSwitchPhase(u32 old_phase, u32 new_phase)
 {
@@ -1233,95 +974,3 @@ void		game_sv_GameState::OnRenderDebug			()
 
 BOOL	game_sv_GameState::IsVotingEnabled			()	{return g_sv_base_iVotingEnabled != 0;};
 BOOL	game_sv_GameState::IsVotingEnabled			(u16 flag) {return (g_sv_base_iVotingEnabled&flag) != 0;};
-
-class NameSearcherPredicate
-{
-public:
-	NameSearcherPredicate(char const * name, IClient const * to_exclude) :
-		m_name(name),
-		m_exclude(to_exclude)
-	{
-	}
-
-	inline bool operator()(IClient* client) const
-	{
-		if (client == m_exclude)
-			return false;
-
-		xrClientData* tmp_cl = static_cast<xrClientData*>(client);
-		if (!tmp_cl || !tmp_cl->ps)
-			return false;
-		
-		return (xr_strcmp(tmp_cl->ps->getName(), m_name) == 0);
-	}
-private:
-	char const *	m_name;
-	IClient const * m_exclude;
-}; //class NameSearcherPredicate
-
-bool game_sv_GameState::FindPlayerName			(char const * name, IClient const * to_exclude)
-{
-	R_ASSERT(name);
-	NameSearcherPredicate	tmp_predicate(name, to_exclude);
-	IClient* tmp_client		= m_server->FindClient(tmp_predicate);
-	return tmp_client != NULL;
-}
-
-void game_sv_GameState::GenerateNewName			(char const * old_name, char * dest, u32 const dest_size)
-{
-	u32 old_name_size = xr_strlen(old_name);
-	R_ASSERT(old_name && old_name_size);
-
-	static char const suffix_symbol = '#';
-
-	char const * currc = old_name + old_name_size - 1;
-	while (currc > old_name)
-	{
-		if (*currc == suffix_symbol)
-			break;
-		
-		--currc;
-	}
-	if (*currc != suffix_symbol)
-		currc = old_name + old_name_size - 1;
-	
-	int		curret_number = atoi(currc + 1);
-	++curret_number;
-
-	u32		name_length = static_cast<u32>(currc - old_name);
-	char	new_suffix[16];
-	
-
-	strncpy_s	(dest, dest_size, old_name, name_length);
-	xr_sprintf	(new_suffix, "%c%u", suffix_symbol, curret_number);
-	xr_strcat	(dest, dest_size, new_suffix);
-}
-
-void game_sv_GameState::CheckPlayerName(xrClientData* CL)
-{
-	R_ASSERT	(CL && CL->ps);
-	R_ASSERT	(!CL->ps->m_account.is_online());
-
-	char const *	current_name = NULL;
-	if (CL->ps->m_account.name().size())	//in case of logging from gamespy login page
-	{
-		current_name = CL->ps->getName();
-	} else
-	{
-		current_name = CL->name.c_str();
-		CL->ps->m_account.set_player_name(current_name);
-	}
-	u32				current_name_length = xr_strlen(current_name);
-
-
-	u32				new_name_dest_size = current_name_length + 16;
-	char *			new_name_dest = static_cast<char*>(
-		_alloca(new_name_dest_size));
-
-	while (FindPlayerName(current_name, CL))
-	{
-		GenerateNewName(current_name, new_name_dest, new_name_dest_size);
-		CL->ps->m_account.set_player_name(new_name_dest);
-		current_name = new_name_dest;
-	}
-}

@@ -4,7 +4,6 @@
 #include "../xrEngine/IGame_Persistent.h"
 #include "script_export_space.h"
 #include "../xrEngine/StatGraph.h"
-#include "xrMessages.h"
 #include "../xrEngine/alife_space.h"
 #include "../xrcore/xrDebug.h"
 #include "xrServer.h"

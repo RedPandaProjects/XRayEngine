@@ -69,13 +69,12 @@ public:
 	u16								ID;				// internal ID
 	u16								ID_Parent;		// internal ParentID, 0xffff means no parent
 	u16								ID_Phantom;		// internal PhantomID, 0xffff means no phantom
-	class xrClientData*				owner;
+	class XRayClient*				owner;
 
 	// spawn data
 	shared_str						s_name;
 	//.	u8								s_gameid;
 	GameTypeChooser					m_gameType;
-	u8								s_RP;
 	Flags16							s_flags;		// state flags
 	xr_vector<u16>					children;
 
@@ -109,6 +108,8 @@ public:
 	virtual void			set_name(LPCSTR) = 0;
 	virtual LPCSTR			name_replace() const = 0;
 	virtual void			set_name_replace(LPCSTR) = 0;
+
+	virtual void			load(NET_Packet& tNetPacket)=0;
 	virtual Fvector& position() = 0;
 	virtual Fvector& angle() = 0;
 	virtual Flags16& flags() = 0;
@@ -121,5 +122,6 @@ public:
 
 	virtual void UPDATE_Read(NET_Packet& tNetPacket) = 0;
 	virtual void UPDATE_Write(NET_Packet& tNetPacket) = 0;
+	virtual	bool			keep_saved_data_anyway() const { return false; };
 };
 

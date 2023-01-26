@@ -187,7 +187,6 @@
     <ClInclude Include="..\..\xrServerEntities\WaveForm.h" />
     <ClInclude Include="..\..\xrServerEntities\xml_str_id_loader.h" />
     <ClInclude Include="..\..\xrServerEntities\xrEProps.h" />
-    <ClInclude Include="..\..\xrServerEntities\xrMessages.h" />
     <ClInclude Include="..\..\xrServerEntities\xrServer_Objects.h" />
     <ClInclude Include="..\..\xrServerEntities\xrServer_Objects_Abstract.h" />
     <ClInclude Include="..\..\xrServerEntities\xrServer_Objects_ALife.h" />

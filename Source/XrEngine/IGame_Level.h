@@ -113,6 +113,8 @@ public:
 	//ref_shader					LL_CreateShader			(int S, int T, int M, int C);
 	void						LL_CheckTextures		();
 	virtual void				SetEnvironmentGameTimeFactor(u64 const& GameTime, float const& fTimeFactor) = 0;
+	virtual void				OnMessage(void* data, u32 size) =0;
+	virtual	void				OnDestroyObject(u16 id) = 0;
 };
 
 //-----------------------------------------------------------------------------------------------------------

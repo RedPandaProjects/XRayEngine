@@ -203,12 +203,6 @@ void CObjectFactory::register_classes	()
 #ifndef NO_SINGLE
 	add<game_sv_Single>											(CLSID_SV_GAME_SINGLE			,"game_sv_single");
 #endif // #ifndef NO_SINGLE
-#ifndef	BENCHMARK_BUILD
-	add<game_sv_Deathmatch>										(CLSID_SV_GAME_DEATHMATCH		,"game_sv_deathmatch");
-	add<game_sv_TeamDeathmatch>									(CLSID_SV_GAME_TEAMDEATHMATCH	,"game_sv_team_deathmatch");
-	add<game_sv_ArtefactHunt>									(CLSID_SV_GAME_ARTEFACTHUNT		,"game_sv_artefact_hunt");
-	add<game_sv_CaptureTheArtefact>									(CLSID_SV_GAME_CAPTURETHEARTEFACT	,"game_sv_capture_the_artefact");
-#endif	//	BENCHMARK_BUILD
 	//Client Game type
 #ifndef NO_SINGLE
 	add<game_cl_Single>											(CLSID_CL_GAME_SINGLE			,"game_cl_single");

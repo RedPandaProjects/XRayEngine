@@ -201,7 +201,7 @@ void CLevel::IR_OnKeyboardPress	(int key)
 		RealFS->rescan_pathes			();
 		NET_Packet					net_packet;
 		net_packet.w_begin			(M_RELOAD_GAME);
-		Send						(net_packet,net_flags(TRUE));
+		Send						(net_packet);
 		return;
 	}
 	case DIK_DIVIDE: {

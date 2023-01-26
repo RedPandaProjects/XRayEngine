@@ -8,7 +8,6 @@
 
 #pragma once
 
-#include "xrMessages.h"
 #include "xrServer_Object_Base.h"
 #include "phnetstate.h"
 

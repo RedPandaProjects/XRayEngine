@@ -108,7 +108,7 @@ void CALifeStorageManager::load	(void *buffer, const u32 &buffer_size, LPCSTR fi
 	CALifeObjectRegistry::OBJECT_REGISTRY::iterator	I;
 	for (I = B; I != E; ++I) {
 		ALife::_OBJECT_ID		id = (*I).second->ID;
-		(*I).second->ID			= server().PerformIDgen(id);
+		(*I).second->ID			= server().GenerateIndex(id);
 		VERIFY					(id == (*I).second->ID);
 		register_object			((*I).second,false);
 	}

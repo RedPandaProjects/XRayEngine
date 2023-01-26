@@ -10,436 +10,388 @@
 #include "UI/UIMessagesWindow.h"
 #include "UI/UIDialogWnd.h"
 #include "string_table.h"
-#include "game_cl_base_weapon_usage_statistic.h"
-#include "game_sv_mp_vote_flags.h"
 
-EGameIDs ParseStringToGameType	(LPCSTR str);
-LPCSTR GameTypeToString			(EGameIDs gt, bool bShort);
-
-game_cl_GameState::game_cl_GameState()
+void game_cl_GameState::signal_Syncronize()
 {
-	local_player				= createPlayerState(NULL);	//initializing account info
-	m_WeaponUsageStatistic		= NULL;
+	sv_force_sync = TRUE;
+}
 
-	m_game_type_name			= 0;
+// Network
+void game_cl_GameState::net_Export_State(NET_Packet& P, ClientID to)
+{
+	// Generic
+	P.w_u16(m_phase);
+	P.w_u32(m_start_time);
 
-	shedule.t_min				= 5;
-	shedule.t_max				= 20;
-	m_game_ui_custom			= NULL;
-	shedule_register			();
+	// Players
+	net_Export_GameTime(P);
+}
 
-	m_u16VotingEnabled			= 0;
-	m_bServerControlHits		= true;
+void game_cl_GameState::net_Export_Update(NET_Packet& P, ClientID id_to, ClientID id)
+{
+	net_Export_GameTime(P);
+};
 
-	m_WeaponUsageStatistic		= xr_new<WeaponUsageStatistic>();
+void game_cl_GameState::net_Export_GameTime(NET_Packet& P)
+{
+	//Syncronize GameTime 
+	P.w_u64(GetGameTime());
+	P.w_float(GetGameTimeFactor());
+
+	//Syncronize EnvironmentGameTime 
+	P.w_u64(GetEnvironmentGameTime());
+	P.w_float(GetEnvironmentGameTimeFactor());
+};
+
+void game_cl_GameState::OnPlayerConnect(ClientID /**id_who/**/)
+{
+	signal_Syncronize();
+}
+
+void game_cl_GameState::Create(shared_str& options)
+{
+	// loading scripts
+	ai().script_engine().remove_script_process(ScriptEngine::eScriptProcessorGame);
+	string_path S;
+	FS.update_path(S, "$game_config$", "script.ltx");
+	CInifile* l_tpIniFile = new CInifile(S);
+	R_ASSERT(l_tpIniFile);
+
+	if (l_tpIniFile->section_exist("single"))
+	{
+		if (l_tpIniFile->r_string("single", "script"))
+			ai().script_engine().add_script_process(ScriptEngine::eScriptProcessorGame, new CScriptProcess("game", l_tpIniFile->r_string("single", "script")));
+		else
+			ai().script_engine().add_script_process(ScriptEngine::eScriptProcessorGame, new CScriptProcess("game", ""));
+	}
+	xr_delete(l_tpIniFile);
+
+	if (strstr(*options, "/alife"))
+		m_alife_simulator = new CALifeSimulator(Level().Server, &options);
+
+	switch_Phase(GAME_PHASE_INPROGRESS);
+}
+
+void game_cl_GameState::Update()
+{
+	if (Level().game)
+	{
+		CScriptProcess* script_process = ai().script_engine().script_process(ScriptEngine::eScriptProcessorGame);
+		if (script_process)
+			script_process->update();
+	}
+}
+
+game_cl_GameState::game_cl_GameState() : m_alife_simulator(nullptr)
+{
+	VERIFY(g_pGameLevel);
+	m_type = eGameIDSingle;
 }
 
 game_cl_GameState::~game_cl_GameState()
 {
-	PLAYERS_MAP_IT I	= players.begin();
-	for(;I!=players.end(); ++I)
-		xr_delete(I->second);
-	players.clear();
-
-	shedule_unregister();
-	xr_delete(m_WeaponUsageStatistic);
-	xr_delete(local_player);
+	ai().script_engine().remove_script_process(ScriptEngine::eScriptProcessorGame);
+	m_alife_simulator->destroy();
+	xr_delete(m_alife_simulator);
+	m_alife_simulator = nullptr;
 }
 
-void	game_cl_GameState::net_import_GameTime		(NET_Packet& P)
+bool game_cl_GameState::change_level(NET_Packet& net_packet)
 {
-	u64				GameTime;
-	P.r_u64			(GameTime);
-	float			TimeFactor;
-	P.r_float		(TimeFactor);
-
-	Level().SetGameTimeFactor	(GameTime,TimeFactor);
-
-	u64				GameEnvironmentTime;
-	P.r_u64			(GameEnvironmentTime);
-	float			EnvironmentTimeFactor;
-	P.r_float		(EnvironmentTimeFactor);
-
-	u64 OldTime = Level().GetEnvironmentGameTime();
-	Level().SetEnvironmentGameTimeFactor	(GameEnvironmentTime,EnvironmentTimeFactor);
-	if (OldTime > GameEnvironmentTime)
-		GamePersistent().EnvironmentAsCOP()->Invalidate();
+	if (ai().get_alife())
+		return (alife().change_level(net_packet));
+	else
+		return (true);
 }
 
-struct not_exsiting_clients_deleter
+bool game_cl_GameState::load_game(NET_Packet& net_packet)
 {
-	typedef buffer_vector<ClientID>	existing_clients_vector_t;
-	existing_clients_vector_t*	exist_clients;
-	game_PlayerState**			local_player;
-	ClientID*					client_id;
-	not_exsiting_clients_deleter(existing_clients_vector_t* exist, game_PlayerState** local_player, ClientID* client_id) :
-		exist_clients(exist), local_player(local_player), client_id(client_id)
-	{
-	}
-	//default copy constructor is right
-	bool operator()(game_cl_GameState::PLAYERS_MAP::value_type & value)
-	{
-		VERIFY(exist_clients);
-		existing_clients_vector_t::iterator tmp_iter = std::find(
-			exist_clients->begin(),
-			exist_clients->end(),
-			value.first	//key
-		);
-		
-		if (tmp_iter != exist_clients->end())
-			return false;
-
-		if ( *local_player == value.second )
-			return false;
-// 			*local_player	=	NULL;
-// 			*client_id		=	0;
-// 		}
-
-		xr_delete(value.second);
+	if (!ai().get_alife())
 		return true;
-	}
-}; //not_present_clients_deleter
 
-void	game_cl_GameState::net_import_state	(NET_Packet& P)
+	shared_str game_name;
+	net_packet.r_stringZ(game_name);
+	return (alife().load_game(*game_name, true));
+}
+
+void game_cl_GameState::OnEvent(NET_Packet& tNetPacket, u16 type, u32 time, ClientID sender)
 {
-	// Generic
-	P.r_clientID	(local_svdpnid);
-	P.r_u32			((u32&)m_type);
-	
-	u16 ph;
-	P.r_u16			(ph);
-	
-	if(Phase()!=ph)
-		switch_Phase(ph);
-
-	P.r_s32			(m_round);
-	P.r_u32			(m_start_time);
-	m_u16VotingEnabled = u16(P.r_u8());
-	m_bServerControlHits = !!P.r_u8();	
-	m_WeaponUsageStatistic->SetCollectData(!!P.r_u8());
-
-	// Players
-	u16	p_count;
-	P.r_u16			(p_count);
-	R_ASSERT		(p_count <= MAX_PLAYERS_COUNT);
-
-	buffer_vector<ClientID> valid_players(
-		_alloca(sizeof(ClientID) * (p_count+1)),
-		(p_count+1)
-	);
-	
-	for (u16 p_it=0; p_it<p_count; ++p_it)
+	if (type == GAME_EVENT_ON_HIT)
 	{
-		ClientID			ID;
-		P.r_clientID		(ID);
-		
-		game_PlayerState*   IP;
-		PLAYERS_MAP_IT I = players.find(ID);
-		if(I != players.end())
-		{
-			IP = I->second;
-			//***********************************************
-			u16 OldFlags = IP->flags__;
-			u8 OldVote = IP->m_bCurrentVoteAgreed;
-			//-----------------------------------------------
-			IP->net_Import(P);
-			//-----------------------------------------------
-			if (OldFlags != IP->flags__)
-				if (Type() != eGameIDSingle) OnPlayerFlagsChanged(IP);
-			if (OldVote != IP->m_bCurrentVoteAgreed)
-				OnPlayerVoted(IP);
-			//***********************************************
-			valid_players.push_back(ID);
-		}else{
-			if (ID == local_svdpnid)//Level().GetClientID())
-			{
-				game_PlayerState::skip_Import(P);	//this mean that local_player not created yet ..
-				continue;
-			}
-			
-			IP = createPlayerState	(&P);
-			
-			if (Type() != eGameIDSingle)
-				OnPlayerFlagsChanged(IP);
+		u16 id_dest = tNetPacket.r_u16();
+		u16 id_src = tNetPacket.r_u16();
+		ISE_Abstract* e_src = Level().Server->ID_to_entity(id_src);
 
-			players.insert			(mk_pair(ID,IP));
-			valid_players.push_back	(ID);
+		if (e_src)
+			Level().Server->SendBroadcast(tNetPacket);
+	}
+}
+
+void game_cl_GameState::teleport_object(NET_Packet& packet, u16 id)
+{
+	if (!ai().get_alife())
+		return;
+
+	GameGraph::_GRAPH_ID		game_vertex_id;
+	u32						level_vertex_id;
+	Fvector					position;
+
+	packet.r(&game_vertex_id, sizeof(game_vertex_id));
+	packet.r(&level_vertex_id, sizeof(level_vertex_id));
+	packet.r_vec3(position);
+
+	alife().teleport_object(id, game_vertex_id, level_vertex_id, position);
+}
+
+void game_cl_GameState::add_restriction(RestrictionSpace::ERestrictorTypes type, u16 restriction_id, u16 id)
+{
+	if (ai().get_alife())
+	{
+		alife().add_restriction(id, restriction_id, type);
+	}
+}
+
+void game_cl_GameState::remove_restriction(RestrictionSpace::ERestrictorTypes type, u16 restriction_id, u16 id)
+{
+	if (ai().get_alife())
+	{
+		alife().remove_restriction(id, restriction_id, type);
+	}
+}
+
+void game_cl_GameState::remove_all_restrictions(RestrictionSpace::ERestrictorTypes type, u16 id)
+{
+	if (ai().get_alife())
+	{
+		alife().remove_all_restrictions(id, type);
+	}
+}
+
+shared_str game_cl_GameState::level_name(const shared_str& server_options) const
+{
+	if (!ai().get_alife())
+	{
+		string64 l_name = "";
+		VERIFY(_GetItemCount(*server_options, '/'));
+		return (_GetItem(*server_options, 0, l_name, '/'));
+	}
+
+	return (alife().level_name());
+}
+
+constexpr const char* default_map_version = "1.0";
+constexpr const char* map_ver_string = "ver=";
+
+shared_str game_cl_GameState::parse_level_version(const shared_str& server_options)
+{
+	const char* map_ver = strstr(server_options.c_str(), map_ver_string);
+	string128	result_version;
+	if (map_ver)
+	{
+		map_ver += sizeof(map_ver_string);
+		if (strchr(map_ver, '/'))
+			strncpy_s(result_version, map_ver, strchr(map_ver, '/') - map_ver);
+		else
+			xstr::strcpy(result_version, map_ver);
+	}
+	else xstr::strcpy(result_version, default_map_version);
+
+	return shared_str(result_version);
+}
+
+void game_cl_GameState::on_death(CSE_Abstract* e_dest, CSE_Abstract* e_src)
+{
+	CSE_ALifeCreatureAbstract* creature = smart_cast<CSE_ALifeCreatureAbstract*>(e_dest);
+	if (!creature)
+		return;
+
+	VERIFY(creature->get_killer_id() == ALife::_OBJECT_ID(-1));
+	creature->set_killer_id(e_src->ID);
+
+	if (!ai().get_alife())
+		return;
+
+	alife().on_death(e_dest, e_src);
+}
+
+void game_cl_GameState::OnCreate(u16 id_who)
+{
+	if (!ai().get_alife())
+		return;
+
+	ISE_Abstract* e_who = Level().Server->ID_to_entity(id_who);
+	VERIFY(e_who);
+	if (!e_who->m_bALifeControl)
+		return;
+
+	CSE_ALifeObject* alife_object = smart_cast<CSE_ALifeObject*>(e_who);
+	if (!alife_object)
+		return;
+
+	alife_object->m_bOnline = true;
+
+	if (alife_object->ID_Parent != 0xffff)
+	{
+		CSE_ALifeDynamicObject* parent = ai().alife().objects().object(alife_object->ID_Parent, true);
+		if (parent)
+		{
+			CSE_ALifeTraderAbstract* trader = smart_cast<CSE_ALifeTraderAbstract*>(parent);
+			if (trader)
+				alife().create(alife_object);
+			else
+			{
+				CSE_ALifeInventoryBox* const box = smart_cast<CSE_ALifeInventoryBox*>(parent);
+				if (box)
+					alife().create(alife_object);
+				else
+					alife_object->m_bALifeControl = false;
+			}
+		}
+		else alife_object->m_bALifeControl = false;
+	}
+	else alife().create(alife_object);
+}
+
+void game_cl_GameState::restart_simulator(const char* saved_game_name)
+{
+	shared_str options = GamePersistent().GetServerOption();
+
+	m_alife_simulator->destroy();
+	xr_delete(m_alife_simulator);
+	m_alife_simulator = nullptr;
+
+	Level().Server->clear_ids();
+
+	xstr::strcpy(g_pGamePersistent->m_game_params.m_game_or_spawn, saved_game_name);
+	xstr::strcpy(g_pGamePersistent->m_game_params.m_new_or_load, "load");
+
+	pApp->SetLoadingScreen(new UILoadingScreen());
+	pApp->LoadBegin();
+	m_alife_simulator = new CALifeSimulator(Level().Server, &options);
+	g_pGamePersistent->SetLoadStageTitle("st_client_synchronising");
+	pApp->LoadForceFinish();
+	g_pGamePersistent->LoadTitle();
+	Device->PreCache(60, true, true);
+	pApp->LoadEnd();
+}
+
+void game_cl_GameState::OnTouch(u16 eid_who, u16 eid_what)
+{
+	ISE_Abstract* e_who = Level().Server->ID_to_entity(eid_who);		VERIFY(e_who);
+	ISE_Abstract* e_what = Level().Server->ID_to_entity(eid_what);	VERIFY(e_what);
+
+	if (ai().get_alife())
+	{
+		CSE_ALifeInventoryItem* l_tpALifeInventoryItem = smart_cast<CSE_ALifeInventoryItem*>	(e_what);
+		CSE_ALifeDynamicObject* l_tpDynamicObject = smart_cast<CSE_ALifeDynamicObject*>	(e_who);
+
+		if (l_tpALifeInventoryItem && l_tpDynamicObject &&
+			ai().alife().graph().level().object(l_tpALifeInventoryItem->base()->ID, true) &&
+			ai().alife().objects().object(e_who->ID, true) &&
+			ai().alife().objects().object(e_what->ID, true))
+			alife().graph().attach(*(CSE_Abstract*)e_who, l_tpALifeInventoryItem, l_tpDynamicObject->m_tGraphID, false, false);
+	}
+}
+
+void game_cl_GameState::OnDetach(u16 eid_who, u16 eid_what)
+{
+	if (ai().get_alife())
+	{
+		ISE_Abstract* e_who = Level().Server->ID_to_entity(eid_who);		VERIFY(e_who);
+		ISE_Abstract* e_what = Level().Server->ID_to_entity(eid_what);	VERIFY(e_what);
+
+		CSE_ALifeInventoryItem* l_tpALifeInventoryItem = smart_cast<CSE_ALifeInventoryItem*>(e_what);
+		if (!l_tpALifeInventoryItem)
+			return;
+
+		CSE_ALifeDynamicObject* l_tpDynamicObject = smart_cast<CSE_ALifeDynamicObject*>(e_who);
+		if (!l_tpDynamicObject)
+			return;
+
+		const CALifeObjectRegistry& refAlifeObj = ai().alife().objects();
+
+		if (refAlifeObj.object(e_who->ID, true) && refAlifeObj.object(e_what->ID, true) &&
+			!ai().alife().graph().level().object(l_tpALifeInventoryItem->base()->ID, true))
+		{
+			alife().graph().detach(*(CSE_Abstract*)e_who, l_tpALifeInventoryItem, l_tpDynamicObject->m_tGraphID, false, false);
+		}
+		else if (!refAlifeObj.object(e_what->ID, true))
+		{
+			u16 id = l_tpALifeInventoryItem->base()->ID_Parent;
+			l_tpALifeInventoryItem->base()->ID_Parent = 0xffff;
+
+			CSE_ALifeDynamicObject* dynamic_object = smart_cast<CSE_ALifeDynamicObject*>(e_what);
+			VERIFY(dynamic_object);
+			dynamic_object->m_tNodeID = l_tpDynamicObject->m_tNodeID;
+			dynamic_object->m_tGraphID = l_tpDynamicObject->m_tGraphID;
+			dynamic_object->m_bALifeControl = true;
+			dynamic_object->m_bOnline = true;
+			alife().create(dynamic_object);
+			l_tpALifeInventoryItem->base()->ID_Parent = id;
 		}
 	}
-	not_exsiting_clients_deleter	tmp_deleter(&valid_players, &local_player, &local_svdpnid);
-	
-	players.erase(
-		std::remove_if(
-			players.begin(),
-			players.end(),
-			tmp_deleter
-		),
-		players.end()
-	);
-
-	net_import_GameTime(P);
 }
 
-void	game_cl_GameState::net_import_update(NET_Packet& P)
+u64 game_cl_GameState::GetStartGameTime()
 {
-	// Read
-	ClientID			ID;
-	P.r_clientID		(ID);
-
-	// Update
-	PLAYERS_MAP_IT I	= players.find(ID);
-	/*VERIFY2(I != players.end(), 
-		make_string("Player ClientID = %d not found in players map", ID.value()).c_str());*/
-	if (players.end()!=I)
-	{
-		game_PlayerState* IP		= I->second;
-//		CopyMemory	(&IP,&PS,sizeof(PS));		
-		//***********************************************
-		u16 OldFlags = IP->flags__;
-		u8 OldVote = IP->m_bCurrentVoteAgreed;
-		//-----------------------------------------------
-		IP->net_Import(P);
-		//-----------------------------------------------
-		if (OldFlags != IP->flags__)
-			if (Type() != eGameIDSingle) OnPlayerFlagsChanged(IP);
-		if (OldVote != IP->m_bCurrentVoteAgreed)
-			OnPlayerVoted(IP);
-		//***********************************************
-	}
+	if (ai().get_alife() && ai().alife().initialized())
+		return(ai().alife().time_manager().start_game_time());
 	else
-	{
-		//updates can be delivered faster than guarantee packets
-		//that store GAME_EVENT_PLAYER_CONNECTED
-		game_PlayerState::skip_Import(P);
-	};
-
-	//Syncronize GameTime
-	net_import_GameTime (P);
+		return(inherited::GetStartGameTime());
 }
 
-void	game_cl_GameState::net_signal		(NET_Packet& P)
+u64 game_cl_GameState::GetGameTime()
 {
-}
-
-void game_cl_GameState::TranslateGameMessage	(u32 msg, NET_Packet& P)
-{
-	CStringTable st;
-
-	string512 Text;
-	char	Color_Main[]	= "%c[255,192,192,192]";
-	LPCSTR	Color_Teams[3]	= {"%c[255,255,240,190]", "%c[255,64,255,64]", "%c[255,64,64,255]"};
-
-	switch (msg)
-	{
-	case GAME_EVENT_PLAYER_CONNECTED:
-		{
-			ClientID newClientId;
-			P.r_clientID(newClientId);
-			game_PlayerState*	PS = NULL;
-			if (newClientId == local_svdpnid)
-			{
-				PS = local_player;
-			} else
-			{
-				PS = createPlayerState(&P);
-			}
-			VERIFY2(PS, "failed to create player state");
-			
-			if (Type() != eGameIDSingle)
-			{
-				players.insert(mk_pair(newClientId, PS));
-				OnNewPlayerConnected(newClientId);
-			}
-			xr_sprintf(Text, "%s%s %s%s",Color_Teams[0],PS->getName(),Color_Main,*st.translate("mp_connected"));
-			if(CurrentGameUI()) CurrentGameUI()->CommonMessageOut(Text);
-			//---------------------------------------
-			Msg("%s connected", PS->getName());
-		}break;
-	case GAME_EVENT_PLAYER_DISCONNECTED:
-		{
-			string64 PlayerName;
-			P.r_stringZ(PlayerName);
-
-			xr_sprintf(Text, "%s%s %s%s",Color_Teams[0],PlayerName,Color_Main,*st.translate("mp_disconnected"));
-			if(CurrentGameUI()) CurrentGameUI()->CommonMessageOut(Text);
-			//---------------------------------------
-			Msg("%s disconnected", PlayerName);
-		}break;
-	case GAME_EVENT_PLAYER_ENTERED_GAME:
-		{
-			string64 PlayerName;
-			P.r_stringZ(PlayerName);
-
-			xr_sprintf(Text, "%s%s %s%s",Color_Teams[0],PlayerName,Color_Main,*st.translate("mp_entered_game"));
-			if(CurrentGameUI()) CurrentGameUI()->CommonMessageOut(Text);
-		}break;
-	default:
-		{
-			R_ASSERT2(0,"Unknown Game Message");
-		}break;
-	};
-
-}
-
-void	game_cl_GameState::OnGameMessage	(NET_Packet& P)
-{
-	VERIFY	(this && &P);
-	u32 msg	;
-	P.r_u32	(msg);
-
-	TranslateGameMessage(msg, P);
-};
-
-game_PlayerState* game_cl_GameState::lookat_player()
-{
-	CObject* current_entity = Level().CurrentEntity();
-	if (current_entity)
-	{
-		return GetPlayerByGameID(current_entity->ID());
-	}
-	return NULL;
-}
-
-game_PlayerState* game_cl_GameState::GetPlayerByGameID(u32 GameID)
-{
-	PLAYERS_MAP_IT I=players.begin();
-	PLAYERS_MAP_IT E=players.end();
-
-	for (;I!=E;++I)
-	{
-		game_PlayerState* P = I->second;
-		if (P->GameID == GameID) return P;
-	};
-	return NULL;
-};
-
-game_PlayerState* game_cl_GameState::GetPlayerByOrderID		(u32 idx)
-{
-	PLAYERS_MAP_IT I = players.begin();
-	std::advance(I,idx);
-	game_PlayerState* ps = I->second;
-	return ps;
-}
-
-ClientID game_cl_GameState::GetClientIDByOrderID	(u32 idx)
-{
-	PLAYERS_MAP_IT I = players.begin();
-	std::advance(I,idx);
-	return I->first;
-}
-
-void game_cl_GameState::shedule_Update		(u32 dt)
-{
-	ISheduled::shedule_Update	(dt);
-
-	if(!m_game_ui_custom)
-	{
-		if( CurrentGameUI() )
-			m_game_ui_custom = CurrentGameUI();
-	} 
-	//---------------------------------------
-	switch (Phase())
-	{
-	case GAME_PHASE_INPROGRESS:
-		{
-			if (!IsGameTypeSingle())
-				m_WeaponUsageStatistic->Update();
-		}break;
-	default:
-		{
-		}break;
-	};
-};
-
-void game_cl_GameState::sv_GameEventGen(NET_Packet& P)
-{
-	P.w_begin	(M_EVENT);
-	P.w_u32		(Level().timeServer());
-	P.w_u16		( u16(GE_GAME_EVENT&0xffff) );
-	P.w_u16		(0);//dest==0
-}
-
-void	game_cl_GameState::sv_EventSend(NET_Packet& P)
-{
-	Level().Send(P,net_flags(TRUE,TRUE));
-}
-
-bool game_cl_GameState::OnKeyboardPress		(int dik)
-{
-	if(!local_player || local_player->IsSkip())
-		return true;
+	if (ai().get_alife() && ai().alife().initialized())
+		return(ai().alife().time_manager().game_time());
 	else
-		return false;
+		return(inherited::GetGameTime());
 }
 
-bool game_cl_GameState::OnKeyboardRelease	(int dik)
+float game_cl_GameState::GetGameTimeFactor()
 {
-	if(!local_player || local_player->IsSkip())
-		return true;
+	if (ai().get_alife() && ai().alife().initialized())
+		return(ai().alife().time_manager().time_factor());
 	else
-		return false;
+		return(inherited::GetGameTimeFactor());
 }
 
-void game_cl_GameState::u_EventGen(NET_Packet& P, u16 type, u16 dest)
+void game_cl_GameState::SetGameTimeFactor(const float fTimeFactor)
 {
-	P.w_begin	(M_EVENT);
-	P.w_u32		(Level().timeServer());
-	P.w_u16		(type);
-	P.w_u16		(dest);
+	if (ai().get_alife() && ai().alife().initialized())
+		return(alife().time_manager().set_time_factor(fTimeFactor));
+	else
+		return(inherited::SetGameTimeFactor(fTimeFactor));
 }
 
-void game_cl_GameState::u_EventSend(NET_Packet& P)
+u64 game_cl_GameState::GetEnvironmentGameTime()
 {
-	Level().Send(P,net_flags(TRUE,TRUE));
+	if (ai().get_alife() && ai().alife().initialized())
+		return(alife().time_manager().game_time());
+	else
+		return(inherited::GetGameTime());
 }
 
-void				game_cl_GameState::OnSwitchPhase			(u32 old_phase, u32 new_phase)
+float game_cl_GameState::GetEnvironmentGameTimeFactor()
 {
-	switch (old_phase)
-	{
-	case GAME_PHASE_INPROGRESS:
-		{
-		}break;
-	default:
-		{
-		}break;
-	};
-
-	switch (new_phase)
-	{
-		case GAME_PHASE_INPROGRESS:
-			{
-				m_WeaponUsageStatistic->Clear();
-			}break;
-		default:
-			{
-			}break;
-	}	
+	return(inherited::GetGameTimeFactor());
 }
 
-void game_cl_GameState::SendPickUpEvent(u16 ID_who, u16 ID_what)
+void game_cl_GameState::SetEnvironmentGameTimeFactor(const float fTimeFactor)
 {
-	CObject* O		= Level().Objects.net_Find	(ID_what);
-	Level().m_feel_deny.feel_touch_deny			(O, 1000);
+	return(inherited::SetGameTimeFactor(fTimeFactor));
+}
 
-	NET_Packet		P;
-	u_EventGen		(P,GE_OWNERSHIP_TAKE, ID_who);
-	P.w_u16			(ID_what);
-	u_EventSend		(P);
+void game_cl_GameState::sls_default()
+{
+	alife().update_switch();
+}
+
+//  [7/5/2005]
+#ifdef DEBUG
+extern	Flags32	dbg_net_Draw_Flags;
+
+void		game_cl_GameState::OnRender()
+{
 };
-
-void game_cl_GameState::set_type_name(LPCSTR s)	
-{ 
-	EGameIDs gid =			ParseStringToGameType	(s);
-	m_game_type_name		= GameTypeToString		(gid, false); 
-	if(OnClient())
-	{
-		xr_strcpy					(g_pGamePersistent->m_game_params.m_game_type, m_game_type_name.c_str());
-		g_pGamePersistent->OnGameStart();
-	}
-};
-
-void game_cl_GameState::OnConnected()
-{
-	m_game_ui_custom	= CurrentGameUI();
-}
+#endif

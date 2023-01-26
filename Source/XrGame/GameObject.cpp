@@ -54,7 +54,7 @@ CGameObject::CGameObject		()
 	m_bCrPr_Activated			= false;
 	m_dwCrPr_ActivationStep		= 0;
 	m_spawn_time				= 0;
-	m_ai_location				= !g_dedicated_server ? xr_new<CAI_ObjectLocation>() : 0;
+	m_ai_location				=  xr_new<CAI_ObjectLocation>() ;
 	m_server_flags.one			();
 
 	m_callbacks					= xr_new<CALLBACK_MAP>();
@@ -94,8 +94,7 @@ void CGameObject::Load(LPCSTR section)
 void CGameObject::reinit	()
 {
 	m_visual_callback.clear	();
-	if (!g_dedicated_server)
-        ai_location().reinit	();
+    ai_location().reinit	();
 
 	// clear callbacks	
 	for (CALLBACK_MAP_IT it = m_callbacks->begin(); it != m_callbacks->end(); ++it) it->second.clear();
@@ -212,15 +211,6 @@ void CGameObject::OnEvent		(NET_Packet& P, u16 type)
 			}
 			SetHitInfo(Hitter, Weapon, HDS.bone(), HDS.p_in_bone_space, HDS.dir);
 			Hit				(&HDS);
-			//---------------------------------------------------------------------------
-			if (GameID() != eGameIDSingle)
-			{
-				Game().m_WeaponUsageStatistic->OnBullet_Check_Result(false);
-				game_cl_mp*	mp_game = smart_cast<game_cl_mp*>(&Game());
-				if (mp_game->get_reward_generator())
-					mp_game->get_reward_generator()->OnBullet_Hit(Hitter, this, Weapon, HDS.boneID);
-			}
-			//---------------------------------------------------------------------------
 		}
 		break;
 	case GE_DESTROY:
@@ -300,17 +290,14 @@ BOOL CGameObject::net_Spawn		(CSE_Abstract*	DC)
 	VERIFY							(_valid(renderable.xform));
 	VERIFY							(!fis_zero(DET(renderable.xform)));
 	CSE_ALifeObject					*O = smart_cast<CSE_ALifeObject*>(E);
-	if (O && xr_strlen(O->m_ini_string)) {
-#pragma warning(push)
-#pragma warning(disable:4238)
-		m_ini_file					= xr_new<CInifile>(
-			new IReader				(
-				(void*)(*(O->m_ini_string)),
-				O->m_ini_string.size()
-			),
+	if (O && xr_strlen(O->m_ini_string))
+	{
+		IReader*Reader =  xr_new<IReader>((void*)(*(O->m_ini_string)), O->m_ini_string.size());
+		m_ini_file					= xr_new<CInifile>(Reader
+		,
 			FS.get_path("$game_config$")->m_Path
 		);
-#pragma warning(pop)
+		xr_delete(Reader);
 	}
 
 	m_story_id						= ALife::_STORY_ID(-1);
@@ -332,7 +319,8 @@ BOOL CGameObject::net_Spawn		(CSE_Abstract*	DC)
 		g_pGameLevel->Objects.net_Register	(this);
 
 	m_server_flags.one				();
-	if (O) {
+	if (O) 
+	{
 		m_server_flags					= O->m_flags;
 		if (O->m_flags.is(CSE_ALifeObject::flVisibleForAI))
 			spatial.type				|= STYPE_VISIBLEFORAI;
@@ -341,12 +329,10 @@ BOOL CGameObject::net_Spawn		(CSE_Abstract*	DC)
 	}
 
 	reload						(*cNameSect());
-	if(!g_dedicated_server)
-		CScriptBinder::reload	(*cNameSect());
+	CScriptBinder::reload		(*cNameSect());
 	
 	reinit						();
-	if(!g_dedicated_server)
-		CScriptBinder::reinit	();
+	CScriptBinder::reinit		();
 #ifdef DEBUG
 	if(ph_dbg_draw_mask1.test(ph_m1_DbgTrackObject)&&stricmp(PH_DBG_ObjectTrackName(),*cName())==0)
 	{
@@ -551,7 +537,7 @@ void CGameObject::spawn_supplies()
 
 				NET_Packet					P;
 				A->Spawn_Write				(P,TRUE);
-				Level().Send				(P,net_flags(TRUE));
+				Level().Send				(P);
 				F_entity_Destroy			(A);
 		}
 	}
@@ -834,8 +820,7 @@ void CGameObject::shedule_Update	(u32 dt)
 	inherited::shedule_Update	(dt);
 
 	Device->Statistic->TEST0.Begin();
-	if(!g_dedicated_server)
-		CScriptBinder::shedule_Update(dt);
+	CScriptBinder::shedule_Update(dt);
 
 	Device->Statistic->TEST0.End();
 }
@@ -899,8 +884,7 @@ u32	CGameObject::ef_detector_type		() const
 void CGameObject::net_Relcase			(CObject* O)
 {
 	inherited::net_Relcase		(O);
-	if(!g_dedicated_server)
-		CScriptBinder::net_Relcase	(O);
+	CScriptBinder::net_Relcase	(O);
 }
 
 CGameObject::CScriptCallbackExVoid &CGameObject::callback(GameObject::ECallbackType type) const

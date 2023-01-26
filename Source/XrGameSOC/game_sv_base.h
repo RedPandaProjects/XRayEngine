@@ -37,37 +37,6 @@ protected:
 		
 	//Events
 	virtual		void				OnEvent					(NET_Packet &tNetPacket, u16 type, u32 time, ClientID sender );
-
-	virtual		void				ReadOptions				(shared_str &options);
-	virtual		void				ConsoleCommands_Create	();
-	virtual		void				ConsoleCommands_Clear	();
-
-	DEF_DEQUE(MAP_ROTATION_LIST,	xr_string);
-	bool							m_bMapRotation;
-	bool							m_bMapNeedRotation;
-	bool							m_bMapSwitched;
-	bool							m_bFastRestart;
-
-	MAP_ROTATION_LIST				m_pMapRotation_List;
-
-public:
-#define		TEAM_COUNT 4
-
-	bool							NewPlayerName_Exists	(void* pClient, LPCSTR NewName);
-	void							NewPlayerName_Generate	(void* pClient, LPSTR NewPlayerName);
-	void							NewPlayerName_Replace	(void* pClient, LPCSTR NewPlayerName);
-
-	BOOL							sv_force_sync;
-	float							rpoints_MinDist [TEAM_COUNT];
-	xr_vector<RPoint>				rpoints	[TEAM_COUNT];
-	DEF_VECTOR(RPRef, RPoint*);
-	RPRef							rpointsBlocked;
-
-	ERoundEnd_Result				round_end_reason;
-	
-	virtual		void				SaveMapList				();
-	virtual		bool				HasMapRotation			() {return m_bMapRotation; };
-	
 public:
 	virtual		void				OnPlayerConnect			(ClientID id_who);
 	virtual		void				OnPlayerDisconnect		(ClientID id_who, LPSTR Name, u16 GameID);
@@ -106,7 +75,7 @@ public:
 
 	//virtual		LPCSTR				get_name_it				(u32 it);
 	virtual		LPCSTR				get_name_id(ClientID id);
-	LPCSTR				get_player_name_id(ClientID id);
+	LPCSTR							get_player_name_id(ClientID id);
 	virtual		u16					get_id_2_eid(ClientID id);
 	virtual		u32					get_players_count		();
 				CSE_Abstract*		get_entity_from_eid		(u16 id);
@@ -132,8 +101,6 @@ public:
 	const char*						get_option_s			(LPCSTR lst, LPCSTR name, LPCSTR def = 0);
 	virtual		u32					get_alive_count			(u32 team);
 	virtual		xr_vector<u16>*		get_children			(ClientID id_who);
-	void							u_EventGen				(NET_Packet& P, u16 type, u16 dest	);
-	void							u_EventSend				(NET_Packet& P, u32 dwFlags = DPNSEND_GUARANTEED);
 
 	// Events
 	virtual		BOOL				OnPreCreate				(CSE_Abstract* E)				{return TRUE;};

@@ -8,7 +8,6 @@
 #include "ai_space.h"
 #include "game_cl_base.h"
 #include "NET_Queue.h"
-#include "file_transfer.h"
 #include "hudmanager.h"
 
 #include "../xrphysics/iphworld.h"
@@ -50,7 +49,6 @@ bool	CLevel::net_start_client1				()
 
 bool	CLevel::net_start_client2				()
 {
-	if(psNET_direct_connect)
 	{
 		Server->create_direct_client();
 		//offline account creation
@@ -84,17 +82,10 @@ bool	CLevel::net_start_client3				()
 		LPCSTR					level_ver = NULL;
 		LPCSTR					download_url = NULL;
 
-		if (psNET_direct_connect)	//single
 		{
 			shared_str const & server_options = Server->GetConnectOptions();
 			level_name	= name().c_str();//Server->level_name		(server_options).c_str();
 			level_ver	= Server->level_version		(server_options).c_str(); //1.0
-		} else					//multiplayer
-		{
-			level_name		= get_net_DescriptionData().map_name;
-			level_ver		= get_net_DescriptionData().map_version;
-			download_url	= get_net_DescriptionData().download_url;
-			rescan_mp_archives(); //because if we are using psNET_direct_connect, we not download map...
 		}
 		// Determine internal level-ID
 		int						level_id = g_Engine->Level_ID(level_name, level_ver, true);
@@ -161,16 +152,9 @@ bool	CLevel::net_start_client4				()
 		if (psDeviceFlags.test(mtNetwork))	Device->seqFrameMT.Add	(g_pNetProcessor,REG_PRIORITY_HIGH	+ 2);
 		else								Device->seqFrame.Add		(g_pNetProcessor,REG_PRIORITY_LOW	- 2);
 
-		if(!psNET_direct_connect)
-		{
-			// Waiting for connection/configuration completition
-			CTimer	timer_sync	;	timer_sync.Start	();
-			while	(!net_isCompleted_Connect())	Sleep	(5);
-			Msg		("* connection sync: %d ms", timer_sync.GetElapsed_ms());
-			while	(!net_isCompleted_Sync())	{ ClientReceive(); Sleep(5); }
-		}
+
 /*
-		if(psNET_direct_connect)
+		if(true)
 		{
 			ClientReceive(); 
 			if(Server)
@@ -199,7 +183,7 @@ void CLevel::ClientSendProfileData	()
 	NP.w_begin								(M_CREATE_PLAYER_STATE);
 	game_PlayerState	tmp_player_state	(NULL);
 	tmp_player_state.net_Export				(NP, TRUE);
-	SecureSend								(NP,net_flags(TRUE, TRUE, TRUE, TRUE));
+	SecureSend								(NP);
 }
 
 
@@ -208,8 +192,7 @@ bool	CLevel::net_start_client5				()
 	if(connected_to_server){
 		// HUD
 
-		// Textures
-		if	(!g_dedicated_server)
+	
 		{
 //			g_pGamePersistent->LoadTitle		("st_loading_textures");
 			g_pGamePersistent->LoadTitle		();
@@ -233,7 +216,6 @@ bool	CLevel::net_start_client6				()
 			g_Engine->LoadEnd						(); 
 			return true;
 		}
-		if (!g_dedicated_server)
 		{
 			g_hud->Load						();
 			g_hud->OnConnected				();

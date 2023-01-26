@@ -236,7 +236,7 @@ void CALifeUpdateManager::new_game_for_editor()
 	reload(m_section);
 	spawns().load_from_editor();
 	graph().on_load();
-	server().PerformIDgen(0x0000);
+	server().GenerateIndex(0x0000);
 	time_manager().init(m_section);
 	VERIFY(can_register_objects());
 
@@ -264,7 +264,7 @@ void CALifeUpdateManager::new_game			(LPCSTR save_name)
 	reload								(m_section);
 	spawns().load						(save_name);
 	graph().on_load						();
-	server().PerformIDgen				(0x0000);
+	server().GenerateIndex				(0x0000);
 	time_manager().init					(m_section);
 	VERIFY								(can_register_objects());
 	
@@ -405,7 +405,7 @@ void CALifeUpdateManager::jump_to_level			(LPCSTR level_name) const
 	Fvector								level_point = ai().game_graph().vertex(dest)->level_point();
 	net_packet.w						(&level_point,sizeof(level_point));
 	net_packet.w_vec3					(Fvector().set(0.f,0.f,0.f));
-	Level().Send						(net_packet,net_flags(TRUE));
+	Level().Send						(net_packet);
 }
 
 void CALifeUpdateManager::teleport_object	(ALife::_OBJECT_ID id, GameGraph::_GRAPH_ID game_vertex_id, u32 level_vertex_id, const Fvector &position)

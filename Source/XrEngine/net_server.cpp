@@ -1,175 +1,418 @@
 #include "stdafx.h"
 #include "net_server.h"
-#include <functional>
+#include "IGame_Level.h"
 
-#pragma warning(push)
-#pragma warning(disable : 4995)
-#include <malloc.h>
-#pragma warning(pop)
-
-ENGINE_API ClientID BroadcastCID(0xffffffff);
-
-IClient::IClient(CTimer* timer) : server(NULL) {
-    dwTime_LastUpdate = 0;
-    flags.bLocal = FALSE;
-    flags.bConnected = FALSE;
-    flags.bReconnect = FALSE;
-    flags.bVerified = TRUE;
+XRayClient::XRayClient()
+{
+	flags.bConnected = FALSE;
+	Clear();
 }
 
-IClient::~IClient() {}
+XRayClient::~XRayClient() {}
 
-// {0218FA8B-515B-4bf2-9A5F-2F079D1759F3}
-static const GUID NET_GUID = {
-    0x218fa8b, 0x515b, 0x4bf2, { 0x9a, 0x5f, 0x2f, 0x7, 0x9d, 0x17, 0x59, 0xf3 }
-};
-// {8D3F9E5E-A3BD-475b-9E49-B0E77139143C}
-static const GUID CLSID_NETWORKSIMULATOR_DP8SP_TCPIP = {
-    0x8d3f9e5e, 0xa3bd, 0x475b, { 0x9e, 0x49, 0xb0, 0xe7, 0x71, 0x39, 0x14, 0x3c }
-};
-
-static HRESULT WINAPI Handler(PVOID pvUserContext, DWORD dwMessageType, PVOID pMessage) {
-    IPureServer* C = (IPureServer*)pvUserContext;
-    return C->net_Handler(dwMessageType, pMessage);
+void XRayClient::Clear()
+{
+	owner = nullptr;
+	net_Accepted = FALSE;
 }
 
-//------------------------------------------------------------------------------
 
-void IClient::_SendTo_LL(const void* data, u32 size, u32 flags, u32 timeout) {
-    R_ASSERT(server);
-    server->IPureServer::SendTo_LL(ID, const_cast<void*>(data), size, flags, timeout);
+IPureServer::IPureServer()
+{
+	ServerClient = NULL;
+	CountIndexes = 0;
 }
 
-//------------------------------------------------------------------------------
-IClient* IPureServer::ID_to_client(ClientID ID, bool ScanAll) {
-    if (0 == ID.value())
-        return NULL;
-    IClient* ret_client = GetClientByID(ID);
-    if (ret_client || !ScanAll)
-        return ret_client;
-
-    return NULL;
+IPureServer::~IPureServer() 
+{
+	VERIFY(CountIndexes-FreeIndexes.size()==0);
+	ServerClient = NULL;
 }
 
-void IPureServer::_Recieve(const void* data, u32 data_size, u32 param) {
-    if (data_size >= NET_PacketSizeLimit) {
-        Msg("! too large packet size[%d] received, DoS attack?", data_size);
-        return;
-    }
+void IPureServer::SendBroadcast(NET_Packet& P)
+{
+	if (!ServerClient || !ServerClient->flags.bConnected)
+		return;
 
-    NET_Packet packet;
-    packet.construct(data, data_size);
-
-    ClientID id(param);
-
-    csMessage.lock();
-
-    //---------------------------------------
-    u32 result = OnMessage(packet, id);
-    csMessage.unlock();
-
-    if (result)
-        SendBroadcast(id, packet, result);
+	if (ServerClient->net_Accepted)
+	{
+		g_pGameLevel->OnMessage(P.B.data, (u32)P.B.count);
+	}
 }
 
-//==============================================================================
+u32 IPureServer::OnMessage(NET_Packet& P)
+{
+	VERIFY(VerifyEntities());
+	return 0;
+}
 
-IPureServer::IPureServer(CTimer* timer) {
-    device_timer = timer;
-    stats.clear();
-    stats.dwSendTime = device_timer->GetElapsed_ms();
-    SV_Client = NULL;
+void IPureServer::SpawnClient()
+{
+	if (!ServerClient)
+	{
+		Msg("! ERROR: Player state not created - incorrect message sequence!");
+		return;
+	}
 
+	ServerClient->net_Accepted = TRUE;
+
+	// Export Game Type
+	R_ASSERT(g_pGameLevel->Load_GameSpecific_After());
+	// end
+
+	PerformGameExport();
+
+	NET_Packet P;
+	xr_set<u16> IsSpawned;
+
+	// Replicate current entities on to this client
+	for (auto [ID, Entity] : Entities)
+	{
+		PerformConnectSpawn(Entity, P, IsSpawned);
+	}
+	//Perform_game_export();
+	//SendConnectionData(SV_Client);
+	//OnPlayerConnected();
+}
+
+void IPureServer::Update()
+{
+	VerifyEntities();
+}
+
+void IPureServer::ProcessUpdate(NET_Packet& P)
+{
+	if (!ServerClient) 
+	{
+		return;
+	}
+
+	// while has information
+	while (!P.r_eof())
+	{
+		// find entity
+		u16 ID = P.r_u16();
+		u8 size = P.r_u8();
+
+		u32	_pos = P.r_tell();
+		ISE_Abstract* pSEAbstract = GetEntityFromID(ID);
+
+		if (pSEAbstract)
+		{
+			pSEAbstract->UPDATE_Read(P);
+
+			if ((P.r_tell() - _pos) != size)
+			{
+				string16 tmp;
+				CLSID2TEXT(pSEAbstract->m_tClassID, tmp);
+				Debug.fatal(DEBUG_INFO, "Beer from the creator of '%s'; initiator: 0x%08x, r_tell() = %d, pos = %d, size = %d, objectID = %d",tmp, ServerClient->ID.value(), P.r_tell(), _pos, size, pSEAbstract->ID);
+			}
+		}
+		else P.r_advance(size);
+	}
+}
+
+void IPureServer::ProcessSave(NET_Packet& P)
+{
+	R_ASSERT(ServerClient);
+
+	// while has information
+	while (!P.r_eof())
+	{
+		// find entity
+		u16 ID = P.r_u16();
+		u16 size = P.r_u16();
+
+		u32 _pos_start = P.r_tell();
+		ISE_Abstract* pSEAbstract = GetEntityFromID(ID);
+
+		if (pSEAbstract)
+		{
+			pSEAbstract->load(P);
+		}
+		else P.r_advance(size);
+
+		const u32 _pos_end = P.r_tell();
+
+		if (size != (_pos_end - _pos_start))
+		{
+			Msg("! load/save mismatch, object: '%s'", pSEAbstract ? pSEAbstract->name_replace() : "unknown");
+			// Rollback pos
+			P.r_seek(_pos_start + size);
+		}
+	}
+}
+
+void IPureServer::ProcessEvent(NET_Packet& P)
+{
+	R_ASSERT(!"not_impl");
+}
+
+ISE_Abstract* IPureServer::ProcessSpawn(NET_Packet& P, ISE_Abstract* InServerEntity)
+{
+	ISE_Abstract* ServerEntity = InServerEntity;
+	if (!ServerEntity)
+	{
+		// read spawn information
+		string64		EntityName;
+		P.r_stringZ(EntityName);
+		ServerEntity = CreateEntity(EntityName);
+		R_ASSERT3(ServerEntity, "Can't create entity.", EntityName);
+		ServerEntity->Spawn_Read(P);
+	}
+	else 
+	{
+		VERIFY(ServerEntity->m_bALifeControl);
+	}
+
+	ISE_Abstract* EntityParent = nullptr;
+	if (ServerEntity->ID_Parent != 0xffff) 
+	{
+		EntityParent = GetEntityFromID(ServerEntity->ID_Parent);
+		if (!EntityParent)
+		{
+			R_ASSERT(!InServerEntity);
+			OnDestroyEntity(ServerEntity);
+			return			NULL;
+		}
+	}
+
+
+	// check for respawn-capability and create phantom as needed
+	if (ServerEntity->RespawnTime && (0xffff == ServerEntity->ID_Phantom))
+	{
+		// Create phantom
+		ISE_Abstract* Phantom = CreateEntity(*ServerEntity->s_name); R_ASSERT(Phantom);
+		Phantom->Spawn_Read(P);
+		Phantom->ID = GenerateIndex(0xffff);
+		Phantom->ID_Phantom = Phantom->ID;						// Self-linked to avoid phantom-breeding
+		Phantom->owner = NULL;
+		Entities.insert(mk_pair(Phantom->ID, Phantom));
+
+		Phantom->s_flags.set(M_SPAWN_OBJECT_PHANTOM, TRUE);
+
+		// Spawn entity
+		ServerEntity->ID = GenerateIndex(ServerEntity->ID);
+		ServerEntity->ID_Phantom = Phantom->ID;
+		ServerEntity->owner = ServerClient;
+		Entities.insert(mk_pair(ServerEntity->ID, ServerEntity));
+	}
+	else
+	{
+		if (ServerEntity->s_flags.is(M_SPAWN_OBJECT_PHANTOM))
+		{
+			// Clone from Phantom
+			ServerEntity->ID = GenerateIndex(0xffff);
+			ServerEntity->owner = ServerClient;//		= SelectBestClientToMigrateTo	(ServerEntity);
+			ServerEntity->s_flags.set(M_SPAWN_OBJECT_PHANTOM, FALSE);
+			Entities.insert(mk_pair(ServerEntity->ID, ServerEntity));
+		}
+		else
+		{
+			ServerEntity->ID = GenerateIndex(ServerEntity->ID);
+			ServerEntity->owner = ServerClient;
+			Entities.insert(mk_pair(ServerEntity->ID, ServerEntity));
+		}
+	}
+
+	// PROCESS NAME; Name this entity
+	if (ServerClient && (ServerEntity->s_flags.is(M_SPAWN_OBJECT_ASPLAYER)))
+	{
+		ServerClient->owner = ServerEntity;
+	}
+	// Parent-Connect
+	if (!InServerEntity)
+	{
+		OnCreateEntity(ServerEntity, EntityParent);
+	}
+
+	// create packet and broadcast packet to everybody
+	NET_Packet				NewPacket;
+	if (ServerClient)
+	{
+		// For local ONLY
+		EntityParent->Spawn_Write(NewPacket, TRUE);
+		if (EntityParent->s_flags.is(M_SPAWN_UPDATE))
+		{
+			EntityParent->UPDATE_Write(NewPacket);
+		}
+
+		g_pGameLevel->OnMessage(NewPacket.B.data, (u32)NewPacket.B.count);
+	}
+
+	return ServerEntity;
+}
+
+ISE_Abstract* IPureServer::CreateEntity(const char* Name)
+{
+	R_ASSERT(!"not_impl");
+	return nullptr;
+}
+
+void IPureServer::DestroyEntity(ISE_Abstract* ServerEntity)
+{
+	R_ASSERT(ServerEntity);
+
+	Entities.erase(ServerEntity->ID);
+	FreeIndex(ServerEntity->ID);
+
+	if (ServerEntity->owner && ServerEntity->owner->owner == ServerEntity)
+		ServerEntity->owner->owner = NULL;
+
+	ServerEntity->owner = nullptr;
+}
+
+void IPureServer::OnCreateEntity(ISE_Abstract* Entity, ISE_Abstract* ParentEntity)
+{
+	R_ASSERT(!"not_impl");
+}
+void IPureServer::OnDestroyEntity(ISE_Abstract*)
+{
+	R_ASSERT(!"not_impl");
+}
+
+u16 IPureServer::GenerateIndex(u16 CurrentIndex /*= 0xFFFF*/)
+{
+	if (CurrentIndex != 0xFFFF)
+	{
+		return CurrentIndex;
+	}
+	if (FreeIndexes.size())
+	{
+		u16 Index = FreeIndexes.back();
+		FreeIndexes.pop_back();
+		return Index;
+	}
+	VERIFY(CountIndexes<0xFFFF);
+	return CountIndexes++;
+}
+
+
+void IPureServer::FreeIndex(u16 CurrentIndex)
+{
+	FreeIndexes.push_back(CurrentIndex);
+}
+
+void IPureServer::ClearIndexes()
+{
+	CountIndexes = 0;
+	FreeIndexes.clear();
+}
+
+ISE_Abstract* IPureServer::GetEntityFromID(u16 Index) const
+{
+	if (Index == 0xFFFF)
+	{
+		return nullptr;
+	}
+	auto Iterator =  Entities.find(Index);
+	if (Iterator == Entities.end())
+	{
+		return nullptr;
+	}
+	return Iterator->second;
+}
+
+void IPureServer::PerformGameExport()
+{
+
+}
+
+bool IPureServer::VerifyEntities() const
+{
 #ifdef DEBUG
-    sender_functor_invoked = false;
+	static bool IsInitialized = false;
+	static bool IsUse = false;
+	if (!IsInitialized)
+	{
+		IsInitialized = true;
+		if (strstr(Core.Params, "-verify_entities"))	IsUse = true;
+	}
+	if (!IsUse)						return true;
+
+	auto		I = Entities.begin();
+	auto		E = Entities.end();
+	for (; I != E; ++I) {
+		VERIFY2((*I).first != 0xffff, "SERVER : Invalid entity id as a map key - 0xffff");
+		VERIFY2((*I).second, "SERVER : Null entity object in the map");
+		VERIFY3((*I).first == (*I).second->ID, "SERVER : ID mismatch - map key doesn't correspond to the real entity ID", (*I).second->name_replace());
+		VerifyEntity((*I).second);
+	}
 #endif
+	return								(true);
 }
 
-IPureServer::~IPureServer() {
-    SV_Client = NULL;
+void IPureServer::VerifyEntity(const ISE_Abstract* entity) const
+{
+	VERIFY(entity->m_wVersion != 0);
+	if (entity->ID_Parent != 0xffff) {
+		auto	J = Entities.find(entity->ID_Parent);
+		if(J == Entities.end())
+		{
+			Debug.fatal(__FILE__,__LINE__,__FUNCTION__,"SERVER : Cannot find parent in the map [%s][%s]", entity->name_replace(),entity->name());
+		}
+			
+		VERIFY3((*J).second, "SERVER : Null entity object in the map", entity->name_replace());
+		VERIFY3((*J).first == (*J).second->ID, "SERVER : ID mismatch - map key doesn't correspond to the real entity ID", (*J).second->name_replace());
+		VERIFY3(std::find((*J).second->children.begin(), (*J).second->children.end(), entity->ID) != (*J).second->children.end(), "SERVER : Parent/Children relationship mismatch - Object has parent, but corresponding parent doesn't have children", (*J).second->name_replace());
+	}
+
+	auto	I = entity->children.begin();
+	auto		E = entity->children.end();
+	for (; I != E; ++I) {
+		VERIFY3(*I != 0xffff, "SERVER : Invalid entity children id - 0xffff", entity->name_replace());
+		auto	J = Entities.find(*I);
+		VERIFY3(J != Entities.end(), "SERVER : Cannot find children in the map", entity->name_replace());
+		VERIFY3((*J).second, "SERVER : Null entity object in the map", entity->name_replace());
+		VERIFY3((*J).first == (*J).second->ID, "SERVER : ID mismatch - map key doesn't correspond to the real entity ID", (*J).second->name_replace());
+		VERIFY3((*J).second->ID_Parent == entity->ID, "SERVER : Parent/Children relationship mismatch - Object has children, but children doesn't have parent", (*J).second->name_replace());
+	}
 }
 
-IPureServer::EConnect IPureServer::Connect(LPCSTR options, GameDescriptionData& game_descr) 
+void IPureServer::PerformConnectSpawn(ISE_Abstract* Entity, NET_Packet& P, xr_set<u16>& IsSpawned)
 {
-    connect_options = options;
+	P.B.count = 0;
+	if (IsSpawned.contains(Entity->ID))
+		return;
 
-    return ErrNoError;
-}
+	IsSpawned.insert(Entity->ID);
 
-void IPureServer::Disconnect()
-{
-}
+	if (Entity->s_flags.is(M_SPAWN_OBJECT_PHANTOM))	return;
 
-HRESULT IPureServer::net_Handler(u32 dwMessageType, PVOID pMessage) 
-{
-    return S_OK;
-}
+	// Connectivity order
+	ISE_Abstract* Parent = GetEntityFromID(Entity->ID_Parent);
+	if (Parent)
+	{
+		PerformConnectSpawn(Parent, P, IsSpawned);
+	}
 
-void IPureServer::Flush_Clients_Buffers() 
-{
-}
+	// Process
+	Flags16 save = Entity->s_flags;
+	//-------------------------------------------------
+	Entity->s_flags.set(M_SPAWN_UPDATE, true);
+	if (!Entity->owner)
+	{
+		// PROCESS NAME; Name this entity
+		if (Entity->s_flags.is(M_SPAWN_OBJECT_ASPLAYER))
+		{
+			ServerClient->owner = Entity;
+			Entity->set_name_replace("");
+		}
 
-void IPureServer::SendTo_Buf(ClientID id, void* data, u32 size, u32 dwFlags, u32 dwTimeout) 
-{
-}
+		// Associate
+		Entity->owner = ServerClient;
+		Entity->Spawn_Write(P, TRUE);
+		Entity->UPDATE_Write(P);
 
-void IPureServer::SendTo_LL(ClientID ID /*DPNID ID*/, void* data, u32 size, u32 dwFlags, u32 dwTimeout) 
-{
-}
-
-void IPureServer::SendTo(ClientID ID /*DPNID ID*/, NET_Packet& P, u32 dwFlags, u32 dwTimeout)
-{
-    SendTo_LL(ID, P.B.data, P.B.count, dwFlags, dwTimeout);
-}
-
-void IPureServer::SendBroadcast_LL(ClientID exclude, void* data, u32 size, u32 dwFlags)
-{
-}
-
-void IPureServer::SendBroadcast(ClientID exclude, NET_Packet& P, u32 dwFlags) 
-{
-    // Perform broadcasting
-    SendBroadcast_LL(exclude, P.B.data, P.B.count, dwFlags);
-}
-
-u32 IPureServer::OnMessage(NET_Packet& P,
-    ClientID sender) // Non-Zero means broadcasting with "flags" as returned
-{
-    return 0;
-}
-
-void IPureServer::OnCL_Connected(IClient* CL) 
-{
-    Msg("* Player 0x%08x connected.\n", CL->ID.value());
-}
-void IPureServer::OnCL_Disconnected(IClient* CL) 
-{
-    Msg("* Player 0x%08x disconnected.\n", CL->ID.value());
-}
-
-BOOL IPureServer::HasBandwidth(IClient* C) 
-{
-    u32 dwTime = device_timer->GetElapsed_ms();
-    u32 dwInterval = 0;
-
-    UpdateClientStatistic(C);
-    C->dwTime_LastUpdate = dwTime;
-    dwInterval = 1000;
-    return TRUE;
-}
-
-void IPureServer::UpdateClientStatistic(IClient* C) 
-{
-}
-
-void IPureServer::ClearStatistic() 
-{
-};
-
-bool IPureServer::DisconnectClient(IClient* C, LPCSTR Reason)
-{
-    if (!C)
-        return false;
-
-    return true;
+		if (!Entity->keep_saved_data_anyway())
+			Entity->client_data.clear();
+	}
+	else
+	{
+		Entity->Spawn_Write(P, FALSE);
+		Entity->UPDATE_Write(P);
+	}
+	//-----------------------------------------------------
+	Entity->s_flags = save;
+	g_pGameLevel->OnMessage(P.B.data, (u32)P.B.count);
 }

@@ -181,8 +181,7 @@ void SArtefactActivation::SpawnAnomaly()
 		Fvector pos;
 		m_af->Center(pos);
 		CSE_Abstract		*object = Level().spawn_item(	zone_sect,
-															pos,
-															(g_dedicated_server)?u32(-1):m_af->ai_location().level_vertex_id(),
+			pos,m_af->ai_location().level_vertex_id(),
 															0xffff,
 															true
 		);
@@ -199,7 +198,7 @@ void SArtefactActivation::SpawnAnomaly()
 
 		NET_Packet					P;
 		object->Spawn_Write			(P,TRUE);
-		Level().Send				(P,net_flags(TRUE));
+		Level().Send				(P);
 		F_entity_Destroy			(object);
 //. #ifdef DEBUG
 		Msg("artefact [%s] spawned a zone [%s] at [%f]", *m_af->cName(), zone_sect, Device->fTimeGlobal);
