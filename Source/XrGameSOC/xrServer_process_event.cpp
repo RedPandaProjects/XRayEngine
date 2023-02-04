@@ -145,7 +145,7 @@ void xrServer::Process_event	(NET_Packet& P, ClientID sender)
 
 		CSE_ALifeCreatureAbstract	*creature = smart_cast<CSE_ALifeCreatureAbstract*>(e_dest);
 		if (creature)
-			creature->m_killer_id	= id_src;
+			creature->set_killer_id(id_src);
 
 //		Msg							("[%d][%s] killed [%d][%s]",id_src,id_src==u16(-1) ? "UNKNOWN" : game->get_entity_from_eid(id_src)->name_replace(),id_dest,e_dest->name_replace());
 

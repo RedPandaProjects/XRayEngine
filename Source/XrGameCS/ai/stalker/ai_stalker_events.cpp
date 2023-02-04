@@ -10,7 +10,7 @@
 #include "ai_stalker.h"
 #include "../../pda.h"
 #include "../../inventory.h"
-#include "../../../XrServerEntitiesCS/xrmessages.h"
+#include "../../../XrServerEntities/xrmessages.h"
 #include "../../shootingobject.h"
 #include "../../level.h"
 #include "../../ai_monster_space.h"

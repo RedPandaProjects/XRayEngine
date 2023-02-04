@@ -13,8 +13,8 @@
 #include "UIHelper.h"
 
 #include "../actor.h"
-#include "../ai_space.h"
-#include "../../XrServerEntitiesCS/script_engine.h"
+#include "ai_space.h"
+#include "../../XrServerEntities/script_engine.h"
 #include "../character_community.h"
 #include "../character_reputation.h"
 #include "../relation_registry.h"

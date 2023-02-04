@@ -24,7 +24,7 @@ void CSE_ActorMP::fill_state	(actor_mp_state &state)
 
 	state.inventory_active_slot		= weapon;
 	state.body_state_flags			= mstate;
-	state.health					= fHealth;
+	state.health					= get_health();
 	state.radiation					= fRadiation;
 	state.physics_state_enabled		= m_AliveState.enabled ? 1 : 0;
 

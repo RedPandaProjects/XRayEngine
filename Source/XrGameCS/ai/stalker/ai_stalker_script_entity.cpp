@@ -15,10 +15,10 @@
 #include "../../weapon.h"
 #include "../../weaponmagazined.h"
 #include "../../../xrRender/Public/Kinematics.h"
-#include "../../../XrServerEntitiesCS/script_engine.h"
+#include "../../../XrServerEntities/script_engine.h"
 #include "../../sight_manager.h"
 #include "../../stalker_movement_manager_smart_cover.h"
-#include "../../ai_space.h"
+#include "ai_space.h"
 
 CWeapon	*CAI_Stalker::GetCurrentWeapon() const
 {

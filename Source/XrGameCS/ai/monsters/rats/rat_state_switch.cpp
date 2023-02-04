@@ -14,7 +14,7 @@
 #include "../../../movement_manager.h"
 #include "../../../sound_player.h"
 #include "ai_rat_impl.h"
-#include "../../../ai_space.h"
+#include "ai_space.h"
 #include "ai/monsters/ai_monster_squad_manager.h"
 #include "ai/monsters/ai_monster_squad.h"
 

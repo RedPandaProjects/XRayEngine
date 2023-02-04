@@ -93,7 +93,7 @@ float CPersonalHealthFunction::ffGetValue()
 		const CSE_ALifeMonsterAbstract	*l_tpALifeMonsterAbstract = smart_cast<const CSE_ALifeMonsterAbstract*>(ef_storage().alife().member());
 		VERIFY3			(l_tpALifeMonsterAbstract,"Invalid object passed to the evaluation function ",m_caName);
 		m_fMaxResultValue	= l_tpALifeMonsterAbstract->g_MaxHealth();
-		return(l_tpALifeMonsterAbstract->g_Health());
+		return(l_tpALifeMonsterAbstract->get_health());
 	}
 }
 

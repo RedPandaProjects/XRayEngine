@@ -18,7 +18,7 @@
 #include "../../../location_manager.h"
 #include "../../../level.h"
 #include "../../../random32.h"
-#include "../../../ai_space.h"
+#include "ai_space.h"
 #include "../../../restricted_object.h"
 #include "../../../patrol_path.h"
 #include "../../../debug_renderer.h"

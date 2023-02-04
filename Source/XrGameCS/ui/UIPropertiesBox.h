@@ -4,7 +4,7 @@
 #include "uiframewindow.h"
 #include "uilistbox.h"
 
-#include "../../XrServerEntitiesCS/script_export_space.h"
+#include "../../XrServerEntities/script_export_space.h"
 
 class CUIPropertiesBox: public CUIFrameWindow
 {

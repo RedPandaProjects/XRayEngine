@@ -163,32 +163,56 @@ void CSE_ALifeInventoryItem::UPDATE_Write(NET_Packet& tNetPacket)
 	{
 		tNetPacket.w_float				(m_blend_timeCurrent);
 	}*/
-
+	if(xrGameManager::GetGame() == EGame::SHOC)
 	{
-		tNetPacket.w_vec3(State.force);
-		tNetPacket.w_vec3(State.torque);
 
 		tNetPacket.w_vec3(State.position);
 
-		tNetPacket.w_float(State.quaternion.x);
-		tNetPacket.w_float(State.quaternion.y);
-		tNetPacket.w_float(State.quaternion.z);
-		tNetPacket.w_float(State.quaternion.w);
+		tNetPacket.w_float_q8(State.quaternion.x, 0.f, 1.f);
+		tNetPacket.w_float_q8(State.quaternion.y, 0.f, 1.f);
+		tNetPacket.w_float_q8(State.quaternion.z, 0.f, 1.f);
+		tNetPacket.w_float_q8(State.quaternion.w, 0.f, 1.f);
 
 		if (!check(num_items.mask, inventory_item_angular_null)) {
-			tNetPacket.w_float(State.angular_vel.x);
-			tNetPacket.w_float(State.angular_vel.y);
-			tNetPacket.w_float(State.angular_vel.z);
+			tNetPacket.w_float_q8(State.angular_vel.x, 0.f, 10 * PI_MUL_2);
+			tNetPacket.w_float_q8(State.angular_vel.y, 0.f, 10 * PI_MUL_2);
+			tNetPacket.w_float_q8(State.angular_vel.z, 0.f, 10 * PI_MUL_2);
 		}
 
 		if (!check(num_items.mask, inventory_item_linear_null)) {
-			tNetPacket.w_float(State.linear_vel.x);
-			tNetPacket.w_float(State.linear_vel.y);
-			tNetPacket.w_float(State.linear_vel.z);
+			tNetPacket.w_float_q8(State.linear_vel.x, -32.f, 32.f);
+			tNetPacket.w_float_q8(State.linear_vel.y, -32.f, 32.f);
+			tNetPacket.w_float_q8(State.linear_vel.z, -32.f, 32.f);
 		}
-
 	}
-	tNetPacket.w_u8(1);	// not freezed - doesn't mean anything...
+	else
+	{
+		{
+			tNetPacket.w_vec3(State.force);
+			tNetPacket.w_vec3(State.torque);
+
+			tNetPacket.w_vec3(State.position);
+
+			tNetPacket.w_float(State.quaternion.x);
+			tNetPacket.w_float(State.quaternion.y);
+			tNetPacket.w_float(State.quaternion.z);
+			tNetPacket.w_float(State.quaternion.w);
+
+			if (!check(num_items.mask, inventory_item_angular_null)) {
+				tNetPacket.w_float(State.angular_vel.x);
+				tNetPacket.w_float(State.angular_vel.y);
+				tNetPacket.w_float(State.angular_vel.z);
+			}
+
+			if (!check(num_items.mask, inventory_item_linear_null)) {
+				tNetPacket.w_float(State.linear_vel.x);
+				tNetPacket.w_float(State.linear_vel.y);
+				tNetPacket.w_float(State.linear_vel.z);
+			}
+
+		}
+		tNetPacket.w_u8(1);	// not freezed - doesn't mean anything...
+	}
 };
 
 void CSE_ALifeInventoryItem::UPDATE_Read(NET_Packet& tNetPacket)
@@ -217,60 +241,89 @@ void CSE_ALifeInventoryItem::UPDATE_Read(NET_Packet& tNetPacket)
 	{
 	anim_use=false;
 	}*/
-
+	if (xrGameManager::GetGame() == EGame::SHOC)
 	{
-		tNetPacket.r_vec3(State.force);
-		tNetPacket.r_vec3(State.torque);
-
 		tNetPacket.r_vec3(State.position);
-		base()->o_Position.set(State.position); //this is very important because many functions use this o_Position..
 
-		tNetPacket.r_float(State.quaternion.x);
-		tNetPacket.r_float(State.quaternion.y);
-		tNetPacket.r_float(State.quaternion.z);
-		tNetPacket.r_float(State.quaternion.w);
+		tNetPacket.r_float_q8(State.quaternion.x, 0.f, 1.f);
+		tNetPacket.r_float_q8(State.quaternion.y, 0.f, 1.f);
+		tNetPacket.r_float_q8(State.quaternion.z, 0.f, 1.f);
+		tNetPacket.r_float_q8(State.quaternion.w, 0.f, 1.f);
 
 		State.enabled = check(num_items.mask, inventory_item_state_enabled);
 
 		if (!check(num_items.mask, inventory_item_angular_null)) {
-			tNetPacket.r_float(State.angular_vel.x);
-			tNetPacket.r_float(State.angular_vel.y);
-			tNetPacket.r_float(State.angular_vel.z);
+			tNetPacket.r_float_q8(State.angular_vel.x, 0.f, 10 * PI_MUL_2);
+			tNetPacket.r_float_q8(State.angular_vel.y, 0.f, 10 * PI_MUL_2);
+			tNetPacket.r_float_q8(State.angular_vel.z, 0.f, 10 * PI_MUL_2);
 		}
 		else
 			State.angular_vel.set(0.f, 0.f, 0.f);
 
 		if (!check(num_items.mask, inventory_item_linear_null)) {
-			tNetPacket.r_float(State.linear_vel.x);
-			tNetPacket.r_float(State.linear_vel.y);
-			tNetPacket.r_float(State.linear_vel.z);
+			tNetPacket.r_float_q8(State.linear_vel.x, -32.f, 32.f);
+			tNetPacket.r_float_q8(State.linear_vel.y, -32.f, 32.f);
+			tNetPacket.r_float_q8(State.linear_vel.z, -32.f, 32.f);
 		}
 		else
 			State.linear_vel.set(0.f, 0.f, 0.f);
+	}
+	else
+	{
+			{
+			tNetPacket.r_vec3(State.force);
+			tNetPacket.r_vec3(State.torque);
 
-		/*if (check(num_items.mask,animated))
+			tNetPacket.r_vec3(State.position);
+			base()->o_Position.set(State.position); //this is very important because many functions use this o_Position..
+
+			tNetPacket.r_float(State.quaternion.x);
+			tNetPacket.r_float(State.quaternion.y);
+			tNetPacket.r_float(State.quaternion.z);
+			tNetPacket.r_float(State.quaternion.w);
+
+			State.enabled = check(num_items.mask, inventory_item_state_enabled);
+
+			if (!check(num_items.mask, inventory_item_angular_null)) {
+				tNetPacket.r_float(State.angular_vel.x);
+				tNetPacket.r_float(State.angular_vel.y);
+				tNetPacket.r_float(State.angular_vel.z);
+			}
+			else
+				State.angular_vel.set(0.f, 0.f, 0.f);
+
+			if (!check(num_items.mask, inventory_item_linear_null)) {
+				tNetPacket.r_float(State.linear_vel.x);
+				tNetPacket.r_float(State.linear_vel.y);
+				tNetPacket.r_float(State.linear_vel.z);
+			}
+			else
+				State.linear_vel.set(0.f, 0.f, 0.f);
+
+			/*if (check(num_items.mask,animated))
+			{
+				anim_use=true;
+			}*/
+		}
+		prev_freezed = freezed;
+		if (tNetPacket.r_eof())		// in case spawn + update 
 		{
-			anim_use=true;
-		}*/
-	}
-	prev_freezed = freezed;
-	if (tNetPacket.r_eof())		// in case spawn + update 
-	{
-		freezed = false;
-		return;
-	}
-	if (tNetPacket.r_u8())
-	{
-		freezed = false;
-	}
-	else {
-		if (!freezed)
-#ifdef XRGAME_EXPORTS
-			m_freeze_time = Device->dwTimeGlobal;
-#else
-			m_freeze_time = 0;
-#endif
-		freezed = true;
+			freezed = false;
+			return;
+		}
+		if (tNetPacket.r_u8())
+		{
+			freezed = false;
+		}
+		else {
+			if (!freezed)
+	#ifdef XRGAME_EXPORTS
+				m_freeze_time = Device->dwTimeGlobal;
+	#else
+				m_freeze_time = 0;
+	#endif
+			freezed = true;
+		}
 	}
 };
 

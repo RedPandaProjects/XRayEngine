@@ -214,8 +214,6 @@ void CLevel::Load_GameSpecific_CFORM	( CDB::TRI* tris, u32 count )
 			if (i != translator.end()) {
 				(*I).material			= (*i).m_index;
 				SGameMtl* mtl			= GameMaterialLibrary->GetMaterialByIdx	((*i).m_index);
-				(*I).suppress_shadows	= mtl->Flags.is(SGameMtl::flSuppressShadows);
-				(*I).suppress_wm		= mtl->Flags.is(SGameMtl::flSuppressWallmarks);
 				continue;
 			}
 			if(Device->IsEditorMode()==false)
@@ -233,8 +231,6 @@ void CLevel::Load_GameSpecific_CFORM	( CDB::TRI* tris, u32 count )
 			if ((i != translator.end()) && ((*i).m_id == (*I).material)) {
 				(*I).material			= (*i).m_index;
 				SGameMtl* mtl			= GameMaterialLibrary->GetMaterialByIdx	((*i).m_index);
-				(*I).suppress_shadows	= mtl->Flags.is(SGameMtl::flSuppressShadows);
-				(*I).suppress_wm		= mtl->Flags.is(SGameMtl::flSuppressWallmarks);
 				continue;
 			}
 			if (Device->IsEditorMode() == false)

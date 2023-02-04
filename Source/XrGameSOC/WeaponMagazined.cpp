@@ -752,15 +752,15 @@ bool CWeaponMagazined::CanAttach(PIItem pIItem)
 
 bool CWeaponMagazined::CanDetach(const char* item_section_name)
 {
-	if( m_eScopeStatus == CSE_ALifeItemWeapon::eAddonAttachable &&
+	if( m_eScopeStatus == CSE_ALifeItemWeapon::EWeaponAddonStatus::eAddonAttachable &&
 	   0 != (m_flagsAddOnState&CSE_ALifeItemWeapon::eWeaponAddonScope) &&
 	   (m_sScopeName	== item_section_name))
        return true;
-	else if(m_eSilencerStatus == CSE_ALifeItemWeapon::eAddonAttachable &&
+	else if(m_eSilencerStatus == CSE_ALifeItemWeapon::EWeaponAddonStatus::eAddonAttachable &&
 	   0 != (m_flagsAddOnState&CSE_ALifeItemWeapon::eWeaponAddonSilencer) &&
 	   (m_sSilencerName == item_section_name))
        return true;
-	else if(m_eGrenadeLauncherStatus == CSE_ALifeItemWeapon::eAddonAttachable &&
+	else if(m_eGrenadeLauncherStatus == CSE_ALifeItemWeapon::EWeaponAddonStatus::eAddonAttachable &&
 	   0 != (m_flagsAddOnState&CSE_ALifeItemWeapon::eWeaponAddonGrenadeLauncher) &&
 	   (m_sGrenadeLauncherName == item_section_name))
        return true;
@@ -777,7 +777,7 @@ bool CWeaponMagazined::Attach(PIItem pIItem, bool b_send_event)
 	CGrenadeLauncher*	pGrenadeLauncher		= smart_cast<CGrenadeLauncher*>(pIItem);
 	
 	if(pScope &&
-	   m_eScopeStatus == CSE_ALifeItemWeapon::eAddonAttachable &&
+	   m_eScopeStatus == CSE_ALifeItemWeapon::EWeaponAddonStatus::eAddonAttachable &&
 	   (m_flagsAddOnState&CSE_ALifeItemWeapon::eWeaponAddonScope) == 0 &&
 	   (m_sScopeName == pIItem->object().cNameSect()))
 	{
@@ -785,7 +785,7 @@ bool CWeaponMagazined::Attach(PIItem pIItem, bool b_send_event)
 		result = true;
 	}
 	else if(pSilencer &&
-	   m_eSilencerStatus == CSE_ALifeItemWeapon::eAddonAttachable &&
+	   m_eSilencerStatus == CSE_ALifeItemWeapon::EWeaponAddonStatus::eAddonAttachable &&
 	   (m_flagsAddOnState&CSE_ALifeItemWeapon::eWeaponAddonSilencer) == 0 &&
 	   (m_sSilencerName == pIItem->object().cNameSect()))
 	{
@@ -793,7 +793,7 @@ bool CWeaponMagazined::Attach(PIItem pIItem, bool b_send_event)
 		result = true;
 	}
 	else if(pGrenadeLauncher &&
-	   m_eGrenadeLauncherStatus == CSE_ALifeItemWeapon::eAddonAttachable &&
+	   m_eGrenadeLauncherStatus == CSE_ALifeItemWeapon::EWeaponAddonStatus::eAddonAttachable &&
 	   (m_flagsAddOnState&CSE_ALifeItemWeapon::eWeaponAddonGrenadeLauncher) == 0 &&
 	   (m_sGrenadeLauncherName == pIItem->object().cNameSect()))
 	{
@@ -822,7 +822,7 @@ bool CWeaponMagazined::Attach(PIItem pIItem, bool b_send_event)
 
 bool CWeaponMagazined::Detach(const char* item_section_name, bool b_spawn_item)
 {
-	if(		m_eScopeStatus == CSE_ALifeItemWeapon::eAddonAttachable &&
+	if(		m_eScopeStatus == CSE_ALifeItemWeapon::EWeaponAddonStatus::eAddonAttachable &&
 			0 != (m_flagsAddOnState&CSE_ALifeItemWeapon::eWeaponAddonScope) &&
 			(m_sScopeName == item_section_name))
 	{
@@ -833,7 +833,7 @@ bool CWeaponMagazined::Detach(const char* item_section_name, bool b_spawn_item)
 
 		return CInventoryItemObject::Detach(item_section_name, b_spawn_item);
 	}
-	else if(m_eSilencerStatus == CSE_ALifeItemWeapon::eAddonAttachable &&
+	else if(m_eSilencerStatus == CSE_ALifeItemWeapon::EWeaponAddonStatus::eAddonAttachable &&
 			0 != (m_flagsAddOnState&CSE_ALifeItemWeapon::eWeaponAddonSilencer) &&
 			(m_sSilencerName == item_section_name))
 	{
@@ -843,7 +843,7 @@ bool CWeaponMagazined::Detach(const char* item_section_name, bool b_spawn_item)
 		InitAddons();
 		return CInventoryItemObject::Detach(item_section_name, b_spawn_item);
 	}
-	else if(m_eGrenadeLauncherStatus == CSE_ALifeItemWeapon::eAddonAttachable &&
+	else if(m_eGrenadeLauncherStatus == CSE_ALifeItemWeapon::EWeaponAddonStatus::eAddonAttachable &&
 			0 != (m_flagsAddOnState&CSE_ALifeItemWeapon::eWeaponAddonGrenadeLauncher) &&
 			(m_sGrenadeLauncherName == item_section_name))
 	{

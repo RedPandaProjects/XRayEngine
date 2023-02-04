@@ -14,7 +14,7 @@
 #include "../string_table.h"
 
 #include "../actor.h"
-#include "../../XrServerEntitiesCS/script_process.h"
+#include "../../XrServerEntities/script_process.h"
 #include "../inventory.h"
 
 #include "ai_space.h"

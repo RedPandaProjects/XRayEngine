@@ -497,11 +497,11 @@ void CGameObject::spawn_supplies()
 
 				CSE_ALifeItemWeapon* W =  smart_cast<CSE_ALifeItemWeapon*>(A);
 				if (W) {
-					if (W->m_scope_status			== CSE_ALifeItemWeapon::eAddonAttachable)
+					if (W->m_scope_status			== CSE_ALifeItemWeapon::EWeaponAddonStatus::eAddonAttachable)
 						W->m_addon_flags.set(CSE_ALifeItemWeapon::eWeaponAddonScope, bScope);
-					if (W->m_silencer_status		== CSE_ALifeItemWeapon::eAddonAttachable)
+					if (W->m_silencer_status		== CSE_ALifeItemWeapon::EWeaponAddonStatus::eAddonAttachable)
 						W->m_addon_flags.set(CSE_ALifeItemWeapon::eWeaponAddonSilencer, bSilencer);
-					if (W->m_grenade_launcher_status == CSE_ALifeItemWeapon::eAddonAttachable)
+					if (W->m_grenade_launcher_status == CSE_ALifeItemWeapon::EWeaponAddonStatus::eAddonAttachable)
 						W->m_addon_flags.set(CSE_ALifeItemWeapon::eWeaponAddonGrenadeLauncher, bLauncher);
 				}
 

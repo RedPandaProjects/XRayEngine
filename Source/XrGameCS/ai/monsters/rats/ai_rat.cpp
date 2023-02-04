@@ -12,7 +12,7 @@
 #include "../../../PhysicsShell.h"
 #include "../../../game_graph.h"
 #include "../../../game_level_cross_table.h"
-#include "../../../../XrServerEntitiesCS/xrserver_objects_alife_monsters.h"
+#include "../../../../XrServerEntities/xrserver_objects_alife_monsters.h"
 
 #include "ai_rat_space.h"
 #include "../../../../xrRender/Public/KinematicsAnimated.h"
@@ -20,10 +20,10 @@
 #include "../../../ai_object_location.h"
 #include "../../../movement_manager.h"
 #include "../../../location_manager.h"
-#include "../../../../XrServerEntitiesCS/ai_sounds.h"
+#include "../../../../XrServerEntities/ai_sounds.h"
 #include "../../../sound_player.h"
 #include "ai_rat_impl.h"
-#include "../../../ai_space.h"
+#include "ai_space.h"
 
 #include "../../../rat_state_manager.h"
 #include "../../../rat_states.h"

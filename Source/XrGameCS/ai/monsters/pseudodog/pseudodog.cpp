@@ -14,9 +14,9 @@
 #	include "../../../ai_object_location.h"
 #	include "../../../level_debug.h"
 #	include "../../../level_graph.h"
-#	include "../../../ai_space.h"
+#	include "ai_space.h"
 #	include "../../../alife_simulator.h"
-#	include "../../../../XrServerEntitiesCS/xrServer_Object_Base.h"
+#	include "../../../../XrServerEntities/xrServer_Object_Base.h"
 #	include "../../../xrserver.h"
 #endif
 

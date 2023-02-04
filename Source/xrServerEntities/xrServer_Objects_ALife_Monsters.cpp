@@ -631,6 +631,14 @@ void CSE_ALifeTrader::FillProps(LPCSTR _pref, PropItemVec& items)
 CSE_ALifeCustomZone::CSE_ALifeCustomZone(LPCSTR caSection) : CSE_ALifeSpaceRestrictor(caSection)
 {
 	m_owner_id = u32(-1);
+	if (xrGameManager::GetGame() == EGame::SHOC)
+	{
+		m_maxPower = pSettings->r_float(caSection, "min_start_power");
+	}
+	else
+	{
+		m_maxPower = 0;
+	}
 	//	m_maxPower					= pSettings->r_float(caSection,"min_start_power");
 	if (pSettings->line_exist(caSection, "hit_type"))
 		m_tHitType = ALife::g_tfString2HitType(pSettings->r_string(caSection, "hit_type"));

@@ -12,7 +12,7 @@
 #include "../../script_entity_action.h"
 #include "../../script_game_object.h"
 #include "../../inventory.h"
-#include "../../../XrServerEntitiesCS/xrserver_objects_alife_monsters.h"
+#include "../../../XrServerEntities/xrserver_objects_alife_monsters.h"
 #include "../../artefact.h"
 #include "../../xrserver.h"
 #include "../../relation_registry.h"
@@ -22,7 +22,7 @@
 #include "../../script_callback_ex.h"
 #include "../../game_object_space.h"
 #include "trader_animation.h"
-#include "../../../XrServerEntitiesCS/clsid_game.h"
+#include "../../../XrServerEntities/clsid_game.h"
 
 CAI_Trader::CAI_Trader()
 {

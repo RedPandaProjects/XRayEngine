@@ -6,8 +6,8 @@
 #include "../xrEngine/object_broker.h"
 #include "../../xrEngine/xr_input.h"
 #include "../xr_level_controller.h"
-#include "../../XrServerEntitiesCS/script_engine.h"
-#include "../ai_space.h"
+#include "../../XrServerEntities/script_engine.h"
+#include "ai_space.h"
 
 void CUISequenceItem::Load(CUIXml* xml, int idx)
 {

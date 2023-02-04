@@ -8,7 +8,7 @@ void CSE_ActorMP::UPDATE_Read	(NET_Packet &packet)
 	m_u16NumItems				= 1;
 	velocity.set				(0.f,0.f,0.f);
 
-	if (fHealth<=0)
+	if (get_health()<=0)
 	{
 		actor_mp_state_holder	tmp_state_holder;
 		tmp_state_holder.read	(packet);
@@ -36,7 +36,7 @@ void CSE_ActorMP::UPDATE_Read	(NET_Packet &packet)
 	
 	weapon						= m_state_holder.state().inventory_active_slot;
 	mstate						= m_state_holder.state().body_state_flags;
-	fHealth						= m_state_holder.state().health;
+	set_health(m_state_holder.state().health);
 	fRadiation					= m_state_holder.state().radiation;
 	m_AliveState.enabled		= m_state_holder.state().physics_state_enabled;
 

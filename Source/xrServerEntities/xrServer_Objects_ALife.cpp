@@ -1105,7 +1105,8 @@ void CSE_ALifeObjectPhysic::UPDATE_Read(NET_Packet& tNetPacket)
 {
 	inherited1::UPDATE_Read(tNetPacket);
 	inherited2::UPDATE_Read(tNetPacket);
-
+	if(xrGameManager::GetGame()==EGame::SHOC)
+		return;
 	if (tNetPacket.r_eof())		//backward compatibility
 		return;
 
@@ -1193,6 +1194,8 @@ void CSE_ALifeObjectPhysic::UPDATE_Write(NET_Packet& tNetPacket)
 {
 	inherited1::UPDATE_Write(tNetPacket);
 	inherited2::UPDATE_Write(tNetPacket);
+	if (xrGameManager::GetGame() == EGame::SHOC)
+		return;
 	//////////////////////////////////////////////////////////////////////////
 	if (!m_u8NumItems) {
 		tNetPacket.w_u8(0);

@@ -3,7 +3,7 @@
 #include "BaseMonster/base_monster.h"
 #include "../../cover_evaluators.h"
 #include "../../cover_point.h"
-#include "../../ai_space.h"
+#include "ai_space.h"
 #include "../../level_graph.h"
 #include "../../game_graph.h"
 #include "../../game_level_cross_table.h"

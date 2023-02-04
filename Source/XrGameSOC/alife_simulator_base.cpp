@@ -300,7 +300,7 @@ void CALifeSimulatorBase::append_item_vector(OBJECT_VECTOR &tObjectVector, ITEM_
 
 void CALifeSimulatorBase::assign_death_position(CSE_ALifeCreatureAbstract *tpALifeCreatureAbstract, GameGraph::_GRAPH_ID tGraphID, CSE_ALifeSchedulable *tpALifeSchedulable)
 {
-	tpALifeCreatureAbstract->fHealth		= 0;
+	tpALifeCreatureAbstract->set_health(0);
 	
 	if (tpALifeSchedulable) {
 		CSE_ALifeAnomalousZone				*l_tpALifeAnomalousZone = smart_cast<CSE_ALifeAnomalousZone*>(tpALifeSchedulable);

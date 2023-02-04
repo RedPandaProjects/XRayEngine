@@ -71,11 +71,11 @@ void CSE_ALifeObject::spawn_supplies		(LPCSTR ini_string)
 					//подсоединить аддоны к оружию, если включены соответствующие флажки
 					CSE_ALifeItemWeapon* W =  smart_cast<CSE_ALifeItemWeapon*>(E);
 					if (W) {
-						if (W->m_scope_status == CSE_ALifeItemWeapon::eAddonAttachable)
+						if (W->m_scope_status == CSE_ALifeItemWeapon::EWeaponAddonStatus::eAddonAttachable)
 							W->m_addon_flags.set(CSE_ALifeItemWeapon::eWeaponAddonScope, bScope);
-						if (W->m_silencer_status == CSE_ALifeItemWeapon::eAddonAttachable)
+						if (W->m_silencer_status == CSE_ALifeItemWeapon::EWeaponAddonStatus::eAddonAttachable)
 							W->m_addon_flags.set(CSE_ALifeItemWeapon::eWeaponAddonSilencer, bSilencer);
-						if (W->m_grenade_launcher_status == CSE_ALifeItemWeapon::eAddonAttachable)
+						if (W->m_grenade_launcher_status == CSE_ALifeItemWeapon::EWeaponAddonStatus::eAddonAttachable)
 							W->m_addon_flags.set(CSE_ALifeItemWeapon::eWeaponAddonGrenadeLauncher, bLauncher);
 					}
 					CSE_ALifeInventoryItem* IItem = smart_cast<CSE_ALifeInventoryItem*>(E);

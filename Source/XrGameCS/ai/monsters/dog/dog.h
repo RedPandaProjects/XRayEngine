@@ -2,7 +2,7 @@
 
 #include "../BaseMonster/base_monster.h"
 #include "../controlled_entity.h"
-#include "../../../../XrServerEntitiesCS/script_export_space.h"
+#include "../../../../XrServerEntities/script_export_space.h"
 
 class CAI_Dog : public CBaseMonster, 
 				public CControlledEntity<CAI_Dog> {

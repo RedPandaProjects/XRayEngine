@@ -1849,7 +1849,7 @@ void game_sv_Deathmatch::OnCreate(u16 eid_who)
 	CSE_ALifeCustomZone* pCustomZone	=	smart_cast<CSE_ALifeCustomZone*> (pEntity);
 	if (pCustomZone) 
 	{
-		pCustomZone->m_maxPower = pSettings->r_float(*pCustomZone->s_name,"max_start_power");
+		//pCustomZone->m_maxPower = pSettings->r_float(*pCustomZone->s_name,"max_start_power");
 	}
 };
 

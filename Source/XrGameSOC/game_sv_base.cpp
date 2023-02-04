@@ -949,8 +949,8 @@ void game_sv_GameState::on_death	(CSE_Abstract *e_dest, CSE_Abstract *e_src)
 	if (!creature)
 		return;
 
-	VERIFY						(creature->m_killer_id == ALife::_OBJECT_ID(-1));
-	creature->m_killer_id		= e_src->ID;
+	VERIFY						(creature->get_killer_id() == ALife::_OBJECT_ID(-1));
+	creature->set_killer_id(e_src->ID);
 }
 
 //  [7/5/2005]

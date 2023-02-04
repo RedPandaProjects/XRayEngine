@@ -3,8 +3,8 @@
 #include "UIXmlInit.h"
 #include "../level.h"
 #include "game_base_space.h"
-#include "../ai_space.h"
-#include "../../XrServerEntitiesCS/script_engine.h"
+#include "ai_space.h"
+#include "../../XrServerEntities/script_engine.h"
 #include "inventory_item_object.h"
 
 

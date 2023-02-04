@@ -1,16 +1,20 @@
 #pragma once
-/*
-enum EGameIDs {
-	eGameIDNoGame						= u32(0),
-	eGameIDSingle						= u32(1) << 0,
-	eGameIDDeathmatch					= u32(1) << 1,
-	eGameIDTeamDeathmatch				= u32(1) << 2,
-	eGameIDArtefactHunt					= u32(1) << 3,
-	eGameIDCaptureTheArtefact			= u32(1) << 4,
-	eGameIDDominationZone				= u32(1) << 5,
-	eGameIDTeamDominationZone			= u32(1) << 6,
-};*/
+#ifdef GAME_SOC
+enum EGameTypes
+{
+	GAME_ANY = 0,
+	GAME_SINGLE = 1,
+	GAME_DEATHMATCH = 2,
+	//	GAME_CTF							= 3,
+	//	GAME_ASSAULT						= 4,	// Team1 - assaulting, Team0 - Defending
+	GAME_CS = 5,
+	GAME_TEAMDEATHMATCH = 6,
+	GAME_ARTEFACTHUNT = 7,
 
+	//identifiers in range [100...254] are registered for script game type
+	GAME_DUMMY = 255	// temporary game type
+};
+#endif
 enum EGamePlayerFlags
 {
 	GAME_PLAYER_FLAG_LOCAL				= (1<<0),

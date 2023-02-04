@@ -752,7 +752,7 @@ public:
 	CCC_ScriptDbg(LPCSTR N) : IConsole_Command(N)  { bEmptyArgsHandled = true; };
 	virtual void Execute(LPCSTR args) {
 		
-		if(strstr(cName,"script_debug_break")==cName ){
+		/*if(strstr(cName,"script_debug_break")==cName ){
 		
 		CScriptDebugger* d = ai().script_engine().debugger();
 		if(d){
@@ -768,7 +768,7 @@ public:
 		}
 		else if(strstr(cName,"script_debug_restart")==cName ){
 			ai().script_engine().restartDebugger();
-		};
+		};*/
 	};
 	
 

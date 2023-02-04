@@ -6,7 +6,7 @@
 #include "stdafx.h"
 #include "UIPdaMsgListItem.h"
 #include "../Entity.h"
-#include "../../XrServerEntitiesCS/character_info.h"
+#include "../../XrServerEntities/character_info.h"
 #include "UIInventoryUtilities.h"
 #include "xrUIXmlParser.h"
 #include "UIXmlInit.h"

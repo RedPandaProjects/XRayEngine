@@ -126,7 +126,7 @@ CSE_Abstract::CSE_Abstract(LPCSTR caSection)
 	if (pSettings->line_exist(caSection, "custom_data")) {
 		pcstr const raw_file_name = pSettings->r_string(caSection, "custom_data");
 		IReader const* config = 0;
-#ifdef XRGAME_EXPORTS
+#if defined( XRGAME_EXPORTS)&&!defined( GAME_SOC)&&!defined( GAME_CS)
 		if (ai().get_alife())
 			config = ai().alife().get_config(raw_file_name);
 		else
@@ -253,14 +253,14 @@ void CSE_Abstract::Spawn_Write(NET_Packet& tNetPacket, BOOL bLocal)
 	//#endif
 	tNetPacket.w_seek(position, &size, sizeof(u16));
 }
-
+#ifndef GAME_SOC
 static enum EGameTypes {
 	GAME_ANY = 0,
 	GAME_SINGLE = 1,
 	GAME_DEATHMATCH = 2,
 	//	GAME_CTF							= 3,
 	//	GAME_ASSAULT						= 4,	// Team1 - assaulting, Team0 - Defending
-	GAME_CS = 5,
+	GAME_CSS = 5,
 	GAME_TEAMDEATHMATCH = 6,
 	GAME_ARTEFACTHUNT = 7,
 	GAME_CAPTURETHEARTEFACT = 8,
@@ -268,7 +268,7 @@ static enum EGameTypes {
 	//identifiers in range [100...254] are registered for script game type
 	GAME_DUMMY = 255	// temporary game type
 };
-
+#endif
 BOOL CSE_Abstract::Spawn_Read(NET_Packet& tNetPacket)
 {
 	u16							dummy16;

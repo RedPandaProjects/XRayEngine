@@ -35,7 +35,7 @@ void CLevel::ClientReceive()
 		P->r_begin	(m_type);
 		switch (m_type)
 		{
-		case M_MAP_SYNC:
+	/*	case M_MAP_SYNC:
 			{
 				shared_str map_name;
 				P->r_stringZ(map_name);
@@ -48,7 +48,7 @@ void CLevel::ClientReceive()
 					Engine->Event.Defer	("KERNEL:disconnect");
 					Engine->Event.Defer	("KERNEL:start",m_caServerOptions.size() ? size_t( xr_strdup(*m_caServerOptions)) : 0, m_caClientOptions.size() ? size_t(xr_strdup(*m_caClientOptions)) : 0);
 				}
-			}break;
+			}break;*/
 		case M_SPAWN:			
 			{
 				if (!m_bGameConfigStarted || !bReady) 

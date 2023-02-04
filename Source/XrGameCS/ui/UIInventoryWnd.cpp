@@ -13,7 +13,7 @@
 
 #include "../weapon.h"
 
-#include "../../XrServerEntitiesCS/script_process.h"
+#include "../../XrServerEntities/script_process.h"
 
 #include "../eatable_item.h"
 #include "../inventory.h"

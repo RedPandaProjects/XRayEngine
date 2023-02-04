@@ -95,7 +95,7 @@ CSavedGameWrapper::CSavedGameWrapper		(LPCSTR saved_game_name)
 		CSE_ALifeCreatureActor	*actor = smart_cast<CSE_ALifeCreatureActor*>(object);
 		VERIFY					(actor);
 
-		m_actor_health			= actor->g_Health();
+		m_actor_health			= actor->get_health();
 		m_level_id				= ai().game_graph().vertex(object->m_tGraphID)->level_id();
 
 		F_entity_Destroy		(object);

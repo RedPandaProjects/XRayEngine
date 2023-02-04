@@ -20,7 +20,9 @@ public:
 
 #ifdef XRGAME_EXPORTS
 public:
+#if !defined(GAME_SOC)&&!defined(GAME_CS)
 	virtual	void							on_location_change	( ) const = 0;
+#endif
 	virtual	CSE_ALifeDynamicObject const&	get_object			( ) const = 0;
 	virtual	CSE_ALifeDynamicObject&			get_object			( ) = 0;
 #endif //#ifdef XRGAME_EXPORTS

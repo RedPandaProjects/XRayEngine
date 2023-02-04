@@ -21,8 +21,9 @@
 #include "object_factory.h"
 #include "script_sound_type.h"
 #include "xrServer_Objects_ALife_All.h"
+#ifndef GAME_SOC
 #include "xrServer_Objects_ALife_Smartcovers.h"
-
+#endif
 
 #ifndef XRGAME_EXPORTS
 #	include "script_properties_list_helper.h"
@@ -63,15 +64,44 @@
 #	include "script_entity_action.h"
 #	include "helicopter.h"
 #	include "game_base.h"
+#if !defined(GAME_SOC)&&!defined(GAME_CS)
 #	include "demoinfo.h"
+#else
+#	include "game_sv_base.h"
+#	include "game_sv_mp.h"
+#	include "game_sv_deathmatch.h"
+#	include "game_sv_mp_script.h"
+#	include "game_cl_mp.h"
+#	include "game_cl_mp_script.h"
+#	include "UIGameCustom.h"
+#	include "UIGame_custom_script.h"
+#	include "UI/UIScriptWnd.h"
+#	include "UI/UIStatic.h"
+#	include "UI/UIButton.h"
+#	include "UI/UIWindow.h"
+#	include "UI/UIProgressBar.h"
+#	include "UI/UIEditBox.h"
+#	include "UI/UIMessageBox.h"
+#	include "UI/UIPropertiesBox.h"
+#	include "UI/UITabControl.h"
+#	include "UI/UIListWnd.h"
+#   include "UI/UIComboBox.h"
+#	include "ui/UIOptionsManagerScript.h"
+#	include "ui/UIMapInfo.h"
+#	include "ScriptXmlInit.h"
+#endif
 #	include "script_ui_registrator.h"
 #	include "key_binding_registrator.h"
 #	include "fs_registrator.h"
 #	include "console_registrator.h"
+#if !defined(GAME_SOC)&&!defined(GAME_CS)
 #	include	"physics_shell_scripted.h"
 #	include	"physics_joint_scripted.h"
 #	include	"physics_element_scripted.h"
 #	include	"physics_world_scripted.h"
+#else
+#	include	"PhysicsShell.h"
+#endif
 
 #	include	"HangingLamp.h"
 #	include "holder_custom.h"
@@ -104,7 +134,11 @@
 #	include "PHDestroyable.h"
 #	include "car.h"
 #	include "script_lanim.h"
+#ifndef GAME_SOC
 #	include "artefact.h"
+#else
+#	include "artifact.h"
+#endif
 #	include "game_cl_single.h"
 #	include "alife_human_brain.h"
 #	include "alife_monster_brain.h"
@@ -145,11 +179,15 @@
 #	include "ai/trader/ai_trader.h"
 #	include "space_restrictor.h"
 #	include "physicobject.h"
+#ifndef GAME_SOC
 #	include "smart_cover_object.h"
 #	include "ui/FactionState.h"
 #	include "actor.h"
+#ifndef GAME_CS
 #	include "login_manager.h"
 #	include "account_manager.h"
 #	include	"profile_store.h"
 #	include	"profile_data_types.h"
+#endif
+#endif
 #endif

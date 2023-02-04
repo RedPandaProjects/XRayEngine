@@ -120,7 +120,7 @@ add_to_type_list(CSE_ALifeTrader)
 #define script_type_list save_type_list(CSE_ALifeTrader)
 
 SERVER_ENTITY_DECLARE_BEGIN(CSE_ALifeCustomZone,CSE_ALifeSpaceRestrictor)
-//.	f32								m_maxPower;
+	f32								m_maxPower;
 	ALife::EHitType					m_tHitType;
 	u32								m_owner_id;
 	u32								m_enabled_time;
@@ -150,13 +150,18 @@ SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeAnomalousZone,CSE_ALifeCustomZone, ISE_ALi
 	virtual u32						ef_weapon_type			() const;
 	virtual u32						ef_creature_type		() const;
 #ifdef XRGAME_EXPORTS
+#ifdef GAME_SOC
+	void							spawn_artefacts			();
+#endif
 //			void					spawn_artefacts			();
 	virtual void					on_spawn				();
 	virtual	CSE_ALifeItemWeapon		*tpfGetBestWeapon		(ALife::EHitType		&tHitType,				float &fHitPower);
 	virtual	ALife::EMeetActionType	tfGetActionType			(CSE_ALifeSchedulable	*tpALifeSchedulable,	int iGroupIndex, bool bMutualDetection);
 	virtual bool					bfActive				();
 	virtual CSE_ALifeDynamicObject	*tpfGetBestDetector		();
+#if  !defined(GAME_SOC)&&!defined(GAME_CS)
 	virtual bool					keep_saved_data_anyway	() const;
+#endif
 #endif
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeAnomalousZone)
@@ -303,11 +308,13 @@ public:
 			void					vfCheckForPopulationChanges();
 	virtual	void					add_online				(const bool &update_registries);
 	virtual	void					add_offline				(const xr_vector<ALife::_OBJECT_ID> &saved_children, const bool &update_registries);
-	virtual void					on_register				();
-	virtual void					on_unregister			();
 	virtual Fvector					draw_level_position		() const;
 	virtual	bool					redundant				() const;
-	virtual void					on_location_change		() const;
+#if !defined(GAME_SOC)&&!defined(GAME_CS)
+	virtual void					on_location_change() const;
+	virtual void					on_register();
+	virtual void					on_unregister();
+#endif
 	virtual	CSE_ALifeDynamicObject const&	get_object		() const	{ return *this; }
 	virtual	CSE_ALifeDynamicObject&			get_object		()			{ return *this; }
 
@@ -560,7 +567,6 @@ public:
 	virtual bool					bfActive				();
 	virtual CSE_ALifeDynamicObject	*tpfGetBestDetector		();
 	virtual void					update					();
-	virtual bool					need_update				(CSE_ALifeDynamicObject *object);
 			void					register_member			(ALife::_OBJECT_ID member_id);
 			void					unregister_member		(ALife::_OBJECT_ID member_id);
 			void					notify_on_member_death	(MEMBER *member);
@@ -573,9 +579,11 @@ public:
 	virtual	void					switch_online			();
 	virtual	void					switch_offline			();
 	virtual	bool					redundant				() const;
+	virtual	CSE_ALifeDynamicObject const& get_object() const { return *this; }
+	virtual	CSE_ALifeDynamicObject& get_object() { return *this; }
+#if !defined(GAME_SOC)&&!defined(GAME_CS)
+	virtual bool					need_update				(CSE_ALifeDynamicObject* object);
 	virtual void					on_location_change		() const;
-	virtual	CSE_ALifeDynamicObject const&	get_object		() const	{ return *this; }
-	virtual	CSE_ALifeDynamicObject&			get_object		()			{ return *this; }
 			ALife::_OBJECT_ID		commander_id			();	
 			MEMBERS const&			squad_members			() const;
 			u32						npc_count				() const;
@@ -583,6 +591,7 @@ public:
 			void					add_location_type		(LPCSTR mask);	
 			void					force_change_position	(Fvector position);
 	virtual void					on_failed_switch_online	();	
+#endif
 #else
 public:
 	virtual void					update					() {};

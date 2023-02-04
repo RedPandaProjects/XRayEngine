@@ -299,10 +299,12 @@ public:
 	virtual	void					add_online(const bool& update_registries);
 	virtual	void					add_offline(const xr_vector<ALife::_OBJECT_ID>& saved_children, const bool& update_registries);
 	virtual	bool					redundant() const;
-	void					attach(CSE_ALifeInventoryItem* tpALifeInventoryItem, bool		bALifeRequest, bool bAddChildren = true);
-	void					detach(CSE_ALifeInventoryItem* tpALifeInventoryItem, ALife::OBJECT_IT* I = 0, bool bALifeRequest = true, bool bRemoveChildren = true);
+	void							attach(CSE_ALifeInventoryItem* tpALifeInventoryItem, bool		bALifeRequest, bool bAddChildren = true);
+	void							detach(CSE_ALifeInventoryItem* tpALifeInventoryItem, ALife::OBJECT_IT* I = 0, bool bALifeRequest = true, bool bRemoveChildren = true);
+#if !defined(GAME_SOC)&&!defined(GAME_CS)
 	virtual void					clear_client_data();
 	virtual void					on_failed_switch_online();
+#endif
 #endif
 	virtual CSE_ALifeDynamicObject* cast_alife_dynamic_object() { return this; }
 	SERVER_ENTITY_DECLARE_END

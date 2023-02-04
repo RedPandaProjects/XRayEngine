@@ -10,8 +10,8 @@
 
 #include "../actor.h"
 #include "../inventory_item.h"
-#include "../ai_space.h"
-#include "../../XrServerEntitiesCS/script_engine.h"
+#include "ai_space.h"
+#include "../../XrServerEntities/script_engine.h"
 
 using namespace luabind;
 

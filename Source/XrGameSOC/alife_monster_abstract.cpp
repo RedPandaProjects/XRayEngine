@@ -154,7 +154,7 @@ ALife::EMeetActionType	CSE_ALifeMonsterAbstract::tfGetActionType(CSE_ALifeSchedu
 bool CSE_ALifeMonsterAbstract::bfActive()
 {
 	CSE_ALifeGroupAbstract		*l_tpALifeGroupAbstract = smart_cast<CSE_ALifeGroupAbstract*>(this);
-	return						(/**/interactive() && /**/((l_tpALifeGroupAbstract && (l_tpALifeGroupAbstract->m_wCount > 0)) || (!l_tpALifeGroupAbstract && (fHealth > EPS_L))));
+	return						(/**/interactive() && /**/((l_tpALifeGroupAbstract && (l_tpALifeGroupAbstract->m_wCount > 0)) || (!l_tpALifeGroupAbstract && (get_health() > EPS_L))));
 }
 
 CSE_ALifeDynamicObject *CSE_ALifeMonsterAbstract::tpfGetBestDetector()

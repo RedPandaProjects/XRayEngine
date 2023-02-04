@@ -96,7 +96,7 @@ void CSE_ALifeOnlineOfflineGroup::script_register(lua_State *L)
 			CSE_ALifeDynamicObject,
 			CSE_ALifeSchedulable
 		)
-#ifdef XRGAME_EXPORTS
+#if defined(XRGAME_EXPORTS)&&!defined(GAME_SOC)&&!defined(GAME_CS)
 		.def("register_member",		&CSE_ALifeOnlineOfflineGroup::register_member)
 		.def("unregister_member",	&CSE_ALifeOnlineOfflineGroup::unregister_member)
 		.def("commander_id",		&CSE_ALifeOnlineOfflineGroup::commander_id)

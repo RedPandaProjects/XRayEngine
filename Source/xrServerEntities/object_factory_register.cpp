@@ -20,7 +20,6 @@
 #ifndef NO_XR_GAME
 #	include "../xrEngine/std_classes.h"
 #	include "level.h"
-#	include "XrLevelEditor.h"
 #	include "gamepersistent.h"
 #	include "hudmanager.h"
 #	include "actor.h"
@@ -43,8 +42,9 @@
 #	include "ai/monsters/snork/snork.h"
 #	include "ai/monsters/cat/cat.h"
 #	include "ai/monsters/tushkano/tushkano.h"
+#ifndef GAME_SOC
 #	include "ai/monsters/rats/ai_rat.h"
-
+#endif
 #	include "ai/phantom/phantom.h"
 
 #	include "ai/trader/ai_trader.h"
@@ -74,8 +74,9 @@
 #	include "RustyHairArtifact.h"
 #	include "GalantineArtifact.h"
 #	include "GraviArtifact.h"
+#ifndef GAME_SOC
 #	include "cta_game_artefact.h"
-
+#endif
 #	include "weaponFN2000.h"
 #	include "weaponAK74.h"
 #	include "weaponLR300.h"
@@ -116,8 +117,9 @@
 #	include "StalkerOutfit.h"
 #	include "MilitaryOutfit.h"
 #	include "ExoOutfit.h"
+#if !defined(GAME_SOC)&&!defined(GAME_CS)
 #	include "ActorHelmet.h"
-
+#endif
 #	include "f1.h"
 #	include "rgd5.h"
 
@@ -136,16 +138,23 @@
 #	include "torridZone.h"
 #	include "ZoneVisual.h"
 #	include "hairszone.h"
-//. #	include "amebazone.h"
+#ifdef GAME_SOC
+#	include "amebazone.h"
+#endif
 #	include "nogravityzone.h"
 #	include "simpledetector.h"
+
+#ifndef GAME_SOC
 #	include "elitedetector.h"
 #	include "advanceddetector.h"
 #	include "zonecampfire.h"
+#endif
 
 #	include "torch.h"
 #	include "pda.h"
+#ifndef GAME_SOC
 #	include "flare.h"
+#endif
 
 #	include "searchlight.h"
 
@@ -160,17 +169,23 @@
 #	include "game_sv_deathmatch.h"
 #	include "game_sv_teamdeathmatch.h"
 #	include "game_sv_ArtefactHunt.h"
+#ifndef GAME_SOC
 #	include "game_sv_capture_the_artefact.h"
+#endif
 
 #	include "game_cl_single.h"
 #	include "game_cl_deathmatch.h"
 #	include "game_cl_teamdeathmatch.h"
 #	include "game_cl_ArtefactHunt.h"
+#ifndef GAME_SOC
 #	include	"game_cl_capture_the_artefact.h"
+#endif
 
 #	include "UIGameSP.h"
 #	include "UIGameAHunt.h"
+#ifndef GAME_SOC
 #	include "UIGameCTA.h"
+#endif
 #	include	"climableobject.h"
 #	include "space_restrictor.h"
 #	include "smart_zone.h"
@@ -178,7 +193,9 @@
 
 #	include "actor_mp_server.h"
 #	include "actor_mp_client.h"
+#ifndef GAME_SOC
 #	include "smart_cover_object.h"
+#endif
 #endif // NO_XR_GAME
 
 #ifndef NO_XR_GAME
@@ -193,9 +210,6 @@ void CObjectFactory::register_classes	()
 #ifndef NO_XR_GAME
 	// client entities
 	add<CLevel>													(CLSID_GAME_LEVEL				,"level");
-#ifndef MASTER_GOLD
-	add<CLevelEditor>											(CLSID_EDITOR_LEVEL,			"level_editor");
-#endif
 	add<CGamePersistent>										(CLSID_GAME_PERSISTANT			,"game");
 	add<CHUDManager>											(CLSID_HUDMANAGER				,"hud_manager");
 	//Server Game type
@@ -207,7 +221,10 @@ void CObjectFactory::register_classes	()
 	add<game_sv_Deathmatch>										(CLSID_SV_GAME_DEATHMATCH		,"game_sv_deathmatch");
 	add<game_sv_TeamDeathmatch>									(CLSID_SV_GAME_TEAMDEATHMATCH	,"game_sv_team_deathmatch");
 	add<game_sv_ArtefactHunt>									(CLSID_SV_GAME_ARTEFACTHUNT		,"game_sv_artefact_hunt");
+
+#ifndef GAME_SOC
 	add<game_sv_CaptureTheArtefact>									(CLSID_SV_GAME_CAPTURETHEARTEFACT	,"game_sv_capture_the_artefact");
+#endif
 #endif	//	BENCHMARK_BUILD
 	//Client Game type
 #ifndef NO_SINGLE
@@ -217,7 +234,10 @@ void CObjectFactory::register_classes	()
 	add<game_cl_Deathmatch>										(CLSID_CL_GAME_DEATHMATCH		,"game_cl_deathmatch");
 	add<game_cl_TeamDeathmatch>									(CLSID_CL_GAME_TEAMDEATHMATCH	,"game_cl_team_deathmatch");
 	add<game_cl_ArtefactHunt>									(CLSID_CL_GAME_ARTEFACTHUNT		,"game_cl_artefact_hunt");
+
+#ifndef GAME_SOC
 	add<game_cl_CaptureTheArtefact>									(CLSID_CL_GAME_CAPTURETHEARTEFACT	,"game_cl_capture_the_artefact");
+#endif
 #endif	//	BENCHMARK_BUILD
 
 
@@ -225,7 +245,10 @@ void CObjectFactory::register_classes	()
 	add<CUIGameDM>												(CLSID_GAME_UI_DEATHMATCH		,"game_ui_deathmatch");
 	add<CUIGameTDM>												(CLSID_GAME_UI_TEAMDEATHMATCH	,"game_ui_team_deathmatch");
 	add<CUIGameAHunt>											(CLSID_GAME_UI_ARTEFACTHUNT		,"game_ui_artefact_hunt");
+
+#ifndef GAME_SOC
 	add<CUIGameCTA>												(CLSID_GAME_UI_CAPTURETHEARTEFACT	,"game_ui_capture_the_artefact");
+#endif
 
 #	ifndef NO_SINGLE
 		ADD_MP(CActor,CActorMP,CSE_ALifeCreatureActor,CSE_ActorMP	,CLSID_OBJECT_ACTOR				,"actor");
@@ -273,7 +296,10 @@ void CObjectFactory::register_classes	()
 	ADD(CAI_Trader				,CSE_ALifeTrader				,CLSID_AI_TRADER				,"trader");
 
 	ADD(CAI_Crow				,CSE_ALifeCreatureCrow			,CLSID_AI_CROW					,"crow");
+
+#ifndef GAME_SOC
 	ADD(CAI_Rat					,CSE_ALifeMonsterRat			,CLSID_AI_RAT					,"rat");
+#endif
 	ADD(CCar					,CSE_ALifeCar					,CLSID_CAR						,"car");
 
 	ADD(CHelicopter				,CSE_ALifeHelicopter			,CLSID_VEHICLE_HELICOPTER		,"helicopter");
@@ -294,7 +320,10 @@ void CObjectFactory::register_classes	()
 	ADD(CGalantineArtefact		,CSE_ALifeItemArtefact			,CLSID_AF_GALANTINE				,"art_galantine");
 	ADD(CGraviArtefact			,CSE_ALifeItemArtefact			,CLSID_AF_GRAVI					,"art_gravi");
 	ADD(CGraviArtefact			,CSE_ALifeItemArtefact			,CLSID_ARTEFACT					,"artefact");
+
+#ifndef GAME_SOC
 	ADD(CtaGameArtefact			,CSE_ALifeItemArtefact			,CLSID_AF_CTA					,"art_cta");
+#endif
 
 	//  [8/15/2006]
 	ADD(CWeaponMagazined		,CSE_ALifeItemWeaponMagazined	,CLSID_OBJECT_W_MAGAZINED		,"wpn_wmagaz");
@@ -353,7 +382,10 @@ void CObjectFactory::register_classes	()
 	ADD(CStalkerOutfit			,CSE_ALifeItemCustomOutfit		,CLSID_EQUIPMENT_STALKER		,"equ_stalker");
 	ADD(CMilitaryOutfit			,CSE_ALifeItemCustomOutfit		,CLSID_EQUIPMENT_MILITARY		,"equ_military");
 	ADD(CExoOutfit				,CSE_ALifeItemCustomOutfit		,CLSID_EQUIPMENT_EXO			,"equ_exo");
+
+#if !defined(GAME_SOC)&&!defined(GAME_CS)
 	ADD(CHelmet					,CSE_ALifeItem					,CLSID_EQUIPMENT_HELMET			,"helmet");
+#endif
 
 	// Grenades
 	ADD(CF1						,CSE_ALifeItemGrenade			,CLSID_GRENADE_F1				,"wpn_grenade_f1");
@@ -378,26 +410,47 @@ void CObjectFactory::register_classes	()
 	ADD(CHairsZone				,CSE_ALifeZoneVisual			,CLSID_Z_RUSTYH					,"zone_rusty_hair");
 	ADD(CMosquitoBald			,CSE_ALifeAnomalousZone			,CLSID_Z_DEAD					,"zone_dead");
 #ifndef	BENCHMARK_BUILD
-	ADD(CLevelChanger			,CSE_ALifeLevelChanger			,CLSID_LEVEL_CHANGER			,"level_changer");
+	if (xrGameManager::GetGame() == EGame::SHOC)
+	{
+		ADD(CLevelChanger, CSE_ALifeLevelChanger, CLSID_LEVEL_CHANGER_SOC, "level_changer");
+	}
+	else
+	{
+		ADD(CLevelChanger, CSE_ALifeLevelChanger, CLSID_LEVEL_CHANGER, "level_changer");
+	}
 #endif	//	BENCHMARK_BUILD
 	ADD(CScriptZone				,CSE_ALifeSpaceRestrictor		,CLSID_SCRIPT_ZONE				,"script_zone");
 	ADD(CSmartZone				,CSE_ALifeSmartZone				,CLSID_SMART_ZONE				,"smart_zone");
 	ADD(CTeamBaseZone			,CSE_ALifeTeamBaseZone			,CLSID_Z_TEAM_BASE				,"team_base_zone");
 	ADD(CTorridZone				,CSE_ALifeTorridZone			,CLSID_Z_TORRID					,"torrid_zone");
 	ADD(CSpaceRestrictor		,CSE_ALifeSpaceRestrictor		,CLSID_SPACE_RESTRICTOR			,"space_restrictor");
+#ifdef GAME_SOC
+	ADD(CAmebaZone				,CSE_ALifeZoneVisual			,CLSID_Z_AMEBA					,"ameba_zone");
+#endif
 //.	ADD(CAmebaZone				,CSE_ALifeZoneVisual			,CLSID_Z_AMEBA					,"ameba_zone");
 	ADD(CNoGravityZone			,CSE_ALifeAnomalousZone			,CLSID_Z_NOGRAVITY				,"nogravity_zone");
+
+#ifndef GAME_SOC
 	ADD(CZoneCampfire			,CSE_ALifeAnomalousZone			,CLSID_Z_CAMPFIRE				,"zone_campfire");
+#endif
 	// Detectors
 	ADD(CSimpleDetector			,CSE_ALifeItemDetector			,CLSID_DETECTOR_SIMPLE			,"device_detector_simple");
+
+#ifndef GAME_SOC
 	ADD(CAdvancedDetector		,CSE_ALifeItemDetector			,CLSID_DETECTOR_ADVANCED		,"device_detector_advanced");
 	ADD(CEliteDetector			,CSE_ALifeItemDetector			,CLSID_DETECTOR_ELITE			,"device_detector_elite");
+#ifndef GAME_CS
 	ADD(CScientificDetector		,CSE_ALifeItemDetector			,CLSID_DETECTOR_SCIENTIFIC		,"device_detector_scientific");
+#endif
+#endif
 
 	// Devices
 	ADD(CTorch					,CSE_ALifeItemTorch				,CLSID_DEVICE_TORCH				,"device_torch");
 	ADD(CPda					,CSE_ALifeItemPDA				,CLSID_DEVICE_PDA				,"device_pda");
+
+#ifndef GAME_SOC
 	ADD(CFlare					,CSE_ALifeItem					,CLSID_DEVICE_FLARE				,"device_flare");
+#endif
 
 	// objects
 	ADD(CProjector				,CSE_ALifeObjectProjector		,CLSID_OBJECT_PROJECTOR			,"projector");
@@ -414,7 +467,7 @@ void CObjectFactory::register_classes	()
 	ADD(CDestroyablePhysicsObject,CSE_ALifeObjectPhysic			,CLSID_PHYSICS_DESTROYABLE		,"obj_phys_destroyable");
 
 	ADD(CInventoryBox			,CSE_ALifeInventoryBox			,CLSID_INVENTORY_BOX			,"inventory_box");
-#ifndef NO_SINGLE
+#ifndef GAME_SOC
 	ADD(smart_cover::object		,CSE_SmartCover					,TEXT2CLSID("SMRTCOVR")			,"smart_cover");
 #endif // #ifndef NO_SINGLE
 

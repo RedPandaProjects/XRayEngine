@@ -2,7 +2,7 @@
 
 #include "UIDialogWnd.h"
 #include "UIEditBox.h"
-#include "../../XrServerEntitiesCS/inventory_space.h"
+#include "../../XrServerEntities/inventory_space.h"
 /*
 class CUIDragDropListEx;
 class CUIItemInfo;

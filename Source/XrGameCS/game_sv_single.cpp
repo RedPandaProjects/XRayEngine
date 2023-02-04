@@ -72,7 +72,7 @@ void	game_sv_Single::OnCreate		(u16 id_who)
 			if (trader)
 				alife().create			(alife_object);
 			else {
-				CSE_InventoryBox* const	box = smart_cast<CSE_InventoryBox*>(parent);
+				CSE_ALifeInventoryBox* const	box = smart_cast<CSE_ALifeInventoryBox*>(parent);
 				if (box)
 					alife().create		(alife_object);
 				else

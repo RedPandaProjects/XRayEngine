@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "phantom.h"
 #include "../../level.h"
-#include "../../../XrServerEntitiesCS/xrserver_objects_alife_monsters.h"
+#include "../../../XrServerEntities/xrserver_objects_alife_monsters.h"
 #include "../../../xrEngine/motion.h"
 #include "../xrRender/Public/RenderVisual.h"
 #include "../xrRender/Public/KinematicsAnimated.h"

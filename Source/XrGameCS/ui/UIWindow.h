@@ -75,7 +75,7 @@ class	ui_list 		: public std::list<T,uialloc<T> >{ public: u32 size() const {ret
 //////////////////////////////////////////////////////////////////////////
 
 #include "UIMessages.h"
-#include "../../XrServerEntitiesCS/script_export_space.h"
+#include "../../XrServerEntities/script_export_space.h"
 #include "uiabstract.h"
 
 

@@ -16,8 +16,8 @@
 #include "game_base_space.h"
 #include "../actor.h"
 
-#include "../ai_space.h"
-#include "../../XrServerEntitiesCS/script_engine.h"
+#include "ai_space.h"
+#include "../../XrServerEntities/script_engine.h"
 
 #include "../xrRender/Public/UIShader.h"
 
