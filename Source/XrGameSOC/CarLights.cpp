@@ -56,7 +56,7 @@ void SCarLight::ParseDefinitions(LPCSTR section)
 	light_render->set_range	(ini->r_float(section,"range"));
 	light_render->set_color	(clr);
 	light_render->set_cone	(deg2rad(ini->r_float(section,"cone_angle")));
-	light_render->set_texture(ini->r_string(section,"spot_texture"));
+	light_render->set_material(ini->r_string(section,"spot_texture"));
 
 	glow_render->set_texture(ini->r_string(section,"glow_texture"));
 	glow_render->set_color	(clr);

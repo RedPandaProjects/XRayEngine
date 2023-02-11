@@ -29,12 +29,8 @@ void CHangingLamp::Init()
 {
 	fHealth					= 100.f;
 	light_bone				= BI_NONE;
-	ambient_bone			= BI_NONE;
 	lanim					= 0;
-	ambient_power			= 0.f;
 	light_render			= 0;
-	light_ambient			= 0;
-	glow_render				= 0;
 	m_bState				= 1;
 }
 
@@ -71,8 +67,6 @@ void CHangingLamp::Load		(LPCSTR section)
 void CHangingLamp::net_Destroy()
 {
 	light_render.destroy	();
-	light_ambient.destroy	();
-	glow_render.destroy		();
 	RespawnInit				();
 	if(Visual())CPHSkeleton::RespawnInit();
 	inherited::net_Destroy	();
@@ -94,43 +88,20 @@ BOOL CHangingLamp::net_Spawn(CSE_Abstract* DC)
 		IKinematics* K		= CastToIKinematics(Visual());
 		R_ASSERT			(Visual()&&CastToIKinematics(Visual()));
 		light_bone			= K->LL_BoneID	(*lamp->light_main_bone);	VERIFY(light_bone!=BI_NONE);
-		ambient_bone		= K->LL_BoneID	(*lamp->light_ambient_bone);VERIFY(ambient_bone!=BI_NONE);
 		collidable.model	= xr_new<CCF_Skeleton>				(this);
 	}
 	fBrightness				= lamp->brightness;
 	clr.set					(lamp->color);						clr.a = 1.f;
-	clr.mul_rgb				(fBrightness);
+
 
 	light_render			= ::Render->light_create();
-	light_render->set_shadow(!!lamp->flags.is(CSE_ALifeObjectHangingLamp::flCastShadow));
-	light_render->set_volumetric(!!lamp->flags.is(CSE_ALifeObjectHangingLamp::flVolumetric));
-	light_render->set_type	(lamp->flags.is(CSE_ALifeObjectHangingLamp::flTypeSpot)?IRender_Light::SPOT:IRender_Light::POINT);
+	light_render->set_shadow(!!lamp->light_flags.is(ISE_ALifeObjectHangingLamp::flCastShadow));
+	light_render->set_type	(lamp->light_flags.is(ISE_ALifeObjectHangingLamp::flTypeSpot)?IRender_Light::SPOT:IRender_Light::POINT);
 	light_render->set_range	(lamp->range);
 	light_render->set_color	(clr);
 	light_render->set_cone	(lamp->spot_cone_angle);
-	light_render->set_texture(*lamp->light_texture);
-
-	light_render->set_volumetric_quality(lamp->m_volumetric_quality);
-	light_render->set_volumetric_intensity(lamp->m_volumetric_intensity);
-	light_render->set_volumetric_distance(lamp->m_volumetric_distance);	
-
-	if (lamp->glow_texture.size())	{
-		glow_render				= ::Render->glow_create();
-		glow_render->set_texture(*lamp->glow_texture);
-		glow_render->set_color	(clr);
-		glow_render->set_radius	(lamp->glow_radius);
-	}
-
-	if (lamp->flags.is(CSE_ALifeObjectHangingLamp::flPointAmbient)){
-		ambient_power			= lamp->m_ambient_power;
-		light_ambient			= ::Render->light_create();
-		light_ambient->set_type	(IRender_Light::POINT);
-		light_ambient->set_shadow(false);
-		clr.mul_rgb				(ambient_power);
-		light_ambient->set_range(lamp->m_ambient_radius);
-		light_ambient->set_color(clr);
-		light_ambient->set_texture(*lamp->m_ambient_texture);
-	}
+	light_render->set_material(*lamp->light_material);
+	light_render->set_intensity(fBrightness);
 
 	fHealth					= lamp->m_health;
 
@@ -143,7 +114,7 @@ BOOL CHangingLamp::net_Spawn(CSE_Abstract* DC)
 		CastToIKinematics			(Visual())->CalculateBones(TRUE);
 		//.intepolate_pos
 	}
-	if (lamp->flags.is(CSE_ALifeObjectHangingLamp::flPhysic)&&!Visual())
+	if (lamp->light_flags.is(CSE_ALifeObjectHangingLamp::flPhysic)&&!Visual())
 		Msg("! WARNING: lamp, obj name [%s],flag physics set, but has no visual",*cName());
 //.	if (lamp->flags.is(CSE_ALifeObjectHangingLamp::flPhysic)&&Visual()&&!guid_physic_bone)	fHealth=0.f;
 	if (Alive() && m_bState)
@@ -163,7 +134,7 @@ BOOL CHangingLamp::net_Spawn(CSE_Abstract* DC)
 void	CHangingLamp::SpawnInitPhysics	(CSE_Abstract	*D)	
 {
 	CSE_ALifeObjectHangingLamp	*lamp	= smart_cast<CSE_ALifeObjectHangingLamp*>(D);	
-	if (lamp->flags.is(CSE_ALifeObjectHangingLamp::flPhysic))		CreateBody(lamp);
+	if (lamp->light_flags.is(CSE_ALifeObjectHangingLamp::flPhysic))		CreateBody(lamp);
 	if (CastToIKinematics(Visual())){
 		CastToIKinematics			(Visual())->CalculateBones_Invalidate	();
 		CastToIKinematics			(Visual())->CalculateBones(TRUE);
@@ -215,7 +186,8 @@ void CHangingLamp::UpdateCL	()
 	if(m_pPhysicsShell)
 		m_pPhysicsShell->InterpolateGlobalTransform(&XFORM());
 
-	if (Alive() && light_render->get_active()){
+	if (Alive() && light_render->get_active())
+	{
 		if(Visual())	PKinematics(Visual())->CalculateBones();
 
 		// update T&R from light (main) bone
@@ -229,35 +201,17 @@ void CHangingLamp::UpdateCL	()
 		}
 		light_render->set_rotation	(xf.k,xf.i);
 		light_render->set_position	(xf.c);
-		if (glow_render)glow_render->set_position	(xf.c);
 
-		// update T&R from ambient bone
-		if (light_ambient){	
-			if (ambient_bone!=light_bone){
-				if (ambient_bone!=BI_NONE){
-					const Fmatrix& M = CastToIKinematics(Visual())->LL_GetTransform(ambient_bone);
-					xf.mul		(XFORM(),M);
-					VERIFY(!fis_zero(DET(xf)));
-				}else{
-					xf.set		(XFORM());
-				}
-			}
-			light_ambient->set_rotation	(xf.k,xf.i);
-			light_ambient->set_position	(xf.c);
-		}
 		
-		if (lanim){
+		if (lanim)
+		{
 			int frame;
 			u32 clr					= lanim->CalculateBGR(Device->fTimeGlobal,frame); // возвращает в формате BGR
 			Fcolor					fclr;
 			fclr.set				((float)color_get_B(clr),(float)color_get_G(clr),(float)color_get_R(clr),1.f);
-			fclr.mul_rgb			(fBrightness/255.f);
 			light_render->set_color	(fclr);
-			if (glow_render)		glow_render->set_color	(fclr);
-			if (light_ambient) {
-				fclr.mul_rgb		(ambient_power);
-				light_ambient->set_color(fclr);
-			}
+			light_render->set_intensity(fBrightness);
+			
 		}
 	}
 }
@@ -270,16 +224,6 @@ void CHangingLamp::TurnOn	()
 	Fvector p						= XFORM().c;
 	light_render->set_position		(p);
 	light_render->set_active		(true);
-	if (glow_render)	
-	{
-		glow_render->set_position		(p);
-		glow_render->set_active		(true);
-	}
-	if (light_ambient)	
-	{
-		light_ambient->set_position	(p);
-		light_ambient->set_active	(true);
-	}
 	if (Visual())
 	{
 		IKinematics* K				= CastToIKinematics(Visual());
@@ -298,8 +242,6 @@ void CHangingLamp::TurnOff	()
 		return;
 
 	light_render->set_active						(false);
-	if (glow_render)	glow_render->set_active		(false);
-	if (light_ambient)	light_ambient->set_active	(false);
 	if (Visual())		
 	{
 		IKinematics *K = CastToIKinematics(Visual());

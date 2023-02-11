@@ -22,16 +22,11 @@ class CALifeOnlineOfflineGroupBrain;
 #pragma warning(push)
 #pragma warning(disable:4005)
 
-SERVER_ENTITY_DECLARE_BEGIN0(CSE_ALifeTraderAbstract)
-	enum eTraderFlags {
-		eTraderFlagInfiniteAmmo		= u32(1) << 0,
-		eTraderFlagDummy			= u32(-1),
-	};
+SERVER_ENTITY_DECLARE_BEGIN(CSE_ALifeTraderAbstract, ISE_ALifeTraderAbstract)
+
 //	float							m_fCumulativeItemMass;
 //	int								m_iCumulativeItemVolume;
-	u32								m_dwMoney;
 	float							m_fMaxItemMass;
-	Flags32							m_trader_flags;
 
 	////////////////////////////////////////////////////
 	//character profile info
@@ -61,12 +56,11 @@ SERVER_ENTITY_DECLARE_BEGIN0(CSE_ALifeTraderAbstract)
 
 #endif
 
-	shared_str						m_sCharacterProfile;
 	shared_str						m_SpecificCharacter;
 
 	//�������� ������ ����������� ����������
-	xr_vector<shared_str> m_CheckedCharacters;
-	xr_vector<shared_str> m_DefaultCharacters;
+	xr_vector<shared_str>			m_CheckedCharacters;
+	xr_vector<shared_str>			m_DefaultCharacters;
 
 public:	
 									CSE_ALifeTraderAbstract		(LPCSTR caSection);
@@ -78,7 +72,7 @@ public:
 	virtual CSE_Abstract			*cast_abstract				() {return 0;};
 	virtual CSE_ALifeTraderAbstract	*cast_trader_abstract		() {return this;};
 	// end of the virtual inheritance dependant code
-			void 			OnChangeProfile				(PropValue* sender);
+			void 					OnChangeProfile				() override;
 
 #ifdef XRGAME_EXPORTS
 	virtual	void					add_online					(const bool &update_registries);
@@ -115,20 +109,21 @@ SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeTrader,CSE_ALifeDynamicObjectVisual,CSE_AL
 	virtual CSE_Abstract			*cast_abstract			() {return this;};
 	virtual CSE_ALifeTraderAbstract	*cast_trader_abstract	() {return this;};
 	virtual CSE_ALifeTrader			*cast_trader			() {return this;};
+	virtual ISE_ALifeTraderAbstract* CastALifeTraderAbstract() { return this; }
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeTrader)
 #define script_type_list save_type_list(CSE_ALifeTrader)
 
-SERVER_ENTITY_DECLARE_BEGIN(CSE_ALifeCustomZone,CSE_ALifeSpaceRestrictor)
+SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeCustomZone,CSE_ALifeSpaceRestrictor, ISE_ALifeCustomZone)
 	f32								m_maxPower;
 	ALife::EHitType					m_tHitType;
 	u32								m_owner_id;
-	u32								m_enabled_time;
-	u32								m_disabled_time;
-	u32								m_start_time_shift;
 
 									CSE_ALifeCustomZone		(LPCSTR caSection);
 	virtual							~CSE_ALifeCustomZone	();
+
+	EXRaySpawnPropertiesType		GetPropertiesType		() override { return EXRaySpawnPropertiesType::CSE_ALifeCustomZone; }
+	void*							QueryPropertiesInterface(EXRaySpawnPropertiesType InType) override;
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeCustomZone)
 #define script_type_list save_type_list(CSE_ALifeCustomZone)
@@ -149,6 +144,9 @@ SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeAnomalousZone,CSE_ALifeCustomZone, ISE_ALi
 	virtual u32						ef_anomaly_type			() const;
 	virtual u32						ef_weapon_type			() const;
 	virtual u32						ef_creature_type		() const;
+
+	EXRaySpawnPropertiesType		GetPropertiesType		() override { return EXRaySpawnPropertiesType::CSE_ALifeAnomalousZone; }
+	void*							QueryPropertiesInterface(EXRaySpawnPropertiesType InType) override;
 #ifdef XRGAME_EXPORTS
 #ifdef GAME_SOC
 	void							spawn_artefacts			();
@@ -175,27 +173,24 @@ SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeTorridZone)
 #define script_type_list save_type_list(CSE_ALifeTorridZone)
 
-SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeZoneVisual,CSE_ALifeAnomalousZone,CSE_Visual)
-shared_str attack_animation;
-CSE_ALifeZoneVisual	(LPCSTR caSection);
+SERVER_ENTITY_DECLARE_BEGIN3(CSE_ALifeZoneVisual,CSE_ALifeAnomalousZone,CSE_Visual,ISE_ALifeZoneVisual)
+								CSE_ALifeZoneVisual		(LPCSTR caSection);
 virtual							~CSE_ALifeZoneVisual	();
-virtual ISE_Visual* 	visual					();
+virtual ISE_Visual* 			visual					();
+EXRaySpawnPropertiesType		GetPropertiesType		() override { return EXRaySpawnPropertiesType::CSE_ALifeZoneVisual; }
+void*							QueryPropertiesInterface(EXRaySpawnPropertiesType InType) override;
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeZoneVisual)
 #define script_type_list save_type_list(CSE_ALifeZoneVisual)
 
 //---------------------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------------------
+//-----------------------------------------------CSE_ALifeCustomZone----------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------
 
-SERVER_ENTITY_DECLARE_BEGIN(CSE_ALifeCreatureAbstract,CSE_ALifeDynamicObjectVisual)
+SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeCreatureAbstract,CSE_ALifeDynamicObjectVisual,ISE_ALifeCreatureAbstract)
 private:
-	float							fHealth;
 	ALife::_OBJECT_ID				m_killer_id;
 public:
-	u8								s_team;
-	u8								s_squad;
-	u8								s_group;
 	
 	float							m_fMorale;
 	float							m_fAccuracy;
@@ -235,7 +230,9 @@ public:
 	virtual u32						ef_creature_type		() const;
 	virtual u32						ef_weapon_type			() const;
 	virtual u32						ef_detector_type		() const;
-	virtual CSE_ALifeCreatureAbstract	*cast_creature_abstract		() {return this;};
+	virtual CSE_ALifeCreatureAbstract* cast_creature_abstract() { return this; };
+	EXRaySpawnPropertiesType		GetPropertiesType		() override { return EXRaySpawnPropertiesType::CSE_ALifeCreatureAbstract; }
+	void*							QueryPropertiesInterface(EXRaySpawnPropertiesType InType) override;
 #ifdef XRGAME_EXPORTS
 	virtual	void					on_death				(CSE_Abstract *killer);
 	virtual void					on_spawn				();
@@ -247,15 +244,13 @@ SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeCreatureAbstract)
 #define script_type_list save_type_list(CSE_ALifeCreatureAbstract)
 
-SERVER_ENTITY_DECLARE_BEGIN3(CSE_ALifeMonsterAbstract,CSE_ALifeCreatureAbstract,CSE_ALifeSchedulable,CMovementManagerHolder)
+SERVER_ENTITY_DECLARE_BEGIN4(CSE_ALifeMonsterAbstract,CSE_ALifeCreatureAbstract,CSE_ALifeSchedulable,CMovementManagerHolder, ISE_ALifeMonsterAbstract)
 
 	float								m_fMaxHealthValue;
 	float								m_fRetreatThreshold;
 	float								m_fEyeRange;
 	float								m_fHitPower;
 	ALife::EHitType						m_tHitType;
-	shared_str							m_out_space_restrictors;
-	shared_str							m_in_space_restrictors;
 	svector<float,ALife::eHitTypeMax>	m_fpImmunityFactors;
 
 	ALife::_OBJECT_ID					m_smart_terrain_id;
@@ -321,6 +316,8 @@ public:
 #endif
 	virtual bool					need_update				(CSE_ALifeDynamicObject *object);
 
+	EXRaySpawnPropertiesType		GetPropertiesType		() override { return EXRaySpawnPropertiesType::CSE_ALifeMonsterAbstract; }
+	void*							QueryPropertiesInterface(EXRaySpawnPropertiesType InType) override;
 private:
 	CALifeMonsterBrain				*m_brain;
 
@@ -392,60 +389,34 @@ SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeCreaturePhantom)
 #define script_type_list save_type_list(CSE_ALifeCreaturePhantom)
 
-SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeMonsterRat,CSE_ALifeMonsterAbstract,CSE_ALifeInventoryItem)
+SERVER_ENTITY_DECLARE_BEGIN3(CSE_ALifeMonsterRat,CSE_ALifeMonsterAbstract,CSE_ALifeInventoryItem,ISE_ALifeMonsterRat)
 	// Personal characteristics:
-	float							fEyeFov;
-	float							fEyeRange;
-	float							fMinSpeed;
-	float							fMaxSpeed;
-	float							fAttackSpeed;
-	float							fMaxPursuitRadius;
-	float							fMaxHomeRadius;
-	// morale
-	float							fMoraleSuccessAttackQuant;
-	float							fMoraleDeathQuant;
-	float							fMoraleFearQuant;
-	float							fMoraleRestoreQuant;
-	u16								u16MoraleRestoreTimeInterval;
-	float							fMoraleMinValue;
-	float							fMoraleMaxValue;
-	float							fMoraleNormalValue;
-	// attack
-	float							fHitPower;
-	u16								u16HitInterval;
-	float							fAttackDistance;
-	float							fAttackAngle;
-	float							fAttackSuccessProbability;
+
 
 									CSE_ALifeMonsterRat	(LPCSTR caSection);				// constructor for variable initialization
 	virtual							~CSE_ALifeMonsterRat();
-	virtual bool					bfUseful();
-	virtual CSE_Abstract			*init				();
-	virtual CSE_Abstract			*base				();
-	virtual const CSE_Abstract		*base				() const;
+	virtual bool					bfUseful				();
+	virtual CSE_Abstract			*init					();
+	virtual CSE_Abstract			*base					();
+	virtual const CSE_Abstract		*base					() const;
 	virtual CSE_Abstract			*cast_abstract			() {return this;};
 	virtual CSE_ALifeInventoryItem	*cast_inventory_item	() {return this;};
+
+	EXRaySpawnPropertiesType		GetPropertiesType		() override { return EXRaySpawnPropertiesType::CSE_ALifeMonsterRat; }
+	void*							QueryPropertiesInterface(EXRaySpawnPropertiesType InType) override;
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeMonsterRat)
 #define script_type_list save_type_list(CSE_ALifeMonsterRat)
 
-SERVER_ENTITY_DECLARE_BEGIN(CSE_ALifeMonsterZombie,CSE_ALifeMonsterAbstract)
+SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeMonsterZombie,CSE_ALifeMonsterAbstract, ISE_ALifeMonsterZombie)
 	// Personal characteristics:
-	float							fEyeFov;
-	float							fEyeRange;
-	float							fMinSpeed;
-	float							fMaxSpeed;
-	float							fAttackSpeed;
-	float							fMaxPursuitRadius;
-	float							fMaxHomeRadius;
-	// attack
-	float							fHitPower;
-	u16								u16HitInterval;
-	float							fAttackDistance;
-	float							fAttackAngle;
+
 
 									CSE_ALifeMonsterZombie	(LPCSTR caSection);				// constructor for variable initialization
 	virtual							~CSE_ALifeMonsterZombie	();
+	
+	EXRaySpawnPropertiesType		GetPropertiesType		() override { return EXRaySpawnPropertiesType::CSE_ALifeMonsterZombie; }
+	void*							QueryPropertiesInterface(EXRaySpawnPropertiesType InType) override;
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeMonsterZombie)
 #define script_type_list save_type_list(CSE_ALifeMonsterZombie)
@@ -480,7 +451,7 @@ add_to_type_list(CSE_ALifePsyDogPhantom)
 
 
 //-------------------------------
-SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeHumanAbstract,CSE_ALifeTraderAbstract,CSE_ALifeMonsterAbstract)
+SERVER_ENTITY_DECLARE_BEGIN3(CSE_ALifeHumanAbstract,CSE_ALifeTraderAbstract,CSE_ALifeMonsterAbstract, ISE_ALifeHumanAbstract)
 
 
 public:
@@ -495,7 +466,8 @@ public:
 	virtual bool					natural_weapon			() const {return false;}
 	virtual bool					natural_detector		() const {return false;}
 	IC		CALifeHumanBrain		&brain					() const {VERIFY(m_brain); return(*m_brain);}
-	virtual CALifeMonsterBrain		*create_brain			();
+	virtual CALifeMonsterBrain*		create_brain			();
+	virtual ISE_ALifeTraderAbstract* CastALifeTraderAbstract()override { return this; }
 
 #ifdef XRGAME_EXPORTS
 	virtual	void					update					();
@@ -514,6 +486,8 @@ public:
 	virtual	void					add_offline				(const xr_vector<ALife::_OBJECT_ID> &saved_children, const bool &update_registries);
 #endif
 
+	EXRaySpawnPropertiesType		GetPropertiesType		() override { return EXRaySpawnPropertiesType::CSE_ALifeHumanAbstract; }
+	void*							QueryPropertiesInterface(EXRaySpawnPropertiesType InType) override;
 private:
 	CALifeHumanBrain				*m_brain;
 

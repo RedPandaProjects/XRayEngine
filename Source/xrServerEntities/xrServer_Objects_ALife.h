@@ -88,9 +88,7 @@ add_to_type_list(CSE_ALifeSchedulable)
 
 SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeGraphPoint,ISE_ALifeGraphPoint, CSE_Abstract)
 public:
-	shared_str						m_caConnectionLevelName;
-	shared_str						m_caConnectionPointName;
-	u8								m_tLocations[GameGraph::LOCATION_TYPE_COUNT];
+
 
 	CSE_ALifeGraphPoint(LPCSTR caSection);
 	virtual							~CSE_ALifeGraphPoint();
@@ -98,6 +96,9 @@ public:
 
 	virtual  ISE_Abstract* CastAbstract() { return this; }
 	virtual ISE_ALifeGraphPoint* CastALifeGraphPoint() { return this; }
+
+	EXRaySpawnPropertiesType		GetPropertiesType() override { return EXRaySpawnPropertiesType::ALifeGraphPoint; }
+	void* QueryPropertiesInterface(EXRaySpawnPropertiesType InType) override;
 #ifndef XRGAME_EXPORTS
 	virtual void 			on_render(CDUInterface* du, ISE_AbstractLEOwner* owner, bool bSelected, const Fmatrix& parent, int priority, bool strictB2F);
 #endif
@@ -136,6 +137,8 @@ public:
 	virtual u32						ef_main_weapon_type() const;
 	virtual u32						ef_weapon_type() const;
 	virtual u32						ef_detector_type() const;
+	 EXRaySpawnPropertiesType		GetPropertiesType() override { return EXRaySpawnPropertiesType::ALifeObject; }
+	 void*							QueryPropertiesInterface(EXRaySpawnPropertiesType InType) override;
 #ifdef XRGAME_EXPORTS
 	virtual void					spawn_supplies(LPCSTR);
 	virtual void					spawn_supplies();
@@ -319,45 +322,50 @@ public:
 		add_to_type_list(CSE_ALifeDynamicObjectVisual)
 #define script_type_list save_type_list(CSE_ALifeDynamicObjectVisual)
 
-		SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifePHSkeletonObject, CSE_ALifeDynamicObjectVisual, CSE_PHSkeleton)
-		CSE_ALifePHSkeletonObject(LPCSTR caSection);
+SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifePHSkeletonObject, CSE_ALifeDynamicObjectVisual, CSE_PHSkeleton)
+									CSE_ALifePHSkeletonObject(LPCSTR caSection);
 	virtual							~CSE_ALifePHSkeletonObject();
 	virtual bool					can_save() const;
 	virtual bool					used_ai_locations() const;
 	virtual	void					load(NET_Packet& tNetPacket);
-	virtual CSE_Abstract* cast_abstract() { return this; }
+	virtual CSE_Abstract*			cast_abstract() { return this; }
 public:
-	SERVER_ENTITY_DECLARE_END
-		add_to_type_list(CSE_ALifePHSkeletonObject)
+SERVER_ENTITY_DECLARE_END
+
+add_to_type_list(CSE_ALifePHSkeletonObject)
 #define script_type_list save_type_list(CSE_ALifePHSkeletonObject)
 
-		SERVER_ENTITY_DECLARE_BEGIN3(CSE_ALifeSpaceRestrictor, CSE_ALifeDynamicObject, ISE_ALifeSpaceRestrictor, CSE_Shape)
+SERVER_ENTITY_DECLARE_BEGIN3(CSE_ALifeSpaceRestrictor, CSE_ALifeDynamicObject, ISE_ALifeSpaceRestrictor, CSE_Shape)
+										CSE_ALifeSpaceRestrictor	(LPCSTR caSection);
+	virtual								~CSE_ALifeSpaceRestrictor	();
+	virtual ISE_Shape*					shape						();
+	virtual bool						can_switch_offline			() const;
+	virtual bool						used_ai_locations			() const;
+	virtual  ISE_ALifeObject*			CastALifeObject				() { return this; };
+	virtual  ISE_Abstract*				CastAbstract				() { return this; };
+	virtual ISE_ALifeSpaceRestrictor*	CastALifeSpaceRestricto		() { return this; };
+	EXRaySpawnPropertiesType			GetPropertiesType			() override { return EXRaySpawnPropertiesType::CSE_ALifeSpaceRestrictor; }
+	void*								QueryPropertiesInterface	(EXRaySpawnPropertiesType InType) override;
+SERVER_ENTITY_DECLARE_END
 
-	CSE_ALifeSpaceRestrictor(LPCSTR caSection);
-	virtual							~CSE_ALifeSpaceRestrictor();
-	virtual ISE_Shape* shape();
-	virtual bool					can_switch_offline() const;
-	virtual bool					used_ai_locations() const;
-	virtual  ISE_ALifeObject* CastALifeObject() { return this; };
-	virtual  ISE_Abstract* CastAbstract() { return this; };
-	virtual ISE_ALifeSpaceRestrictor* CastALifeSpaceRestricto() { return this; };
-	SERVER_ENTITY_DECLARE_END
-		add_to_type_list(CSE_ALifeSpaceRestrictor)
+add_to_type_list(CSE_ALifeSpaceRestrictor)
 #define script_type_list save_type_list(CSE_ALifeSpaceRestrictor)
 
 SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeLevelChanger, CSE_ALifeSpaceRestrictor, ISE_ALifeLevelChanger)
 
-	CSE_ALifeLevelChanger(LPCSTR caSection);
-	virtual							~CSE_ALifeLevelChanger();
-	virtual  ISE_ALifeObject* CastALifeObject() { return this; };
-	virtual  ISE_Abstract* CastAbstract() { return this; };
-	virtual ISE_ALifeLevelChanger* CastALifeLevelChanger() { return this; }
-	SERVER_ENTITY_DECLARE_END
-		add_to_type_list(CSE_ALifeLevelChanger)
+									CSE_ALifeLevelChanger	(LPCSTR caSection);
+	virtual							~CSE_ALifeLevelChanger	();
+	virtual  ISE_ALifeObject*		CastALifeObject			() { return this; };
+	virtual  ISE_Abstract*			CastAbstract			() { return this; };
+	virtual ISE_ALifeLevelChanger*	CastALifeLevelChanger	() { return this; }
+	EXRaySpawnPropertiesType		GetPropertiesType		() override { return EXRaySpawnPropertiesType::CSE_ALifeLevelChanger; }
+	void*							QueryPropertiesInterface(EXRaySpawnPropertiesType InType) override;
+SERVER_ENTITY_DECLARE_END
+add_to_type_list(CSE_ALifeLevelChanger)
 #define script_type_list save_type_list(CSE_ALifeLevelChanger)
 
-		SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeSmartZone, CSE_ALifeSpaceRestrictor, CSE_ALifeSchedulable)
-		CSE_ALifeSmartZone(LPCSTR caSection);
+SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeSmartZone, CSE_ALifeSpaceRestrictor, CSE_ALifeSchedulable)
+	CSE_ALifeSmartZone(LPCSTR caSection);
 	virtual							~CSE_ALifeSmartZone();
 	virtual CSE_Abstract* base();
 	virtual const CSE_Abstract* base() const;
@@ -385,16 +393,17 @@ SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeLevelChanger, CSE_ALifeSpaceRestrictor, IS
 		add_to_type_list(CSE_ALifeSmartZone)
 #define script_type_list save_type_list(CSE_ALifeSmartZone)
 
-		SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeObjectPhysic, CSE_ALifeDynamicObjectVisual, CSE_PHSkeleton)
-		u32 							type;
-	f32 							mass;
-	shared_str 						fixed_bones;
-	CSE_ALifeObjectPhysic(LPCSTR caSection);
-	virtual 						~CSE_ALifeObjectPhysic();
-	virtual bool					used_ai_locations() const;
-	virtual bool					can_save() const;
-	virtual	void					load(NET_Packet& tNetPacket);
-	virtual CSE_Abstract* cast_abstract() { return this; }
+SERVER_ENTITY_DECLARE_BEGIN3(CSE_ALifeObjectPhysic, CSE_ALifeDynamicObjectVisual, CSE_PHSkeleton,ISE_ALifeObjectPhysic)
+
+									CSE_ALifeObjectPhysic			(LPCSTR caSection);
+			 						~CSE_ALifeObjectPhysic			();
+	virtual bool					used_ai_locations				() const;
+	virtual bool					can_save						() const;
+	virtual	void					load							(NET_Packet& tNetPacket);
+	virtual CSE_Abstract*			cast_abstract					() { return this; }
+	Flags8&							GetPHSkeletonFlags8				() override;
+	EXRaySpawnPropertiesType		GetPropertiesType				() override { return EXRaySpawnPropertiesType::CSE_ALifeObjectPhysic; }
+	void*							QueryPropertiesInterface(EXRaySpawnPropertiesType InType) override;
 	//	virtual	void					load					(IReader& r){inherited::load(r);}
 	//	using inherited::load(IReader&);
 private:
@@ -429,64 +438,28 @@ public:
 
 	virtual BOOL					Net_Relevant();
 
-	SERVER_ENTITY_DECLARE_END
-		add_to_type_list(CSE_ALifeObjectPhysic)
+SERVER_ENTITY_DECLARE_END
+add_to_type_list(CSE_ALifeObjectPhysic)
 #define script_type_list save_type_list(CSE_ALifeObjectPhysic)
 
-		SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeObjectHangingLamp, CSE_ALifeDynamicObjectVisual, CSE_PHSkeleton)
+SERVER_ENTITY_DECLARE_BEGIN3(CSE_ALifeObjectHangingLamp, CSE_ALifeDynamicObjectVisual, CSE_PHSkeleton, ISE_ALifeObjectHangingLamp)
 
-		void  					OnChangeFlag(PropValue* sender);
-	enum {
-		flPhysic = (1 << 0),
-		flCastShadow = (1 << 1),
-		flR1 = (1 << 2),
-		flR2 = (1 << 3),
-		flTypeSpot = (1 << 4),
-		flPointAmbient = (1 << 5),
-		flVolumetric = (1 << 6),
-	};
-
-	Flags16							flags;
-	// light color    
-	u32								color;
-	float							brightness;
-	shared_str						color_animator;
-	// light texture    
-	shared_str						light_texture;
-	// range
-	float							range;
-	float							m_virtual_size;
-	// bones&motions
-	shared_str						light_ambient_bone;
-	shared_str						light_main_bone;
-	shared_str						fixed_bones;
-	// spot
-	float							spot_cone_angle;
-	// ambient    
-	float							m_ambient_radius;
-	float							m_ambient_power;
-	shared_str						m_ambient_texture;
-	//	volumetric
-	float							m_volumetric_quality;
-	float							m_volumetric_intensity;
-	float							m_volumetric_distance;
-	// glow    
-	shared_str						glow_texture;
-	float							glow_radius;
+	void  					OnChangeFlag(PropValue* sender);
 	// game
-	float							m_health;
 
-	CSE_ALifeObjectHangingLamp(LPCSTR caSection);
-	virtual							~CSE_ALifeObjectHangingLamp();
-	virtual	void					load(NET_Packet& tNetPacket);
-	virtual bool					used_ai_locations() const;
-	virtual bool					match_configuration() const;
-	virtual bool			validate();
+									CSE_ALifeObjectHangingLamp	(LPCSTR caSection);
+	virtual							~CSE_ALifeObjectHangingLamp	();
+	virtual	void					load						(NET_Packet& tNetPacket);
+	virtual bool					used_ai_locations			() const;
+	virtual bool					match_configuration			() const;
+	virtual bool					validate					();
 #ifndef XRGAME_EXPORTS
-	virtual void 			on_render(CDUInterface* du, ISE_AbstractLEOwner* owner, bool bSelected, const Fmatrix& parent, int priority, bool strictB2F);
+	virtual void 					on_render(CDUInterface* du, ISE_AbstractLEOwner* owner, bool bSelected, const Fmatrix& parent, int priority, bool strictB2F);
 #endif // #ifndef XRGAME_EXPORTS
-	virtual CSE_Abstract* cast_abstract() { return this; }
-	SERVER_ENTITY_DECLARE_END
+	virtual CSE_Abstract*			cast_abstract				() { return this; }
+	EXRaySpawnPropertiesType		GetPropertiesType			() override { return EXRaySpawnPropertiesType::CSE_ALifeObjectHangingLamp; }
+	void*							QueryPropertiesInterface	(EXRaySpawnPropertiesType InType) override;
+SERVER_ENTITY_DECLARE_END
 		add_to_type_list(CSE_ALifeObjectHangingLamp)
 #define script_type_list save_type_list(CSE_ALifeObjectHangingLamp)
 
@@ -498,22 +471,24 @@ public:
 		add_to_type_list(CSE_ALifeObjectProjector)
 #define script_type_list save_type_list(CSE_ALifeObjectProjector)
 
-		SERVER_ENTITY_DECLARE_BEGIN3(CSE_ALifeHelicopter, CSE_ALifeDynamicObjectVisual, CSE_Motion, CSE_PHSkeleton)
-		shared_str							engine_sound;
-	CSE_ALifeHelicopter(LPCSTR caSection);
-	virtual							~CSE_ALifeHelicopter();
-	virtual	void					load(NET_Packet& tNetPacket);
-	virtual bool					can_save() const;
-	virtual bool					used_ai_locations() const;
-	virtual ISE_Motion* motion();
-	virtual CSE_Abstract* cast_abstract() { return this; }
+SERVER_ENTITY_DECLARE_BEGIN4(CSE_ALifeHelicopter, CSE_ALifeDynamicObjectVisual, CSE_Motion, CSE_PHSkeleton, ISE_ALifeHelicopter)
+		
+									CSE_ALifeHelicopter		(LPCSTR caSection);
+	virtual							~CSE_ALifeHelicopter	();
+	virtual	void					load					(NET_Packet& tNetPacket);
+	virtual bool					can_save				() const;
+	virtual bool					used_ai_locations		() const;
+	virtual ISE_Motion*				motion					();
+	virtual CSE_Abstract*			cast_abstract			() { return this; }
 
-	SERVER_ENTITY_DECLARE_END
-		add_to_type_list(CSE_ALifeHelicopter)
+	EXRaySpawnPropertiesType		GetPropertiesType		() override { return EXRaySpawnPropertiesType::CSE_ALifeHelicopter; }
+	void*							QueryPropertiesInterface(EXRaySpawnPropertiesType InType) override;
+SERVER_ENTITY_DECLARE_END
+add_to_type_list(CSE_ALifeHelicopter)
 #define script_type_list save_type_list(CSE_ALifeHelicopter)
 
-		SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeCar, CSE_ALifeDynamicObjectVisual, CSE_PHSkeleton)
-		struct SDoorState
+SERVER_ENTITY_DECLARE_BEGIN3(CSE_ALifeCar, CSE_ALifeDynamicObjectVisual, CSE_PHSkeleton,ISE_ALifeCar)
+	struct SDoorState
 	{
 		void read(NET_Packet& P);
 		void write(NET_Packet& P);
@@ -528,56 +503,59 @@ public:
 	};
 	xr_vector<SDoorState>			door_states;
 	xr_vector<SWheelState>			wheel_states;
-	float							health;
-	CSE_ALifeCar(LPCSTR caSection);
-	virtual							~CSE_ALifeCar();
-	virtual bool					used_ai_locations() const;
-	virtual	void					load(NET_Packet& tNetPacket);
-	virtual bool					can_save() const;
-	virtual CSE_Abstract* cast_abstract() { return this; }
+									CSE_ALifeCar		(LPCSTR caSection);
+	virtual							~CSE_ALifeCar		();
+	virtual bool					used_ai_locations	() const;
+	virtual	void					load				(NET_Packet& tNetPacket);
+	virtual bool					can_save			() const;
+	virtual CSE_Abstract*			cast_abstract		() { return this; }
 protected:
-	virtual void					data_load(NET_Packet& tNetPacket);
-	virtual void					data_save(NET_Packet& tNetPacket);
-	SERVER_ENTITY_DECLARE_END
-		add_to_type_list(CSE_ALifeCar)
+	virtual void					data_load			(NET_Packet& tNetPacket);
+	virtual void					data_save			(NET_Packet& tNetPacket);
+
+	EXRaySpawnPropertiesType		GetPropertiesType		() override { return EXRaySpawnPropertiesType::CSE_ALifeCar; }
+	void*							QueryPropertiesInterface(EXRaySpawnPropertiesType InType) override;
+SERVER_ENTITY_DECLARE_END
+add_to_type_list(CSE_ALifeCar)
 #define script_type_list save_type_list(CSE_ALifeCar)
 
-		SERVER_ENTITY_DECLARE_BEGIN(CSE_ALifeObjectBreakable, CSE_ALifeDynamicObjectVisual)
-		float							m_health;
-	CSE_ALifeObjectBreakable(LPCSTR caSection);
-	virtual							~CSE_ALifeObjectBreakable();
-	virtual bool					used_ai_locations() const;
-	virtual bool					can_switch_offline() const;
-	SERVER_ENTITY_DECLARE_END
-		add_to_type_list(CSE_ALifeObjectBreakable)
+SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeObjectBreakable, CSE_ALifeDynamicObjectVisual,ISE_ALifeObjectBreakable)
+
+									CSE_ALifeObjectBreakable	(LPCSTR caSection);
+	virtual							~CSE_ALifeObjectBreakable	();
+	virtual bool					used_ai_locations			() const;
+	virtual bool					can_switch_offline			() const;
+	
+	EXRaySpawnPropertiesType		GetPropertiesType			() override { return EXRaySpawnPropertiesType::CSE_ALifeObjectBreakable; }
+	void*							QueryPropertiesInterface	(EXRaySpawnPropertiesType InType) override;
+SERVER_ENTITY_DECLARE_END
+add_to_type_list(CSE_ALifeObjectBreakable)
 #define script_type_list save_type_list(CSE_ALifeObjectBreakable)
 
-		SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeObjectClimable, CSE_Shape, CSE_ALifeDynamicObject)
-		CSE_ALifeObjectClimable(LPCSTR caSection);
+SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeObjectClimable, CSE_Shape, CSE_ALifeDynamicObject)
 	shared_str						material;
+									CSE_ALifeObjectClimable	(LPCSTR caSection);
 	virtual							~CSE_ALifeObjectClimable();
-	virtual bool					used_ai_locations() const;
-	virtual bool					can_switch_offline() const;
-	virtual ISE_Shape* shape();
+	virtual bool					used_ai_locations		() const;
+	virtual bool					can_switch_offline		() const;
+	virtual ISE_Shape*				shape					();
 
 #ifndef XRGAME_EXPORTS
-	virtual	void			set_additional_info(void* info);
+	virtual	void					set_additional_info		(void* info);
 #endif
-
-	SERVER_ENTITY_DECLARE_END
-
-		add_to_type_list(CSE_ALifeObjectClimable)
+SERVER_ENTITY_DECLARE_END
+add_to_type_list(CSE_ALifeObjectClimable)
 #define script_type_list save_type_list(CSE_ALifeObjectClimable)
 
-		SERVER_ENTITY_DECLARE_BEGIN(CSE_ALifeMountedWeapon, CSE_ALifeDynamicObjectVisual)
-		CSE_ALifeMountedWeapon(LPCSTR caSection);
-	virtual							~CSE_ALifeMountedWeapon();
-	SERVER_ENTITY_DECLARE_END
-		add_to_type_list(CSE_ALifeMountedWeapon)
+SERVER_ENTITY_DECLARE_BEGIN(CSE_ALifeMountedWeapon, CSE_ALifeDynamicObjectVisual)
+									CSE_ALifeMountedWeapon	(LPCSTR caSection);
+	virtual							~CSE_ALifeMountedWeapon	();
+SERVER_ENTITY_DECLARE_END
+add_to_type_list(CSE_ALifeMountedWeapon)
 #define script_type_list save_type_list(CSE_ALifeMountedWeapon)
 
-		SERVER_ENTITY_DECLARE_BEGIN(CSE_ALifeStationaryMgun, CSE_ALifeDynamicObjectVisual)
-		bool							m_bWorking;
+SERVER_ENTITY_DECLARE_BEGIN(CSE_ALifeStationaryMgun, CSE_ALifeDynamicObjectVisual)
+bool							m_bWorking;
 	Fvector							m_destEnemyDir;
 
 	CSE_ALifeStationaryMgun(LPCSTR caSection);

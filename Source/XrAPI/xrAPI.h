@@ -41,8 +41,6 @@ class XRayMemoryInterface;
 extern XRAPI_API XRayMemoryInterface*MemoryInterface;
 
 #ifndef SHIPPING
-class XrGameEditorInterface;
-extern XRAPI_API XrGameEditorInterface* GameEditor;
 class XrEditorSceneInterface;
 extern XRAPI_API XrEditorSceneInterface* EditorScene;
 #endif

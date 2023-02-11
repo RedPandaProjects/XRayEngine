@@ -40,12 +40,7 @@ struct	SRotation
 	SRotation(float y, float p, float r) { yaw=y;pitch=p;roll=r; }
 };
 
-enum EPOType {
-	epotBox,
-	epotFixedChain,
-    epotFreeChain,
-    epotSkeleton
-};
+
 
 DEFINE_VECTOR	(u32,						DWORD_VECTOR,					DWORD_IT);
 DEFINE_VECTOR	(bool,						BOOL_VECTOR,					BOOL_IT);

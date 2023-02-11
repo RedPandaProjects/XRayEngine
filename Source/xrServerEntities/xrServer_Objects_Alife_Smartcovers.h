@@ -16,7 +16,7 @@
 
 class CSE_ALifeDynamicObject;
 
-SERVER_ENTITY_DECLARE_BEGIN2(CSE_SmartCover,CSE_ALifeDynamicObject,CSE_Shape)
+SERVER_ENTITY_DECLARE_BEGIN3(CSE_SmartCover,CSE_ALifeDynamicObject,CSE_Shape,ISE_SmartCover)
 public:
 	struct SSCDrawHelper{
 		shared_str		string_identifier;
@@ -29,12 +29,6 @@ public:
 		shared_str		animation_id;
 	};
 	xr_vector<SSCDrawHelper>		m_draw_data;
-	shared_str						m_description;
-	float							m_hold_position_time;
-	float							m_enter_min_enemy_distance;
-	float							m_exit_min_enemy_distance;
-	BOOL							m_is_combat_cover;
-	BOOL							m_can_fire;
 	bool							m_need_to_reparse_loopholes;
 #ifndef AI_COMPILER
 	luabind::object					m_available_loopholes;
@@ -44,9 +38,6 @@ public:
 private:
 	typedef xr_vector<visual_data>	visuals_collection;
 
-	void 					OnChangeDescription				(PropValue* sender);
-	void 					OnChangeLoopholes				(PropValue* sender);
-	void							set_loopholes_table_checker		(BOOLValue *value);
 
 private:
 	mutable visuals_collection		m_visuals;
@@ -54,32 +45,39 @@ private:
 
 
 public:
-	CSE_SmartCover			(LPCSTR caSection);
-	virtual							~CSE_SmartCover			();
-	virtual ISE_Shape*  	shape					();
-	virtual bool					used_ai_locations		() const;
-	virtual bool					can_save				() const;
-	virtual bool					can_switch_online		() const;
-	virtual bool					can_switch_offline		() const;
-	virtual bool					interactive				() const;
-	LPCSTR					description				() const;
+								CSE_SmartCover			(LPCSTR caSection);
+	virtual						~CSE_SmartCover			();
+	virtual ISE_Shape*  		shape					();
+	virtual bool				used_ai_locations		() const;
+	virtual bool				can_save				() const;
+	virtual bool				can_switch_online		() const;
+	virtual bool				can_switch_offline		() const;
+	virtual bool				interactive				() const;
+	LPCSTR						description				() const;
 #ifndef AI_COMPILER
-	void					set_available_loopholes (luabind::object table);
+	void						set_available_loopholes (luabind::object table);
 #endif // #ifndef AI_COMPILER
 #ifdef XRSEFACTORY_EXPORTS
-	virtual void 			on_render				(CDUInterface* du, ISE_AbstractLEOwner* owner, bool bSelected, const Fmatrix& parent,int priority, bool strictB2F);
-	virtual	visual_data*	visual_collection		() const { return &*m_visuals.begin(); }
-	virtual	u32				visual_collection_size	() const { return m_visuals.size(); }
+	virtual void 				on_render				(CDUInterface* du, ISE_AbstractLEOwner* owner, bool bSelected, const Fmatrix& parent,int priority, bool strictB2F);
+	virtual	visual_data*		visual_collection		() const { return &*m_visuals.begin(); }
+	virtual	u32					visual_collection_size	() const { return m_visuals.size(); }
 #endif // #ifdef XRSEFACTORY_EXPORTS
 
-private:
-	void					check_enterable_loopholes(shared_str const &description);
-	void					set_enterable			(shared_str const &id);
-	void					fill_visuals			();
-	void					load_draw_data			();
+	virtual	void				refresh_loopholes		();
 
-	SERVER_ENTITY_DECLARE_END
-		add_to_type_list(CSE_SmartCover)
+	void 						OnChangeDescription		() override;
+	void 						OnChangeLoopholes		() override;
+	void						OnFillProperties		() override;
+private:
+	void						check_enterable_loopholes(shared_str const &description);
+	void						set_enterable			(shared_str const &id);
+	void						fill_visuals			();
+	void						load_draw_data			();
+
+	EXRaySpawnPropertiesType	GetPropertiesType		() override { return EXRaySpawnPropertiesType::CSE_SmartCover; }
+	void*						QueryPropertiesInterface(EXRaySpawnPropertiesType InType) override;
+SERVER_ENTITY_DECLARE_END
+add_to_type_list(CSE_SmartCover)
 #define script_type_list save_type_list(CSE_SmartCover)
 #pragma warning(pop)
 #endif

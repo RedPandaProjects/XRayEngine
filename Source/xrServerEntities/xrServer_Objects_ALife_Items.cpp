@@ -577,7 +577,7 @@ u32	CSE_ALifeItemWeapon::ef_weapon_type() const
 
 void CSE_ALifeItemWeapon::UPDATE_Read(NET_Packet& tNetPacket)
 {
-	inherited::UPDATE_Read(tNetPacket);
+	inherited1::UPDATE_Read(tNetPacket);
 
 	tNetPacket.r_float_q8(m_fCondition, 0.0f, 1.0f);
 	tNetPacket.r_u8(wpn_flags);
@@ -595,7 +595,7 @@ void CSE_ALifeItemWeapon::clone_addons(CSE_ALifeItemWeapon* parent)
 
 void CSE_ALifeItemWeapon::UPDATE_Write(NET_Packet& tNetPacket)
 {
-	inherited::UPDATE_Write(tNetPacket);
+	inherited1::UPDATE_Write(tNetPacket);
 
 	tNetPacket.w_float_q8(m_fCondition, 0.0f, 1.0f);
 	tNetPacket.w_u8(wpn_flags);
@@ -608,7 +608,7 @@ void CSE_ALifeItemWeapon::UPDATE_Write(NET_Packet& tNetPacket)
 
 void CSE_ALifeItemWeapon::STATE_Read(NET_Packet& tNetPacket, u16 size)
 {
-	inherited::STATE_Read(tNetPacket, size);
+	inherited1::STATE_Read(tNetPacket, size);
 	tNetPacket.r_u16(a_current);
 	tNetPacket.r_u16(a_elapsed);
 	tNetPacket.r_u8(wpn_state);
@@ -625,7 +625,7 @@ void CSE_ALifeItemWeapon::STATE_Read(NET_Packet& tNetPacket, u16 size)
 
 void CSE_ALifeItemWeapon::STATE_Write(NET_Packet& tNetPacket)
 {
-	inherited::STATE_Write(tNetPacket);
+	inherited1::STATE_Write(tNetPacket);
 	tNetPacket.w_u16(a_current);
 	tNetPacket.w_u16(a_elapsed);
 	tNetPacket.w_u8(wpn_state);
@@ -636,7 +636,7 @@ void CSE_ALifeItemWeapon::STATE_Write(NET_Packet& tNetPacket)
 
 void CSE_ALifeItemWeapon::OnEvent(NET_Packet& tNetPacket, u16 type, u32 time, ClientID sender)
 {
-	inherited::OnEvent(tNetPacket, type, time, sender);
+	inherited1::OnEvent(tNetPacket, type, time, sender);
 	switch (type) {
 	case GE_WPN_STATE_CHANGE:
 	{
@@ -685,13 +685,13 @@ BOOL CSE_ALifeItemWeapon::Net_Relevant()
 	if (wpn_flags == 1)
 		return TRUE;
 
-	return inherited::Net_Relevant();
+	return inherited1::Net_Relevant();
 }
 
 #ifndef XRGAME_EXPORTS
 void CSE_ALifeItemWeapon::FillProps(LPCSTR pref, PropItemVec& items)
 {
-	inherited::FillProps(pref, items);
+	inherited1::FillProps(pref, items);
 	PHelper().CreateU8(items, PrepareKey(pref, *s_name, "Ammo type:"), &ammo_type, 0, 255, 1);
 	PHelper().CreateU16(items, PrepareKey(pref, *s_name, "Ammo: in magazine"), &a_elapsed, 0, 30, 1);
 
@@ -705,7 +705,17 @@ void CSE_ALifeItemWeapon::FillProps(LPCSTR pref, PropItemVec& items)
 	if (m_grenade_launcher_status == ALife::eAddonAttachable)
 		PHelper().CreateFlag8(items, PrepareKey(pref, *s_name, "Addons\\Podstvolnik"), &m_addon_flags, eWeaponAddonGrenadeLauncher);
 }
+
+
 #endif // #ifndef XRGAME_EXPORTS
+void* CSE_ALifeItemWeapon::QueryPropertiesInterface(EXRaySpawnPropertiesType InType)
+{
+	if (InType == EXRaySpawnPropertiesType::CSE_ALifeItemWeapon)
+	{
+		return reinterpret_cast<void*>(static_cast<ISE_ALifeItemWeapon*>(this));
+	}
+	return inherited1::QueryPropertiesInterface(InType);
+}
 
 ////////////////////////////////////////////////////////////////////////////
 // CSE_ALifeItemWeaponShotGun
@@ -884,45 +894,56 @@ CSE_ALifeItemAmmo::~CSE_ALifeItemAmmo()
 
 void CSE_ALifeItemAmmo::STATE_Read(NET_Packet& tNetPacket, u16 size)
 {
-	inherited::STATE_Read(tNetPacket, size);
+	inherited1::STATE_Read(tNetPacket, size);
 	tNetPacket.r_u16(a_elapsed);
 }
 
 void CSE_ALifeItemAmmo::STATE_Write(NET_Packet& tNetPacket)
 {
-	inherited::STATE_Write(tNetPacket);
+	inherited1::STATE_Write(tNetPacket);
 	tNetPacket.w_u16(a_elapsed);
 }
 
 void CSE_ALifeItemAmmo::UPDATE_Read(NET_Packet& tNetPacket)
 {
-	inherited::UPDATE_Read(tNetPacket);
+	inherited1::UPDATE_Read(tNetPacket);
 
 	tNetPacket.r_u16(a_elapsed);
 }
 
 void CSE_ALifeItemAmmo::UPDATE_Write(NET_Packet& tNetPacket)
 {
-	inherited::UPDATE_Write(tNetPacket);
+	inherited1::UPDATE_Write(tNetPacket);
 
 	tNetPacket.w_u16(a_elapsed);
 }
 
 #ifndef XRGAME_EXPORTS
-void CSE_ALifeItemAmmo::FillProps(LPCSTR pref, PropItemVec& values) {
-	inherited::FillProps(pref, values);
+void CSE_ALifeItemAmmo::FillProps(LPCSTR pref, PropItemVec& values) 
+{
+	inherited1::FillProps(pref, values);
 	PHelper().CreateU16(values, PrepareKey(pref, *s_name, "Ammo: left"), &a_elapsed, 0, m_boxSize, m_boxSize);
 }
 #endif // #ifndef XRGAME_EXPORTS
 
 bool CSE_ALifeItemAmmo::can_switch_online() const
 {
-	return inherited::can_switch_online();
+	return inherited1::can_switch_online();
 }
 
 bool CSE_ALifeItemAmmo::can_switch_offline() const
 {
-	return (inherited::can_switch_offline() && a_elapsed != 0);
+	return (inherited1::can_switch_offline() && a_elapsed != 0);
+}
+
+void* CSE_ALifeItemAmmo::QueryPropertiesInterface(EXRaySpawnPropertiesType InType)
+{
+	if (InType == EXRaySpawnPropertiesType::CSE_ALifeItemAmmo)
+	{
+		return reinterpret_cast<void*>(static_cast<ISE_ALifeItemAmmo*>(this));
+	}
+	return inherited1::QueryPropertiesInterface(InType);
+
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -984,28 +1005,28 @@ CSE_ALifeItemArtefact::~CSE_ALifeItemArtefact()
 
 void CSE_ALifeItemArtefact::STATE_Read(NET_Packet& tNetPacket, u16 size)
 {
-	inherited::STATE_Read(tNetPacket, size);
+	inherited1::STATE_Read(tNetPacket, size);
 }
 
 void CSE_ALifeItemArtefact::STATE_Write(NET_Packet& tNetPacket)
 {
-	inherited::STATE_Write(tNetPacket);
+	inherited1::STATE_Write(tNetPacket);
 }
 
 void CSE_ALifeItemArtefact::UPDATE_Read(NET_Packet& tNetPacket)
 {
-	inherited::UPDATE_Read(tNetPacket);
+	inherited1::UPDATE_Read(tNetPacket);
 }
 
 void CSE_ALifeItemArtefact::UPDATE_Write(NET_Packet& tNetPacket)
 {
-	inherited::UPDATE_Write(tNetPacket);
+	inherited1::UPDATE_Write(tNetPacket);
 }
 
 #ifndef XRGAME_EXPORTS
 void CSE_ALifeItemArtefact::FillProps(LPCSTR pref, PropItemVec& items)
 {
-	inherited::FillProps(pref, items);
+	inherited1::FillProps(pref, items);
 	PHelper().CreateFloat(items, PrepareKey(pref, *s_name, "Anomaly value:"), &m_fAnomalyValue, 0.f, 200.f);
 }
 #endif // #ifndef XRGAME_EXPORTS
@@ -1016,6 +1037,15 @@ BOOL CSE_ALifeItemArtefact::Net_Relevant()
 		return TRUE;
 
 	return FALSE;
+}
+
+void* CSE_ALifeItemArtefact::QueryPropertiesInterface(EXRaySpawnPropertiesType InType)
+{
+	if (InType == EXRaySpawnPropertiesType::CSE_ALifeItemArtefact)
+	{
+		return reinterpret_cast<void*>(static_cast<ISE_ALifeItemArtefact*>(this));
+	}
+	return inherited1::QueryPropertiesInterface(InType);
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -1104,7 +1134,7 @@ CSE_ALifeItemDocument::~CSE_ALifeItemDocument()
 
 void CSE_ALifeItemDocument::STATE_Read(NET_Packet& tNetPacket, u16 size)
 {
-	inherited::STATE_Read(tNetPacket, size);
+	inherited1::STATE_Read(tNetPacket, size);
 
 	if (m_wVersion < 98) {
 		u16 tmp;
@@ -1117,29 +1147,39 @@ void CSE_ALifeItemDocument::STATE_Read(NET_Packet& tNetPacket, u16 size)
 
 void CSE_ALifeItemDocument::STATE_Write(NET_Packet& tNetPacket)
 {
-	inherited::STATE_Write(tNetPacket);
+	inherited1::STATE_Write(tNetPacket);
 	tNetPacket.w_stringZ(m_wDoc);
 }
 
 void CSE_ALifeItemDocument::UPDATE_Read(NET_Packet& tNetPacket)
 {
-	inherited::UPDATE_Read(tNetPacket);
+	inherited1::UPDATE_Read(tNetPacket);
 }
 
 void CSE_ALifeItemDocument::UPDATE_Write(NET_Packet& tNetPacket)
 {
-	inherited::UPDATE_Write(tNetPacket);
+	inherited1::UPDATE_Write(tNetPacket);
 }
 
 #ifndef XRGAME_EXPORTS
 void CSE_ALifeItemDocument::FillProps(LPCSTR pref, PropItemVec& items)
 {
-	inherited::FillProps(pref, items);
+	inherited1::FillProps(pref, items);
 	//	PHelper().CreateU16			(items, PrepareKey(pref, *s_name, "Document index :"), &m_wDocIndex, 0, 65535);
 	PHelper().CreateRText(items, PrepareKey(pref, *s_name, "Info portion :"), &m_wDoc);
 }
+
+
 #endif // #ifndef XRGAME_EXPORTS
 
+void* CSE_ALifeItemDocument::QueryPropertiesInterface(EXRaySpawnPropertiesType InType)
+{
+	if (InType == EXRaySpawnPropertiesType::CSE_ALifeItemDocument)
+	{
+		return reinterpret_cast<void*>(static_cast<ISE_ALifeItemDocument*>(this));
+	}
+	return inherited1::QueryPropertiesInterface(InType);
+}
 ////////////////////////////////////////////////////////////////////////////
 // CSE_ALifeItemGrenade
 ////////////////////////////////////////////////////////////////////////////

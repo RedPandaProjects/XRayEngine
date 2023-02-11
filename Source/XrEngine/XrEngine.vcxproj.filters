@@ -738,7 +738,7 @@
     <ClInclude Include="XrGameMaterialLibraryInterface.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="XrGameEditorInterface.h">
+    <ClInclude Include="XRaySEFactoryInterface.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="XrEditorSceneInterface.h">
@@ -927,7 +927,7 @@
     <ClInclude Include="XrISEALifeObject.h">
       <Filter>Game API\Server</Filter>
     </ClInclude>
-    <ClInclude Include="XrISEALifeCreatureActor.h">
+    <ClInclude Include="XrISEALifeCreatureAbstract.h">
       <Filter>Game API\Server</Filter>
     </ClInclude>
     <ClInclude Include="XrISEALifeDynamicObject.h">
@@ -951,6 +951,21 @@
     <ClInclude Include="Engine.h" />
     <ClInclude Include="XRayUnrealProxyInterface.h">
       <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="XrISEALifeObjectHangingLamp.h">
+      <Filter>Game API\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="XrISEALifeInventoryItem.h">
+      <Filter>Game API\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="XrISEALifeItem.h">
+      <Filter>Game API\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="XrISEALifeDynamicObjectVisual.h">
+      <Filter>Game API\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="XrISEALifeSmartCover.h">
+      <Filter>Game API\Server</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1287,7 +1302,7 @@
     <ClCompile Include="BoneEditor.cpp">
       <Filter>Game API\Animator</Filter>
     </ClCompile>
-    <ClCompile Include="XrGameEditorInterface.cpp">
+    <ClCompile Include="XRaySEFactoryInterface.cpp">
       <Filter>Interfaces</Filter>
     </ClCompile>
     <ClCompile Include="XrEditorSceneInterface.cpp">

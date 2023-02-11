@@ -15,7 +15,6 @@ XRAPI_API	bool g_dedicated_server = false;
 XRAPI_API XrGameMaterialLibraryInterface* GameMaterialLibrary = NULL;
 XRAPI_API XRayMemoryInterface* MemoryInterface = NULL;
 #ifndef SHIPPING
-XRAPI_API XrGameEditorInterface* GameEditor = NULL;
 XRAPI_API XrEditorSceneInterface* EditorScene = NULL;
 #endif
 	XRAPI_API IDebugRender*	DRender = NULL;

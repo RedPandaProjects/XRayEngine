@@ -310,7 +310,6 @@ BOOL CCustomZone::net_Spawn(CSE_Abstract* DC)
 		if(m_zone_flags.test(eIdleLightVolumetric))
 		{
 			//m_pIdleLight->set_type				(IRender_Light::SPOT);
-			m_pIdleLight->set_volumetric		(true);
 		}
 	}
 	else

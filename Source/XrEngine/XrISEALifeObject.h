@@ -1,9 +1,14 @@
 #pragma once
-#include "XrISEALifeCreatureActor.h"
+#include "XrISEALifeCreatureAbstract.h"
 #include "XrISEALifeDynamicObject.h"
 #include "XrISEALifeLevelChanger.h"
 #include "XrISEALifeSpaceRestrictor.h"
 #include "XrISEALifeAnomalousZone.h"
+#include "XrISEALifeObjectHangingLamp.h"
+#include "XrISEALifeInventoryItem.h"
+#include "XrISEALifeItem.h"
+#include "XrISEALifeDynamicObjectVisual.h"
+#include "XrISEALifeSmartCover.h"
 #include "alife_space.h"
 #include "game_graph_space.h"
 class ISE_ALifeObject
@@ -24,19 +29,19 @@ public:
 		flUseSmartTerrains = u32(1) << 11,
 		flCheckForSeparator = u32(1) << 12,
 	};
-	GameGraph::_GRAPH_ID			m_tGraphID;
-	float							m_fDistance;
-	bool							m_bOnline;
-	bool							m_bDirectControl;
-	u32								m_tNodeID;
-	flags32							m_flags;
-	ALife::_STORY_ID				m_story_id;
-	ALife::_SPAWN_STORY_ID			m_spawn_story_id;
-	virtual ISE_ALifeDynamicObject* CastALifeDynamicObject() { return 0; }
-	virtual ISE_ALifeCreatureActor* CastALifeCreatureActor() { return 0; }
-	virtual ISE_ALifeLevelChanger* CastALifeLevelChanger() { return 0; }
-	virtual ISE_ALifeSpaceRestrictor* CastALifeSpaceRestricto() { return 0; }
-	virtual ISE_ALifeAnomalousZone* CastALifeAnomalousZone() { return 0; }
-	virtual class ISE_Abstract* CastAbstract() = 0;
-	virtual bool					used_ai_locations() const = 0;
+	GameGraph::_GRAPH_ID				m_tGraphID;
+	float								m_fDistance;
+	bool								m_bOnline;
+	bool								m_bDirectControl;
+	u32									m_tNodeID;
+	flags32								m_flags;
+	ALife::_STORY_ID					m_story_id;
+	ALife::_SPAWN_STORY_ID				m_spawn_story_id;
+	virtual ISE_ALifeDynamicObject*		CastALifeDynamicObject	() { return 0; }
+	virtual ISE_ALifeCreatureActor*		CastALifeCreatureActor	() { return 0; }
+	virtual ISE_ALifeLevelChanger*		CastALifeLevelChanger	() { return 0; }
+	virtual ISE_ALifeSpaceRestrictor*	CastALifeSpaceRestricto	() { return 0; }
+	virtual ISE_ALifeAnomalousZone*		CastALifeAnomalousZone	() { return 0; }
+	virtual class ISE_Abstract*			CastAbstract			() = 0;
+	virtual bool						used_ai_locations		() const = 0;
 };

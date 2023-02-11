@@ -176,7 +176,7 @@ void CSE_SmartCover::FillProps(LPCSTR pref, PropItemVec& items)
 #	ifdef XRSEFACTORY_EXPORTS
 	PHelper().CreateFloat(items, PrepareKey(pref, *s_name, "hold position time"), &m_hold_position_time, 0.f, 60.f);
 	RListValue* value = PHelper().CreateRList(items, PrepareKey(pref, *s_name, "description"), &m_description, &*fp_data.smart_covers.begin(), fp_data.smart_covers.size());
-	value->OnChangeEvent.bind(this, &CSE_SmartCover::OnChangeDescription);
+
 
 	PHelper().CreateFloat(items, PrepareKey(pref, *s_name, "enter min enemy distance"), &m_enter_min_enemy_distance, 0.f, 100.f);
 	PHelper().CreateFloat(items, PrepareKey(pref, *s_name, "exit min enemy distance"), &m_exit_min_enemy_distance, 0.f, 100.f);
@@ -188,23 +188,31 @@ void CSE_SmartCover::FillProps(LPCSTR pref, PropItemVec& items)
 #	endif // #ifdef XRSEFACTORY_EXPORTS
 }
 #endif // #ifndef XRGAME_EXPORTS
-
+void CSE_SmartCover::OnChangeLoopholes()
+{
 #ifdef XRSEFACTORY_EXPORTS
-void CSE_SmartCover::set_loopholes_table_checker(BOOLValue* value) {
-	value->OnChangeEvent.bind(this, &CSE_SmartCover::OnChangeLoopholes);
-}
-
-void CSE_SmartCover::OnChangeLoopholes(PropValue* sender)
-{
-	CScriptValueContainer::assign();
-	m_need_to_reparse_loopholes = true;
-}
-
-void CSE_SmartCover::OnChangeDescription(PropValue* sender)
-{
+	if (m_available_loopholes.is_valid())
+	{
+		for (auto& [Key, Value] : EditorLoopholes)
+		{
+			m_available_loopholes[Key.c_str()] = Value;
+		}
+	}
 	set_editor_flag(flVisualChange);
 	load_draw_data();
+#endif
 }
+
+void CSE_SmartCover::OnChangeDescription()
+{
+#ifdef XRSEFACTORY_EXPORTS
+	set_editor_flag(flVisualChange);
+	set_editor_flag(flUpdateProperties);
+	load_draw_data();
+#endif
+}
+#ifdef XRSEFACTORY_EXPORTS
+
 
 LPCSTR parse_string(luabind::object const& table, LPCSTR identifier)
 {
@@ -420,15 +428,15 @@ void draw_frustum(CDUInterface* du, float FOV, float _FAR, float A, Fvector& P, 
 	_F[2].mad(COP, ProjDirs[2], _FAR);
 	_F[3].mad(COP, ProjDirs[3], _FAR);
 
-	du->DrawLine(COP, _F[0], CL);
-	du->DrawLine(COP, _F[1], CL);
-	du->DrawLine(COP, _F[2], CL);
-	du->DrawLine(COP, _F[3], CL);
+	//du->DrawLine(COP, _F[0], CL);
+	//du->DrawLine(COP, _F[1], CL);
+	//du->DrawLine(COP, _F[2], CL);
+	//du->DrawLine(COP, _F[3], CL);
 
-	du->DrawLine(_F[0], _F[1], CL);
-	du->DrawLine(_F[1], _F[2], CL);
-	du->DrawLine(_F[2], _F[3], CL);
-	du->DrawLine(_F[3], _F[0], CL);
+	//du->DrawLine(_F[0], _F[1], CL);
+	//du->DrawLine(_F[1], _F[2], CL);
+	//du->DrawLine(_F[2], _F[3], CL);
+	//du->DrawLine(_F[3], _F[0], CL);
 }
 
 shared_str animation_id(luabind::object table)
@@ -560,7 +568,7 @@ void CSE_SmartCover::on_render(CDUInterface* du, ISE_AbstractLEOwner* owner, boo
 
 	if (m_need_to_reparse_loopholes && m_description.size())
 	{
-		OnChangeDescription(NULL);
+		OnChangeDescription();
 		m_need_to_reparse_loopholes = false;
 	}
 
@@ -575,7 +583,7 @@ void CSE_SmartCover::on_render(CDUInterface* du, ISE_AbstractLEOwner* owner, boo
 		Fvector pos = H.point_position;
 		parent.transform_tiny(pos);
 
-		du->OutText(pos, H.string_identifier.c_str(), color_rgba(255, 255, 255, 255));
+		//du->OutText(pos, H.string_identifier.c_str(), color_rgba(255, 255, 255, 255));
 
 		//du->DrawBox(H.point_position,Fvector().set(0.2f,0.2f,0.2f),TRUE,TRUE,color_rgba(255,0,0,80),color_rgba(0,255,0,255));
 		//du->DrawFlag(H.point_position, 0, 1.0f, 1, 1, color_rgba(0,255,0,255), FALSE);
@@ -587,4 +595,36 @@ void CSE_SmartCover::on_render(CDUInterface* du, ISE_AbstractLEOwner* owner, boo
 		draw_frustum(du, H.fov, H.range, 1.f, pos, dir, up, color_rgba(255, 0, 0, 255));
 	}
 }
+
 #endif // #ifdef XRSEFACTORY_EXPORTS
+
+
+void CSE_SmartCover::refresh_loopholes()
+{
+
+}
+
+void* CSE_SmartCover::QueryPropertiesInterface(EXRaySpawnPropertiesType InType)
+{
+	if (InType == EXRaySpawnPropertiesType::CSE_SmartCover)
+	{
+		return reinterpret_cast<void*>(static_cast<ISE_SmartCover*>(this));
+	}
+	return inherited1::QueryPropertiesInterface(InType);
+}
+
+void CSE_SmartCover::OnFillProperties()
+{
+	refresh_loopholes();
+	EditorLoopholes.clear();
+	if (m_available_loopholes.is_valid()) 
+	{
+		luabind::object::iterator	i = m_available_loopholes.begin();
+		luabind::object::iterator	e = m_available_loopholes.end();
+		for (; i != e; ++i) 
+		{
+			EditorLoopholes.insert(std::make_pair<shared_str, bool>(luabind::object_cast<LPCSTR>(i.key()), luabind::object_cast<bool>(*i)));
+		}
+	}
+
+}

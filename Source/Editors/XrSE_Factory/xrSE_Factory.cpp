@@ -30,61 +30,17 @@ extern CSE_Abstract *F_entity_Create	(LPCSTR section);
 
 extern CScriptPropertiesListHelper	*g_property_list_helper;
 
-#ifdef NDEBUG
-
-
-
-#endif // #ifdef NDEBUG
 
 extern SFillPropData			fp_data;
 void setup_luabind_allocator();
-extern "C" {
-	FACTORY_API	ISE_Abstract* __cdecl create_entity(LPCSTR section)
+XRaySEFactory GSEFactory;
+extern "C" 
+{
+	FACTORY_API	XRaySEFactoryInterface* __cdecl GetSEFactoryInterface()
 	{
-		return					(F_entity_Create(section));
+		return &GSEFactory;
 	}
 
-	FACTORY_API	void		__cdecl destroy_entity(ISE_Abstract*& abstract)
-	{
-		CSE_Abstract* object = smart_cast<CSE_Abstract*>(abstract);
-		F_entity_Destroy(object);
-		abstract = 0;
-	}
-	FACTORY_API	void __cdecl initialize()
-	{
-		string_path					SYSTEM_LTX;
-		FS.update_path(SYSTEM_LTX, "$game_config$", "system.ltx");
-		pSettings = xr_new<CInifile>(SYSTEM_LTX);
-
-		setup_luabind_allocator();
-
-		CCharacterInfo::InitInternal();
-		CSpecificCharacter::InitInternal();
-	}
-	FACTORY_API void __cdecl reload()
-	{
-		if (fp_data.counter)
-		{
-
-			fp_data.unload();
-			fp_data.load();
-		}
-	}
-	FACTORY_API	void __cdecl destroy()
-	{
-		CCharacterInfo::DeleteSharedData();
-		CCharacterInfo::DeleteIdToIndexData();
-		CSpecificCharacter::DeleteSharedData();
-		CSpecificCharacter::DeleteIdToIndexData();
-
-
-		xr_delete(g_object_factory);
-		CInifile** s = (CInifile**)(&pSettings);
-		xr_delete(*s);
-		xr_delete(g_property_list_helper);
-		xr_delete(g_ai_space);
-		xr_delete(g_object_factory);
-	}
 }
 //typedef void DUMMY_STUFF (const void*,const u32&,void*);
 //XRCORE_API DUMMY_STUFF	*g_temporary_stuff;
@@ -107,4 +63,91 @@ void _destroy_item_data_vector_cont(T_VECTOR* vec)
 			_tmp.push_back	((*it)._xml);
 	}
 	delete_data	(_tmp);
+}
+
+XRaySEFactory::XRaySEFactory()
+{
+
+}
+
+XRaySEFactory::~XRaySEFactory()
+{
+
+}
+
+void XRaySEFactory::Create()
+{
+	string_path					SYSTEM_LTX;
+	FS.update_path(SYSTEM_LTX, "$game_config$", "system.ltx");
+	pSettings = xr_new<CInifile>(SYSTEM_LTX);
+
+	setup_luabind_allocator();
+
+	CCharacterInfo::InitInternal();
+	CSpecificCharacter::InitInternal();
+	fp_data.inc();
+}
+
+void XRaySEFactory::Destroy()
+{
+	fp_data.dec();
+	R_ASSERT(fp_data.counter == 0);
+	CCharacterInfo::DeleteSharedData();
+	CCharacterInfo::DeleteIdToIndexData();
+	CSpecificCharacter::DeleteSharedData();
+	CSpecificCharacter::DeleteIdToIndexData();
+
+
+	xr_delete(g_object_factory);
+	CInifile** s = (CInifile**)(&pSettings);
+	xr_delete(*s);
+	xr_delete(g_property_list_helper);
+	xr_delete(g_ai_space);
+	xr_delete(g_object_factory);
+}
+
+class ISE_Abstract* XRaySEFactory::CreateEntity(const char* SectionName)
+{
+	return					(F_entity_Create(SectionName));
+}
+
+void XRaySEFactory::DestroyEntity(ISE_Abstract* Entity)
+{
+	CSE_Abstract* object = smart_cast<CSE_Abstract*>(Entity);
+	F_entity_Destroy(object);
+}
+
+const RTokenVec& XRaySEFactory::GetLocations(int ID)
+{
+	return fp_data.locations[ID];
+}
+
+const RStringVec& XRaySEFactory::GetLevelIDS()
+{
+	return fp_data.level_ids;
+}
+
+const RTokenVec& XRaySEFactory::GetStoryNames()
+{
+	return fp_data.story_names;
+}
+
+const RTokenVec& XRaySEFactory::GetSpawnStoryNames()
+{
+	return fp_data.spawn_story_names;
+}
+
+const RStringVec& XRaySEFactory::GetCharacterProfiles()
+{
+	return fp_data.character_profiles;
+}
+
+const RStringVec& XRaySEFactory::GetSmartCovers()
+{
+	return fp_data.smart_covers;
+}
+
+const xr_map<shared_str, u32>& XRaySEFactory::GetLocationColors()
+{
+	return fp_data.location_colors;
 }

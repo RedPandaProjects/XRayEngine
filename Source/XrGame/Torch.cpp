@@ -230,7 +230,7 @@ BOOL CTorch::net_Spawn(CSE_Abstract* DC)
 	light_omni->set_range	(range_o);
 
 	light_render->set_cone	(deg2rad(pUserData->r_float			("torch_definition","spot_angle")));
-	light_render->set_texture(pUserData->r_string				("torch_definition","spot_texture"));
+	light_render->set_material(pUserData->r_string				("torch_definition","spot_texture"));
 
 	glow_render->set_texture(pUserData->r_string				("torch_definition","glow_texture"));
 	glow_render->set_color	(clr);
@@ -383,9 +383,10 @@ void CTorch::UpdateCL()
 
 	Fcolor					fclr;
 	fclr.set				((float)color_get_B(clr),(float)color_get_G(clr),(float)color_get_R(clr),1.f);
-	fclr.mul_rgb			(fBrightness/255.f);
+	//fclr.mul_rgb			(fBrightness/255.f);
 	if (can_use_dynamic_lights())
 	{
+		light_render->set_intensity(fBrightness);
 		light_render->set_color	(fclr);
 		light_omni->set_color	(fclr);
 	}

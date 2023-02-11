@@ -162,8 +162,9 @@
 //       CSE_ALifeTraderAbstract		added property m_deadbody_can_take, m_deadbody_closed
 // 127	 CSE_ALifeObjectClimable		added material;
 // 128	 CSE_ALifeObjectClimable		added can_fire in smart covers;
+// 129	 CSE_ALifeObjectHangingLamp		fix for ue5
 //------------------------------------------------------------------------------
-#define SPAWN_VERSION	u16(128)
+#define SPAWN_VERSION	u16(129)
 
 SERVER_ENTITY_DECLARE_BEGIN(CSE_Shape,ISE_Shape)
 public:

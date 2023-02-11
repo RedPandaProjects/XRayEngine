@@ -21,7 +21,7 @@
 
 class CSE_ALifeItemAmmo;
 
-SERVER_ENTITY_DECLARE_BEGIN0(CSE_ALifeInventoryItem)
+SERVER_ENTITY_DECLARE_BEGIN(CSE_ALifeInventoryItem, ISE_ALifeInventoryItem)
 public:
 	enum {
 		inventory_item_state_enabled	= u8(1) << 0,
@@ -38,7 +38,6 @@ public:
 	};
 
 public:
-	float							m_fCondition;
 	float							m_fMass;
 	u32								m_dwCost;
 	s32								m_iHealthValue;
@@ -100,6 +99,7 @@ SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeItem,CSE_ALifeDynamicObjectVisual,CSE_ALif
 	virtual CSE_ALifeInventoryItem	*cast_inventory_item	() {return this;};
 	virtual BOOL					Net_Relevant			();
 	virtual void					OnEvent					(NET_Packet &tNetPacket, u16 type, u32 time, ClientID sender );
+	ISE_ALifeInventoryItem*			CastALifeInventoryItem	() override { return this; }
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeItem)
 #define script_type_list save_type_list(CSE_ALifeItem)
@@ -122,8 +122,7 @@ SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeItemTorch)
 #define script_type_list save_type_list(CSE_ALifeItemTorch)
 
-SERVER_ENTITY_DECLARE_BEGIN(CSE_ALifeItemAmmo,CSE_ALifeItem)
-	u16								a_elapsed;
+SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeItemAmmo,CSE_ALifeItem, ISE_ALifeItemAmmo)
 	u16								m_boxSize;
 
 									CSE_ALifeItemAmmo	(LPCSTR caSection);
@@ -131,32 +130,21 @@ SERVER_ENTITY_DECLARE_BEGIN(CSE_ALifeItemAmmo,CSE_ALifeItem)
 	virtual CSE_ALifeItemAmmo		*cast_item_ammo		()  {return this;};
 	virtual bool					can_switch_online	() const;
 	virtual bool					can_switch_offline	() const;
+
+	EXRaySpawnPropertiesType		GetPropertiesType	() override { return EXRaySpawnPropertiesType::CSE_ALifeItemAmmo; }
+	void*							QueryPropertiesInterface(EXRaySpawnPropertiesType InType) override;
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeItemAmmo)
 #define script_type_list save_type_list(CSE_ALifeItemAmmo)
 
-SERVER_ENTITY_DECLARE_BEGIN(CSE_ALifeItemWeapon,CSE_ALifeItem)
+SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeItemWeapon,CSE_ALifeItem,ISE_ALifeItemWeapon)
 
-	typedef	ALife::EWeaponAddonStatus	EWeaponAddonStatus;
 	
-	//текущее состояние аддонов
-	enum EWeaponAddonState 
-	{
-		eWeaponAddonScope = 0x01,
-		eWeaponAddonGrenadeLauncher = 0x02,
-		eWeaponAddonSilencer = 0x04
-	};
-
-	EWeaponAddonStatus				m_scope_status;
-	EWeaponAddonStatus				m_silencer_status;				
-	EWeaponAddonStatus				m_grenade_launcher_status;
 
 	u32								timestamp;
 	u8								wpn_flags;
 	u8								wpn_state;
-	u8								ammo_type;
 	u16								a_current;
-	u16								a_elapsed;
 	//count of grenades to spawn in grenade launcher [ttcccccc]
 	//WARNING! hight 2 bits (tt bits) indicate type of grenade, so maximum grenade count is 2^6 = 64
 	struct grenade_count_t
@@ -179,7 +167,6 @@ SERVER_ENTITY_DECLARE_BEGIN(CSE_ALifeItemWeapon,CSE_ALifeItem)
 	ALife::EHitType					m_tHitType;
 	LPCSTR							m_caAmmoSections;
 	u32								m_dwAmmoAvailable;
-	Flags8							m_addon_flags;
 	u8								m_bZoom;
 	u32								m_ef_main_weapon_type;
 	u32								m_ef_weapon_type;
@@ -199,6 +186,9 @@ SERVER_ENTITY_DECLARE_BEGIN(CSE_ALifeItemWeapon,CSE_ALifeItem)
 	virtual BOOL					Net_Relevant		();
 
 	virtual CSE_ALifeItemWeapon		*cast_item_weapon	() {return this;}
+
+	EXRaySpawnPropertiesType		GetPropertiesType	() override { return EXRaySpawnPropertiesType::CSE_ALifeItemWeapon; }
+	void*							QueryPropertiesInterface(EXRaySpawnPropertiesType InType) override;
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeItemWeapon)
 #define script_type_list save_type_list(CSE_ALifeItemWeapon)
@@ -252,11 +242,12 @@ SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeItemDetector)
 #define script_type_list save_type_list(CSE_ALifeItemDetector)
 
-SERVER_ENTITY_DECLARE_BEGIN(CSE_ALifeItemArtefact,CSE_ALifeItem)
-	float							m_fAnomalyValue;
+SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeItemArtefact,CSE_ALifeItem, ISE_ALifeItemArtefact)
 									CSE_ALifeItemArtefact	(LPCSTR caSection);
 	virtual							~CSE_ALifeItemArtefact	();
 	virtual BOOL					Net_Relevant			();
+	EXRaySpawnPropertiesType		GetPropertiesType		() override { return EXRaySpawnPropertiesType::CSE_ALifeItemArtefact; }
+	void*							QueryPropertiesInterface(EXRaySpawnPropertiesType InType) override;
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeItemArtefact)
 #define script_type_list save_type_list(CSE_ALifeItemArtefact)
@@ -273,10 +264,12 @@ SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeItemPDA)
 #define script_type_list save_type_list(CSE_ALifeItemPDA)
 
-SERVER_ENTITY_DECLARE_BEGIN(CSE_ALifeItemDocument,CSE_ALifeItem)
-	shared_str							m_wDoc;
-									CSE_ALifeItemDocument(LPCSTR caSection);
-	virtual							~CSE_ALifeItemDocument();
+SERVER_ENTITY_DECLARE_BEGIN2(CSE_ALifeItemDocument,CSE_ALifeItem, ISE_ALifeItemDocument)
+									CSE_ALifeItemDocument	(LPCSTR caSection);
+	virtual							~CSE_ALifeItemDocument	();
+
+	EXRaySpawnPropertiesType		GetPropertiesType		() override { return EXRaySpawnPropertiesType::CSE_ALifeItemDocument; }
+	void*							QueryPropertiesInterface(EXRaySpawnPropertiesType InType) override;
 SERVER_ENTITY_DECLARE_END
 add_to_type_list(CSE_ALifeItemDocument)
 #define script_type_list save_type_list(CSE_ALifeItemDocument)

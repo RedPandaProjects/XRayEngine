@@ -128,6 +128,10 @@ class CALifeSmartTerrainTask;
 	INHERIT_DYNAMIC_ALIFE\
 	DEFINE_LUA_WRAPPER_METHOD_0			(bfUseful,	bool)
 
+#define INHERIT_SMART_COVER \
+	INHERIT_DYNAMIC_ALIFE\
+	DEFINE_LUA_WRAPPER_METHOD_V0			(refresh_loopholes)
+
 template <typename T>
 struct CWrapperPure : public T, public luabind::wrap_base {
 	typedef T							inherited;
@@ -159,6 +163,14 @@ struct CWrapperAbstractDynamicALife : public T, public luabind::wrap_base {
 	typedef CWrapperAbstractDynamicALife<T>	self_type;
 	CWrapperAbstractDynamicALife		(LPCSTR section) : inherited(section){}
 	INHERIT_DYNAMIC_ALIFE;
+};
+
+template <typename T>
+struct CWrapperSmartCoverALife : public T, public luabind::wrap_base {
+	typedef T								inherited;
+	typedef CWrapperSmartCoverALife<T>	self_type;
+	CWrapperSmartCoverALife			(LPCSTR section) : inherited(section){}
+	INHERIT_SMART_COVER;
 };
 
 template <typename T>
@@ -295,6 +307,9 @@ struct CWrapperAbstractItem : public T, public luabind::wrap_base {
 #define luabind_virtual_item(a,b) \
 	DEFINE_LUABIND_VIRTUAL_FUNCTION(a,b,bfUseful)
 
+#define luabind_virtual_smart_cover(a,b) \
+	DEFINE_LUABIND_VIRTUAL_FUNCTION(a,b,refresh_loopholes)
+
 #define luabind_virtual_Pure(a,b) \
 	luabind_virtual_pure(a,b)
 
@@ -329,6 +344,10 @@ struct CWrapperAbstractItem : public T, public luabind::wrap_base {
 #define luabind_virtual_Item(a,b) \
 	luabind_virtual_DynamicAlife(a,b) \
 	luabind_virtual_item(a,b)
+
+#define luabind_virtual_SmartCover(a,b) \
+	luabind_virtual_DynamicAlife(a, b)\
+	luabind_virtual_smart_cover(a, b)
 
 //////////////////////////////////////////////////////////////////////////
 // 0
@@ -400,6 +419,9 @@ struct CWrapperAbstractItem : public T, public luabind::wrap_base {
 	DEFINE_LUABIND_CLASS_WRAPPER_1(a,CWrapperAbstractItem<a>,b,c) \
 	luabind_virtual_Item(a,CWrapperAbstractItem<a>)
 
+#define luabind_class_smart_cover1(a,b,c) \
+	DEFINE_LUABIND_CLASS_WRAPPER_1(a,CWrapperSmartCoverALife<a>,b,c) \
+	luabind_virtual_SmartCover(a,CWrapperSmartCoverALife<a>)
 //////////////////////////////////////////////////////////////////////////
 // 2
 //////////////////////////////////////////////////////////////////////////

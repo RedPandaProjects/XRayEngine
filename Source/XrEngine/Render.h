@@ -44,19 +44,15 @@ public:
 	virtual void					set_active			(bool)								= 0;
 	virtual bool					get_active			()									= 0;
 	virtual void					set_shadow			(bool)								= 0;
-	virtual void					set_volumetric		(bool)								= 0;
-	virtual void					set_volumetric_quality(float)							= 0;
-	virtual void					set_volumetric_intensity(float)							= 0;
-	virtual void					set_volumetric_distance(float)							= 0;
-	virtual void					set_indirect		(bool)								{};
 	virtual void					set_position		(const Fvector& P)					= 0;
 	virtual void					set_rotation		(const Fvector& D, const Fvector& R)= 0;
 	virtual void					set_cone			(float angle)						= 0;
 	virtual void					set_range			(float R)							= 0;
-	virtual void					set_virtual_size	(float R)							= 0;
-	virtual void					set_texture			(LPCSTR name)						= 0;
+	virtual void					set_material		(LPCSTR name)						= 0;
 	virtual void					set_color			(const Fcolor& C)					= 0;
 	virtual void					set_color			(float r, float g, float b)			= 0;
+	virtual void					set_intensity		(float Inintensity)					= 0;
+
 	virtual void					set_hud_mode		(bool b)							= 0;
 	virtual bool					get_hud_mode		()									= 0;
 	virtual ~IRender_Light()		;

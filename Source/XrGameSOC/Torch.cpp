@@ -250,7 +250,7 @@ BOOL CTorch::net_Spawn(CSE_Abstract* DC)
 	light_omni->set_range	(range_o);
 
 	light_render->set_cone	(deg2rad(pUserData->r_float			("torch_definition","spot_angle")));
-	light_render->set_texture(pUserData->r_string				("torch_definition","spot_texture"));
+	light_render->set_material(pUserData->r_string				("torch_definition","spot_texture"));
 
 	glow_render->set_texture(pUserData->r_string				("torch_definition","glow_texture"));
 	glow_render->set_color	(clr);
