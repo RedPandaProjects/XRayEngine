@@ -17,21 +17,6 @@ BOOL CLevel::net_Start_client	( LPCSTR options )
 #include "string_table.h"
 bool	CLevel::net_start_client1				()
 {
-	g_Engine->LoadBegin	();
-	// name_of_server
-	string64					name_of_server = "";
-//	strcpy						(name_of_server,*m_caClientOptions);
-	if (strchr(*m_caClientOptions, '/'))
-		strncpy(name_of_server,*m_caClientOptions, strchr(*m_caClientOptions, '/')-*m_caClientOptions);
-
-	if (strchr(name_of_server,'/'))	*strchr(name_of_server,'/') = 0;
-
-	// Startup client
-	string256					temp;
-	sprintf_s						(temp,"%s %s",
-								CStringTable().translate("st_client_connecting_to").c_str(), name_of_server);
-
-	g_pGamePersistent->LoadTitle				(temp);
 	return true;
 }
 
@@ -43,44 +28,34 @@ bool	CLevel::net_start_client2				()
 	{
 		Server->create_direct_client();
 	}
-
 	connected_to_server = Connect2Server(*m_caClientOptions);
-	
 	return true;
 }
 
 bool	CLevel::net_start_client3				()
 {
-	if(connected_to_server){
+	if(connected_to_server)
+	{
 		LPCSTR					level_name = NULL;
 		LPCSTR					level_ver  = NULL;
 
 		if(psNET_direct_connect)
 		{
 			level_name	= ai().get_alife() ? *name() : Server->level_name( Server->GetConnectOptions() ).c_str();
-		}else
+		}
+		else
+		{
 			level_name	= ai().get_alife() ? *name() : net_SessionName	();
+		}
 
 		shared_str const& server_options = Server->GetConnectOptions();
 		level_name = name().c_str();//Server->level_name		(server_options).c_str();
 		level_ver = "1.0";
 
-		// Determine internal level-ID
-		int						level_id = g_Engine->Level_ID(level_name, level_ver,true);
-		if (level_id<0)	{
-			Disconnect			();
-			g_Engine->LoadEnd		();
-
-			connected_to_server = FALSE;
-			Msg("! Level (name:%s), (version:%s), not found",
-				level_name, level_ver);
-		
-			return false;
-		}
-		g_Engine->Level_Set			(level_id);
 		m_name					= level_name;
 		// Load level
-		R_ASSERT2				(Load(level_id),"Loading failed.");
+		// 
+		g_Engine->LoadWorld(level_name);
 
 	}
 	return true;
@@ -88,9 +63,22 @@ bool	CLevel::net_start_client3				()
 
 bool	CLevel::net_start_client4				()
 {
-	if(connected_to_server){
-		// Begin spawn
-		g_pGamePersistent->LoadTitle		("st_client_spawning");
+	
+	if(connected_to_server)
+	{
+
+		if(g_Engine->GetWorldStatus() == EXRayWorldStatus::Loading)
+		{
+			return false;
+		}
+		R_ASSERT(g_Engine->GetWorldStatus() != EXRayWorldStatus::None);
+		if (g_Engine->GetWorldStatus() == EXRayWorldStatus::Failure)
+		{
+			Disconnect();
+			connected_to_server = FALSE;
+			return true;
+		}
+		Load();
 
 		// Send physics to single or multithreaded mode
 		LoadPhysicsGameParams				();
@@ -120,37 +108,20 @@ bool	CLevel::net_start_client4				()
 				Server->Update()	;
 			Sleep(5); 
 		}
-/*
-		if(psNET_direct_connect)
-		{
-			ClientReceive(); 
-			if(Server)
-					Server->Update()	;
-			Sleep(5);
-		}else
-
-			while(!game_configured)			
-			{ 
-				ClientReceive(); 
-				if(Server)
-					Server->Update()	;
-				Sleep(5); 
-			}
-*/
-		}
+	}
 	return true;
 }
 
 bool	CLevel::net_start_client5				()
 {
-	if(connected_to_server){
+	if(connected_to_server)
+	{
 		// HUD
 
 		// Textures
 		if	(!g_dedicated_server)
 		{
 			HUD().Load							();
-			g_pGamePersistent->LoadTitle				("st_loading_textures");
 			LL_CheckTextures					();
 		}
 	}
@@ -159,19 +130,19 @@ bool	CLevel::net_start_client5				()
 
 bool	CLevel::net_start_client6				()
 {
-	if(connected_to_server){
+	if(connected_to_server)
+	{
 		// Sync
 		if(g_hud)
 			g_hud->OnConnected				();
 
 
-		g_pGamePersistent->LoadTitle		("st_client_synchronising");
 		Device->PreCache						(30,true,true);
 		net_start_result_total				= TRUE;
-	}else{
+	}
+	else
+	{
 		net_start_result_total				= FALSE;
 	}
-
-	g_Engine->LoadEnd							(); 
 	return true;
 }

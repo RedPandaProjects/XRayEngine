@@ -246,7 +246,7 @@ u32	 ILevelGraph::check_position_in_direction_slow	(u32 start_vertex_id, const F
 			u32				next_vertex_id = value(cur_vertex_id,I);
 			if ((next_vertex_id == prev_vertex_id) || !valid_vertex_id(next_vertex_id))
 				continue;
-			CVertex			*v = vertex(next_vertex_id);
+			const CVertex			*v = vertex(next_vertex_id);
 			unpack_xz		(v,temp.x,temp.y);
 			box.min			= box.max = temp;
 			box.grow		(identity);
@@ -379,7 +379,7 @@ bool ILevelGraph::create_straight_path(u32 start_vertex_id, const Fvector2 &star
 			u32				next_vertex_id = value(cur_vertex_id,I);
 			if ((next_vertex_id == prev_vertex_id) || !valid_vertex_id(next_vertex_id))
 				continue;
-			CVertex			*v = vertex(next_vertex_id);
+			const CVertex			*v = vertex(next_vertex_id);
 			unpack_xz		(v,temp.x,temp.y);
 			box.min			= box.max = temp;
 			box.grow		(identity);

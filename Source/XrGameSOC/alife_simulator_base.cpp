@@ -19,7 +19,7 @@
 #include "alife_group_registry.h"
 #include "alife_registry_container.h"
 #include "xrserver.h"
-#include "level_graph.h"
+
 
 #pragma warning(push)
 #pragma warning(disable:4995)

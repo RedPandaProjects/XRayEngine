@@ -9,7 +9,7 @@
 #include "stdafx.h"
 #include "game_graph.h"
 #include "game_level_cross_table.h"
-#include "level_graph.h"
+
 #include "graph_engine.h"
 #include "ef_storage.h"
 #include "ai_space.h"
@@ -22,6 +22,7 @@
 
 #include "../xrEngine/dedicated_server_only.h"
 #include "../xrEngine/no_single.h"
+#include "../XrEngine/XRayEngineInterface.h"
 
 
 CAI_Space *g_ai_space = 0;
@@ -104,7 +105,7 @@ void CAI_Space::load				(LPCSTR level_name)
 
 	const IGameGraph::SLevel &current_level = game_graph().header().level(level_name);
 
-	m_level_graph			= xr_new<ILevelGraph>();
+	m_level_graph			= g_Engine->GetLevelGraphCurrentWorld();
 	game_graph().set_current_level(current_level.id());
 	R_ASSERT2				(cross_table().header().level_guid() == level_graph().header().guid(), "cross_table doesn't correspond to the AI-map");
 	R_ASSERT2				(cross_table().header().game_guid() == game_graph().header().guid(), "graph doesn't correspond to the cross table");
@@ -137,7 +138,7 @@ void CAI_Space::unload				(bool reload)
 
 	script_engine().unload	();
 	xr_delete				(m_graph_engine);
-	xr_delete				(m_level_graph);
+	m_level_graph			= nullptr;
 	if (!reload && m_game_graph)
 		m_graph_engine		= xr_new<CGraphEngine>(game_graph().header().vertex_count());
 }

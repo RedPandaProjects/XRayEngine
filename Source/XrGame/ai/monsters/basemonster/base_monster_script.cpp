@@ -21,7 +21,7 @@
 
 // #include "ai/monsters/ai_monster_squad.h"
 // #include "ai/monsters/ai_monster_squad_manager.h"
-#include "../../../level_graph.h"
+
 #include "../../../game_path_manager.h"
 #include "../../../alife_simulator.h"
 #include "../../../alife_group_registry.h"

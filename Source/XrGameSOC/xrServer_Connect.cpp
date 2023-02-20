@@ -8,11 +8,8 @@
 #include "game_cl_artefacthunt.h"
 #include "game_cl_single.h"
 #include "MainMenu.h"
+#include "../XrEngine/XRayEngineInterface.h"
 
-#pragma warning(push)
-#pragma warning(disable:4995)
-#include <malloc.h>
-#pragma warning(pop)
 
 xrServer::EConnect xrServer::Connect(shared_str &session_name)
 {
@@ -23,7 +20,10 @@ xrServer::EConnect xrServer::Connect(shared_str &session_name)
 	// Parse options and create game
 	if (0==strchr(*session_name,'/'))
 		return				ErrConnect;
-
+	if (g_Engine->GetGameSpawn().length() == 0)
+	{
+		return				ErrConnect;
+	}
 	string1024				options;
 	R_ASSERT2(xr_strlen(session_name) <= sizeof(options), "session_name too BIIIGGG!!!");
 	strcpy					(options,strchr(*session_name,'/')+1);

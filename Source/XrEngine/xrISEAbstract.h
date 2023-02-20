@@ -105,6 +105,7 @@ public:
 
 	// spawn data
 	shared_str							s_name;
+	shared_str							unreal_soft_refence;
 	//.	u8									s_gameid;
 	GameTypeChooser						m_gameType;
 	u8									s_RP;

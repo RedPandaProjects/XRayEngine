@@ -168,9 +168,9 @@ u32	ILevelGraph::vertex_id(const Fvector& position) const
 	);
 
 	CPosition			_vertex_position = vertex_position(position);
-	CVertex* B = m_nodes;
-	CVertex* E = m_nodes + header().vertex_count();
-	CVertex* I = std::lower_bound(B, E, _vertex_position.xz());
+	const CVertex* B = get_nodes();
+	const CVertex* E = get_nodes() + header().vertex_count();
+	const CVertex* I = std::lower_bound(B, E, _vertex_position.xz());
 	if ((I == E) || ((*I).position().xz() != _vertex_position.xz()))
 		return			(u32(-1));
 
@@ -233,8 +233,8 @@ u32 ILevelGraph::guess_vertex_id(u32 const& current_vertex_id, Fvector const& po
 	float					result_distance = nearest(best_point, position, vertex_contour);
 	u32						result_vertex_id = current_vertex_id;
 
-	CVertex const* B = m_nodes;
-	CVertex const* E = m_nodes + header().vertex_count();
+	CVertex const* B = get_nodes();
+	CVertex const* E = get_nodes() + header().vertex_count();
 	u32						start_x = (u32)_max(0, int(x) - max_guess_vertex_count);
 	u32						stop_x = _min(max_x(), x + (u32)max_guess_vertex_count);
 	u32						start_z = (u32)_max(0, int(z) - max_guess_vertex_count);

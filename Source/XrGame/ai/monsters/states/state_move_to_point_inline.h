@@ -1,6 +1,6 @@
 #pragma once
 #include "ai_space.h"
-#include "level_graph.h"
+
 
 #define TEMPLATE_SPECIALIZATION template <\
 	typename _Object\

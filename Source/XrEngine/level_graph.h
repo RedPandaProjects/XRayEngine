@@ -45,8 +45,6 @@ public:
 	typedef LevelGraph::ELineIntersections	ELineIntersections;
 
 protected:
-	CHeader					*m_header;		// level graph header
-	CVertex					*m_nodes;		// nodes array
 	xr_vector<bool>			m_access_mask;
 	GameGraph::_LEVEL_ID	m_level_id;		// unique level identifier
 	u32						m_row_length;
@@ -78,8 +76,10 @@ protected:
 	};
 
 public:
-	ILevelGraph();
-	virtual			~ILevelGraph();
+					ILevelGraph					();
+	virtual			~ILevelGraph				();
+	virtual	const CHeader& header				() const = 0;
+	virtual const CVertex* get_nodes			() const = 0;
 	IC		const_vertex_iterator begin			() const;
 	IC		const_vertex_iterator end			() const;
 	
@@ -105,7 +105,6 @@ public:
 	IC		u32		value						(const CVertex &vertex, const_iterator &i) const;
 	IC		u32		value						(const CVertex *vertex, const_iterator &i) const;
 	IC		u32		value						(const u32 vertex_id,	const_iterator &i) const;
-	IC		const CHeader &header				() const;
 	ICF		bool	valid_vertex_id				(u32 vertex_id) const;
 	IC		const GameGraph::_LEVEL_ID &level_id() const;
 	IC		void	unpack_xz					(const ILevelGraph::CPosition &vertex_position, u32 &x, u32 &z) const;
@@ -115,7 +114,7 @@ public:
 	IC		void	unpack_xz					(const ILevelGraph::CVertex &vertex, T &x, T &z) const;
 	template <typename T>
 	IC		void	unpack_xz					(const ILevelGraph::CVertex *vertex, T &x, T &z) const;
-	ICF		CVertex	*vertex						(u32 vertex_id) const;
+	ICF		const CVertex	*vertex				(u32 vertex_id) const;
 	ICF		u32		vertex						(const CVertex *vertex_p) const;
 	ICF		u32		vertex						(const CVertex &vertex_r) const;
 	IC		const	Fvector						vertex_position(const ILevelGraph::CPosition &source_position) const;
@@ -215,7 +214,7 @@ public:
 	IC		bool	valid_vertex_position		(const Fvector &position) const;
 			bool	neighbour_in_direction		(const Fvector &direction, u32 start_vertex_id) const;
 
-	IC		CVertex* vertices					() { return m_nodes; }
+	IC		const CVertex* vertices					() { return get_nodes(); }
 	public:
 
 };

@@ -77,14 +77,23 @@
 TEMPLATE_SPECIALIZATION
 IC	CSDijkstra::CDijkstra			(const u32 max_vertex_count)
 {
+#if !__UNREAL__
 	m_data_storage		= xr_new<CDataStorage>(max_vertex_count);
+#else
+	m_data_storage = new CDataStorage(max_vertex_count);
+#endif
 	m_search_started	= false;
 }
 
 TEMPLATE_SPECIALIZATION
 CSDijkstra::~CDijkstra				()
 {
-	xr_delete			(m_data_storage);
+#if !__UNREAL__
+	xr_delete(m_data_storage);
+#else
+	delete m_data_storage;
+#endif
+
 }
 
 TEMPLATE_SPECIALIZATION
@@ -103,7 +112,7 @@ TEMPLATE_SPECIALIZATION
 template <typename _PathManager>
 IC	void CSDijkstra::initialize		(_PathManager &path_manager)
 {
-	THROW2				(!m_search_started,"Recursive graph engine usage is not allowed!");
+	VERIFY2				(!m_search_started,"Recursive graph engine usage is not allowed!");
 	m_search_started	= true;
 	// initialize data structures before we started path search
 	data_storage().init	();

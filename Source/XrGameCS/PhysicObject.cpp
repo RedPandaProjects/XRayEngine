@@ -352,7 +352,7 @@ void CPhysicObject::CreateBody(CSE_ALifeObjectPhysic* po) {
 	IKinematics* pKinematics=CastToIKinematics(Visual());
 	switch(m_type) {
 		case epotBox : {
-			m_pPhysicsShell=P_build_SimpleShell(this,m_mass,!po->_flags.test(CSE_ALifeObjectPhysic::flActive));
+			m_pPhysicsShell=P_build_SimpleShell(this,m_mass,!po->_flags.test(ISE_ALifeObjectPhysic::flActive));
 					   } break;
 		case epotFixedChain : 
 		case epotFreeChain  :

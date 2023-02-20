@@ -24,7 +24,7 @@
 #include "item_manager.h"
 #include "danger_manager.h"
 #include "ai_object_location.h"
-#include "level_graph.h"
+
 #include "game_graph.h"
 #include "movement_manager.h"
 #include "entitycondition.h"

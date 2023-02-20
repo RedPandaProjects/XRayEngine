@@ -9,7 +9,7 @@
 #include "HangingLamp.h"
 #include "PhysicsShell.h"
 #include "game_sv_single.h"
-#include "level_graph.h"
+
 #include "ph_shell_interface.h"
 #include "script_game_object.h"
 #include "xrserver_objects_alife.h"

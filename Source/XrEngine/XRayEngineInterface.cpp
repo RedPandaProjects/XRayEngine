@@ -31,31 +31,25 @@
 #include "securom_api.h"
 #include "..\XrAPI\xrGameManager.h"
 #include "GameMtlLib.h"
+#include "xr_ioc_cmd.h"
+
+//////////////////////////////////////////////////////////////////////////
+// global variables
+ENGINE_API	XRayEngineInterface* g_Engine = NULL;
+
 //---------------------------------------------------------------------
-ENGINE_API CInifile* pGameIni		= NULL;
+ENGINE_API CInifile*		pGameIni		= NULL;
 // computing build id
 XRCORE_API extern	LPCSTR	build_date;
-XRCORE_API	extern u32		build_id;
-
-FACTORY_PTR_INSTANCIATE(FontRender)
-FACTORY_PTR_INSTANCIATE(FlareRender)
-FACTORY_PTR_INSTANCIATE(ThunderboltRender)
-FACTORY_PTR_INSTANCIATE(ThunderboltDescRender)
-FACTORY_PTR_INSTANCIATE(LensFlareRender)
-FACTORY_PTR_INSTANCIATE(RainRender)
-FACTORY_PTR_INSTANCIATE(EnvironmentRender)
-FACTORY_PTR_INSTANCIATE(EnvDescriptorRender)
-FACTORY_PTR_INSTANCIATE(EnvDescriptorMixerRender)
-FACTORY_PTR_INSTANCIATE(UIShader)
-FACTORY_PTR_INSTANCIATE(WallMarkArray)
-FACTORY_PTR_INSTANCIATE(StatGraphRender)
+XRCORE_API extern u32		build_id;
 
 #ifdef MASTER_GOLD
 #	define NO_MULTI_INSTANCES
 #endif // #ifdef MASTER_GOLD
 
 
-static const char* month_id[12] = {
+static const char* month_id[12] = 
+{
 	"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"
 };
 
@@ -63,11 +57,10 @@ static int days_in_month[12] = {
 	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
 };
 
-static int start_day	= 31;	// 31
-static int start_month	= 1;	// January
-static int start_year	= 1999;	// 1999
+static int start_day	= 02;	
+static int start_month	= 11;	
+static int start_year	= 2022;	
 
-// binary hash, mainly for copy-protection
 void compute_build_id	()
 {
 	build_date			= __DATE__;
@@ -111,80 +104,8 @@ struct _SoundProcessor	: public pureFrame
 	}
 }	SoundProcessor;
 
-//////////////////////////////////////////////////////////////////////////
-// global variables
-ENGINE_API	XRayEngineInterface*	g_Engine			= NULL;
-
-// -------------------------------------------
-// startup point
-
-struct path_excluder_predicate
-{
-	explicit path_excluder_predicate(xr_auth_strings_t const * ignore) :
-		m_ignore(ignore)
-	{
-	}
-	bool xr_stdcall is_allow_include(LPCSTR path)
-	{
-		if (!m_ignore)
-			return true;
-		
-		return allow_to_include_path(*m_ignore, path);
-	}
-	xr_auth_strings_t const *	m_ignore;
-};
-
-#include "xr_ioc_cmd.h"
-
-LPCSTR _GetFontTexName (LPCSTR section)
-{
-	static const char* tex_names[]={"texture800","texture","texture1600"};
-	int def_idx		= 1;//default 1024x768
-	int idx			= def_idx;
-
-#if 0
-	u32 w = Device->dwWidth;
-
-	if(w<=800)		idx = 0;
-	else if(w<=1280)idx = 1;
-	else 			idx = 2;
-#else
-	u32 h = Device->dwHeight;
-
-	if(h<=600)		idx = 0;
-	else if(h<1024)	idx = 1;
-	else 			idx = 2;
-#endif
-
-	while(idx>=0){
-		if( pSettings->line_exist(section,tex_names[idx]) )
-			return pSettings->r_string(section,tex_names[idx]);
-		--idx;
-	}
-	return pSettings->r_string(section,tex_names[def_idx]);
-}
-
-void _InitializeFont(CGameFont*& F, LPCSTR section, u32 flags)
-{
-	LPCSTR FontName = pSettings->r_string(section, "font");
-	float FontSize = pSettings->r_float(section, "size");
-	if (!F)
-		F = xr_new<CGameFont>(FontName, FontSize, flags);
-	else
-		F->Initialize(FontName, FontSize);
-
-#ifdef DEBUG
-	F->m_font_name = section;
-#endif
-
-}
-
 XRayEngineInterface::XRayEngineInterface()
 {
-	ll_dwReference	= 0;
-
-	max_load_stage = 0;
-
 	Engine = xr_new<CEngine>();
 	// events
 	eQuit						= Engine->Event.Handler_Attach("KERNEL:quit",this);
@@ -194,28 +115,6 @@ XRayEngineInterface::XRayEngineInterface()
 	eConsole					= Engine->Event.Handler_Attach("KERNEL:console",this);
 	eStartMPDemo				= Engine->Event.Handler_Attach("KERNEL:start_mp_demo",this);
 
-	// levels
-	Level_Current				= u32(-1);
-	pFontSystem = NULL;
-	ls_header[0] = '\0';
-	ls_tip_number[0] = '\0';
-	ls_tip[0] = '\0';
-	//if (Device->IsEditorMode())return;
-	//Level_Scan					( );
-
-	//// Font
-
-
-	//// Register us
-	//
-	//if (psDeviceFlags.test(mtSound))	Device->seqFrameMT.Add		(&SoundProcessor);
-	//else								
-
-	//Console->Show				( );
-
-	// App Title
-//	app_title[ 0 ] = '\0';
-
 }
 
 XRayEngineInterface::~XRayEngineInterface()
@@ -224,13 +123,6 @@ XRayEngineInterface::~XRayEngineInterface()
 	{
 		Console->Hide();
 	}
-
-	// font
-	xr_delete					( pFontSystem		);
-
-	
-
-
 	// events
 	Engine->Event.Handler_Detach	(eConsole,this);
 	Engine->Event.Handler_Detach	(eDisconnect,this);
@@ -241,81 +133,67 @@ XRayEngineInterface::~XRayEngineInterface()
 	xr_delete(Engine);
 	
 }
+void XRayEngineInterface::OnFrame()
+{
+	Engine->Event.OnFrame();
+	g_SpatialSpace->update();
+	g_SpatialSpacePhysic->update();
+	if (g_pGameLevel)
+	{
+		g_pGameLevel->SoundEvent_Dispatch();
+	}
+	Device->seqFrame.Process(rp_Frame);
+}
+
+void XRayEngineInterface::RunGame			(const char* ServerParams, const char* ClientParams)
+{
+	R_ASSERT(0 == g_pGameLevel);
+	R_ASSERT(0 != g_pGamePersistent);
+	{
+		Console->Execute("main_menu off");
+		Console->Hide();
+		g_pGamePersistent->PreStart(ServerParams);
+		g_pGameLevel = (IGame_Level*)NEW_INSTANCE(CLSID_GAME_LEVEL);
+		g_pGamePersistent->Start(ServerParams);
+		g_pGameLevel->net_Start(ServerParams, ClientParams);
+	}
+}
+
+void XRayEngineInterface::StopGame			()
+{
+	if (g_pGameLevel)
+	{
+		Console->Hide();
+		g_pGameLevel->net_Stop();
+		DEL_INSTANCE(g_pGameLevel);
+		Console->Show();
+	}
+	R_ASSERT(0 != g_pGamePersistent);
+	g_pGamePersistent->Disconnect();
+}
+
+bool XRayEngineInterface::IsRunningGame		()
+{
+	return g_pGameLevel!=nullptr;
+}
 
 void XRayEngineInterface::OnEvent(EVENT E, u64 P1, u64 P2)
 {
 	if (E==eQuit)
 	{
-
 		PostQuitMessage	(0);
-		
-		for (u32 i=0; i<Levels.size(); i++)
-		{
-			xr_free(Levels[i].folder);
-			xr_free(Levels[i].name);
-		}
 	}
 	else if(E==eStart) 
 	{
 		LPSTR		op_server		= LPSTR	(P1);
 		LPSTR		op_client		= LPSTR	(P2);
-		Level_Current				= u32(-1);
-		R_ASSERT	(0==g_pGameLevel);
-		R_ASSERT	(0!=g_pGamePersistent);
-
-#ifdef NO_SINGLE
-		Console->Execute("main_menu on");
-		if (	(op_server == NULL)			||
-				(!xr_strlen(op_server))		||
-				(
-					(	strstr(op_server, "/dm")	|| strstr(op_server, "/deathmatch") ||
-						strstr(op_server, "/tdm")	|| strstr(op_server, "/teamdeathmatch") ||
-						strstr(op_server, "/ah")	|| strstr(op_server, "/artefacthunt") ||
-						strstr(op_server, "/cta")	|| strstr(op_server, "/capturetheartefact")
-					) && 
-					!strstr(op_server, "/alife")
-				)
-			)
-#endif // #ifdef NO_SINGLE
-		{		
-			Console->Execute("main_menu off");
-			Console->Hide();
-//!			this line is commented by Dima
-//!			because I don't see any reason to reset device here
-//!			Device->Reset					(false);
-			//-----------------------------------------------------------
-			g_pGamePersistent->PreStart		(op_server);
-			//-----------------------------------------------------------
-			g_pGameLevel					= (IGame_Level*)NEW_INSTANCE(CLSID_GAME_LEVEL);
-			g_Engine->LoadBegin					(); 
-			g_pGamePersistent->Start		(op_server);
-			g_pGameLevel->net_Start			(op_server,op_client);
-			g_Engine->LoadEnd					(); 
-		}
+		RunGame(op_server,op_client);
 		xr_free							(op_server);
 		xr_free							(op_client);
 	} 
 	else if (E==eDisconnect) 
 	{
-		ls_header[0] = '\0';
-		ls_tip_number[0] = '\0';
-		ls_tip[0] = '\0';
-
-		if (g_pGameLevel) 
-		{
-			Console->Hide			();
-			g_pGameLevel->net_Stop	();
-			DEL_INSTANCE			(g_pGameLevel);
-			Console->Show			();
-			
-			if( (FALSE == Engine->Event.Peek("KERNEL:quit")) &&(FALSE == Engine->Event.Peek("KERNEL:start")) )
-			{
-				Console->Execute("main_menu off");
-				Console->Execute("main_menu on");
-			}
-		}
-		R_ASSERT			(0!=g_pGamePersistent);
-		g_pGamePersistent->Disconnect();
+		StopGame();
 	}
 	else if (E == eConsole)
 	{
@@ -341,56 +219,14 @@ void XRayEngineInterface::OnEvent(EVENT E, u64 P1, u64 P2)
 		g_pGamePersistent->PreStart		(server_options.c_str());
 		//-----------------------------------------------------------
 		
-		g_Engine->LoadBegin					(); 
 		g_pGamePersistent->Start		("");//server_options.c_str()); - no prefetch !
 		g_pGameLevel->net_StartPlayDemo	();
-		g_Engine->LoadEnd					(); 
 
 		xr_free						(demo_file);
 	}
 }
 
-static	CTimer	phase_timer		;
 extern	ENGINE_API BOOL			g_appLoaded = FALSE;
-
-void XRayEngineInterface::LoadBegin	()
-{
-	ll_dwReference++;
-	if (1==ll_dwReference)	{
-
-		g_appLoaded			= FALSE;
-
-#ifndef DEDICATED_SERVER
-		_InitializeFont		(pFontSystem,"ui_font_letterica18_russian",0);
-
-		//m_pRender->LoadBegin();
-#endif
-		phase_timer.Start	();
-		load_stage			= 0;
-
-	}
-}
-
-void XRayEngineInterface::LoadEnd		()
-{
-	ll_dwReference--;
-	if (0==ll_dwReference)		{
-		Msg						("* phase time: %d ms",phase_timer.GetElapsed_ms());
-		Msg						("* phase cmem: %d K", MemoryInterface->mem_usage()/1024);
-		Console->Execute		("stat_memory");
-		g_appLoaded				= TRUE;
-//		DUMP_PHASE;
-	}
-}
-
-void XRayEngineInterface::destroy_loading_shaders()
-{
-	//m_pRender->destroy_loading_shaders();
-	//hLevelLogo.destroy		();
-	//sh_progress.destroy		();
-//.	::Sound->mute			(false);
-}
-
 void XRayEngineInterface::Initialize()
 {
 	compute_build_id();
@@ -451,10 +287,6 @@ void XRayEngineInterface::Destroy()
 	DEL_INSTANCE(g_pGamePersistent);
 	Engine->Event.Dump();
 
-	// Destroying
-//.	destroySound();
-	destroyInput();
-
 	destroySettings();
 
 	LALib->OnDestroy();
@@ -496,23 +328,6 @@ void XRayEngineInterface::InitSettings()
 #endif // #ifdef DEBUG
 	pSettings = xr_new<CInifile>(fname, TRUE);
 	CHECK_OR_EXIT(0 != pSettings->section_count(), make_string("Cannot find file %s.\nReinstalling application may fix this problem.", fname));
-
-	xr_auth_strings_t			tmp_ignore_pathes;
-	xr_auth_strings_t			tmp_check_pathes;
-	fill_auth_check_params(tmp_ignore_pathes, tmp_check_pathes);
-
-	path_excluder_predicate			tmp_excluder(&tmp_ignore_pathes);
-	CInifile::allow_include_func_t	tmp_functor;
-	tmp_functor.bind(&tmp_excluder, &path_excluder_predicate::is_allow_include);
-	pSettingsAuth = xr_new<CInifile>(
-		fname,
-		TRUE,
-		TRUE,
-		FALSE,
-		0,
-		tmp_functor
-		);
-
 	FS.update_path(fname, "$game_config$", "game.ltx");
 	pGameIni = xr_new<CInifile>(fname, TRUE);
 	CHECK_OR_EXIT(0 != pGameIni->section_count(), make_string("Cannot find file %s.\nReinstalling application may fix this problem.", fname));
@@ -574,11 +389,6 @@ void XRayEngineInterface::InitSound2()
 	Device->seqFrame.Add(&SoundProcessor);
 }
 
-void XRayEngineInterface::destroyInput()
-{
-
-}
-
 void XRayEngineInterface::destroySettings()
 {
 	CInifile** s = (CInifile**)(&pSettings);
@@ -608,186 +418,16 @@ void XRayEngineInterface::destroyEngine()
 	xr_delete(Device->Statistic);
 }
 
-//u32 calc_progress_color(u32, u32, int, int);
 
- void XRayEngineInterface::LoadDraw		()
-{
-	if(g_appLoaded)				return;
-	Device->dwFrame				+= 1;
-
-
-	if(!Device->Begin () )		return;
-
-	if	(g_dedicated_server)
-		Console->OnRender			();
-	else
-		load_draw_internal			();
-
-	Device->End					();
-}
-
-void XRayEngineInterface::LoadTitleInt(LPCSTR str1, LPCSTR str2, LPCSTR str3)
-{
-	xr_strcpy					(ls_header, str1);
-	xr_strcpy					(ls_tip_number, str2);
-	xr_strcpy					(ls_tip, str3);
-//	LoadDraw					();
-}
-void XRayEngineInterface::LoadStage()
-{
-	load_stage++;
-	VERIFY						(ll_dwReference);
-	Msg							("* phase time: %d ms",phase_timer.GetElapsed_ms());	phase_timer.Start();
-	Msg							("* phase cmem: %d K", MemoryInterface->mem_usage()/1024);
-	
-	if (g_pGamePersistent->GameType()==1 && strstr(Core.Params,"alife"))
-		max_load_stage			= 17;
-	else
-		max_load_stage			= 14;
-	LoadDraw					();
-}
-void XRayEngineInterface::LoadSwitch	()
-{
-}
-
-// Sequential
-void XRayEngineInterface::OnFrame	( )
-{
-	Engine->Event.OnFrame			();
-	g_SpatialSpace->update			();
-	g_SpatialSpacePhysic->update	();
-	if (g_pGameLevel)				g_pGameLevel->SoundEvent_Dispatch	( );
-	Device->seqFrame.Process(rp_Frame);
-}
-
-void XRayEngineInterface::Level_Append		(LPCSTR folder)
-{
-	string_path	N1,N2,N3,N4;
-	strconcat	(sizeof(N1),N1,folder,"level");
-	strconcat	(sizeof(N2),N2,folder,"level.ltx");
-	strconcat	(sizeof(N3),N3,folder,"level.geom");
-	strconcat	(sizeof(N4),N4,folder,"level.cform");
-	if	(
-		FS.exist("$game_levels$",N1)		&&
-		FS.exist("$game_levels$",N2)		&&
-		FS.exist("$game_levels$",N3)		&&
-		FS.exist("$game_levels$",N4)	
-		)
-	{
-		sLevelInfo			LI;
-		LI.folder			= xr_strdup(folder);
-		LI.name				= 0;
-		Levels.push_back	(LI);
-	}
-}
-
-void XRayEngineInterface::Level_Scan()
-{
-
-	for (u32 i=0; i<Levels.size(); i++)
-	{ 
-		xr_free(Levels[i].folder);
-		xr_free(Levels[i].name);
-	}
-	Levels.clear	();
-
-	Level_Append("labx8\\");
-	Level_Append("zaton\\");
-	Level_Append("test5\\");
-	Level_Append("l01_escape\\");
-
-	
-
-}
-
-void gen_logo_name(string_path& dest, LPCSTR level_name, int num)
-{
-	strconcat	(sizeof(dest), dest, "intro\\intro_", level_name);
-	
-	u32 len = xr_strlen(dest);
-	if(dest[len-1]=='\\')
-		dest[len-1] = 0;
-
-	string16 buff;
-	xr_strcat(dest, sizeof(dest), "_");
-	xr_strcat(dest, sizeof(dest), itoa(num+1, buff, 10));
-}
-
-void XRayEngineInterface::Level_Set(u32 L)
-{
-
-	if (L>=Levels.size())	return;
-	FS.get_path	("$level$")->_set	(Levels[L].folder);
-
-	static string_path			path;
-
-	if(Level_Current != L)
-	{
-		path[0]					= 0;
-
-		Level_Current			= L;
-		
-		int count				= 0;
-		while(true)
-		{
-			string_path			temp2;
-			gen_logo_name		(path, Levels[L].folder, count);
-			if(FS.exist(temp2, "$game_textures$", path, ".dds") || FS.exist(temp2, "$level$", path, ".dds"))
-				count++;
-			else
-				break;
-		}
-
-		if(count)
-		{
-			int num				= ::Random.randI(count);
-			gen_logo_name		(path, Levels[L].folder, num);
-		}
-	}
-
-	/*if(path[0])
-		m_pRender->setLevelLogo	(path);*/
-
-
-}
-
-int XRayEngineInterface::Level_ID(LPCSTR name, LPCSTR ver, bool bSet)
-{
-	int result = -1;
-	
-	Level_Scan							();
-	
-	string256		buffer;
-	strconcat		(sizeof(buffer),buffer,name,"\\");
-	for (u32 I=0; I<Levels.size(); ++I)
-	{
-		if (0==stricmp(buffer,Levels[I].folder))	
-		{
-			result = int(I);	
-			break;
-		}
-	}
-
-	if(bSet && result!=-1)
-		Level_Set(result);
-
-	g_pGamePersistent->OnAssetsChanged	();
-
-	return result;
-}
-
-CInifile*  XRayEngineInterface::GetArchiveHeader(LPCSTR name, LPCSTR ver)
-{
-	return NULL;
-}
-
-void XRayEngineInterface::LoadAllArchives()
-{
-		Level_Scan							();
-		g_pGamePersistent->OnAssetsChanged	();
-}
-
-void XRayEngineInterface::load_draw_internal()
-{
-	//m_pRender->load_draw_internal(*this);
-}
+FACTORY_PTR_INSTANCIATE(FontRender)
+FACTORY_PTR_INSTANCIATE(FlareRender)
+FACTORY_PTR_INSTANCIATE(ThunderboltRender)
+FACTORY_PTR_INSTANCIATE(ThunderboltDescRender)
+FACTORY_PTR_INSTANCIATE(LensFlareRender)
+FACTORY_PTR_INSTANCIATE(RainRender)
+FACTORY_PTR_INSTANCIATE(EnvironmentRender)
+FACTORY_PTR_INSTANCIATE(EnvDescriptorRender)
+FACTORY_PTR_INSTANCIATE(EnvDescriptorMixerRender)
+FACTORY_PTR_INSTANCIATE(UIShader)
+FACTORY_PTR_INSTANCIATE(WallMarkArray)
+FACTORY_PTR_INSTANCIATE(StatGraphRender)

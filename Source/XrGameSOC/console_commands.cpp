@@ -36,7 +36,6 @@
 #include "GameTask.h"
 #include "MainMenu.h"
 #include "saved_game_wrapper.h"
-#include "level_graph.h"
 #include "doug_lea_memory_allocator.h"
 #include "cameralook.h"
 
@@ -683,69 +682,6 @@ public:
 
 #ifdef DEBUG
 
-class CCC_DrawGameGraphAll : public IConsole_Command {
-public:
-				 CCC_DrawGameGraphAll	(LPCSTR N) : IConsole_Command(N)
-	{
-		bEmptyArgsHandled = true;
-	}
-
-	virtual void Execute				(LPCSTR args)
-	{
-		if (!ai().get_level_graph() || !dynamic_cast<CLevelGraph*>(&ai().level_graph()))
-			return;
-
-		dynamic_cast<CLevelGraph*>(&ai().level_graph())->setup_current_level	(-1);
-	}
-};
-
-class CCC_DrawGameGraphCurrent : public IConsole_Command {
-public:
-				 CCC_DrawGameGraphCurrent	(LPCSTR N) : IConsole_Command(N)
-	{
-		bEmptyArgsHandled = true;
-	}
-
-	virtual void Execute					(LPCSTR args)
-	{
-		if (!ai().get_level_graph()||!dynamic_cast<CLevelGraph*>(&ai().level_graph()))
-			return;
-
-		dynamic_cast<CLevelGraph*>(&ai().level_graph())->setup_current_level	(
-			ai().level_graph().level_id()
-		);
-	}
-};
-
-class CCC_DrawGameGraphLevel : public IConsole_Command {
-public:
-				 CCC_DrawGameGraphLevel	(LPCSTR N) : IConsole_Command(N)
-	{
-	}
-
-	virtual void Execute					(LPCSTR args)
-	{
-		if (!ai().get_level_graph() || !dynamic_cast<CLevelGraph*>(&ai().level_graph()))
-			return;
-
-		string256			S;
-		S[0]				= 0;
-		sscanf				(args,"%s",S);
-
-		if (!*S) {
-			dynamic_cast<CLevelGraph*>(&ai().level_graph())->setup_current_level	(-1);
-			return;
-		}
-
-		const GameGraph::SLevel	*level = ai().game_graph().header().level(S,true);
-		if (!level) {
-			Msg				("! There is no level %s in the game graph",S);
-			return;
-		}
-
-		dynamic_cast<CLevelGraph*>(&ai().level_graph())->setup_current_level	(level->id());
-	}
-};
 
 class CCC_ScriptDbg : public IConsole_Command {
 public:
@@ -1460,9 +1396,9 @@ void CCC_RegisterCommands()
 
 	CMD1(CCC_DumpModelBones,	"debug_dump_model_bones");
 
-	CMD1(CCC_DrawGameGraphAll,		"ai_draw_game_graph_all");
-	CMD1(CCC_DrawGameGraphCurrent,	"ai_draw_game_graph_current_level");
-	CMD1(CCC_DrawGameGraphLevel,	"ai_draw_game_graph_level");
+	//CMD1(CCC_DrawGameGraphAll,		"ai_draw_game_graph_all");
+	//CMD1(CCC_DrawGameGraphCurrent,	"ai_draw_game_graph_current_level");
+	//CMD1(CCC_DrawGameGraphLevel,	"ai_draw_game_graph_level");
 
 	CMD4(CCC_Integer,			"ai_dbg_inactive_time",	&g_AI_inactive_time, 0, 1000000);
 	

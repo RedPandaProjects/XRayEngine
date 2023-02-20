@@ -13,7 +13,7 @@
 #include "../../../magic_box3.h"
 #include "RenderVisual.h"
 #include "../../../ai_object_location.h"
-#include "../../../level_graph.h"
+
 #include "../../../movement_manager.h"
 #include "../../../location_manager.h"
 #include "../../../level.h"

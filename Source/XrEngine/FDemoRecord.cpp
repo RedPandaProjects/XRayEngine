@@ -292,7 +292,7 @@ BOOL CDemoRecord::ProcessCam(SCamEffectorInfo& info)
 		if(IR_GetKeyState(DIK_F1))
 		{
 
-			g_Engine->pFontSystem->SetColor	(color_rgba(255,0,0,255));
+			/*g_Engine->pFontSystem->SetColor	(color_rgba(255,0,0,255));
 			g_Engine->pFontSystem->SetAligment(CGameFont::alCenter);
 			g_Engine->pFontSystem->OutSetI	(0,-.05f);
 			g_Engine->pFontSystem->OutNext	("%s","RECORDING");
@@ -312,7 +312,7 @@ BOOL CDemoRecord::ProcessCam(SCamEffectorInfo& info)
 			g_Engine->pFontSystem->OutNext	("= Quit");
 			g_Engine->pFontSystem->OutNext	("= Level Map ScreenShot");
 			g_Engine->pFontSystem->OutNext	("= Level Map ScreenShot(High Quality)");
-			g_Engine->pFontSystem->OutNext	("= ScreenShot");
+			g_Engine->pFontSystem->OutNext	("= ScreenShot");*/
 
 		}
 
@@ -531,5 +531,5 @@ void CDemoRecord::MakeLevelMapScreenshot(BOOL bHQ)
 
 void CDemoRecord::OnRender()
 {
-	g_Engine->pFontSystem->OnRender();
+	//g_Engine->pFontSystem->OnRender();
 }

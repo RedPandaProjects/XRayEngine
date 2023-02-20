@@ -11,7 +11,7 @@
 #include "custommonster.h"
 #include "ai/stalker/ai_stalker.h"
 #include "detail_path_manager.h"
-#include "level_graph.h"
+
 #include "stalker_movement_manager.h"
 #include "ai/stalker/ai_stalker_space.h"
 #include "ai_space.h"
@@ -127,7 +127,7 @@ void CSightManager::SetLessCoverLook(const ILevelGraph::CVertex *tpNode, float f
 	m_object->update_range_fov(range,fAngleOfView,m_object->eye_range,m_object->eye_fov);
 	fAngleOfView			= (fAngleOfView/180.f*PI)/2.f;
 
-	ILevelGraph::CVertex	*tpNextNode = 0;
+	const ILevelGraph::CVertex	*tpNextNode = 0;
 	u32						node_id;
 	bool bOk = false;
 	if (bDifferenceLook && !m_object->movement().detail().path().empty() && (m_object->movement().detail().path().size() - 1 > m_object->movement().detail().curr_travel_point_index())) {

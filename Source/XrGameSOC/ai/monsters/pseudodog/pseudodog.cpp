@@ -13,7 +13,6 @@
 #	include <dinput.h>
 #	include "../../../ai_object_location.h"
 #	include "../../../level_debug.h"
-#	include "../../../level_graph.h"
 #	include "ai_space.h"
 #	include "../../../alife_simulator.h"
 #	include "XrServer_Object_Base.h"

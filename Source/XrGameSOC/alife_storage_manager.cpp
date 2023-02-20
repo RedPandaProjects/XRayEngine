@@ -90,10 +90,7 @@ void CALifeStorageManager::load	(void *buffer, const u32 &buffer_size, LPCSTR fi
 	header().load				(source);
 	time_manager().load			(source);
 	spawns().load				(source,file_name);
-
-#ifdef PRIQUEL
 	graph().on_load				();
-#endif // PRIQUEL
 
 	objects().load				(source);
 
@@ -142,9 +139,6 @@ bool CALifeStorageManager::load	(LPCSTR save_name)
 
 	CHECK_OR_EXIT				(CSavedGameWrapper::valid_saved_game(*stream),make_string("%s\nSaved game version mismatch or saved game is corrupted",file_name));
 
-	string512					temp;
-	strconcat					(sizeof(temp),temp,CStringTable().translate("st_loading_saved_game").c_str()," \"",save_name,SAVE_EXTENSION,"\"");
-	g_pGamePersistent->LoadTitle(temp);
 
 	unload						();
 	reload						(m_section);

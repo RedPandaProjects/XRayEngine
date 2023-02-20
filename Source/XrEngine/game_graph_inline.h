@@ -60,7 +60,8 @@ IC	bool IGameGraph::valid_vertex_id								(u32 const vertex_id) const
 
 IC	void IGameGraph::begin											(u32 const vertex_id, const_iterator &start, const_iterator &end) const
 {
-	end							= (start = (const CEdge *)(m_edges + vertex(_GRAPH_ID(vertex_id))->edge_offset())) + vertex(_GRAPH_ID(vertex_id))->edge_count();
+	start	= get_edges()	+ vertex(_GRAPH_ID(vertex_id))->edge_offset();
+	end		= start			+ vertex(_GRAPH_ID(vertex_id))->edge_count();
 }
 
 IC	const IGameGraph::_GRAPH_ID &IGameGraph::value					(u32 const vertex_id, const_iterator &i) const
@@ -75,7 +76,7 @@ IC	const float &IGameGraph::edge_weight							(const_iterator i) const
 
 IC	const IGameGraph::CVertex *IGameGraph::vertex					(u32 const vertex_id) const
 {
-	return						(m_nodes + vertex_id);
+	return						(get_nodes() + vertex_id);
 }
 
 IC	const u8 &IGameGraph::CHeader::version							() const
@@ -207,8 +208,8 @@ IC	const float &GameGraph::CEdge::distance							() const
 IC	void IGameGraph::begin_spawn									(u32 const vertex_id, const_spawn_iterator &start, const_spawn_iterator &end) const
 {
 	const CVertex				*object = vertex(vertex_id);
-	start						= (const_spawn_iterator)((u8*)m_nodes + object->death_point_offset());
-	end							= start + object->death_point_count();
+	start						= get_level_points() + object->death_point_offset();
+	end							= start				 + object->death_point_count();
 }
 
 IC	void IGameGraph::set_invalid_vertex								(_GRAPH_ID &vertex_id) const
@@ -219,8 +220,8 @@ IC	void IGameGraph::set_invalid_vertex								(_GRAPH_ID &vertex_id) const
 
 IC	GameGraph::_GRAPH_ID IGameGraph::vertex_id						(const IGameGraph::CVertex *vertex) const
 {
-	VERIFY						(valid_vertex_id(_GRAPH_ID(vertex - m_nodes)));
-	return						(_GRAPH_ID(vertex - m_nodes));
+	VERIFY						(valid_vertex_id(_GRAPH_ID(vertex - get_nodes())));
+	return						(_GRAPH_ID(vertex - get_nodes()));
 }
 
 IC	const GameGraph::_GRAPH_ID &IGameGraph::current_level_vertex	() const
@@ -281,12 +282,4 @@ IC	void GameGraph::CHeader::save									(IWriter *writer)
 	for ( ; I != E; ++I)
 		(*I).second.save		(writer);
 }
-
-
-IC const IGameLevelCrossTable &IGameGraph::cross_table	() const
-{
-	VERIFY						(m_current_level_cross_table);
-	return						(*m_current_level_cross_table);
-}
-
 

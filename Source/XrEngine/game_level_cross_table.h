@@ -47,7 +47,7 @@ public:
 	public:
 #endif
 		GameGraph::_GRAPH_ID	tGraphIndex;
-		float				fDistance;
+		float					fDistance;
 	public:
 		IC	GameGraph::_GRAPH_ID game_vertex_id			() const;
 		IC	float			distance				() const;
@@ -56,15 +56,14 @@ public:
 
 protected:
 	CHeader					m_tCrossTableHeader;
-	CCell					*m_tpaCrossTable;
 
 
 public:
 							IGameLevelCrossTable	();
-		virtual				~IGameLevelCrossTable();
+		virtual				~IGameLevelCrossTable	();
 
 public:
-	IC		const CCell		&vertex					(u32 level_vertex_id) const;
+	virtual	const CCell		&vertex					(u32 level_vertex_id) const = 0;
 	IC		const CHeader	&header					() const;
 };
 

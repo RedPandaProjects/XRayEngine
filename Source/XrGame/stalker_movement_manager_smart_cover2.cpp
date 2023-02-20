@@ -22,7 +22,7 @@
 #include "relation_registry.h"
 #include "custommonster.h"
 #include "actorcondition.h"
-#include "level_graph.h"
+
 #include "huditem.h"
 #include "ui/UItalkWnd.h"
 #include "inventory.h"

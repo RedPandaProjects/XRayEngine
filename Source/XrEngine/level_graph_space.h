@@ -10,13 +10,7 @@
 
 namespace LevelGraph
 {
-	class CHeader :
-#ifndef MASTER_GOLD
-		public
-#else
-		private
-#endif
-		hdrNODES 
+	class CHeader :public hdrNODES 
 	{
 	private:
 		friend class CRenumbererConverter;
@@ -32,14 +26,7 @@ namespace LevelGraph
 
 	typedef NodePosition	CPosition;
 
-	class CVertex : 
-		
-#ifndef MASTER_GOLD
-		public
-#else
-		private
-#endif
-		NodeCompressed 
+	class CVertex : public	NodeCompressed 
 	{
 	private:
 		friend class CRenumbererConverter;

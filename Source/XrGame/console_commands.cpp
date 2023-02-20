@@ -39,7 +39,7 @@
 #include "GameTask.h"
 #include "MainMenu.h"
 #include "saved_game_wrapper.h"
-#include "level_graph.h"
+
 //#include "../xrEngine/resourcemanager.h"
 #include "../xrEngine/doug_lea_memory_allocator.h"
 #include "cameralook.h"
@@ -785,7 +785,7 @@ public:
 
 
 #ifdef DEBUG
-
+#if  0
 class CCC_DrawGameGraphAll : public IConsole_Command {
 public:
 				 CCC_DrawGameGraphAll	(LPCSTR N) : IConsole_Command(N)
@@ -846,7 +846,7 @@ public:
 		dynamic_cast<CLevelGraph*>(&ai().level_graph())->setup_current_level(level->id());
 	}
 };
-
+#endif
 #if defined(USE_DEBUGGER) && !defined(USE_LUA_STUDIO)
 class CCC_ScriptDbg : public IConsole_Command {
 public:
@@ -1936,9 +1936,9 @@ CMD4(CCC_Integer,			"hit_anims_tune",						&tune_hit_anims,		0, 1);
 
 	CMD1(CCC_DumpModelBones,	"debug_dump_model_bones");
 
-	CMD1(CCC_DrawGameGraphAll,		"ai_draw_game_graph_all");
-	CMD1(CCC_DrawGameGraphCurrent,	"ai_draw_game_graph_current_level");
-	CMD1(CCC_DrawGameGraphLevel,	"ai_draw_game_graph_level");
+	//CMD1(CCC_DrawGameGraphAll,		"ai_draw_game_graph_all");
+	//CMD1(CCC_DrawGameGraphCurrent,	"ai_draw_game_graph_current_level");
+	//CMD1(CCC_DrawGameGraphLevel,	"ai_draw_game_graph_level");
 
 	CMD4(CCC_Integer,			"ai_dbg_inactive_time",	&g_AI_inactive_time, 0, 1000000);
 	

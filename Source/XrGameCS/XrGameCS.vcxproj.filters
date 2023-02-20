@@ -4782,15 +4782,6 @@
     <ClInclude Include="game_graph.h">
       <Filter>AI\ANavigation\GameGraph</Filter>
     </ClInclude>
-    <ClInclude Include="game_graph_inline.h">
-      <Filter>AI\ANavigation\GameGraph</Filter>
-    </ClInclude>
-    <ClInclude Include="game_level_cross_table.h">
-      <Filter>AI\ANavigation\GameLevelCrossTable</Filter>
-    </ClInclude>
-    <ClInclude Include="game_level_cross_table_inline.h">
-      <Filter>AI\ANavigation\GameLevelCrossTable</Filter>
-    </ClInclude>
     <ClInclude Include="graph_edge.h">
       <Filter>AI\ANavigation\GraphAbstract\GraphEdge</Filter>
     </ClInclude>
@@ -4802,9 +4793,6 @@
     </ClInclude>
     <ClInclude Include="graph_vertex_inline.h">
       <Filter>AI\ANavigation\GraphAbstract\GraphVertex</Filter>
-    </ClInclude>
-    <ClInclude Include="level_graph.h">
-      <Filter>AI\ANavigation\LevelGraph</Filter>
     </ClInclude>
     <ClInclude Include="ai_object_location.h">
       <Filter>AI\ANavigation\ObjectLocation</Filter>
@@ -7165,7 +7153,6 @@
     <ClInclude Include="..\XrServerEntities\DrawUtils.h" />
     <ClInclude Include="..\XrServerEntities\FastDelegate.h" />
     <ClInclude Include="..\XrServerEntities\game_base_space.h" />
-    <ClInclude Include="..\XrServerEntities\game_graph_space.h" />
     <ClInclude Include="..\XrServerEntities\InfoPortionDefs.h" />
     <ClInclude Include="..\XrServerEntities\inventory_space.h" />
     <ClInclude Include="..\XrServerEntities\ItemListTypes.h" />
@@ -8386,15 +8373,6 @@
     </ClCompile>
     <ClCompile Include="game_graph_script.cpp">
       <Filter>AI\ANavigation\GameGraph</Filter>
-    </ClCompile>
-    <ClCompile Include="level_graph.cpp">
-      <Filter>AI\ANavigation\LevelGraph</Filter>
-    </ClCompile>
-    <ClCompile Include="level_graph_debug.cpp">
-      <Filter>AI\ANavigation\LevelGraph</Filter>
-    </ClCompile>
-    <ClCompile Include="level_graph_debug2.cpp">
-      <Filter>AI\ANavigation\LevelGraph</Filter>
     </ClCompile>
     <ClCompile Include="patrol_path.cpp">
       <Filter>AI\ANavigation\PatrolPaths\PatrolPath</Filter>
@@ -10718,8 +10696,6 @@
     <ClCompile Include="ui\UIGameTutorialVideoItem.cpp">
       <Filter>UI\Tutorial</Filter>
     </ClCompile>
-    <ClCompile Include="game_graph.cpp" />
-    <ClCompile Include="game_level_cross_table.cpp" />
     <ClCompile Include="..\XrServerEntities\alife_human_brain.cpp" />
     <ClCompile Include="..\XrServerEntities\alife_monster_brain.cpp" />
     <ClCompile Include="..\XrServerEntities\character_info.cpp" />

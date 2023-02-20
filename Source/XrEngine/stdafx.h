@@ -66,3 +66,5 @@ extern ENGINE_API CInifile *pGameIni;
 	(((ltx)->line_exist(section, name)) ? ((ltx)->method(section, name)) : (default_value))
 
 #include "bone.h"
+#include "level_graph.h"
+#include "game_graph.h"

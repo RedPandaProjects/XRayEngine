@@ -65,60 +65,30 @@ void IGame_Level::net_Stop			()
 
 //-------------------------------------------------------------------------------------------
 //extern CStatTimer				tscreate;
-void  _sound_event		(ref_sound_data_ptr S, float range)
+void  _sound_event(ref_sound_data_ptr S, float range)
 {
 	if ( g_pGameLevel && S && S->feedback )	g_pGameLevel->SoundEvent_Register	(S,range);
 }
-static void 	build_callback	(Fvector* V, int Vcnt, CDB::TRI* T, int Tcnt, void* params)
+static void 	build_callback(Fvector* V, int Vcnt, CDB::TRI* T, int Tcnt, void* params)
 {
 	g_pGameLevel->Load_GameSpecific_CFORM( T, Tcnt );
 }
 
-BOOL IGame_Level::Load			(u32 dwNum) 
+void IGame_Level::Load() 
 {
-	SECUROM_MARKER_PERFORMANCE_ON(10)
-
-	// Initialize level data
-	g_Engine->Level_Set				( dwNum );
-	string_path					temp;
-	if (!FS.exist(temp, "$level$", "level.ltx"))
-		Debug.fatal	(DEBUG_INFO,"Can't find level configuration file '%s'.",temp);
-	pLevel						= xr_new<CInifile>	( temp );
+	IReader F;
+	pLevel						= xr_new<CInifile>	(&F);
 	
-	// Open
-//	g_pGamePersistent->LoadTitle	("st_opening_stream");
-	g_pGamePersistent->LoadTitle	();
-	IReader* LL_Stream			= FS.r_open	("$level$","level");
-	IReader	&fs					= *LL_Stream;
-
-	// Header
-	hdrLEVEL					H;
-	fs.r_chunk_safe				(fsL_HEADER,&H,sizeof(H));
-	R_ASSERT2					(XRCL_PRODUCTION_VERSION==H.XRLC_version,"Incompatible level version.");
-
-	// CForms
-//	g_pGamePersistent->LoadTitle	("st_loading_cform");
-	g_pGamePersistent->LoadTitle();
 	g_Engine->LoadCFormFormCurrentWorld(ObjectSpace, build_callback);
-	//Sound->set_geometry_occ		( &Static );
 	Sound->set_geometry_occ		(ObjectSpace.GetStaticModel	());
 	Sound->set_handler			( _sound_event );
-
-	g_Engine->LoadSwitch			();
-
-
 	// HUD + Environment
 	if(!g_hud)
 		g_hud					= (CCustomHUD*)NEW_INSTANCE	(CLSID_HUDMANAGER);
 
-	// Render-level Load
-	Render->level_Load			(LL_Stream);
-	// tscreate.FrameEnd			();
-	// Msg						("* S-CREATE: %f ms, %d times",tscreate.result,tscreate.count);
-
 	// Objects
 	g_pGamePersistent->Environment().mods_load	();
-	R_ASSERT					(Load_GameSpecific_Before());
+	R_ASSERT(Load_GameSpecific_Before());
 	Objects.Load();
 	if (xrGameManager::GetGame() == EGame::SHOC)
 	{
@@ -126,18 +96,18 @@ BOOL IGame_Level::Load			(u32 dwNum)
 	}
 
 	// Done
-	FS.r_close					( LL_Stream );
 	bReady						= true;
-	if (!g_dedicated_server)	IR_Capture();
+
+	if (!g_dedicated_server)
+	{
+		IR_Capture();
+	}
+
 #ifndef DEDICATED_SERVER
 	Device->seqRenderDebug.Add		(this);
 #endif
 
-	Device->seqFrame.Add			(this);
-
-	SECUROM_MARKER_PERFORMANCE_OFF(10)
-
-	return TRUE;	
+	Device->seqFrame.Add			(this);	
 }
 
 int		psNET_DedicatedSleep	= 5;

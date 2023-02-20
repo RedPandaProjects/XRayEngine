@@ -88,7 +88,7 @@ public:
 	virtual void				net_Stop				( );
 	virtual void				net_Update				( )										= 0;
 
-	virtual BOOL				Load					( u32 dwNum );
+	virtual void				Load					( );
 	virtual BOOL				Load_GameSpecific_Before( )										{ return TRUE; };		// before object loading
 	virtual BOOL				Load_GameSpecific_After	( )										{ return TRUE; };		// after object loading
 	virtual void				Load_GameSpecific_CFORM	( CDB::TRI* T, u32 count )				= 0;

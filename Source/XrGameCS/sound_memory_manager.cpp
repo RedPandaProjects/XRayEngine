@@ -15,7 +15,7 @@
 #include "memory_space_impl.h"
 #include "custommonster.h"
 #include "ai_object_location.h"
-#include "level_graph.h"
+
 #include "sound_user_data_visitor.h"
 #include "agent_manager.h"
 #include "agent_member_manager.h"

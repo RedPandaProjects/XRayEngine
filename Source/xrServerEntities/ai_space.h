@@ -48,10 +48,6 @@ private:
 #ifndef GAME_SOC
 	moving_objects						*m_moving_objects;
 	doors::manager						*m_doors_manager;
-#else
-#ifndef PRIQUEL
-	IGameLevelCrossTable* m_cross_table;
-#endif // PRIQUEL
 #endif
 #endif
 #ifndef XRSEFACTORY_EXPORTS

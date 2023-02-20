@@ -9,7 +9,7 @@
 #include "stdafx.h"
 #include "ai_obstacle.h"
 #include "ai_space.h"
-#include "level_graph.h"
+
 #include "GameObject.h"
 #include "../xrRender/Public/Kinematics.h"
 #include <boost/crc.hpp>

@@ -32,7 +32,6 @@
 #include "entitycondition.h"
 #include "space_restrictor.h"
 #include "detail_path_manager.h"
-#include "level_graph.h"
 #include "actor.h"
 #include "actor_memory.h"
 #include "visual_memory_manager.h"

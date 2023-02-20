@@ -78,19 +78,6 @@ IC	doors::manager& CAI_Space::doors								() const
 	VERIFY					(m_doors_manager);
 	return					(*m_doors_manager);
 }
-#else
-#ifndef PRIQUEL
-IC	const IGameLevelCrossTable& CAI_Space::cross_table() const
-{
-	VERIFY(m_cross_table);
-	return					(*m_cross_table);
-}
-
-IC	const IGameLevelCrossTable* CAI_Space::get_cross_table() const
-{
-	return					(m_cross_table);
-}
-#endif // PRIQUEL
 #endif
 #endif
 IC	CScriptEngine				&CAI_Space::script_engine			() const

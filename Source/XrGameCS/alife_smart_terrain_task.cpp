@@ -14,7 +14,6 @@
 #include "patrol_point.h"
 
 #ifdef DEBUG
-#	include "level_graph.h"
 #	include "game_graph.h"
 #endif
 

@@ -13,7 +13,7 @@
 #include "ai_object_location.h"
 #include "smart_cover_action.h"
 #include "ai_space.h"
-#include "level_graph.h"
+
 #include "graph_engine.h"
 
 namespace smart_cover {

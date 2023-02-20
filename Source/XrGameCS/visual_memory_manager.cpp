@@ -12,7 +12,7 @@
 #include "memory_space_impl.h"
 #include "../xrRender/Public/Kinematics.h"
 #include "ai_object_location.h"
-#include "level_graph.h"
+
 #include "stalker_movement_manager_smart_cover.h"
 #include "../xrEngine/gamemtllib.h"
 #include "agent_manager.h"

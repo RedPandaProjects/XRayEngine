@@ -26,45 +26,42 @@ public:
 	typedef GameGraph::CHeader		CHeader;
 	typedef GameGraph::CLevelPoint	CLevelPoint;
 
-public:		
 	typedef const CEdge				*const_iterator;
 	typedef const CLevelPoint		*const_spawn_iterator;
 	typedef xr_vector<CLevelPoint>	LEVEL_POINT_VECTOR;
 	typedef xr_vector<bool>			ENABLED;
 
-protected:
-	CHeader							m_header;
-	CVertex							*m_nodes;
-	BYTE							*m_edges;
-	mutable ENABLED					m_enabled;
-	_GRAPH_ID						m_current_level_some_vertex_id;
-
-protected:
-	u32								*m_cross_tables;
-	IGameLevelCrossTable			*m_current_level_cross_table;
 
 public:
-	IGameGraph();
-	virtual						~IGameGraph();
-	virtual		void					save					(IWriter &stream);
-	IC	const IGameLevelCrossTable	&cross_table			() const;
+										IGameGraph				();
+	virtual								~IGameGraph				();
+	virtual	const IGameLevelCrossTable	&cross_table			() const = 0;
+	virtual	void						set_current_level		(u32 level_id) = 0;
 
-public:
-	IC		const CHeader			&header					() const;
-	IC		bool					mask					(const svector<_LOCATION_ID,GameGraph::LOCATION_TYPE_COUNT> &M, const _LOCATION_ID E[GameGraph::LOCATION_TYPE_COUNT]) const;
-	IC		bool					mask					(const _LOCATION_ID M[GameGraph::LOCATION_TYPE_COUNT], const _LOCATION_ID E[GameGraph::LOCATION_TYPE_COUNT]) const;
-	IC		float					distance				(const _GRAPH_ID tGraphID0, const _GRAPH_ID tGraphID1) const;
-	IC		bool					accessible				(u32 vertex_id) const;
-	IC		void					accessible				(u32 vertex_id, bool value) const;
-	IC		bool					valid_vertex_id			(u32 vertex_id) const;
-	IC		void					begin					(u32 vertex_id, const_iterator &start, const_iterator &end) const;
-	IC		void					begin_spawn				(u32 vertex_id, const_spawn_iterator &start, const_spawn_iterator &end) const;
-	IC		const _GRAPH_ID			&value					(u32 vertex_id, const_iterator &i) const;
-	IC		const float				&edge_weight			(const_iterator i) const;
-	IC		const CVertex			*vertex					(u32 vertex_id) const;
-	IC		void					set_invalid_vertex		(_GRAPH_ID &vertex_id) const;
-	IC		_GRAPH_ID				vertex_id				(const CVertex *vertex) const;
-	virtual		void					set_current_level		(u32 level_id)=0;
-	IC		const _GRAPH_ID			&current_level_vertex	() const;
+	IC		const CHeader				&header					() const;
+	IC		bool						mask					(const svector<_LOCATION_ID,GameGraph::LOCATION_TYPE_COUNT> &M, const _LOCATION_ID E[GameGraph::LOCATION_TYPE_COUNT]) const;
+	IC		bool						mask					(const _LOCATION_ID M[GameGraph::LOCATION_TYPE_COUNT], const _LOCATION_ID E[GameGraph::LOCATION_TYPE_COUNT]) const;
+	IC		float						distance				(const _GRAPH_ID tGraphID0, const _GRAPH_ID tGraphID1) const;
+	IC		bool						accessible				(u32 vertex_id) const;
+	IC		void						accessible				(u32 vertex_id, bool value) const;
+	IC		bool						valid_vertex_id			(u32 vertex_id) const;
+	IC		void						begin					(u32 vertex_id, const_iterator &start, const_iterator &end) const;
+	IC		void						begin_spawn				(u32 vertex_id, const_spawn_iterator &start, const_spawn_iterator &end) const;
+	IC		const _GRAPH_ID				&value					(u32 vertex_id, const_iterator &i) const;
+	IC		const float					&edge_weight			(const_iterator i) const;
+	IC		const CVertex				*vertex					(u32 vertex_id) const;
+	IC		void						set_invalid_vertex		(_GRAPH_ID &vertex_id) const;
+	IC		_GRAPH_ID					vertex_id				(const CVertex *vertex) const;
+	IC		const _GRAPH_ID				&current_level_vertex	() const;
+
+
+protected:
+	virtual const CVertex*				get_nodes				() const = 0;
+	virtual const CEdge*				get_edges				() const = 0;
+	virtual const CLevelPoint*			get_level_points		() const = 0;
+	CHeader								m_header;
+	mutable ENABLED						m_enabled;
+private:
+	_GRAPH_ID							m_current_level_some_vertex_id;
 };
 #include "game_graph_inline.h"

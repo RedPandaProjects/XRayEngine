@@ -231,16 +231,12 @@ bool CALifeUpdateManager::change_level	(NET_Packet &net_packet)
 #include "../xrengine/igame_persistent.h"
 void CALifeUpdateManager::new_game			(LPCSTR save_name)
 {
-	g_pGamePersistent->LoadTitle		("st_creating_new_game");
 	Msg									("* Creating new game...");
 
 	unload								();
 	reload								(m_section);
 	spawns().load						(save_name);
-
-#ifdef PRIQUEL
 	graph().on_load						();
-#endif // PRIQUEL
 
 	server().PerformIDgen				(0x0000);
 	time_manager().init					(m_section);
@@ -262,7 +258,6 @@ void CALifeUpdateManager::new_game			(LPCSTR save_name)
 
 void CALifeUpdateManager::load			(LPCSTR game_name, bool no_assert, bool new_only)
 {
-	g_pGamePersistent->LoadTitle		("st_loading_alife_simulator");
 
 #ifdef DEBUG
 	//MemoryInterface->mem_compact					();
@@ -279,7 +274,6 @@ void CALifeUpdateManager::load			(LPCSTR game_name, bool no_assert, bool new_onl
 #ifdef DEBUG
 	Msg									("* Loading alife simulator is successfully completed (%7.3f Mb)",float(MemoryInterface->mem_usage() - memory_usage)/1048576.0);
 #endif
-	g_pGamePersistent->LoadTitle		("st_server_connecting");
 }
 
 void CALifeUpdateManager::reload		(LPCSTR section)

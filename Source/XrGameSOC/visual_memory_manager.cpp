@@ -14,7 +14,6 @@
 #include "../XrRender/Public/Kinematics.h"
 #include "clsid_game.h"
 #include "ai_object_location.h"
-#include "level_graph.h"
 #include "stalker_movement_manager.h"
 #include "../XrEngine/gamemtllib.h"
 #include "agent_manager.h"

@@ -4743,9 +4743,6 @@
     <ClInclude Include="game_level_cross_table.h">
       <Filter>AI\ANavigation\GameLevelCrossTable</Filter>
     </ClInclude>
-    <ClInclude Include="level_graph.h">
-      <Filter>AI\ANavigation\LevelGraph</Filter>
-    </ClInclude>
     <ClInclude Include="ai_object_location.h">
       <Filter>AI\ANavigation\ObjectLocation</Filter>
     </ClInclude>
@@ -8492,15 +8489,6 @@
     </ClCompile>
     <ClCompile Include="game_graph_script.cpp">
       <Filter>AI\ANavigation\GameGraph</Filter>
-    </ClCompile>
-    <ClCompile Include="level_graph.cpp">
-      <Filter>AI\ANavigation\LevelGraph</Filter>
-    </ClCompile>
-    <ClCompile Include="level_graph_debug.cpp">
-      <Filter>AI\ANavigation\LevelGraph</Filter>
-    </ClCompile>
-    <ClCompile Include="level_graph_debug2.cpp">
-      <Filter>AI\ANavigation\LevelGraph</Filter>
     </ClCompile>
     <ClCompile Include="patrol_path.cpp">
       <Filter>AI\ANavigation\PatrolPaths\PatrolPath</Filter>

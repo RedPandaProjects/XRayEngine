@@ -8,7 +8,7 @@
 #include "../ai_monster_squad_manager.h"
 #include "../../../../xrRender/Public/KinematicsAnimated.h"
 #include "../../../detail_path_manager.h"
-#include "../../../level_graph.h"
+
 #include "../corpse_cover.h"
 #include "../../../cover_evaluators.h"
 #include "../../../sound_player.h"

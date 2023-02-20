@@ -30,7 +30,6 @@
 #include "client_spawn_manager.h"
 #include "autosave_manager.h"
 #include "ClimableObject.h"
-#include "level_graph.h"
 #include "mt_config.h"
 #include "phcommander.h"
 #include "map_manager.h"
@@ -618,8 +617,8 @@ void CLevel::OnRenderDebug()
 #endif
 
 #ifdef DEBUG
-	if (ai().get_level_graph()&& dynamic_cast<CLevelGraph*>(&ai().level_graph()))
-		dynamic_cast<CLevelGraph*>(&ai().level_graph())->render();
+	//if (ai().get_level_graph()&& dynamic_cast<CLevelGraph*>(&ai().level_graph()))
+	//	dynamic_cast<CLevelGraph*>(&ai().level_graph())->render();
 
 #ifdef DEBUG_PRECISE_PATH
 	test_precise_path		();

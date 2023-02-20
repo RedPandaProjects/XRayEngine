@@ -15,7 +15,7 @@
 #include "alife_time_manager.h"
 void CSE_ALifeCreatureAbstract::on_spawn	()
 {
-	inherited::on_spawn					();
+	inherited1::on_spawn					();
 
 	m_dynamic_out_restrictions.clear	();
 	m_dynamic_in_restrictions.clear		();

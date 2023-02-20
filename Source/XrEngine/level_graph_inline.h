@@ -12,18 +12,14 @@
 
 IC	ILevelGraph::const_vertex_iterator ILevelGraph::begin	() const
 {
-	return				(m_nodes);
+	return				(get_nodes());
 }
 
 IC	ILevelGraph::const_vertex_iterator ILevelGraph::end		() const
 {
-	return				(m_nodes + header().vertex_count());
+	return				(get_nodes() + header().vertex_count());
 }
 
-IC const ILevelGraph::CHeader &ILevelGraph::header	() const
-{
-	return				(*m_header);
-}
 
 ICF bool ILevelGraph::valid_vertex_id	(u32 id) const
 {
@@ -31,16 +27,16 @@ ICF bool ILevelGraph::valid_vertex_id	(u32 id) const
 	return				(b);
 }
 
-ICF	ILevelGraph::CVertex	*ILevelGraph::vertex(const u32 vertex_id) const
+ICF	const ILevelGraph::CVertex	*ILevelGraph::vertex(const u32 vertex_id) const
 {
 	VERIFY				(valid_vertex_id(vertex_id));
-	return				(m_nodes + vertex_id);
+	return				(get_nodes() + vertex_id);
 }
 
 ICF	u32	ILevelGraph::vertex	(const CVertex *vertex_p) const
 {
-	VERIFY				((vertex_p >= m_nodes) && valid_vertex_id(u32(vertex_p - m_nodes)));
-	return				(u32(vertex_p - m_nodes));
+	VERIFY				((vertex_p >= get_nodes()) && valid_vertex_id(u32(vertex_p - get_nodes())));
+	return				(u32(vertex_p - get_nodes()));
 }
 
 ICF	u32	ILevelGraph::vertex	(const CVertex &vertex_r) const
@@ -372,8 +368,8 @@ IC	void ILevelGraph::set_invalid_vertex(u32 &vertex_id, CVertex **vertex) const
 
 IC	const u32 ILevelGraph::vertex_id(const ILevelGraph::CVertex *vertex) const
 {
-	VERIFY				(valid_vertex_id(u32(vertex - m_nodes)));
-	return				(u32(vertex - m_nodes));
+	VERIFY				(valid_vertex_id(u32(vertex - get_nodes())));
+	return				(u32(vertex - get_nodes()));
 }
 
 IC  Fvector ILevelGraph::v3d(const Fvector2 &vector2d) const
@@ -438,7 +434,7 @@ IC	bool	ILevelGraph::create_straight_path	(u32 start_vertex_id, const Fvector2 &
 			u32				next_vertex_id = value(cur_vertex_id,I);
 			if ((next_vertex_id == prev_vertex_id) || !valid_vertex_id(next_vertex_id))
 				continue;
-			CVertex			*v = vertex(next_vertex_id);
+			const CVertex			*v = vertex(next_vertex_id);
 			unpack_xz		(v,temp.x,temp.y);
 			box.min			= box.max = temp;
 			box.grow		(identity);
@@ -636,20 +632,20 @@ IC	void ILevelGraph::clear_mask_no_check	(u32 vertex_id)
 template<typename P>
 IC	void ILevelGraph::iterate_vertices		(const Fvector &min_position, const Fvector &max_position, const P &predicate) const
 {
-	CVertex						*I, *E;
+	const CVertex						*I, *E;
 
 	if (valid_vertex_position(min_position))
-		I						= std::lower_bound(m_nodes,m_nodes + header().vertex_count(),vertex_position(min_position).xz(),&vertex::predicate2);
+		I						= std::lower_bound(get_nodes(),get_nodes() + header().vertex_count(),vertex_position(min_position).xz(),&vertex::predicate2);
 	else
-		I						= m_nodes;
+		I						= get_nodes();
 
 	if (valid_vertex_position(max_position)) {
-		E						= std::upper_bound(m_nodes,m_nodes + header().vertex_count(),vertex_position(max_position).xz(),&vertex::predicate);
-		if (E != (m_nodes + header().vertex_count()))
+		E						= std::upper_bound(get_nodes(),get_nodes() + header().vertex_count(),vertex_position(max_position).xz(),&vertex::predicate);
+		if (E != (get_nodes() + header().vertex_count()))
 			++E;
 	}
 	else
-		E						= m_nodes + header().vertex_count();
+		E						= get_nodes() + header().vertex_count();
 
 	for ( ; I != E; ++I)
 		predicate				(*I);

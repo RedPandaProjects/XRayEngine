@@ -4,7 +4,6 @@
 #include "ai_space.h"
 #include "../../patrol_path_storage.h"
 #include "../../patrol_path.h"
-#include "../../level_graph.h"
 #include "../../cover_point.h"
 #include "monster_cover_manager.h"
 #include "../../ai_object_location.h"

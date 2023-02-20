@@ -15,8 +15,6 @@ BOOL CLevel::net_Start	( LPCSTR op_server, LPCSTR op_client )
 {
 	net_start_result_total				= TRUE;
 
-	g_Engine->LoadBegin				();
-
 	//make Client Name if options doesn't have it
 	LPCSTR	NameStart	= strstr(op_client,"/name=");
 	if (!NameStart)
@@ -94,7 +92,6 @@ bool CLevel::net_start1				()
 	// Start client and server if need it
 	if (m_caServerOptions.size())
 	{
-		g_pGamePersistent->LoadTitle		("st_server_starting");
 
 		typedef IGame_Persistent::params params;
 		params							&p = g_pGamePersistent->m_game_params;
@@ -116,7 +113,7 @@ bool CLevel::net_start1				()
 
 			m_name					= l_name;
 
-			int						id = g_Engine->Level_ID(l_name,"1.0",true);
+		/*	int						id = g_Engine->Level_ID(l_name,"1.0",true);
 
 			if (id<0) {
 				g_Engine->LoadEnd				();
@@ -124,7 +121,7 @@ bool CLevel::net_start1				()
 				net_start_result_total		= FALSE;
 				return true;
 			}
-			g_Engine->Level_Set			(id);
+			g_Engine->Level_Set			(id);*/
 		}
 	}
 	return true;
@@ -234,22 +231,7 @@ bool xr_stdcall net_start_finalizer()
 	{
 		shared_str ln	= Level().name();
 		Msg				("! Failed to start client. Check the connection or level existance.");
-		DEL_INSTANCE	(g_pGameLevel);
-		Console->Execute("main_menu on");
-
-	/*	if (g_connect_server_err==xrServer::ErrBELoad)
-		{
-			MainMenu()->OnLoadError("BattlEye/BEServer.dll");
-		}else*/
-		if(g_connect_server_err==xrServer::ErrConnect && !psNET_direct_connect && !g_dedicated_server) 
-		{
-			MainMenu()->SwitchToMultiplayerMenu();
-		}
-	/*	if(g_connect_server_err==xrServer::ErrNoLevel)
-		{
-			MainMenu()->SwitchToMultiplayerMenu();
-			MainMenu()->OnLoadError(ln.c_str());
-		}*/
+		DEL_INSTANCE(g_pGameLevel);
 	}
 	return true;
 }
@@ -267,7 +249,6 @@ bool CLevel::net_start6()
 	BulletManager().Clear		();
 	BulletManager().Load		();
 
-	g_Engine->LoadEnd				();
 
 	if(net_start_result_total)
 	{

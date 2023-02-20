@@ -12,6 +12,7 @@
 #include "game_base.h"
 #include "ai_space.h"
 #include "game_graph.h"
+#include "../XrEngine/XRayEngineInterface.h"
 
 #pragma warning(push)
 #pragma warning(disable:4995)
@@ -71,20 +72,9 @@ void CALifeSpawnRegistry::load				(IReader &file_stream, LPCSTR game_name)
 	chunk->r_stringZ			(m_spawn_name);
 	chunk->r					(&guid,sizeof(guid));
 	chunk->close				();
-
-	string_path					file_name;
-	bool						file_exists = !!FS.exist(file_name, "$game_spawn$", *m_spawn_name, ".spawn");
-	R_ASSERT3					(file_exists,"Can't find spawn file:",*m_spawn_name);
-	
-#ifndef PRIQUEL
-	IReader						*m_file = 0;
-#endif // PRIQUEL
-	VERIFY						(!m_file);
-	m_file						= FS.r_open(file_name);
-	load						(*m_file,&guid);
-#ifndef PRIQUEL
-	FS.r_close					(m_file);
-#endif // PRIQUEL
+		
+	IReader						F = g_Engine->GetGameSpawn();
+	load						(F,&guid);
 
 	chunk0->close				();
 }
@@ -92,19 +82,8 @@ void CALifeSpawnRegistry::load				(IReader &file_stream, LPCSTR game_name)
 void CALifeSpawnRegistry::load				(LPCSTR spawn_name)
 {
 	Msg							("* Loading spawn registry...");
-	m_spawn_name				= spawn_name;
-	string_path					file_name;
-	R_ASSERT3					(FS.exist(file_name, "$game_spawn$", *m_spawn_name, ".spawn"),"Can't find spawn file:",*m_spawn_name);
-	
-#ifndef PRIQUEL
-	IReader						*m_file = 0;
-#endif // PRIQUEL
-	VERIFY						(!m_file);
-	m_file						= FS.r_open(file_name);
-	load						(*m_file);
-#ifndef PRIQUEL
-	FS.r_close					(m_file);
-#endif // PRIQUEL
+	IReader F = g_Engine->GetGameSpawn();
+	load						(F);
 }
 
 struct dummy {
@@ -154,17 +133,11 @@ void CALifeSpawnRegistry::load				(IReader &file_stream, xrGUID *save_guid)
 	ai().patrol_path_storage	(*chunk);
 	chunk->close				();
 
-#ifdef PRIQUEL
-	VERIFY						(!m_chunk);
-	m_chunk						= file_stream.open_chunk(4);
-	R_ASSERT2					(m_chunk,"Spawn version mismatch - REBUILD SPAWN!");
-
-	VERIFY						(!m_game_graph);
-	m_game_graph				= xr_new<IGameGraph>(*m_chunk);
-	ai().game_graph				(m_game_graph);
-#endif // PRIQUEL
+	ai().game_graph(g_Engine->GetGameGraph());
 
 	R_ASSERT2					(header().graph_guid() == ai().game_graph().header().guid(),"Spawn doesn't correspond to the graph : REBUILD SPAWN!");
+
+
 
 	build_story_spawns			();
 
@@ -252,13 +225,15 @@ void CALifeSpawnRegistry::load_from_editor()
 	Msg("* Loading spawn registry...");
 	ai().patrol_path_storage_from_editor();
 
-	IReader*F = EditorScene->LoadSpawn();
+	ai().game_graph(g_Engine->GetGameGraph());
+
+	IReader F = g_Engine->GetGameSpawn();
 	IReader* chunk;
-	chunk = F->open_chunk(0);
+	chunk = F.open_chunk(0);
 	m_header.load(*chunk);
 	chunk->close();
 
-	chunk = F->open_chunk(1);
+	chunk = F.open_chunk(1);
 	m_spawns.load(*chunk);
 	chunk->close();
 
@@ -280,16 +255,15 @@ void CALifeSpawnRegistry::load_from_editor()
 	}
 #endif
 
-	chunk = F->open_chunk(2);
+	chunk = F.open_chunk(2);
 	load_data(m_artefact_spawn_positions, *chunk);
 	chunk->close();
 
-	chunk = F->open_chunk(3);
+	chunk = F.open_chunk(3);
 	R_ASSERT2(chunk, "Spawn version mismatch - REBUILD SPAWN!");
 	ai().patrol_path_storage(*chunk);
 	chunk->close();
 
-	xr_delete(F);
 
 	build_story_spawns();
 

@@ -15,7 +15,7 @@
 #include "ef_pattern.h"
 #include "autosave_manager.h"
 #include "ai_object_location.h"
-#include "level_graph.h"
+
 #include "level.h"
 #include "script_game_object.h"
 #include "ai_space.h"

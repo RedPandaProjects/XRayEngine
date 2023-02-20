@@ -855,7 +855,7 @@ void CAI_Stalker::OnRender			()
 		Level().debug_renderer().draw_aabb	(position,half_size - .01f,1.f,ai().level_graph().header().cell_size()*.5f-.01f,color_xrgb(0*255,255,0*255));
 
 		if (ai().level_graph().valid_vertex_id(level_vertex_id)) {
-			LevelGraph::CVertex			*v = ai().level_graph().vertex(level_vertex_id);
+			const LevelGraph::CVertex	*v = ai().level_graph().vertex(level_vertex_id);
 			Fvector						direction;
 			float						best_value = -1.f;
 			u32 j = 0;

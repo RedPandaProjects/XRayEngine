@@ -11,7 +11,7 @@
 #include "../ai_monster_squad_manager.h"
 #include "../../../CharacterPhysicsSupport.h"
 
-#include "../../../level_graph.h"
+
 #include "ai_space.h"
 #include "../../../ai_object_location.h"
 #include "../../../actor.h"

@@ -99,8 +99,7 @@ public:
 	virtual ~IGame_Persistent		();
 
 	ICF		u32						GameType			() {return m_game_params.m_e_game_type;};
-	virtual void					Statistics(CGameFont* F) = 0;
-	virtual	void					LoadTitle			(bool change_tip=false, shared_str map_name=""){}
+	virtual void					Statistics			(CGameFont* F) = 0;
 	virtual bool					CanBePaused			()		{ return true;}
 };
 

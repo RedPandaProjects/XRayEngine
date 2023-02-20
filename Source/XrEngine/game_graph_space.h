@@ -25,9 +25,7 @@ namespace GameGraph
 
 	class SLevel
 	{
-#ifndef MASTER_GOLD
 	public:
-#endif
 		shared_str				m_name;
 		Fvector					m_offset;
 		_LEVEL_ID				m_id;
@@ -71,9 +69,7 @@ namespace GameGraph
 #pragma pack(push,1)
 	class CEdge
 	{
-#ifndef MASTER_GOLD
 	public:
-#endif
 		_GRAPH_ID					m_vertex_id;
 		float						m_path_distance;
 	public:
@@ -83,13 +79,11 @@ namespace GameGraph
 
 	class CVertex 
 	{
-#ifndef MASTER_GOLD
 	public:
-#endif
 		Fvector						tLocalPoint;
 		Fvector						tGlobalPoint;
-		u32							tLevelID:8;
-		u32							tNodeID:24;
+		u32							tLevelID;
+		u32							tNodeID;
 		u8							tVertexTypes[LOCATION_TYPE_COUNT];
 		u32							dwEdgeOffset;
 		u32							dwPointOffset;
@@ -111,9 +105,7 @@ namespace GameGraph
 
 	class CHeader 
 	{
-#ifndef MASTER_GOLD
 	public:
-#endif
 		u8							m_version;
 		_GRAPH_ID					m_vertex_count;
 		u32							m_edge_count;
@@ -140,9 +132,7 @@ namespace GameGraph
 
 	class CLevelPoint
 	{
-	#ifndef MASTER_GOLD
 	public:
-	#endif
 		Fvector		tPoint;
 		u32			tNodeID;
 		float		fDistance;	

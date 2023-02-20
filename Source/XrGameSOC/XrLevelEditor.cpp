@@ -145,7 +145,6 @@ BOOL CLevelEditor::net_Start(LPCSTR op_server, LPCSTR op_client)
 			g_hud->OnConnected();
 
 
-		g_pGamePersistent->LoadTitle("st_client_synchronising");
 		//Device->PreCache(30, true, true);
 		
 	}

@@ -11,7 +11,8 @@
 #include "object_interfaces.h"
 #include "object_type_traits.h"
 
-struct CDestroyer {
+struct CDestroyer 
+{
 	IC	static void delete_data(LPCSTR data)
 	{
 	}
@@ -84,67 +85,54 @@ struct CDestroyer {
 	}
 
 	template <typename T>
-	struct CHelper1 {
-		template <bool a>
-		IC	static void delete_data(T &)
-		{
-		}
-
-		template <>
-		IC	static void delete_data<true>(T &data)
-		{
-			data.destroy();
-		}
-	};
+	IC	static void delete_data3(T& data)
+	{
+		typename T::iterator					I = data.begin();
+		typename T::iterator					E = data.end();
+		for (; I != E; ++I)
+			CDestroyer::delete_data(*I);
+		data.clear();
+	}
 
 	template <typename T>
-	struct CHelper2 {
-		template <bool a>
-		IC	static void delete_data(T &data)
-		{
-			CHelper1<T>::delete_data<object_type_traits::is_base_and_derived<IPureDestroyableObject,T>::value>(data);
-		}
-
-		template <>
-		IC	static void delete_data<true>(T &data)
-		{
-			if (data)
-				CDestroyer::delete_data	(*data);
-			xr_delete					(data);
-		}
-	};
-
-	struct CHelper3 {
-		template <typename T>
-		IC	static void delete_data(T &data)
-		{
-			typename T::iterator					I = data.begin();
-			typename T::iterator					E = data.end();
-			for ( ; I != E; ++I)
-				CDestroyer::delete_data	(*I);
-			data.clear					();
-		}
-	};
-
+	IC	static void delete_data2(T& data)
+	{
+		if (data)
+			CDestroyer::delete_data(*data);
+#if !__UNREAL__
+		xr_delete(data);
+#else
+		delete data;
+#endif
+	}
 	template <typename T>
-	struct CHelper4 {
-		template <bool a>
-		IC	static void delete_data(T &data)
-		{
-			CHelper2<T>::delete_data<object_type_traits::is_pointer<T>::value>	(data);
-		}
+	IC	static void delete_data1(T& data)
+	{
+		data.destroy();
+	}
 
-		template <>
-		IC	static void delete_data<true>(T &data)
-		{
-			CHelper3::delete_data	(data);
-		}
-	};
 
 	template <typename T>
 	IC	static void delete_data(T &data)
 	{
-		CHelper4<T>::delete_data<object_type_traits::is_stl_container<T>::value>(data);
+		if constexpr (object_type_traits::is_stl_container<T>::value)
+		{
+			delete_data3(data);
+		}
+		else
+		{
+			if constexpr (object_type_traits::is_pointer<T>::value)
+			{
+				delete_data2(data);
+			}
+			else
+			{
+				if constexpr (object_type_traits::is_base_and_derived<IPureDestroyableObject, T>::value)
+				{
+					delete_data1(data);
+				}
+			}
+		}
 	}
 };
 

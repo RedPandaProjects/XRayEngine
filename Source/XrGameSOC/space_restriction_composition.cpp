@@ -13,7 +13,7 @@
 #include "space_restriction_bridge.h"
 #include "restriction_space.h"
 #include "ai_space.h"
-#include "level_graph.h"
+
 #include "graph_engine.h"
 
 #pragma warning(push)

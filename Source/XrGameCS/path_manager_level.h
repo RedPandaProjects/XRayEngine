@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "level_graph.h"
+
 
 template <
 	typename _DataStorage,
@@ -69,7 +69,7 @@ protected:
 //	float				size_y;
 	float				m_sqr_distance_xz;
 	float				m_distance_xz;
-	_Graph::CVertex		*best_node;
+	const _Graph::CVertex*best_node;
 
 public:
 	virtual				~CPathManager	();

@@ -2,7 +2,7 @@
 #include "poltergeist.h"
 #include "../../../../XrServerEntities/xrmessages.h"
 #include "../../../ai_object_location.h"
-#include "../../../level_graph.h"
+
 #include "../../../level.h"
 #include "ai_space.h"
 #include "../../../restricted_object.h"

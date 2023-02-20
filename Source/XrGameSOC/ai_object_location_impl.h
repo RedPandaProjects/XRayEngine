@@ -11,7 +11,6 @@
 #include "ai_object_location.h"
 #include "ai_space.h"
 #include "game_graph.h"
-#include "level_graph.h"
 
 IC	void CAI_ObjectLocation::init()
 {

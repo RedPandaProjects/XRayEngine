@@ -9,13 +9,6 @@
 
 #pragma once
 
-
-IC const IGameLevelCrossTable::CCell &IGameLevelCrossTable::vertex(u32 level_vertex_id) const
-{
-	VERIFY				(level_vertex_id < header().level_vertex_count());
-	return				(m_tpaCrossTable[level_vertex_id]);
-}
-
 IC	u32	IGameLevelCrossTable::CHeader::version() const
 {
 	return				(dwVersion);

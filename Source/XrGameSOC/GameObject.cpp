@@ -9,7 +9,6 @@
 #include "HangingLamp.h"
 #include "PhysicsShell.h"
 #include "game_sv_single.h"
-#include "level_graph.h"
 #include "ph_shell_interface.h"
 #include "script_game_object.h"
 #include "xrserver_objects_alife.h"
@@ -26,7 +25,6 @@
 #include "script_callback_ex.h"
 #include "MathUtils.h"
 #include "game_cl_base_weapon_usage_statistic.h"
-#include "game_level_cross_table.h"
 #include "animation_movement_controller.h"
 #include "game_object_space.h"
 

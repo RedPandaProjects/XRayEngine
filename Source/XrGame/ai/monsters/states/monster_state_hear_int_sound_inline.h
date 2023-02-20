@@ -1,6 +1,6 @@
 #pragma once
 #include "ai_space.h"
-#include "level_graph.h"
+
 #include "state_custom_action_look.h"
 
 #define TEMPLATE_SPECIALIZATION template <\

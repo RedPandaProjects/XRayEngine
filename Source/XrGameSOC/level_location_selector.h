@@ -9,7 +9,6 @@
 #pragma once
 
 #include "abstract_location_selector.h"
-#include "level_graph.h"
 
 template <
 	typename _VertexEvaluator,

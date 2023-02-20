@@ -28,7 +28,7 @@
 #include "../control_movement_base.h"
 #include "../control_path_builder_base.h"
 
-#include "../../../level_graph.h"
+
 #include "../../../ai_object_location.h"
 
 #include "../../../Inventory.h"

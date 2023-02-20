@@ -15,7 +15,7 @@
 #include "game_level_cross_table.h"
 #include "xrserver.h"
 #include "ai_space.h"
-#include "level_graph.h"
+
 
 #ifdef DEBUG
 #	include "level.h"

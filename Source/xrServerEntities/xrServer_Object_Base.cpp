@@ -217,6 +217,8 @@ void CSE_Abstract::Spawn_Write(NET_Packet& tNetPacket, BOOL bLocal)
 
 	tNetPacket.w_u16(SPAWN_VERSION);
 
+	tNetPacket.w_stringZ(unreal_soft_refence);
+
 	tNetPacket.w_u16(m_gameType.m_GameType.get());
 
 	tNetPacket.w_u16(script_server_object_version());
@@ -280,6 +282,7 @@ BOOL CSE_Abstract::Spawn_Read(NET_Packet& tNetPacket)
 	string4096					temp;
 	tNetPacket.r_stringZ(temp);
 	set_name_replace(temp);
+
 	u8							temp_gt;
 	tNetPacket.r_u8(temp_gt/*s_gameid*/);
 	tNetPacket.r_u8(s_RP);
@@ -295,7 +298,10 @@ BOOL CSE_Abstract::Spawn_Read(NET_Packet& tNetPacket)
 	// dangerous!!!!!!!!!
 	if (s_flags.is(M_SPAWN_VERSION))
 		tNetPacket.r_u16(m_wVersion);
-
+	if (m_wVersion >= 129)
+	{
+		tNetPacket.r_stringZ(unreal_soft_refence);
+	}
 	if (m_wVersion > 120)
 	{
 		u16 gt;

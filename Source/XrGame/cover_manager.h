@@ -48,8 +48,8 @@ private:
 
 protected:
 	IC		bool					edge_vertex				(u32 index);
-	IC		bool					cover					(LevelGraph::CVertex *v, u32 index0, u32 index1);
-	IC		bool					critical_point			(LevelGraph::CVertex *v, u32 index, u32 index0, u32 index1);
+	IC		bool					cover					(const LevelGraph::CVertex *v, u32 index0, u32 index1);
+	IC		bool					critical_point			(const LevelGraph::CVertex *v, u32 index, u32 index0, u32 index1);
 	IC		bool					critical_cover			(u32 index);
 
 private:
