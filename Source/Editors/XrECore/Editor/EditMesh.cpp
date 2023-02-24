@@ -12,6 +12,7 @@
 #include "face_smoth_flags.h"
 #include "itterate_adjacents.h"
 #include "itterate_adjacents_dynamic.h"
+#include "Library.h"
 
 CEditableMesh::~CEditableMesh(){
 	Clear();
@@ -213,11 +214,16 @@ void CEditableMesh::GenerateVNormals(const Fmatrix* parent_xform)
 	if (m_VertexNormals)		return;
 	m_VertexNormals = xr_alloc<Fvector>(m_FaceCount * 3);
 
-	float CosA = cosf(deg2rad(75.f));
+	float CosA = cosf(deg2rad(GRayObjectLibrary->AngleSmooth));
 	// gen req    
 	GenerateFNormals();
 	GenerateAdjacency();
 	const bool HardSmoth = true;
+	EGame CurrentGame = xrGameManager::GetGame();
+	if (GRayObjectLibrary->LoadAsGame != EGame::NONE)
+	{
+		CurrentGame = GRayObjectLibrary->LoadAsGame;
+	}
 	if (xrGameManager::GetGame() == EGame::SHOC&& HardSmoth)
 	{
 		for (u32 f_i = 0; f_i < m_FaceCount; f_i++)

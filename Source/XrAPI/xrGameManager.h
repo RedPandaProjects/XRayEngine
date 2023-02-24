@@ -5,6 +5,7 @@ enum class EGame
 	COP,
 	CS,
 	SHOC,
+	NONE = -1,
 };
 enum class EGamePath
 {

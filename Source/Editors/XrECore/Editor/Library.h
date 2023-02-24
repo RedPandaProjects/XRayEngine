@@ -27,7 +27,7 @@ public:
 	void 				OnCreate			();
 	void 				OnDestroy			();
 	void 				Save				(FS_FileSet* modif_map=0);
-
+    
     void 				ReloadObjects		();
     void 				CleanLibrary		();
     void 				ReloadObject		(LPCSTR name);
@@ -42,6 +42,9 @@ public:
 
 	virtual		void	OnDeviceCreate		();
 	virtual		void	OnDeviceDestroy		();
+public:
+    float               AngleSmooth      = 75;
+    EGame               LoadAsGame       = EGame::NONE;
 };
 
 extern ECORE_API XRayObjectLibrary* GRayObjectLibrary;
