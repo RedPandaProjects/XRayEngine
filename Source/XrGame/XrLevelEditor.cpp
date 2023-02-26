@@ -96,10 +96,9 @@ BOOL CLevelEditor::net_Start(LPCSTR op_server, LPCSTR op_client)
 		map_data.m_level_geom_crc32 = 0;
 	}
 
-	if (connected_to_server) {
+	if (connected_to_server) 
+	{
 		// Begin spawn
-//		g_pGamePersistent->LoadTitle		("st_client_spawning");
-		g_pGamePersistent->LoadTitle();
 
 		// Send physics to single or multithreaded mode
 
@@ -186,8 +185,6 @@ BOOL CLevelEditor::net_Start(LPCSTR op_server, LPCSTR op_client)
 			}
 		}
 
-		//		g_pGamePersistent->LoadTitle		("st_client_synchronising");
-		g_pGamePersistent->LoadTitle();
 		Device->PreCache(60, true, true);
 		net_start_result_total = TRUE;
 

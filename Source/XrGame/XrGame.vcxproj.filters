@@ -4740,9 +4740,6 @@
     <ClInclude Include="game_graph.h">
       <Filter>AI\ANavigation\GameGraph</Filter>
     </ClInclude>
-    <ClInclude Include="game_level_cross_table.h">
-      <Filter>AI\ANavigation\GameLevelCrossTable</Filter>
-    </ClInclude>
     <ClInclude Include="ai_object_location.h">
       <Filter>AI\ANavigation\ObjectLocation</Filter>
     </ClInclude>
@@ -10961,12 +10958,6 @@
     </ClCompile>
     <ClCompile Include="XrLevelEditor.cpp">
       <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="game_level_cross_table.cpp">
-      <Filter>AI\ANavigation\GameLevelCrossTable</Filter>
-    </ClCompile>
-    <ClCompile Include="game_graph.cpp">
-      <Filter>AI\ANavigation\GameGraph</Filter>
     </ClCompile>
     <ClCompile Include="stalker_movement_manager_smart_cover2.cpp">
       <Filter>AI\AMonsters\humans\stalker\MovementManager\smart_covers</Filter>

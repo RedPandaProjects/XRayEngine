@@ -51,7 +51,7 @@ GameGraph::LEVEL_MAP const& get_levels	( IGameGraph const* graph )
 }
 
 #pragma optimize("s",on)
-void CGameGraph::script_register		(lua_State *L)
+void CGameGraphScipt::script_register		(lua_State *L)
 {
 	module(L)
 	[
@@ -69,7 +69,7 @@ void CGameGraph::script_register		(lua_State *L)
 			.def("vertex_id",		&IGameGraph::vertex_id)
 			.def("levels",			&get_levels, return_stl_iterator),
 
-		class_<CVertex>("GameGraph__CVertex")
+		class_<IGameGraph::CVertex>("GameGraph__CVertex")
 			.def("level_point",		&CVertex__level_point)
 			.def("game_point",		&CVertex__game_point)
 			.def("level_id",		&CVertex::level_id)

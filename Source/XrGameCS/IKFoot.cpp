@@ -371,7 +371,7 @@ bool CIKFoot::GetFootStepMatrix( ik_goal_matrix &m, const Fmatrix &g_anim, const
 
 	VERIFY( _valid( xm ) );
 	m.set( xm, cl_state );
-#ifdef DEBUG
+#if 0
 	if(ph_dbg_draw_mask.test( phDbgDrawIKGoal ))
 	{
 		DBG_DrawPoint( global_point, 0.03f, color_rgba( 255, 0, 0, 255 ) );

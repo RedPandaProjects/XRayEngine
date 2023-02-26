@@ -48,6 +48,11 @@ xrServer::EConnect xrServer::Connect(shared_str &session_name, GameDescriptionDa
 	if (0==strchr(*session_name,'/'))
 		return				ErrConnect;
 
+	if (g_Engine->GetGameSpawn().length() == 0)
+	{
+		return				ErrConnect;
+	}
+
 	string1024				options;
 	R_ASSERT2(xr_strlen(session_name) <= sizeof(options), "session_name too BIIIGGG!!!");
 	strcpy_s					(options,strchr(*session_name,'/')+1);

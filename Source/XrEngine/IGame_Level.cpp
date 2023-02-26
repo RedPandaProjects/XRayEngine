@@ -76,7 +76,7 @@ static void 	build_callback(Fvector* V, int Vcnt, CDB::TRI* T, int Tcnt, void* p
 
 void IGame_Level::Load() 
 {
-	IReader F;
+	IReader F(nullptr,0);
 	pLevel						= xr_new<CInifile>	(&F);
 	
 	g_Engine->LoadCFormFormCurrentWorld(ObjectSpace, build_callback);

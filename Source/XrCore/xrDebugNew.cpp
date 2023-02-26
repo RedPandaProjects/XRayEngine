@@ -81,7 +81,7 @@ void xrDebug::backend	(const char *expression, const char *description, const ch
 	if (IsDebuggerPresent())
 	{
 		DebugBreak();
-		return;
+w		return;
 	}
 
 

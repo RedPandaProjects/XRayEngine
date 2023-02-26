@@ -9,19 +9,14 @@
 #pragma once
 
 #include "../xrEngine/game_graph.h"
+#include "../xrEngine/game_level_cross_table.h"
 #include "script_export_space.h"
-#include "game_level_cross_table.h"
 
-class CGameGraph:public IGameGraph
+class CGameGraphScipt:public IGameGraph
 {
-private:
-	friend class CRenumbererConverter;
 public:
-	CGameGraph(const IReader &stream);
-	virtual ~CGameGraph();
-	virtual void set_current_level(u32 const level_id);
 	DECLARE_SCRIPT_REGISTER_FUNCTION
 };
-add_to_type_list(CGameGraph)
+add_to_type_list(CGameGraphScipt)
 #undef script_type_list
-#define script_type_list save_type_list(CGameGraph)
+#define script_type_list save_type_list(CGameGraphScipt)

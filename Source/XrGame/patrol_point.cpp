@@ -10,7 +10,7 @@
 #include "patrol_point.h"
 
 
-#include "game_level_cross_table.h"
+
 #include "game_graph.h"
 #include "../xrEngine/object_broker.h"
 

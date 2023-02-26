@@ -695,7 +695,7 @@ void CGamePersistent::OnFrame	()
 	}
 
 #ifdef DEBUG
-	if ((m_last_stats_frame + 1) < m_frame_counter)
+	if ((m_last_stats_frame + 1) < m_frame_counter&&g_profiler)
 		profiler().clear		();
 #endif
 	UpdateDof();
@@ -822,7 +822,6 @@ void CGamePersistent::OnRenderPPUI_PP()
 #include "../xrEngine/XRayEngineInterface.h"
 void CGamePersistent::LoadTitle(bool change_tip, shared_str map_name)
 {
-	g_Engine->LoadStage();
 	if(change_tip)
 	{
 		string512				buff;
@@ -848,7 +847,6 @@ void CGamePersistent::LoadTitle(bool change_tip, shared_str map_name)
 		else
 			xr_sprintf			(buff, "ls_mp_tip_%d", tip_num);
 
-		g_Engine->LoadTitleInt		(CStringTable().translate("ls_header").c_str(), tmp.c_str(), CStringTable().translate(buff).c_str());
 	}
 }
 

@@ -2,6 +2,7 @@
 #include "ai_space.h"
 
 #include "state_custom_action_look.h"
+#include "ai/Monsters/states/state_move_to_point.h"
 
 #define TEMPLATE_SPECIALIZATION template <\
 	typename _Object\

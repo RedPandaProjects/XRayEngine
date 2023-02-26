@@ -25,6 +25,7 @@
 
 #include <typeinfo>
 
+#include <luabind/back_reference.hpp>
 #include <luabind/detail/class_rep.hpp>
 #include <luabind/object.hpp>
 #include <luabind/weak_ref.hpp>
@@ -39,6 +40,9 @@
 
 namespace luabind
 {
+
+	template<class T>
+	struct back_reference;
 	namespace detail
 	{
 		struct conversion_policy_base {};
