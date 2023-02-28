@@ -13,7 +13,7 @@
 #include "alife_object_registry.h"
 #include "alife_graph_registry.h"
 #include "alife_schedule_registry.h"
-#include "game_level_cross_table.h"
+
 
 
 #pragma warning(push)

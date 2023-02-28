@@ -350,7 +350,7 @@ void CActor::Load	(LPCSTR section )
 if(!g_dedicated_server)
 {
 	LPCSTR hit_snd_sect = pSettings->r_string(section,"hit_sounds");
-	for(int hit_type=0; hit_type<(int)ALife::eHitTypeMax; ++hit_type)
+	for(int hit_type=0; hit_type<(int)ALife::eHitTypeMaxCS; ++hit_type)
 	{
 		LPCSTR hit_name = ALife::g_cafHitType2String((ALife::EHitType)hit_type);
 		LPCSTR hit_snds = READ_IF_EXISTS(pSettings, r_string, hit_snd_sect, hit_name, "");
@@ -810,10 +810,17 @@ void CActor::g_Physics			(Fvector& _accel, float jump, float dt)
 	character_physics_support()->movement()->bSleep				=false;
 	}
 
-	if (Local() && g_Alive()) {
+	if (Local() && g_Alive())
+	{
 		if (character_physics_support()->movement()->gcontact_Was)
-			Cameras().AddCamEffector		(xr_new<CEffectorFall> (character_physics_support()->movement()->gcontact_Power));
-		if (!fis_zero(character_physics_support()->movement()->gcontact_HealthLost))	{
+		{
+			if(!Cameras().GetCamEffector((ECamEffectorType)210408))
+			{
+				Cameras().AddCamEffector(xr_new<CEffectorFall>(character_physics_support()->movement()->gcontact_Power));
+			}
+		}
+		if (!fis_zero(character_physics_support()->movement()->gcontact_HealthLost))
+		{
 			const ICollisionDamageInfo* di=character_physics_support()->movement()->CollisionDamageInfo();
 			Fvector hdir;di->HitDir(hdir);
 			SetHitInfo(this, NULL, 0, Fvector().set(0, 0, 0), hdir);

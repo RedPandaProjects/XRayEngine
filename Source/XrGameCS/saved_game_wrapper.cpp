@@ -15,6 +15,7 @@
 #include "game_graph.h"
 #include "alife_simulator_header.h"
 #include "game_graph.h"
+#include "../XrEngine/XRayEngineInterface.h"
 
 extern LPCSTR alife_section;
 
@@ -117,39 +118,11 @@ CSavedGameWrapper::CSavedGameWrapper			(LPCSTR saved_game_name)
 		}
 
 		chunk->close			();
-
-		if (!FS.exist(file_name, "$game_spawn$", spawn_file_name, ".spawn")) {
-			F_entity_Destroy	(object);
-			m_level_id			= _LEVEL_ID(-1);
-			m_level_name		= "";
-			return;
-		}
-
-		IReader* spawn			= FS.r_open(file_name);
-		if (!spawn) {
-			F_entity_Destroy	(object);
-			m_level_id			= _LEVEL_ID(-1);
-			m_level_name		= "";
-			return;
-		}
-
-		chunk					= spawn->open_chunk(4);
-		if (!chunk) {
-			F_entity_Destroy	(object);
-			FS.r_close			(spawn);
-			m_level_id			= _LEVEL_ID(-1);
-			m_level_name		= "";
-			return;
-		}
-
 		{
-			CGameGraph			graph(*chunk);
-			m_level_id			= graph.vertex(object->m_tGraphID)->level_id();
-			m_level_name		= graph.header().level(m_level_id).name();
+			IGameGraph* Graph = g_Engine->GetGameGraph();
+			m_level_id = Graph->vertex(object->m_tGraphID)->level_id();
+			m_level_name = Graph->header().level(m_level_id).name();
 		}
-
-		chunk->close			();
-		FS.r_close				(spawn);
 		F_entity_Destroy		(object);
 	}
 

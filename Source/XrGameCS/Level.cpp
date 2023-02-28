@@ -489,7 +489,7 @@ void CLevel::ProcessGameEvents		()
 				}break;
 			case M_STATISTIC_UPDATE:
 				{
-					if (GameID() != eGameIDSingle)
+					if (Level().game && GameID() != eGameIDSingle)
 						Game().m_WeaponUsageStatistic->OnUpdateRequest(&P);
 				}break;
 			case M_FILE_TRANSFER:
@@ -508,7 +508,7 @@ void CLevel::ProcessGameEvents		()
 			}			
 		}
 	}
-	if (OnServer() && GameID()!= eGameIDSingle)
+	if (Level().game &&OnServer() && GameID()!= eGameIDSingle)
 		Game().m_WeaponUsageStatistic->Send_Check_Respond();
 }
 
@@ -1035,6 +1035,7 @@ void CLevel::make_NetCorrectionPrediction	()
 	pObjects4CrPr.clear();
 	pActors4CrPr.clear();
 };
+
 
 u32			CLevel::GetInterpolationSteps	()
 {

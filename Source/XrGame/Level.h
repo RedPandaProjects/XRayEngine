@@ -108,7 +108,11 @@ public:
 	// level debugger
 	CLevelDebug					*m_level_debug;
 #endif
+	void		ActorTransferInfo	(shared_str Name, bool Value) override;
+	bool		ActorHasInfo		(shared_str Name) override;
+	CObject*	GetActor			() override;
 
+	void		SpawnObject			(shared_str SectionName, shared_str WayObjectName, int PointIndex = 0, float YawAngle = 0) override;
 public:
 	////////////// network ////////////////////////
 	u32							GetInterpolationSteps	();

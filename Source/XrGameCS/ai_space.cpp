@@ -8,7 +8,6 @@
 
 #include "stdafx.h"
 #include "game_graph.h"
-#include "game_level_cross_table.h"
 
 #include "graph_engine.h"
 #include "ef_storage.h"
@@ -105,7 +104,7 @@ void CAI_Space::load				(LPCSTR level_name)
 
 	const IGameGraph::SLevel &current_level = game_graph().header().level(level_name);
 
-	m_level_graph			= g_Engine->GetLevelGraphCurrentWorld();
+	m_level_graph			= g_Engine->GetLevelGraph(current_level.name().c_str());
 	game_graph().set_current_level(current_level.id());
 	R_ASSERT2				(cross_table().header().level_guid() == level_graph().header().guid(), "cross_table doesn't correspond to the AI-map");
 	R_ASSERT2				(cross_table().header().game_guid() == game_graph().header().guid(), "graph doesn't correspond to the cross table");

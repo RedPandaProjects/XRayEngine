@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "pch_script.h"
 #include "UITaskWnd.h"
 #include "UIMapWnd.h"
 #include "../xrEngine/object_broker.h"

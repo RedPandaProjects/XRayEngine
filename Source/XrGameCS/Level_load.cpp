@@ -17,7 +17,6 @@
 BOOL CLevel::Load_GameSpecific_Before()
 {
 	// AI space
-	g_pGamePersistent->LoadTitle		("st_loading_ai_objects");
 	string_path							fn_game;
 	
 	if (GamePersistent().GameType() == eGameIDSingle && !ai().get_alife() && FS.exist(fn_game,"$level$","level.ai") && !net_Hosts.empty())
@@ -215,7 +214,8 @@ void CLevel::Load_GameSpecific_CFORM	( CDB::TRI* tris, u32 count )
 				SGameMtl* mtl			= GameMaterialLibrary->GetMaterialByIdx	((*i).m_index);
 				continue;
 			}
-
+			
+			if(Device->IsEditorMode()==false)
 			Debug.fatal					(DEBUG_INFO,"Game material '%d' not found",(*I).material);
 		}
 		return;
@@ -232,7 +232,8 @@ void CLevel::Load_GameSpecific_CFORM	( CDB::TRI* tris, u32 count )
 				SGameMtl* mtl			= GameMaterialLibrary->GetMaterialByIdx	((*i).m_index);
 				continue;
 			}
-
+			
+			if(Device->IsEditorMode()==false)
 			Debug.fatal					(DEBUG_INFO,"Game material '%d' not found",(*I).material);
 		}
 	}

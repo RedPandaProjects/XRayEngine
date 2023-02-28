@@ -231,6 +231,7 @@ bool xr_stdcall net_start_finalizer()
 	{
 		shared_str ln	= Level().name();
 		Msg				("! Failed to start client. Check the connection or level existance.");
+		g_pGameLevel->net_Stop();
 		DEL_INSTANCE(g_pGameLevel);
 	}
 	return true;

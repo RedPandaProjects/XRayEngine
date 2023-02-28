@@ -102,8 +102,16 @@ void CLevel::remove_objects	()
 void CLevel::net_Stop		()
 {
 	Msg							("- Disconnect");
-
-	if(HUD().GetUI())
+	if(!bReady)
+	{
+		if (Server) 
+		{
+			Server->Disconnect();
+			xr_delete(Server);
+		}
+		return;
+	}
+	if( HUD().GetUI())
 		HUD().GetUI()->UIGame()->HideShownDialogs();
 
 	bReady						= false;

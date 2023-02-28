@@ -58,7 +58,7 @@ void IGame_Level::net_Stop			()
 		Objects.Update			(false);
 	// Destroy all objects
 	Objects.Unload				( );
-	IR_Release					( );
+	IR_Release		( );
 
 	bReady						= false;	
 }

@@ -230,7 +230,8 @@ bool CLevel::net_start6				()
 	BulletManager().Clear		();
 	BulletManager().Load		();
 
-	if(net_start_result_total){
+	if(net_start_result_total)
+	{
 		if (strstr(Core.Params,"-$")) {
 			string256				buf,cmd,param;
 			sscanf					(strstr(Core.Params,"-$")+2,"%[^ ] %[^ ] ",cmd,param);
@@ -241,6 +242,7 @@ bool CLevel::net_start6				()
 	else
 	{
 		Msg				("! Failed to start client. Check the connection or level existance.");
+		g_pGameLevel->net_Stop();
 		DEL_INSTANCE	(g_pGameLevel);
 		return true;
 	}

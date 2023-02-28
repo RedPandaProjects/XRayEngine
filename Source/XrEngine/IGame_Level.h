@@ -6,6 +6,7 @@
 #include "iinputreceiver.h"
 #include "xr_object_list.h"
 #include "../xrcdb/xr_area.h"
+#include "XRayLevelToBlueprint.h"
 
 // refs
 class ENGINE_API CCameraManager;
@@ -44,7 +45,8 @@ class ENGINE_API	IGame_Level	:
 	public IInputReceiver,
 	public pureRenderDebug,
 	public pureFrame,
-	public IEventReceiver
+	public IEventReceiver,
+	public XRayLevelToBlueprint
 {
 protected:
 	// Network interface

@@ -98,7 +98,16 @@ void CLevel::remove_objects	()
 
 void CLevel::net_Stop		()
 {
-	Msg							("- Disconnect");
+	Msg("- Disconnect");
+	if (!bReady)
+	{
+		if (Server)
+		{
+			Server->Disconnect();
+			xr_delete(Server);
+		}
+		return;
+	}
 	bReady						= false;
 	m_bGameConfigStarted		= FALSE;
 	game_configured				= FALSE;

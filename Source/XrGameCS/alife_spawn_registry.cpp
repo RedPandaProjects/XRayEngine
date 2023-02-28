@@ -16,6 +16,7 @@
 #pragma warning(push)
 #pragma warning(disable:4995)
 #include <malloc.h>
+#include "../XrEngine/XRayEngineInterface.h"
 #pragma warning(pop)
 
 CALifeSpawnRegistry::CALifeSpawnRegistry	(LPCSTR section)
@@ -29,7 +30,6 @@ CALifeSpawnRegistry::CALifeSpawnRegistry	(LPCSTR section)
 
 CALifeSpawnRegistry::~CALifeSpawnRegistry	()
 {
-	xr_delete					(m_game_graph);
 	m_chunk->close				();
 	FS.r_close					(m_file);
 }
@@ -67,13 +67,9 @@ void CALifeSpawnRegistry::load				(IReader &file_stream, LPCSTR game_name)
 	chunk->r					(&guid,sizeof(guid));
 	chunk->close				();
 
-	string_path					file_name;
-	bool						file_exists = !!FS.exist(file_name, "$game_spawn$", *m_spawn_name, ".spawn");
-	R_ASSERT3					(file_exists,"Can't find spawn file:",*m_spawn_name);
-	
-	VERIFY						(!m_file);
-	m_file						= FS.r_open(file_name);
-	load						(*m_file,&guid);
+	m_file						= nullptr;
+	IReader	F = g_Engine->GetGameSpawn();
+	load						(F,&guid);
 
 	chunk0->close				();
 }
@@ -82,12 +78,9 @@ void CALifeSpawnRegistry::load				(LPCSTR spawn_name)
 {
 	Msg							("* Loading spawn registry...");
 	m_spawn_name				= spawn_name;
-	string_path					file_name;
-	R_ASSERT3					(FS.exist(file_name, "$game_spawn$", *m_spawn_name, ".spawn"),"Can't find spawn file:",*m_spawn_name);
-	
-	VERIFY						(!m_file);
-	m_file						= FS.r_open(file_name);
-	load						(*m_file);
+	m_file = nullptr;
+	IReader	F = g_Engine->GetGameSpawn();
+	load						(F);
 }
 
 struct dummy {
@@ -140,13 +133,9 @@ void CALifeSpawnRegistry::load				(IReader &file_stream, xrGUID *save_guid)
 	ai().patrol_path_storage	(*chunk);
 	chunk->close				();
 
-	VERIFY						(!m_chunk);
-	m_chunk						= file_stream.open_chunk(4);
-	R_ASSERT2					(m_chunk,"Spawn version mismatch - REBUILD SPAWN!");
-
-	VERIFY						(!m_game_graph);
-	m_game_graph				= xr_new<CGameGraph>(*m_chunk);
-	ai().game_graph				(m_game_graph);
+	VERIFY(!m_game_graph);
+	m_game_graph = g_Engine->GetGameGraph();
+	ai().game_graph(m_game_graph);
 
 	R_ASSERT2					((header().graph_guid() == ai().game_graph().header().guid()) || ignore_save_incompatibility(),"Spawn doesn't correspond to the graph : REBUILD SPAWN!");
 

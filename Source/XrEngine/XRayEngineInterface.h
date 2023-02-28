@@ -1,4 +1,5 @@
 #pragma once
+#include "XRayLevelToBlueprint.h"
 enum class EXRayWorldStatus
 {
 	None,
@@ -30,6 +31,7 @@ public:
 	virtual IReader							GetGameSpawn				() = 0;
 	virtual bool							LoadWorld					(const char*Name) = 0;
 	virtual EXRayWorldStatus				GetWorldStatus				() = 0;
+			XRayLevelToBlueprint*			GetLevelScript				();
 private:
 	void									InitEngine					();
 	void									InitSettings				();

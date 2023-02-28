@@ -163,8 +163,9 @@
 // 127	 CSE_ALifeObjectClimable		added material;
 // 128	 CSE_ALifeObjectClimable		added can_fire in smart covers;
 // 129	 CSE_ALifeObjectHangingLamp		fix for ue5
+// 130	 CSE_ALifeObjectHangingLamp		fix light brightness for candelas
 //------------------------------------------------------------------------------
-#define SPAWN_VERSION	u16(129)
+#define SPAWN_VERSION	u16(130)
 
 SERVER_ENTITY_DECLARE_BEGIN(CSE_Shape,ISE_Shape)
 public:

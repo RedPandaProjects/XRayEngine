@@ -119,8 +119,16 @@ extern CUISequencer * g_tutorial2;
 void CLevel::net_Stop		()
 {
 	Msg							("- Disconnect");
-
-	if(CurrentGameUI())
+	if (!bReady)
+	{
+		if (Server)
+		{
+			Server->Disconnect();
+			xr_delete(Server);
+		}
+		return;
+	}
+	if(g_hud&&CurrentGameUI())
 	{
 		CurrentGameUI()->HideShownDialogs();
 		CurrentGameUI()->PdaMenu().Reset();

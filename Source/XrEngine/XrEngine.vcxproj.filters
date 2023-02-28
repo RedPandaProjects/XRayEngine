@@ -967,6 +967,9 @@
     <ClInclude Include="XrISEALifeSmartCover.h">
       <Filter>Game API\Server</Filter>
     </ClInclude>
+    <ClInclude Include="XRayLevelToBlueprint.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="defines.cpp">

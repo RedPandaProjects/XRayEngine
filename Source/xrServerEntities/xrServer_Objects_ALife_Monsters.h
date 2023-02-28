@@ -367,6 +367,7 @@ SERVER_ENTITY_DECLARE_BEGIN4(CSE_ALifeCreatureActor,CSE_ALifeCreatureAbstract,CS
 	virtual ISE_ALifeObject*		 CastALifeObject		() {return this;};
 	virtual ISE_Abstract*			 CastAbstract			() {return this;};
 	virtual ISE_ALifeCreatureActor*  CastALifeCreatureActor  () {return this;};
+	virtual ISE_ALifeTraderAbstract* CastALifeTraderAbstract() { return this; }
 public:
 	virtual BOOL					Net_Relevant			();
 SERVER_ENTITY_DECLARE_END

@@ -6,6 +6,7 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
+#include "pch_script.h"
 #include "UISecondTaskWnd.h"
 
 #include "xrUIXmlParser.h"

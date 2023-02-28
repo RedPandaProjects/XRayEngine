@@ -298,6 +298,15 @@ void XRayEngineInterface::Destroy()
 	destroyEngine();
 }
 
+XRayLevelToBlueprint* XRayEngineInterface::GetLevelScript()
+{
+	if(g_pGameLevel)
+	{
+		return g_pGameLevel;
+	}
+	return nullptr;
+}
+
 extern XRCDB_API BOOL* cdb_bDebug;
 
 void XRayEngineInterface::InitEngine()

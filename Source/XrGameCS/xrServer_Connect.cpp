@@ -19,7 +19,7 @@
 #pragma warning(pop)
 
 LPCSTR xrServer::get_map_download_url(LPCSTR level_name, LPCSTR level_version)
-{
+{/*
 	R_ASSERT(level_name && level_version);
 	LPCSTR ret_url = "";
 	CInifile* level_ini = g_Engine->GetArchiveHeader(level_name, level_version);
@@ -34,8 +34,9 @@ LPCSTR xrServer::get_map_download_url(LPCSTR level_name, LPCSTR level_version)
 	ret_url = level_ini->r_string_wb("header", "link").c_str();
 	if (!ret_url)
 		ret_url = "";
-	
-	return ret_url;
+
+	return ret_url;*/
+	return "";
 }
 
 xrServer::EConnect xrServer::Connect(shared_str &session_name, GameDescriptionData & game_descr)

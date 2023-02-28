@@ -84,13 +84,10 @@ LPCSTR CFontManager::GetFontTexName (LPCSTR section)
 
 void CFontManager::InitializeFont(CGameFont*& F, LPCSTR section, u32 flags)
 {
-	LPCSTR font_tex_name = GetFontTexName(section);
-	R_ASSERT(font_tex_name);
-
-	LPCSTR FontName = pSettings->r_string(section, "font");
-	float FontSize = pSettings->r_float(section, "size");
-	if (!F)
-		F = xr_new<CGameFont>(FontName, FontSize, flags);
+	LPCSTR FontName = pSettings->r_string(section,"font");
+	float FontSize = pSettings->r_float(section,"size");
+	if(!F)
+		F = xr_new<CGameFont> (FontName, FontSize, flags);
 	else
 		F->Initialize(FontName, FontSize);
 

@@ -1080,14 +1080,11 @@ public:
 		S[0]		= 0;
 		sscanf		(args ,"%s",S);
 		if (!xr_strlen(S))
+		{
 			Log("* Specify script name!");
-		else {
-			// rescan pathes
-			FS_Path* P = FS.get_path("$game_scripts$");
-			P->m_Flags.set	(FS_Path::flNeedRescan,TRUE);
-			CLocatorAPI* RealFS = dynamic_cast<CLocatorAPI*>(xr_FS);
-			VERIFY(RealFS);
-			RealFS->rescan_pathes();
+		}
+		else 
+		{
 			// run script
 			if (ai().script_engine().script_process(ScriptEngine::eScriptProcessorLevel))
 				ai().script_engine().script_process(ScriptEngine::eScriptProcessorLevel)->add_script(S,false,true);

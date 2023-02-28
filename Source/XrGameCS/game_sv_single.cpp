@@ -345,9 +345,6 @@ void game_sv_Single::restart_simulator			(LPCSTR saved_game_name)
 	strcpy_s					(g_pGamePersistent->m_game_params.m_game_or_spawn,saved_game_name);
 	strcpy_s					(g_pGamePersistent->m_game_params.m_new_or_load,"load");
 
-	g_Engine->LoadBegin			();
 	m_alife_simulator		= xr_new<CALifeSimulator>(&server(),&options);
-	g_pGamePersistent->LoadTitle		("st_client_synchronising");
 	Device->PreCache			(60,true,false);
-	g_Engine->LoadEnd			();
 }

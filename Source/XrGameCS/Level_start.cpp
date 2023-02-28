@@ -21,8 +21,6 @@ BOOL CLevel::net_Start	( LPCSTR op_server, LPCSTR op_client )
 {
 	net_start_result_total				= TRUE;
 
-	g_Engine->LoadBegin				();
-
 	string64	player_name;
 	GetPlayerName_FromRegistry( player_name, sizeof(player_name) );
 
@@ -107,7 +105,6 @@ bool CLevel::net_start1				()
 	// Start client and server if need it
 	if (m_caServerOptions.size())
 	{
-		g_pGamePersistent->LoadTitle		("st_server_starting");
 
 		typedef IGame_Persistent::params params;
 		params							&p = g_pGamePersistent->m_game_params;
@@ -122,14 +119,6 @@ bool CLevel::net_start1				()
 			shared_str l_ver			= game_sv_GameState::parse_level_version(m_caServerOptions);
 			
 			map_data.m_name				= game_sv_GameState::parse_level_name(m_caServerOptions);
-
-			int							id = g_Engine->Level_ID(map_data.m_name.c_str(), l_ver.c_str(), true);
-
-			if (id<0) {
-				Log						("Can't find level: ",map_data.m_name.c_str());
-				net_start_result_total	= FALSE;
-				return true;
-			}
 		}
 	}
 	return true;
@@ -235,7 +224,6 @@ bool CLevel::net_start6				()
 	BulletManager().Clear		();
 	BulletManager().Load		();
 
-	g_Engine->LoadEnd				();
 
 	if(net_start_result_total)
 	{
@@ -249,6 +237,7 @@ bool CLevel::net_start6				()
 	else
 	{
 		Msg				("! Failed to start client. Check the connection or level existance.");
+		g_pGameLevel->net_Stop();
 		DEL_INSTANCE(g_pGameLevel);
 		return true;
 	}

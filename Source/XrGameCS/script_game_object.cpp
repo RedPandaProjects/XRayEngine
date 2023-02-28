@@ -397,10 +397,11 @@ void CScriptGameObject::eat				(CScriptGameObject *item)
 	}
 	
 	inventory_owner->inventory().Eat(inventory_item);
-}
+} 
 
 bool CScriptGameObject::inside					(const Fvector &position, float epsilon) const
 {
+
 	CSpaceRestrictor		*space_restrictor = smart_cast<CSpaceRestrictor*>(&object());
 	if (!space_restrictor) {
 		ai().script_engine().script_log			(ScriptStorage::eLuaMessageTypeError,"CSpaceRestrictor : cannot access class member inside!");

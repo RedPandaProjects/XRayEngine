@@ -36,8 +36,65 @@
 #include "ui/UIInventoryUtilities.h"
 #include "alife_object_registry.h"
 #include "xrServer_Objects_ALife_Monsters.h"
+#include "patrol_path.h"
 
 using namespace luabind;
+
+extern CActor* g_actor;
+void CLevel::ActorTransferInfo(shared_str Name, bool Value)
+{
+	if (g_actor)
+	{
+		Actor()->TransferInfo(Name, Value);
+	}
+}
+
+bool CLevel::ActorHasInfo(shared_str Name)
+{
+	if (g_actor)
+	{
+		return Actor()->HasInfo(Name);
+	}
+	return false;
+}
+
+CObject* CLevel::GetActor()
+{
+	return g_actor;
+}
+
+void CLevel::SpawnObject(shared_str SectionName, shared_str WayObjectName, int PointIndex /*= 0*/, float YawAngle /*= 0*/)
+{
+	if (CALifeSimulator* ALife = const_cast<CALifeSimulator*>(ai().get_alife()))
+	{
+		u32 LevelVertexID = 0;
+		u32 GameVertexID = 0;
+		Fvector Position;
+		Position.set(0, 0, 0);
+
+		const CPatrolPath* PatrolPath = ai().patrol_paths().path(WayObjectName, true);
+		if (PatrolPath)
+		{
+			if (PatrolPath->vertex_count() <= PointIndex)
+			{
+				Msg("! Cant not found point [%d] in way %s", PointIndex, SectionName.c_str());
+				PointIndex = 0;
+			}
+			GameVertexID = PatrolPath->vertex(PointIndex)->data().game_vertex_id();
+			LevelVertexID = PatrolPath->vertex(PointIndex)->data().level_vertex_id();
+			Position = PatrolPath->vertex(PointIndex)->data().position();
+		}
+		else
+		{
+			Msg("! Cant not found way %s", SectionName.c_str());
+		}
+		CSE_Abstract* Abstract = ALife->spawn_item(SectionName.c_str(), Position, LevelVertexID, GameVertexID, ALife::_OBJECT_ID(-1));
+		if (CSE_ALifeCreatureAbstract* ALifeCreatureAbstract = smart_cast<CSE_ALifeCreatureAbstract*>(Abstract))
+		{
+			ALifeCreatureAbstract->o_torso.yaw = deg2rad(YawAngle);
+		}
+	}
+}
 
 LPCSTR command_line	()
 {

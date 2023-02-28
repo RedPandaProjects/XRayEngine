@@ -59,7 +59,7 @@ CGamePersistent::CGamePersistent(void)
 	m_pUI_core					= NULL;
 	m_pMainMenu					= NULL;
 	m_intro						= NULL;
-	m_intro_event.bind			(this,&CGamePersistent::start_logo_intro);
+	//m_intro_event.bind			(this,&CGamePersistent::start_logo_intro);
 #ifdef DEBUG
 	m_frame_counter				= 0;
 	m_last_stats_frame			= u32(-2);
@@ -88,8 +88,7 @@ CGamePersistent::CGamePersistent(void)
 	}
 
 	eQuickLoad				= Engine->Event.Handler_Attach("Game:QuickLoad",this);
-	Fvector3* DofValue		= Console->GetFVectorPtr("r2_dof");
-	SetBaseDof				(*DofValue);
+
 }
 
 CGamePersistent::~CGamePersistent(void)
@@ -463,7 +462,7 @@ void CGamePersistent::start_game_intro		()
 {
 #ifdef MASTER_GOLD
 #else	// #ifdef MASTER_GOLD
-	if ((0!=strstr(Core.Params,"-nointro")) )
+	if ((0!=strstr(Core.Params,"-nointro"))||1 )
 #endif	// #ifdef MASTER_GOLD
 	{
 		m_intro_event			= 0;
@@ -721,7 +720,6 @@ void CGamePersistent::LoadTitle(LPCSTR str)
 {
 	string512			buff;
 	sprintf_s			(buff, "%s...", CStringTable().translate(str).c_str());
-	g_Engine->LoadTitleInt	(buff,"","");
 }
 
 bool CGamePersistent::CanBePaused()

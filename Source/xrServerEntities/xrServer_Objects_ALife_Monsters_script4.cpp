@@ -76,7 +76,9 @@ void current_level_travel_speed2	(CSE_ALifeMonsterAbstract *self, float travel_s
 #ifndef GAME_SOC
 void ForceSetGoodwill(CSE_ALifeMonsterAbstract *self, int goodwill, ALife::_OBJECT_ID pWhoToSet)
 {
+#ifndef GAME_CS
 	RELATION_REGISTRY().ForceSetGoodwill(self->ID, pWhoToSet, goodwill);
+#endif
 }
 #endif 
 #endif // #ifdef XRGAME_EXPORTS
