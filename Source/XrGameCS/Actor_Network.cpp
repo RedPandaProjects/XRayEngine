@@ -47,6 +47,8 @@
 #	include "debug_renderer.h"
 #	include "Physics.h"
 #endif
+#include "../XrEngine/XRayUnrealProxyInterface.h"
+#include "../XrEngine/XRayEngineInterface.h"
 
 int			g_cl_InterpolationType		= 0;
 u32			g_cl_InterpolationMaxPoints = 0;
@@ -515,8 +517,13 @@ BOOL CActor::net_Spawn		(CSE_Abstract* DC)
 		E->s_flags.set(M_SPAWN_OBJECT_LOCAL, TRUE);
 	}
 	
-	if(	TRUE == E->s_flags.test(M_SPAWN_OBJECT_LOCAL) && TRUE == E->s_flags.is(M_SPAWN_OBJECT_ASPLAYER))
+	if (TRUE == E->s_flags.test(M_SPAWN_OBJECT_LOCAL) && TRUE == E->s_flags.is(M_SPAWN_OBJECT_ASPLAYER))
+	{
 		g_actor = this;
+		UnrealProxy = g_Engine->GetUnrealPlayerCharacter();
+		UnrealProxy->Lock(this);
+	}
+
 
 	VERIFY(m_pActorEffector == NULL);
 
@@ -689,11 +696,27 @@ BOOL CActor::net_Spawn		(CSE_Abstract* DC)
 	{
 		setLocal(FALSE);
 	};
+
+	setVisible(TRUE);
+	if (renderable.visual)
+	{
+		UnrealProxy->AttachAsRoot(renderable.visual);
+	}
+
 	return					TRUE;
 }
 
 void CActor::net_Destroy	()
 {
+	if (UnrealProxy && UnrealProxy->CastToStalkerPlayerCharacter())
+	{
+		if (renderable.visual)
+		{
+			UnrealProxy->Detach(renderable.visual);
+		}
+		UnrealProxy->Unlock(this);
+		UnrealProxy = nullptr;
+	}
 	inherited::net_Destroy	();
 
 	if (m_holder_id != ALife::_OBJECT_ID(-1))

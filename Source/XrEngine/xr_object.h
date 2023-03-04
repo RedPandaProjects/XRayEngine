@@ -65,10 +65,10 @@ private:
 protected:
 	// Parentness
 	CObject*							Parent;
-	class XRayUnrealProxyInterface*			UnrealProxy;
 	// Geometric (transformation)
 	svector<SavedPosition,4>			PositionStack;
 public:
+	class XRayUnrealProxyInterface*		UnrealProxy;
 	u32									dbg_update_cl;
 	u32									dwFrame_UpdateCL;
 	u32									dwFrame_AsCrow;
@@ -197,13 +197,13 @@ virtual	const IObjectPhysicsCollision	*physics_collision	()					{ return  0; }
 
 	virtual void						On_SetEntity		()	{};
 	virtual void						On_LostEntity		()	{};
-
-public:
 	virtual bool						register_schedule	() const {return true;}
 
-public:
-	virtual	Fvector				get_new_local_point_on_mesh	( u16& bone_id ) const;
-	virtual	Fvector				get_last_local_point_on_mesh( Fvector const& last_point, u16 bone_id ) const;
+	virtual	Fvector						get_new_local_point_on_mesh	( u16& bone_id ) const;
+	virtual	Fvector						get_last_local_point_on_mesh( Fvector const& last_point, u16 bone_id ) const;
+
+	virtual void						CreateUnrealProxy	();
+	virtual void						DestroyUnrealProxy	();
 };
 
 #pragma pack(pop)

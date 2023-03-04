@@ -17,16 +17,21 @@ class IRenderVisual
 public:
 	virtual ~IRenderVisual() {;}
 
-	virtual vis_data&	_BCL			getVisData() = 0;
-	virtual u32							getType() = 0;
+	virtual vis_data&	_BCL					getVisData							() = 0;
+	virtual u32									getType								() = 0;
 
-	virtual shared_str	_BCL			getDebugName() = 0;
+	virtual shared_str	_BCL					getDebugName						() = 0;
 
-	virtual	IKinematics*	_BCL		dcast_PKinematics			()				{ return 0;	}
-	virtual	IKinematicsAnimated*		dcast_PKinematicsAnimated	()				{ return 0;	}
-	virtual IParticleCustom*			dcast_ParticleCustom		()				{ return 0;	}
-	virtual class XRaySkeletonVisual*	CastToRaySkeletonVisual	()				{ return 0;	}
-	virtual class UStalkerKinematicsComponent*   CastToStalkerKinematicsComponent()				{ return 0; }
+	virtual	IKinematics*	_BCL				dcast_PKinematics					()						{ return 0;	}
+	virtual	IKinematicsAnimated*				dcast_PKinematicsAnimated			()						{ return 0;	}
+	virtual IParticleCustom*					dcast_ParticleCustom				()						{ return 0;	}
+	virtual class XRaySkeletonVisual*			CastToRaySkeletonVisual				()						{ return 0;	}
+	virtual class UStalkerKinematicsComponent*  CastToStalkerKinematicsComponent	()						{ return 0; }
+	virtual void								Lock								(class CObject*Parent)	{}
+	virtual void								Unlock								(class CObject*Parent)	{}
+	virtual void								SetOwnerNoSee						(bool Enable){}
+	virtual void								SetOnlyOwnerSee						(bool Enable){}
+	virtual void								SetOffset							(const Fmatrix&offset){}
 };
 
 ICF IKinematics* CastToIKinematics(IRenderVisual*Visual)

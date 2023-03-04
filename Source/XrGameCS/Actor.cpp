@@ -69,6 +69,7 @@
 #include "../xrRender/Public/UIRender.h"
 
 #include "ai_object_location.h"
+#include "../XrEngine/XRayUnrealProxyInterface.h"
 
 const u32		patch_frames	= 50;
 const float		respawn_delay	= 1.f;
@@ -225,6 +226,23 @@ CActor::~CActor()
 
 	xr_delete				(m_anims);
 	xr_delete				(m_vehicle_anims);
+}
+
+
+void CActor::CreateUnrealProxy()
+{
+	if (!UnrealProxy || !UnrealProxy->CastToStalkerPlayerCharacter())
+	{
+		inherited::CreateUnrealProxy();
+	}
+}
+
+void CActor::DestroyUnrealProxy()
+{
+	if (!UnrealProxy || !UnrealProxy->CastToStalkerPlayerCharacter())
+	{
+		inherited::DestroyUnrealProxy();
+	}
 }
 
 void CActor::reinit	()
@@ -1217,8 +1235,10 @@ void CActor::shedule_Update	(u32 DT)
 	}
 	
 	//���� � ������ HUD, �� ���� ������ ������ �� ��������
-	if(!character_physics_support()->IsRemoved())
-		setVisible				(!HUDview	());
+	if(!character_physics_support()->IsRemoved()&&renderable.visual)
+	{
+		renderable.visual->SetOwnerNoSee(HUDview	());
+	}
 
 	//��� ����� ����� ����� �����
 	collide::rq_result& RQ				= HUD().GetCurrentRayQuery();

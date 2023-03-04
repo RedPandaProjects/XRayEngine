@@ -23,7 +23,8 @@ public:
 	virtual void							StopGame					();
 	virtual bool							IsRunningGame				();
 
-	virtual class XRayUnrealProxyInterface*	CreateUnrealProxy			(class CObject*) = 0;
+	virtual class XRayUnrealProxyInterface*	CreateUnrealProxy			() = 0;
+	virtual class XRayUnrealProxyInterface* GetUnrealPlayerCharacter	() = 0;
 	virtual void							Destroy						(class XRayUnrealProxyInterface*) = 0;
 	virtual void							LoadCFormFormCurrentWorld	(class CObjectSpace&ObjectSpace,CDB::build_callback build_callback)= 0 ;
 	virtual class ILevelGraph*				GetLevelGraph				(const char* Name) = 0;

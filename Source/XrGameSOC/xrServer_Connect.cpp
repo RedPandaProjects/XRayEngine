@@ -20,6 +20,8 @@ xrServer::EConnect xrServer::Connect(shared_str &session_name)
 	// Parse options and create game
 	if (0==strchr(*session_name,'/'))
 		return				ErrConnect;
+	game					= NULL;
+
 	if (g_Engine->GetGameSpawn().length() == 0)
 	{
 		return				ErrConnect;
@@ -33,7 +35,7 @@ xrServer::EConnect xrServer::Connect(shared_str &session_name)
 	R_ASSERT2(xr_strlen(options) <= sizeof(type), "session_name too BIIIGGG!!!");
 	strcpy					(type,options);
 	if (strchr(type,'/'))	*strchr(type,'/') = 0;
-	game					= NULL;
+	
 
 	CLASS_ID clsid			= game_GameState::getCLASS_ID(type,true);
 	game					= smart_cast<game_sv_GameState*> (NEW_INSTANCE(clsid));

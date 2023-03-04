@@ -12,6 +12,7 @@
 #include "Kinematics.h"
 #include "inventory_item.h"
 #include "physicsshellholder.h"
+#include "../XrEngine/XRayUnrealProxyInterface.h"
 
 CAttachmentOwner::~CAttachmentOwner()
 {
@@ -87,18 +88,19 @@ void CAttachmentOwner::attach(CInventoryItem *inventory_item)
 //		VERIFY								((*I)->ID() != inventory_item->object().ID());
 	}
 
-	if (can_attach(inventory_item)) {
+	if (can_attach(inventory_item)) 
+	{
 		CAttachableItem						*attachable_item = smart_cast<CAttachableItem*>(inventory_item);
 		VERIFY								(attachable_item);
 		CGameObject							*game_object = smart_cast<CGameObject*>(this);
 		VERIFY								(game_object && game_object->Visual());
-		if (m_attached_objects.empty())
-			game_object->add_visual_callback(AttachmentCallback);
+		IRenderVisual*VisualAttachableItem =  attachable_item->object().Visual();
+		VERIFY(VisualAttachableItem);
 		attachable_item->set_bone_id		(CastToIKinematics(game_object->Visual())->LL_BoneID(attachable_item->bone_name()));
+		game_object->UnrealProxy->Attach	(VisualAttachableItem,attachable_item->bone_name().c_str());
+		VisualAttachableItem->SetOffset(inventory_item->offset());
 		m_attached_objects.push_back		(smart_cast<CAttachableItem*>(inventory_item));
-
-		inventory_item->object().setVisible	(true);
-		attachable_item->afterAttach		();
+		attachable_item->afterAttach();
 	}
 }
 
@@ -108,20 +110,14 @@ void CAttachmentOwner::detach(CInventoryItem *inventory_item)
 	xr_vector<CAttachableItem*>::iterator	E = m_attached_objects.end();
 	for ( ; I != E; ++I) 
 	{
-		if ((*I)->item().object().ID() == inventory_item->object().ID()) 
+		if ((*I)->item().object().ID() == inventory_item->object().ID())
 		{
-			CAttachableItem* ai			= *I;
-			m_attached_objects.erase	(I);
-			ai->afterDetach();
-			if (m_attached_objects.empty()) 
-			{
-				CGameObject					*game_object = smart_cast<CGameObject*>(this);
-				VERIFY						(game_object && game_object->Visual());
-				game_object->remove_visual_callback(AttachmentCallback);
-				
-				inventory_item->object().setVisible	(false);
-
-			}
+			m_attached_objects.erase(I);
+			(*I)->afterDetach();
+			CGameObject* game_object = smart_cast<CGameObject*>(this);
+			VERIFY(game_object && game_object->Visual());
+			VERIFY(inventory_item->object().Visual());
+			game_object->UnrealProxy->Detach(inventory_item->object().Visual());
 			break;
 		}
 	}

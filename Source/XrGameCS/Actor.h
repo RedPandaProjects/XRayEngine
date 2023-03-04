@@ -80,6 +80,8 @@ private:
 public:
 										CActor				();
 	virtual								~CActor				();
+	void								CreateUnrealProxy() override;
+	void								DestroyUnrealProxy() override;
 
 public:
 	virtual BOOL						AlwaysTheCrow				()						{ return TRUE; }

@@ -78,6 +78,7 @@ void CObject::cNameVisual_set	(shared_str N)
 		IRenderVisual			*old_v = renderable.visual;
 		NameVisual				= N;
 		renderable.visual		= Render->model_Create	(*N);
+		renderable.visual->Lock(this);
 		IKinematics* old_k	= old_v?old_v->dcast_PKinematics():NULL;
 		IKinematics* new_k	= renderable.visual->dcast_PKinematics();
 
@@ -98,12 +99,17 @@ void CObject::cNameVisual_set	(shared_str N)
 		}
 		if (new_k && UnrealProxy)
 		{
-			UnrealProxy->Attach(renderable.visual);
+			UnrealProxy->AttachAsRoot(renderable.visual);
 		}
+		if(old_v)old_v->Unlock(this);
 		::Render->model_Delete	(old_v);
 	} 
 	else 
 	{
+		if(renderable.visual)
+		{
+			renderable.visual->Unlock(this);
+		}
 		::Render->model_Delete	(renderable.visual);
 		NameVisual				= 0;
 	}
@@ -143,25 +149,17 @@ void CObject::setVisible			(BOOL _visible)
 
 	if (_visible)
 	{				// Parent should control object visibility itself (??????)
-		R_ASSERT(UnrealProxy == nullptr);
 		Props.bVisible							= 1;
 		if (renderable.visual)	spatial.type	|=	STYPE_RENDERABLE;
 		if(g_pGameLevel->bReady)
 		{
-			UnrealProxy = g_Engine->CreateUnrealProxy(this);
-			if (renderable.visual)
-			{
-				UnrealProxy->Attach(renderable.visual);
-			}
+			CreateUnrealProxy();
 		}
-		
-	
 
 	}
 	else
 	{
-		g_Engine->Destroy	(UnrealProxy);
-		UnrealProxy = nullptr;
+		DestroyUnrealProxy();
 		Props.bVisible							= 0;
 		spatial.type							&=	~STYPE_RENDERABLE;
 
@@ -272,6 +270,7 @@ void CObject::net_Destroy		()
 //	setDestroy					(true);
 	// remove visual
 	cNameVisual_set				( 0 );
+	DestroyUnrealProxy			();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -489,4 +488,30 @@ Fvector CObject::get_last_local_point_on_mesh	( Fvector const& local_point, u16 
 	mE.transform_tiny	(result,local_point);
 
 	return				result;
+}
+
+void CObject::CreateUnrealProxy	()
+{
+	R_ASSERT(UnrealProxy == nullptr);
+	UnrealProxy = g_Engine->CreateUnrealProxy();
+	UnrealProxy->Lock(this);
+	if (renderable.visual)
+	{
+		UnrealProxy->AttachAsRoot(renderable.visual);
+	}
+}
+
+void CObject::DestroyUnrealProxy()
+{
+	if (UnrealProxy)
+	{
+		if (renderable.visual)
+		{
+			UnrealProxy->Detach(renderable.visual);
+		}
+		UnrealProxy->Unlock(this);
+		g_Engine->Destroy(UnrealProxy);
+		UnrealProxy = nullptr;
+	}
+
 }
