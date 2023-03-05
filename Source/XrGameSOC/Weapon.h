@@ -299,6 +299,7 @@ private:
 		}
 	}						m_firedeps			;
 protected:
+	const char*				GetAttachBone () override;
 	virtual void			UpdateFireDependencies_internal	();
 	virtual void			UpdatePosition			(const Fmatrix& transform);	//.
 	virtual void			UpdateXForm				();

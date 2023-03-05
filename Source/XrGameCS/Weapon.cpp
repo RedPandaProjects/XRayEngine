@@ -150,6 +150,28 @@ void CWeapon::UpdateXForm	()
 	}
 
 	UpdatePosition			(mRes);
+	{
+		mRes.identity();
+		if (fis_zero(D.magnitude()))
+		{
+			mRes.identity();
+		}
+		else
+		{
+			D.normalize();
+			R.crossproduct(mR.j, D);
+			N.crossproduct(D, R);
+			N.normalize();
+			mRes.set(R, N, D, Fvector().set(0, 0, 0));
+			Fmatrix Invert = mR;
+			Invert.invert();
+			mRes.mulA_44(Invert);
+			mRes.c.set(0, 0, 0);
+			//
+		}
+		mRes.mulB_43(m_strapped_mode ? m_StrapOffset : m_Offset);
+		Visual()->SetOffset(mRes, false, false);
+	}
 }
 
 void CWeapon::UpdateFireDependencies_internal()
@@ -1418,6 +1440,31 @@ void CWeapon::activate_physic_shell()
 	CPhysicsShellHolder::activate_physic_shell();
 }
 
+const char* CWeapon::GetAttachBone()
+{
+	CEntityAlive* E = smart_cast<CEntityAlive*>(H_Parent());
+
+	if (!E)
+	{
+		return "";
+	}
+	const CInventoryOwner* parent = smart_cast<const CInventoryOwner*>(E);
+	if (parent && parent->use_simplified_visual())
+		return "";
+
+	if (parent->attached(this))
+		return "";
+
+	R_ASSERT(E);
+	IKinematics* V = CastToIKinematics(E->Visual());
+	VERIFY(V);
+
+	// Get matrices
+	int				boneL, boneR, boneR2;
+	E->g_WeaponBones(boneL, boneR, boneR2);
+	if (boneR == -1)		return "";
+	return V->LL_BoneName_dbg(u16(boneR));
+}
 void CWeapon::setup_physic_shell()
 {
 	CPhysicsShellHolder::setup_physic_shell();

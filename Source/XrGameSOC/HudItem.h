@@ -70,16 +70,17 @@ public:
 	virtual bool	Activate			();
 	virtual void	Deactivate			();
 	
-	virtual void	OnActiveItem		() {};
-	virtual void	OnHiddenItem		() {};
+	virtual void	OnActiveItem		();
+	virtual void	OnHiddenItem		();
+	virtual const char* GetAttachBone	(){return ""; }
 
 	virtual void	OnAnimationEnd		(u32 state)				{};
 
 	virtual void	UpdateCL			();
 	virtual void	renderable_Render	();
 
-	virtual void	Hide() = 0;
-	virtual void	Show() = 0;
+	virtual void	Hide();
+	virtual void	Show();
 
 	virtual void	UpdateHudPosition	();
 	
@@ -101,6 +102,7 @@ protected:
 	CWeaponHUD*				m_pHUD;
 	BOOL					hud_mode;
 	shared_str				hud_sect;
+	shared_str				LastAttachBone;
 	bool					m_bRenderHud;
 
 	//время нахождения в текущем состоянии

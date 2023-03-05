@@ -10,6 +10,7 @@
 #include "../xrEngine/CameraBase.h"
 #include "player_hud.h"
 #include "../xrEngine/SkeletonMotions.h"
+#include "../XrEngine/XRayUnrealProxyInterface.h"
 
 CHudItem::CHudItem()
 {
@@ -111,6 +112,10 @@ void CHudItem::OnEvent(NET_Packet& P, u16 type)
 
 void CHudItem::OnStateSwitch(u32 S)
 {
+	if (S == eHidden)
+	{
+		Hide();
+	}
 	SetState			(S);
 	
 	if(object().Remote()) 
@@ -150,12 +155,14 @@ void CHudItem::PlayAnimBore()
 
 bool CHudItem::ActivateItem() 
 {
+	Show();
 	OnActiveItem	();
 	return			true;
 }
 
 void CHudItem::DeactivateItem() 
 {
+	Hide();
 	OnHiddenItem	();
 }
 void CHudItem::OnMoveToRuck(EItemPlace prev)
@@ -234,6 +241,32 @@ void CHudItem::UpdateCL()
 			}
 		}
 	}
+	if (!IsHidden() && object().H_Parent())
+	{
+		if (LastAttachBone != GetAttachBone())
+		{
+			CObject* ParentActor = object().H_Parent();
+			VERIFY(ParentActor && ParentActor->UnrealProxy);
+			LastAttachBone = GetAttachBone();
+			ParentActor->UnrealProxy->Attach(object().Visual(), LastAttachBone.c_str());
+		}
+	}
+	UpdateXForm();
+}
+void CHudItem::Hide()
+{
+	if (object().Visual())
+	{
+		object().Visual()->Detach();
+	}
+}
+
+void CHudItem::Show()
+{
+	CObject* ParentActor = object().H_Parent();
+	VERIFY(ParentActor && ParentActor->UnrealProxy);
+	LastAttachBone = GetAttachBone();
+	ParentActor->UnrealProxy->Attach(object().Visual(), LastAttachBone.c_str());
 }
 
 void CHudItem::OnH_A_Chield		()

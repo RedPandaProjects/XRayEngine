@@ -335,12 +335,12 @@ void CMissile::OnAnimationEnd(u32 state)
 	{
 	case eHiding:
 		{
-			setVisible(FALSE);
+			//setVisible(FALSE);
 			SwitchState(eHidden);
 		} break;
 	case eShowing:
 		{
-			setVisible(TRUE);
+			//setVisible(TRUE);
 			SwitchState(eIdle);
 		} break;
 	case eThrowStart:
@@ -415,6 +415,15 @@ void CMissile::UpdateXForm	()
 		R.crossproduct		(mR.j,D);		R.normalize_safe();
 		N.crossproduct		(D,R);			N.normalize_safe();
 		mRes.set			(R,N,D,mR.c);
+		{
+			Fmatrix VisualRes = mRes;
+			Fmatrix Invert = mR;
+			Invert.invert();
+			VisualRes.mulA_44(Invert);
+			VisualRes.c.set(0, 0, 0);
+			VisualRes.mulB_43(offset());
+			Visual()->SetOffset(VisualRes, false, false);
+		}
 		mRes.mulA_43		(E->XFORM());
 		UpdatePosition		(mRes);
 	}
@@ -463,6 +472,31 @@ void CMissile::OnMotionMark(u32 state, const motion_marks& M)
 	}
 }
 
+
+const char* CMissile::GetAttachBone()
+{
+	if (0 == H_Parent())	return "";
+
+	CEntityAlive* E = smart_cast<CEntityAlive*>(H_Parent());
+	if (!E)				return  "";
+
+	const CInventoryOwner* parent = smart_cast<const CInventoryOwner*>(E);
+	if (parent && parent->use_simplified_visual())
+		return  "";
+
+	if (parent->attached(this))
+		return  "";
+
+	VERIFY(E);
+	IKinematics* V = CastToIKinematics(E->Visual());
+	VERIFY(V);
+
+	// Get matrices
+	int					boneL, boneR, boneR2;
+	E->g_WeaponBones(boneL, boneR, boneR2);
+	if (boneR == -1)	return "";
+	return V->LL_BoneName_dbg(u16(boneR));
+}
 
 void CMissile::Throw() 
 {

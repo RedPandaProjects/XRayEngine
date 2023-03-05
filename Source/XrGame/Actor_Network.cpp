@@ -722,7 +722,7 @@ void CActor::net_Destroy	()
 	{
 		if (renderable.visual)
 		{
-			UnrealProxy->Detach(renderable.visual);
+			renderable.visual->Detach();
 		}
 		UnrealProxy->Unlock(this);
 		UnrealProxy = nullptr;

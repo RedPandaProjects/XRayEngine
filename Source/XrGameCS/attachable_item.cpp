@@ -90,7 +90,7 @@ void CAttachableItem::enable			(bool value)
 		if (owner) {
 			m_enabled			= value;
 			owner->attach		(&item());
-			object().setVisible	(true);
+			//object().setVisible	(true);
 		}
 	}
 	
@@ -101,7 +101,7 @@ void CAttachableItem::enable			(bool value)
 		if (owner) {
 			m_enabled			= value;
 			owner->detach		(&item());
-			object().setVisible	(false);
+		//	object().setVisible	(false);
 		}
 	}
 }

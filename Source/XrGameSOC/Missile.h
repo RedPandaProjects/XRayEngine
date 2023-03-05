@@ -71,6 +71,7 @@ protected:
 	//��� ����
 	virtual void			StartIdleAnim		();
 	virtual void			net_Relcase			(CObject* O );
+	const char*				GetAttachBone		() override;
 protected:
 
 	bool					m_throw;

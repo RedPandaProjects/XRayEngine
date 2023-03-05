@@ -98,7 +98,7 @@ void CAttachmentOwner::attach(CInventoryItem *inventory_item)
 		VERIFY(VisualAttachableItem);
 		attachable_item->set_bone_id		(CastToIKinematics(game_object->Visual())->LL_BoneID(attachable_item->bone_name()));
 		game_object->UnrealProxy->Attach	(VisualAttachableItem,attachable_item->bone_name().c_str());
-		VisualAttachableItem->SetOffset(inventory_item->offset());
+		VisualAttachableItem->SetOffset		(inventory_item->offset());
 		m_attached_objects.push_back		(smart_cast<CAttachableItem*>(inventory_item));
 		attachable_item->afterAttach();
 	}
@@ -117,7 +117,7 @@ void CAttachmentOwner::detach(CInventoryItem *inventory_item)
 			CGameObject* game_object = smart_cast<CGameObject*>(this);
 			VERIFY(game_object && game_object->Visual());
 			VERIFY(inventory_item->object().Visual());
-			game_object->UnrealProxy->Detach(inventory_item->object().Visual());
+			inventory_item->object().Visual()->Detach();
 			break;
 		}
 	}

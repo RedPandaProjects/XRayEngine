@@ -116,7 +116,7 @@ void CAttachmentOwner::detach(CInventoryItem *inventory_item)
 			CGameObject* game_object = smart_cast<CGameObject*>(this);
 			VERIFY(game_object && game_object->Visual());
 			VERIFY(inventory_item->object().Visual());
-			game_object->UnrealProxy->Detach(inventory_item->object().Visual());
+			inventory_item->object().Visual()->Detach();
 			break;
 		}
 	}

@@ -132,15 +132,12 @@ void CWeapon::UpdateXForm	()
 		E->g_WeaponBones(boneL,boneR,boneR2);
 		if ((HandDependence() == hd1Hand) || (GetState() == eReload) || (!E->g_Alive()))
 			boneL = boneR2;
-#pragma todo("TO ALL: serious performance problem")
-		V->CalculateBones	();
 		const Fmatrix& mL			= V->LL_GetTransform(u16(boneL));
 		const Fmatrix& mR			= V->LL_GetTransform(u16(boneR));
 		// Calculate
 		Fmatrix				mRes;
 		Fvector				R,D,N;
 		D.sub				(mL.c,mR.c);	
-
 		if(fis_zero(D.magnitude()))
 		{
 			mRes.set(E->XFORM());
@@ -150,16 +147,64 @@ void CWeapon::UpdateXForm	()
 		{		
 			D.normalize();
 			R.crossproduct	(mR.j,D);
-
 			N.crossproduct	(D,R);			
 			N.normalize();
-
 			mRes.set		(R,N,D,mR.c);
 			mRes.mulA_43	(E->XFORM());
 		}
-
+		
 		UpdatePosition	(mRes);
+		
+		{
+			mRes.identity();
+			if (fis_zero(D.magnitude()))
+			{
+				mRes.identity();
+			}
+			else
+			{
+				D.normalize();
+				R.crossproduct	(mR.j,D);
+				N.crossproduct(D, R);
+				N.normalize();
+				mRes.set(R,N,D, Fvector().set(0, 0, 0));
+				Fmatrix Invert = mR;
+				Invert.invert();
+				mRes.mulA_44(Invert);
+				mRes.c.set(0,0,0);
+				//
+			}
+			mRes.mulB_43(m_strapped_mode ? m_StrapOffset : m_Offset);
+			Visual()->SetOffset(mRes,false,false);
+		}
+	
+
 	}
+}
+
+const char* CWeapon::GetAttachBone()
+{
+	CEntityAlive* E = smart_cast<CEntityAlive*>(H_Parent());
+
+	if (!E)
+	{
+		return "";
+	}
+	const CInventoryOwner* parent = smart_cast<const CInventoryOwner*>(E);
+	if (parent && parent->use_simplified_visual())
+		return "";
+
+	if (parent->attached(this))
+		return "";
+
+	R_ASSERT(E);
+	IKinematics* V = CastToIKinematics(E->Visual());
+	VERIFY(V);
+
+	// Get matrices
+	int				boneL, boneR, boneR2;
+	E->g_WeaponBones(boneL, boneR, boneR2);
+	return V->LL_BoneName_dbg(u16(boneR));
 }
 
 void CWeapon::UpdateFireDependencies_internal()
@@ -1552,11 +1597,13 @@ void CWeapon::Hide		()
 		SwitchState(eHidden);
 
 	OnZoomOut();
+	inherited::Hide();
 }
 
 void CWeapon::Show		()
 {
 	SwitchState(eShowing);
+	inherited::Show();
 }
 
 bool CWeapon::show_crosshair()

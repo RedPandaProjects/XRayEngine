@@ -14,6 +14,8 @@
 #include "level.h"
 #include "inventory.h"
 #include "../XrEngine/CameraBase.h"
+#include "../XrEngine/XRayUnrealProxyInterface.h"
+#include "RenderVisual.h"
 
 
 CHudItem::CHudItem(void)
@@ -105,6 +107,22 @@ void CHudItem::renderable_Render()
 					on_renderable_Render();
 			}
 	}
+}
+
+void CHudItem::Hide()
+{
+	if (object().Visual())
+	{
+		object().Visual()->Detach();
+	}
+}
+
+void CHudItem::Show()
+{
+	CObject* ParentActor = object().H_Parent();
+	VERIFY(ParentActor && ParentActor->UnrealProxy);
+	LastAttachBone = GetAttachBone();
+	ParentActor->UnrealProxy->Attach(object().Visual(), LastAttachBone.c_str());	
 }
 
 bool CHudItem::Action(s32 cmd, u32 flags) 
@@ -247,6 +265,17 @@ void CHudItem::UpdateCL()
 
 	if(m_pHUD) m_pHUD->Update();
 	UpdateHudPosition	();
+	if (!item().IsHidden()&&object().H_Parent())
+	{
+		if (LastAttachBone != GetAttachBone())
+		{
+			CObject* ParentActor = object().H_Parent();
+			VERIFY(ParentActor && ParentActor->UnrealProxy);
+			LastAttachBone =  GetAttachBone();
+			ParentActor->UnrealProxy->Attach(object().Visual(), LastAttachBone.c_str());
+		}
+	}
+	UpdateXForm();
 }
 
 void CHudItem::OnH_A_Chield		()
@@ -259,6 +288,15 @@ void CHudItem::OnH_A_Chield		()
 		else
 			m_pHUD->Visible(false);
 	}
+}
+
+void	CHudItem::OnActiveItem()
+{
+	
+}
+void	CHudItem::OnHiddenItem()
+{
+	
 }
 
 void CHudItem::OnH_B_Chield		()

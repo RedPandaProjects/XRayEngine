@@ -142,6 +142,9 @@ public:
 	virtual bool				render_item_3d_ui_query	()					{return false;}
 
 	virtual bool				CheckCompatibility		(CHudItem*)			{return true;}
+	virtual void				Hide					();
+	virtual void				Show					();
+	virtual const char*			GetAttachBone			() { return ""; }
 protected:
 
 	IC		void				SetPending			(BOOL H)			{ m_huditem_flags.set(fl_pending, H);}
@@ -160,7 +163,8 @@ protected:
 
 private:
 	CPhysicItem					*m_object;
-	CInventoryItem				*m_item;
+	CInventoryItem*				m_item;
+	shared_str					LastAttachBone;
 
 public:
 	const shared_str&			HudSection				() const		{ return hud_sect;}

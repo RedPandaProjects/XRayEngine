@@ -121,7 +121,9 @@ public:
 
 
 	virtual void				UpdateHudAdditonal	(Fmatrix&);
-
+	virtual void				Hide				();
+	virtual void				Show				();
+	virtual const char*			GetAttachBone		() { return ""; }
 
 	virtual	void				UpdateXForm			()						= 0;
 
@@ -159,6 +161,7 @@ protected:
 	HUD_SOUND_COLLECTION		m_sounds;
 
 private:
+	shared_str					LastAttachBone;
 	CPhysicItem					*m_object;
 	CInventoryItem				*m_item;
 

@@ -93,9 +93,9 @@ void CObject::cNameVisual_set	(shared_str N)
 			new_k->SetUpdateCallback(old_k->GetUpdateCallback());
 			new_k->SetUpdateCallbackParam(old_k->GetUpdateCallbackParam());
 		}
-		if (old_k&&UnrealProxy)
+		if (old_k)
 		{
-			UnrealProxy->Detach(old_v);
+			old_v->Detach();
 		}
 		if (new_k && UnrealProxy)
 		{
@@ -507,7 +507,7 @@ void CObject::DestroyUnrealProxy()
 	{
 		if (renderable.visual)
 		{
-			UnrealProxy->Detach(renderable.visual);
+			renderable.visual->Detach();
 		}
 		UnrealProxy->Unlock(this);
 		g_Engine->Destroy(UnrealProxy);
