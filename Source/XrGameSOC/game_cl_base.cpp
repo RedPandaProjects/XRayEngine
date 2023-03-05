@@ -313,7 +313,7 @@ void game_cl_GameState::StartStopMenu(CUIDialogWnd* pDialog, bool bDoHideIndicat
 void game_cl_GameState::sv_GameEventGen(NET_Packet& P)
 {
 	P.w_begin	(M_EVENT);
-	P.w_u32		(Level().timeServer());
+	P.w_u32		(Device->dwTimeGlobal);
 	P.w_u16		( u16(GE_GAME_EVENT&0xffff) );
 	P.w_u16		(0);//dest==0
 }
@@ -351,7 +351,7 @@ bool game_cl_GameState::IR_OnMouseWheel			(int direction)
 void game_cl_GameState::u_EventGen(NET_Packet& P, u16 type, u16 dest)
 {
 	P.w_begin	(M_EVENT);
-	P.w_u32		(Level().timeServer());
+	P.w_u32		(Device->dwTimeGlobal);
 	P.w_u16		(type);
 	P.w_u16		(dest);
 }

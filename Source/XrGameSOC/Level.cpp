@@ -60,7 +60,7 @@ u32			lvInterpSteps		= 0;
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-CLevel::CLevel():IPureClient	(Device->GetTimerGlobal())
+CLevel::CLevel():IPureClient	()
 #ifdef PROFILE_CRITICAL_SECTIONS
 	,DemoCS(MUTEX_PROFILE_ID(DemoCS))
 #endif // PROFILE_CRITICAL_SECTIONS
@@ -387,11 +387,11 @@ void CLevel::ProcessGameEvents		()
 	// Game events
 	{
 		NET_Packet			P;
-		u32 svT				= timeServer()-NET_Latency;
+		u32 svT				= Device->dwTimeContinual-NET_Latency;
 
 		/*
 		if (!game_events->queue.empty())	
-			Msg("- d[%d],ts[%d] -- E[svT=%d],[evT=%d]",Device->dwTimeGlobal,timeServer(),svT,game_events->queue.begin()->timestamp);
+			Msg("- d[%d],ts[%d] -- E[svT=%d],[evT=%d]",Device->dwTimeGlobal,Device->dwTimeGlobal,svT,game_events->queue.begin()->timestamp);
 		*/
 
 		while	(game_events->available(svT))

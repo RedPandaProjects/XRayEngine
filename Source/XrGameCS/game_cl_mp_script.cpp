@@ -69,7 +69,7 @@ CScriptGameObject*	game_cl_mp_script::GetObjectByGameID (u16 id)
 LPCSTR game_cl_mp_script::GetRoundTime()
 {
 	static string32 bufTime;
-	u64 dt = Level().timeServer()-StartTime();
+	u64 dt = Device->dwTimeGlobal-StartTime();
 
 	u32 year = 0, month = 0, day = 0, hours = 0, mins = 0, secs = 0, milisecs = 0;
 

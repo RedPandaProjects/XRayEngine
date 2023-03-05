@@ -172,7 +172,7 @@ void game_cl_CaptureTheArtefact::shedule_Update(u32 dt)
 					{
 						m_game_ui->SetReinforcementTimes(m_curReinforcementTime, m_maxReinforcementTime);
 					}
-					u32 current_time = Level().timeServer();
+					u32 current_time = Device->dwTimeGlobal;
 					UpdateVotingTime(current_time);
 					UpdateWarmupTime(current_time);
 					UpdateTimeLimit(current_time);
@@ -1259,7 +1259,7 @@ void game_cl_CaptureTheArtefact::OnVoteStart(NET_Packet& P)
 	P.r_stringZ			(command);
 	P.r_stringZ			(player);
 
-	m_dwVoteEndTime		= Level().timeServer() + P.r_u32();
+	m_dwVoteEndTime		= Device->dwTimeGlobal + P.r_u32();
 
 	command[psize - 1]	= 0;
 	player[psize - 1]	= 0;

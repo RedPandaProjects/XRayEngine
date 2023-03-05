@@ -20,11 +20,11 @@
 #include <malloc.h>
 #pragma warning(pop)
 
-xrClientData::xrClientData	():IClient(Device->GetTimerGlobal())
+xrClientData::xrClientData	():IClient()
 {
 	ps					= Level().Server->game->createPlayerState();
 	ps->clear			();
-	ps->m_online_time	= Level().timeServer();
+	ps->m_online_time	= Device->dwTimeGlobal;
 
 	Clear				();
 }
@@ -46,7 +46,7 @@ xrClientData::~xrClientData()
 }
 
 
-xrServer::xrServer():IPureServer(Device->GetTimerGlobal(), g_dedicated_server)
+xrServer::xrServer():IPureServer( g_dedicated_server)
 {
 	m_iCurUpdatePacket = 0;
 	m_aUpdatePackets.push_back(NET_Packet());
@@ -148,7 +148,7 @@ void		xrServer::client_Destroy	(IClient* C)
 		{
 			NET_Packet			P;
 			P.w_begin(M_EVENT);
-			P.w_u32(Level().timeServer());//Device->TimerAsync());
+			P.w_u32(Device->dwTimeGlobal);//Device->TimerAsync());
 			P.w_u16(GE_DESTROY);
 			P.w_u16(pS->ID);
 			SendBroadcast(C->ID, P, net_flags(TRUE, TRUE));

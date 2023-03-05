@@ -153,7 +153,7 @@ void game_cl_ArtefactHunt::net_import_state	(NET_Packet& P)
 	if (iReinforcementTime > 0)
 	{
 		P.r_s32	(dReinforcementTime);
-		dReinforcementTime += Level().timeServer();
+		dReinforcementTime += Device->dwTimeGlobal;
 	}
 	else
 		dReinforcementTime = 0;
@@ -445,7 +445,7 @@ void game_cl_ArtefactHunt::shedule_Update			(u32 dt)
 
 				if (dReinforcementTime > 0 && Level().CurrentViewEntity() && m_cl_dwWarmUp_Time == 0)
 				{
-					u32 CurTime = Level().timeServer();
+					u32 CurTime = Device->dwTimeGlobal;
 					u32 dTime;
 					if (s32(CurTime) > dReinforcementTime) dTime = 0;
 					else dTime = iCeil(float(dReinforcementTime - CurTime) / 1000);

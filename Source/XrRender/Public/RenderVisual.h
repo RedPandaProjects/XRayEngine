@@ -27,8 +27,8 @@ public:
 	virtual IParticleCustom*					dcast_ParticleCustom				()						{ return 0;	}
 	virtual class XRaySkeletonVisual*			CastToRaySkeletonVisual				()						{ return 0;	}
 	virtual class UStalkerKinematicsComponent*  CastToStalkerKinematicsComponent	()						{ return 0; }
-	virtual void								Lock								(class CObject*Parent)	{}
-	virtual void								Unlock								(class CObject*Parent)	{}
+	virtual void								Lock								(void*Owner)	{}
+	virtual void								Unlock								(void*Owner)	{}
 	virtual void								SetOwnerNoSee						(bool Enable){}
 	virtual void								SetOnlyOwnerSee						(bool Enable){}
 	virtual void								SetOffset							(const Fmatrix&offset,bool IsWorldLocation = false,bool IsWorldRotation = false){}

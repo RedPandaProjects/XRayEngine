@@ -151,7 +151,7 @@ void game_sv_Deathmatch::OnRoundStart()
 	{
 		if (GetWarmUpTime() != 0)
 		{
-			m_dwWarmUp_CurTime = Level().timeServer()+GetWarmUpTime()*1000;
+			m_dwWarmUp_CurTime = Device->dwTimeGlobal+GetWarmUpTime()*1000;
 			m_bInWarmUp = true;
 		}
 	}
@@ -428,7 +428,7 @@ void	game_sv_Deathmatch::Update()
 
 			if (m_bSpectatorMode)
 			{
-				if (!m_pSM_CurViewEntity || !smart_cast<CActor*>(m_pSM_CurViewEntity) || m_dwSM_LastSwitchTime<Level().timeServer())
+				if (!m_pSM_CurViewEntity || !smart_cast<CActor*>(m_pSM_CurViewEntity) || m_dwSM_LastSwitchTime<Device->dwTimeGlobal)
 					SM_SwitchOnNextActivePlayer();
 				CUIGameDM* GameDM = NULL;
 				if (CurrentGameUI())
@@ -478,7 +478,7 @@ bool game_sv_Deathmatch::checkForRoundStart()
 #ifdef DEBUG
 		!g_sv_Wait_For_Players_Ready &&
 #endif		
-		(((Level().timeServer()-StartTime()))>u32(g_sv_Pending_Wait_Time)))
+		(((Device->dwTimeGlobal-StartTime()))>u32(g_sv_Pending_Wait_Time)))
 		)
 		)
 	{
@@ -501,7 +501,7 @@ bool game_sv_Deathmatch::checkForRoundStart()
 bool game_sv_Deathmatch::checkForTimeLimit()
 {
 	if (m_dwWarmUp_CurTime != 0 || m_bInWarmUp) return false;
-	if (GetTimeLimit() && ((Level().timeServer()-StartTime())) > u32(GetTimeLimit()*60000) )
+	if (GetTimeLimit() && ((Device->dwTimeGlobal-StartTime())) > u32(GetTimeLimit()*60000) )
 	{
 		if (!HasChampion()) return false;
 		OnTimelimitExceed();
@@ -632,7 +632,7 @@ void	game_sv_Deathmatch::SM_SwitchOnPlayer(CObject* pNewObject)
 
 	m_pSM_CurViewEntity				= pNewObject;
 	m_dwSM_CurViewEntity			= pNewObject->ID();
-	m_dwSM_LastSwitchTime			= Level().timeServer() + m_dwSM_SwitchDelta;
+	m_dwSM_LastSwitchTime			= Device->dwTimeGlobal + m_dwSM_SwitchDelta;
 }
 
 
@@ -1558,7 +1558,7 @@ void	game_sv_Deathmatch::StartAnomalies			(int AnomalySet)
 
 	if (IsAnomaliesEnabled())
 		Send_EventPack_for_AnomalySet(m_dwLastAnomalySetID, CCustomZone::eZoneStateIdle); //Idle
-	m_dwLastAnomalyStartTime = Level().timeServer();
+	m_dwLastAnomalyStartTime = Device->dwTimeGlobal;
 #ifdef DEBUG
 	Msg("Anomaly Set %d Activated", m_dwLastAnomalySetID);
 #endif
@@ -1957,7 +1957,7 @@ bool game_sv_Deathmatch::check_for_Anomalies()
 	if (m_dwLastAnomalySetID < 1000)
 	{
 		if (GetAnomaliesTime() == 0) return false;
-		if (m_dwLastAnomalyStartTime + GetAnomaliesTime()*60000 > Level().timeServer()) return false;
+		if (m_dwLastAnomalyStartTime + GetAnomaliesTime()*60000 > Device->dwTimeGlobal) return false;
 	};
 	StartAnomalies(); 
 	return true;
@@ -2190,7 +2190,7 @@ void game_sv_Deathmatch::OnRenderDebug()
 void		game_sv_Deathmatch::check_for_WarmUp()
 {
 	if (m_dwWarmUp_CurTime == 0 && !m_bInWarmUp) return;
-	if (m_dwWarmUp_CurTime < Level().timeServer())
+	if (m_dwWarmUp_CurTime < Device->dwTimeGlobal)
 	{
 		m_dwWarmUp_CurTime	= 0;
 		Console->Execute	("g_restart_fast");
@@ -2230,7 +2230,7 @@ void game_sv_Deathmatch::WriteGameState(CInifile& ini, LPCSTR sect, bool bRoundR
 
 	if(!bRoundResult)
 	{
-		u32 game_time		= (Level().timeServer()-m_round_start_time);
+		u32 game_time		= (Device->dwTimeGlobal-m_round_start_time);
 		ini.w_u32			(sect,"round_time_sec", game_time/1000);
 	}
 }

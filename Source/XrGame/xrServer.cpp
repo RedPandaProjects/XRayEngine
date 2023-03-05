@@ -29,7 +29,7 @@
 u32 g_sv_traffic_optimization_level = eto_none;
 
 xrClientData::xrClientData	() :
-	IClient(Device->GetTimerGlobal())
+	IClient()
 {
 	ps = NULL;
 	Clear		();
@@ -53,7 +53,7 @@ xrClientData::~xrClientData()
 }
 
 
-xrServer::xrServer() : IPureServer(Device->GetTimerGlobal(), g_dedicated_server)
+xrServer::xrServer() : IPureServer( g_dedicated_server)
 {
 	m_file_transfers	= NULL;
 	m_aDelayedPackets.clear();
@@ -151,7 +151,7 @@ void		xrServer::client_Destroy	(IClient* C)
 		{
 			NET_Packet			P;
 			P.w_begin			(M_EVENT);
-			P.w_u32				(Level().timeServer());//Device->TimerAsync());
+			P.w_u32				(Device->dwTimeGlobal);//Device->TimerAsync());
 			P.w_u16				(GE_DESTROY);
 			P.w_u16				(pS->ID);
 			SendBroadcast		(C->ID,P,net_flags(TRUE,TRUE));

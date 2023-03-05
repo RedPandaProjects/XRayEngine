@@ -131,7 +131,7 @@ void game_sv_mp::OnRoundStart()
 
 	switch_Phase	(GAME_PHASE_INPROGRESS);
 	++m_round;
-	m_round_start_time	= Level().timeServer();
+	m_round_start_time	= Device->dwTimeGlobal;
 	timestamp			(m_round_start_time_str);
 	
 	// clear "ready" flag
@@ -144,7 +144,7 @@ void game_sv_mp::OnRoundStart()
 			if (!tmp_ps)
 				return;
 			tmp_ps->resetFlag(GAME_PLAYER_FLAG_READY+GAME_PLAYER_FLAG_VERY_VERY_DEAD);
-			tmp_ps->m_online_time = Level().timeServer();
+			tmp_ps->m_online_time = Device->dwTimeGlobal;
 		}
 	};
 	ready_clearer tmp_functor;
@@ -1045,7 +1045,7 @@ void game_sv_mp::OnVoteStart				(LPCSTR VoteCommand, ClientID sender)
 
 	//-----------------------------------------------------------------------------
 	SetVotingActive(true);
-	u32 CurTime = Level().timeServer();
+	u32 CurTime = Device->dwTimeGlobal;
 	m_uVoteStartTime = CurTime;
 	if (m_bVotingReal)
 	{
@@ -1172,7 +1172,7 @@ void game_sv_mp::SendActiveVotingTo(ClientID const & receiver)
 	P.w_u32(GAME_EVENT_VOTE_START);
 	P.w_stringZ(m_voting_string);
 	P.w_stringZ(m_started_player);
-	u32 CurTime = Level().timeServer();
+	u32 CurTime = Device->dwTimeGlobal;
 	u32 EndVoteTime = m_uVoteStartTime + u32(g_sv_mp_fVoteTime * 60000);
 	if (EndVoteTime <= CurTime)
 		return;
@@ -1210,7 +1210,7 @@ void		game_sv_mp::UpdateVote				()
 	u32 NumAgainst = (vote_stats.NumToCount - vote_stats.NumAgreed);
 
 	bool VoteSucceed = false;
-	u32 CurTime = Level().timeServer();
+	u32 CurTime = Device->dwTimeGlobal;
 	
 	if (m_uVoteStartTime + u32(g_sv_mp_fVoteTime*60000) > CurTime)
 	{
@@ -1951,7 +1951,7 @@ void game_sv_mp::WritePlayerStats(CInifile& ini, LPCSTR sect, xrClientData* pCl)
 	ini.w_u32	(sect,"artefacts",		pCl->ps->af_count);
 	ini.w_u32	(sect,"ping",			pCl->ps->ping);
 	ini.w_u32	(sect,"money",			pCl->ps->money_for_round);
-	ini.w_u32	(sect,"online_time_sec",(Level().timeServer()-pCl->ps->m_online_time)/1000);
+	ini.w_u32	(sect,"online_time_sec",(Device->dwTimeGlobal-pCl->ps->m_online_time)/1000);
 
 	if(Game().m_WeaponUsageStatistic->CollectData())
 	{

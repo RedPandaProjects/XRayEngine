@@ -81,7 +81,7 @@ void CActorMP::fill_state	(actor_mp_state &state)
 	state.camera_pitch				= angle_normalize(unaffected_r_torso.pitch);
 	state.camera_roll				= angle_normalize(unaffected_r_torso.roll);
 
-	state.time						= Level().timeServer();
+	state.time						= Device->dwTimeGlobal;
 
 	state.inventory_active_slot		= inventory().GetActiveSlot();
 	state.body_state_flags			= mstate_real & 0x0000ffff;

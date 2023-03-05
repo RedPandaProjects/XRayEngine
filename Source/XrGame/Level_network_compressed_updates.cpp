@@ -50,17 +50,17 @@ void CLevel::ProcessCompressedUpdate(NET_Packet& P, u8 const compress_type)
 	}
 	Device->Statistic->netClientCompressor.End();
 
-	if (OnClient()) UpdateDeltaUpd(timeServer());
+	if (OnClient()) UpdateDeltaUpd(Device->dwTimeGlobal);
 	IClientStatistic pStat = Level().GetStatistic();
 	u32 dTime = 0;
 	
-	if ((Level().timeServer() + pStat.getPing()) < P.timeReceive)
+	if ((Device->dwTimeGlobal + pStat.getPing()) < P.timeReceive)
 	{
 		dTime = pStat.getPing();
 	}
 	else
 	{
-		dTime = Level().timeServer() - P.timeReceive + pStat.getPing();
+		dTime = Device->dwTimeGlobal - P.timeReceive + pStat.getPing();
 	}
 	u32 NumSteps = physics_world()->CalcNumSteps(dTime);
 	SetNumCrSteps(NumSteps);

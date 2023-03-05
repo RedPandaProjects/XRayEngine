@@ -31,12 +31,10 @@ public:
 #endif
 	virtual			bool				Paused()const = 0;
 	virtual void Reset(bool precache = false) = 0;
-	IC u32	 TimerAsync() { return TimerGlobal.GetElapsed_ms(); }
-	IC u32	 TimerAsync_MMT() { return TimerMM.GetElapsed_ms() + Timer_MM_Delta; }
-	IC CTimer* GetTimerGlobal() { return &TimerGlobal; }
+	IC u32	 TimerAsync() { return dwTimeGlobal; }
+	IC u32	 TimerAsync_MMT() { return dwTimeContinual; }
 
 	Fmatrix									mInvFullTransform;
-	CTimer									TimerMM;
 	CRegistrator	<pureFrame			>			seqFrameMT;
 	CRegistrator	<pureDeviceReset	>			seqDeviceReset;
 	xr_vector		<fastdelegate::FastDelegate0<> >	seqParallel;
@@ -44,14 +42,13 @@ public:
 	float									fWidth_2, fHeight_2;
 	IC void time_factor(const float& time_factor)
 	{
-		Timer.time_factor(time_factor);
-		TimerGlobal.time_factor(time_factor);
+		/*Timer.time_factor(time_factor);
+		TimerGlobal.time_factor(time_factor);*/
 	}
 
-	IC	const float& time_factor() const
+	IC	 float time_factor() const
 	{
-		VERIFY(Timer.time_factor() == TimerGlobal.time_factor());
-		return					(Timer.time_factor());
+		return 1;
 	}
 
 	// Multi-threading
@@ -117,8 +114,6 @@ public:
 protected:
 
 	u32										Timer_MM_Delta;
-	CTimer_paused							Timer;
-	CTimer_paused							TimerGlobal;
 public:
 
 	// Registrators

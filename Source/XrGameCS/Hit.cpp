@@ -70,7 +70,7 @@ void	SHit::GenHeader				(u16 PacketType, u16 ID)
 {
 	DestID = ID;
 	PACKET_TYPE = PacketType;
-	Time = Level().timeServer();
+	Time = Device->dwTimeGlobal;
 };
 
 void SHit::Read_Packet				(NET_Packet	Packet)

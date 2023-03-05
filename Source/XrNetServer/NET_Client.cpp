@@ -11,6 +11,8 @@
 #pragma warning(disable:4995)
 #include <malloc.h>
 #include "directx\dxerr.h"
+#include "../XrAPI/xrAPI.h"
+#include "../XrEngine/stdafx.h"
 
 //#pragma warning(pop)
 //
@@ -304,7 +306,7 @@ IPureClient::_Recieve( const void* data, u32 data_size, u32 /*param*/ )
 		if( (data_size == sizeof(MSYS_PING)) )
 		{
 			// It is reverted(server) ping
-			u32		    time	= TimerAsync( device_timer );
+			u32		    time	= Device->dwTimeContinual;
 			u32		    ping	= time - (cfg->dwTime_ClientSend);
 			u32		    delta	= cfg->dwTime_Server + ping/2 - time;
 
@@ -328,10 +330,10 @@ IPureClient::_Recieve( const void* data, u32 data_size, u32 /*param*/ )
 		if( psNET_Flags.test( NETFLAG_LOG_CL_PACKETS ) ) 
 		{
 			if( !pClNetLog ) 
-				pClNetLog = xr_new<INetLog>("logs\\net_cl_log.log", timeServer());
+				pClNetLog = xr_new<INetLog>("logs\\net_cl_log.log", Device->dwTimeGlobal);
 			    
 			if( pClNetLog ) 
-				pClNetLog->LogData( timeServer(), const_cast<void*>(data), data_size, TRUE );
+				pClNetLog->LogData(Device->dwTimeContinual, const_cast<void*>(data), data_size, TRUE );
 		}
 
 		OnMessage( const_cast<void*>(data), data_size );
@@ -340,7 +342,7 @@ IPureClient::_Recieve( const void* data, u32 data_size, u32 /*param*/ )
 
 //==============================================================================
 
-IPureClient::IPureClient	(CTimer* timer): net_Statistic(timer)
+IPureClient::IPureClient	()
 #ifdef PROFILE_CRITICAL_SECTIONS
 	,net_csEnumeration(MUTEX_PROFILE_ID(IPureClient::net_csEnumeration))
 #endif // PROFILE_CRITICAL_SECTIONS
@@ -348,13 +350,12 @@ IPureClient::IPureClient	(CTimer* timer): net_Statistic(timer)
 	NET						= NULL;
 	net_Address_server		= NULL;
 	net_Address_device		= NULL;
-	device_timer			= timer;
 	net_TimeDelta_User		= 0;
 	net_Time_LastUpdate		= 0;
 	net_TimeDelta			= 0;
 	net_TimeDelta_Calculated = 0;
 
-	pClNetLog = NULL;//xr_new<INetLog>("logs\\net_cl_log.log", timeServer());
+	pClNetLog = NULL;//xr_new<INetLog>("logs\\net_cl_log.log", Device->dwTimeGlobal);
 
 }
 
@@ -925,7 +926,7 @@ void	IPureClient::OnMessage(void* data, u32 size)
 	NET_Packet* P = net_Queue.Create();
 
 	P->construct( data, size );	
-	P->timeReceive	= timeServer_Async();//TimerAsync				(device_timer);	
+	P->timeReceive	=Device->dwTimeContinual;//TimerAsync				(device_timer);	
 
 	u16			m_type;
 	P->r_begin	(m_type);
@@ -948,9 +949,9 @@ void	IPureClient::SendTo_LL(void* data, u32 size, u32 dwFlags, u32 dwTimeout)
 	if( psNET_Flags.test(NETFLAG_LOG_CL_PACKETS) ) 
 	{
 		if( !pClNetLog) 
-		    pClNetLog = xr_new<INetLog>( "logs\\net_cl_log.log", timeServer() );
+		    pClNetLog = xr_new<INetLog>( "logs\\net_cl_log.log",Device->dwTimeContinual);
 		if( pClNetLog ) 
-		    pClNetLog->LogData( timeServer(), data, size );
+		    pClNetLog->LogData( Device->dwTimeContinual, data, size );
 	}
 	DPN_BUFFER_DESC				desc;
 
@@ -992,7 +993,7 @@ void	IPureClient::Flush_Send_Buffer		()
 
 BOOL	IPureClient::net_HasBandwidth	()
 {
-	u32		dwTime				= TimeGlobal(device_timer);
+	u32		dwTime				=Device->dwTimeContinual;
 	u32		dwInterval			= 0;
 	if		(net_Disconnected) return FALSE;
 	
@@ -1067,7 +1068,7 @@ void	IPureClient::Sync_Thread	()
 		// Construct message
 		clPing.sign1				= 0x12071980;
 		clPing.sign2				= 0x26111975;
-		clPing.dwTime_ClientSend	= TimerAsync(device_timer);
+		clPing.dwTime_ClientSend	=Device->dwTimeContinual;
 
 		// Send it
 		__try {
@@ -1091,8 +1092,8 @@ void	IPureClient::Sync_Thread	()
 		// Waiting for reply-packet to arrive
 		if (!net_Syncronised)	{
 			u32	old_size	= net_DeltaArray.size();
-			u32	timeBegin	= TimerAsync(device_timer);
-			while ((net_DeltaArray.size()==old_size)&&(TimerAsync(device_timer)-timeBegin<5000))		Sleep(1);
+			u32	timeBegin	= Device->dwTimeContinual;
+			while ((net_DeltaArray.size()==old_size)&&(Device->dwTimeContinual-timeBegin<5000))		Sleep(1);
 			
 			if (net_DeltaArray.size()>=syncSamples)	{
 				net_Syncronised	= TRUE;

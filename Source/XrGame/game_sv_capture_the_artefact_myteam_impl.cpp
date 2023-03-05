@@ -77,12 +77,12 @@ void game_sv_CaptureTheArtefact::MyTeam::OnPlayerDetachArtefact(
 		make_string("artefacts owners not equal: firstOwnerId = %d, secondOwnerId = %d",
 		oldArtefactOwner->ID, artefactOwner->ID).c_str());
 	artefactOwner = NULL;
-	freeArtefactTimeStart = Level().timeServer();
+	freeArtefactTimeStart = Device->dwTimeGlobal;
 }
 
 void game_sv_CaptureTheArtefact::MyTeam::OnPlayerActivateArtefact(u16 eid_who)
 {
-	activationArtefactTimeStart = Level().timeServer();
+	activationArtefactTimeStart = Device->dwTimeGlobal;
 	artefactActivated = true;
 	last_activator_id = eid_who;
 }

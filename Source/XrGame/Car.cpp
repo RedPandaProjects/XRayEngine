@@ -494,7 +494,7 @@ void	CCar::renderable_Render				( )
 void	CCar::net_Export			(NET_Packet& P)
 {
 	inherited::net_Export(P);
-//	P.w_u32 (Level().timeServer());
+//	P.w_u32 (Device->dwTimeGlobal);
 //	P.w_u16 (0);
 }
 

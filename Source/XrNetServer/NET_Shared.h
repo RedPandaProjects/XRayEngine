@@ -45,10 +45,8 @@ class XRNETSERVER_API IClientStatistic
 	DPN_CONNECTION_INFO	ci_last;
 	u32					mps_recive, mps_receive_base;
 	u32					mps_send,	mps_send_base;
-	u32					dwBaseTime;
-	CTimer*				device_timer;
 public:
-			IClientStatistic	(CTimer* timer){ ZeroMemory(this,sizeof(*this)); device_timer=timer; dwBaseTime=TimeGlobal(device_timer); }
+			IClientStatistic	(){ ZeroMemory(this,sizeof(*this)); }
 
 	void	Update				(DPN_CONNECTION_INFO& CI);
 
@@ -63,7 +61,7 @@ public:
 	IC u32	getSendedPerSec		()	{ return dwBytesSendedPerSec; }
 	
 
-	IC void	Clear				()	{ CTimer* timer = device_timer; ZeroMemory(this,sizeof(*this)); device_timer=timer; dwBaseTime=TimeGlobal(device_timer); }
+	IC void	Clear				()	{  ZeroMemory(this,sizeof(*this));   }
 
 	//-----------------------------------------------------------------------
 	u32		dwTimesBlocked;

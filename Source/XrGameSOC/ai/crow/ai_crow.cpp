@@ -340,7 +340,7 @@ void CAI_Crow::net_Export	(NET_Packet& P)					// export to server
 	P.w_u32				(0);
 	P.w_u32				(0);
 
-	P.w_u32				(Level().timeServer());
+	P.w_u32				(Device->dwTimeGlobal);
 	P.w_u8				(flags);
 	
 	float				yaw, pitch, bank;

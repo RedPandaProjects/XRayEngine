@@ -110,7 +110,7 @@ void CLevel::SaveDemoHeader(shared_str const & server_options)
 {
 	strncpy_s(m_demo_header.m_server_options, server_options.c_str(), server_options.size());
 	m_demo_header.m_time_global			= Device->dwTimeGlobal;
-	m_demo_header.m_time_server			= timeServer();
+	m_demo_header.m_time_server			= Device->dwTimeGlobal;
 	m_demo_header.m_time_delta			= timeServer_Delta();
 	m_demo_header.m_time_delta_user		= net_TimeDelta_User;
 	m_writer->w(&m_demo_header, sizeof(m_demo_header));

@@ -90,7 +90,8 @@ void CHudItem::renderable_Render()
 	BOOL _hud_render			= ::Render->get_HUD() && GetHUDmode();
 	if(_hud_render && !m_pHUD->IsHidden() && !item().IsHidden()){ 
 		// HUD render
-		if(m_bRenderHud){
+		if(m_bRenderHud)
+		{
 			::Render->set_Transform		(&m_pHUD->Transform());
 			::Render->add_Visual		(m_pHUD->Visual());
 		}
@@ -115,6 +116,10 @@ void CHudItem::Hide()
 	{
 		object().Visual()->Detach();
 	}
+	if (smart_cast<CActor*>(object().H_Parent())&& m_pHUD->Visual())
+	{
+		 m_pHUD->Visual()->Detach();
+	}
 }
 
 void CHudItem::Show()
@@ -123,6 +128,17 @@ void CHudItem::Show()
 	VERIFY(ParentActor && ParentActor->UnrealProxy);
 	LastAttachBone = GetAttachBone();
 	ParentActor->UnrealProxy->Attach(object().Visual(), LastAttachBone.c_str());	
+	object().Visual()->SetOwnerNoSee(true);
+	if (smart_cast<CActor*>(object().H_Parent())&&m_pHUD->Visual())
+	{
+		if (XRayUnrealPlayerCharacterInterface* PlayerCharacter = ParentActor->UnrealProxy->CastToXRayUnrealPlayerCharacterInterface())
+		{
+			PlayerCharacter->AttachToCamera(m_pHUD->Visual());
+			m_pHUD->Visual()->SetOwnerNoSee(false);
+			m_pHUD->Visual()->SetOnlyOwnerSee(true);
+		}
+		
+	}
 }
 
 bool CHudItem::Action(s32 cmd, u32 flags) 
@@ -195,10 +211,13 @@ void CHudItem::UpdateHudPosition	()
 
 		CActor* pActor = smart_cast<CActor*>(object().H_Parent());
 		if(pActor){
-			pActor->Cameras().camera_Matrix				(trans);
+			//pActor->Cameras().camera_Matrix				(trans);
+			trans.identity();
+			trans.setHPB(deg2rad(90.f),0,0);
 			UpdateHudInertion							(trans);
 			UpdateHudAdditonal							(trans);
 			m_pHUD->UpdatePosition						(trans);
+			m_pHUD->Visual()->SetOffset					(m_pHUD->Transform(),false,false);
 		}
 	}
 }

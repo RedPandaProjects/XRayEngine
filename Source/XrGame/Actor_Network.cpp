@@ -92,7 +92,7 @@ void CActor::net_Export	(NET_Packet& P)					// export to server
 	//CSE_ALifeCreatureAbstract
 	u8					flags = 0;
 	P.w_float			(GetfHealth());
-	P.w_u32				(Level().timeServer());
+	P.w_u32				(Device->dwTimeGlobal);
 	P.w_u8				(flags);
 	Fvector				p = Position();
 	P.w_vec3			(p);//Position());
@@ -467,7 +467,7 @@ void		CActor::net_Import_Physic			( NET_Packet& P)
 		if (!NET.empty())
 			N_A.dwTimeStamp			= NET.back().dwTimeStamp;
 		else
-			N_A.dwTimeStamp			= Level().timeServer();
+			N_A.dwTimeStamp			= Device->dwTimeGlobal;
 
 		N_A.State.previous_position	= N_A.State.position;
 		N_A.State.previous_quaternion = N_A.State.quaternion;
@@ -1097,7 +1097,7 @@ void	CActor::CalculateInterpolationParams()
 
 	if (m_bInInterpolation)
 	{
-		u32 CurTime = Level().timeServer();
+		u32 CurTime = Device->dwTimeGlobal;
 		float factor	= float(CurTime - m_dwIStartTime)/(m_dwIEndTime - m_dwIStartTime);
 		if (factor > 1.0f) factor = 1.0f;
 
@@ -1226,7 +1226,7 @@ void	CActor::CalculateInterpolationParams()
 int		actInterpType = 0;
 void CActor::make_Interpolation	()
 {
-	m_dwILastUpdateTime = Level().timeServer();
+	m_dwILastUpdateTime = Device->dwTimeGlobal;
 			
 	if(g_Alive() && m_bInInterpolation) 
 	{
@@ -1340,7 +1340,7 @@ void		CActor::UpdatePosStack	( u32 Time0, u32 Time1 )
 	else		
 	{
 		SMemoryPosStack.push_back(SMemoryPos(Time0, Time1, ph_world->m_steps_num, State));
-		if (SMemoryPosStack.front().dwTime0 < (Level().timeServer() - 2000)) SMemoryPosStack.pop_front();
+		if (SMemoryPosStack.front().dwTime0 < (Device->dwTimeGlobal - 2000)) SMemoryPosStack.pop_front();
 	};
 };
 

@@ -10,6 +10,8 @@
 #pragma warning(push)
 #pragma warning(disable:4995)
 #include <malloc.h>
+#include "..\XrAPI\xrAPI.h"
+#include "..\XrEngine\stdafx.h"
 #pragma warning(pop)
 
 static	INetLog* pSvNetLog = NULL; 
@@ -97,8 +99,8 @@ xr_string IBannedClient::BannedTimeTo() const
 	return res;
 }
 
-IClient::IClient( CTimer* timer )
-  : stats(timer),
+IClient::IClient()
+  : stats(),
     server(NULL)
 {
 	dwTime_LastUpdate	= 0;
@@ -114,22 +116,22 @@ IClient::~IClient()
 
 void IClientStatistic::Update(DPN_CONNECTION_INFO& CI)
 {
-	u32 time_global		= TimeGlobal(device_timer);
-	if (time_global-dwBaseTime >= 999)
+	u32 time_global		= Device->dwTimeContinual;
+//	if (time_global-dwBaseTime >= 999)
 	{
-		dwBaseTime		= time_global;
-		
-		mps_recive		= CI.dwMessagesReceived - mps_receive_base;
-		mps_receive_base= CI.dwMessagesReceived;
+		//dwBaseTime		= time_global;
+		//
+		//mps_recive		= CI.dwMessagesReceived - mps_receive_base;
+		//mps_receive_base= CI.dwMessagesReceived;
 
-		u32	cur_msend	= CI.dwMessagesTransmittedHighPriority+CI.dwMessagesTransmittedNormalPriority+CI.dwMessagesTransmittedLowPriority;
-		mps_send		= cur_msend - mps_send_base;
-		mps_send_base	= cur_msend;
+		//u32	cur_msend	= CI.dwMessagesTransmittedHighPriority+CI.dwMessagesTransmittedNormalPriority+CI.dwMessagesTransmittedLowPriority;
+		//mps_send		= cur_msend - mps_send_base;
+		//mps_send_base	= cur_msend;
 
-		dwBytesSendedPerSec		= dwBytesSended;
-		dwBytesSended			= 0;
-		dwBytesReceivedPerSec	= dwBytesReceived;
-		dwBytesReceived			= 0;
+		//dwBytesSendedPerSec		= dwBytesSended;
+		//dwBytesSended			= 0;
+		//dwBytesReceivedPerSec	= dwBytesReceived;
+		//dwBytesReceived			= 0;
 	}
 	ci_last	= CI;
 }
@@ -191,10 +193,10 @@ IPureServer::_Recieve( const void* data, u32 data_size, u32 param )
 	if( psNET_Flags.test(NETFLAG_LOG_SV_PACKETS) ) 
 	{
 		if( !pSvNetLog) 
-			pSvNetLog = xr_new<INetLog>("logs\\net_sv_log.log", TimeGlobal(device_timer));
+			pSvNetLog = xr_new<INetLog>("logs\\net_sv_log.log", Device->dwTimeContinual);
 		    
 		if( pSvNetLog ) 
-		    pSvNetLog->LogPacket( TimeGlobal(device_timer), &packet, TRUE );
+		    pSvNetLog->LogPacket(Device->dwTimeContinual, &packet, TRUE );
 	}
 	//---------------------------------------
 	u32	result = OnMessage( packet, id );
@@ -207,20 +209,19 @@ IPureServer::_Recieve( const void* data, u32 data_size, u32 param )
 
 //==============================================================================
 
-IPureServer::IPureServer	(CTimer* timer, BOOL	Dedicated)
+IPureServer::IPureServer	( BOOL	Dedicated)
 	:	m_bDedicated(Dedicated)
 #ifdef PROFILE_CRITICAL_SECTIONS
 	,csPlayers(MUTEX_PROFILE_ID(IPureServer::csPlayers))
 	,csMessage(MUTEX_PROFILE_ID(IPureServer::csMessage))
 #endif // PROFILE_CRITICAL_SECTIONS
 {
-	device_timer			= timer;
 	stats.clear				();
-	stats.dwSendTime		= TimeGlobal(device_timer);
+	stats.dwSendTime		= Device->dwTimeContinual;
 	SV_Client				= NULL;
 	NET						= NULL;
 	net_Address_device		= NULL;
-	pSvNetLog				= NULL;//xr_new<INetLog>("logs\\net_sv_log.log", TimeGlobal(device_timer));
+	pSvNetLog				= NULL;//xr_new<INetLog>("logs\\net_sv_log.log", TimeGlobal(Device->dwTimeContinual));
 #ifdef DEBUG
 	sender_functor_invoked = false;
 #endif
@@ -535,7 +536,7 @@ HRESULT	IPureServer::net_Handler(u32 dwMessageType, PVOID pMessage)
 				if (m_size==sizeof(MSYS_PING))
 				{
 					// ping - save server time and reply
-					m_ping->dwTime_Server	= TimerAsync(device_timer);
+					m_ping->dwTime_Server	= Device->dwTimeContinual;
 					ClientID ID; ID.set(m_sender);
 					//						IPureServer::SendTo_LL	(ID,m_data,m_size,net_flags(FALSE,FALSE,TRUE));
 					IPureServer::SendTo_Buf	(ID,m_data,m_size,net_flags(FALSE,FALSE,TRUE, TRUE));
@@ -602,11 +603,11 @@ void	IPureServer::SendTo_Buf(ClientID id, void* data, u32 size, u32 dwFlags, u32
 
 void	IPureServer::SendTo_LL(ClientID ID/*DPNID ID*/, void* data, u32 size, u32 dwFlags, u32 dwTimeout)
 {
-	//	if (psNET_Flags.test(NETFLAG_LOG_SV_PACKETS)) pSvNetLog->LogData(TimeGlobal(device_timer), data, size);
+	//	if (psNET_Flags.test(NETFLAG_LOG_SV_PACKETS)) pSvNetLog->LogData(TimeGlobal(Device->dwTimeContinual), data, size);
 	if (psNET_Flags.test(NETFLAG_LOG_SV_PACKETS)) 
 	{
-		if (!pSvNetLog) pSvNetLog = xr_new<INetLog>("logs\\net_sv_log.log", TimeGlobal(device_timer));
-		if (pSvNetLog) pSvNetLog->LogData(TimeGlobal(device_timer), data, size);
+		if (!pSvNetLog) pSvNetLog = xr_new<INetLog>("logs\\net_sv_log.log", Device->dwTimeContinual);
+		if (pSvNetLog) pSvNetLog->LogData(Device->dwTimeContinual, data, size);
 	}
 
 	// send it
@@ -615,7 +616,7 @@ void	IPureServer::SendTo_LL(ClientID ID/*DPNID ID*/, void* data, u32 size, u32 d
 	desc.pBufferData	= LPBYTE(data);
 
 #ifdef _DEBUG
-	u32 time_global		= TimeGlobal(device_timer);
+	u32 time_global		= Device->dwTimeContinual;
 	if (time_global - stats.dwSendTime >= 999)
 	{
 		stats.dwBytesPerSec = (stats.dwBytesPerSec*9 + stats.dwBytesSended)/10;
@@ -725,7 +726,7 @@ void IPureServer::OnCL_Disconnected		(IClient* CL)
 
 BOOL IPureServer::HasBandwidth			(IClient* C)
 {
-	u32	dwTime			= TimeGlobal(device_timer);
+	u32	dwTime			= Device->dwTimeContinual;
 	u32	dwInterval		= 0;
 
 	if(psNET_direct_connect)

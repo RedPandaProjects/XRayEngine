@@ -478,9 +478,9 @@ void game_cl_Deathmatch::shedule_Update			(u32 dt)
 
 			if (m_s32TimeLimit && m_cl_dwWarmUp_Time == 0)
 			{
-				if (Level().timeServer()<(m_start_time + m_s32TimeLimit))
+				if (Device->dwTimeGlobal<(m_start_time + m_s32TimeLimit))
 				{
-					u32 lts = Level().timeServer();
+					u32 lts = Device->dwTimeGlobal;
 					u32 Rest = (m_start_time + m_s32TimeLimit) - lts;
 					string64 S;
 					ConvertTime2String(&S, Rest);
@@ -516,9 +516,9 @@ void game_cl_Deathmatch::shedule_Update			(u32 dt)
 				m_game_ui->SetPressJumpMsgCaption(NULL);
 				m_game_ui->SetPressBuyMsgCaption(NULL);				
 
-				if (m_cl_dwWarmUp_Time > Level().timeServer())
+				if (m_cl_dwWarmUp_Time > Device->dwTimeGlobal)
 				{
-					u32 TimeRemains = m_cl_dwWarmUp_Time - Level().timeServer();
+					u32 TimeRemains = m_cl_dwWarmUp_Time - Device->dwTimeGlobal;
 					string64 S;
 					ConvertTime2String(&S, TimeRemains);
 					string1024 tmpStr = "";
@@ -579,10 +579,10 @@ void game_cl_Deathmatch::shedule_Update			(u32 dt)
 					}
 				}
 
-				u32 CurTime = Level().timeServer();
+				u32 CurTime = Device->dwTimeGlobal;
 				if (IsVotingEnabled() && IsVotingActive() && m_dwVoteEndTime>=CurTime)
 				{
-					u32 TimeLeft = m_dwVoteEndTime - Level().timeServer();
+					u32 TimeLeft = m_dwVoteEndTime - Device->dwTimeGlobal;
 					string1024 VoteTimeResStr;
 					u32 SecsLeft = (TimeLeft % 60000) / 1000;
 					u32 MinitsLeft = (TimeLeft - SecsLeft) / 60000;
@@ -811,7 +811,7 @@ void game_cl_Deathmatch::OnVoteStart(NET_Packet& P)
 	string64	Player = "";
 	P.r_stringZ(Command);
 	P.r_stringZ(Player);
-	m_dwVoteEndTime = Level().timeServer() + P.r_u32();
+	m_dwVoteEndTime = Device->dwTimeGlobal + P.r_u32();
 	
 	if(m_game_ui)
 	{

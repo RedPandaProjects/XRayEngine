@@ -14,6 +14,7 @@
 #include "inventory_item.h"
 #include "physicsshellholder.h"
 #include "../XrEngine/XRayUnrealProxyInterface.h"
+#include "Actor.h"
 
 CAttachmentOwner::~CAttachmentOwner()
 {
@@ -104,6 +105,10 @@ void CAttachmentOwner::attach(CInventoryItem *inventory_item)
 		VERIFY(VisualAttachableItem);
 		attachable_item->set_bone_id		(CastToIKinematics(game_object->Visual())->LL_BoneID(attachable_item->bone_name()));
 		game_object->UnrealProxy->Attach	(VisualAttachableItem,attachable_item->bone_name().c_str());
+		if (smart_cast<CActor*>(this))
+		{
+			VisualAttachableItem->SetOwnerNoSee(true);
+		}
 		VisualAttachableItem->SetOffset(inventory_item->offset());
 		m_attached_objects.push_back		(smart_cast<CAttachableItem*>(inventory_item));
 

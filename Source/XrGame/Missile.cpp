@@ -246,7 +246,7 @@ void CMissile::shedule_Update(u32 dt)
 	inherited::shedule_Update(dt);
 	if(!H_Parent() && getVisible() && m_pPhysicsShell) 
 	{
-		if(m_dwDestroyTime <= Level().timeServer()) 
+		if(m_dwDestroyTime <= Device->dwTimeGlobal) 
 		{
 			m_dwDestroyTime = 0xffffffff;
 			VERIFY	(!m_pInventory);

@@ -207,7 +207,7 @@ void CInventoryItem::OnH_B_Independent(bool just_before_destroy)
 
 void CInventoryItem::OnH_A_Independent()
 {
-	m_dwItemIndependencyTime	= Level().timeServer();
+	m_dwItemIndependencyTime	= Device->dwTimeGlobal;
 	m_eItemPlace				= eItemPlaceUndefined;	
 	inherited::OnH_A_Independent();
 }
@@ -682,7 +682,7 @@ void CInventoryItem::CalculateInterpolationParams()
 
 	if (m_flags.test(FInInterpolation))
 	{
-		u32 CurTime = Level().timeServer();
+		u32 CurTime = Device->dwTimeGlobal;
 		float factor	= float(CurTime - p->m_dwIStartTime)/(p->m_dwIEndTime - p->m_dwIStartTime);
 		if (factor > 1.0f) factor = 1.0f;
 
@@ -791,12 +791,12 @@ void CInventoryItem::CalculateInterpolationParams()
 void CInventoryItem::make_Interpolation	()
 {
 	net_updateData* p		= NetSync();
-	p->m_dwILastUpdateTime = Level().timeServer();
+	p->m_dwILastUpdateTime = Device->dwTimeGlobal;
 	
 	if(!object().H_Parent() && object().getVisible() && object().m_pPhysicsShell && m_flags.test(FInInterpolation) ) 
 	{
 
-		u32 CurTime = Level().timeServer();
+		u32 CurTime = Device->dwTimeGlobal;
 		if (CurTime >= p->m_dwIEndTime) 
 		{
 			m_flags.set(FInInterpolation, FALSE);
@@ -1066,7 +1066,7 @@ bool CInventoryItem::NeedToDestroyObject()	const
 ALife::_TIME_ID	 CInventoryItem::TimePassedAfterIndependant()	const
 {
 	if(!object().H_Parent() && m_dwItemIndependencyTime != 0)
-		return Level().timeServer() - m_dwItemIndependencyTime;
+		return Device->dwTimeGlobal - m_dwItemIndependencyTime;
 	else
 		return 0;
 }

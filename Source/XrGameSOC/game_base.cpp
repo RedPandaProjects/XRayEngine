@@ -160,7 +160,7 @@ game_GameState::game_GameState()
 	m_round_start_time_str[0]	= 0;
 
 	VERIFY						(g_pGameLevel);
-	m_qwStartProcessorTime		= Level().timeServer_Async();
+	m_qwStartProcessorTime		=  Device->dwTimeContinual;
 	m_qwStartGameTime			= g_qwStartGameTime;
 	m_fTimeFactor				= g_fTimeFactor;
 	m_qwEStartProcessorTime		= m_qwStartProcessorTime;	
@@ -227,13 +227,13 @@ void game_GameState::switch_Phase		(u32 new_phase)
 	OnSwitchPhase(m_phase, new_phase);
 
 	m_phase				= u16(new_phase);
-	m_start_time		= Level().timeServer();
+	m_start_time		= Device->dwTimeGlobal;
 }
 
 
 ALife::_TIME_ID game_GameState::GetGameTime()
 {
-	return			(m_qwStartGameTime + iFloor(m_fTimeFactor*float(Level().timeServer_Async() - m_qwStartProcessorTime)));
+	return			(m_qwStartGameTime + iFloor(m_fTimeFactor*float(Device->dwTimeContinual - m_qwStartProcessorTime)));
 }
 
 float game_GameState::GetGameTimeFactor()
@@ -244,20 +244,20 @@ float game_GameState::GetGameTimeFactor()
 void game_GameState::SetGameTimeFactor (const float fTimeFactor)
 {
 	m_qwStartGameTime			= GetGameTime();
-	m_qwStartProcessorTime		= Level().timeServer_Async();
+	m_qwStartProcessorTime		= Device->dwTimeContinual;
 	m_fTimeFactor				= fTimeFactor;
 }
 
 void game_GameState::SetGameTimeFactor	(ALife::_TIME_ID GameTime, const float fTimeFactor)
 {
 	m_qwStartGameTime			= GameTime;
-	m_qwStartProcessorTime		= Level().timeServer_Async();
+	m_qwStartProcessorTime		= Device->dwTimeContinual;
 	m_fTimeFactor				= fTimeFactor;
 }
 
 ALife::_TIME_ID game_GameState::GetEnvironmentGameTime()
 {
-	return			(m_qwEStartGameTime + iFloor(m_fETimeFactor*float(Level().timeServer_Async() - m_qwEStartProcessorTime)));
+	return			(m_qwEStartGameTime + iFloor(m_fETimeFactor*float(Device->dwTimeContinual - m_qwEStartProcessorTime)));
 }
 
 float game_GameState::GetEnvironmentGameTimeFactor()
@@ -268,13 +268,13 @@ float game_GameState::GetEnvironmentGameTimeFactor()
 void game_GameState::SetEnvironmentGameTimeFactor (const float fTimeFactor)
 {
 	m_qwEStartGameTime			= GetEnvironmentGameTime();
-	m_qwEStartProcessorTime		= Level().timeServer_Async();
+	m_qwEStartProcessorTime		= Device->dwTimeContinual;
 	m_fETimeFactor				= fTimeFactor;
 }
 
 void game_GameState::SetEnvironmentGameTimeFactor	(ALife::_TIME_ID GameTime, const float fTimeFactor)
 {
 	m_qwEStartGameTime			= GameTime;
-	m_qwEStartProcessorTime		= Level().timeServer_Async();
+	m_qwEStartProcessorTime		= Device->dwTimeContinual;
 	m_fETimeFactor				= fTimeFactor;
 }

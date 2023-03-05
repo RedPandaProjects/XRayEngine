@@ -166,7 +166,7 @@ void WeaponUsageStatistic::Clear()
 	ZeroMemory					(m_dwTotalPlayersMoneyRound, sizeof(m_dwTotalPlayersMoneyRound));
 	ZeroMemory					(m_dwTotalNumRespawns, sizeof(m_dwTotalNumRespawns));
 
-	m_dwLastUpdateTime			= Level().timeServer();
+	m_dwLastUpdateTime			= Device->dwTimeGlobal;
 	mFileName[0]				= 0;
 };
 
@@ -586,14 +586,14 @@ void WeaponUsageStatistic::OnPlayerKilled(game_PlayerState* ps)
 void WeaponUsageStatistic::Update()
 {
 	if (!CollectData())							return;
-	if (Level().timeServer() < (m_dwLastUpdateTime + m_dwUpdateTimeDelta))
+	if (Device->dwTimeGlobal < (m_dwLastUpdateTime + m_dwUpdateTimeDelta))
 	{
 		//---------------------------------------------
-		m_dwLastUpdateTime = Level().timeServer();
+		m_dwLastUpdateTime = Device->dwTimeGlobal;
 		//---------------------------------------------
 		NET_Packet P;
 		P.w_begin	(M_STATISTIC_UPDATE);
-		P.w_u32		(Level().timeServer());
+		P.w_u32		(Device->dwTimeGlobal);
 		Level().Send(P);
 	}
 };

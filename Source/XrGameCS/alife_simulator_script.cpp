@@ -265,7 +265,7 @@ void CALifeSimulator__release					(CALifeSimulator *self, CSE_Abstract *object, 
 	// awful hack, for stohe only
 	NET_Packet							packet;
 	packet.w_begin						(M_EVENT);
-	packet.w_u32						(Level().timeServer());
+	packet.w_u32						(Device->dwTimeGlobal);
 	packet.w_u16						(GE_DESTROY);
 	packet.w_u16						(object->ID);
 	Level().Send						(packet,net_flags(TRUE,TRUE));

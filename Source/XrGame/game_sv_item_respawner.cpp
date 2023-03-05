@@ -285,7 +285,7 @@ void item_respawn_manager::check_to_delete(u16 item_id)
 
 	if (temp_iter != m_respawns.end())
 	{
-		temp_iter->last_spawn_time = Level().timeServer();
+		temp_iter->last_spawn_time = Device->dwTimeGlobal;
 	}
 
 	xr_set<u16>::iterator temp_li_iter = level_items_respawn.find(item_id);

@@ -26,9 +26,11 @@ BOOL weapon_hud_value::load(const shared_str& section, CHudItem* owner)
 	// Visual
 	LPCSTR visual_name			= pSettings->r_string(section, "visual");
 	m_animations				= CastToIKinematicsAnimated(::Render->model_Create(visual_name));
+	m_animations->dcast_RenderVisual()->Lock(this);
 	IKinematics* pK = m_animations->dcast_PKinematics();
 	// fire bone	
-	if(smart_cast<CWeapon*>(owner)){
+	if(smart_cast<CWeapon*>(owner))
+	{
 		LPCSTR fire_bone		= pSettings->r_string					(section,"fire_bone");
 		m_fire_bone				= pK->LL_BoneID	(fire_bone);
 		if (m_fire_bone>= pK->LL_BoneCount())
@@ -42,7 +44,9 @@ BOOL weapon_hud_value::load(const shared_str& section, CHudItem* owner)
 			m_sp_offset			= pSettings->r_fvector3	(section,"shell_point");
 		else 
 			m_sp_offset.set		(0,0,0);
-	}else{
+	}
+	else
+	{
 		m_fire_bone				= -1;
 		m_fp_offset.set			(0,0,0);
 		m_fp2_offset.set		(0,0,0);
@@ -54,6 +58,10 @@ BOOL weapon_hud_value::load(const shared_str& section, CHudItem* owner)
 weapon_hud_value::~weapon_hud_value()
 {
 	auto Visual = m_animations->dcast_RenderVisual();
+	if (Visual)
+	{
+		Visual->Unlock(this);
+	}
 	::Render->model_Delete		(Visual);
 	Visual = nullptr;
 }

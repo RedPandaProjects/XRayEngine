@@ -110,7 +110,7 @@ void game_sv_CaptureTheArtefact::Update()
 	{
 		case GAME_PHASE_INPROGRESS:
 			CheckForArtefactDelivering();
-			currentTime = Level().timeServer();
+			currentTime = Device->dwTimeGlobal;
 
 			CheckForWarmap(currentTime);
 			ResetTimeoutInvincibility(currentTime);
@@ -167,7 +167,7 @@ void game_sv_CaptureTheArtefact::Update()
 			break;
 		case GAME_PHASE_PLAYER_SCORES:
 			{
-				currentTime = Level().timeServer();
+				currentTime = Device->dwTimeGlobal;
 				if (nextReinforcementTime <= currentTime)
 				{
 					OnRoundEnd(); //OnRoundEnd("Finish");
@@ -178,7 +178,7 @@ void game_sv_CaptureTheArtefact::Update()
 
 void game_sv_CaptureTheArtefact::SM_CheckViewSwitching()
 {
-	if (!m_pSM_CurViewEntity || !smart_cast<CActor*>(m_pSM_CurViewEntity) || m_dwSM_LastSwitchTime<Level().timeServer())
+	if (!m_pSM_CurViewEntity || !smart_cast<CActor*>(m_pSM_CurViewEntity) || m_dwSM_LastSwitchTime<Device->dwTimeGlobal)
 		SM_SwitchOnNextActivePlayer();
 	
 	CUIGameCTA* gameCTA = smart_cast<CUIGameCTA*>(CurrentGameUI());
@@ -217,7 +217,7 @@ void game_sv_CaptureTheArtefact::SM_SwitchOnPlayer(CObject* pNewObject)
 	}
 	m_pSM_CurViewEntity				= pNewObject;
 	m_dwSM_CurViewEntity			= pNewObject->ID();
-	m_dwSM_LastSwitchTime			= Level().timeServer() + m_dwSM_SwitchDelta;
+	m_dwSM_LastSwitchTime			= Device->dwTimeGlobal + m_dwSM_SwitchDelta;
 }
 
 void game_sv_CaptureTheArtefact::SM_SwitchOnNextActivePlayer()
@@ -584,7 +584,7 @@ void game_sv_CaptureTheArtefact::OnRoundStart()
 	{
 		if (GetWarmUpTime() != 0)
 		{
-			m_dwWarmUp_CurTime = Level().timeServer() + GetWarmUpTime()*1000;
+			m_dwWarmUp_CurTime = Device->dwTimeGlobal + GetWarmUpTime()*1000;
 			m_bInWarmUp = true;
 		}
 	}
@@ -642,10 +642,10 @@ void game_sv_CaptureTheArtefact::OnRoundStart()
 	//TeamList[etBlueTeam].m_iM_TargetSucceed = 0;
 	if (m_bFastRestartBefore)
 	{
-		nextReinforcementTime = Level().timeServer();
+		nextReinforcementTime = Device->dwTimeGlobal;
 	} else
 	{
-		nextReinforcementTime = Level().timeServer() + (Get_ReinforcementTime_msec() / 5);
+		nextReinforcementTime = Device->dwTimeGlobal + (Get_ReinforcementTime_msec() / 5);
 	}
 	ReSpawnArtefacts();
 	LoadAnomalySet();
@@ -1140,7 +1140,7 @@ void game_sv_CaptureTheArtefact::SendAnomalyStates()
 		if (i->second)
 			AddAnomalyChanges	(event_pack, i->first, CCustomZone::eZoneStateIdle);
 	}
-	m_dwLastAnomalyStartTime = Level().timeServer();
+	m_dwLastAnomalyStartTime = Device->dwTimeGlobal;
 	u_EventSend(event_pack);
 }
 
@@ -2339,7 +2339,7 @@ BOOL game_sv_CaptureTheArtefact::CheckForRoundEnd()
 	}
 	if (!GetTimeLimit())
 		return FALSE;
-	if ( (Level().timeServer() - StartTime()) > u32(GetTimeLimit()*60000) )
+	if ( (Device->dwTimeGlobal - StartTime()) > u32(GetTimeLimit()*60000) )
 	{
 		if (teams[etGreenTeam].score != teams[etBlueTeam].score)
 		{
@@ -2403,7 +2403,7 @@ void game_sv_CaptureTheArtefact::RespawnPlayer(ClientID id_who, bool NoSpectator
 			Player_AddMoney(ps, pTeamData->m_iM_OnRespawn);
 		ps->setFlag(GAME_PLAYER_FLAG_INVINCIBLE);
 		
-		u32 invLostTime = Level().timeServer() + Get_InvincibilityTime_msec();
+		u32 invLostTime = Device->dwTimeGlobal + Get_InvincibilityTime_msec();
 		InvincibilityTimeouts::iterator	ti	= m_invTimeouts.find(id_who);
 		
 		if (ti == m_invTimeouts.end())

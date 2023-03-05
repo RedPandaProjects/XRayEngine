@@ -139,16 +139,16 @@ void CLevel::ClientReceive()
 			{
 				Objects.net_Import		(P);
 
-				if (OnClient()) UpdateDeltaUpd(timeServer());
+				if (OnClient()) UpdateDeltaUpd(Device->dwTimeGlobal);
 				IClientStatistic pStat = Level().GetStatistic();
 				u32 dTime = 0;
 				
-				if ((Level().timeServer() + pStat.getPing()) < P->timeReceive)
+				if ((Device->dwTimeGlobal + pStat.getPing()) < P->timeReceive)
 				{
 					dTime = pStat.getPing();
 				}
 				else
-					dTime = Level().timeServer() - P->timeReceive + pStat.getPing();
+					dTime = Device->dwTimeGlobal - P->timeReceive + pStat.getPing();
 
 				u32 NumSteps = physics_world()->CalcNumSteps(dTime);
 				SetNumCrSteps(NumSteps);
@@ -172,22 +172,22 @@ void CLevel::ClientReceive()
 				if (0 == O)		break;
 				O->net_Import(*P);
 		//---------------------------------------------------
-				UpdateDeltaUpd(timeServer());
+				UpdateDeltaUpd(Device->dwTimeGlobal);
 				if (pObjects4CrPr.empty() && pActors4CrPr.empty())
 					break;
 				if (!smart_cast<CActor*>(O))
 					break;
 
 				u32 dTime = 0;
-				if ((Level().timeServer() + Ping) < P->timeReceive)
+				if ((Device->dwTimeGlobal + Ping) < P->timeReceive)
 				{
 #ifdef DEBUG
-//					Msg("! TimeServer[%d] < TimeReceive[%d]", Level().timeServer(), P->timeReceive);
+//					Msg("! TimeServer[%d] < TimeReceive[%d]", Device->dwTimeGlobal, P->timeReceive);
 #endif
 					dTime = Ping;
 				}
 				else					
-					dTime = Level().timeServer() - P->timeReceive + Ping;
+					dTime = Device->dwTimeGlobal - P->timeReceive + Ping;
 				u32 NumSteps = physics_world()->CalcNumSteps(dTime);
 				SetNumCrSteps(NumSteps);
 

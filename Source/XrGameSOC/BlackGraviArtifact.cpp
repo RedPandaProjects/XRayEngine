@@ -106,7 +106,7 @@ void CBlackGraviArtefact::UpdateCLChild()
 			pos.set(XFORM()); 
 			Fvector vel; 
 			//vel.sub(Position(),ps_Element(0).vPosition); 
-			//vel.div((Level().timeServer()-ps_Element(0).dwTime)/1000.f);
+			//vel.div((Device->dwTimeGlobal-ps_Element(0).dwTime)/1000.f);
 			vel.set(0,0,0);
 			pStaticPG->UpdateParent(pos, vel); 
 			pStaticPG->Play();

@@ -81,7 +81,7 @@ void CActorMP::postprocess_packet	(net_update_A &N_A)
 	if (!NET.empty())
 		N_A.dwTimeStamp		= NET.back().dwTimeStamp;
 	else
-		N_A.dwTimeStamp		= Level().timeServer();
+		N_A.dwTimeStamp		= Device->dwTimeGlobal;
 
 	N_A.State.previous_position	= N_A.State.position;
 	N_A.State.previous_quaternion = N_A.State.quaternion;

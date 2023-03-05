@@ -1645,7 +1645,7 @@ bool  CActor::NeedToDestroyObject() const
 ALife::_TIME_ID	 CActor::TimePassedAfterDeath()	const
 {
 	if(!g_Alive())
-		return Level().timeServer() - GetLevelDeathTime();
+		return Device->dwTimeGlobal - GetLevelDeathTime();
 	else
 		return 0;
 }
@@ -1808,13 +1808,13 @@ float CActor::GetProtection_ArtefactsOnBelt( ALife::EHitType hit_type )
 void	CActor::SetZoomRndSeed		(s32 Seed)
 {
 	if (0 != Seed) m_ZoomRndSeed = Seed;
-	else m_ZoomRndSeed = s32(Level().timeServer_Async());
+	else m_ZoomRndSeed = s32(Device->dwTimeContinual);
 };
 
 void	CActor::SetShotRndSeed		(s32 Seed)
 {
 	if (0 != Seed) m_ShotRndSeed = Seed;
-	else m_ShotRndSeed = s32(Level().timeServer_Async());
+	else m_ShotRndSeed = s32(Device->dwTimeContinual);
 };
 
 void CActor::spawn_supplies			()

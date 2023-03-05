@@ -29,7 +29,7 @@ void	game_cl_mp::PlaySndMessage			(u32 ID)
 	};
 	SND_Message& SndMsg = *it;
 	
-//	if (Level().timeServer()<pSndMgs->pSound._handle()->length_ms() + pSndMgs->LastStarted) return;
+//	if (Device->dwTimeGlobal<pSndMgs->pSound._handle()->length_ms() + pSndMgs->LastStarted) return;
 	if (SndMsg.pSound._feedback()) return;
 
 	u32 MaxDelay = 0;
@@ -45,9 +45,9 @@ void	game_cl_mp::PlaySndMessage			(u32 ID)
 		}
 		if (pSndMsgIP->priority == SndMsg.priority)
 		{
-			if (Level().timeServer_Async()>pSndMsgIP->LastStarted + pSndMsgIP->pSound._handle()->length_ms()) continue;
+			if (Device->dwTimeContinual>pSndMsgIP->LastStarted + pSndMsgIP->pSound._handle()->length_ms()) continue;
 
-			u32 Delay = pSndMsgIP->LastStarted + pSndMsgIP->pSound._handle()->length_ms() - Level().timeServer_Async();
+			u32 Delay = pSndMsgIP->LastStarted + pSndMsgIP->pSound._handle()->length_ms() - Device->dwTimeContinual;
 			if (Delay > MaxDelay)
 			{
 				MaxDelay = Delay;
@@ -62,7 +62,7 @@ void	game_cl_mp::PlaySndMessage			(u32 ID)
 #endif
 	
 	SndMsg.pSound.play_at_pos(NULL, Fvector().set(0,0,0), sm_2D, float(MaxDelay)/1000.0f);
-	SndMsg.LastStarted = Level().timeServer_Async()+MaxDelay;
+	SndMsg.LastStarted = Device->dwTimeContinual+MaxDelay;
 	m_pSndMessagesInPlay.push_back(&SndMsg);
 }
 

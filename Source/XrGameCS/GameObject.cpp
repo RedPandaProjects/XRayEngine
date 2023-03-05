@@ -696,7 +696,7 @@ CObject::SavedPosition CGameObject::ps_Element(u32 ID) const
 void CGameObject::u_EventGen(NET_Packet& P, u32 type, u32 dest)
 {
 	P.w_begin	(M_EVENT);
-	P.w_u32		(Level().timeServer());
+	P.w_u32		(Device->dwTimeGlobal);
 	P.w_u16		(u16(type&0xffff));
 	P.w_u16		(u16(dest&0xffff));
 }

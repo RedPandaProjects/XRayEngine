@@ -722,7 +722,7 @@ void CWeapon::OnEvent(NET_Packet& P, u16 type)
 void CWeapon::shedule_Update	(u32 dT)
 {
 	// Queue shrink
-//	u32	dwTimeCL		= Level().timeServer()-NET_Latency;
+//	u32	dwTimeCL		= Device->dwTimeGlobal-NET_Latency;
 //	while ((NET.size()>2) && (NET[1].dwTimeStamp<dwTimeCL)) NET.pop_front();	
 
 	// Inherited
@@ -747,7 +747,7 @@ void CWeapon::OnH_B_Independent	(bool just_before_destroy)
 
 void CWeapon::OnH_A_Independent	()
 {
-	m_dwWeaponIndependencyTime = Level().timeServer();
+	m_dwWeaponIndependencyTime = Device->dwTimeGlobal;
 	inherited::OnH_A_Independent();
 	Light_Destroy				();
 	UpdateAddonsVisibility		();
@@ -1624,7 +1624,7 @@ bool CWeapon::NeedToDestroyObject()	const
 ALife::_TIME_ID	 CWeapon::TimePassedAfterIndependant()	const
 {
 	if(!H_Parent() && m_dwWeaponIndependencyTime != 0)
-		return Level().timeServer() - m_dwWeaponIndependencyTime;
+		return Device->dwTimeGlobal - m_dwWeaponIndependencyTime;
 	else
 		return 0;
 }

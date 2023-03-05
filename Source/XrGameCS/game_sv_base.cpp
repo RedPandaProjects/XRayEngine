@@ -558,7 +558,7 @@ void	game_sv_GameState::assign_RP				(CSE_Abstract* E, game_PlayerState* ps_who)
 	xr_vector<u32>	xrp;//	= rpoints[l_uc_team];
 	for (u32 i=0; i<rp.size(); i++)
 	{
-		if (rp[i].TimeToUnfreeze < Level().timeServer())
+		if (rp[i].TimeToUnfreeze < Device->dwTimeGlobal)
 			xrp.push_back(i);
 	}
 	u32 rpoint = 0;
@@ -584,7 +584,7 @@ void	game_sv_GameState::assign_RP				(CSE_Abstract* E, game_PlayerState* ps_who)
 	RPoint&				r	= rp[rpoint];
 	if (!tpSpectator)
 	{
-		r.TimeToUnfreeze	= Level().timeServer() + g_sv_base_dwRPointFreezeTime;
+		r.TimeToUnfreeze	= Device->dwTimeGlobal + g_sv_base_dwRPointFreezeTime;
 	};
 	E->o_Position.set	(r.P);
 	E->o_Angle.set		(r.A);
@@ -592,13 +592,13 @@ void	game_sv_GameState::assign_RP				(CSE_Abstract* E, game_PlayerState* ps_who)
 
 bool				game_sv_GameState::IsPointFreezed			(RPoint* rp)
 {
-	return rp->TimeToUnfreeze > Level().timeServer();
+	return rp->TimeToUnfreeze > Device->dwTimeGlobal;
 };
 
 void				game_sv_GameState::SetPointFreezed		(RPoint* rp)
 {
 	R_ASSERT(rp);
-	rp->TimeToUnfreeze	= Level().timeServer() + g_sv_base_dwRPointFreezeTime;
+	rp->TimeToUnfreeze	= Device->dwTimeGlobal + g_sv_base_dwRPointFreezeTime;
 }
 
 CSE_Abstract*		game_sv_GameState::spawn_begin				(LPCSTR N)
@@ -634,7 +634,7 @@ void game_sv_GameState::GenerateGameMessage (NET_Packet &P)
 void game_sv_GameState::u_EventGen(NET_Packet& P, u16 type, u16 dest)
 {
 	P.w_begin	(M_EVENT);
-	P.w_u32		(Level().timeServer());//Device->TimerAsync());
+	P.w_u32		(Device->dwTimeGlobal);//Device->TimerAsync());
 	P.w_u16		(type);
 	P.w_u16		(dest);
 }
@@ -659,7 +659,7 @@ void game_sv_GameState::Update		()
 	
 	if (!IsGameTypeSingle() && (Phase() == GAME_PHASE_INPROGRESS))
 	{
-		m_item_respawner.update(Level().timeServer());
+		m_item_respawner.update(Device->dwTimeGlobal);
 	}
 	
 	if (!g_dedicated_server)

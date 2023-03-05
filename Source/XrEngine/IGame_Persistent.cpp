@@ -138,7 +138,7 @@ void IGame_Persistent::OnGameStart()
 	if (strstr(Core.Params,"-noprefetch"))	return;
 
 	// prefetch game objects & models
-	float	p_time		=			1000.f*Device->GetTimerGlobal()->GetElapsed_sec();
+	float	p_time		=			1000.f*Device->dwTimeContinual;
 	u32	mem_0			=			MemoryInterface->mem_usage()	;
 
 	Log				("Loading objects...");
@@ -147,7 +147,7 @@ void IGame_Persistent::OnGameStart()
 	Render->models_Prefetch				();
 	//Device->Resources->DeferredUpload	();
 
-	p_time				=			1000.f*Device->GetTimerGlobal()->GetElapsed_sec() - p_time;
+	p_time				=			1000.f*Device->dwTimeContinual - p_time;
 	u32		p_mem		=			MemoryInterface->mem_usage() - mem_0	;
 
 	Msg					("* [prefetch] time:    %d ms",	iFloor(p_time));

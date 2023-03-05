@@ -23,7 +23,7 @@ void						CLevel::Demo_StoreData			(void* data, u32 size, DEMO_CHUNK DataType)
 
 //	DemoCS.Enter();
 	
-	u32 CurTime = timeServer_Async();
+	u32 CurTime = Device->dwTimeContinual;
 	u32 TotalSize = 4 + 4 + 4;//	
 	switch(DataType)
 	{
@@ -71,7 +71,7 @@ void						CLevel::Demo_StoreData			(void* data, u32 size, DEMO_CHUNK DataType)
 
 	static u32 Count = 0;
 	static u32 TotalSize = 0;
-	u32 CurTime = timeServer_Async();
+	u32 CurTime = Device->dwTimeContinual;
 	fwrite(&(CurTime), sizeof(CurTime), 1, fTDemo); TotalSize += sizeof(CurTime);
 	fwrite(&(size), sizeof(size), 1, fTDemo);		TotalSize += sizeof(size);
 	if (size) fwrite((data), 1, size, fTDemo);		TotalSize += size;
@@ -317,7 +317,7 @@ void						CLevel::Demo_Update				()
 	{
 		for (Pos; Pos < m_aDemoData.size(); Pos++)
 		{
-			u32 CurTime = timeServer_Async();
+			u32 CurTime = Device->dwTimeContinual;
 			DemoDataStruct* P = &(m_aDemoData[Pos]);
 			{
 				switch (P->m_dwDataType)
@@ -367,7 +367,7 @@ void						CLevel::Demo_Update				()
 				{
 					Device->dwTimeDelta		= P->FrameTime.dwTimeDelta;
 					Device->dwTimeGlobal		= P->FrameTime.dwTimeGlobal;
-					//					CurFrameTime.dwTimeServer		= Level().timeServer();
+					//					CurFrameTime.dwTimeServer		= Device->dwTimeGlobal;
 					//					CurFrameTime.dwTimeServer_Delta = Level().timeServer_Delta();
 					Device->fTimeDelta		= P->FrameTime.fTimeDelta;
 					Device->fTimeGlobal		= P->FrameTime.fTimeGlobal;
@@ -438,7 +438,7 @@ void						CLevel::Demo_StartFrame			()
 	DemoFrameTime CurFrameTime;
 	CurFrameTime.dwTimeDelta = Device->dwTimeDelta;
 	CurFrameTime.dwTimeGlobal = Device->dwTimeGlobal;
-	CurFrameTime.dwTimeServer = Level().timeServer();
+	CurFrameTime.dwTimeServer = Device->dwTimeGlobal;
 	CurFrameTime.dwTimeServer_Delta = Level().timeServer_Delta();
 	CurFrameTime.fTimeDelta = Device->fTimeDelta;
 	CurFrameTime.fTimeGlobal= Device->fTimeGlobal;

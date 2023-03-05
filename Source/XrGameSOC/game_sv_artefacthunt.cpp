@@ -116,7 +116,7 @@ void game_sv_ArtefactHunt::OnRoundStart()
 
 	m_ArtefactsSpawnedTotal = 0;
 
-	m_dwNextReinforcementTime	= Level().timeServer();
+	m_dwNextReinforcementTime	= Device->dwTimeGlobal;
 	
 	Artefact_PrepareForSpawn();
 	//-------------------------------------------------------
@@ -368,7 +368,7 @@ void	game_sv_ArtefactHunt::SetRP					(CSE_Abstract* E, RPoint* pRP)
 
 	pRP->Blocked				= true;
 	pRP->BlockedByID			= E->ID;
-	pRP->BlockTime				= Level().timeServer();
+	pRP->BlockTime				= Device->dwTimeGlobal;
 	
 	if(std::find(rpointsBlocked.begin(),rpointsBlocked.end(),pRP) == rpointsBlocked.end())
 		rpointsBlocked.push_back	(pRP);
@@ -380,7 +380,7 @@ void	game_sv_ArtefactHunt::CheckRPUnblock			()
 	for (u32 b=0; b<rpointsBlocked.size(); )
 	{
 		RPoint* pRP = rpointsBlocked[b];
-		if (!pRP->Blocked || pRP->BlockTime+1000 < Level().timeServer())
+		if (!pRP->Blocked || pRP->BlockTime+1000 < Device->dwTimeGlobal)
 		{
 			pRP->Blocked = false;
 			rpointsBlocked.erase(rpointsBlocked.begin()+b);
@@ -746,7 +746,7 @@ void game_sv_ArtefactHunt::Update()
 				//---------------------------------------------------
 				if (Get_ReinforcementTime() > 0)
 				{
-					u32 CurTime = Level().timeServer();
+					u32 CurTime = Device->dwTimeGlobal;
 					if (m_dwNextReinforcementTime < CurTime)
 					{
 						RespawnAllNotAlivePlayers();
@@ -871,7 +871,7 @@ void game_sv_ArtefactHunt::net_Export_State(NET_Packet& P, ClientID id_to)
 	P.w_s32			(Get_ReinforcementTime());
 	if ( Get_ReinforcementTime() > 0)
 	{
-		u32		CurTime = Level().timeServer();
+		u32		CurTime = Device->dwTimeGlobal;
 		u32		dTime = m_dwNextReinforcementTime - CurTime;
 		
 		P.w_s32			(dTime);
@@ -973,7 +973,7 @@ void game_sv_ArtefactHunt::RespawnAllNotAlivePlayers()
 	m_server->ForEachClientDo(Lamda);
 	signal_Syncronize();
 
-	m_dwNextReinforcementTime = Level().timeServer() + Get_ReinforcementTime() * 1000;
+	m_dwNextReinforcementTime = Device->dwTimeGlobal + Get_ReinforcementTime() * 1000;
 };
 
 void game_sv_ArtefactHunt::CheckForAnyAlivePlayer()
@@ -1048,7 +1048,7 @@ void	game_sv_ArtefactHunt::MoveAllAlivePlayers()
 		//------------------------------------------------
 		AliveCount++;
 		l_pC->net_PassUpdates = FALSE;
-		l_pC->net_LastMoveUpdateTime = Level().timeServer();
+		l_pC->net_LastMoveUpdateTime = Device->dwTimeGlobal;
 	};
 	m_server->ForEachClientDo(Lamda);
 	if (AliveCount == 0) return;
@@ -1070,10 +1070,10 @@ void	game_sv_ArtefactHunt::UpdatePlayersNotSendedMoveRespond()
 		game_PlayerState* ps = l_pC->ps;
 		if (!l_pC->net_Ready || ps->IsSkip())	return;
 		if (l_pC->net_PassUpdates) return;
-		if (l_pC->net_LastMoveUpdateTime > Level().timeServer() - 1000) return;
+		if (l_pC->net_LastMoveUpdateTime > Device->dwTimeGlobal - 1000) return;
 		ReplicatePlayersStateToPlayer(l_pC->ID);
 		l_pC->net_PassUpdates = FALSE;
-		l_pC->net_LastMoveUpdateTime = Level().timeServer();
+		l_pC->net_LastMoveUpdateTime = Device->dwTimeGlobal;
 	};
 	m_server->ForEachClientDo(Lamda);
 }
@@ -1147,7 +1147,7 @@ void	game_sv_ArtefactHunt::CheckForTeamWin()
 	if (!WinTeam) 
 	{
 		if (!GetTimeLimit()) return;
-		if (GetTimeLimit() && ((Level().timeServer()-StartTime())) > u32(GetTimeLimit()*60000))
+		if (GetTimeLimit() && ((Device->dwTimeGlobal-StartTime())) > u32(GetTimeLimit()*60000))
 		{
 			int Team1 = GetTeamScore(0);
 			int Team2 = GetTeamScore(1);

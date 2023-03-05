@@ -351,7 +351,7 @@ void CAI_Crow::net_Export	(NET_Packet& P)					// export to server
 	u8					flags = 0;
 	P.w_float			(GetfHealth());
 
-	P.w_u32				(Level().timeServer());
+	P.w_u32				(Device->dwTimeGlobal);
 	P.w_u8				(flags);
 
 	P.w_vec3			(Position());

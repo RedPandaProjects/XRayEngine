@@ -446,7 +446,7 @@ void			CLevel::ClearAllObjects				()
 			NET_Packet					GEN;
 			GEN.w_begin					(M_EVENT);
 			//------------------		---------------------------		
-			GEN.w_u32					(Level().timeServer());
+			GEN.w_u32					(Device->dwTimeGlobal);
 			GEN.w_u16					(GE_OWNERSHIP_REJECT);
 			GEN.w_u16					(pObj->H_Parent()->ID());
 			GEN.w_u16					(u16(pObj->ID()));
@@ -472,7 +472,7 @@ void			CLevel::ClearAllObjects				()
 		NET_Packet			GEN;
 		GEN.w_begin			(M_EVENT);
 		//---------------------------------------------		
-		GEN.w_u32			(Level().timeServer());
+		GEN.w_u32			(Device->dwTimeGlobal);
 		GEN.w_u16			(GE_DESTROY);
 		GEN.w_u16			(u16(pObj->ID()));
 		game_events->insert	(GEN);

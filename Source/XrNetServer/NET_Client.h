@@ -45,7 +45,6 @@ protected:
 		shared_str				dpSessionName;
 	};
 	GameDescriptionData		m_game_description;
-	CTimer*					device_timer;
 protected:
 	IDirectPlay8Client*		NET;
 	IDirectPlay8Address*	net_Address_device;
@@ -77,7 +76,7 @@ protected:
 	IC virtual	void			SendTo_LL				(void* data, u32 size, u32 dwFlags=DPNSEND_GUARANTEED, u32 dwTimeout=0);													
 
 public:
-	IPureClient				(CTimer* tm);
+	IPureClient				();
 	virtual ~IPureClient	();
 	HRESULT					net_Handler				(u32 dwMessageType, PVOID pMessage);
 	
@@ -115,8 +114,6 @@ public:
 			bool			GetServerAddress		(ip_address& pAddress, DWORD* pPort);
 	
 	// time management
-	IC u32					timeServer				()	{ return TimeGlobal(device_timer) + net_TimeDelta + net_TimeDelta_User; }
-	IC u32					timeServer_Async		()	{ return TimerAsync(device_timer) + net_TimeDelta + net_TimeDelta_User; }
 	IC u32					timeServer_Delta		()	{ return net_TimeDelta; }
 	IC void					timeServer_UserDelta	(s32 d)						{ net_TimeDelta_User=d;	}
 	IC void					timeServer_Correct		(u32 sv_time, u32 cl_time);

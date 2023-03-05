@@ -77,7 +77,7 @@ void CGrenade::OnH_B_Independent(bool just_before_destroy)
 
 void CGrenade::OnH_A_Independent() 
 {
-	m_dwGrenadeIndependencyTime			= Level().timeServer();
+	m_dwGrenadeIndependencyTime			= Device->dwTimeGlobal;
 	inherited::OnH_A_Independent		();	
 }
 
@@ -262,7 +262,7 @@ bool CGrenade::NeedToDestroyObject()	const
 ALife::_TIME_ID	 CGrenade::TimePassedAfterIndependant()	const
 {
 	if(!H_Parent() && m_dwGrenadeIndependencyTime != 0)
-		return Level().timeServer() - m_dwGrenadeIndependencyTime;
+		return Device->dwTimeGlobal - m_dwGrenadeIndependencyTime;
 	else
 		return 0;
 }
