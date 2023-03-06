@@ -94,6 +94,10 @@ CMainMenu::CMainMenu	()
 
 CMainMenu::~CMainMenu	()
 {
+	if (m_Flags.test(flActive))
+	{
+		IR_Release();
+	}
 	xr_delete						(g_btnHint);
 	xr_delete						(m_startDialog);
 	g_pGamePersistent->m_pMainMenu	= NULL;
@@ -189,12 +193,14 @@ void CMainMenu::Activate	(bool bActivate)
 		Device->seqRenderUI.Remove				(this);
 		
 		bool b = !!Console->bVisible;
-		if(b){
+		if(b)
+		{
 			Console->Hide					();
 		}
 
-		IR_Release							();
-		if(b){
+		//IR_Release							();
+		if(b)
+		{
 			Console->Show					();
 		}
 
@@ -202,9 +208,9 @@ void CMainMenu::Activate	(bool bActivate)
 		CleanInternals						();
 		if(g_pGameLevel)
 		{
-			if(b_is_single){
+			if(b_is_single)
+			{
 				Device->seqFrame.Add			(g_pGameLevel);
-
 			}
 			Device->seqRenderDebug.Add			(g_pGameLevel);
 		};
