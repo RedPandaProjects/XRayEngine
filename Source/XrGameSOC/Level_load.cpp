@@ -36,7 +36,7 @@ BOOL CLevel::Load_GameSpecific_After()
 {
 	// loading static particles
 	string_path		fn_game;
-	if (FS.exist(fn_game, "$level$", "level.ps_static") && !Device->IsEditorMode()) {
+	/*if (FS.exist(fn_game, "$level$", "level.ps_static") && !Device->IsEditorMode()) {
 		IReader *F = FS.r_open	(fn_game);
 		CParticlesObject* pStaticParticles;
 		u32				chunk = 0;
@@ -52,40 +52,40 @@ BOOL CLevel::Load_GameSpecific_After()
 			m_StaticParticles.push_back		(pStaticParticles);
 		}
 		FS.r_close		(F);
-	}
+	}*/
 	
-	if	(!g_dedicated_server&&!Device->IsEditorMode())
-	{
-		// loading static sounds
-		VERIFY								(m_level_sound_manager);
-		m_level_sound_manager->Load			();
+	//if	(!g_dedicated_server&&!Device->IsEditorMode())
+	//{
+	//	// loading static sounds
+	//	VERIFY								(m_level_sound_manager);
+	//	m_level_sound_manager->Load			();
 
-		// loading sound environment
-		if ( FS.exist(fn_game, "$level$", "level.snd_env")) {
-			IReader *F				= FS.r_open	(fn_game);
-			::Sound->set_geometry_env(F);
-			FS.r_close				(F);
-		}
-		// loading SOM
-		if (FS.exist(fn_game, "$level$", "level.som")) {
-			IReader *F				= FS.r_open	(fn_game);
-			::Sound->set_geometry_som(F);
-			FS.r_close				(F);
-		}
+	//	// loading sound environment
+	//	if ( FS.exist(fn_game, "$level$", "level.snd_env")) {
+	//		IReader *F				= FS.r_open	(fn_game);
+	//		::Sound->set_geometry_env(F);
+	//		FS.r_close				(F);
+	//	}
+	//	// loading SOM
+	//	if (FS.exist(fn_game, "$level$", "level.som")) {
+	//		IReader *F				= FS.r_open	(fn_game);
+	//		::Sound->set_geometry_som(F);
+	//		FS.r_close				(F);
+	//	}
 
-		// loading random (around player) sounds
-		if (pSettings->section_exist("sounds_random")){ 
-			CInifile::Sect& S		= pSettings->r_section("sounds_random");
-			Sounds_Random.reserve	(S.Data.size());
-			for (CInifile::SectCIt I=S.Data.begin(); S.Data.end()!=I; ++I) 
-			{
-				Sounds_Random.push_back	(ref_sound());
-				Sound->create			(Sounds_Random.back(),*I->first,st_Effect,sg_SourceType);
-			}
-			Sounds_Random_dwNextTime= Device->TimerAsync	()	+ 50000;
-			Sounds_Random_Enabled	= FALSE;
-		}
-	}	
+	//	// loading random (around player) sounds
+	//	if (pSettings->section_exist("sounds_random")){ 
+	//		CInifile::Sect& S		= pSettings->r_section("sounds_random");
+	//		Sounds_Random.reserve	(S.Data.size());
+	//		for (CInifile::SectCIt I=S.Data.begin(); S.Data.end()!=I; ++I) 
+	//		{
+	//			Sounds_Random.push_back	(ref_sound());
+	//			Sound->create			(Sounds_Random.back(),*I->first,st_Effect,sg_SourceType);
+	//		}
+	//		Sounds_Random_dwNextTime= Device->TimerAsync	()	+ 50000;
+	//		Sounds_Random_Enabled	= FALSE;
+	//	}
+	//}	
 
 	if (!g_dedicated_server) {
 		// loading scripts
@@ -143,10 +143,7 @@ void CLevel::Load_GameSpecific_CFORM	( CDB::TRI* tris, u32 count )
 		if (!GameMaterialLibrary->GetMaterialByIdx(i)->Flags.test(SGameMtl::flDynamic))
 		{
 			++static_mtl_count;
-			if(Device->IsEditorMode()&&EditorScene)
-				translator.push_back(translation_pair(GameMaterialLibrary->GetMaterialByIdx(i)->GetID(), GameMaterialLibrary->GetMaterialByIdx(i)->GetID()));
-			else
-				translator.push_back		(translation_pair(GameMaterialLibrary->GetMaterialByIdx(i)->GetID(),index));
+			translator.push_back		(translation_pair(GameMaterialLibrary->GetMaterialByIdx(i)->GetID(),index));
 			if (GameMaterialLibrary->GetMaterialByIdx(i)->GetID()>max_static_ID)	max_static_ID	= GameMaterialLibrary->GetMaterialByIdx(i)->GetID();
 		}
 		if (GameMaterialLibrary->GetMaterialByIdx(i)->GetID()>max_ID)				max_ID			= GameMaterialLibrary->GetMaterialByIdx(i)->GetID();

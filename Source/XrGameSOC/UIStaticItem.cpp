@@ -71,20 +71,18 @@ void CUIStaticItem::Render()
 	int tile_y					= fis_zero(iRemY)?iTileY:iTileY+1;
 	int							x,y;
 	if (!(tile_x&&tile_y))		return;
+	// set scissor
+	Frect clip_rect				= {iPos.x,iPos.y,iPos.x+iVisRect.x2*iTileX+iRemX,iPos.y+iVisRect.y2*iTileY+iRemY};
+	UI()->PushScissor			(clip_rect);
 	// render
 	UIRender->StartPrimitive(8 * tile_x * tile_y, IUIRender::ePrimitiveType::ptTriList, IUIRender::ePointType::pttTL);
 	
 	for (x=0; x<tile_x; ++x){
 		for (y=0; y<tile_y; ++y){
 			pos.set				(bp.x+f_len.x*x,bp.y+f_len.y*y);
-			inherited::Render	(pos,dwColor);
+			inherited::Render(pos, dwColor);
 		}
 	}
-
-
-	// set scissor
-	Frect clip_rect				= {iPos.x,iPos.y,iPos.x+iVisRect.x2*iTileX+iRemX,iPos.y+iVisRect.y2*iTileY+iRemY};
-	UI()->PushScissor			(clip_rect);
 	// set geom
 	UIRender->FlushPrimitive();
 	if (alpha_ref != -1)

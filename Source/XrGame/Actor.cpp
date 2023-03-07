@@ -74,6 +74,7 @@
 #include "ActorHelmet.h"
 #include "UI/UIDragDropReferenceList.h"
 #include "../XrEngine/XRayUnrealProxyInterface.h"
+#include "../XrEngine/XRayEngineInterface.h"
 
 const u32		patch_frames	= 50;
 const float		respawn_delay	= 1.f;
@@ -234,7 +235,7 @@ CActor::~CActor()
 }
 void CActor::CreateUnrealProxy()
 {
-	if (!UnrealProxy || !UnrealProxy->CastToStalkerPlayerCharacter())
+	if (g_actor!=this)
 	{
 		inherited::CreateUnrealProxy();
 	}
@@ -242,9 +243,13 @@ void CActor::CreateUnrealProxy()
 
 void CActor::DestroyUnrealProxy()
 {
-	if (!UnrealProxy || !UnrealProxy->CastToStalkerPlayerCharacter())
+	if (g_actor!=this)
 	{
 		inherited::DestroyUnrealProxy();
+	}
+	else
+	{
+		UnrealProxy = nullptr;
 	}
 }
 void CActor::reinit	()
@@ -948,6 +953,19 @@ float CActor::currentFOV()
 
 void CActor::UpdateCL	()
 {
+	if (UnrealProxy == nullptr && g_actor == this)
+	{
+		UnrealProxy = g_Engine->GetUnrealPlayerCharacter();
+		if (UnrealProxy)
+		{
+			UnrealProxy->Lock(this);
+			if (renderable.visual)
+			{
+				UnrealProxy->AttachAsRoot(renderable.visual);
+			}
+			reattach_items();
+		}
+	}
 	if(g_Alive() && Level().CurrentViewEntity() == this)
 	{
 		if(CurrentGameUI() && NULL==CurrentGameUI()->TopInputReceiver())

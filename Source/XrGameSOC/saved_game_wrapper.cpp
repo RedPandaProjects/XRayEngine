@@ -14,6 +14,7 @@
 #include "ai_space.h"
 #include "game_graph.h"
 #include "alife_simulator_header.h"
+#include "../XrEngine/XRayEngineInterface.h"
 
 extern LPCSTR alife_section;
 
@@ -69,7 +70,7 @@ CSavedGameWrapper::CSavedGameWrapper		(LPCSTR saved_game_name)
 		CALifeTimeManager		time_manager(alife_section);
 		m_game_time				= time_manager.game_time();
 		m_actor_health			= 1.f;
-		m_level_id				= ai().game_graph().header().levels().begin()->first;
+		m_level_id				= -1;
 		return;
 	}
 
@@ -96,7 +97,14 @@ CSavedGameWrapper::CSavedGameWrapper		(LPCSTR saved_game_name)
 		VERIFY					(actor);
 
 		m_actor_health			= actor->get_health();
-		m_level_id				= ai().game_graph().vertex(object->m_tGraphID)->level_id();
+		m_level_id =-1;
+		if (g_Engine->GetGameGraph())
+		{
+			if (g_Engine->GetGameGraph()->valid_vertex_id(object->m_tGraphID))
+			{
+				m_level_id = g_Engine->GetGameGraph()->vertex(object->m_tGraphID)->level_id();
+			}
+		}
 
 		F_entity_Destroy		(object);
 	}

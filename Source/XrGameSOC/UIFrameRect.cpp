@@ -65,6 +65,11 @@ void CUIFrameRect::InitTexture(const char* texture){
 	}
 }
 
+void CUIFrameRect::InitTextureEx(const char* texture, const char* shader)
+{
+	InitTexture(shader);
+}
+
 void CUIFrameRect::UpdateSize()
 {
 	VERIFY(g_bRendering);

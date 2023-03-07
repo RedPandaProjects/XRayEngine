@@ -21,6 +21,7 @@ public:
 	virtual void	Init						(LPCSTR base_name, Frect* pRect);
 
 	virtual void	InitTexture					(const char* texture);
+	virtual void	InitTextureEx				(const char* texture,const char* shader);
 			void	SetTextureColor				(u32 color)										{m_UIWndFrame.SetTextureColor(color);}
 
 	virtual void	SetWidth					(float width);

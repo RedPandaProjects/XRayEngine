@@ -254,9 +254,12 @@ void CHudItem::Hide()
 void CHudItem::Show()
 {
 	CObject* ParentActor = object().H_Parent();
-	VERIFY(ParentActor && ParentActor->UnrealProxy);
-	LastAttachBone = GetAttachBone();
-	ParentActor->UnrealProxy->Attach(object().Visual(), LastAttachBone.c_str());
+	VERIFY(ParentActor);
+	if (ParentActor->UnrealProxy)
+	{
+		LastAttachBone = GetAttachBone();
+		ParentActor->UnrealProxy->Attach(object().Visual(), LastAttachBone.c_str());
+	}
 }
 
 void CHudItem::OnH_A_Chield		()

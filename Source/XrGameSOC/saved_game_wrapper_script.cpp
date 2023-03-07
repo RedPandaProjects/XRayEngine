@@ -11,6 +11,7 @@
 #include "ai_space.h"
 #include "game_graph.h"
 #include "xr_time.h"
+#include "../XrEngine/XRayEngineInterface.h"
 
 using namespace luabind;
 
@@ -21,7 +22,11 @@ xrTime CSavedGameWrapper__game_time		(const CSavedGameWrapper *self)
 
 LPCSTR CSavedGameWrapper__level_name	(const CSavedGameWrapper *self)
 {
-	return			(*ai().game_graph().header().level(self->level_id()).name());
+	if (g_Engine->GetGameGraph()&&self->level_id()>=0)
+	{
+		return g_Engine->GetGameGraph()->header().level(self->level_id()).name().c_str();
+	}
+	return "Unknown";
 }
 
 

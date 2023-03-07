@@ -49,8 +49,6 @@ protected:
 
     CUIStatic*			m_shniaga;
 	CUIStatic*			m_magnifier;
-	CUIStatic*			m_anims[2];
-	CUIStatic*			m_gratings[2];
 	CUIScrollView*		m_view;
 
     u32					m_start_time;
@@ -66,7 +64,6 @@ protected:
 	int						m_page;
     CUIWindow*				m_selected;
 	CMMSound*				m_sound;
-	Fvector2				m_wheel_size[2];
 	enum {fl_SoundFinalized	= 1, fl_MovingStoped = 2	};
 
 	Flags32				m_flags;	

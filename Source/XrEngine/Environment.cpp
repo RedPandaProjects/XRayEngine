@@ -478,7 +478,7 @@ void CEnvironment::lerp		(float& current_weight)
 
 void CEnvironment::OnFrame()
 {
-	if (!g_pGameLevel&&!Device->IsEditorMode())		return;
+	return;
 
 //	if (pInput->iGetAsyncKeyState(DIK_O))		SetWeatherFX("surge_day"); 
 	float					current_weight;

@@ -18,6 +18,7 @@
 #include "string_table.h"
 
 #include "../XrEngine/object_broker.h"
+#include "../XrEngine/XRayEngineInterface.h"
 
 //#define DEMO_BUILD
 
@@ -94,10 +95,6 @@ CMainMenu::CMainMenu	()
 
 CMainMenu::~CMainMenu	()
 {
-	if (m_Flags.test(flActive))
-	{
-		IR_Release();
-	}
 	xr_delete						(g_btnHint);
 	xr_delete						(m_startDialog);
 	g_pGamePersistent->m_pMainMenu	= NULL;
@@ -130,9 +127,6 @@ void CMainMenu::Activate	(bool bActivate)
 {
 	if (	!!m_Flags.test(flActive) == bActivate)		return;
 	if (	m_Flags.test(flGameSaveScreenshot)	)		return;
-	if (	(m_screenshotFrame == Device->dwFrame)	||
-			(m_screenshotFrame == Device->dwFrame-1) ||
-			(m_screenshotFrame == Device->dwFrame+1))	return;
 
 	bool b_is_single		= IsGameTypeSingle();
 
@@ -198,7 +192,7 @@ void CMainMenu::Activate	(bool bActivate)
 			Console->Hide					();
 		}
 
-		//IR_Release							();
+		IR_Release							();
 		if(b)
 		{
 			Console->Show					();
@@ -397,7 +391,6 @@ void CMainMenu::OnFrame()
 	{
 		m_Flags.set					(flNeedChangeCapture,FALSE);
 		if (m_Flags.test(flActive))	IR_Capture();
-		else						IR_Release();
 	}
 	CDialogHolder::OnFrame		();
 
@@ -674,16 +667,7 @@ void CMainMenu::OnConnectToMasterServerOkClicked(CUIWindow*, void*)
 
 LPCSTR CMainMenu::GetGSVer()
 {
-	static string256	buff;
 	static string256	buff2;
-	if(m_pGameSpyFull)
-	{
-		strcpy(buff2, m_pGameSpyFull->GetGameVersion(buff));
-	}else
-	{
-		buff[0]		= 0;
-		buff2[0]	= 0;
-	}
-
+	xr_strcpy(buff2,g_Engine->GetGameVersion().c_str());
 	return buff2;
 }

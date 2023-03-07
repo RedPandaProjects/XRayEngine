@@ -49,6 +49,7 @@ class IUIMultiTextureOwner{
 public:
 	virtual ~IUIMultiTextureOwner() {}	
 	virtual void		InitTexture(const char* texture)								= 0;
+	virtual void		InitTextureEx(const char* texture, const char* shader)			= 0;
 	virtual bool		GetTextureAvailability()										= 0;
 	virtual void		SetTextureVisible(bool vis)										= 0;
 	virtual bool		GetTextureVisible()												= 0;

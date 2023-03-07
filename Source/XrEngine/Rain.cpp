@@ -99,8 +99,7 @@ BOOL CEffect_Rain::RayPick(const Fvector& s, const Fvector& d, float& range, col
 	if (Device->IsEditorMode())
 	{
 #ifndef MASTER_GOLD
-		EditorScene->RayPick(s, d, range);
-			return true;
+		return true;
 #endif
 	}
 	collide::rq_result	RQ;
@@ -126,13 +125,8 @@ void CEffect_Rain::RenewItem(Item& dest, float height, BOOL bHit)
 
 void	CEffect_Rain::OnFrame	()
 {
-#ifndef _EDITOR
-	if (!g_pGameLevel&&!Device->IsEditorMode())			return;
-#endif
 
-#ifdef DEDICATED_SERVER
 	return;
-#endif
 
 	// Parse states
 	float	factor				= g_pGamePersistent->Environment().CurrentEnv->rain_density;
@@ -194,9 +188,7 @@ void	CEffect_Rain::OnFrame	()
 //#include "xr_input.h"
 void	CEffect_Rain::Render	()
 {
-#ifndef _EDITOR
-	if (!g_pGameLevel&&!Device->IsEditorMode())			return;
-#endif
+	return;
 
 	m_pRender->Render(*this);
 

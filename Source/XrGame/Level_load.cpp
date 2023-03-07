@@ -192,10 +192,7 @@ void CLevel::Load_GameSpecific_CFORM	( CDB::TRI* tris, u32 count )
 		if (!GameMaterialLibrary->GetMaterialByIdx(i)->Flags.test(SGameMtl::flDynamic))
 		{
 			++static_mtl_count;
-			if (Device->IsEditorMode() && EditorScene)
-				translator.push_back(translation_pair(GameMaterialLibrary->GetMaterialByIdx(i)->GetID(), GameMaterialLibrary->GetMaterialByIdx(i)->GetID()));
-			else
-				translator.push_back(translation_pair(GameMaterialLibrary->GetMaterialByIdx(i)->GetID(), index));
+			translator.push_back(translation_pair(GameMaterialLibrary->GetMaterialByIdx(i)->GetID(), index));
 			if (GameMaterialLibrary->GetMaterialByIdx(i)->GetID() > max_static_ID)	max_static_ID = GameMaterialLibrary->GetMaterialByIdx(i)->GetID();
 		}
 		if (GameMaterialLibrary->GetMaterialByIdx(i)->GetID() > max_ID)				max_ID = GameMaterialLibrary->GetMaterialByIdx(i)->GetID();

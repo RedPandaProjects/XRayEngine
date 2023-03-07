@@ -21,8 +21,10 @@ public:
 
 	virtual void							RunGame						(const char* ServerParams = "unreal/single/alife/new" ,const char*ClientParams = "localhost");
 	virtual void							StopGame					();
+	virtual void							LoadDefaultWorld			() = 0;
 	virtual bool							IsRunningGame				();
-
+	shared_str								GetGameVersion				();
+	virtual shared_str						GetUnrealVersion			() = 0;
 	virtual class XRayUnrealProxyInterface*	CreateUnrealProxy			() = 0;
 	virtual class XRayUnrealProxyInterface* GetUnrealPlayerCharacter	() = 0;
 	virtual void							Destroy						(class XRayUnrealProxyInterface*) = 0;

@@ -115,7 +115,7 @@ void CUIComboBox::SetCurrentValue()
 	m_list.Clear		();
 	xr_token* tok		= GetOptToken();
 
-	while (tok->name)
+	while (tok&&tok->name)
 	{		
 		AddItem_(tok->name, tok->id);
 		tok++;

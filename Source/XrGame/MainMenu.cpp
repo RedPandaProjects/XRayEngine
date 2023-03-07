@@ -169,9 +169,6 @@ void CMainMenu::Activate	(bool bActivate)
 {
 	if (	!!m_Flags.test(flActive) == bActivate)		return;
 	if (	m_Flags.test(flGameSaveScreenshot)	)		return;
-	if (	(m_screenshotFrame == Device->dwFrame)	||
-		(m_screenshotFrame == Device->dwFrame-1) ||
-		(m_screenshotFrame == Device->dwFrame+1))	return;
 
 	bool b_is_single				= IsGameTypeSingle();
 
@@ -444,7 +441,6 @@ void CMainMenu::OnFrame()
 	{
 		m_Flags.set					(flNeedChangeCapture,FALSE);
 		if (m_Flags.test(flActive))	IR_Capture();
-		else						IR_Release();
 	}
 	CDialogHolder::OnFrame		();
 

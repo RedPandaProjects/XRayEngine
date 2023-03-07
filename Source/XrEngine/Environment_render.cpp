@@ -91,11 +91,6 @@ extern ENGINE_API float psHUD_FOV;
 //BOOL bNeed_re_create_env = FALSE;
 void CEnvironment::RenderSky		()
 {
-#ifndef _EDITOR
-	if (0==g_pGameLevel&&!Device->IsEditorMode())		return;
-#endif
-
-	m_pRender->RenderSky(*this);
 	/*
 	// clouds_sh.create		("clouds","null");
 	//. this is the bug-fix for the case when the sky is broken
@@ -147,11 +142,6 @@ void CEnvironment::RenderSky		()
 
 void CEnvironment::RenderClouds			()
 {
-#ifndef _EDITOR
-	if (0==g_pGameLevel && !Device->IsEditorMode())		return	;
-#endif
-	// draw clouds
-	if (fis_zero(CurrentEnv->clouds_color.w,EPS_L))	return;
 
 	m_pRender->RenderClouds(*this);
 	/*
@@ -206,12 +196,7 @@ void CEnvironment::RenderFlares		()
 
 void CEnvironment::RenderLast		()
 {
-#ifndef _EDITOR
-	if (0==g_pGameLevel&&!Device->IsEditorMode())			return	;
-#endif
-	// 2
-	eff_Rain->Render				();
-	eff_Thunderbolt->Render			();
+
 }
 
 void CEnvironment::OnDeviceCreate()

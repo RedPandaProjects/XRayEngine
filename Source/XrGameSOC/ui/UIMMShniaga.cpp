@@ -20,11 +20,7 @@ CUIMMShniaga::CUIMMShniaga(){
 
 	m_view			= xr_new<CUIScrollView>();	AttachChild(m_view);
 	m_shniaga		= xr_new<CUIStatic>();	AttachChild(m_shniaga);
-	m_magnifier		= xr_new<CUIStatic>();	m_shniaga->AttachChild(m_magnifier);	m_magnifier->SetPPMode();
-	m_gratings[0]	= xr_new<CUIStatic>();	m_shniaga->AttachChild(m_gratings[0]);
-	m_gratings[1]	= xr_new<CUIStatic>();	m_shniaga->AttachChild(m_gratings[1]);
-	m_anims[0]		= xr_new<CUIStatic>();	m_shniaga->AttachChild(m_anims[0]);
-	m_anims[1]		= xr_new<CUIStatic>();	m_shniaga->AttachChild(m_anims[1]);
+	m_magnifier		= xr_new<CUIStatic>();	m_shniaga->AttachChild(m_magnifier);	//m_magnifier->SetPPMode();
 
 	m_mag_pos = 0;
 
@@ -44,10 +40,6 @@ CUIMMShniaga::CUIMMShniaga(){
 CUIMMShniaga::~CUIMMShniaga(){
 	xr_delete(m_magnifier);
 	xr_delete(m_shniaga);
-	xr_delete(m_anims[0]);
-	xr_delete(m_anims[1]);	
-	xr_delete(m_gratings[0]);
-	xr_delete(m_gratings[1]);
 	xr_delete(m_view);
 	xr_delete(m_sound);
 
@@ -65,20 +57,12 @@ void CUIMMShniaga::Init(CUIXml& xml_doc, LPCSTR path)
 	m_mag_pos				= m_magnifier->GetWndPos().x;
 	strconcat				(sizeof(_path),_path,path,":shniaga");
 	CUIXmlInit::InitStatic(xml_doc, _path,0,m_shniaga);
-	strconcat				(sizeof(_path),_path,path,":shniaga:left_anim");
-	CUIXmlInit::InitStatic(xml_doc, _path,0,m_anims[0]);
-	strconcat				(sizeof(_path),_path,path,":shniaga:right_anim");
-	CUIXmlInit::InitStatic(xml_doc, _path,0,m_anims[1]);
-	strconcat				(sizeof(_path),_path,path,":shniaga:left_grating");
-	CUIXmlInit::InitStatic(xml_doc, _path,0,m_gratings[0]);
-	strconcat				(sizeof(_path),_path,path,":shniaga:right_grating");
-	CUIXmlInit::InitStatic(xml_doc, _path,0,m_gratings[1]);
 	strconcat				(sizeof(_path),_path,path,":buttons_region");
 	CUIXmlInit::InitScrollView(xml_doc, _path,0,m_view);
 	strconcat				(sizeof(_path),_path,path,":shniaga:magnifire:y_offset");
 	m_offset = xml_doc.ReadFlt(_path,0,0);
 
-	if (!g_pGameLevel) {
+	if (!g_pGameLevel||!Level().game) {
 		
 		if (!*g_last_saved_game || !CSavedGameWrapper::valid_saved_game(g_last_saved_game))
 			CreateList		(m_buttons, xml_doc, "menu_main");
@@ -104,23 +88,10 @@ void CUIMMShniaga::Init(CUIXml& xml_doc, LPCSTR path)
 	m_sound->Init(xml_doc, "menu_sound");
 	m_sound->music_Play();
 
-	m_wheel_size[0]		= m_anims[0]->GetWndSize();
-	
-	m_wheel_size[1].set(m_wheel_size[0]);
-	m_wheel_size[1].x	/= 1.33f;
 }
 
 void CUIMMShniaga::OnDeviceReset()
 {
-	if(UI()->is_16_9_mode())
-	{
-		m_anims[0]->SetWndSize(m_wheel_size[1]);
-		m_anims[1]->SetWndSize(m_wheel_size[1]);
-	}else
-	{
-		m_anims[0]->SetWndSize(m_wheel_size[0]);
-		m_anims[1]->SetWndSize(m_wheel_size[0]);
-	}
 }
 
 extern CActor*		g_actor;
@@ -253,12 +224,6 @@ void CUIMMShniaga::Update(){
 	{
 //		playing = true;
 		Fvector2 pos = m_shniaga->GetWndPos();
-		float l = 2*PI*m_anims[0]->GetHeight()/2;
-		int n = iFloor(pos.y/l);
-		float a = 2*PI*(pos.y - l*n)/l;
-		m_anims[0]->SetHeading(-a);
-		m_anims[1]->SetHeading(a);
-
 		pos.y = this->pos(m_origin, m_destination, Device->dwTimeContinual - m_start_time);
 		m_shniaga->SetWndPos(pos);		
 	}
@@ -358,12 +323,12 @@ bool b_shniaganeed_pp = true;
 void CUIMMShniaga::SetVisibleMagnifier(bool f)
 {
 	b_shniaganeed_pp = f;
-	Fvector2 pos = m_magnifier->GetWndPos();
+	/*Fvector2 pos = m_magnifier->GetWndPos();
 	if (f)
 		pos.x = m_mag_pos;
 	else
 		pos.x = 1025;
-	m_magnifier->SetWndPos(pos);
+	m_magnifier->SetWndPos(pos);*/
 }
 
 void CUIMMShniaga::ProcessEvent(EVENT ev){

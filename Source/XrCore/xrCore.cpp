@@ -146,7 +146,6 @@ void xrCore::Initialize	(XRayMemoryInterface* InMemoryInterface, XRayLogInterfac
 	#endif
 #endif
 		FS._initialize		(flags,0,FSName);
-		Msg					("'%s' build %d, %s\n","xrCore",build_id, build_date);
 		EFS._initialize		();
 #ifdef DEBUG
     #if 1

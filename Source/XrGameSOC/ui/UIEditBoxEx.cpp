@@ -28,3 +28,8 @@ void CUIEditBoxEx::Init(float x, float y, float width, float height){
 void CUIEditBoxEx::InitTexture(const char* texture){
 	m_pFrameWindow->InitTexture(texture);
 }
+
+void CUIEditBoxEx::InitTextureEx(const char* texture, const char* shader)
+{
+	m_pFrameWindow->InitTextureEx(texture,shader);
+}

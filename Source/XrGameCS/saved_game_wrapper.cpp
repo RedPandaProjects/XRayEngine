@@ -66,13 +66,13 @@ CSavedGameWrapper::CSavedGameWrapper			(LPCSTR saved_game_name)
 	R_ASSERT3					(FS.exist(file_name),"There is no saved game ",file_name);
 	
 	IReader						*stream = FS.r_open(file_name);
+	m_level_id = _LEVEL_ID(-1);
+	m_level_name = "";
 	if (!valid_saved_game(*stream)) {
 		FS.r_close				(stream);
 		CALifeTimeManager		time_manager(alife_section);
 		m_game_time				= time_manager.game_time();
 		m_actor_health			= 1.f;
-		m_level_id				= _LEVEL_ID(-1);
-		m_level_name			= "";
 		return;
 	}
 
@@ -120,8 +120,12 @@ CSavedGameWrapper::CSavedGameWrapper			(LPCSTR saved_game_name)
 		chunk->close			();
 		{
 			IGameGraph* Graph = g_Engine->GetGameGraph();
-			m_level_id = Graph->vertex(object->m_tGraphID)->level_id();
-			m_level_name = Graph->header().level(m_level_id).name();
+			if (Graph)
+			{
+				m_level_id = Graph->vertex(object->m_tGraphID)->level_id();
+				m_level_name = Graph->header().level(m_level_id).name();
+			}
+	
 		}
 		F_entity_Destroy		(object);
 	}

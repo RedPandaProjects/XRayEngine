@@ -67,6 +67,7 @@
 #include "InventoryBox.h"
 #include "location_manager.h"
 #include "../XrEngine/XRayUnrealProxyInterface.h"
+#include "../XrEngine/XRayEngineInterface.h"
 
 const u32		patch_frames	= 50;
 const float		respawn_delay	= 1.f;
@@ -226,7 +227,7 @@ CActor::~CActor()
 
 void CActor::CreateUnrealProxy()
 {
-	if(!UnrealProxy||!UnrealProxy->CastToStalkerPlayerCharacter())
+	if (g_actor != this)
 	{
 		inherited::CreateUnrealProxy();
 	}
@@ -234,9 +235,13 @@ void CActor::CreateUnrealProxy()
 
 void CActor::DestroyUnrealProxy()
 {
-	if (!UnrealProxy || !UnrealProxy->CastToStalkerPlayerCharacter())
+	if (g_actor != this)
 	{
 		inherited::DestroyUnrealProxy();
+	}
+	else
+	{
+		UnrealProxy = nullptr;
 	}
 }
 
@@ -876,6 +881,24 @@ float CActor::currentFOV()
 
 void CActor::UpdateCL	()
 {
+	if(UnrealProxy==nullptr&&g_actor==this)
+	{
+		UnrealProxy = g_Engine->GetUnrealPlayerCharacter();
+		if(UnrealProxy)
+		{
+			UnrealProxy->Lock(this);
+			if (renderable.visual)
+			{
+				UnrealProxy->AttachAsRoot(renderable.visual);
+				reattach_items();
+				if(CHudItem*HudItem = smart_cast<CHudItem*>(inventory().ActiveItem()))
+				{
+					HudItem->Hide();
+					HudItem->Show();
+				}
+			}
+		}
+	}
 	if(m_feel_touch_characters>0)
 	{
 		for(xr_vector<CObject*>::iterator it = feel_touch.begin(); it != feel_touch.end(); it++)

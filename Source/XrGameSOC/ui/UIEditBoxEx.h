@@ -14,6 +14,9 @@ public:
 
 	// CUIMultiTextureOwner
 	virtual void	InitTexture(const char* texture);
+
+	void InitTextureEx(const char* texture, const char* shader) override;
+
 protected:
 	CUIFrameWindow*	m_pFrameWindow;
 };

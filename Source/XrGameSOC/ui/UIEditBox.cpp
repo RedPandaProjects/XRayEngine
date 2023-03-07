@@ -28,6 +28,11 @@ void CUIEditBox::InitTexture(const char* texture){
 	m_frameLine.InitTexture(texture);
 }
 
+void CUIEditBox::InitTextureEx(const char* texture, const char* shader)
+{
+	m_frameLine.InitTexture(texture,shader);
+}
+
 void CUIEditBox::SetCurrentValue(){
 	SetText(GetOptStringValue());
 }

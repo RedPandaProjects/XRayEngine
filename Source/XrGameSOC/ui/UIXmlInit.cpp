@@ -966,17 +966,23 @@ bool CUIXmlInit::InitAnimatedStatic(CUIXml &xml_doc, const char *path, int index
 	return true;
 }
 
-bool CUIXmlInit::InitTexture(CUIXml& xml_doc, const char* path, int index, IUIMultiTextureOwner* pWnd){
+bool CUIXmlInit::InitTexture(CUIXml& xml_doc, const char* path, int index, IUIMultiTextureOwner* pWnd)
+{
 	string256 buf;	
-	shared_str texture;
-
 	strconcat(sizeof(buf),buf, path, ":texture");
+	LPCSTR texture = NULL;
+	LPCSTR shader = NULL;
 	if (xml_doc.NavigateToNode(buf))
-		texture = xml_doc.Read(buf, index, NULL);
-
-	if (!!texture)
 	{
-        pWnd->InitTexture(*texture);
+		texture = xml_doc.Read(buf, index, NULL);
+		shader = xml_doc.ReadAttrib(buf, index, "shader", NULL);
+	}
+	if (texture)
+	{
+		if (shader)
+			pWnd->InitTextureEx(texture, shader);
+		else
+			pWnd->InitTexture(texture);
 		return true;
 	}
 

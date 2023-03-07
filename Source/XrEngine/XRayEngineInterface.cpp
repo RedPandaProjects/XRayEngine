@@ -88,6 +88,8 @@ void compute_build_id	()
 
 	for (int i=0; i<start_month-1; ++i)
 		build_id		-= days_in_month[i];
+
+	Msg("'%s' build %d, %s\n", "Stalker2UE", build_id, build_date);
 }
 //---------------------------------------------------------------------
 // 2446363
@@ -177,6 +179,34 @@ bool XRayEngineInterface::IsRunningGame		()
 	return g_pGameLevel!=nullptr;
 }
 
+shared_str XRayEngineInterface::GetGameVersion()
+{
+	xr_string Version = "";
+	switch (xrGameManager::GetPath())
+	{
+	default:
+		Version = "Unknown";
+	case EGamePath::COP_1602:
+		Version = "COP 1.6.02";
+		break;
+	case EGamePath::CS_1510:
+		Version = "CS 1.5.10";
+		break;
+	case EGamePath::SHOC_10006:
+		Version = "SOC 1.0006";
+		break;
+	case EGamePath::SHOC_10004:
+		Version = "SOC 1.0004";
+		break;
+	}
+	xr_string BuildData;BuildData.Printf(", build %d %s\n", build_id, build_date);
+	Version += BuildData;
+	Version += "(";
+	Version += GetUnrealVersion().c_str();
+	Version += ")";
+	return Version.c_str();
+}
+
 void XRayEngineInterface::OnEvent(EVENT E, u64 P1, u64 P2)
 {
 	if (E==eQuit)
@@ -194,6 +224,7 @@ void XRayEngineInterface::OnEvent(EVENT E, u64 P1, u64 P2)
 	else if (E==eDisconnect) 
 	{
 		StopGame();
+		LoadDefaultWorld();
 	}
 	else if (E == eConsole)
 	{

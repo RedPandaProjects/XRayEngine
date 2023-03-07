@@ -29,6 +29,7 @@ public:
 
 	// CUIMultiTextureOwner
 	virtual void	InitTexture(const char* texture);
+	virtual void	InitTextureEx(const char* texture,const char* shader);
 protected:
 	CUIFrameLineWnd	m_frameLine;
 	DECLARE_SCRIPT_REGISTER_FUNCTION

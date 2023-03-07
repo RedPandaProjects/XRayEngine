@@ -526,8 +526,6 @@ BOOL CActor::net_Spawn		(CSE_Abstract* DC)
 	if (TRUE == E->s_flags.test(M_SPAWN_OBJECT_LOCAL) && TRUE == E->s_flags.is(M_SPAWN_OBJECT_ASPLAYER))
 	{
 		g_actor = this;
-		UnrealProxy = g_Engine->GetUnrealPlayerCharacter();
-		UnrealProxy->Lock(this);
 	}
 
 
@@ -709,10 +707,6 @@ BOOL CActor::net_Spawn		(CSE_Abstract* DC)
 		setLocal(FALSE);
 	};
 	setVisible(TRUE);
-	if (renderable.visual)
-	{
-		UnrealProxy->AttachAsRoot(renderable.visual);
-	}
 	return					TRUE;
 }
 

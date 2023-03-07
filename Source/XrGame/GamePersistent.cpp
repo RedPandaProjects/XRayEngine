@@ -68,8 +68,7 @@ CGamePersistent::CGamePersistent(void)
 	m_pUI_core					= NULL;
 	m_pMainMenu					= NULL;
 	m_intro						= NULL;
-	if(!Device->IsEditorMode())
-	m_intro_event.bind			(this, &CGamePersistent::start_logo_intro);
+	//m_intro_event.bind			(this, &CGamePersistent::start_logo_intro);
 #ifdef DEBUG
 	m_frame_counter				= 0;
 	m_last_stats_frame			= u32(-2);

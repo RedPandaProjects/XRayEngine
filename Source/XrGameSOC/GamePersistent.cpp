@@ -51,8 +51,8 @@ CGamePersistent::CGamePersistent(void)
 	m_pUI_core					= NULL;
 	m_pMainMenu					= NULL;
 	m_intro						= NULL;
-	if(!Device->IsEditorMode())
-	m_intro_event.bind			(this,&CGamePersistent::start_logo_intro);
+
+	//m_intro_event.bind			(this,&CGamePersistent::start_logo_intro);
 #ifdef DEBUG
 	m_frame_counter				= 0;
 	m_last_stats_frame			= u32(-2);
@@ -299,7 +299,7 @@ void CGamePersistent::update_logo_intro			()
 void CGamePersistent::start_game_intro		()
 {
 #if 1//def DEBUG
-	if (0!=strstr(Core.Params,"-nointro")|| Device->IsEditorMode()||1){
+	{
 		m_intro_event			= 0;
 		return;
 	}

@@ -85,7 +85,7 @@ BOOL CClimableObject::	net_Spawn			( CSE_Abstract* DC)
 	CSE_Abstract				*e = (CSE_Abstract*)(DC);
 	CSE_ALifeObjectClimable	*CLB=smart_cast<CSE_ALifeObjectClimable*>(e);
 	const Fmatrix& b=CLB->shapes[0].data.box;
-	m_box.m_halfsize.set(b._11,b._22,b._33);
+	m_box.m_halfsize.set(b._11/2.f,b._22/2.f,b._33/2.f);
 	m_radius=_max(_max(m_box.m_halfsize.x,m_box.m_halfsize.y),m_box.m_halfsize.z);
 
 	//m_box.m_halfsize.set(1.f,1.f,1.f);

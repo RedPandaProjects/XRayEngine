@@ -233,6 +233,7 @@ bool xr_stdcall net_start_finalizer()
 		Msg				("! Failed to start client. Check the connection or level existance.");
 		g_pGameLevel->net_Stop();
 		DEL_INSTANCE(g_pGameLevel);
+		if(!Device->IsEditorMode())	g_Engine->LoadDefaultWorld();
 	}
 	return true;
 }

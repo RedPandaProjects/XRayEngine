@@ -36,9 +36,15 @@ void CUICustomItem::Render(const Fvector2& pos, u32 color, float x1, float y1, f
 	//координаты на экране в пикселях
 	UI()->ClientToScreenScaled	(LTp, x1,y1);
 	LTp.add						(pos);
+	
+	LTp.x = ceilf(LTp.x);
+	LTp.y = ceilf(LTp.y);
 
 	UI()->ClientToScreenScaled	(RBp, x2,y2);
 	RBp.add						(pos);
+
+	RBp.x = ceilf(RBp.x);
+	RBp.y = ceilf(RBp.y);
 
 	//текстурные координаты
 	LTt.set			( iOriginalRect.x1/ts.x, iOriginalRect.y1/ts.y);
@@ -49,10 +55,10 @@ void CUICustomItem::Render(const Fvector2& pos, u32 color, float x1, float y1, f
 	if (tmMirrorVertical == eMirrorMode || tmMirrorBoth == eMirrorMode)		std::swap	(LTt.y,RBt.y);
 	// clip poly
 	sPoly2D			S; S.resize(4);
-	S[0].set		(LTp.x-0.5f,LTp.y-0.5f,	LTt.x,LTt.y);	// LT
-	S[1].set		(RBp.x-0.5f,LTp.y-0.5f,	RBt.x,LTt.y);	// RT
-	S[2].set		(RBp.x-0.5f,RBp.y-0.5f,	RBt.x,RBt.y);	// RB
-	S[3].set		(LTp.x-0.5f,RBp.y-0.5f,	LTt.x,RBt.y);	// LB
+	S[0].set(LTp.x, LTp.y, LTt.x, LTt.y);	// LT
+	S[1].set(RBp.x, LTp.y, RBt.x, LTt.y);	// RT
+	S[2].set(RBp.x, RBp.y, RBt.x, RBt.y);	// RB
+	S[3].set(LTp.x, RBp.y, LTt.x, RBt.y);	// LB
 	
 	sPoly2D D;
 //	const C2DFrustum& FF = UI()->ScreenFrustum();

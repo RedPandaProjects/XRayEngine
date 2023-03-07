@@ -37,6 +37,12 @@ void CUIFrameWindow::InitTexture(const char* texture){
 	m_bTextureVisible			= true;
 }
 
+void CUIFrameWindow::InitTextureEx(const char* texture, const char* shader)
+{
+	m_UIWndFrame.InitTextureEx(texture,shader);
+	m_bTextureVisible = true;
+}
+
 void CUIFrameWindow::Draw()
 {
 	if (m_bTextureVisible)
