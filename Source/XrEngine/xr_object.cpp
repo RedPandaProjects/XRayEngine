@@ -353,6 +353,10 @@ void CObject::UpdateCL			()
 		else 
 		if( (Visual() && Visual()->getVisData().hom_frame+2 > Device->dwFrame) && (dist < CROW_RADIUS2*CROW_RADIUS2) )
 			MakeMeCrow	();
+		else if (UnrealProxy && getVisible())
+		{
+			MakeMeCrow();
+		}
 	}
 }
 

@@ -149,7 +149,7 @@ BOOL CAI_Crow::net_Spawn		(CSE_Abstract* DC)
 	m_Anims.m_idle.Load			(M,"fly_idle");
 
 	// disable UpdateCL, enable only on HIT
-	processing_deactivate		();
+	//processing_deactivate		();
 	VERIFY2( valid_pos( Position() ), dbg_valide_pos_string(Position(),this,"CAI_Crow::net_Spawn") );
 	return		R;
 }
@@ -287,6 +287,11 @@ void CAI_Crow::UpdateCL		()
 		m_pPhysicsShell->Update		();
 		XFORM().set					(m_pPhysicsShell->mXFORM);
 	}
+	if (getVisible())
+	{
+		UpdateWorkload(Device->fTimeDelta);
+	}
+
 }
 void CAI_Crow::renderable_Render	()
 {
