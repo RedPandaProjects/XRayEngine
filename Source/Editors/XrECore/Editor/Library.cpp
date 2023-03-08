@@ -9,7 +9,7 @@
 #include "EditObject.h"
 
 //----------------------------------------------------
-XRayObjectLibrary *GRayObjectLibrary = nullptr;
+XRayObjectLibrary *GXRayObjectLibrary = nullptr;
 //----------------------------------------------------
 XRayObjectLibrary::XRayObjectLibrary()
 {

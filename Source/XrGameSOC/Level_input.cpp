@@ -119,8 +119,8 @@ void CLevel::IR_OnKeyboardPress	(int key)
 		if(b_ui_exist && HUD().GetUI()->MainInputReceiver() ){
 				if(HUD().GetUI()->MainInputReceiver()->IR_OnKeyboardPress(key))	return;//special case for mp and main_menu
 				HUD().GetUI()->StartStopMenu( HUD().GetUI()->MainInputReceiver(), true);
-		}//else
-		//	Console->Execute			("main_menu");
+		}else
+			Console->Execute			("main_menu");
 		return;
 		}break;
 

@@ -89,6 +89,7 @@ public:
 
 	float									fTimeDelta;
 	float									fTimeGlobal;
+	float									fTimeContinual;
 	u32										dwTimeDelta;
 	u32										dwTimeGlobal;
 	u32										dwTimeContinual;

@@ -214,15 +214,15 @@ void CEditableMesh::GenerateVNormals(const Fmatrix* parent_xform)
 	if (m_VertexNormals)		return;
 	m_VertexNormals = xr_alloc<Fvector>(m_FaceCount * 3);
 
-	float CosA = cosf(deg2rad(GRayObjectLibrary->AngleSmooth));
+	float CosA = cosf(deg2rad(GXRayObjectLibrary->AngleSmooth));
 	// gen req    
 	GenerateFNormals();
 	GenerateAdjacency();
 	const bool HardSmoth = true;
 	EGame CurrentGame = xrGameManager::GetGame();
-	if (GRayObjectLibrary->LoadAsGame != EGame::NONE)
+	if (GXRayObjectLibrary->LoadAsGame != EGame::NONE)
 	{
-		CurrentGame = GRayObjectLibrary->LoadAsGame;
+		CurrentGame = GXRayObjectLibrary->LoadAsGame;
 	}
 	if (xrGameManager::GetGame() == EGame::SHOC&& HardSmoth)
 	{

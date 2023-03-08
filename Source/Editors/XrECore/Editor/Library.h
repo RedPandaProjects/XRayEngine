@@ -47,7 +47,7 @@ public:
     EGame               LoadAsGame       = EGame::NONE;
 };
 
-extern ECORE_API XRayObjectLibrary* GRayObjectLibrary;
+extern ECORE_API XRayObjectLibrary* GXRayObjectLibrary;
 //----------------------------------------------------
 #endif /*_INCDEF_Library_H_*/
 
