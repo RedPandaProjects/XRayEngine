@@ -102,13 +102,13 @@ void CWalmarkManager::StartWorkflow()
 	u32					max_wallmarks_count = pSettings->r_u32(sect,"max_count");
 
 
-	XRC.box_options							(0);
-	XRC.box_query							(Level().ObjectSpace.GetStaticModel(),m_pos,Fvector().set(m_trace_dist,m_trace_dist,m_trace_dist));
+	XRC->box_options							(0);
+	XRC->box_query							(Level().ObjectSpace.GetStaticModel(),m_pos,Fvector().set(m_trace_dist,m_trace_dist,m_trace_dist));
 
 	CDB::TRI*		T_array					= Level().ObjectSpace.GetStaticTris();
 	Fvector*		V_array					= Level().ObjectSpace.GetStaticVerts();
-	CDB::RESULT*	R_begin                 = XRC.r_begin();
-	CDB::RESULT*    R_end                   = XRC.r_end();
+	CDB::RESULT*	R_begin                 = XRC->r_begin();
+	CDB::RESULT*    R_end                   = XRC->r_end();
 //.	Triangle		ntri;
 //.	float			ndist					= dInfinity;
 //.	Fvector			npoint;
@@ -187,7 +187,7 @@ void CWalmarkManager::StartWorkflow()
 	}
 /*
 	Msg("----------------------------------");
-	Msg("tri count=%d",						XRC.r_count());
+	Msg("tri count=%d",						XRC->r_count());
 	Msg("far_dist=%d",						_not_dist);
 	Msg("RayTest = %d",						_ray_test);
 	Msg("c==tdBehind = %d",					_tri_behind);

@@ -262,7 +262,7 @@ void XRayEngineInterface::Initialize()
 {
 	compute_build_id();
 	InitSettings();
-
+	XRC = xr_new<xrXRC>();
 	// Adjust player & computer name for Asian
 	if (pSettings->line_exist("string_table", "no_native_input"))
 	{
@@ -456,6 +456,7 @@ void XRayEngineInterface::destroyEngine()
 {
 	Engine->Destroy();
 	xr_delete(Device->Statistic);
+	xr_delete(XRC);
 }
 
 

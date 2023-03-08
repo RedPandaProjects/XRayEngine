@@ -61,9 +61,9 @@ void CEditableMesh::RayQuery(SPickQuery& pinf)
 	//for (int r=0; r<ETOOLS::r_count(); r++)
 	//	pinf.append		(ETOOLS::r_begin()+r,m_Parent,this);
 /*
-	XRC.ray_query	(m_CFModel, pinf.m_Start, pinf.m_Direction, pinf.m_Dist);
-    for (int r=0; r<XRC.r_count(); r++)
-        pinf.append	(XRC.r_begin()+r,m_Parent,this);
+	XRC->ray_query	(m_CFModel, pinf.m_Start, pinf.m_Direction, pinf.m_Dist);
+    for (int r=0; r<XRC->r_count(); r++)
+        pinf.append	(XRC->r_begin()+r,m_Parent,this);
 //*/
 }
 
@@ -74,9 +74,9 @@ void CEditableMesh::RayQuery(const Fmatrix& parent, const Fmatrix& inv_parent, S
 	  for (int r=0; r<ETOOLS::r_count(); r++)
 		  pinf.append_mtx(parent,ETOOLS::r_begin()+r,m_Parent,this);*/
 /*
-	XRC.ray_query	(inv_parent, m_CFModel, pinf.m_Start, pinf.m_Direction, pinf.m_Dist);
-    for (int r=0; r<XRC.r_count(); r++)
-        pinf.append_mtx(parent,XRC.r_begin()+r,m_Parent,this);*/
+	XRC->ray_query	(inv_parent, m_CFModel, pinf.m_Start, pinf.m_Direction, pinf.m_Dist);
+    for (int r=0; r<XRC->r_count(); r++)
+        pinf.append_mtx(parent,XRC->r_begin()+r,m_Parent,this);*/
 //
 }
 

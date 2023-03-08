@@ -73,6 +73,6 @@ public:
 	xrXRC();
 	~xrXRC();
 };
-XRCDB_API extern xrXRC XRC;
+XRCDB_API extern xrXRC *XRC;
 
 #endif // !defined(AFX_XRXRC_H__9AA25268_621F_4FCA_BD75_AF2E9822B8E3__INCLUDED_)

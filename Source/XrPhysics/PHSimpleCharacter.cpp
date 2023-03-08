@@ -904,8 +904,8 @@ bool CPHSimpleCharacter::ValidateWalkOnMesh()
 	query.merge		(tmp);
 	query.get_CD	(q_c,q_d);
 
-	XRC.box_options                (0);
-	XRC.box_query                  (inl_ph_world().ObjectSpace().GetStaticModel(),q_c,q_d);
+	XRC->box_options                (0);
+	XRC->box_query                  (inl_ph_world().ObjectSpace().GetStaticModel(),q_c,q_d);
 	//Fvector fv_dir;fv_dir.mul(accel,1.f/mag);
 	Fvector sd_dir;sd_dir.set(-accel.z,0,accel.x);
 	Fvector obb_fb;obb_fb.set(m_radius*0.5f,m_radius*2.f,m_radius*0.7f);
@@ -923,9 +923,9 @@ bool CPHSimpleCharacter::ValidateWalkOnMesh()
 	}
 #endif
 
-	//if(XRC.r_end()!=XRC.r_begin()) return false;
-	CDB::RESULT*    R_begin        = XRC.r_begin();
-	CDB::RESULT*    R_end          = XRC.r_end();
+	//if(XRC->r_end()!=XRC->r_begin()) return false;
+	CDB::RESULT*    R_begin        = XRC->r_begin();
+	CDB::RESULT*    R_end          = XRC->r_end();
 	for (CDB::RESULT* Res=R_begin; Res!=R_end; ++Res)
 	{
 		SGameMtl* m =  GMLibrary().GetMaterialByIdx(Res->material);

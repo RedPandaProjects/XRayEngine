@@ -35,11 +35,11 @@ IC int dcTriListCollider::dSortTriPrimitiveCollide (
 		Fvector aabb;aabb.set(AABB);
 		aabb.mul(ph_tri_query_ex_aabb_rate);
 	///////////////////////////////////////////////////////////////////////////////////////////////
-		XRC.box_options                (0);
-		XRC.box_query                  (Level().ObjectSpace.GetStaticModel(),cast_fv(p),aabb);
+		XRC->box_options                (0);
+		XRC->box_query                  (Level().ObjectSpace.GetStaticModel(),cast_fv(p),aabb);
 
-		CDB::RESULT*    R_begin                         = XRC.r_begin()	;
-		CDB::RESULT*    R_end                           = XRC.r_end()	;
+		CDB::RESULT*    R_begin                         = XRC->r_begin()	;
+		CDB::RESULT*    R_end                           = XRC->r_end()	;
 #ifdef DEBUG
 		
 		dbg_total_saved_tries-=data->cashed_tries.size();
