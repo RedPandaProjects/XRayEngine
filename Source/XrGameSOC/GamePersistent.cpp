@@ -501,7 +501,7 @@ void CGamePersistent::OnAppDeactivate	()
 
 	bRestorePause = FALSE;
 
-	if ( !bIsMP )
+	if ( !bIsMP&&! Device->IsEditorMode())
 	{
 		bRestorePause			= Device->Paused();
 		Device->Pause			(TRUE, TRUE, TRUE, "CGP::OnAppDeactivate");

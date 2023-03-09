@@ -193,14 +193,17 @@ IC	bool CBlend::update_time			( float dt )
 
 IC bool CBlend::update_falloff( float dt )
 {
+	if (blendAmount == 0)
+	{
+		return true;
+	}
 	update_time( dt );
 	
 	//if(  dt<0.f || timeCurrent >= blendAccrue )
 		blendAmount 		-= dt*blendFalloff*blendPower;
 
-	bool ret			= blendAmount<=0;
 	clamp				( blendAmount, 0.f, blendPower);
-	return ret;
+	return false;
 }
 
 IC bool CBlend::update( float dt, PlayCallback _Callback )

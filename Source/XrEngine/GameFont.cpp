@@ -188,5 +188,5 @@ void CGameFont::SetHeightI(float S)
 
 void CGameFont::SetHeight(float S)
 {
-	fCurrentHeight	= S/fSize*(Device->dwHeight/1024);
+	fCurrentHeight	= S/fSize;
 };

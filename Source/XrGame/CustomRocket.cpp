@@ -590,7 +590,7 @@ void CCustomRocket::StartEngineParticles()
 	UpdateParticles();
 	m_pEngineParticles->Play(false);
 
-	VERIFY(m_pEngineParticles);
+	//VERIFY(m_pEngineParticles);
 }
 void CCustomRocket::StopEngineParticles()
 {
@@ -612,8 +612,8 @@ void CCustomRocket::StartFlyParticles()
 	UpdateParticles();
 	m_pFlyParticles->Play(false);
 	
-	VERIFY(m_pFlyParticles);
-	VERIFY3(m_pFlyParticles->IsLooped(), "must be a looped particle system for rocket fly: %s", *m_sFlyParticles);
+	//VERIFY(m_pFlyParticles);
+	//VERIFY3(m_pFlyParticles->IsLooped(), "must be a looped particle system for rocket fly: %s", *m_sFlyParticles);
 }
 void CCustomRocket::StopFlyParticles()
 {

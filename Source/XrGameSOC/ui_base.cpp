@@ -230,7 +230,7 @@ void ui_core::pp_start()
 //.	g_current_font_scale	= m_pp_scale_;
 	
 	g_current_font_scale.set(	float(::Render->getTarget()->get_width())/float(Device->dwWidth),	
-								float(::Render->getTarget()->get_height())/float(Device->dwHeight) );
+								float(Device->dwHeight)/768.f );
 
 }
 
@@ -239,7 +239,7 @@ void ui_core::pp_stop()
 	m_bPostprocess			= false;
 	m_current_scale			= &m_scale_;
 //.	g_current_font_scale	= m_scale_;
-	g_current_font_scale.set	(1.0f,1.0f);
+	//g_current_font_scale.set	(1.0f,1.0f);
 }
 
 void ui_core::RenderFont()
