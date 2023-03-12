@@ -1452,11 +1452,11 @@ void CSE_ALifeObjectHangingLamp::STATE_Read(NET_Packet& tNetPacket, u16 size)
 	if(m_wVersion < 129)
 	{
 		light_material = "";
-		brightness*=30;
 	}
 	if (m_wVersion < 130)
 	{
-		brightness *=0.25f;
+		brightness *=15.f;
+		range*=2;
 	}
 }
 

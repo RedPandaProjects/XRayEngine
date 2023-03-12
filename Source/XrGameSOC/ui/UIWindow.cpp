@@ -293,7 +293,7 @@ void CUIWindow::GetAbsoluteRect(Frect& r)
 //�������� ������������ �������� ����
 
 #define DOUBLE_CLICK_TIME 250
-
+#pragma optimize("", off)
 bool CUIWindow::OnMouse(float x, float y, EUIMessages mouse_action)
 {	
 	Frect	wndRect = GetWndRect();
@@ -383,7 +383,7 @@ bool CUIWindow::OnMouse(float x, float y, EUIMessages mouse_action)
 
 	return false;
 }
-
+#pragma optimize("", on)
 bool CUIWindow::HasChildMouseHandler(){
 	WINDOW_LIST::reverse_iterator it = m_ChildWndList.rbegin();
 

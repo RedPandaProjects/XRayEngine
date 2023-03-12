@@ -165,7 +165,7 @@ void XRayConsoleInterface::ExecuteCommand(LPCSTR cmd_str, bool record_cmd)
 	}
 	else
 	{
-		first[CONSOLE_BUF_SIZE - 21] = 0;
+		first[str_size] = 0;
 		Log("! Unknown command: ", first);
 	}
 }
@@ -555,7 +555,7 @@ void CConsole::ExecuteCommand( LPCSTR cmd_str, bool record_cmd )
 	}
 	else
 	{
-		first[CONSOLE_BUF_SIZE-21] = 0;
+		first[str_size] = 0;
 		Log( "! Unknown command: ", first );
 	}
 

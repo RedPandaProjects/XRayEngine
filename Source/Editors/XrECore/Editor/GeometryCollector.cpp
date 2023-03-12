@@ -20,10 +20,17 @@ VCPacked::VCPacked(const Fbox &bb, float _eps, u32 _sx, u32 _sy, u32 _sz, int ap
 
 u32		VCPacked::add_vert(const Fvector& V)
 {
-    u32 P = 0xffffffff;
-    if (0xffffffff==P)
+    u32 P = 0;
+    for (GCVertex&v:verts)
     {
-        P = verts.size();
+        if (v.pos.distance_to(V) < 0.05f)
+        {
+           break;
+		}
+		P++;
+    }
+    if (verts.size() == P)
+    {
         verts.push_back(GCVertex(V));
     }
     return P;

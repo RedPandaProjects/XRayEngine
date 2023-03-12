@@ -423,7 +423,7 @@ void CMissile::UpdateXForm	()
 			VisualRes.mulA_44(Invert);
 			VisualRes.c.set(0, 0, 0);
 			VisualRes.mulB_43(offset());
-			Visual()->SetOffset(VisualRes, false, false);
+			Visual()->SetOffset(VisualRes);
 		}
 		mRes.mulA_43		(E->XFORM());
 		UpdatePosition		(mRes);

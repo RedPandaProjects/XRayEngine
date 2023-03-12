@@ -234,7 +234,7 @@ void CLevel::ClientReceive()
 						}
 					}
 				}
-				Engine->Event.Defer	("KERNEL:disconnect");
+				Engine->Event.Defer	("KERNEL:disconnect",1);
 				Engine->Event.Defer	("KERNEL:start",size_t(xr_strdup(*m_caServerOptions)),size_t(xr_strdup(*m_caClientOptions)));
 			}break;
 		case M_SAVE_GAME:

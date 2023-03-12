@@ -134,12 +134,13 @@ bool  CUIButton::OnMouse(float x, float y, EUIMessages mouse_action)
 	}
 	return false;
 }
-
-void CUIButton::OnClick(){
+#pragma optimize( "", off )
+void CUIButton::OnClick()
+{
 	GetMessageTarget()->SendMessage(this, BUTTON_CLICKED);
 	m_bButtonClicked = true;
 }
-
+#pragma optimize( "", on )
 void CUIButton::DrawTexture()
 {
 	Frect rect; 

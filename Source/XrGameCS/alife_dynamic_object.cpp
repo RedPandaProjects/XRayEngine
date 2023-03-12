@@ -97,17 +97,21 @@ bool CSE_ALifeDynamicObject::synchronize_location	()
 
 	m_tNodeID					= new_vertex_id;
 	GameGraph::_GRAPH_ID		tGraphID = ai().cross_table().vertex(m_tNodeID).game_vertex_id();
-	if (tGraphID != m_tGraphID) {
-		if (!m_bOnline) {
+	if (tGraphID != m_tGraphID) 
+	{
+		if (!m_bOnline) 
+		{
 			Fvector				position = o_Position;
 			u32					level_vertex_id = m_tNodeID;
 			alife().graph().change	(this,m_tGraphID,tGraphID);
-			if (ai().level_graph().inside(ai().level_graph().vertex(level_vertex_id),position)) {
+			if (ai().level_graph().inside(ai().level_graph().vertex(level_vertex_id),position))
+			{
 				level_vertex_id	= m_tNodeID;
 				o_Position		= position;
 			}
 		}
-		else {
+		else
+		{
 			VERIFY				(ai().game_graph().vertex(tGraphID)->level_id() == alife().graph().level().level_id());
 			m_tGraphID			= tGraphID;
 		}

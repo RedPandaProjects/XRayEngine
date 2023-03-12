@@ -164,7 +164,16 @@ CSE_Abstract *CALifeSimulator__spawn_item		(CALifeSimulator *self, LPCSTR sectio
 	THROW								(self);
 	return								(self->spawn_item(section,position,level_vertex_id,game_vertex_id,ALife::_OBJECT_ID(-1)));
 }
-
+CSE_Abstract *CALifeSimulator__spawn_item_without_ai_locations		(CALifeSimulator *self, LPCSTR section, const Fvector &position, u32 level_vertex_id, GameGraph::_GRAPH_ID game_vertex_id)
+{
+	THROW								(self);
+	CSE_Abstract * abstact = (self->spawn_item(section,position,level_vertex_id,game_vertex_id,ALife::_OBJECT_ID(-1)));
+	if( CSE_ALifeObject *ALifeObject =smart_cast<CSE_ALifeObject*>(abstact))
+	{
+		ALifeObject->use_ai_locations(false);
+	}
+	return					abstact			;
+}
 CSE_Abstract *CALifeSimulator__spawn_item2		(CALifeSimulator *self, LPCSTR section, const Fvector &position, u32 level_vertex_id, GameGraph::_GRAPH_ID game_vertex_id, ALife::_OBJECT_ID id_parent)
 {
 	if (id_parent == ALife::_OBJECT_ID(-1))
@@ -355,6 +364,7 @@ void CALifeSimulator::script_register			(lua_State *L)
 			.def("create",					&CALifeSimulator__create)
 			.def("create",					&CALifeSimulator__spawn_item2)
 			.def("create",					&CALifeSimulator__spawn_item)
+			.def("create_without_ai_locations",					&CALifeSimulator__spawn_item_without_ai_locations)
 			.def("create_ammo",				&CALifeSimulator__spawn_ammo)
 			.def("release",					&CALifeSimulator__release)
 			.def("spawn_id",				&CALifeSimulator__spawn_id)

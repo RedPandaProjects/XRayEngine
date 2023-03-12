@@ -235,9 +235,12 @@ void CHudItem::UpdateCL()
 		if (LastAttachBone != GetAttachBone())
 		{
 			CObject* ParentActor = object().H_Parent();
-			VERIFY(ParentActor && ParentActor->UnrealProxy);
-			LastAttachBone = GetAttachBone();
-			ParentActor->UnrealProxy->Attach(object().Visual(), LastAttachBone.c_str());
+			VERIFY(ParentActor);
+			if(ParentActor->UnrealProxy)
+			{
+				LastAttachBone = GetAttachBone();
+				ParentActor->UnrealProxy->Attach(object().Visual(), LastAttachBone.c_str());
+			}
 		}
 	}
 	UpdateXForm();

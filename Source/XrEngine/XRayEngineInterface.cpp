@@ -225,7 +225,10 @@ void XRayEngineInterface::OnEvent(EVENT E, u64 P1, u64 P2)
 	{
 		StopGame();
 		Console->ExecuteCommand		( "main_menu 0");
-		LoadDefaultWorld();
+		if(P1==0)
+		{
+			LoadDefaultWorld();
+		}
 	}
 	else if (E == eConsole)
 	{

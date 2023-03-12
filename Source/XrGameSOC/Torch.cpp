@@ -35,9 +35,6 @@ CTorch::CTorch(void)
 	light_render				= ::Render->light_create();
 	light_render->set_type		(IRender_Light::SPOT);
 	light_render->set_shadow	(true);
-	light_omni					= ::Render->light_create();
-	light_omni->set_type		(IRender_Light::POINT);
-	light_omni->set_shadow		(false);
 
 	m_switched_on				= false;
 	glow_render					= ::Render->glow_create();
@@ -57,7 +54,6 @@ CTorch::CTorch(void)
 CTorch::~CTorch(void) 
 {
 	light_render.destroy	();
-	light_omni.destroy	();
 	glow_render.destroy		();
 	HUD_SOUND::DestroySound	(m_NightVisionOnSnd);
 	HUD_SOUND::DestroySound	(m_NightVisionOffSnd);
@@ -200,7 +196,6 @@ void CTorch::Switch	(bool light_on)
 		light_render->set_active(light_on);
 		
 		CActor *pA = smart_cast<CActor *>(H_Parent());
-		if(!pA)light_omni->set_active(light_on);
 	}
 	glow_render->set_active					(light_on);
 
@@ -241,13 +236,11 @@ BOOL CTorch::net_Spawn(CSE_Abstract* DC)
 	Fcolor clr				= pUserData->r_fcolor				("torch_definition",(b_r2)?"color_r2":"color");
 	fBrightness				= clr.intensity();
 	float range				= pUserData->r_float				("torch_definition",(b_r2)?"range_r2":"range");
+	clr.normalize_rgb();
 	light_render->set_color	(clr);
+	light_render->set_intensity(4);
 	light_render->set_range	(range);
 
-	Fcolor clr_o			= pUserData->r_fcolor				("torch_definition",(b_r2)?"omni_color_r2":"omni_color");
-	float range_o			= pUserData->r_float				("torch_definition",(b_r2)?"omni_range_r2":"omni_range");
-	light_omni->set_color	(clr_o);
-	light_omni->set_range	(range_o);
 
 	light_render->set_cone	(deg2rad(pUserData->r_float			("torch_definition","spot_angle")));
 	light_render->set_material(pUserData->r_string				("torch_definition","spot_texture"));
@@ -347,7 +340,6 @@ void CTorch::UpdateCL()
 					offset.mad					(M.i,OMNI_OFFSET.x);
 					offset.mad					(M.j,OMNI_OFFSET.y);
 					offset.mad					(M.k,OMNI_OFFSET.z);
-					light_omni->set_position	(offset);
 				}
 			}//if (true)
 			glow_render->set_position	(M.c);
@@ -356,10 +348,6 @@ void CTorch::UpdateCL()
 			{
 				light_render->set_rotation	(dir, right);
 				
-				if(false)
-				{
-					light_omni->set_rotation	(dir, right);
-				}
 			}//if (true)
 			glow_render->set_direction	(dir);
 
@@ -375,8 +363,6 @@ void CTorch::UpdateCL()
 				offset.mad					(M.i,OMNI_OFFSET.x);
 				offset.mad					(M.j,OMNI_OFFSET.y);
 				offset.mad					(M.k,OMNI_OFFSET.z);
-				light_omni->set_position	(M.c);
-				light_omni->set_rotation	(M.k,M.i);
 			}//if (can_use_dynamic_lights()) 
 
 			glow_render->set_position	(M.c);
@@ -402,7 +388,6 @@ void CTorch::UpdateCL()
 			{
 				m_switched_on			= false;
 				light_render->set_active(false);
-				light_omni->set_active(false);
 				glow_render->set_active	(false);
 			}
 		}//if (getVisible() && m_pPhysicsShell)  
@@ -423,7 +408,6 @@ void CTorch::UpdateCL()
 	if (can_use_dynamic_lights())
 	{
 		light_render->set_color	(fclr);
-		light_omni->set_color	(fclr);
 	}
 	glow_render->set_color		(fclr);
 }

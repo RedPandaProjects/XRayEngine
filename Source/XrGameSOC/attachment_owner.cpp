@@ -97,10 +97,10 @@ void CAttachmentOwner::attach(CInventoryItem *inventory_item)
 		VERIFY								(attachable_item);
 		CGameObject							*game_object = smart_cast<CGameObject*>(this);
 		VERIFY								(game_object && game_object->Visual());
-	/*	if (m_attached_objects.empty())
+		if (m_attached_objects.empty())
 		{
 			game_object->add_visual_callback(AttachmentCallback);
-		}*/ 
+		} 
 		IRenderVisual*VisualAttachableItem =  attachable_item->object().Visual();
 		VERIFY(VisualAttachableItem);
 		attachable_item->set_bone_id		(CastToIKinematics(game_object->Visual())->LL_BoneID(attachable_item->bone_name()));
@@ -133,13 +133,12 @@ void CAttachmentOwner::detach(CInventoryItem *inventory_item)
 			VERIFY(game_object && game_object->Visual());
 			VERIFY( inventory_item->object().Visual());
 			inventory_item->object().Visual()->Detach( );
-			//if (m_attached_objects.empty()) 
-			//{
-	
-			//	//game_object->remove_visual_callback(AttachmentCallback);
-			//	
-			//	//inventory_item->object().setVisible	(false);
-			//}
+			if (m_attached_objects.empty()) 
+			{
+				game_object->remove_visual_callback(AttachmentCallback);
+				
+				//inventory_item->object().setVisible	(false);
+			}
 			break;
 		}
 	}
