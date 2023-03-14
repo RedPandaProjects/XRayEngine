@@ -354,8 +354,11 @@ void CPHSkeleton::UnsplitSingle(CPHSkeleton* SO)
 
 	SO->CopySpawnInit		();
 	CopySpawnInit			();
-	VERIFY3(CheckObjectSize(pKinematics),*(O->cNameVisual()),"Object unsplit whith no size");
-	VERIFY3(CheckObjectSize(newKinematics),*(O->cNameVisual()),"Object unsplit whith no size");
+	if (IsDebuggerPresent())
+	{
+		VERIFY3(CheckObjectSize(pKinematics), *(O->cNameVisual()), "Object unsplit whith no size");
+		VERIFY3(CheckObjectSize(newKinematics), *(O->cNameVisual()), "Object unsplit whith no size");
+	}
 
 }
 

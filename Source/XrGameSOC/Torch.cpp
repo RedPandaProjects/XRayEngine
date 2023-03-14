@@ -238,11 +238,11 @@ BOOL CTorch::net_Spawn(CSE_Abstract* DC)
 	float range				= pUserData->r_float				("torch_definition",(b_r2)?"range_r2":"range");
 	clr.normalize_rgb();
 	light_render->set_color	(clr);
-	light_render->set_intensity(4);
-	light_render->set_range	(range);
+	light_render->set_intensity(70);
+	light_render->set_range	(range*1.5);
+	light_render->set_volumetric_intensity(0.1);
 
-
-	light_render->set_cone	(deg2rad(pUserData->r_float			("torch_definition","spot_angle")));
+	light_render->set_cone	(deg2rad(pUserData->r_float			("torch_definition","spot_angle")*1.4f));
 	light_render->set_material(pUserData->r_string				("torch_definition","spot_texture"));
 
 	glow_render->set_texture(pUserData->r_string				("torch_definition","glow_texture"));

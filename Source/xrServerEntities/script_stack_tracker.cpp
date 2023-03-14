@@ -29,7 +29,18 @@ CScriptStackTracker::~CScriptStackTracker	()
 void CScriptStackTracker::script_hook	(lua_State *L, lua_Debug *dbg)
 {
 	VERIFY				(L);// && (m_virtual_machine == L));
-
+	if(m_current_stack_level == max_stack_size)
+	{
+		print_stack(L);
+		if(IsDebuggerPresent())
+		{
+			DebugBreak();
+		}
+		else
+		{
+			R_ASSERT(false);
+		}
+	}
 	switch	(dbg->event) {
 		case LUA_HOOKCALL : {
 			if (m_current_stack_level >= max_stack_size)
@@ -42,7 +53,8 @@ void CScriptStackTracker::script_hook	(lua_State *L, lua_Debug *dbg)
 			++m_current_stack_level;
 			break;
 		}
-		case LUA_HOOKRET : {
+		case LUA_HOOKRET : { 
+
 			if (m_current_stack_level > 0)
 				--m_current_stack_level;
 			break;

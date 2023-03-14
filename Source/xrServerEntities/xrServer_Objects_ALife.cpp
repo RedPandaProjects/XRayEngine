@@ -1455,6 +1455,10 @@ void CSE_ALifeObjectHangingLamp::STATE_Read(NET_Packet& tNetPacket, u16 size)
 	}
 	if (m_wVersion < 130)
 	{
+		if(light_flags.is(flTypeSpot))
+		{
+			brightness *=4;
+		}
 		brightness *=15.f;
 		range*=2;
 	}

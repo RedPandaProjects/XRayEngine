@@ -280,7 +280,7 @@ void CHUDTarget::Render()
 	//отрендерить кружочек или крестик
 	if(!m_bShowCrosshair)
 	{
-
+		
 		UIRender->SetShader(*hShader);
 		UIRender->StartPrimitive	(6, IUIRender::ptTriList, UI().m_currentPointType);
 		
@@ -295,8 +295,8 @@ void CHUDTarget::Render()
 		float			h_2		= scr_size.y/2.0f;
 
 		// Convert to screen coords
-		float cx		    = (pt.x+1)*w_2;
-		float cy		    = (pt.y+1)*h_2;
+		float cx		    = w_2;
+		float cy		    = h_2;
 
 		//	TODO: return code back to indexed rendering since we use quads
 		//	Tri 1

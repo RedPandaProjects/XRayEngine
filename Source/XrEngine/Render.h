@@ -52,6 +52,7 @@ public:
 	virtual void					set_color			(const Fcolor& C)					= 0;
 	virtual void					set_color			(float r, float g, float b)			= 0;
 	virtual void					set_intensity		(float Inintensity)					= 0;
+	virtual void					set_volumetric_intensity		(float Inintensity)					= 0;
 
 	virtual void					set_hud_mode		(bool b)							= 0;
 	virtual bool					get_hud_mode		()									= 0;

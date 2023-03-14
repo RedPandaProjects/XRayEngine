@@ -655,7 +655,7 @@ public:
 		if (!xr_strlen(args))
 			Log("* Specify string to run!");
 		else {
-#if 1
+#if 0
 			if (ai().script_engine().script_process(ScriptEngine::eScriptProcessorLevel))
 				ai().script_engine().script_process(ScriptEngine::eScriptProcessorLevel)->add_script(args,true,true);
 #else

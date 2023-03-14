@@ -211,7 +211,7 @@ void XRayEngineInterface::OnEvent(EVENT E, u64 P1, u64 P2)
 {
 	if (E==eQuit)
 	{
-		PostQuitMessage	(0);
+		Exit();
 	}
 	else if(E==eStart) 
 	{

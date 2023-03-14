@@ -99,7 +99,7 @@ CHUDTarget::CHUDTarget	()
 	fuzzyShowInfo = 0.f;
 	RQ.range = 0.f;
 	//	hGeom.create		(FVF::F_TL, RCache.Vertex.Buffer(), RCache.QuadIB);
-	hShader->create("hud\\cursor", "ui\\cursor");
+	hShader->create("hud\\default", "ui\\cursor");
 
 	RQ.set(NULL, 0.f, -1);
 
@@ -278,6 +278,8 @@ void CHUDTarget::Render()
 	//îòðåíäåðèòü êðóæî÷åê èëè êðåñòèê
 	if (!m_bShowCrosshair) {
 		// actual rendering
+
+		UIRender->SetShader(*hShader);
 		UIRender->StartPrimitive(6, IUIRender::ptTriList, IUIRender::pttTL);
 
 		Fvector2		scr_size;
@@ -292,8 +294,8 @@ void CHUDTarget::Render()
 		float			h_2 = scr_size.y / 2.0f;
 
 		// Convert to screen coords
-		float cx = (PT.p.x + 1) * w_2;
-		float cy = (PT.p.y + 1) * h_2;
+		float cx =  w_2;
+		float cy =  h_2;
 
 		/*	pv->set				(cx - size_x, cy + size_y, C, 0, 1); ++pv;
 			pv->set				(cx - size_x, cy - size_y, C, 0, 0); ++pv;
@@ -313,7 +315,6 @@ void CHUDTarget::Render()
 		UIRender->PushPoint(cx + size_x, cy - size_y, 0, C, 1, 0);
 
 		// unlock VB and Render it as triangle LIST
-		UIRender->SetShader(*hShader);
 		UIRender->FlushPrimitive();
 	}
 	else {

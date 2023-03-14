@@ -60,6 +60,8 @@ void CHUDCrosshair::OnRenderFirstBulletDispertion()
 {
 	Fvector2		center;
 	Fvector2		scr_size;
+
+	UIRender->SetShader(*hShader);
 	scr_size.set(float(::Render->getTarget()->get_width()), float(::Render->getTarget()->get_height()));
 	center.set(scr_size.x / 2.0f, scr_size.y / 2.0f);
 
@@ -99,7 +101,6 @@ void CHUDCrosshair::OnRenderFirstBulletDispertion()
 
 
 	// render	
-	UIRender->SetShader(*hShader);
 	UIRender->FlushPrimitive();
 }
 #endif

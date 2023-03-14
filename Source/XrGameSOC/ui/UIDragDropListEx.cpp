@@ -698,6 +698,8 @@ void CUICellContainer::Draw()
 
 	// fill cell buffer
 	u32 vOffset					= 0;
+
+	UIRender->SetShader(*hShader);
 	UIRender->StartPrimitive((tgt_cells.width() + 1) * (tgt_cells.height() + 1) * 6, IUIRender::ePrimitiveType::ptTriList, IUIRender::ePointType::pttTL);
 
 	for (int x=0; x<=tgt_cells.width(); ++x){
@@ -718,7 +720,6 @@ void CUICellContainer::Draw()
 	UI()->PushScissor					(clientArea);
 
 		// draw grid
-	UIRender->SetShader(*hShader);
 	UIRender->FlushPrimitive();
 
 	//draw shown items in range

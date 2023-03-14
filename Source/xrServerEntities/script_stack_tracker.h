@@ -14,7 +14,7 @@ struct lua_State;
 class CScriptStackTracker {
 protected:
 	enum consts {
-		max_stack_size = u32(256),
+		max_stack_size = u32(1024),
 	};
 
 protected:

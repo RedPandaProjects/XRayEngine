@@ -19,6 +19,7 @@ public:
 	virtual	void							OnEvent						(EVENT E, u64 P1, u64 P2);
 	virtual void							OnFrame						();
 
+	virtual void							Exit						()=0;
 	virtual void							RunGame						(const char* ServerParams = "unreal/single/alife/new" ,const char*ClientParams = "localhost");
 	virtual void							StopGame					();
 	virtual void							LoadDefaultWorld			() = 0;
