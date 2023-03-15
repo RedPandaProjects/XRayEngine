@@ -10,7 +10,7 @@ class ENGINE_API CGameFont
 {
 	friend class dxFontRender;
 	friend class XRayFontRender;
-public:
+public: 
 	enum EAligment{
 		alLeft				= 0,
 		alRight,
@@ -28,7 +28,6 @@ private:
 protected:
 	EAligment				eCurrentAlignment;
 	u32						dwCurrentColor;
-	float					fCurrentHeight;
 	float					fCurrentX, fCurrentY;
 	float					fSize;
 
@@ -92,10 +91,9 @@ public:
 	void					OnRender		();
 
 	IC	void				Clear			()  { strings.clear(); };
-
-#ifdef DEBUG
+	
+	float					fCurrentHeight;
 	shared_str				m_font_name;
-#endif
 };
 
 #endif // _XR_GAMEFONT_H_

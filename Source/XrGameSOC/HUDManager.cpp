@@ -85,7 +85,7 @@ void CFontManager::InitializeFont(CGameFont*& F, LPCSTR section, u32 flags)
 	if (!F)
 		F = xr_new<CGameFont>(FontName, FontSize, flags);
 	else
-		F->Initialize(FontName, FontSize);
+		F->Initialize(FontName,(FontSize*static_cast<float>(Device->dwHeight)/768.f));
 
 #ifdef DEBUG
 	F->m_font_name = section;

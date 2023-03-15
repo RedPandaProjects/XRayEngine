@@ -13,7 +13,7 @@ ENGINE_API Fvector2		g_current_font_scale={1.0f,1.0f};
 CGameFont::CGameFont(LPCSTR section, u32 flags)
 {
 	pFontRender					= RenderFactory->CreateFontRender();
-	fCurrentHeight				= 0.0f;
+	fCurrentHeight				= 1.0f;
 	uFlags						= flags;
 	Initialize	(pSettings->r_string(section,"font"),pSettings->r_float(section,"size"));
 }
@@ -21,7 +21,7 @@ CGameFont::CGameFont(LPCSTR section, u32 flags)
 CGameFont::CGameFont(LPCSTR font, float size, u32 flags)
 {
 	pFontRender					= RenderFactory->CreateFontRender();
-	fCurrentHeight				= 0.0f;
+	fCurrentHeight				= 1.0f;
 	uFlags						= flags;
 	Initialize					(font, size);
 }
@@ -151,7 +151,7 @@ void CGameFont::OutSkip( float val )
 
 float CGameFont::GetTextSize( const char cChar )
 {
-	return  pFontRender->GetTextSize(cChar);
+	return  pFontRender->GetTextSize(cChar)*fCurrentHeight;
 }
 
 float CGameFont::GetTextSize( LPCSTR s )
@@ -167,12 +167,12 @@ float CGameFont::GetTextSize( LPCSTR s )
 		return GetTextSize( wsStr );
 	}
 
-	return pFontRender->GetTextSize(s);
+	return pFontRender->GetTextSize(s)*fCurrentHeight;
 }
 
 float CGameFont::GetTextSize( const wide_char *wsStr )
 {
-	return pFontRender->GetTextSize(wsStr);
+	return pFontRender->GetTextSize(wsStr)*fCurrentHeight;
 }
 
 float CGameFont::CurrentHeight_	()
