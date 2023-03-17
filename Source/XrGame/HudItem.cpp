@@ -232,7 +232,10 @@ void CHudItem::UpdateCL()
 	}
 	if (!IsHidden() && object().H_Parent())
 	{
-		if (LastAttachBone != GetAttachBone())
+		CInventoryOwner	*owner = smart_cast<CInventoryOwner*>(object().H_Parent());
+		VERIFY			(owner);
+		CInventoryItem	*self = smart_cast<CInventoryItem*>(this);
+		if (owner->attached(self)&&LastAttachBone != GetAttachBone())
 		{
 			CObject* ParentActor = object().H_Parent();
 			VERIFY(ParentActor);
