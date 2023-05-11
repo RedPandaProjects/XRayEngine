@@ -3,7 +3,7 @@
 #ifdef SHIPPING
 #define PARTICLES_API
 #else
-#ifdef XR_PARTICLES_EXPORTS
+#ifdef XRECORE_EXPORTS
 	#define PARTICLES_API __declspec(dllexport)
 #else
 	#define PARTICLES_API __declspec(dllimport)

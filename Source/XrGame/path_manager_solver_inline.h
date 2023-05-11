@@ -61,7 +61,7 @@ IC	bool CSolverPathManager::is_goal_reached		(const _index_type &vertex_id) cons
 TEMPLATE_SPECIALIZATION
 IC	const _index_type &CSolverPathManager::get_value(typename _Graph::const_iterator &i, bool reverse_search) const
 {
-	return					(this->graph->value(*this->best_node_index,i,reverse_search));
+	return					(this->graph->value(this->best_node_index,i,reverse_search));
 }
 
 TEMPLATE_SPECIALIZATION

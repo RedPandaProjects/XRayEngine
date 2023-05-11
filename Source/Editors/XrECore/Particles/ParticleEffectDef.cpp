@@ -1,14 +1,7 @@
 #include "stdafx.h"
-#pragma hdrstop
-
 #include "ParticleEffectDef.h"
-#include "ParticleEffect.h"
-#ifdef REDITOR
-	#include "Editor/UI_ToolsCustom.h"
-	#include "Editor/ParticleEffectActions.h"
-#else
+#include "particle_manager.h"
 
-#endif
 
 //---------------------------------------------------------------------------
 using namespace PAPI;
@@ -21,7 +14,6 @@ CPEDef::CPEDef()
 {                                          
     m_Frame.InitDefault	();
     m_MaxParticles		= 0;
-	m_CachedShader		= 0;
 	m_fTimeLimit		= 0.f;
     // collision
     m_fCollideOneMinusFriction 	= 1.f;
@@ -33,25 +25,16 @@ CPEDef::CPEDef()
     m_APDefaultRotation.set		(-PI_DIV_2,0.f,0.f);
 	// flags
     m_Flags.zero		();
-#ifdef REDITOR
-	m_EditChoose = false;
-#endif
 }
 
 CPEDef::~CPEDef()
 {
-#ifdef REDITOR
-	for (EPAVecIt it=m_EActionList.begin(); it!=m_EActionList.end(); it++) xr_delete(*it);
-#endif
 }
 void CPEDef::CreateShader()
 {
-    if (*m_ShaderName&&*m_TextureName)	
-        m_CachedShader.create(*m_ShaderName,*m_TextureName);
 }
 void CPEDef::DestroyShader()
 {
-    m_CachedShader.destroy();
 }
 void CPEDef::SetName(LPCSTR name)
 {
@@ -111,65 +94,6 @@ void CPEDef::ExecuteAnimate(Particle *particles, u32 p_cnt, float dt)
 		if (f>m_Frame.m_iFrameCount)f-=m_Frame.m_iFrameCount;
 		if (f<0.f)					f+=m_Frame.m_iFrameCount;
 		m.frame						= (u16)iFloor(f*255.f);
-	}
-}
-
-void CPEDef::ExecuteCollision(PAPI::Particle* particles, u32 p_cnt, float dt, CParticleEffect* owner, CollisionCallback cb)
-{
-	pVector pt,n;
-	// Must traverse list in reverse order so Remove will work
-	for(int i = p_cnt-1; i >= 0; i--){
-		Particle &m = particles[i];
-
-		bool pick_needed;
-		int pick_cnt=0;
-		do{		
-			pick_needed = false;
-			Fvector 	dir;
-			dir.sub		(m.pos,m.posB);
-			float dist 	= dir.magnitude();
-			if (dist>=EPS){
-				dir.div	(dist);
-#ifdef REDITOR                
-				if (Tools->RayPick(m.posB,dir,dist,&pt,&n)){
-#else
-				collide::rq_result	RQ;
-                collide::rq_target	RT = m_Flags.is(dfCollisionDyn)?collide::rqtBoth:collide::rqtStatic;
-				if (g_pGameLevel->ObjectSpace.RayPick(m.posB,dir,dist,RT,RQ,NULL)){	
-					pt.mad	(m.posB,dir,RQ.range);
-					if (RQ.O){
-						n.set(0.f,1.f,0.f);
-					}else{
-						CDB::TRI*	T		=  	g_pGameLevel->ObjectSpace.GetStaticTris()+RQ.element;
-						Fvector*	verts	=	g_pGameLevel->ObjectSpace.GetStaticVerts();
-						n.mknormal(verts[T->verts[0]],verts[T->verts[1]],verts[T->verts[2]]);
-					}
-#endif
-					pick_cnt++;
-					if (cb&&(pick_cnt==1)) if (!cb(owner,m,pt,n)) break;
-					if (m_Flags.is(dfCollisionDel)){ 
-	                   	ParticleManager()->RemoveParticle(owner->m_HandleEffect,i);
-					}else{
-						// Compute tangential and normal components of velocity
-						float nmag = m.vel * n;
-						pVector vn(n * nmag); 	// Normal Vn = (V.N)N
-						pVector vt(m.vel - vn);	// Tangent Vt = V - Vn
-
-						// Compute _new velocity heading out:
-						// Don't apply friction if tangential velocity < cutoff
-						if(vt.length2() <= m_fCollideSqrCutoff){
-							m.vel = vt - vn * m_fCollideResilience;
-						}else{
-							m.vel = vt * m_fCollideOneMinusFriction - vn * m_fCollideResilience;
-						}
-						m.pos	= m.posB + m.vel * dt; 
-						pick_needed = true;
-					}
-				}
-			}else{
-				m.pos	= m.posB;
-			}
-		}while(pick_needed&&(pick_cnt<2));
 	}
 }
 
@@ -238,14 +162,15 @@ BOOL CPEDef::Load(IReader& F)
 		}
 	}
 
-#ifdef REDITOR
-    if (pCreateEAction&&F.find_chunk(PED_CHUNK_EDATA))
+#if 0
+    if (F.find_chunk(PED_CHUNK_EDATA))
 	{
+		CParticleManager Manager;
         m_EActionList.resize(F.r_u32());
         for (EPAVecIt it=m_EActionList.begin(); it!=m_EActionList.end(); ++it)
 		{
             PAPI::PActionEnum type		= (PAPI::PActionEnum)F.r_u32();
-            (*it)						= pCreateEAction(type);
+            (*it)						= Manager.CreateAction(type);
             (*it)->Load					(F);
         }
 		Compile							(m_EActionList);
@@ -297,7 +222,7 @@ BOOL CPEDef::Load2(CInifile& ini)
 	{
 		m_APDefaultRotation			= ini.r_fvector3	("align_to_path", "default_rotation");
 	}
-#ifdef REDITOR
+#if 0
 	if(pCreateEAction)
 	{
 		u32 count		= ini.r_u32("_effect", "action_count");
@@ -362,7 +287,7 @@ void CPEDef::Save2(CInifile& ini)
 	{
 		ini.w_fvector3	("align_to_path", "default_rotation", m_APDefaultRotation);
 	}
-#ifdef REDITOR
+#if 0
     ini.w_u32			("_effect", "action_count", m_EActionList.size());
     u32					action_id = 0;
 	for (EPAVecIt it=m_EActionList.begin(); it!=m_EActionList.end(); ++it,++action_id)
@@ -439,7 +364,7 @@ void CPEDef::Save(IWriter& F)
 		F.w_fvector3	(m_APDefaultRotation);
 		F.close_chunk	();
 	}
-#ifdef REDITOR
+#if 0
 	F.open_chunk	(PED_CHUNK_EDATA);
     F.w_u32			(m_EActionList.size());
     for (EPAVecIt it=m_EActionList.begin(); it!=m_EActionList.end(); it++){
@@ -450,7 +375,7 @@ void CPEDef::Save(IWriter& F)
 #endif
 }
 
-#ifdef REDITOR
+#if 0
 void PS::CPEDef::Compile(EPAVec& v)
 {
 	m_Actions.clear	();
@@ -461,7 +386,7 @@ void PS::CPEDef::Compile(EPAVec& v)
     
 	for(; it!=it_e; ++it)
 	{
-		if ((*it)->flags.is(EParticleAction::flEnabled))
+		if ((*it)->flags.is(ParticleAction::m_Flags::flEnabled))
 		{
     	    (*it)->Compile(m_Actions);
             cnt++;

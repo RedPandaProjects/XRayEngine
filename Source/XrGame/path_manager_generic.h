@@ -26,7 +26,7 @@ protected:
 	_dist_type				max_range;
 	_iteration_type			max_iteration_count;
 	u32						max_visited_node_count;
-	const _index_type		*best_node_index;
+	_index_type				best_node_index;
 
 public:
 	typedef	typename _Graph::const_iterator const_iterator;

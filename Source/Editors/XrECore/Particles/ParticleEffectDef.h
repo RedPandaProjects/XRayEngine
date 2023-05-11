@@ -1,8 +1,4 @@
-//---------------------------------------------------------------------------
-#ifndef ParticleEffectDefH
-#define ParticleEffectDefH
-
-#include "XRayShader.h"
+#pragma once
 
 namespace PAPI
 {
@@ -75,7 +71,6 @@ namespace PS
 	// texture
 		shared_str		  	m_ShaderName;
 		shared_str		  	m_TextureName;
-		ref_shader			m_CachedShader;
 		SFrame				m_Frame;
 	// compiled actions
         CMemoryWriter		m_Actions;
@@ -93,7 +88,6 @@ namespace PS
 		BOOL 				LoadActionList		(IReader& F);
 	// execute
 		void				ExecuteAnimate		(PAPI::Particle *particles, u32 p_cnt, float dt);
-        void				ExecuteCollision	(PAPI::Particle *particles, u32 p_cnt, float dt, CParticleEffect* owner, CollisionCallback cb);
 	public:
                             CPEDef				();
                             ~CPEDef				();
@@ -108,39 +102,13 @@ namespace PS
 
 		void 				Save2				(CInifile& ini);
 		BOOL 				Load2				(CInifile& ini);
-
-#ifdef REDITOR         
-// change Copy&Equal if variables changed
 	public:
-	    DEFINE_VECTOR		(EParticleAction*,EPAVec,EPAVecIt);
+#if 0
+		DEFINE_VECTOR(ParticleAction*, EPAVec, EPAVecIt);
 		EPAVec 				m_EActionList;
-		bool m_EditChoose;
-	public:             
-		void   	FindActionByName	(LPCSTR new_name, bool& res);
-		bool   	NameOnAfterEdit					(PropValue* sender, shared_str& edit_val);
-		bool   	CollisionFrictionOnAfterEdit	(PropValue* sender, float& edit_val);
-		void   	CollisionFrictionOnBeforeEdit	(PropValue* sender, float& edit_val);
-		void   	CollisionFrictionOnDraw			(PropValue* sender, xr_string& draw_val);
-		bool   	CollisionCutoffOnAfterEdit		(PropValue* sender, float& edit_val);
-		void   	CollisionCutoffOnBeforeEdit		(PropValue* sender, float& edit_val);
-		void   	CollisionCutoffOnDraw			(PropValue* sender, xr_string& draw_val);
-		void   	OnActionEditClick	(ButtonValue* sender, bool& bDataModified, bool& bSafe);
-	    void   	OnFrameResize		(PropValue* sender);
-	    void   	OnShaderChange		(PropValue* sender);
-	    void   	OnFlagChange		(PropValue* sender);
-		void   	OnControlClick		(ButtonValue* sender, bool& bDataModified, bool& bSafe);
-		void   	OnActionsClick		(ButtonValue* sender, bool& bDataModified, bool& bSafe);
-        bool   	OnAfterActionNameEdit(PropValue* sender, shared_str& edit_val);
-		void				FillProp		   	(LPCSTR pref, ::PropItemVec& items, ::ListItem* owner);
-		void				Copy				(const CPEDef& src);
-		BOOL				Equal				(const CPEDef* pe);
-		void 				Render				(const Fmatrix& parent);
-		static PFunction*	FindCommandPrototype(LPCSTR src, LPCSTR& dest);
-		void   	FillActionList		(ChooseItemVec& items, void* param);
-        bool 				Validate 			(bool bMsg);
-		void 				Compile				(EPAVec& v);
-		void				OnDrawUI();
+		void Compile(EPAVec& v);
 #endif
+
 	};
 };
 #define PED_VERSION				0x0001
@@ -158,5 +126,3 @@ namespace PS
 #define PED_CHUNK_VEL_SCALE		0x0022
 #define PED_CHUNK_EDATA			0x0024
 #define PED_CHUNK_ALIGN_TO_PATH	0x0025
-//---------------------------------------------------------------------------
-#endif

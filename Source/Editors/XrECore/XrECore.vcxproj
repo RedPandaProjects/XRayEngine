@@ -58,6 +58,16 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="LuaMemoryController.cpp" />
+    <ClCompile Include="Particles\noise.cpp" />
+    <ClCompile Include="Particles\ParticleEffectDef.cpp" />
+    <ClCompile Include="Particles\ParticleGroup.cpp" />
+    <ClCompile Include="Particles\particle_actions.cpp" />
+    <ClCompile Include="Particles\particle_actions_collection.cpp" />
+    <ClCompile Include="Particles\particle_actions_collection_io.cpp" />
+    <ClCompile Include="Particles\particle_core.cpp" />
+    <ClCompile Include="Particles\particle_effect.cpp" />
+    <ClCompile Include="Particles\particle_manager.cpp" />
+    <ClCompile Include="Particles\PSLibrary.cpp" />
     <ClCompile Include="StbImage.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -129,6 +139,15 @@
     <ClInclude Include="Engine\Texture.h" />
     <ClInclude Include="Engine\XrGameMaterialLibraryEditors.h" />
     <ClInclude Include="Engine\XrGamePersistentEditors.h" />
+    <ClInclude Include="Particles\noise.h" />
+    <ClInclude Include="Particles\ParticleEffectDef.h" />
+    <ClInclude Include="Particles\ParticleGroup.h" />
+    <ClInclude Include="Particles\particle_actions.h" />
+    <ClInclude Include="Particles\particle_actions_collection.h" />
+    <ClInclude Include="Particles\particle_core.h" />
+    <ClInclude Include="Particles\particle_effect.h" />
+    <ClInclude Include="Particles\particle_manager.h" />
+    <ClInclude Include="Particles\PSLibrary.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="WildMagic\WmlApprGaussPointsFit3.h" />
     <ClInclude Include="WildMagic\WmlBox3.h" />

@@ -242,7 +242,7 @@ void CHudItem::UpdateCL()
 			if(ParentActor->UnrealProxy)
 			{
 				LastAttachBone = GetAttachBone();
-				ParentActor->UnrealProxy->Attach(object().Visual(), LastAttachBone.c_str());
+				//ParentActor->UnrealProxy->Attach(object().Visual(), LastAttachBone.c_str());
 			}
 		}
 	}
@@ -264,7 +264,7 @@ void CHudItem::Show()
 	if (ParentActor->UnrealProxy)
 	{
 		LastAttachBone = GetAttachBone();
-		ParentActor->UnrealProxy->Attach(object().Visual(), LastAttachBone.c_str());
+	//	ParentActor->UnrealProxy->Attach(object().Visual(), LastAttachBone.c_str());
 	}
 }
 

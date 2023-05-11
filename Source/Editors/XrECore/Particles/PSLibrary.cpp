@@ -5,13 +5,8 @@
 #pragma hdrstop
 
 #include "PSLibrary.h"
-#include "ParticleEffect.h"
+#include "ParticleEffectDef.h"
 #include "ParticleGroup.h"
-
-#ifdef REDITOR
-#	include "Editor/ParticleEffectActions.h"
-#include "Editor/ui_main.h"
-#endif
 
 #define _game_data_			"$game_data$"
 
@@ -23,7 +18,7 @@ bool pgd_find_pred	(const PS::CPGDef* a, 	LPCSTR b)				{	return xr_strcmp(a->m_N
 //----------------------------------------------------
 void CPSLibrary::OnCreate()
 {
-#ifdef REDITOR
+#if 0
     if(pCreateEAction)
     {
         Load2();
@@ -53,7 +48,7 @@ void CPSLibrary::OnDestroy()
 PS::PEDIt CPSLibrary::FindPEDIt(LPCSTR Name)
 {
 	if (!Name) return m_PEDs.end();
-#ifdef REDITOR
+#if 0
 	for (PS::PEDIt it=m_PEDs.begin(); it!=m_PEDs.end(); it++)
     	if (0==xr_strcmp((*it)->Name(),Name)) return it;
 	return m_PEDs.end();
@@ -73,7 +68,7 @@ PS::CPEDef* CPSLibrary::FindPED(LPCSTR Name)
 PS::PGDIt CPSLibrary::FindPGDIt(LPCSTR Name)
 {
 	if (!Name) return m_PGDs.end();
-#ifdef REDITOR
+#if 0
 	for (PS::PGDIt it=m_PGDs.begin(); it!=m_PGDs.end(); it++)
     	if (0==xr_strcmp((*it)->m_Name,Name)) return it;
 	return m_PGDs.end();
@@ -129,7 +124,7 @@ bool CPSLibrary::Load2()
 
 	FS.file_list				(files, _path, FS_ListFiles, "*.pe,*.pg");
 
-#ifdef REDITOR
+#if 0
 	SPBItem* pb = NULL;
 	if(UI->m_bReady)
     pb 							= UI->ProgressStart(files.size(),"Loading particles...");
@@ -145,7 +140,7 @@ bool CPSLibrary::Load2()
         FS.update_path			(_path, "$game_particles$",f.name.c_str());
         CInifile				ini (_path,TRUE,TRUE,FALSE);
 
-#ifdef REDITOR
+#if 0
         if(pb) pb->Inc					();
 #endif
 
@@ -179,7 +174,7 @@ bool CPSLibrary::Load2()
 	for (PS::PEDIt e_it = m_PEDs.begin(); e_it!=m_PEDs.end(); e_it++)
     	(*e_it)->CreateShader();
 
-#ifdef REDITOR
+#if 0
     if(pb) UI->ProgressEnd		(pb);
 #endif
 	Msg				("Loaded particles :%d", files.size());

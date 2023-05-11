@@ -135,14 +135,14 @@ IC	bool CGenericPathManager::is_metric_euclidian	() const
 TEMPLATE_SPECIALIZATION
 IC	void CGenericPathManager::begin					(const _index_type &vertex_id, const_iterator &begin, const_iterator &end)
 {
-	best_node_index			= &vertex_id;
+	best_node_index			= vertex_id;
 	graph->begin			(vertex_id,begin,end);
 }
 
 TEMPLATE_SPECIALIZATION
 IC	const _index_type CGenericPathManager::get_value(const_iterator &i) const
 {
-	return					(graph->value(*best_node_index,i));
+	return					(graph->value(best_node_index,i));
 }
 
 TEMPLATE_SPECIALIZATION
