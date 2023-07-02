@@ -1486,7 +1486,7 @@ void PATargetSize::Execute(ParticleEffect *effect, const float dt, float& tm_max
 		dif.z *= scaleFac_z;
 		m.size += dif;
 	}
-}
+} 
 void PATargetSize::Transform(const Fmatrix&){;}
 //-------------------------------------------------------------------------------------------------
 

@@ -25,7 +25,6 @@ void CParticlesObject::Init	(LPCSTR p_name, IRender_Sector* S, BOOL bAutoRemove)
 	m_bLooped				= false;
 	m_bStopping				= false;
 	m_bAutoRemove			= bAutoRemove;
-	float time_limit		= 0.0f;
 
 	if(!g_dedicated_server)
 	{
@@ -36,37 +35,30 @@ void CParticlesObject::Init	(LPCSTR p_name, IRender_Sector* S, BOOL bAutoRemove)
 		{
 #endif
 			VERIFY(renderable.visual);
-			IParticleCustom* V = smart_cast<IParticleCustom*>(renderable.visual);  VERIFY(V);
-			time_limit = V->GetTimeLimit();
+			IParticleCustom* V =renderable.visual->dcast_ParticleCustom();  VERIFY(V);
 
 #ifndef MASTER_GOLD
 		}
 		else
 		{
-		time_limit					= 1.0f;
 #endif
 		}
 	}else
 	{
-		time_limit					= 1.0f;
 	}
 
-	if(time_limit > 0.f)
+	if (renderable.visual &&renderable.visual->dcast_ParticleCustom()&&renderable.visual->dcast_ParticleCustom()->IsLooping())
 	{
-		m_iLifeTime			= iFloor(time_limit*1000.f);
-	}
-	else
-	{
-		if(bAutoRemove)
+		if (bAutoRemove)
 		{
-			R_ASSERT3			(!m_bAutoRemove,"Can't set auto-remove flag for looped particle system.",p_name);
+			R_ASSERT3(!m_bAutoRemove, "Can't set auto-remove flag for looped particle system.", p_name);
 		}
 		else
 		{
-			m_iLifeTime = 0;
 			m_bLooped = true;
 		}
 	}
+
 
 
 	// spatial
@@ -78,14 +70,11 @@ void CParticlesObject::Init	(LPCSTR p_name, IRender_Sector* S, BOOL bAutoRemove)
 	shedule.t_max			= 50;
 	shedule_register		();
 
-	dwLastTime				= Device->dwTimeGlobal;
-	mt_dt					= 0;
 }
 
 //----------------------------------------------------
 CParticlesObject::~CParticlesObject()
 {
-	VERIFY					(0==mt_dt);
 
 //	we do not need this since CPS_Instance does it
 //	shedule_unregister		();
@@ -127,7 +116,7 @@ const shared_str CParticlesObject::Name()
 #ifndef MASTER_GOLD
 	if (!renderable.visual)return "";
 #endif
-	IParticleCustom* V	= smart_cast<IParticleCustom*>(renderable.visual); VERIFY(V);
+	IParticleCustom* V	= renderable.visual->dcast_ParticleCustom(); VERIFY(V);
 	return (V) ? V->Name() : "";
 }
 
@@ -138,14 +127,12 @@ void CParticlesObject::Play		(bool bHudMode)
 #ifndef MASTER_GOLD
 	if (!renderable.visual)return ;
 #endif
-	IParticleCustom* V			= smart_cast<IParticleCustom*>(renderable.visual); VERIFY(V);
+	IParticleCustom* V			= renderable.visual->dcast_ParticleCustom(); VERIFY(V);
 	if(bHudMode)
 		V->SetHudMode			(bHudMode);
 
 	V->Play						();
-	dwLastTime					= Device->dwTimeGlobal-33ul;
-	mt_dt						= 0;
-	PerformAllTheWork			(0);
+	UpdateSpatial				();
 	m_bStopping					= false;
 }
 
@@ -155,13 +142,11 @@ void CParticlesObject::play_at_pos(const Fvector& pos, BOOL xform)
 #ifndef MASTER_GOLD
 	if (!renderable.visual)return ;
 #endif
-	IParticleCustom* V			= smart_cast<IParticleCustom*>(renderable.visual); VERIFY(V);
+	IParticleCustom* V			=renderable.visual->dcast_ParticleCustom(); VERIFY(V);
 	Fmatrix m; m.translate		(pos); 
 	V->UpdateParent				(m,zero_vel,xform);
-	V->Play						();
-	dwLastTime					= Device->dwTimeGlobal-33ul;
-	mt_dt						= 0;
-	PerformAllTheWork			(0);
+	V->Play();
+	UpdateSpatial();
 	m_bStopping					= false;
 }
 
@@ -171,7 +156,7 @@ void CParticlesObject::Stop		(BOOL bDefferedStop)
 #ifndef MASTER_GOLD
 	if (!renderable.visual)return ;
 #endif
-	IParticleCustom* V			= smart_cast<IParticleCustom*>(renderable.visual); VERIFY(V);
+	IParticleCustom* V			= renderable.visual->dcast_ParticleCustom(); VERIFY(V);
 	V->Stop						(bDefferedStop);
 	m_bStopping					= true;
 }
@@ -186,48 +171,7 @@ void CParticlesObject::shedule_Update	(u32 _dt)
 #endif
 	// Update
 	if (m_bDead)					return;
-	u32 dt							= Device->dwTimeGlobal - dwLastTime;
-	if (dt)							{
-		if (0){//.psDeviceFlags.test(mtParticles))	{    //. AlexMX comment this line// NO UNCOMMENT - DON'T WORK PROPERLY
-			mt_dt					= dt;
-			fastdelegate::FastDelegate0<>		delegate	(this,&CParticlesObject::PerformAllTheWork_mt);
-			Device->seqParallel.push_back		(delegate);
-		} else {
-			mt_dt					= 0;
-			IParticleCustom* V		= smart_cast<IParticleCustom*>(renderable.visual); VERIFY(V);
-			V->OnFrame				(dt);
-		}
-		dwLastTime					= Device->dwTimeGlobal;
-	}
 	UpdateSpatial					();
-}
-
-void CParticlesObject::PerformAllTheWork(u32 _dt)
-{
-	if(g_dedicated_server)		return;
-#ifndef MASTER_GOLD
-	if (!renderable.visual)return ;
-#endif
-	// Update
-	u32 dt							= Device->dwTimeGlobal - dwLastTime;
-	if (dt)							{
-		IParticleCustom* V		= smart_cast<IParticleCustom*>(renderable.visual); VERIFY(V);
-		V->OnFrame				(dt);
-		dwLastTime				= Device->dwTimeGlobal;
-	}
-	UpdateSpatial					();
-}
-
-void CParticlesObject::PerformAllTheWork_mt()
-{
-	if(g_dedicated_server)		return;
-#ifndef MASTER_GOLD
-	if (!renderable.visual)return ;
-#endif
-	if (0==mt_dt)			return;	//???
-	IParticleCustom* V		= smart_cast<IParticleCustom*>(renderable.visual); VERIFY(V);
-	V->OnFrame				(mt_dt);
-	mt_dt					= 0;
 }
 
 void CParticlesObject::SetXFORM			(const Fmatrix& m)
@@ -236,7 +180,7 @@ void CParticlesObject::SetXFORM			(const Fmatrix& m)
 #ifndef MASTER_GOLD
 	if (!renderable.visual)return ;
 #endif
-	IParticleCustom* V	= smart_cast<IParticleCustom*>(renderable.visual); VERIFY(V);
+	IParticleCustom* V	= renderable.visual->dcast_ParticleCustom(); VERIFY(V);
 	V->UpdateParent		(m,zero_vel,TRUE);
 	renderable.xform.set(m);
 	UpdateSpatial		();
@@ -248,7 +192,7 @@ void CParticlesObject::UpdateParent		(const Fmatrix& m, const Fvector& vel)
 #ifndef MASTER_GOLD
 	if (!renderable.visual)return ;
 #endif
-	IParticleCustom* V	= smart_cast<IParticleCustom*>(renderable.visual); VERIFY(V);
+	IParticleCustom* V	=renderable.visual->dcast_ParticleCustom(); VERIFY(V);
 	V->UpdateParent		(m,vel,FALSE);
 	UpdateSpatial		();
 }
@@ -286,12 +230,6 @@ void CParticlesObject::renderable_Render	()
 	if (!renderable.visual)return;
 #endif
 	VERIFY					(renderable.visual);
-	u32 dt					= Device->dwTimeGlobal - dwLastTime;
-	if (dt){
-		IParticleCustom* V	= smart_cast<IParticleCustom*>(renderable.visual); VERIFY(V);
-		V->OnFrame			(dt);
-		dwLastTime			= Device->dwTimeGlobal;
-	}
 
 	::Render->set_Transform	(&renderable.xform);
 	::Render->add_Visual	(renderable.visual);
@@ -316,7 +254,14 @@ bool CParticlesObject::IsPlaying()
 #ifndef MASTER_GOLD
 	if (!renderable.visual)    return false;
 #endif
-	IParticleCustom* V	= smart_cast<IParticleCustom*>(renderable.visual); 
+	IParticleCustom* V	= renderable.visual->dcast_ParticleCustom(); 
 	VERIFY(V);
 	return !!V->IsPlaying();
+}
+
+BOOL CParticlesObject::PSI_alive()
+{
+	if (!renderable.visual)return false;
+	IParticleCustom* V = renderable.visual->dcast_ParticleCustom(); VERIFY(V);
+	return V ? V->Alive() : false;
 }

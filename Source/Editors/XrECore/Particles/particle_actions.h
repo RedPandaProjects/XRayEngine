@@ -28,13 +28,7 @@ namespace PAPI{
 	public:
 						ParticleActions()						{actions.reserve(4);m_bLocked=false;	}
 						~ParticleActions()						{clear();				}
-		IC void			clear			()
-        {
-			R_ASSERT(!m_bLocked);
-			for (PAVecIt it=actions.begin(); it!=actions.end(); it++) 
-				xr_delete(*it);
-			actions.clear();
-		}
+		void			clear			();
 		IC void			append			(ParticleAction* pa)	{R_ASSERT(!m_bLocked);actions.push_back(pa);	}
 		IC bool			empty			()						{return	actions.empty();}
 		IC PAVecIt		begin			()						{return	actions.begin();}

@@ -14,7 +14,6 @@ CPS_Instance::CPS_Instance			(bool destroy_on_game_load)	:
 	g_pGamePersistent->ps_active.insert		(this);
 	renderable.pROS_Allowed					= FALSE;
 
-	m_iLifeTime								= int_max;
 	m_bAutoRemove							= TRUE;
 	m_bDead									= FALSE;
 }
@@ -41,19 +40,16 @@ void CPS_Instance::shedule_Update	(u32 dt)
 {
 	if (renderable.pROS)			::Render->ros_destroy	(renderable.pROS);	//. particles doesn't need ROS
 
-	ISheduled::shedule_Update		(dt);
-	m_iLifeTime						-= dt;
 
 	// remove???
 	if (m_bDead)					return;
-	if (m_bAutoRemove && m_iLifeTime<=0)
+	if (m_bAutoRemove && !PSI_alive())
 		PSI_destroy					();
 }
 //----------------------------------------------------
 void CPS_Instance::PSI_destroy		()
 {
 	m_bDead								= TRUE;
-	m_iLifeTime							= 0;
 	g_pGamePersistent->ps_destroy.push_back	(this);
 }
 //----------------------------------------------------

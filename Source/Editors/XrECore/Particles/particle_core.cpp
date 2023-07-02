@@ -272,8 +272,7 @@ BOOL pDomain::Within(const pVector &pos) const
 			float rSqr = xrad.length2();
 			
 			if(type == PDCone)
-				return (rSqr <= _sqr(dist * radius1) &&
-				rSqr >= _sqr(dist * radius2));
+				return (rSqr <= _sqr(dist * radius1) &&	rSqr >= _sqr(dist * radius2));
 			else
 				return (rSqr <= radius1Sqr && rSqr >= _sqr(radius2));
 		}
