@@ -10,7 +10,6 @@
 #include "../xrEngine/CameraBase.h"
 #include "player_hud.h"
 #include "../xrEngine/SkeletonMotions.h"
-#include "../XrEngine/XRayUnrealProxyInterface.h"
 
 CHudItem::CHudItem()
 {

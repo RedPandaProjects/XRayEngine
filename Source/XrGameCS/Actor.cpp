@@ -69,7 +69,6 @@
 #include "../xrRender/Public/UIRender.h"
 
 #include "ai_object_location.h"
-#include "../XrEngine/XRayUnrealProxyInterface.h"
 #include "../XrEngine/XRayEngineInterface.h"
 
 const u32		patch_frames	= 50;
@@ -896,7 +895,7 @@ void CActor::UpdateCL	()
 			UnrealProxy->Lock(this);
 			if (renderable.visual)
 			{
-				UnrealProxy->AttachAsRoot(renderable.visual);
+				UnrealProxy->SetAsRoot(renderable.visual);
 			}
 		}
 	}

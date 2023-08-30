@@ -99,7 +99,7 @@ void CObject::cNameVisual_set	(shared_str N)
 		}
 		if (new_k && UnrealProxy)
 		{
-			UnrealProxy->AttachAsRoot(renderable.visual);
+			UnrealProxy->SetAsRoot(renderable.visual);
 		}
 		if(old_v)old_v->Unlock(this);
 		::Render->model_Delete	(old_v);
@@ -501,7 +501,7 @@ void CObject::CreateUnrealProxy	()
 	UnrealProxy->Lock(this);
 	if (renderable.visual)
 	{
-		UnrealProxy->AttachAsRoot(renderable.visual);
+		UnrealProxy->SetAsRoot(renderable.visual);
 	}
 }
 

@@ -29,6 +29,7 @@ void CParticlesObject::Init	(LPCSTR p_name, IRender_Sector* S, BOOL bAutoRemove)
 	{
 		// create visual
 		renderable.visual		= Render->model_CreateParticles(p_name);
+		renderable.visual->Lock(this);
 		if (renderable.visual)
 		{
 			VERIFY(renderable.visual);
@@ -70,7 +71,10 @@ void CParticlesObject::Init	(LPCSTR p_name, IRender_Sector* S, BOOL bAutoRemove)
 //----------------------------------------------------
 CParticlesObject::~CParticlesObject()
 {
-
+	if(renderable.visual)
+	{
+		renderable.visual->Unlock(this);
+	}
 }
 
 void CParticlesObject::UpdateSpatial()

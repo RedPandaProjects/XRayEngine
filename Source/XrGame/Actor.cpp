@@ -73,8 +73,7 @@
 #include "ui/UIActorMenu.h"
 #include "ActorHelmet.h"
 #include "UI/UIDragDropReferenceList.h"
-#include "../XrEngine/XRayUnrealProxyInterface.h"
-#include "../XrEngine/XRayEngineInterface.h"
+#include "../xrEngine/XRayEngineInterface.h"
 
 const u32		patch_frames	= 50;
 const float		respawn_delay	= 1.f;
@@ -961,7 +960,7 @@ void CActor::UpdateCL	()
 			UnrealProxy->Lock(this);
 			if (renderable.visual)
 			{
-				UnrealProxy->AttachAsRoot(renderable.visual);
+				UnrealProxy->SetAsRoot(renderable.visual);
 			}
 			reattach_items();
 		}

@@ -14,7 +14,6 @@
 #include "level.h"
 #include "inventory.h"
 #include "../XrEngine/CameraBase.h"
-#include "../XrEngine/XRayUnrealProxyInterface.h"
 #include "RenderVisual.h"
 
 
@@ -131,13 +130,14 @@ void CHudItem::Show()
 		return;
 	}
 	LastAttachBone = GetAttachBone();
-	ParentActor->UnrealProxy->Attach(object().Visual(), LastAttachBone.c_str());	
+	object().Visual()->AttachTo(ParentActor->UnrealProxy,LastAttachBone.c_str());
 	object().Visual()->SetOwnerNoSee(true);
 	if (smart_cast<CActor*>(object().H_Parent())&&m_pHUD->Visual())
 	{
-		if (XRayUnrealPlayerCharacterInterface* PlayerCharacter = ParentActor->UnrealProxy->CastToXRayUnrealPlayerCharacterInterface())
+		if (XRayUnrealPlayerCharacterInterface* PlayerCharacter = reinterpret_cast<XRayUnrealPlayerCharacterInterface* >(ParentActor->UnrealProxy->QueryInterface(EXRayUnrealInterfaceType::StalkerPlayerCharacter)))
 		{
-			PlayerCharacter->AttachToCamera(m_pHUD->Visual());
+
+			m_pHUD->Visual()->AttachTo(PlayerCharacter->GetCameraComponent(),"");
 			m_pHUD->Visual()->SetOwnerNoSee(false);
 			m_pHUD->Visual()->SetOnlyOwnerSee(true);
 		}
@@ -316,7 +316,7 @@ void CHudItem::UpdateCL()
 			if(ParentActor->UnrealProxy)
 			{
 				LastAttachBone = GetAttachBone();
-				ParentActor->UnrealProxy->Attach(object().Visual(), LastAttachBone.c_str());
+				object().Visual()->AttachTo(ParentActor->UnrealProxy, LastAttachBone.c_str());
 			}
 		}
 	}

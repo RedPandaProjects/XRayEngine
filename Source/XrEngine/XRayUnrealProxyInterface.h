@@ -1,19 +1,54 @@
 #pragma once
-class XRayUnrealProxyInterface 
+enum class  EXRayUnrealInterfaceType
 {
-public:
-	virtual void										AttachAsRoot								(class IRenderVisual* Visual) = 0;
-	virtual void										Attach										(class IRenderVisual* Visual,const char*BoneName) = 0;
-	virtual class AStalkerProxy*						CastToStalkerProxy							() = 0;
-	virtual class AStalkerPlayerCharacter*				CastToStalkerPlayerCharacter				() = 0;
-	virtual class XRayUnrealPlayerCharacterInterface*	CastToXRayUnrealPlayerCharacterInterface	() {return nullptr;}
-	virtual void										Lock										(class CObject*) = 0;
-	virtual void										Unlock										(class CObject*) = 0;
+	StalkerProxy,
+	StalkerPlayerCharacter,
+	Kinematics,
+	KinematicsAnimated,
+	ParticleCustom,
 };
 
-class XRayUnrealPlayerCharacterInterface:public XRayUnrealProxyInterface
+enum class  EXRayUnrealObjectType
+{
+	Object,
+	Actor,
+	StalkerProxy,
+	StalkerPlayerCharacter,
+	SceneComponent,
+	StalkerKinematicsComponent,
+	StalkerNiagaraActor,
+};
+
+class ENGINE_API XRayUnrealAttachableInterface
 {
 public:
-	class XRayUnrealPlayerCharacterInterface*			CastToXRayUnrealPlayerCharacterInterface	() {return this;}
-	virtual void										AttachToCamera								(class IRenderVisual* Visual) = 0;
+	
+	virtual												~XRayUnrealAttachableInterface				();
+	virtual void										AttachTo									(XRayUnrealAttachableInterface* Attach, const char*BoneName) = 0;
+	virtual void										Detach										() = 0;
+	virtual void										SetOffset									(const Fmatrix&offset) = 0;
+	virtual void										SetOwnerNoSee								(bool Enable) = 0;
+	virtual void										SetOnlyOwnerSee								(bool Enable) = 0;
+	virtual void										Lock										(CObject*) = 0;
+	virtual void										Lock										(void*) = 0;
+	virtual void										Unlock										(void*) = 0;
+	
+	virtual void*										QueryInterface								(EXRayUnrealInterfaceType AttachableType);
+	virtual void*										CastUnrealObject							(EXRayUnrealObjectType ObjectType) = 0;
+};
+
+
+
+class ENGINE_API XRayUnrealProxyInterface:public XRayUnrealAttachableInterface
+{
+public:
+	virtual void										SetAsRoot									(XRayUnrealAttachableInterface* Attachable) = 0;
+			void*										QueryInterface								(EXRayUnrealInterfaceType AttachableType) override;
+};
+
+class ENGINE_API XRayUnrealPlayerCharacterInterface:public XRayUnrealProxyInterface
+{
+public:
+	virtual	XRayUnrealAttachableInterface*				GetCameraComponent							() = 0;
+			void*										QueryInterface								(EXRayUnrealInterfaceType AttachableType) override;
 };

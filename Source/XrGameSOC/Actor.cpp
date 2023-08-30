@@ -66,7 +66,6 @@
 #include "script_callback_ex.h"
 #include "InventoryBox.h"
 #include "location_manager.h"
-#include "../XrEngine/XRayUnrealProxyInterface.h"
 #include "../XrEngine/XRayEngineInterface.h"
 
 const u32		patch_frames	= 50;
@@ -889,7 +888,7 @@ void CActor::UpdateCL	()
 			UnrealProxy->Lock(this);
 			if (renderable.visual)
 			{
-				UnrealProxy->AttachAsRoot(renderable.visual);
+				UnrealProxy->SetAsRoot(renderable.visual);
 				reattach_items();
 				if(CHudItem*HudItem = smart_cast<CHudItem*>(inventory().ActiveItem()))
 				{

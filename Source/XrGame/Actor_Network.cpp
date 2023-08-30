@@ -51,7 +51,6 @@
 #	include "../xrPhysics/phvalide.h"
 #endif
 #include "../XrEngine/XRayEngineInterface.h"
-#include "../XrEngine/XRayUnrealProxyInterface.h"
 
 int			g_cl_InterpolationType		= 0;
 u32			g_cl_InterpolationMaxPoints = 0;
@@ -712,7 +711,7 @@ BOOL CActor::net_Spawn		(CSE_Abstract* DC)
 
 void CActor::net_Destroy	()
 {
-	if (UnrealProxy && UnrealProxy->CastToStalkerPlayerCharacter())
+	if (UnrealProxy && UnrealProxy->QueryInterface(EXRayUnrealInterfaceType::StalkerPlayerCharacter))
 	{
 		if (renderable.visual)
 		{

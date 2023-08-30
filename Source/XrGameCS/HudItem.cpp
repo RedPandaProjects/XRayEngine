@@ -10,7 +10,6 @@
 #include "../xrEngine/CameraBase.h"
 #include "player_hud.h"
 #include "../xrEngine/SkeletonMotions.h"
-#include "../XrEngine/XRayUnrealProxyInterface.h"
 
 CHudItem::CHudItem()
 {
@@ -251,7 +250,7 @@ void CHudItem::UpdateCL()
 			if(ParentActor->UnrealProxy)
 			{
 				LastAttachBone = GetAttachBone();
-				ParentActor->UnrealProxy->Attach(object().Visual(), LastAttachBone.c_str());
+				ParentActor->UnrealProxy->AttachTo(object().Visual(), LastAttachBone.c_str());
 			}
 		}
 	}
@@ -274,7 +273,7 @@ void CHudItem::Show()
 		return;
 	}
 	LastAttachBone = GetAttachBone();
-	ParentActor->UnrealProxy->Attach(object().Visual(), LastAttachBone.c_str());
+	ParentActor->UnrealProxy->AttachTo(object().Visual(), LastAttachBone.c_str());
 }
 
 void CHudItem::OnH_A_Chield		()

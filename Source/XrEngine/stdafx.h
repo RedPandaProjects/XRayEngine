@@ -68,3 +68,4 @@ extern ENGINE_API CInifile *pGameIni;
 #include "bone.h"
 #include "level_graph.h"
 #include "game_graph.h"
+#include "XRayUnrealProxyInterface.h"

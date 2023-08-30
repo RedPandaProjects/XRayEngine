@@ -440,6 +440,7 @@
     <ClCompile Include="Text_Console_WndProc.cpp" />
     <ClCompile Include="thunderbolt.cpp" />
     <ClCompile Include="tntQAVI.cpp" />
+    <ClCompile Include="XRayUnrealProxyInterface.cpp" />
     <ClCompile Include="XrDeviceInterface.cpp" />
     <ClCompile Include="XrEditorSceneInterface.cpp" />
     <ClCompile Include="XRaySEFactoryInterface.cpp" />

@@ -18,6 +18,7 @@ public:
 	virtual void				SetHudMode			(BOOL b)=0;
 	virtual BOOL				GetHudMode			()=0;
 	virtual bool				Alive				()=0;
+	virtual void				SetEnableVelocity	(bool EnableVelocity) = 0;
 };
 
 #endif	//	ParticleCustom_included

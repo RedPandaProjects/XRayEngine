@@ -30,6 +30,7 @@ void CParticlesObject::Init	(LPCSTR p_name, IRender_Sector* S, BOOL bAutoRemove)
 	{
 		// create visual
 		renderable.visual		= Render->model_CreateParticles(p_name);
+		renderable.visual	->Lock(this);
 #ifndef MASTER_GOLD
 		if (renderable.visual)
 		{
@@ -75,7 +76,10 @@ void CParticlesObject::Init	(LPCSTR p_name, IRender_Sector* S, BOOL bAutoRemove)
 //----------------------------------------------------
 CParticlesObject::~CParticlesObject()
 {
-
+	if(renderable.visual)
+	{
+		renderable.visual->Unlock(this);
+	}
 //	we do not need this since CPS_Instance does it
 //	shedule_unregister		();
 }
