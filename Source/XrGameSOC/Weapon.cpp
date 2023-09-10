@@ -137,47 +137,51 @@ void CWeapon::UpdateXForm	()
 		// Calculate
 		Fmatrix				mRes;
 		Fvector				R,D,N;
-		D.sub				(mL.c,mR.c);	
-		if(fis_zero(D.magnitude()))
-		{
-			mRes.set(E->XFORM());
-			mRes.c.set(mR.c);
-		}
-		else
-		{		
-			D.normalize();
-			R.crossproduct	(mR.j,D);
-			N.crossproduct	(D,R);			
-			N.normalize();
-			mRes.set		(R,N,D,mR.c);
-			mRes.mulA_43	(E->XFORM());
-		}
-		
-		UpdatePosition	(mRes);
-		
+		D.sub				(mL.c,mR.c);
 		{
 			mRes.identity();
-			if (fis_zero(D.magnitude()))
+			if(GetHUDmode()||E->UnrealProxy&&Visual()->IsAttached(E->UnrealProxy))
 			{
-				mRes.identity();
+				if (fis_zero(D.magnitude()))
+				{
+					mRes.identity();
+				}
+				else
+				{
+					D.normalize();
+					R.crossproduct	(mR.j,D);
+					N.crossproduct(D, R);
+					N.normalize();
+					mRes.set(R,N,D, Fvector().set(0, 0, 0));
+					Fmatrix Invert = mR;
+					Invert.invert();
+					mRes.mulA_44(Invert);
+					mRes.c.set(0,0,0);
+				}
+				mRes.mulB_43(m_strapped_mode ? m_StrapOffset : m_Offset);
+				Visual()->SetOffset(mRes);
+				Visual()->GetWorldTransform(	renderable.xform);
 			}
 			else
 			{
-				D.normalize();
-				R.crossproduct	(mR.j,D);
-				N.crossproduct(D, R);
-				N.normalize();
-				mRes.set(R,N,D, Fvector().set(0, 0, 0));
-				Fmatrix Invert = mR;
-				Invert.invert();
-				mRes.mulA_44(Invert);
-				mRes.c.set(0,0,0);
-				//
+				if(fis_zero(D.magnitude()))
+				{
+					mRes.set(E->XFORM());
+					mRes.c.set(mR.c);
+				}
+				else
+				{		
+					D.normalize();
+					R.crossproduct	(mR.j,D);
+					N.crossproduct	(D,R);			
+					N.normalize();
+					mRes.set		(R,N,D,mR.c);
+					mRes.mulA_43	(E->XFORM());
+				}
+				
+				UpdatePosition	(mRes);
 			}
-			mRes.mulB_43(m_strapped_mode ? m_StrapOffset : m_Offset);
-			Visual()->SetOffset(mRes);
 		}
-	
 
 	}
 }
@@ -224,19 +228,18 @@ void CWeapon::UpdateFireDependencies_internal()
 
 			// fire point&direction
 			const Fmatrix& fire_mat		= V->LL_GetTransform(u16(m_pHUD->FireBone()));
-			const Fmatrix& parent			= m_pHUD->Transform	();
+			Fmatrix parent;m_pHUD->Visual()->GetWorldTransform(parent);
 
 			const Fvector& fp		= m_pHUD->FirePoint();
 			const Fvector& fp2		= m_pHUD->FirePoint2();
 			const Fvector& sp		= m_pHUD->ShellPoint();
-
 			fire_mat.transform_tiny	(m_firedeps.vLastFP,fp);
-			parent.transform_tiny	(m_firedeps.vLastFP);
+			parent.transform	(m_firedeps.vLastFP);
 			fire_mat.transform_tiny	(m_firedeps.vLastFP2,fp2);
-			parent.transform_tiny	(m_firedeps.vLastFP2);
+			parent.transform	(m_firedeps.vLastFP2);
 		
 			fire_mat.transform_tiny	(m_firedeps.vLastSP,sp);
-			parent.transform_tiny	(m_firedeps.vLastSP);
+			parent.transform	(m_firedeps.vLastSP);
 
 			m_firedeps.vLastFD.set	(0.f,0.f,1.f);
 			parent.transform_dir	(m_firedeps.vLastFD);

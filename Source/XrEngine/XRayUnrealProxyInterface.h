@@ -27,6 +27,8 @@ public:
 	virtual void										AttachTo									(XRayUnrealAttachableInterface* Attach, const char*BoneName) = 0;
 	virtual void										Detach										() = 0;
 	virtual void										SetOffset									(const Fmatrix&offset) = 0;
+	virtual void										GetWorldTransform							(Fmatrix&OutXForm) = 0;
+	virtual	bool										IsAttached									(XRayUnrealAttachableInterface* Attach) = 0;
 	virtual void										SetOwnerNoSee								(bool Enable) = 0;
 	virtual void										SetOnlyOwnerSee								(bool Enable) = 0;
 	virtual void										Lock										(CObject*) = 0;

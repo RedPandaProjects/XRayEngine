@@ -207,39 +207,24 @@ void CHudItem::Deactivate()
 extern ENGINE_API float		psHUD_FOV;
 void CHudItem::UpdateHudPosition	()
 {
-	if (m_pHUD && GetHUDmode()){
+	if (m_pHUD && GetHUDmode())
+	{
 		if(item().IsHidden()) 
 			SetHUDmode(FALSE);
 
 		Fmatrix							trans;
 
 		CActor* pActor = smart_cast<CActor*>(object().H_Parent());
-		if(pActor){
-			const float HudFov = tan(deg2rad(psHUD_FOV * Device->fFOV/2));
-			const float Fov = tan(deg2rad( Device->fFOV /2));
-			
-
-			//pActor->Cameras().camera_Matrix				(trans);
+		if(pActor)
+		{
 			trans.identity();
-			Fmatrix Rotation;
-			Rotation.setHPB(deg2rad(90.f), 0, 0);
-
 			UpdateHudInertion							(trans);
 			UpdateHudAdditonal							(trans); 
 			m_pHUD->UpdatePosition						(trans);
 			trans = m_pHUD->Transform();
-			{
-					Fmatrix View = Device->mView;
-					View.c.set(0,0,0);
-					View.identity();
-					Fmatrix FovDelta, InvView; 
-					InvView.invert(View);
-					FovDelta.scale(Fov / HudFov, Fov / HudFov, 1);
-					trans.mulA_43(View);
-					trans.mulA_43(FovDelta);
-					trans.mulA_43(InvView);
-					trans.mulA_43(Rotation);
-			}
+			Fmatrix Rotation;
+			Rotation.setHPB(deg2rad(90.f), 0, 0);
+			trans.mulA_43(Rotation); 
 			m_pHUD->Visual()->SetOffset					(trans);
 		}
 	}
