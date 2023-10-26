@@ -32,7 +32,14 @@ public:
 		cdb_clRAY->End	();
 #endif
 	}
-	
+	IC void			ray_query		(const Fmatrix& inv_parent, const CDB::MODEL *m_def, const Fvector& r_start,  const Fvector& r_dir, float r_range)
+	{
+    	// transform
+        Fvector S,D;
+	    inv_parent.transform_tiny	(S,r_start);
+    	inv_parent.transform_dir	(D,r_dir);
+		ray_query					(m_def,S,D,r_range);
+	}
 	IC void			box_options		(u32 f)	
 	{	
 		CL.box_options(f);

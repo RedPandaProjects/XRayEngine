@@ -38,19 +38,20 @@ void CEditableMesh::GenerateCFModel()
 {
 	UnloadCForm		();
 	// Collect faces
-	//CDB::Collector* CL = ETOOLS::create_collector();
+	CDB::Collector* CL = xr_new<CDB::Collector>	();
 	//// double sided
-	//for (SurfFacesPairIt sp_it=m_SurfFaces.begin(); sp_it!=m_SurfFaces.end(); sp_it++){
-	//	IntVec& face_lst = sp_it->second;
-	//	for (IntIt it=face_lst.begin(); it!=face_lst.end(); it++){
-	//		st_Face&	F = m_Faces[*it];
- //           ETOOLS::collector_add_face_d(CL,m_Vertices[F.pv[0].pindex],m_Vertices[F.pv[1].pindex],m_Vertices[F.pv[2].pindex], *it);
-	//		if (sp_it->first->m_Flags.is(CSurface::sf2Sided))
-	//			ETOOLS::collector_add_face_d(CL,m_Vertices[F.pv[2].pindex],m_Vertices[F.pv[1].pindex],m_Vertices[F.pv[0].pindex], *it);
-	//	}
-	//}
-	//m_CFModel 		= ETOOLS::create_model_cl(CL);
-	//ETOOLS::destroy_collector(CL);
+	for (SurfFacesPairIt sp_it=m_SurfFaces.begin(); sp_it!=m_SurfFaces.end(); sp_it++){
+		IntVec& face_lst = sp_it->second;
+		for (IntIt it=face_lst.begin(); it!=face_lst.end(); it++){
+			st_Face&	F = m_Faces[*it];
+            CL->add_face_D(m_Vertices[F.pv[0].pindex],m_Vertices[F.pv[1].pindex],m_Vertices[F.pv[2].pindex], *it);
+			if (sp_it->first->m_Flags.is(CSurface::sf2Sided))
+				CL->add_face_D(m_Vertices[F.pv[2].pindex],m_Vertices[F.pv[1].pindex],m_Vertices[F.pv[0].pindex], *it);
+		}
+	}
+	m_CFModel		= xr_new<CDB::MODEL> ();
+	m_CFModel->build(CL->getV(), CL->getVS(), CL->getT(), CL->getTS());
+    xr_delete(CL);
 }
 
 void CEditableMesh::RayQuery(SPickQuery& pinf)
@@ -89,21 +90,23 @@ void CEditableMesh::BoxQuery(const Fmatrix& parent, const Fmatrix& inv_parent, S
 }
 
 static const float _sqrt_flt_max = _sqrt(flt_max*0.5f);
-
 bool CEditableMesh::RayPick(float& distance, const Fvector& start, const Fvector& direction, const Fmatrix& inv_parent, SRayPickInfo* pinf)
 {
 	if (!m_Flags.is(flVisible)) return false;
 
     if (!m_CFModel) GenerateCFModel();
-//.	float m_r 		= pinf?pinf->inf.range+EPS_L:UI->ZFar();// (bugs: не всегда выбирает) //S ????
+    
 
-	/*ETOOLS::ray_options	(CDB::OPT_ONLYNEAREST | CDB::OPT_CULL);
-	ETOOLS::ray_query_m	(inv_parent, m_CFModel, start, direction, _sqrt_flt_max);
+	XRC->ray_options(CDB::OPT_ONLYNEAREST | CDB::OPT_CULL);
+	XRC->ray_query(inv_parent, m_CFModel, start, direction, _sqrt_flt_max);
 
-    if (ETOOLS::r_count()){
-		CDB::RESULT* I	= ETOOLS::r_begin	();
-		if (I->range<distance) {
-	        if (pinf){
+    if (XRC->r_count())
+    {
+		CDB::RESULT* I	= XRC->r_begin	();
+		if (I->range<distance) 
+        {
+	        if (pinf)
+            {
             	pinf->SetRESULT	(m_CFModel,I);
     	        pinf->e_obj 	= m_Parent;
         	    pinf->e_mesh	= this;
@@ -113,7 +116,7 @@ bool CEditableMesh::RayPick(float& distance, const Fvector& start, const Fvector
             distance = I->range;
             return true;
 		}
-    }*/
+    }
 	return false;
 }
 //----------------------------------------------------

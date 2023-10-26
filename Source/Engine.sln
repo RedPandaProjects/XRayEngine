@@ -76,6 +76,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlib", "External\zlib\zlib.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FreeMagic", "Editors\FreeMagic\FreeMagic.vcxproj", "{DCC5B76D-BE13-4D1F-BE14-75D0FA678340}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HighMapGenerator", "HighMapGenerator\HighMapGenerator.vcxproj", "{445E1E70-EEEB-4640-850A-BC5997FA521F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -241,6 +243,12 @@ Global
 		{DCC5B76D-BE13-4D1F-BE14-75D0FA678340}.Release|x64.ActiveCfg = Release|x64
 		{DCC5B76D-BE13-4D1F-BE14-75D0FA678340}.Release|x64.Build.0 = Release|x64
 		{DCC5B76D-BE13-4D1F-BE14-75D0FA678340}.Shipping|x64.ActiveCfg = Debug|x64
+		{445E1E70-EEEB-4640-850A-BC5997FA521F}.Debug|x64.ActiveCfg = Debug|x64
+		{445E1E70-EEEB-4640-850A-BC5997FA521F}.Debug|x64.Build.0 = Debug|x64
+		{445E1E70-EEEB-4640-850A-BC5997FA521F}.Release|x64.ActiveCfg = Release|x64
+		{445E1E70-EEEB-4640-850A-BC5997FA521F}.Release|x64.Build.0 = Release|x64
+		{445E1E70-EEEB-4640-850A-BC5997FA521F}.Shipping|x64.ActiveCfg = Debug|x64
+		{445E1E70-EEEB-4640-850A-BC5997FA521F}.Shipping|x64.Build.0 = Debug|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -63,7 +63,7 @@ void CEditableMesh::Clear()
 
 void CEditableMesh::UnloadCForm     ()
 {
-	//ETOOLS::destroy_model			(m_CFModel);
+	xr_delete			(m_CFModel);
 }
 
 void CEditableMesh::UnloadFNormals  (bool force)
