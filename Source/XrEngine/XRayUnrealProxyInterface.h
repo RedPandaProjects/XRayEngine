@@ -31,6 +31,7 @@ public:
 	virtual	bool										IsAttached									(XRayUnrealAttachableInterface* Attach) = 0;
 	virtual void										SetOwnerNoSee								(bool Enable) = 0;
 	virtual void										SetOnlyOwnerSee								(bool Enable) = 0;
+	virtual void										SetVisibility								(bool NewVisibility) = 0;
 	virtual void										Lock										(CObject*) = 0;
 	virtual void										Lock										(void*) = 0;
 	virtual void										Unlock										(void*) = 0;

@@ -344,6 +344,7 @@ BOOL CCustomZone::net_Spawn(CSE_Abstract* DC)
 	{
 		m_pIdleLight = ::Render->light_create();
 		m_pIdleLight->set_shadow(true);
+		m_pIdleLight->set_type(IRender_Light::POINT);
 	}
 	else
 		m_pIdleLight = NULL;

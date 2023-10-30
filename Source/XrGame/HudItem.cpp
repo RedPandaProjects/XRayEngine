@@ -229,20 +229,24 @@ void CHudItem::UpdateCL()
 			}
 		}
 	}
-	if (!IsHidden() && object().H_Parent())
+	if(IsHidden() || !object().H_Parent())
 	{
-		CInventoryOwner	*owner = smart_cast<CInventoryOwner*>(object().H_Parent());
-		VERIFY			(owner);
-		CInventoryItem	*self = smart_cast<CInventoryItem*>(this);
-		if (owner->attached(self)&&LastAttachBone != GetAttachBone())
+		if(LastAttachBone.size())
 		{
-			CObject* ParentActor = object().H_Parent();
-			VERIFY(ParentActor);
-			if(ParentActor->UnrealProxy)
+			LastAttachBone = "";
+			
+			object().Visual()->Detach();
+			if(object().UnrealProxy)
 			{
-				LastAttachBone = GetAttachBone();
-				//ParentActor->UnrealProxy->Attach(object().Visual(), LastAttachBone.c_str());
+				object().UnrealProxy->SetAsRoot(object().Visual());
 			}
+		}
+	}
+	else if (object().H_Parent())
+	{
+		if (LastAttachBone.size() && LastAttachBone != GetAttachBone())
+		{
+			ReAttach();
 		}
 	}
 	UpdateXForm();
@@ -250,21 +254,11 @@ void CHudItem::UpdateCL()
 
 void CHudItem::Hide()
 {
-	if (object().Visual())
-	{
-		object().Visual()->Detach();
-	}
 }
 
 void CHudItem::Show()
 {
-	CObject* ParentActor = object().H_Parent();
-	VERIFY(ParentActor);
-	if (ParentActor->UnrealProxy)
-	{
-		LastAttachBone = GetAttachBone();
-	//	ParentActor->UnrealProxy->Attach(object().Visual(), LastAttachBone.c_str());
-	}
+	ReAttach();
 }
 
 void CHudItem::OnH_A_Chield		()
@@ -450,4 +444,17 @@ attachable_hud_item* CHudItem::HudItemData()
 		return hi;
 
 	return NULL;
+}
+
+void CHudItem::ReAttach()
+{
+	CObject* ParentActor = object().H_Parent();
+	VERIFY(ParentActor);
+	LastAttachBone = GetAttachBone();
+	if(ParentActor->UnrealProxy)
+	{
+		LastAttachBone = GetAttachBone();
+		object().Visual()->AttachTo(ParentActor->UnrealProxy, LastAttachBone.c_str());
+		object().Visual()->SetOwnerNoSee(true);
+	}
 }

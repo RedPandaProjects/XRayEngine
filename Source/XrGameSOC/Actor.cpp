@@ -240,7 +240,11 @@ void CActor::DestroyUnrealProxy()
 	}
 	else
 	{
-		UnrealProxy = nullptr;
+		if(UnrealProxy)
+		{
+			UnrealProxy->Unlock(this);
+			UnrealProxy = nullptr;
+		}
 	}
 }
 

@@ -327,7 +327,7 @@ void	CHudItem::OnActiveItem()
 void	CHudItem::OnHiddenItem()
 {
 	
-}
+} 
 
 void CHudItem::OnH_B_Chield		()
 {

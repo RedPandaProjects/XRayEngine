@@ -187,7 +187,7 @@ void CHudItem::SendHiddenItem()
 		P.w_u8			(u8(eHidden));
 		P.w_u8			(u8(m_sub_state));
 		P.w_u8			(u8(m_ammoType& 0xff));
-		P.w_u8			(u8(iAmmoElapsed & 0xff));
+		P.w_u8			(u8(iAmmoElapsed R& 0xff));
 		P.w_u8			(u8(m_set_next_ammoType_on_reload & 0xff));
 		CHudItem::object().u_EventSend		(P, net_flags(TRUE, TRUE, FALSE, TRUE));*/
 	}
@@ -240,40 +240,48 @@ void CHudItem::UpdateCL()
 			}
 		}
 	}
-	if (!IsHidden() && object().H_Parent())
+	if(IsHidden() || !object().H_Parent())
 	{
-		if (LastAttachBone != GetAttachBone())
+		if(LastAttachBone.size())
 		{
-			CObject* ParentActor = object().H_Parent();
-			VERIFY(ParentActor);
-			LastAttachBone = GetAttachBone();
-			if(ParentActor->UnrealProxy)
+			LastAttachBone = "";
+			
+			object().Visual()->Detach();
+			if(object().UnrealProxy)
 			{
-				LastAttachBone = GetAttachBone();
-				ParentActor->UnrealProxy->AttachTo(object().Visual(), LastAttachBone.c_str());
+				object().UnrealProxy->SetAsRoot(object().Visual());
 			}
+		}
+	}
+	else if (object().H_Parent())
+	{
+		if (LastAttachBone.size() && LastAttachBone != GetAttachBone())
+		{
+			ReAttach();
 		}
 	}
 	UpdateXForm();
 }
 void CHudItem::Hide()
 {
-	if (object().Visual())
-	{
-		object().Visual()->Detach();
-	}
 }
 
 void CHudItem::Show()
 {
-	CObject* ParentActor = object().H_Parent();
-	VERIFY(ParentActor);
-	if (!ParentActor->UnrealProxy)
-	{
-		return;
-	}
-	LastAttachBone = GetAttachBone();
-	ParentActor->UnrealProxy->AttachTo(object().Visual(), LastAttachBone.c_str());
+	ReAttach();
+}
+
+void CHudItem::ReAttach()
+{
+		CObject* ParentActor = object().H_Parent();
+		VERIFY(ParentActor);
+		LastAttachBone = GetAttachBone();
+		if(ParentActor->UnrealProxy)
+		{
+			LastAttachBone = GetAttachBone();
+			object().Visual()->AttachTo(ParentActor->UnrealProxy, LastAttachBone.c_str());
+			object().Visual()->SetOwnerNoSee(true);
+		}
 }
 
 void CHudItem::OnH_A_Chield		()
@@ -288,7 +296,6 @@ void CHudItem::OnH_B_Independent	(bool just_before_destroy)
 {
 	m_sounds.StopAllSounds	();
 	UpdateXForm				();
-	
 	// next code was commented 
 	/*
 	if(HudItemData() && !just_before_destroy)
@@ -302,13 +309,13 @@ void CHudItem::OnH_B_Independent	(bool just_before_destroy)
 		Msg("---Detaching hud item [%s][%d]", this->HudSection().c_str(), this->object().ID());
 	}*/
 	//SetHudItemData			(NULL);
-}
-
+} 
 void CHudItem::OnH_A_Independent	()
-{
+{ 
 	if(HudItemData())
 		g_player_hud->detach_item(this);
 	StopCurrentAnimWithoutCallback();
+	
 }
 
 void CHudItem::on_b_hud_detach()

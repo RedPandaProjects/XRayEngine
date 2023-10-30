@@ -80,8 +80,8 @@ void CShootingObject::Light_Create		()
 {
 	//lights
 	light_render				=	::Render->light_create();
-	if (::Render->get_generation()==IRender_interface::GENERATION_R2)	light_render->set_shadow	(true);
-	else																light_render->set_shadow	(false);
+	light_render->set_type(IRender_Light::POINT);
+	light_render->set_shadow	(true);
 }
 
 void CShootingObject::Light_Destroy		()
@@ -170,6 +170,7 @@ void CShootingObject::Light_Render	(const Fvector& P)
 	light_render->set_position	(P);
 	light_render->set_color		(light_build_color.r*light_scale,light_build_color.g*light_scale,light_build_color.b*light_scale);
 	light_render->set_range		(light_build_range*light_scale);
+	light_render->set_intensity(1);
 
 	if(	!light_render->get_active() )
 	{

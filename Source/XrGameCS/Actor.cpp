@@ -246,6 +246,7 @@ void CActor::DestroyUnrealProxy()
 	else
 	{
 		UnrealProxy = nullptr;
+		g_player_hud->SetActor(nullptr);
 	}
 }
 
@@ -897,6 +898,8 @@ void CActor::UpdateCL	()
 			{
 				UnrealProxy->SetAsRoot(renderable.visual);
 			}
+			reattach_items();
+			g_player_hud->SetActor(this);
 		}
 	}
 	UpdateInventoryOwner			(Device->dwTimeDelta);
@@ -1004,32 +1007,9 @@ void CActor::UpdateCL	()
 		else
 			xr_delete(m_sndShockEffector);
 	}
-	Fmatrix							trans;
-	if(cam_Active() == cam_FirstEye())
-	{
-/*
-		CCameraBase* C = cam_Active();
-		Fvector vRight, vNormal, vDirection, vPosition;
 
-		vNormal					= C->vNormal; 
-		vNormal.normalize		();
-		vDirection				= C->vDirection;
-		vDirection.normalize	();
-
-		vRight.crossproduct		(vNormal,vDirection);
-		vNormal.crossproduct	(vDirection,vRight);
-
-		vPosition				= C->vPosition;
-
-		trans.set				(vRight, vNormal, vDirection, vPosition);
-*/
-		Cameras().hud_camera_Matrix		(trans);
-	}else
-		Cameras().camera_Matrix			(trans);
-	
-	
-	if(IsFocused())
-		g_player_hud->update			(trans);
+	g_player_hud->update			();
+		
 }
 
 float	NET_Jump = 0;
@@ -1377,8 +1357,8 @@ extern	BOOL	g_ShowAnimationInfo		;
 void CActor::OnHUDDraw	(CCustomHUD*)
 {
 	R_ASSERT						(IsFocused());
-	if(! ( (mstate_real & mcLookout) && !IsGameTypeSingle() ) )
-		g_player_hud->render_hud		();
+	/*if(! ( (mstate_real & mcLookout) && !IsGameTypeSingle() ) )
+		g_player_hud->render_hud		();*/
 
 
 #if 0//ndef NDEBUG

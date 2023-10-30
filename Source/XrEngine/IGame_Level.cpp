@@ -296,3 +296,8 @@ void   IGame_Level::SoundEvent_OnDestDestroy (Feel::Sound* obj)
 }
 
 
+
+float IGame_Level::GetGameTimeAsFloat()
+{
+	return  g_pGamePersistent->Environment().GetGameTime();
+}

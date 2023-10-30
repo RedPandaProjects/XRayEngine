@@ -146,14 +146,7 @@ void attachable_hud_item::update(bool bForce)
 
 	m_parent->calc_transform		(m_attach_place_idx, m_attach_offset, m_item_transform);
 	m_upd_firedeps_frame			= Device->dwFrame;
-
-	IKinematicsAnimated* ka			=	m_model->dcast_PKinematicsAnimated();
-	if(ka)
-	{
-		ka->UpdateTracks									();
-		ka->dcast_PKinematics()->CalculateBones_Invalidate	();
-		ka->dcast_PKinematics()->CalculateBones				(TRUE);
-	}
+	m_model->dcast_RenderVisual()->SetOffset(m_attach_offset);
 }
 
 void attachable_hud_item::update_hud_additional(Fmatrix& trans)
@@ -404,11 +397,13 @@ player_hud::player_hud()
 	m_attached_items[0]		= NULL;
 	m_attached_items[1]		= NULL;
 	m_transform.identity	();
+	m_actor = nullptr;
 }
 
 
 player_hud::~player_hud()
 {
+	VERIFY(m_actor == nullptr);
 	IRenderVisual* v			= m_model->dcast_RenderVisual();
 	::Render->model_Delete		(v);
 	m_model						= NULL;
@@ -446,6 +441,7 @@ void player_hud::load(const shared_str& player_hud_sect)
 		{
 			const shared_str& _bone	= _b->second;
 			m_ancors.push_back		(m_model->dcast_PKinematics()->LL_BoneID(_bone));
+			m_ancors_names.push_back(_bone);
 		}
 	}
 	if(!b_reload)
@@ -483,25 +479,25 @@ void player_hud::render_item_ui()
 	if(m_attached_items[1])
 		m_attached_items[1]->render_item_ui();
 }
-
-void player_hud::render_hud()
-{
-	if(!m_attached_items[0] && !m_attached_items[1])	return;
-
-	bool b_r0 = (m_attached_items[0] && m_attached_items[0]->need_renderable());
-	bool b_r1 = (m_attached_items[1] && m_attached_items[1]->need_renderable());
-
-	if(!b_r0 && !b_r1)									return;
-
-	::Render->set_Transform		(&m_transform);
-	::Render->add_Visual		(m_model->dcast_RenderVisual());
-	
-	if(m_attached_items[0])
-		m_attached_items[0]->render();
-	
-	if(m_attached_items[1])
-		m_attached_items[1]->render();
-}
+//
+//void player_hud::render_hud()
+//{
+//	if(!m_attached_items[0] && !m_attached_items[1])	return;
+//
+//	bool b_r0 = (m_attached_items[0] && m_attached_items[0]->need_renderable());
+//	bool b_r1 = (m_attached_items[1] && m_attached_items[1]->need_renderable());
+//
+//	if(!b_r0 && !b_r1)									return;
+//
+//	::Render->set_Transform		(&m_transform);
+//	::Render->add_Visual		(m_model->dcast_RenderVisual());
+//	
+//	if(m_attached_items[0])
+//		m_attached_items[0]->render();
+//	
+//	if(m_attached_items[1])
+//		m_attached_items[1]->render();
+//}
 
 
 #include "../xrEngine/motion.h"
@@ -551,9 +547,13 @@ const Fvector& player_hud::attach_pos() const
 		return Fvector().set(0,0,0);
 }
 
-void player_hud::update(const Fmatrix& cam_trans)
+void player_hud::update()
 {
-	Fmatrix	trans					= cam_trans;
+	bool b_r0 = (m_attached_items[0] && m_attached_items[0]->need_renderable());
+	bool b_r1 = (m_attached_items[1] && m_attached_items[1]->need_renderable());
+	m_model->dcast_RenderVisual()->SetVisibility(b_r0||b_r1);
+
+	Fmatrix	trans					= Fidentity;
 	update_inertion					(trans);
 	update_additional				(trans);
 
@@ -561,18 +561,25 @@ void player_hud::update(const Fmatrix& cam_trans)
 	ypr.mul							(PI/180.f);
 	m_attach_offset.setHPB			(ypr.x,ypr.y,ypr.z);
 	m_attach_offset.translate_over	(attach_pos());
-	m_transform.mul					(trans, m_attach_offset);
-	// insert inertion here
-
-	m_model->UpdateTracks				();
-	m_model->dcast_PKinematics()->CalculateBones_Invalidate	();
-	m_model->dcast_PKinematics()->CalculateBones				(TRUE);
-
+	trans.mulB_44					( m_attach_offset);
+	Fmatrix Rotation;
+	Rotation.setHPB(deg2rad(90.f), 0, 0);
+	trans.mulA_43(Rotation); 
+	m_model->dcast_RenderVisual()->SetOffset(trans);
+	m_model->dcast_RenderVisual()->GetWorldTransform(m_transform);
 	if(m_attached_items[0])
+	{
 		m_attached_items[0]->update(true);
+		m_attached_items[0]->m_model->dcast_RenderVisual()->SetVisibility(b_r0);
+	}
 
 	if(m_attached_items[1])
+	{
 		m_attached_items[1]->update(true);
+		m_attached_items[1]->m_model->dcast_RenderVisual()->SetVisibility(b_r1);
+	}
+
+
 }
 
 u32 player_hud::anim_play(u16 part, const MotionID& M, BOOL bMixIn, const CMotionDef*& md, float speed)
@@ -684,7 +691,13 @@ void player_hud::attach_item(CHudItem* item)
 	if(	m_attached_items[item_idx] != pi)
 	{
 		if(m_attached_items[item_idx])
+		{
 			m_attached_items[item_idx]->m_parent_hud_item->on_b_hud_detach();
+			if(m_actor)
+			{
+				m_attached_items[item_idx]->m_model->dcast_RenderVisual()->Detach();
+			}
+		}
 
 		m_attached_items[item_idx]						= pi;
 		pi->m_parent_hud_item							= item;
@@ -693,8 +706,13 @@ void player_hud::attach_item(CHudItem* item)
 			m_attached_items[1]->m_parent_hud_item->CheckCompatibility(item);
 
 		item->on_a_hud_attach();
+		if(m_actor)
+		{
+			pi->m_model->dcast_RenderVisual()->AttachTo(m_model->dcast_RenderVisual(),m_ancors_names[pi->m_attach_place_idx].c_str());
+		}
 	}
 	pi->m_parent_hud_item							= item;
+
 }
 
 void player_hud::detach_item_idx(u16 idx)
@@ -702,7 +720,10 @@ void player_hud::detach_item_idx(u16 idx)
 	if( NULL==attached_item(idx) )					return;
 
 	m_attached_items[idx]->m_parent_hud_item->on_b_hud_detach();
-
+	if(m_actor)
+	{
+		m_attached_items[idx]->m_model->dcast_RenderVisual()->Detach();
+	}
 	m_attached_items[idx]->m_parent_hud_item		= NULL;
 	m_attached_items[idx]							= NULL;
 
@@ -780,5 +801,39 @@ void player_hud::OnMovementChanged(ACTOR_DEFS::EMoveCommand cmd)
 
 		if(m_attached_items[1])
 			m_attached_items[1]->m_parent_hud_item->OnMovementChanged(cmd);
+	}
+} 
+
+void player_hud::SetActor(CActor* InActor)
+{
+	m_actor = InActor;
+	if(InActor&&InActor->UnrealProxy)
+	{
+		if (XRayUnrealPlayerCharacterInterface* PlayerCharacter = reinterpret_cast<XRayUnrealPlayerCharacterInterface* >(InActor->UnrealProxy->QueryInterface(EXRayUnrealInterfaceType::StalkerPlayerCharacter)))
+		{
+			m_model->dcast_RenderVisual()->AttachTo(PlayerCharacter->GetCameraComponent(),"");
+			m_model->dcast_RenderVisual()->SetOwnerNoSee(false);
+			m_model->dcast_RenderVisual()->SetOnlyOwnerSee(true);
+			if(m_attached_items[0])
+			{
+				m_attached_items[0]->m_model->dcast_RenderVisual()->AttachTo(m_model->dcast_RenderVisual(),m_ancors_names[m_attached_items[0]->m_attach_place_idx].c_str());
+			}
+			if(m_attached_items[1])
+			{
+				m_attached_items[1]->m_model->dcast_RenderVisual()->AttachTo(m_model->dcast_RenderVisual(),m_ancors_names[m_attached_items[1]->m_attach_place_idx].c_str());
+			}
+		}
+	}
+	else
+	{
+		m_model->dcast_RenderVisual()->Detach();
+		if(m_attached_items[0])
+		{
+			m_attached_items[0]->m_model->dcast_RenderVisual()->Detach();
+		}
+		if(m_attached_items[1])
+		{
+			m_attached_items[1]->m_model->dcast_RenderVisual()->Detach();
+		}
 	}
 }

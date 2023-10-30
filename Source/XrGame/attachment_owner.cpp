@@ -99,7 +99,7 @@ void CAttachmentOwner::attach(CInventoryItem *inventory_item)
 		attachable_item->set_bone_id(CastToIKinematics(game_object->Visual())->LL_BoneID(attachable_item->bone_name()));
 		if (game_object->UnrealProxy)
 		{
-			game_object->UnrealProxy->AttachTo(VisualAttachableItem, attachable_item->bone_name().c_str());
+			VisualAttachableItem->AttachTo(game_object->UnrealProxy, attachable_item->bone_name().c_str());
 		}
 		if (smart_cast<CActor*>(this))
 		{
@@ -172,7 +172,7 @@ void CAttachmentOwner::reattach_items		()
 		attachable_item->set_bone_id(CastToIKinematics(game_object->Visual())->LL_BoneID(attachable_item->bone_name()));
 		if (game_object->UnrealProxy)
 		{
-			game_object->UnrealProxy->AttachTo(VisualAttachableItem, attachable_item->bone_name().c_str());
+			VisualAttachableItem->AttachTo(game_object->UnrealProxy, attachable_item->bone_name().c_str());
 		}
 		if (smart_cast<CActor*>(this))
 		{

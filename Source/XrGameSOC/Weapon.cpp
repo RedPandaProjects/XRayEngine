@@ -248,7 +248,7 @@ void CWeapon::UpdateFireDependencies_internal()
 			m_firedeps.m_FireParticlesXForm.k.set(m_firedeps.vLastFD);
 			Fvector::generate_orthonormal_basis_normalized(m_firedeps.m_FireParticlesXForm.k,
 									m_firedeps.m_FireParticlesXForm.j, m_firedeps.m_FireParticlesXForm.i);
-		} else {
+		} else { 
 			// 3rd person or no parent
 			Fmatrix& parent			= XFORM();
 			Fvector& fp				= vLoadedFirePoint;
@@ -781,8 +781,16 @@ void CWeapon::UpdateCL		()
 
 	if(!IsGameTypeSingle())
 		make_Interpolation		();
-	
+	 
 	VERIFY(CastToIKinematics(Visual()));
+	if(!GetHUDmode())
+	{
+		RenderLight				();	
+	}
+	if(m_pHUD)
+	{
+		m_pHUD->Visual()->SetVisibility(!(IsZoomed() && !IsRotatingToZoom() && ZoomTexture()));
+	}
 }
 
 
@@ -791,8 +799,6 @@ void CWeapon::renderable_Render		()
 	UpdateXForm				();
 
 	//���������� ���������
-
-	RenderLight				();	
 
 	//���� �� � ������ ���������, �� ��� HUD �������� �� ����
 	if(IsZoomed() && !IsRotatingToZoom() && ZoomTexture())

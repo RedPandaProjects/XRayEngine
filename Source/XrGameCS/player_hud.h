@@ -101,8 +101,7 @@ public:
 					~player_hud			();
 	void			load				(const shared_str& model_name);
 	void			load_default		(){load("actor_hud");};
-	void			update				(const Fmatrix& trans);
-	void			render_hud			();	
+	void			update				();
 	void			render_item_ui		();
 	bool			render_item_ui_query();
 	u32				anim_play			(u16 part, const MotionID& M, BOOL bMixIn, const CMotionDef*& md, float speed);
@@ -122,6 +121,7 @@ public:
 	u32				motion_length		(const MotionID& M, const CMotionDef*& md, float speed);
 	u32				motion_length		(const shared_str& anim_name, const shared_str& hud_name, const CMotionDef*& md);
 	void			OnMovementChanged	(ACTOR_DEFS::EMoveCommand cmd)	;
+	void			SetActor			(class CActor*InActor);
 private:
 	void			update_inertion		(Fmatrix& trans);
 	void			update_additional	(Fmatrix& trans);
@@ -131,12 +131,13 @@ private:
 	const Fvector&	attach_pos			() const;
 
 	shared_str							m_sect_name;
-
+	class CActor*						m_actor;
 	Fmatrix								m_attach_offset;
 
 	Fmatrix								m_transform;
 	IKinematicsAnimated*				m_model;
 	xr_vector<u16>						m_ancors;
+	xr_vector<shared_str>				m_ancors_names;
 	attachable_hud_item*				m_attached_items[2];
 	xr_vector<attachable_hud_item*>		m_pool;
 

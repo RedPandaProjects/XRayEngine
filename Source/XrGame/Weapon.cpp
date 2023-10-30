@@ -180,6 +180,7 @@ void CWeapon::UpdateXForm	()
 		mRes.mulB_43(m_strapped_mode ? m_StrapOffset : m_Offset);
 		Visual()->SetOffset(mRes);
 	}
+	UpdateFireDependencies_internal();
 }
 
 void CWeapon::UpdateFireDependencies_internal()
