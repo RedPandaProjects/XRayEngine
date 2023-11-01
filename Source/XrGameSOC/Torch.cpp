@@ -236,9 +236,8 @@ BOOL CTorch::net_Spawn(CSE_Abstract* DC)
 	Fcolor clr				= pUserData->r_fcolor				("torch_definition",(b_r2)?"color_r2":"color");
 	fBrightness				= clr.intensity();
 	float range				= pUserData->r_float				("torch_definition",(b_r2)?"range_r2":"range");
-	clr.normalize_rgb();
 	light_render->set_color	(clr);
-	light_render->set_intensity(70);
+	light_render->set_intensity(5);
 	light_render->set_range	(range*1.5);
 	light_render->set_volumetric_intensity(0.1);
 

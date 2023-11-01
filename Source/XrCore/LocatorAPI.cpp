@@ -508,9 +508,9 @@ void CLocatorAPI::ProcessOne(LPCSTR path, void* _F)
 		Register	(N,0xffffffff,0,0,F.size,F.size,(u32)F.time_write);
 		Recurse		(N);
 	} else {
-		if (strext(N) && (0==strncmp(strext(N),".db",3) || 0==strncmp(strext(N),".xdb",4))  )
+		/*if (strext(N) && (0==strncmp(strext(N),".db",3) || 0==strncmp(strext(N),".xdb",4))  )
 			ProcessArchive	(N);
-		else												
+		else*/												
 			Register		(N,0xffffffff,0,0,F.size,F.size,(u32)F.time_write);
 	}
 }
