@@ -25,7 +25,7 @@ class	CMayaTranslator;
 struct	st_ObjectDB;
 struct	SXRShaderData;
 struct  ogf_desc;
-class	CCustomObject;
+class	FXRayCustomObject;
 
 #if 0
 	class PropValue;
@@ -332,7 +332,7 @@ public:
 	void 			RayQuery				(SPickQuery& pinf);
 	void 			RayQuery				(const Fmatrix& parent, const Fmatrix& inv_parent, SPickQuery& pinf);
 	void 			BoxQuery				(const Fmatrix& parent, const Fmatrix& inv_parent, SPickQuery& pinf);
-    bool 			BoxPick					(CCustomObject* obj, const Fbox& box, const Fmatrix& inv_parent, SBoxPickInfoVec& pinf);
+    bool 			BoxPick					(FXRayCustomObject* obj, const Fbox& box, const Fmatrix& inv_parent, SBoxPickInfoVec& pinf);
 	bool 			FrustumPick				(const CFrustum& frustum, const Fmatrix& parent);
     bool 			SpherePick				(const Fvector& center, float radius, const Fmatrix& parent);
 

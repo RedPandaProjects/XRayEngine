@@ -77,7 +77,7 @@ void CDetailManager::SSwingValue::lerp(const SSwingValue& A, const SSwingValue& 
 CDetailManager::CDetailManager	()
 {
 	dtFS 		= 0;
-	dtSlots		= 0;
+	DetailSlots		= 0;
 	soft_Geom	= 0;
 	hw_Geom		= 0;
 	hw_BatchSize= 0;
@@ -120,9 +120,9 @@ void CDetailManager::Load		()
 	dtFS				= FS.r_open(fn);
 
 	// Header
-	dtFS->r_chunk_safe	(0,&dtH,sizeof(dtH));
-	R_ASSERT			(dtH.version == DETAIL_VERSION);
-	u32 m_count			= dtH.object_count;
+	dtFS->r_chunk_safe	(0,&DetailHeader,sizeof(DetailHeader));
+	R_ASSERT			(DetailHeader.version == DETAIL_VERSION);
+	u32 m_count			= DetailHeader.object_count;
 
 	// Models
 	IReader* m_fs		= dtFS->open_chunk(1);
@@ -138,7 +138,7 @@ void CDetailManager::Load		()
 
 	// Get pointer to database (slots)
 	IReader* m_slots	= dtFS->open_chunk(2);
-	dtSlots				= (DetailSlot*)m_slots->pointer();
+	DetailSlots				= (FDetailSlot*)m_slots->pointer();
 	m_slots->close		();
 
 	// Initialize 'vis' and 'cache'
@@ -261,7 +261,7 @@ void CDetailManager::UpdateVisibleM()
 					S.frame			= Device->dwFrame+Random.randI(15,30);
 					for (int sp_id=0; sp_id<dm_obj_in_slot; sp_id++){
 						SlotPart&			sp	= S.G		[sp_id];
-						if (sp.id==DetailSlot::ID_Empty)	continue;
+						if (sp.id==FDetailSlot::ID_Empty)	continue;
 
 						sp.r_items[0].clear();
 						sp.r_items[1].clear();
@@ -290,7 +290,7 @@ void CDetailManager::UpdateVisibleM()
 				}
 				for (int sp_id=0; sp_id<dm_obj_in_slot; sp_id++){
 					SlotPart&			sp	= S.G		[sp_id];
-					if (sp.id==DetailSlot::ID_Empty)	continue;
+					if (sp.id==FDetailSlot::ID_Empty)	continue;
 					if (!sp.r_items[0].empty())
 					{
 						m_visibles[0][sp.id].push_back(&sp.r_items[0]);

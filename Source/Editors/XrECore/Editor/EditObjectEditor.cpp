@@ -63,7 +63,7 @@ bool CEditableObject::FrustumPick(const CFrustum& frustum, const Fmatrix& parent
 	return false;
 }
 
-bool CEditableObject::BoxPick(CCustomObject* obj, const Fbox& box, const Fmatrix& inv_parent, SBoxPickInfoVec& pinf){
+bool CEditableObject::BoxPick(FXRayCustomObject* obj, const Fbox& box, const Fmatrix& inv_parent, SBoxPickInfoVec& pinf){
 	bool picked = false;
     for(EditMeshIt m = m_Meshes.begin();m!=m_Meshes.end();m++)
         if ((*m)->BoxPick(box, inv_parent, pinf)){

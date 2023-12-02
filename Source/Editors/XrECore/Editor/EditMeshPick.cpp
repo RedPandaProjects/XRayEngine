@@ -183,16 +183,26 @@ void CEditableMesh::GetTiesFaces(int start_id, U32Vec& fl, float fSoftAngle, boo
 
 bool CEditableMesh::BoxPick(const Fbox& box, const Fmatrix& inv_parent, SBoxPickInfoVec& pinf)
 {
-    if (!m_CFModel) GenerateCFModel();
+    auto box_query = [](const Fmatrix& inv_parent, const CDB::MODEL *m_def, const Fbox& src)
+	{
+    	Fbox dest;
+		dest.xform(src,inv_parent);
+        Fvector c,d;
+        dest.getcenter(c);
+        dest.getradius(d);
+    	XRC->box_query(m_def,c,d);
+	};
 
-   /*ETOOLS::box_query_m(inv_parent, m_CFModel, box);
-    if (ETOOLS::r_count()){
+    if (!m_CFModel) GenerateCFModel();
+    box_query( inv_parent,m_CFModel, box);
+    if (XRC->r_count())
+    {
     	pinf.push_back(SBoxPickInfo());
 		pinf.back().e_obj 	= m_Parent;
 	    pinf.back().e_mesh	= this;
-	    for (CDB::RESULT* I=ETOOLS::r_begin(); I!=ETOOLS::r_end(); I++) pinf.back().AddRESULT(m_CFModel,I);
+	    for (CDB::RESULT* I=XRC->r_begin(); I!=XRC->r_end(); I++) pinf.back().AddRESULT(m_CFModel,I);
         return true;
-    }*/
+    }
 
     return false;
 }

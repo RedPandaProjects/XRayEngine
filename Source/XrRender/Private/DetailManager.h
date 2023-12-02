@@ -103,9 +103,9 @@ public:
 	float							m_global_time_old;
 public:
 	IReader*						dtFS;
-	DetailHeader					dtH;
-	DetailSlot*						dtSlots;		// note: pointer into VFS
-	DetailSlot						DS_empty;
+	FDetailHeader					DetailHeader;
+	FDetailSlot*						DetailSlots;		// note: pointer into VFS
+	FDetailSlot						DetailSlotEmpty;
 
 public:
 	DetailVec						objects;
@@ -163,7 +163,7 @@ public:
 
 public:
 	// get unpacked slot
-	DetailSlot&						QueryDB			(int sx, int sz);
+	FDetailSlot&						QueryDB			(int sx, int sz);
     
 	void							cache_Initialize();
 	void							cache_Update	(int sx, int sz, Fvector& view, int limit);

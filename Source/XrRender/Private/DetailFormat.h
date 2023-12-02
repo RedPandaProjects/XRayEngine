@@ -59,21 +59,21 @@
 
 #define DO_NO_WAVING	0x0001
 
-struct DetailHeader
+struct FDetailHeader
 {
 	u32		version;
 	u32		object_count;
-	int		offs_x,	offs_z;
+	int		OffsetX,	OffsetZ;
 	u32		size_x,	size_z;
 };
-struct DetailPalette
+struct FDetailPalette
 {
 	u16		a0:4;
 	u16		a1:4;
 	u16		a2:4;
 	u16		a3:4;
 };
-struct DetailSlot					// was(4+4+3*4+2 = 22b), now(8+2*4=16b)
+struct FDetailSlot					// was(4+4+3*4+2 = 22b), now(8+2*4=16b)
 {
 	u32				y_base	:	12;	// 11	// 1 unit = 20 cm, low = -200m, high = 4096*20cm - 200 = 619.2m
 	u32				y_height:	8;	// 20	// 1 unit = 10 cm, low = 0,     high = 256*10 ~= 25.6m
@@ -86,19 +86,19 @@ struct DetailSlot					// was(4+4+3*4+2 = 22b), now(8+2*4=16b)
 	u32				c_r		:	4;	// 56	// rgb = 4.4.4
 	u32				c_g		:	4;	// 60	// rgb = 4.4.4
 	u32				c_b		:	4;	// 64	// rgb = 4.4.4
-	DetailPalette	palette [4];
+	FDetailPalette	Palette [4];
 public:
 	enum			{	ID_Empty	= 0x3f	};
 public:
 	void			w_y		(float base, float height)				
 	{	
 		s32	_base	= iFloor((base + 200)/.2f);			clamp(_base,	0,4095);	y_base		= _base;
-		f32 _error	= base - r_ybase();
+		f32 _error	= base - GetYBase();
 		s32	_height = iCeil ((height+_error) / .1f);	clamp(_height,	0,255);		y_height	= _height;
 	}
 
-	float			r_ybase		()						{	return float(y_base)*.2f - 200.f;								}
-	float			r_yheight	()						{	return float(y_height)*.1f;									}
+	float			GetYBase		()						{	return float(y_base)*.2f - 200.f;								}
+	float			GetYHeight	()						{	return float(y_height)*.1f;									}
 	u32				w_qclr		(float v, u32 range)	{	s32 _v = iFloor(v * float(range)); clamp(_v,0,s32(range)); return _v; };
 	float			r_qclr		(u32 v,   u32 range)	{	return float(v)/float(range); }
 

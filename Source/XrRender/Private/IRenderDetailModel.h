@@ -25,7 +25,6 @@ public:
 	float		m_fMinScale;
 	float		m_fMaxScale;
 
-	ref_shader	shader;
 	fvfVertexIn	*vertices;
 	u32			number_vertices;     
 	u16			*indices;

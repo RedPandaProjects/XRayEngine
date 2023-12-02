@@ -75,7 +75,7 @@ void		CDetailManager::cache_Decompress(Slot* S)
 	D.type				= stReady;
 	if (D.empty)		return;
 
-	DetailSlot&	DS		= QueryDB(D.sx,D.sz);
+	FDetailSlot&	DS		= QueryDB(D.sx,D.sz);
 
 	// Select polygons
 	Fvector		bC,bD;
@@ -101,10 +101,10 @@ void		CDetailManager::cache_Decompress(Slot* S)
 	float		alpha255	[dm_obj_in_slot][4];
 	for (int i=0; i<dm_obj_in_slot; i++)
 	{
-		alpha255[i][0]	= 255.f*float(DS.palette[i].a0)/15.f;
-		alpha255[i][1]	= 255.f*float(DS.palette[i].a1)/15.f;
-		alpha255[i][2]	= 255.f*float(DS.palette[i].a2)/15.f;
-		alpha255[i][3]	= 255.f*float(DS.palette[i].a3)/15.f;
+		alpha255[i][0]	= 255.f*float(DS.Palette[i].a0)/15.f;
+		alpha255[i][1]	= 255.f*float(DS.Palette[i].a1)/15.f;
+		alpha255[i][2]	= 255.f*float(DS.Palette[i].a2)/15.f;
+		alpha255[i][3]	= 255.f*float(DS.Palette[i].a3)/15.f;
 	}
 
 	// Prepare to selection
@@ -140,10 +140,10 @@ void		CDetailManager::cache_Decompress(Slot* S)
 			selected.clear();
 
 #ifndef		DBG_SWITCHOFF_RANDOMIZE
-			if ((DS.id0!=DetailSlot::ID_Empty)&& InterpolateAndDither(alpha255[0],x,z,shift_x,shift_z,d_size,dither))	selected.push_back(0);
-			if ((DS.id1!=DetailSlot::ID_Empty)&& InterpolateAndDither(alpha255[1],x,z,shift_x,shift_z,d_size,dither))	selected.push_back(1);
-			if ((DS.id2!=DetailSlot::ID_Empty)&& InterpolateAndDither(alpha255[2],x,z,shift_x,shift_z,d_size,dither))	selected.push_back(2);
-			if ((DS.id3!=DetailSlot::ID_Empty)&& InterpolateAndDither(alpha255[3],x,z,shift_x,shift_z,d_size,dither))	selected.push_back(3);
+			if ((DS.id0!=FDetailSlot::ID_Empty)&& InterpolateAndDither(alpha255[0],x,z,shift_x,shift_z,d_size,dither))	selected.push_back(0);
+			if ((DS.id1!=FDetailSlot::ID_Empty)&& InterpolateAndDither(alpha255[1],x,z,shift_x,shift_z,d_size,dither))	selected.push_back(1);
+			if ((DS.id2!=FDetailSlot::ID_Empty)&& InterpolateAndDither(alpha255[2],x,z,shift_x,shift_z,d_size,dither))	selected.push_back(2);
+			if ((DS.id3!=FDetailSlot::ID_Empty)&& InterpolateAndDither(alpha255[3],x,z,shift_x,shift_z,d_size,dither))	selected.push_back(3);
 #else
 			if ((DS.id0!=DetailSlot::ID_Empty))	selected.push_back(0);
 			if ((DS.id1!=DetailSlot::ID_Empty))	selected.push_back(1);

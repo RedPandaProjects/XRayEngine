@@ -37,12 +37,12 @@ void 	CDetailManager::cache_Task		(int gx, int gz, Slot* D)
 {
 	int sx					= cg2w_X	(gx);
 	int sz					= cg2w_Z	(gz);
-	DetailSlot&	DS			= QueryDB	(sx,sz);
+	FDetailSlot&	DS			= QueryDB	(sx,sz);
 
-	D->empty				=	(DS.id0==DetailSlot::ID_Empty)&&
-								(DS.id1==DetailSlot::ID_Empty)&&
-								(DS.id2==DetailSlot::ID_Empty)&&
-								(DS.id3==DetailSlot::ID_Empty);
+	D->empty				=	(DS.id0==FDetailSlot::ID_Empty)&&
+								(DS.id1==FDetailSlot::ID_Empty)&&
+								(DS.id2==FDetailSlot::ID_Empty)&&
+								(DS.id3==FDetailSlot::ID_Empty);
 
 	// Unpacking
 	u32 old_type			= D->type;
@@ -50,8 +50,8 @@ void 	CDetailManager::cache_Task		(int gx, int gz, Slot* D)
 	D->sx					= sx;
 	D->sz					= sz;
 
-	D->vis.box.min.set		(sx*dm_slot_size,				DS.r_ybase(),					sz*dm_slot_size);
-	D->vis.box.max.set		(D->vis.box.min.x+dm_slot_size,	DS.r_ybase()+DS.r_yheight(),	D->vis.box.min.z+dm_slot_size);
+	D->vis.box.min.set		(sx*dm_slot_size,				DS.GetYBase(),					sz*dm_slot_size);
+	D->vis.box.max.set		(D->vis.box.min.x+dm_slot_size,	DS.GetYBase()+DS.GetYHeight(),	D->vis.box.min.z+dm_slot_size);
 	D->vis.box.grow			(EPS_L);
 
 	for (u32 i=0; i<dm_obj_in_slot; i++)	{
@@ -196,20 +196,20 @@ void	CDetailManager::cache_Update	(int v_x, int v_z, Fvector& view, int limit)
     }
 }
 
-DetailSlot&	CDetailManager::QueryDB(int sx, int sz)
+FDetailSlot&	CDetailManager::QueryDB(int sx, int sz)
 {
-	int db_x = sx+dtH.offs_x;
-	int db_z = sz+dtH.offs_z;
-	if ((db_x>=0) && (db_x<int(dtH.size_x)) && (db_z>=0) && (db_z<int(dtH.size_z)))
+	int db_x = sx+DetailHeader.OffsetX;
+	int db_z = sz+DetailHeader.OffsetZ;
+	if ((db_x>=0) && (db_x<int(DetailHeader.size_x)) && (db_z>=0) && (db_z<int(DetailHeader.size_z)))
 	{
-		u32 linear_id				= db_z*dtH.size_x + db_x;
-		return dtSlots				[linear_id];
+		u32 linear_id				= db_z*DetailHeader.size_x + db_x;
+		return DetailSlots				[linear_id];
 	} else {
 		// Empty slot
-		DS_empty.w_id				(0,DetailSlot::ID_Empty);
-		DS_empty.w_id				(1,DetailSlot::ID_Empty);
-		DS_empty.w_id				(2,DetailSlot::ID_Empty);
-		DS_empty.w_id				(3,DetailSlot::ID_Empty);
-		return DS_empty;
+		DetailSlotEmpty.w_id				(0,FDetailSlot::ID_Empty);
+		DetailSlotEmpty.w_id				(1,FDetailSlot::ID_Empty);
+		DetailSlotEmpty.w_id				(2,FDetailSlot::ID_Empty);
+		DetailSlotEmpty.w_id				(3,FDetailSlot::ID_Empty);
+		return DetailSlotEmpty;
 	}
 }
