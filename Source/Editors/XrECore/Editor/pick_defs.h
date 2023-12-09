@@ -8,7 +8,7 @@
 
 class CEditableObject;
 class CEditableMesh;
-class FXRayCustomObject;
+class FRBMKSceneObjectBase;
 
 #if 1
 	class SPickQuery{
@@ -139,7 +139,7 @@ class FXRayCustomObject;
 	struct SRayPickInfo{
 		CDB::RESULT 			inf;
         SRayPickObjVisualInfo   visual_inf;
-		FXRayCustomObject*			s_obj;
+		FRBMKSceneObjectBase*			s_obj;
 		CEditableObject*		e_obj;
 		CEditableMesh*			e_mesh;
 		Fvector     			pt;
@@ -150,7 +150,7 @@ class FXRayCustomObject;
     DEFINE_VECTOR(CDB::RESULT,BPInfVec,BPInfIt);
 	struct SBoxPickInfo{
     	BPInfVec			inf;
-		FXRayCustomObject*		s_obj;
+		FRBMKSceneObjectBase*		s_obj;
 		CEditableObject*	e_obj;
 		CEditableMesh*		e_mesh;
 		SBoxPickInfo		(){Reset();}

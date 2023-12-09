@@ -11,7 +11,7 @@ struct 	SRayPickInfo;
 //struct CFrustum;
 struct 	FSChunkDef;
 class 	CExporter;
-class	FXRayCustomObject;
+class	FRBMKSceneObjectBase;
 
 #if 1
 #	include "pick_defs.h"

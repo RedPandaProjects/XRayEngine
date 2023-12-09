@@ -25,7 +25,7 @@ class	CMayaTranslator;
 struct	st_ObjectDB;
 struct	SXRShaderData;
 struct  ogf_desc;
-class	FXRayCustomObject;
+class	FRBMKSceneObjectBase;
 
 #if 0
 	class PropValue;
@@ -133,7 +133,7 @@ const u32 FVF_SV	= D3DFVF_XYZ | D3DFVF_TEX1 | D3DFVF_NORMAL;
 
 class ECORE_API CEditableObject
 {
-	friend class CSceneObject;
+	friend class FRBMKSceneStaticMesh;
 	friend class CEditableMesh;
     friend class TfrmPropertiesEObject;
     friend class CSector;
@@ -332,7 +332,7 @@ public:
 	void 			RayQuery				(SPickQuery& pinf);
 	void 			RayQuery				(const Fmatrix& parent, const Fmatrix& inv_parent, SPickQuery& pinf);
 	void 			BoxQuery				(const Fmatrix& parent, const Fmatrix& inv_parent, SPickQuery& pinf);
-    bool 			BoxPick					(FXRayCustomObject* obj, const Fbox& box, const Fmatrix& inv_parent, SBoxPickInfoVec& pinf);
+    bool 			BoxPick					(FRBMKSceneObjectBase* obj, const Fbox& box, const Fmatrix& inv_parent, SBoxPickInfoVec& pinf);
 	bool 			FrustumPick				(const CFrustum& frustum, const Fmatrix& parent);
     bool 			SpherePick				(const Fvector& center, float radius, const Fmatrix& parent);
 
