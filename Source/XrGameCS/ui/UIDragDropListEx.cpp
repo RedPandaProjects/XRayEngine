@@ -4,8 +4,8 @@
 #include "../xrEngine/object_broker.h"
 #include "UICellItem.h"
 
-#include "../xrRender/Public/UIRender.h"
-#include "../xrRender/Public/UIShader.h"
+#include "../XrEngine/Render/UIRender.h"
+#include "../XrEngine/Render/UIShader.h"
 
 CUIDragItem* CUIDragDropListEx::m_drag_item = NULL;
 

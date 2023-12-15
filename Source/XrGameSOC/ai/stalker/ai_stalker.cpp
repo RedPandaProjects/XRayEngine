@@ -24,7 +24,7 @@
 #include "../../Xr_level_controller.h"
 #include "../../hudmanager.h"
 #include "clsid_game.h"
-#include "Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "../../../xrEngine/bone.h"
 #include "character_info.h"
 #include "../../actor.h"

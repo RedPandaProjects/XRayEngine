@@ -6,7 +6,7 @@
 #include "../xrphysics/MathUtils.h"
 #include "../xrphysics/extendedgeom.h"
 
-#include "Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include <boost/noncopyable.hpp>
 ///////////////////////////////////////////////////////////////////////////////////////
 #include "physicsshellholder.h"

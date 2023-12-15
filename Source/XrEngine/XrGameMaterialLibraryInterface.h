@@ -94,8 +94,8 @@ public:
 DEFINE_VECTOR(SGameMtl*, GameMtlVec, GameMtlIt);
 DEFINE_VECTOR(ref_sound, SoundVec, SoundIt);
 DEFINE_VECTOR(shared_str, PSVec, PSIt);
-#include "../XrRender/Public/WallMarkArray.h"
-#include "../XrRender/Public/RenderFactory.h"
+#include "../XrEngine/Render/WallMarkArray.h"
+#include "../XrEngine/Render/RenderFactory.h"
 
 class ENGINE_API SGameMtlPair
 {

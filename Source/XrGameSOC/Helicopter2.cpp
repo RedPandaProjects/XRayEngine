@@ -3,7 +3,7 @@
 #include "level.h"
 #include "script_game_object.h"
 #include "game_object_space.h"
-#include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 #include "../XrEngine/LightAnimLibrary.h"
 #include "PhysicsShell.h"
 #include "clsid_game.h"
@@ -11,7 +11,7 @@
 #include "ai/stalker/ai_stalker.h"
 #include "CustomZone.h"
 #include "MathUtils.h"
-#include "../XrRender/Public/Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 
 bool CHelicopter::isObjectVisible			(CObject* O)
 {

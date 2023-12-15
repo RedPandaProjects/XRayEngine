@@ -6,8 +6,8 @@
 #include "PHCapture.h"
 #include "Entity.h"
 #include "inventory_item.h"
-#include "../XrRender/Public/Kinematics.h"
-#include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrEngine/Render/Kinematics.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 #include "Actor.h"
 #include "Inventory.h"
 extern	class CPHWorld	*ph_world;

@@ -10,7 +10,7 @@
 
 #ifdef DEBUG
 
-#include "../xrRender/Public/DebugRender.h"
+#include "../XrEngine/Render/DebugRender.h"
 
 class CDebugRenderer {
 private:

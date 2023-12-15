@@ -1,7 +1,7 @@
 #pragma once
 
 #include "interactive_motion.h"
-#include "../xrRender/Public/Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 class imotion_position;
 class imotion_position:
 	public interactive_motion

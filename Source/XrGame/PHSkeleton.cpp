@@ -7,7 +7,7 @@
 #include "../xrphysics/PhysicsShell.h"
 #include "PHSynchronize.h"
 #include "../xrphysics/MathUtils.h"
-#include "Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 //#include "PHObject.h"
 //#include "../xrphysics/PHCollideValidator.h"
 #include "ai_object_location.h"

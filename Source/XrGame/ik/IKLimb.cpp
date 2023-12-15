@@ -3,7 +3,7 @@
 
 #include <boost/noncopyable.hpp>
 
-#include "Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 
 #include "gameobject.h"
 

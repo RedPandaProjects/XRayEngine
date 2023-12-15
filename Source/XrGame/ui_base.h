@@ -4,7 +4,7 @@ class CUICursor;
 class CUIGameCustom;
 
 #include "ui_defs.h"
-
+#include "../XrEngine/Render/UIRender.h"
 
 
 class CDeviceResetNotifier :public pureDeviceReset

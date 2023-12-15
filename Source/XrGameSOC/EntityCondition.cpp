@@ -8,8 +8,8 @@
 #include "game_cl_base.h"
 #include "entity_alive.h"
 #include "..\XrEngine\bone.h"
-#include "../XrRender/Public/Kinematics.h"
-#include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrEngine/Render/Kinematics.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 #include "../XrEngine/object_broker.h"
 
 #define MAX_HEALTH 1.0f

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "EliteDetector.h"
 #include "player_hud.h"
-#include "../xrRender/Public/UIRender.h"
+#include "../XrEngine/Render/UIRender.h"
 #include "ui/UIXmlInit.h"
 #include "ui/xrUIXmlParser.h"
 #include "ui/UIStatic.h"

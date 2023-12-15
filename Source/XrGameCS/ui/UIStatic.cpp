@@ -9,7 +9,7 @@
 #include "../string_table.h"
 #include "../ui_base.h"
 
-#include "../xrRender/Public/UIRender.h"
+#include "../XrEngine/Render/UIRender.h"
 
 const char * const	clDefault	= "default";
 #define CREATE_LINES if (!m_pLines) {m_pLines = xr_new<CUILines>(); m_pLines->SetTextAlignment(CGameFont::alLeft);}
@@ -166,7 +166,7 @@ void CUIStatic::DrawText()
 
 	}
 }
-#include "../../xrRender/Public/UIShader.h"
+#include "../../XrEngine/Render/UIShader.h"
 
 void CUIStatic::DrawTexture()
 {

@@ -3,7 +3,7 @@
 //#include "level.h"
 #include "script_game_object.h"
 //#include "game_object_space.h"
-#include "Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "../xrEngine/LightAnimLibrary.h"
 //#include "../xrphysics/PhysicsShell.h"
 #include "script_callback_ex.h"

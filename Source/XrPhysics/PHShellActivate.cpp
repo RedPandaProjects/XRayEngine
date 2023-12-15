@@ -9,7 +9,7 @@
 //#include "Level.h"
 #include "iphysicsshellholder.h"
 #include "PhysicsShellAnimator.h"
-#include "Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "PHElementInline.h"
 
 ///////////////////////////////////////////////////////////////

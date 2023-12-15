@@ -64,8 +64,8 @@ DEFINE_VECTOR		(xr_string*,LPAStringVec,LPAStringIt);
 #include "..\..\XrEngine\defines.h"
 
 #include "../../xrphysics/xrphysics.h"
-#include "..\..\XrRender\Public\Kinematics.h"
-#include "..\..\XrRender\Public\KinematicsAnimated.h"
+#include "../../XrEngine/Render/Kinematics.h"
+#include "../../XrEngine/Render/KinematicsAnimated.h"
 
 struct str_pred 
 {
@@ -78,7 +78,7 @@ struct astr_pred
     {	return x<y;	}
 };
 
-#include "..\..\XrEngine\properties.h"
+#include "../../XrEngine/properties.h"
 DEFINE_VECTOR(shared_str,RStrVec,RStrVecIt);
 
 
@@ -111,7 +111,7 @@ DEFINE_VECTOR(shared_str,RStrVec,RStrVecIt);
 #define		TEX_POINT_ATT	"internal\\internal_light_attpoint"
 #define		TEX_SPOT_ATT	"internal\\internal_light_attclip"
 
-#include "..\..\XrRender\Private\ETextureParams.h"
+#include "../../XrEngine/Render/ETextureParams.h"
 inline xr_string ChangeFileExt(const char* name, const char* e)
 {
 	string_path path;

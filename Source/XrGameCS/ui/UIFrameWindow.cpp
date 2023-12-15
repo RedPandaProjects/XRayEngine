@@ -4,7 +4,7 @@
 #include "UITextureMaster.h"
 #include "UIXmlInit.h"
 #include "UIStatic.h"
-#include "../xrRender/Public/UIRender.h"
+#include "../XrEngine/Render/UIRender.h"
 
 CUIFrameWindow::CUIFrameWindow()
 {}

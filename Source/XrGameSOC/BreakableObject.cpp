@@ -9,8 +9,8 @@
 #include "../XrEngine/xr_collide_form.h"
 #include "../XrCore/net_utils.h"
 #include "clsid_game.h"
-#include "../XrRender/Public/Kinematics.h"
-#include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrEngine/Render/Kinematics.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction

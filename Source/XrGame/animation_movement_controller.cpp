@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "animation_movement_controller.h"
 
-#include "Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "game_object_space.h"
 #include "../xrphysics/matrix_utils.h"
 #ifdef	 DEBUG

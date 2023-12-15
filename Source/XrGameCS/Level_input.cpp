@@ -23,7 +23,7 @@
 #include "../xrEngine/xr_input.h"
 #include "saved_game_wrapper.h"
 
-#include "../xrRender/Public/DebugRender.h"
+#include "../XrEngine/Render/DebugRender.h"
 
 #ifdef DEBUG
 #	include "ai/monsters/BaseMonster/base_monster.h"

@@ -3,7 +3,7 @@
 
 #include	"physicsshell.h"
 
-#include	"../xrRender/Public/Kinematics.h"
+#include	"../XrEngine/Render/Kinematics.h"
 
 physics_shell_animated::physics_shell_animated( CGameObject* O, bool _update_velocity ): 
 update_velocity( _update_velocity )

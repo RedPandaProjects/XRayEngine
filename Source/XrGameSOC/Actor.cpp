@@ -49,9 +49,9 @@
 #include "ExtendedGeom.h"
 #include "alife_registry_wrappers.h"
 
-#include "../XrRender/Public/RenderVisual.h"
-#include "../XrRender/Public/KinematicsAnimated.h"
-#include "../XrRender/Public/Kinematics.h"
+#include "../XrEngine/Render/RenderVisual.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "artifact.h"
 #include "CharacterPhysicsSupport.h"
 #include "material_manager.h"

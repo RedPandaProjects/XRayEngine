@@ -1,7 +1,7 @@
 #pragma once
 #include <boost/noncopyable.hpp>
 
-#include "../xrRender/Public/KinematicsAnimated.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 #include "poses_blending.h"
 
 //class IKinematicsAnimated;

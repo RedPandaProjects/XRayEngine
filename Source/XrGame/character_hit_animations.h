@@ -2,8 +2,8 @@
 class CEntityAlive;
 class IKinematics;
 
-//#include "KinematicsAnimated.h"
-#include "KinematicsAnimated.h"
+//#include "../XrEngine/Render/KinematicsAnimated.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 class character_hit_animation_controller
 {
 public:

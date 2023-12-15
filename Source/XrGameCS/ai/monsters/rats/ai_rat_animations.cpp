@@ -8,7 +8,7 @@
 
 #include "stdafx.h"
 #include "ai_rat.h"
-#include "../../../../xrRender/Public/KinematicsAnimated.h"
+#include "../../../../XrEngine/Render/KinematicsAnimated.h"
 #include "../../../ai_debug.h"
 #include "../../../movement_manager.h"
 

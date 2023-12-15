@@ -2,7 +2,7 @@
 
 #include	"ik_calculate_data.h"
 
-#include	"../xrRender/Public/Kinematics.h"
+#include	"../XrEngine/Render/Kinematics.h"
 
 class CIKLimb;
 IC bool state_valide( const calculate_state &prev_state );

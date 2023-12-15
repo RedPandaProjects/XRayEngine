@@ -4,8 +4,8 @@
 #include "../../level.h"
 #include "XrServer_Objects_ALife_Monsters.h"
 #include "../../../XrEngine/motion.h"
-#include "../XrRender/Public/KinematicsAnimated.h"
-#include "../XrRender/Public/RenderVisual.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
+#include "../XrEngine/Render/RenderVisual.h"
 CPhantom::CPhantom()
 {
 	fSpeed				= 4.f;

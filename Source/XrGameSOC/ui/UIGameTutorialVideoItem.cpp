@@ -7,9 +7,9 @@
 #include "../XrEngine/Xr_input.h"
 #include "../xr_level_controller.h"
 
-#include "UISequenceVideoItem.h"
-#include "UIShader.h"
-#include "UIRender.h"
+#include "../XrEngine/Render/UISequenceVideoItem.h"
+#include "../XrEngine/Render/UIShader.h"
+#include "../XrEngine/Render/UIRender.h"
 
 //-----------------------------------------------------------------------------
 // Tutorial Item

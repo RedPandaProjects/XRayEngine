@@ -1,11 +1,11 @@
 #include "stdafx.h"
 #include "CustomZone.h"
-//#include "../xrRender/Public/KinematicsAnimated.h"
-#include "../xrRender/Public/KinematicsAnimated.h"
+//#include "../XrEngine/Render/KinematicsAnimated.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 #include "ZoneVisual.h"
 #include "xrServer_Objects_ALife_Monsters.h"
-//#include "../xrRender/Public/KinematicsAnimated.h"
-#include "../xrRender/Public/RenderVisual.h"
+//#include "../XrEngine/Render/KinematicsAnimated.h"
+#include "../XrEngine/Render/RenderVisual.h"
 CVisualZone::CVisualZone						()
 {
 }

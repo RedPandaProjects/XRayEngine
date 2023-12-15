@@ -17,8 +17,8 @@
 #include "debug_renderer.h"
 #include "physicsshellholder.h"
 
-#include "Kinematics.h"
-#include "KinematicsAnimated.h"
+#include "../XrEngine/Render/Kinematics.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 #include "../xrEngine/bone.h"
 #include "../xrEngine/iphdebug.h"
 //#include "phelement.h"

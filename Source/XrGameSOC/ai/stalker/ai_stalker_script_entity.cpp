@@ -14,15 +14,15 @@
 #include "../../inventory.h"
 #include "../../weapon.h"
 #include "../../weaponmagazined.h"
-#include "Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "../../../xrEngine/bone.h"
 #include "script_engine.h"
 #include "../../sight_manager.h"
 #include "../../stalker_movement_manager.h"
 #include "ai_space.h"
-#include "../../../XrRender/Public/RenderVisual.h"
-#include "../../../XrRender/Public/Kinematics.h"
-#include "../../../XrRender/Public/KinematicsAnimated.h"
+#include "../../../XrEngine/Render/RenderVisual.h"
+#include "../../../XrEngine/Render/Kinematics.h"
+#include "../../../XrEngine/Render/KinematicsAnimated.h"
 
 
 CWeapon	*CAI_Stalker::GetCurrentWeapon() const

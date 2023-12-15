@@ -3,7 +3,7 @@
 #include "bloodsucker_state_manager.h"
 #include "../../../actor.h"
 #include "../../../ActorEffector.h"
-#include "KinematicsAnimated.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 #include "../../../level.h"
 #include "../../../material_manager.h"
 #include "bloodsucker_vampire_effector.h"

@@ -9,7 +9,7 @@
 #pragma once
 
 #ifdef DEBUG
-#include "DebugRender.h"
+#include "..\XrEngine\Render\DebugRender.h"
 
 class CDebugRenderer {
 private:

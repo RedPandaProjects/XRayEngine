@@ -11,8 +11,8 @@
 #include "mt_config.h"
 #include "game_cl_base_weapon_usage_statistic.h"
 
-#include "../xrRender/Public/UIRender.h"
-#include "../xrRender/Public/Kinematics.h"
+#include "../XrEngine/Render/UIRender.h"
+#include "../XrEngine/Render/Kinematics.h"
 
 #ifdef DEBUG
 #	include "debug_renderer.h"

@@ -13,7 +13,7 @@
 #include "../xrEngine/igame_persistent.h"
 #include "artefact.h"
 #include "ai_object_location.h"
-#include "../xrRender/Public/Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "zone_effector.h"
 #include "breakableobject.h"
 #include "GamePersistent.h"

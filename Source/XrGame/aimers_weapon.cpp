@@ -7,7 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
-#include "kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "animation_movement_controller.h"
 #include "game_object_space.h"
 #include "gameobject.h"

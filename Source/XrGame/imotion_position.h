@@ -1,7 +1,7 @@
 #pragma once
 
 #include "interactive_motion.h"
-#include "Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 class imotion_position;
 enum motion_history_state;
 class imotion_position:

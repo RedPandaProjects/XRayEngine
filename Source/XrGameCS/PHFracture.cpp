@@ -3,7 +3,7 @@
 #include "Physics.h"
 #include "PHElement.h"
 #include "PHShell.h"
-#include "../xrRender/Public/Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 
 #include "../xrEngine/bone.h"
 

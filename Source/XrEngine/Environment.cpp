@@ -23,10 +23,10 @@
 //#include "D3DUtils.h"
 #include "../xrcore/xrCore.h"
 
-#include "EnvironmentRender.h"
-#include "LensFlareRender.h"
-#include "RainRender.h"
-#include "ThunderboltRender.h"
+#include "Render/EnvironmentRender.h"
+#include "Render/LensFlareRender.h"
+#include "Render/RainRender.h"
+#include "Render/ThunderboltRender.h"
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction

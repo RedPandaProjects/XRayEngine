@@ -16,8 +16,8 @@
 
 #include "phreqcomparer.h"
 
-#include "FactoryPtr.h"
-#include "WallMarkArray.h"
+#include "../XrEngine/Render/FactoryPtr.h"
+#include "../XrEngine/Render/WallMarkArray.h"
 //#ifdef	DEBUG
 //#include "phdebug.h"
 //#endif

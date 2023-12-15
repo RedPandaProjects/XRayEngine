@@ -9,7 +9,7 @@
 #include "stdafx.h"
 #include "aimers_base.h"
 #include "gameobject.h"
-#include "../xrRender/Public/kinematics.h"
+#include "../XrEngine/Render/kinematics.h"
 #include "animation_movement_controller.h"
 
 using aimers::base;

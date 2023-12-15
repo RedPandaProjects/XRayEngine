@@ -9,7 +9,7 @@
 #include "StdAfx.h"
 #include "UIPdaKillMessage.h"
 #include "UIInventoryUtilities.h"
-#include "../xrRender/Public/UIShader.h"
+#include "../XrEngine/Render/UIShader.h"
 
 using namespace InventoryUtilities;
 

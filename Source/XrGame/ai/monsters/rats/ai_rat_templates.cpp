@@ -11,7 +11,7 @@
 #include "../../ai_monsters_misc.h"
 #include "../../../game_graph.h"
 #include "../../../magic_box3.h"
-#include "RenderVisual.h"
+#include "../XrEngine/Render/RenderVisual.h"
 #include "../../../ai_object_location.h"
 
 #include "../../../movement_manager.h"

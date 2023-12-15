@@ -3,7 +3,7 @@
 #include "../../entity.h"
 #include "../../ai_object_location.h"
 #include "ai_space.h"
-#include "Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "../../../xrEngine/bone.h"
 
 // ���������, ��������� �� ������ entity �� ����

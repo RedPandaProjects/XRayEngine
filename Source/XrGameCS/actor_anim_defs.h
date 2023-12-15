@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../xrRender/Public/KinematicsAnimated.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 
 struct SAnimState
 {

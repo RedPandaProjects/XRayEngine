@@ -6,9 +6,9 @@
 #include "../level.h"
 #include "../hudmanager.h"
 #include <dinput.h>
-#include "../xrRender/Public/DebugRender.h"
-#include "../xrRender/Public/UIRender.h"
-#include "../xrRender/Public/UISequenceVideoItem.h"
+#include "../XrEngine/Render/DebugRender.h"
+#include "../XrEngine/Render/UIRender.h"
+#include "../XrEngine/Render/UISequenceVideoItem.h"
 
 void CUIVideoPlayerWnd::SendMessage	(CUIWindow* pWnd, s16 msg, void* pData)
 {

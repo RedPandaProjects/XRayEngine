@@ -8,7 +8,7 @@
 #include "ai_sounds.h"
 
 #include "level.h"
-#include "Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "../xrEngine/camerabase.h"
 #include "../xrengine/xr_collide_form.h"
 #include "inventory.h"

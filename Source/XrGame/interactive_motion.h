@@ -1,5 +1,5 @@
 #pragma once
-#include "KinematicsAnimated.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 class CPhysicsShell;
 class interactive_motion
 {

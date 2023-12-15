@@ -13,7 +13,7 @@
 #include "xr_ioc_cmd.h"
 #include "GameFont.h"
 
-#include "UIRender.h"
+#include "Render/UIRender.h"
 
 #include "securom_api.h"
 

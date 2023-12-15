@@ -9,7 +9,7 @@
 
 
 
-#include "KinematicsAnimated.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 
 
 

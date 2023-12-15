@@ -7,7 +7,7 @@
 #include "render.h"
 #include "xr_object.h"
 
-#include "DrawUtils.h"
+#include "Render/DrawUtils.h"
 
 template<>
 void FactoryPtr<IStatsRender>::CreateObject(void)

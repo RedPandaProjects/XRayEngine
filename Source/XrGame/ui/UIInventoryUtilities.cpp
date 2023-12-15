@@ -18,7 +18,7 @@
 #include "ai_space.h"
 #include "../../xrServerEntities/script_engine.h"
 
-#include "UIShader.h"
+#include "../XrEngine/Render/UIShader.h"
 
 #define BUY_MENU_TEXTURE "ui\\ui_mp_buy_menu"
 #define CHAR_ICONS		 "ui\\ui_icons_npc"

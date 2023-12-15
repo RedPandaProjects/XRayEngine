@@ -1,7 +1,7 @@
 #include "stdafx.h"
 
-#include "../XrRender/Public/Kinematics.h"
-#include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrEngine/Render/Kinematics.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 #include "character_hit_animations.h"
 
 #include "entity_alive.h"

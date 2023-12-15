@@ -3,7 +3,7 @@
 
 #include "../xrEngine/gamemtllib.h"
 #include "../xrEngine/cl_intersect.h"
-#include "../xrRender/Public/Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 
 #include "Level.h"
 #include "GameObject.h"

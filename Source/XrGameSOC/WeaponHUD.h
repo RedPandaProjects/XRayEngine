@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 class CHudItem;
 
 struct weapon_hud_value: public shared_value
@@ -42,9 +42,9 @@ public:
 
 class CWeaponHUD
 {
-	//родительский объект HUD
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ HUD
 	CHudItem*			m_pParentWeapon;		
-	//флаг, если hud спрятан не показывается
+	//пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ hud пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	bool				m_bHidden;
 	bool				m_bVisible;
 
@@ -53,7 +53,7 @@ class CWeaponHUD
 	//shared HUD data
 	shared_weapon_hud	m_shared_data;
 
-	//таймеры для проигрывания анимаций
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	u32					m_dwAnimTime;
 	u32					m_dwAnimEndTime;
 	bool				m_bStopAtEndAnimIsRunning;
@@ -61,10 +61,10 @@ class CWeaponHUD
 //	CInventoryItem*		m_pCallbackItem;
 	CHudItem*			m_pCallbackItem;
 
-	//остановление таймера текущей анимации, и вызов callback
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅ пїЅпїЅпїЅпїЅпїЅ callback
 	void				StopCurrentAnim	();
 
-	//поворот и смещение для режима приближения
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	float				m_fZoomRotateX;
 	float				m_fZoomRotateY;
 	Fvector				m_fZoomOffset;
@@ -106,7 +106,7 @@ public:
 
 	void				Visible			(bool val){m_bVisible=val;}
 	
-	//обновление HUD должно вызываться на каждом кадре
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ HUD пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	void				Update			();
 
 	void				StopCurrentAnimWithoutCallback	();

@@ -7,8 +7,8 @@
 #include "HUDCrosshair.h"
 #include "UIStaticItem.h"
 
-#include "../xrRender/Public/UIShader.h"
-#include "../xrRender/Public/UIRender.h"
+#include "../XrEngine/Render/UIShader.h"
+#include "../XrEngine/Render/UIRender.h"
 
 CHUDCrosshair::CHUDCrosshair	()
 {

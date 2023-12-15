@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "uistaticitem.h"
 #include "hudmanager.h"
-#include "../XrRender/Public/UIShader.h"
+#include "../XrEngine/Render/UIShader.h"
 
 
 CUIStaticItem::CUIStaticItem()

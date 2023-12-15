@@ -4,7 +4,7 @@
 #include "../encyclopedia_article.h"
 #include "UIXmlInit.h"
 #include "../string_table.h"
-#include "../../xrRender/Public/UIShader.h"
+#include "../../XrEngine/Render/UIShader.h"
 
 CUIEncyclopediaArticleWnd::CUIEncyclopediaArticleWnd	()
 :m_Article(NULL)

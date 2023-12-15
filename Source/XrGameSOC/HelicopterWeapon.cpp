@@ -5,8 +5,8 @@
 #include "../XrCore/net_utils.h"
 #include "..\XrEngine\bone.h"
 #include "Level.h"
-#include "../XrRender/Public/Kinematics.h"
-#include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrEngine/Render/Kinematics.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 
 void  
 CHelicopter::BoneMGunCallbackX(IBoneInstance *B)

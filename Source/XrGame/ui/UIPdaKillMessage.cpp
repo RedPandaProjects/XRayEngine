@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "UIPdaKillMessage.h"
 #include "UIInventoryUtilities.h"
-#include "UIShader.h"
+#include "../XrEngine/Render/UIShader.h"
 
 const int INDENT = 3;
 

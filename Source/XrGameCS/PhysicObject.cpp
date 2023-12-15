@@ -4,8 +4,8 @@
 #include "Physics.h"
 #include "xrserver_objects_alife.h"
 #include "Level.h"
-#include "../xrRender/Public/Kinematics.h"
-#include "../xrRender/Public/KinematicsAnimated.h"
+#include "../XrEngine/Render/Kinematics.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 #include "../xrEngine/xr_collide_form.h"
 #include "../xrEngine/cf_dynamic_mesh.h"
 

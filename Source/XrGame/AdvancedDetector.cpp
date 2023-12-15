@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "AdvancedDetector.h"
 #include "ui/ArtefactDetectorUI.h"
-#include "Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "player_hud.h"
 #include "game_object_space.h"
 

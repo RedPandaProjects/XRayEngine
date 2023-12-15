@@ -20,7 +20,7 @@
 #include "PHWorld.h"
 #endif
 
-#include "../xrRender/Public/Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 /*
 [impulse_transition_to_parts]
 random_min              =1       ; � ����� ������� = �������� �������� ������������� �������� 

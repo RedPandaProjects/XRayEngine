@@ -41,7 +41,7 @@
 
 #include "GameSpy/GameSpy_Full.h"
 #include "GameSpy/GameSpy_Patching.h"
-#include "../XrRender/Public/Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #ifdef DEBUG
 #	include "PHDebug.h"
 #	include "ui/UIDebugFonts.h" 

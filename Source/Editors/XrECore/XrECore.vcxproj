@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\XrRender\Private\ETextureParams.cpp" />
+    <ClCompile Include="Engine\ETextureParams.cpp" />
     <ClCompile Include="Editor\du_box.cpp" />
     <ClCompile Include="Editor\du_cone.cpp" />
     <ClCompile Include="Editor\du_cylinder.cpp" />

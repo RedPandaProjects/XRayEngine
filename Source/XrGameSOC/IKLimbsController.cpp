@@ -6,8 +6,8 @@
 #include "physicsshellholder.h"
 
 #include "ik_anim_state.h"
-#include	"../XrRender/Public/KinematicsAnimated.h"
-#include	"../XrRender/Public/Kinematics.h"
+#include	"../XrEngine/Render/KinematicsAnimated.h"
+#include	"../XrEngine/Render/Kinematics.h"
 #include "../XrEngine/EnnumerateVertices.h"
 #ifdef DEBUG
 #include "PHDebug.h"

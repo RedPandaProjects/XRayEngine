@@ -6,7 +6,7 @@
 #include "uilines.h"
 #include "../ui_base.h"
 
-#include "UIRender.h"
+#include "../XrEngine/Render/UIRender.h"
 
 #include "UIBtnHint.h"
 #include "UICursor.h"
@@ -101,7 +101,7 @@ void CUIStatic::DrawText()
 		g_statHint->Draw_();
 }
 
-#include "UIShader.h"
+#include "../XrEngine/Render/UIShader.h"
 
 void CUIStatic::DrawTexture()
 {

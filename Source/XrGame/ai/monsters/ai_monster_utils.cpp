@@ -4,7 +4,7 @@
 #include "../../ai_object_location.h"
 #include "ai_space.h"
 
-#include "Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "basemonster/base_monster.h"
 // проверить, находится ли объект entity на ноде
 // возвращает позицию объекта, если он находится на ноде, или центр его ноды

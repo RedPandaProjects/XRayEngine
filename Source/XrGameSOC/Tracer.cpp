@@ -6,8 +6,8 @@
 #include "stdafx.h"
 #include "Tracer.h"
 #include "../XrEngine/render.h"
-#include "UIShader.h"
-#include "UIRender.h"   
+#include "../XrEngine/Render/UIShader.h"
+#include "../XrEngine/Render/UIRender.h"   
 const u32	MAX_TRACERS	= (1024*5);
 const float TRACER_SIZE = 0.13f;
 

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "simpledetector.h"
 #include "ui/ArtefactDetectorUI.h"
-#include "Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "../xrEngine/LightAnimLibrary.h"
 #include "player_hud.h"
 

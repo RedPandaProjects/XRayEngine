@@ -11,7 +11,7 @@
 #include "ui/UITextureMaster.h"
 #include "ui/UIHelper.h"
 
-#include "UIShader.h"
+#include "../XrEngine/Render/UIShader.h"
 #include "gametaskmanager.h"
 #include "gametask.h"
 

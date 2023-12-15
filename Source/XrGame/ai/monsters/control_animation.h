@@ -1,9 +1,9 @@
 #pragma once
 
 #include "control_combase.h"
-//#include "KinematicsAnimated.h"
-#include "RenderVisual.h"
-#include "KinematicsAnimated.h"
+//#include "../XrEngine/Render/KinematicsAnimated.h"
+#include "../XrEngine/Render/RenderVisual.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 
 struct SAnimationPart {
 	CBlend			*blend;

@@ -6,7 +6,7 @@
 #pragma hdrstop
 
 #include "Image.h"
-#include "../../../xrRender/Private/tga.h"
+#include "tga.h"
 
 void CImage::Create(u32 w, u32 h, u32* data)
 {

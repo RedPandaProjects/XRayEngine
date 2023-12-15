@@ -4,8 +4,8 @@
 #include "../../../actor.h"
 #include "../../../../XREngine/CameraBase.h"
 
-#include "../../../../XrRender/Public/Kinematics.h"
-#include "../../../../XrRender/Public/KinematicsAnimated.h"
+#include "../../../../XrEngine/Render/Kinematics.h"
+#include "../../../../XrEngine/Render/KinematicsAnimated.h"
 
 #define TEMPLATE_SPECIALIZATION template <\
 	typename _Object\

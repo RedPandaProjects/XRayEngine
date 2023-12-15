@@ -11,7 +11,7 @@
 #ifdef DEBUG
 #	include "stalker_animation_manager.h"
 #	include "ai/stalker/ai_stalker.h"
-#include "../XrRender/Public/RenderVisual.h"
+#include "../XrEngine/Render/RenderVisual.h"
 #	pragma warning(push)
 #	pragma warning(disable:4995)
 #	include <malloc.h>

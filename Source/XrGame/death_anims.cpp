@@ -2,7 +2,7 @@
 
 #include	"death_anims.h"
 
-#include "KinematicsAnimated.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 
 #include "entity_alive.h"
 

@@ -11,7 +11,7 @@
 #include "ai_space.h"
 
 #include "GameObject.h"
-#include "../xrRender/Public/Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include <boost/crc.hpp>
 
 #include "../xrEngine/bone.h"

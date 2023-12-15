@@ -2,7 +2,7 @@
 #define __XR_HITMARKER_H__
 #pragma once
 
-#include "FactoryPtr.h"
+#include "../XrEngine/Render/FactoryPtr.h"
 class IUIShader;
 #include "ui_defs.h"
 

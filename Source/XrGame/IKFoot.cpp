@@ -8,7 +8,7 @@
 
 //#include "ode_include.h"
 #include "../xrphysics/MathUtils.h"
-#include "Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "../xrEngine/bone.h"
 #include "../xrEngine/ennumerateVertices.h"
 #include <boost/noncopyable.hpp>

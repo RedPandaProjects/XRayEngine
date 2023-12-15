@@ -9,8 +9,8 @@
 
 #include "HUDManager.h"
 #include "level.h"
-#include "../XrRender/Public/Kinematics.h"
-#include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrEngine/Render/Kinematics.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 #include "../XrEngine/camerabase.h"
 #include "../XrEngine/xr_collide_form.h"
 #include "inventory.h"

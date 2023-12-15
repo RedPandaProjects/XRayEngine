@@ -21,7 +21,7 @@
 #include "inventory_item.h"
 #include "inventory.h"
 
-#include "../xrRender/Public/UIRender.h"
+#include "../XrEngine/Render/UIRender.h"
 
 
 u32 C_ON_ENEMY	=	color_rgba(0xff,0,0,0x80);

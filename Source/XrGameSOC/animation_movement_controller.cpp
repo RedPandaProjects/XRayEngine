@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "animation_movement_controller.h"
-#include "../XrRender/Public/KinematicsAnimated.h" 
-#include "../XrRender/Public/Kinematics.h" 
+#include "../XrEngine/Render/KinematicsAnimated.h" 
+#include "../XrEngine/Render/Kinematics.h" 
 #include "game_object_space.h"
 
 animation_movement_controller::animation_movement_controller( Fmatrix *_pObjXForm, IKinematics* _pKinematicsC, CBlend* b ):

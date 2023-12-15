@@ -26,9 +26,9 @@
 #include "stalker_decision_space.h"
 #include "agent_manager.h"
 #include "agent_enemy_manager.h"
-#include "../XrRender/Public/RenderVisual.h"
-#include "../XrRender/Public/Kinematics.h"
-#include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrEngine/Render/RenderVisual.h"
+#include "../XrEngine/Render/Kinematics.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 
 const u32 MIN_QUEUE		= 0;
 const u32 MAX_QUEUE		= 1;

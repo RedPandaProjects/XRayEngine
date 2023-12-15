@@ -8,8 +8,8 @@
 #include "wound.h"
 #include "xrmessages.h"
 #include "level.h"
-#include "../XrRender/Public/KinematicsAnimated.h"
-#include "../XrRender/Public/Kinematics.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "relation_registry.h"
 #include "monster_community.h"
 #include "entitycondition.h"
@@ -21,7 +21,7 @@
 #include "game_object_space.h"
 #include "material_manager.h"
 #include "game_base_space.h"
-#include "../XrRender/Public/WallMarkArray.h"
+#include "../XrEngine/Render/WallMarkArray.h"
 
 #define SMALL_ENTITY_RADIUS		0.6f
 #define BLOOD_MARKS_SECT		"bloody_marks"

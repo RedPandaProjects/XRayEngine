@@ -5,7 +5,7 @@
 #define MIN_LEGS_COUNT	1
 #define MAX_LEGS_COUNT	4 
 
-#include "../xrRender/Public/animation_motion.h"
+#include "../XrEngine/Render/animation_motion.h"
 
 struct SStepParam {
 	struct{

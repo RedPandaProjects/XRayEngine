@@ -6,8 +6,8 @@
 #include "../../../CharacterPhysicsSupport.h"
 #include "../../../phmovementcontrol.h"
 #include "../ai_monster_squad_manager.h"
-#include "../../../../XrRender/Public/Kinematics.h"
-#include "../../../../XrRender/Public/KinematicsAnimated.h"
+#include "../../../../XrEngine/Render/Kinematics.h"
+#include "../../../../XrEngine/Render/KinematicsAnimated.h"
 #include "../../../detail_path_manager.h"
 
 #include "../corpse_cover.h"

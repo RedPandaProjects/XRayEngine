@@ -7,8 +7,8 @@
 
 #include "ik_anim_state.h"
 #include "../xrphysics/mathutils.h"
-#include "RenderVisual.h"
-#include "Kinematics.h"
+#include "../XrEngine/Render/RenderVisual.h"
+#include "../XrEngine/Render/Kinematics.h"
 //#include "ode_include.h"
 #include "characterphysicssupport.h"
 #include "../xrEngine/motion.h"

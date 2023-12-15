@@ -4,8 +4,8 @@
 #include "PhysicsShellHolder.h"
 #include "game_cl_base.h"
 
-#include "Kinematics.h"
-#include "KinematicsAnimated.h"
+#include "../XrEngine/Render/Kinematics.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 
 #include "inventory.h"
 #include "level.h"

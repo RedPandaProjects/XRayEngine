@@ -14,7 +14,7 @@
 #include "../../../../XrServerEntities/xrserver_objects_alife_monsters.h"
 
 #include "ai_rat_space.h"
-#include "../../../../xrRender/Public/KinematicsAnimated.h"
+#include "../../../../XrEngine/Render/KinematicsAnimated.h"
 #include "../../../detail_path_manager.h"
 #include "../../../ai_object_location.h"
 #include "../../../movement_manager.h"

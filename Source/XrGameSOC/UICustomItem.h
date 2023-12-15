@@ -17,9 +17,9 @@ enum EUIMirroring{
 };
 
 
-#include "FactoryPtr.h"
-#include "UIRender.h"
-#include "UIShader.h"
+#include "../XrEngine/Render/FactoryPtr.h"
+#include "../XrEngine/Render/UIRender.h"
+#include "../XrEngine/Render/UIShader.h"
 typedef	FactoryPtr<IUIShader>	ui_shader;
 
 

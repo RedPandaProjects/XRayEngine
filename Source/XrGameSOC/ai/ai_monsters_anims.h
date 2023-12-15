@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "../../XrRender/Public/KinematicsAnimated.h"
+#include "../../XrEngine/Render/KinematicsAnimated.h"
 #include "../../XrEngine/motion.h"
 #include "../ai_debug.h"
 

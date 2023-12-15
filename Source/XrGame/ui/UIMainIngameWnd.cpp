@@ -57,7 +57,7 @@
 void test_draw	();
 void test_key	(int dik);
 
-#include "Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 
 
 using namespace InventoryUtilities;

@@ -8,7 +8,7 @@
 
 //#include "entity_alive.h"
 //#include "phmovementcontrol.h"
-#include "Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "iphysicsshellholder.h"
 #include "../xrengine/bone.h"
 #include "../xrengine/XrDeviceInterface.h"

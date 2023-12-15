@@ -9,7 +9,7 @@
 #include "../xrEngine/feel_vision.h"
 #include "../xrEngine/feel_sound.h"
 #include "../xrEngine/feel_touch.h"
-#include "Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "../xrEngine/associative_vector.h"
 #include "trajectories.h"
 

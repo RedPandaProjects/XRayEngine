@@ -2,7 +2,7 @@
 #include "PHGeometryOwner.h"
 #include "phworld.h"
 
-#include "Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "../xrEngine/bone.h"
 
 CPHGeometryOwner::CPHGeometryOwner()

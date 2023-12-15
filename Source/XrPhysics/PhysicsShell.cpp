@@ -15,7 +15,7 @@
 //#include "objectdump.h"
 #include "phvalide.h"
 
-#include "Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "../xrengine/xr_object.h"
 #include "../xrengine/bone.h"
 

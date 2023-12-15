@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "CustomZone.h"
-#include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 #include "ZoneVisual.h"
 #include "xrServer_Objects_ALife_Monsters.h"
-#include "../XrRender/Public/Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 CVisualZone::CVisualZone						()
 {
 }

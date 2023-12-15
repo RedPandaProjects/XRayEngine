@@ -193,9 +193,6 @@
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="LuaMemoryController.cpp" />
-    <ClCompile Include="..\..\XrRender\Private\ETextureParams.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\GameMtlLib.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
@@ -228,6 +225,9 @@
     </ClCompile>
     <ClCompile Include="Particles\ParticleEffectDef.cpp">
       <Filter>Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ETextureParams.cpp">
+      <Filter>Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

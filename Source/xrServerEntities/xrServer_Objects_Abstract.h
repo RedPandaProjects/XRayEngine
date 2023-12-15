@@ -22,9 +22,9 @@ class CDUInterface;
 
 
 #ifndef XRGAME_EXPORTS
-	#include "DrawUtils.h"
+	#include "../../XrEngine/Render/DrawUtils.h"
 #else
-	#include "DrawUtils.h"
+	#include "../XrEngine/Render/DrawUtils.h"
 #endif
 #pragma warning(push)
 #pragma warning(disable:4005)

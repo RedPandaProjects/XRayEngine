@@ -49,7 +49,7 @@
 #include "../xrEngine/cl_intersect.h"
 //#include "ExtendedGeom.h"
 #include "alife_registry_wrappers.h"
-#include "Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "artefact.h"
 #include "CharacterPhysicsSupport.h"
 #include "material_manager.h"
@@ -66,7 +66,7 @@
 #include "player_hud.h"
 #include "ai/monsters/basemonster/base_monster.h"
 
-#include "UIRender.h"
+#include "../XrEngine/Render/UIRender.h"
 
 #include "ai_object_location.h"
 #include "ui/uiMotionIcon.h"

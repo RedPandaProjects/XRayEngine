@@ -12,8 +12,8 @@
 #include "PhysicsShellHolder.h"
 #include "game_cl_base.h"
 
-#include "../xrRender/Public/Kinematics.h"
-#include "../xrRender/Public/KinematicsAnimated.h"
+#include "../XrEngine/Render/Kinematics.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 
 #include "inventory.h"
 #include "level.h"

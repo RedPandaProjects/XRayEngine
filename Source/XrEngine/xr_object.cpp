@@ -6,8 +6,8 @@
 #include "render.h"
 #include "xrLevel.h"
 //#include "fbasicvisual.h"
-#include "RenderVisual.h"
-#include "Kinematics.h"
+#include "Render/RenderVisual.h"
+#include "Render/Kinematics.h"
 
 #include "XRayEngineInterface.h"
 #include "GameFont.h"

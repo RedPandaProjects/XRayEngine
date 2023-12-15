@@ -13,8 +13,8 @@
 
 
 #if 1
-#include "../../XrRender/Private/Animation.h"
-	#include "../../XrRender/Private/AnimationKeyCalculate.h"
+#include "../../XrEngine/Render/Animation.h"
+	#include "../../XrEngine/Render/AnimationKeyCalculate.h"
 #endif
 
 #if 0

@@ -1,9 +1,9 @@
 #pragma once
 
 #include "control_combase.h"
-//#include "../../../xrRender/Public/KinematicsAnimated.h"
-#include "../../../xrRender/Public/RenderVisual.h"
-#include "../../../xrRender/Public/KinematicsAnimated.h"
+//#include "../../../XrEngine/Render/KinematicsAnimated.h"
+#include "../../../XrEngine/Render/RenderVisual.h"
+#include "../../../XrEngine/Render/KinematicsAnimated.h"
 
 struct SAnimationPart {
 	MotionID		motion;

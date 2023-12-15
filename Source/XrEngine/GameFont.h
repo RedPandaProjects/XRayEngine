@@ -4,7 +4,7 @@
 
 #include "MbHelpers.h"
 
-#include "../XrRender/Public/FontRender.h"
+#include "../XrEngine/Render/FontRender.h"
 
 class ENGINE_API CGameFont
 {

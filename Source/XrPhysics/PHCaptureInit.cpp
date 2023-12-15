@@ -6,7 +6,7 @@
 #include "PHCapture.h"
 //#include "Entity.h"
 //#include "inventory_item.h"
-#include "Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 //#include "Actor.h"
 //#include "Inventory.h"
 //#include "CaptureBoneCallback.h"

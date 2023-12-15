@@ -2,8 +2,8 @@
 #include "zombie.h"
 #include "zombie_state_manager.h"
 #include "../../../profiler.h"
-#include "../../../../XrRender/Public/KinematicsAnimated.h"
-#include "../../../../XrRender/Public/Kinematics.h"
+#include "../../../../XrEngine/Render/KinematicsAnimated.h"
+#include "../../../../XrEngine/Render/Kinematics.h"
 #include "../../../entitycondition.h"
 #include "../monster_velocity_space.h"
 

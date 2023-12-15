@@ -23,7 +23,7 @@
 #include "../../xrserver.h"
 #include "../../xr_level_controller.h"
 #include "../../hudmanager.h"
-#include "../../../xrRender/Public/Kinematics.h"
+#include "../../../XrEngine/Render/Kinematics.h"
 #include "../../../XrServerEntities/character_info.h"
 #include "../../actor.h"
 #include "../../relation_registry.h"

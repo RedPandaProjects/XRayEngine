@@ -5,7 +5,7 @@
 #include "PHShell.h"
 #include "console_vars.h"
 
-#include "Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "ph_valid_ode.h"
 #include "../xrEngine/bone.h"
 

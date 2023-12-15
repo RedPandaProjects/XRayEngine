@@ -13,7 +13,7 @@
 #include "hit.h"
 #include "PHDestroyable.h"
 #include "Car.h"
-#include "Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "ai_object_location.h"
 #include "game_cl_base.h"
 #include "../xrEngine/motion.h"

@@ -2,8 +2,8 @@
 #ifndef StatGraphH
 #define StatGraphH
 
-#include "FactoryPtr.h"
-#include "StatGraphRender.h"
+#include "Render/FactoryPtr.h"
+#include "Render/StatGraphRender.h"
 
 //---------------------------------------------------------------------------
 class ENGINE_API CStatGraph	

@@ -9,7 +9,7 @@
 #include "../xrCDB/frustum.h"
 
 //#include "skeletoncustom.h"
-#include "Kinematics.h"
+#include "Render/Kinematics.h"
 #include "bone.h"
 #ifdef	DEBUG
 IC float DET(const Fmatrix &a){

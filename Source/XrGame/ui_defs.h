@@ -1,8 +1,7 @@
 #pragma once
 
-#include "FactoryPtr.h"
-#include "UIRender.h"
-#include "UIShader.h"
+#include "../XrEngine/Render/FactoryPtr.h"
+#include "../XrEngine/Render/UIShader.h"
 typedef	FactoryPtr<IUIShader>	ui_shader;
 
 #define UI_BASE_WIDTH	1024.0f

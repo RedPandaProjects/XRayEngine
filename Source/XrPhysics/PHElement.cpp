@@ -9,9 +9,9 @@
 #include "IPhysicsShellHolder.h"
 #include "ph_valid_ode.h"
 //#include "game_object_space.h"
-//#include "Kinematics.h"
-#include "Kinematics.h"
-#include "KinematicsAnimated.h"
+//#include "../XrEngine/Render/Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 #include "ode/src/util.h"
 
 #ifdef DEBUG

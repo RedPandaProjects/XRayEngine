@@ -13,7 +13,7 @@
 #include "camerafirsteye.h"
 #include "script_entity_action.h"
 #include "xr_level_controller.h"
-#include "Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "level.h"
 #include "CarWeapon.h"
 

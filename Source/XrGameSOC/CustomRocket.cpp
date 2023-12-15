@@ -12,7 +12,7 @@
 #include "xrMessages.h"
 #include "../XrEngine/gamemtllib.h"
 #include "tri-colliderknoopc/dTriList.h"
-#include "../XrRender/Public/Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "CalculateTriangle.h"
 #include "actor.h"
 #ifdef DEBUG

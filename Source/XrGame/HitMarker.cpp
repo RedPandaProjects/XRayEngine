@@ -7,8 +7,8 @@
 
 #include "grenade.h"
 
-#include "UIRender.h"
-#include "UIShader.h"
+#include "../XrEngine/Render/UIRender.h"
+#include "../XrEngine/Render/UIShader.h"
 
 
 //--------------------------------------------------------------------

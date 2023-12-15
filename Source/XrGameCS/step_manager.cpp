@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "step_manager.h"
 #include "entity_alive.h"
-#include "../xrRender/Public/Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "level.h"
 #include "gamepersistent.h"
 #include "material_manager.h"

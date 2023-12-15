@@ -25,7 +25,7 @@
 #include "ui/UIMessageBoxEx.h"
 #include "string_table.h"
 #include "../xrEngine/IGame_Persistent.h"
-#include "../xrRender/Public/UIShader.h"
+#include "../XrEngine/Render/UIShader.h"
 #include "clsid_game.h"
 #include "mainmenu.h"
 #include "WeaponKnife.h"

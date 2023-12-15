@@ -1,7 +1,7 @@
 #pragma once
 struct SHit;
 
-#include "animation_motion.h"
+#include "../XrEngine/Render/animation_motion.h"
 struct MotionID;
 
 class  CInifile;

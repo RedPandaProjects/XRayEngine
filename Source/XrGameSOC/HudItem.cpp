@@ -14,7 +14,7 @@
 #include "level.h"
 #include "inventory.h"
 #include "../XrEngine/CameraBase.h"
-#include "RenderVisual.h"
+#include "../XrEngine/Render/RenderVisual.h"
 
 
 CHudItem::CHudItem(void)

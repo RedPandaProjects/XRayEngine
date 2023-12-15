@@ -13,9 +13,9 @@
 #include "hit.h"
 #include "PHDestroyable.h"
 #include "Car.h"
-#include "../XrRender/Public/RenderVisual.h"
-#include "../XrRender/Public/Kinematics.h"
-#include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrEngine/Render/RenderVisual.h"
+#include "../XrEngine/Render/Kinematics.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 #include "PHShellSplitter.h"
 
 #include "actor_anim_defs.h"

@@ -7,8 +7,8 @@
 
 
 #include <dinput.h>
-#include "../XrRender/Public/Kinematics.h"
-#include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrEngine/Render/Kinematics.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 #include "../actor.h"
 #include "../HUDManager.h"
 #include "../PDA.h"

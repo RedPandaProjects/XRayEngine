@@ -4,8 +4,8 @@
 #ifndef XR_IOCONSOLE_H_INCLUDED
 #define XR_IOCONSOLE_H_INCLUDED
 
-#include "../XrRender/Public/FactoryPtr.h"
-#include "../XrRender/Public/UIShader.h"
+#include "../XrEngine/Render/FactoryPtr.h"
+#include "../XrEngine/Render/UIShader.h"
 
 //refs
 class ENGINE_API CGameFont;

@@ -10,8 +10,8 @@
 #define AIMERS_BASE_INLINE_H_INCLUDED
 #include "../XrEngine/SkeletonMotions.h"
 #include "../XrEngine/SkeletonMotionDefs.h"
-#include "KinematicsAnimated.h"
-#include "Kinematics.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "../XrEngine/bone.h"
 #include "../XrGame/GameObject.h"
 #include "animation_movement_controller.h"

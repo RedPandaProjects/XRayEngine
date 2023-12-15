@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "../xrRender/Public/Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "ai/ai_monsters_anims.h"
 
 class CBlend;

@@ -14,8 +14,8 @@
 #include "Level.h"
 #include "ElevatorState.h"
 #include "CalculateTriangle.h"
-//#include	"../xrRender/Public/KinematicsAnimated.h"
-#include "../xrRender/Public/Kinematics.h"
+//#include	"../XrEngine/Render/KinematicsAnimated.h"
+#include "../XrEngine/Render/Kinematics.h"
 
 #define GROUND_FRICTION	10.0f
 #define AIR_FRICTION	0.01f

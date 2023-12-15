@@ -7,7 +7,7 @@
 //#include "../xrphysics/mathutilsode.h"
 //#include "Physics.h"
 #include "../xrEngine/xr_collide_form.h"
-#include "Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction

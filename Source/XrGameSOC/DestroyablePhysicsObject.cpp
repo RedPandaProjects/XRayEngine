@@ -7,7 +7,7 @@
 #include "damage_manager.h"
 #include "DestroyablePhysicsObject.h"
 #include "../XrEngine/bone.h"
-#include "../XrRender/Public/Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "xrServer_Objects_ALife.h"
 #include "game_object_space.h"
 #include "script_callback_ex.h"

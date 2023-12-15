@@ -12,7 +12,7 @@
 #include "../../../game_level_cross_table.h"
 #include "../../../game_graph.h"
 #include "ai_rat_space.h"
-#include "KinematicsAnimated.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 #include "../../../detail_path_manager.h"
 #include "../../../memory_manager.h"
 #include "../../../enemy_manager.h"

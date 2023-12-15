@@ -3,8 +3,8 @@
 #include "../UICursor.h"
 #include "../MainMenu.h"
 
-#include "DebugRender.h"
-#include "UIRender.h"
+#include "../XrEngine/Render/DebugRender.h"
+#include "../XrEngine/Render/UIRender.h"
 
 // #define LOG_ALL_WNDS
 #ifdef LOG_ALL_WNDS

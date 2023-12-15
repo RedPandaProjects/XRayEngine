@@ -10,7 +10,7 @@
 #include "stdafx.h"
 #include "damage_manager.h"
 #include "../XrEngine/xr_object.h"
-#include "../XrRender/Public/Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "../XrEngine/bone.h"
 CDamageManager::CDamageManager			()
 {

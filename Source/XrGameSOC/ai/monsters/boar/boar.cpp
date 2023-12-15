@@ -7,8 +7,8 @@
 #include "../control_animation_base.h"
 #include "../control_movement_base.h"
 
-#include "../../../../XrRender/Public/Kinematics.h"
-#include "../../../../XrRender/Public/KinematicsAnimated.h"
+#include "../../../../XrEngine/Render/Kinematics.h"
+#include "../../../../XrEngine/Render/KinematicsAnimated.h"
 
 CAI_Boar::CAI_Boar()
 {

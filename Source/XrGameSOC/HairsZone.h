@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CustomZone.h"
-#include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 #include "ZoneVisual.h"
 
 #include "script_export_space.h"

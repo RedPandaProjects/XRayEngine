@@ -9,7 +9,7 @@
 #include "../XrEngine/feel_vision.h"
 #include "../XrEngine/Feel_Sound.h"
 #include "../XrEngine/feel_touch.h"
-#include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 #include "../XrEngine/associative_vector.h"
 
 namespace MonsterSpace {

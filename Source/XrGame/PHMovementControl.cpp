@@ -31,8 +31,8 @@
 #include "phdebug.h"
 #endif
 
-//#include	"KinematicsAnimated.h"
-#include "Kinematics.h"
+//#include	"../XrEngine/Render/KinematicsAnimated.h"
+#include "../XrEngine/Render/Kinematics.h"
 
 #define GROUND_FRICTION	10.0f
 #define AIR_FRICTION	0.01f

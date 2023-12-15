@@ -11,7 +11,7 @@
 #include "level.h"
 #include "xr_level_controller.h"
 #include "game_cl_base.h"
-#include "../xrRender/Public/Kinematics.h"
+#include "../XrEngine/Render/Kinematics.h"
 #include "ai_object_location.h"
 #include "mathutils.h"
 #include "../xrEngine/object_broker.h"

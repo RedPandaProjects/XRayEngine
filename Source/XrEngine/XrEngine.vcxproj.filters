@@ -361,6 +361,9 @@
     <Filter Include="Game API\Alife\Search\graphs\level_graph">
       <UniqueIdentifier>{a477e0f2-04d4-4295-879c-d9f40fc81c33}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Render\Interface">
+      <UniqueIdentifier>{9506f6b8-4ab0-4e0b-8b32-0095d52c7bb2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="_d3d_extensions.h">
@@ -969,6 +972,105 @@
     </ClInclude>
     <ClInclude Include="XRayLevelToBlueprint.h">
       <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\DebugRender.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\DebugShader.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\DrawUtils.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\EnvironmentRender.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\ETextureParams.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\FactoryPtr.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\FontRender.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\KinematicAnimatedDefs.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Kinematics.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\KinematicsAnimated.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\LensFlareRender.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\ObjectSpaceRender.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\ParticleCustom.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\particles_systems_library_interface.hpp">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\RainRender.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\RenderDetailModel.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\RenderDeviceRender.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\RenderFactory.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\RenderVisual.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\StatGraphRender.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\StatsRender.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\ThunderboltDescRender.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\ThunderboltRender.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\UIRender.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\UISequenceVideoItem.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\UIShader.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\WallMarkArray.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Animation.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\animation_blend.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\animation_motion.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\AnimationKeyCalculate.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\ApplicationRender.h">
+      <Filter>Render\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\ConsoleRender.h">
+      <Filter>Render\Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

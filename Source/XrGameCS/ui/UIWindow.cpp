@@ -6,8 +6,8 @@
 #include "../UICursor.h"
 #include "../MainMenu.h"
 
-#include "../xrRender/Public/DebugRender.h"
-#include "../xrRender/Public/UIRender.h"
+#include "../XrEngine/Render/DebugRender.h"
+#include "../XrEngine/Render/UIRender.h"
 #ifdef _WIN64
 poolSS< _24b, 128>	ui_allocator;
 #else

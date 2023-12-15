@@ -7,8 +7,8 @@ extern ENGINE_API BOOL g_bRendering;
 ENGINE_API Fvector2		g_current_font_scale={1.0f,1.0f};
 
 #include "../xrAPI/xrAPI.h"
-#include "RenderFactory.h"
-#include "FontRender.h"
+#include "Render/RenderFactory.h"
+#include "Render/FontRender.h"
 
 CGameFont::CGameFont(LPCSTR section, u32 flags)
 {

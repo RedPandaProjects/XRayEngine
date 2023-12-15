@@ -7,7 +7,7 @@
 #include "level.h"
 #include "xr_level_controller.h"
 #include "game_cl_base.h"
-#include "../XrRender/Public/KinematicsAnimated.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 #include "../XrEngine/gamemtllib.h"
 #include "level_bullet_manager.h"
 #include "ai_sounds.h"

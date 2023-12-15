@@ -3,8 +3,8 @@
 #include "../../level.h"
 #include "../../../xrServerEntities/xrserver_objects_alife_monsters.h"
 #include "../../../xrEngine/motion.h"
-#include "RenderVisual.h"
-#include "KinematicsAnimated.h"
+#include "../XrEngine/Render/RenderVisual.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
 
 CPhantom::CPhantom()
 {

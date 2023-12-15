@@ -10,9 +10,9 @@
 #include "physic_item.h"
 #include "physicsshell.h"
 #include "xrserver_objects.h"
-#include "../xrRender/Public/RenderVisual.h"
-#include "../xrRender/Public/KinematicsAnimated.h"
-#include "../xrRender/Public/Kinematics.h"
+#include "../XrEngine/Render/RenderVisual.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
+#include "../XrEngine/Render/Kinematics.h"
 #define CHOOSE_MAX(x,inst_x,y,inst_y,z,inst_z)\
 	if(x>y)\
 	if(x>z){inst_x;}\

@@ -8,7 +8,7 @@
 
 #include "stdafx.h"
 #include "aimers_weapon.h"
-#include "../xrRender/Public/kinematics.h"
+#include "../XrEngine/Render/kinematics.h"
 #include "animation_movement_controller.h"
 #include "gameobject.h"
 #include "animation_movement_controller.h"

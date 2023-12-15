@@ -7,7 +7,7 @@
 //#include "SkeletonCustom.h"
 //	Instead of SkeletonCustom:
 #include "bone.h"
-#include "Kinematics.h"
+#include "Render/Kinematics.h"
 #include "cl_intersect.h"
 
 #include "object_broker.h"
