@@ -33,8 +33,7 @@ static const float depth_resolve = 0.01f;
 
 imotion_position::imotion_position(): 
 interactive_motion(), 
-time_to_end(0.f), 
-saved_visual_callback( 0 ), 
+time_to_end(0.f),  
 blend(0), 
 shell_motion_has_history( false )
 {
@@ -121,8 +120,6 @@ void imotion_position::state_start( )
 	inherited::state_start( );
 	
 	IKinematics			*K	= shell->PKinematics();
-	saved_visual_callback = K->GetUpdateCallback();
-	K->SetUpdateCallback( 0 );
 	IKinematicsAnimated	*KA = shell->PKinematics()->dcast_PKinematicsAnimated();
 	VERIFY( KA );
 	KA->SetUpdateTracksCalback( &update_callback );
@@ -274,7 +271,6 @@ void	imotion_position::state_end( )
 	IKinematics *K = shell->PKinematics();
 	disable_update( false );
 	disable_bone_calculation( *K, false );
-	K->SetUpdateCallback( saved_visual_callback );
 	deinit_bones();
 
 	save_fixes( K );
@@ -356,14 +352,6 @@ void imotion_position::move_update( )
 	disable_bone_calculation( *K, false );
 
 	K->Bone_Calculate( &K->GetBoneData(0), &Fidentity );
-
-	if( saved_visual_callback )
-	{
-		u16 sv_root = K->LL_GetBoneRoot();
-		K->LL_SetBoneRoot( 0 );
-		saved_visual_callback( K );
-		K->LL_SetBoneRoot( sv_root );
-	}
 	disable_bone_calculation( *K, true );
 }
 float imotion_position::advance_animation( float dt, IKinematicsAnimated& KA )

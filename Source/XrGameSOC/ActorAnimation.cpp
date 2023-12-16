@@ -23,7 +23,6 @@
 #include "game_cl_base.h"
 #include "../xrengine/motion.h"
 #include "artifact.h"
-#include "IKLimbsController.h"
 static const float y_spin0_factor		= 0.0f;
 static const float y_spin1_factor		= 0.4f;
 static const float y_shoulder_factor	= 0.4f;

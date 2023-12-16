@@ -18,7 +18,6 @@
 #include "game_cl_base.h"
 #include "../xrEngine/motion.h"
 #include "artefact.h"
-#include "IKLimbsController.h"
 #include "player_hud.h"
 
 static const float y_spin0_factor		= 0.0f;

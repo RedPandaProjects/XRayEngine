@@ -665,17 +665,6 @@ void CEntityAlive::PHGetLinearVell(Fvector& velocity)
 		inherited::PHGetLinearVell(velocity);
 
 }
-CIKLimbsController*	CEntityAlive::character_ik_controller()
-{
-	if(character_physics_support())
-	{
-		return character_physics_support()->ik_controller();
-	}
-	else
-	{
-		return NULL;
-	}
-}
 CPHSoundPlayer* CEntityAlive::ph_sound_player()
 {
 	if(character_physics_support())

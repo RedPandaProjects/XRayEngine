@@ -1136,8 +1136,6 @@ void CCustomMonster::OnRender()
 	if (psAI_Flags.test(aiMotion)) 
 		character_physics_support()->movement()->dbg_Draw();
 	
-	if (bDebug)
-		CastToIKinematics(Visual())->DebugRender(XFORM());
 }
 #endif // DEBUG
 

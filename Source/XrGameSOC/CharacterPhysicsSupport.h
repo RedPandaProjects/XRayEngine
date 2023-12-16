@@ -61,7 +61,6 @@ private:
 	CPhysicsShell						*m_physics_skeleton																																	;
 	CPHMovementControl					*m_PhysicMovementControl																															;
 	CPHSoundPlayer						m_ph_sound_player																																	;
-	CIKLimbsController					*m_ik_controller																																	;
 	SCollisionHitCallback				*m_collision_hit_callback;
 	character_hit_animation_controller	m_hit_animations;
 
@@ -125,7 +124,6 @@ virtual bool							CanRemoveObject					();
 public:
 IC		CPHMovementControl				*movement						()	{return m_PhysicMovementControl;}
 IC		CPHSoundPlayer					*ph_sound_player				()	{return &m_ph_sound_player;}
-IC		CIKLimbsController				*ik_controller					()	{return	m_ik_controller;}
 		void							SetRemoved						();
 		bool							IsRemoved						(){return m_eState==esRemoved;}
 		bool							IsSpecificDamager				()																{return !!m_flags.test(fl_specific_bonce_demager)	;}
@@ -158,8 +156,6 @@ private:
 		void 							ActivateShell					(CObject* who)																										;
 		void							KillHit							(CObject* who, ALife::EHitType hit_type, float &impulse)																										;
 static	void							DeathAnimCallback				(CBlend *B)																											;
-		void							CreateIKController				()																													;
-		void							DestroyIKController				()																													;
 		void							CollisionCorrectObjPos			(const Fvector& start_from,bool character_create=false);
 		void							FlyTo							(const	Fvector &disp);
 		void							TestForWounded					();

@@ -18,7 +18,7 @@
 #include "game_cl_base_weapon_usage_statistic.h"
 #include "../XrCDB/xr_collide_defs.h"
 #include "weapon.h"
-#include "ik/math3d.h"
+//#include "ik/math3d.h"
 #include "actor.h"
 #include "../XrEngine/xr_collide_form.h"
 
@@ -380,7 +380,7 @@ bool CBulletManager::ObjectHit( SBullet_Hit* hit_res, SBullet* bullet, const Fve
 			bullet->speed -= shootFactor;
 			if ( bullet->speed < 0 ) bullet->speed = 0;
 		}
-		if ( DOT( hit_normal, bullet->dir ) < 0 )
+		if (hit_normal.dotproduct(bullet->dir ) < 0 )
 		{
 			if ( bullet->density_mode )
 			{

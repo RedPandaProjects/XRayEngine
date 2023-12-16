@@ -1167,17 +1167,6 @@
     <ClCompile Include="HudSound.cpp" />
     <ClCompile Include="HUDTarget.cpp" />
     <ClCompile Include="hud_item_object.cpp" />
-    <ClCompile Include="IKLimbsController.cpp" />
-    <ClCompile Include="Ik\aint.cxx" />
-    <ClCompile Include="Ik\Dof7control.cpp" />
-    <ClCompile Include="Ik\eqn.cxx" />
-    <ClCompile Include="Ik\eulersolver.cxx" />
-    <ClCompile Include="Ik\IKLimb.cpp" />
-    <ClCompile Include="Ik\jtlimits.cxx" />
-    <ClCompile Include="Ik\limb.cxx" />
-    <ClCompile Include="Ik\math3d.cpp" />
-    <ClCompile Include="Ik\mathTrig.cpp" />
-    <ClCompile Include="ik_anim_state.cpp" />
     <ClCompile Include="InfoDocument.cpp" />
     <ClCompile Include="InfoPortion.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch_script.h</PrecompiledHeaderFile>

@@ -13,7 +13,6 @@
 #include "animation_utils.h"
 class CPhysicsShell;
 class CPHMovementControl;
-class CIKLimbsController;
 class interactive_motion;
 class interactive_animation;
 class physics_shell_animated;
@@ -66,7 +65,6 @@ private:
 	CPhysicsShell						*m_physics_skeleton																																	;
 	CPHMovementControl					*m_PhysicMovementControl																															;
 	CPHSoundPlayer						m_ph_sound_player																																	;
-	CIKLimbsController					*m_ik_controller																																	;
 	ICollisionHitCallback				*m_collision_hit_callback;
 	character_hit_animation_controller	m_hit_animations;
 	death_anims							m_death_anims;
@@ -114,7 +112,6 @@ public:
 IC		CPHMovementControl				*movement						( )	{ return m_PhysicMovementControl; }
 IC	const	CPHMovementControl			*movement						( ) const{ return m_PhysicMovementControl; }
 IC		CPHSoundPlayer					*ph_sound_player				( )	{ return &m_ph_sound_player; }
-IC		CIKLimbsController				*ik_controller					( )	{ return m_ik_controller; }
 		bool							interactive_motion				( ) ;
 		bool							can_drop_active_weapon			( ) ;
 		void							SetRemoved						( );
@@ -176,8 +173,6 @@ private:
 		void							EndActivateFreeShell			( CObject* who, const Fvector& inital_entity_position, const Fvector& dp, const Fvector & velocity )				;
 		void							KillHit							( SHit &H )																											;
 static	void							DeathAnimCallback				( CBlend *B )																										;
-		void							CreateIKController				( )																													;
-		void							DestroyIKController				( )																													;
 		bool							CollisionCorrectObjPos			( const Fvector& start_from, bool character_create=false );
 		
 		void							FlyTo							( const	Fvector &disp );

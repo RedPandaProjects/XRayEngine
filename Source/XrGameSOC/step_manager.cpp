@@ -8,7 +8,6 @@
 #include "gamepersistent.h"
 #include "material_manager.h"
 #include "profiler.h"
-#include "IKLimbsController.h"
 
 CStepManager::CStepManager()
 {
@@ -73,8 +72,8 @@ void CStepManager::on_animation_start(MotionID motion_id, CBlend *blend)
 	m_blend	= blend;
 	if (!m_blend) return;
 
-	if(m_object->character_ik_controller	())
-		m_object->character_ik_controller	()->PlayLegs(blend);
+	/*if(m_object->character_ik_controller	())
+		m_object->character_ik_controller	()->PlayLegs(blend);*/
 
 	m_time_anim_started = Device->dwTimeGlobal; 
 	

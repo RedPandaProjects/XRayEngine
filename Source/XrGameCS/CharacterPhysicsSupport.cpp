@@ -13,7 +13,6 @@
 #include "Physics.h"
 
 #include "PHActivationShape.h"
-#include "IKLimbsController.h"
 #include "PHCapture.h"
 #include "PHCollideValidator.h"
 #include "ai/stalker/ai_stalker.h"
@@ -83,7 +82,7 @@ CCharacterPhysicsSupport::CCharacterPhysicsSupport( EType atype, CEntityAlive* a
 	m_eType( atype ),
 	m_eState( esAlive ),
 	m_physics_skeleton( NULL ),
-	m_ik_controller	( NULL ),
+	//m_ik_controller	( NULL ),
 	m_BonceDamageFactor( 1.f ),
 	m_collision_hit_callback( NULL ),
 	m_interactive_animation( NULL ),
@@ -261,8 +260,8 @@ void CCharacterPhysicsSupport::SpawnInitPhysics( CSE_Abstract* e )
 		}
 #endif
 #ifdef	USE_IK
-		if( etStalker == m_eType || etActor == m_eType || (m_EntityAlife.Visual()->dcast_PKinematics()->LL_UserData() && m_EntityAlife.Visual()->dcast_PKinematics()->LL_UserData()->section_exist("ik")) )
-				CreateIKController( );
+	/*	if( etStalker == m_eType || etActor == m_eType || (m_EntityAlife.Visual()->dcast_PKinematics()->LL_UserData() && m_EntityAlife.Visual()->dcast_PKinematics()->LL_UserData()->section_exist("ik")) )
+				CreateIKController( );*/
 #endif
 		VERIFY(pSettings);
 
@@ -323,7 +322,7 @@ void CCharacterPhysicsSupport::in_NetDestroy( )
 	
 	xr_delete( m_interactive_animation );
 	destroy_animation_collision();
-	DestroyIKController( );
+	//DestroyIKController( );
 	xr_delete( m_collision_activating_delay );
 }
 
@@ -434,8 +433,8 @@ void CCharacterPhysicsSupport::KillHit( SHit &H )
 		else
 			m_interactive_motion = xr_new<imotion_position>( );
 		m_interactive_motion->setup( m ,m_pPhysicsShell, hit_angle );
-	} else 
-		DestroyIKController( );
+	}
+	
 
 	if( is_imotion(m_interactive_motion ) )
 				m_interactive_motion->play( );
@@ -511,7 +510,7 @@ IC		void	CCharacterPhysicsSupport::						UpdateDeathAnims				()
 
 	if(!m_flags.test(fl_death_anim_on) && !is_imotion(m_interactive_motion))//!m_flags.test(fl_use_death_motion)//!b_death_anim_on&&m_pPhysicsShell->isFullActive()
 	{
-		DestroyIKController( );
+		//DestroyIKController( );
 		CastToIKinematicsAnimated(m_EntityAlife.Visual())->PlayCycle("death_init");
 		m_flags.set(fl_death_anim_on,TRUE);
 	}
@@ -583,11 +582,11 @@ void CCharacterPhysicsSupport::in_UpdateCL( )
 		//ActivateShell( NULL );
 		//m_PhysicMovementControl->DestroyCharacter( );
 	//} 
-	else if( ik_controller( ) )
-	{
-		update_interactive_anims();
-		ik_controller( )->Update();
-	}
+	//else if( ik_controller( ) )
+	//{
+	//	update_interactive_anims();
+	//	ik_controller( )->Update();
+	//}
 
 #ifdef DEBUG
 	if(Type()==etStalker && ph_dbg_draw_mask1.test(phDbgHitAnims))
@@ -1167,12 +1166,7 @@ if( dbg_draw_ragdoll_spawn )
 
 void CCharacterPhysicsSupport::in_ChangeVisual()
 {
-	
-	if(m_ik_controller)
-	{
-		DestroyIKController();
-		CreateIKController();
-	}
+
 	xr_delete( m_interactive_animation );
 	destroy_animation_collision();
 	destroy( m_interactive_motion );
@@ -1222,23 +1216,9 @@ void CCharacterPhysicsSupport::PHGetLinearVell(Fvector &velocity)
 		m_pPhysicsShell->get_LinearVel(velocity);
 	}
 	else
+	{
 		movement()->GetCharacterVelocity(velocity);
-		
-}
-
-void CCharacterPhysicsSupport::CreateIKController()
-{
-
-	VERIFY(!m_ik_controller);
-	m_ik_controller=xr_new<CIKLimbsController>();
-	m_ik_controller->Create(&m_EntityAlife);
-	
-}
-void CCharacterPhysicsSupport::DestroyIKController()
-{
-	if(!m_ik_controller)return;
-	m_ik_controller->Destroy(&m_EntityAlife);
-	xr_delete(m_ik_controller);
+	}
 }
 
 void		 CCharacterPhysicsSupport::in_NetRelcase(CObject* O)																													

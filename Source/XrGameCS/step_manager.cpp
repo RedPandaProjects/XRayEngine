@@ -2,11 +2,13 @@
 #include "step_manager.h"
 #include "entity_alive.h"
 #include "../XrEngine/Render/Kinematics.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
+#include "../XrEngine/Render/animation_blend.h"
 #include "level.h"
 #include "gamepersistent.h"
 #include "material_manager.h"
 #include "profiler.h"
-#include "IKLimbsController.h"
+
 #ifdef	DEBUG
 BOOL debug_step_info = FALSE;
 BOOL debug_step_info_load = FALSE;
@@ -108,8 +110,8 @@ void CStepManager::on_animation_start(MotionID motion_id, CBlend *blend)
 	m_blend	= blend;
 	if (!m_blend) return;
 
-	if(m_object->character_ik_controller	())
-		m_object->character_ik_controller	()->PlayLegs(blend);
+	/*if(m_object->character_ik_controller	())
+		m_object->character_ik_controller	()->PlayLegs(blend);*/
 
 	m_time_anim_started = Device->dwTimeGlobal; 
 	

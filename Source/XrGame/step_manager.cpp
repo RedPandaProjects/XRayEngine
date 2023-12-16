@@ -2,11 +2,12 @@
 #include "step_manager.h"
 #include "entity_alive.h"
 #include "../XrEngine/Render/Kinematics.h"
+#include "../XrEngine/Render/KinematicsAnimated.h"
+#include "../XrEngine/Render/animation_blend.h"
 #include "level.h"
 #include "gamepersistent.h"
 #include "material_manager.h"
 #include "profiler.h"
-#include "IKLimbsController.h"
 
 #ifdef	DEBUG
 BOOL debug_step_info = FALSE;
@@ -113,8 +114,8 @@ void CStepManager::on_animation_start(MotionID motion_id, CBlend *blend)
 	m_blend	= blend;
 	if (!m_blend) return;
 
-	if(m_object->character_ik_controller	())
-		m_object->character_ik_controller	()->PlayLegs(blend);
+	//if(m_object->character_ik_controller	())
+	//	m_object->character_ik_controller	()->PlayLegs(blend);
 
 	m_time_anim_started = Device->dwTimeGlobal; 
 	
@@ -232,7 +233,8 @@ void CStepManager::update(bool b_hud_view)
 
 	// если анимация циклическая...
 	u32 time_anim_end = m_time_anim_started + u32(get_blend_time() * 1000);		// время завершения работы анимации
-	if (!m_blend->stop_at_end && (time_anim_end < cur_time)) {
+	if (!m_blend->stop_at_end && time_anim_end < cur_time) 
+	{
 		
 		m_time_anim_started		= time_anim_end;
 		m_step_info.cur_cycle	= 1;

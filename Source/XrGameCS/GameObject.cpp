@@ -92,7 +92,7 @@ void CGameObject::Load(LPCSTR section)
 
 void CGameObject::reinit	()
 {
-	m_visual_callback.clear	();
+	//m_visual_callback.clear	();
 	if (!g_dedicated_server)
         ai_location().reinit	();
 
@@ -119,8 +119,8 @@ void CGameObject::net_Destroy	()
 	xr_delete				(m_ini_file);
 
 	m_script_clsid			= -1;
-	if (Visual() && CastToIKinematics(Visual()))
-		CastToIKinematics(Visual())->Callback	(0,0);
+	//if (Visual() && CastToIKinematics(Visual()))
+	//	CastToIKinematics(Visual())->Callback	(0,0);
 
 	inherited::net_Destroy						();
 	setReady									(FALSE);
@@ -734,46 +734,46 @@ BOOL CGameObject::TestServerFlag(u32 Flag) const
 {
 	return					(m_server_flags.test(Flag));
 }
-
-void CGameObject::add_visual_callback		(visual_callback *callback)
-{
-	VERIFY						(CastToIKinematics(Visual()));
-	CALLBACK_VECTOR_IT			I = std::find(visual_callbacks().begin(),visual_callbacks().end(),callback);
-	VERIFY						(I == visual_callbacks().end());
-
-	if (m_visual_callback.empty())	SetKinematicsCallback(true);
+//
+//void CGameObject::add_visual_callback		(visual_callback *callback)
+//{
+//	VERIFY						(CastToIKinematics(Visual()));
+//	CALLBACK_VECTOR_IT			I = std::find(visual_callbacks().begin(),visual_callbacks().end(),callback);
+//	VERIFY						(I == visual_callbacks().end());
+//
+//	if (m_visual_callback.empty())	SetKinematicsCallback(true);
+////		CastToIKinematics(Visual())->Callback(VisualCallback,this);
+//	m_visual_callback.push_back	(callback);
+//}
+//
+//void CGameObject::remove_visual_callback	(visual_callback *callback)
+//{
+//	CALLBACK_VECTOR_IT			I = std::find(m_visual_callback.begin(),m_visual_callback.end(),callback);
+//	VERIFY						(I != m_visual_callback.end());
+//	m_visual_callback.erase		(I);
+//	if (m_visual_callback.empty())	SetKinematicsCallback(false);
+////		CastToIKinematics(Visual())->Callback(0,0);
+//}
+//
+//void CGameObject::SetKinematicsCallback		(bool set)
+//{
+//	if(!Visual())	return;
+//	if (set)
 //		CastToIKinematics(Visual())->Callback(VisualCallback,this);
-	m_visual_callback.push_back	(callback);
-}
-
-void CGameObject::remove_visual_callback	(visual_callback *callback)
-{
-	CALLBACK_VECTOR_IT			I = std::find(m_visual_callback.begin(),m_visual_callback.end(),callback);
-	VERIFY						(I != m_visual_callback.end());
-	m_visual_callback.erase		(I);
-	if (m_visual_callback.empty())	SetKinematicsCallback(false);
+//	else
 //		CastToIKinematics(Visual())->Callback(0,0);
-}
+//};
 
-void CGameObject::SetKinematicsCallback		(bool set)
-{
-	if(!Visual())	return;
-	if (set)
-		CastToIKinematics(Visual())->Callback(VisualCallback,this);
-	else
-		CastToIKinematics(Visual())->Callback(0,0);
-};
-
-void VisualCallback	(IKinematics *tpKinematics)
-{
-	CGameObject						*game_object = static_cast<CGameObject*>(static_cast<CObject*>(tpKinematics->GetUpdateCallbackParam()));
-	VERIFY							(game_object);
-	
-	CGameObject::CALLBACK_VECTOR_IT	I = game_object->visual_callbacks().begin();
-	CGameObject::CALLBACK_VECTOR_IT	E = game_object->visual_callbacks().end();
-	for ( ; I != E; ++I)
-		(*I)						(tpKinematics);
-}
+//void VisualCallback	(IKinematics *tpKinematics)
+//{
+//	CGameObject						*game_object = static_cast<CGameObject*>(static_cast<CObject*>(tpKinematics->GetUpdateCallbackParam()));
+//	VERIFY							(game_object);
+//	
+//	CGameObject::CALLBACK_VECTOR_IT	I = game_object->visual_callbacks().begin();
+//	CGameObject::CALLBACK_VECTOR_IT	E = game_object->visual_callbacks().end();
+//	for ( ; I != E; ++I)
+//		(*I)						(tpKinematics);
+//}
 
 CScriptGameObject *CGameObject::lua_game_object		() const
 {

@@ -16,7 +16,6 @@ struct tracks_update: public IUpdateTracksCallback
 		bool update;
 	} update_callback;
 	float					time_to_end;
-	UpdateCallback			saved_visual_callback;
 	CBlend					*blend;
 	bool					shell_motion_has_history;
 public:

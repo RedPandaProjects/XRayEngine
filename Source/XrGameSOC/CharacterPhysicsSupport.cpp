@@ -14,7 +14,6 @@
 #include "Physics.h"
 #include "level.h"
 #include "PHActivationShape.h"
-#include "IKLimbsController.h"
 #include "PHCapture.h"
 #include "PHCollideValidator.h"
 #include "ai/stalker/ai_stalker.h"
@@ -92,7 +91,6 @@ CCharacterPhysicsSupport::CCharacterPhysicsSupport(EType atype,CEntityAlive* aen
 	m_flags.set(fl_skeleton_in_shell,FALSE);
 	m_shot_up_factor				=0.f;
 	m_after_death_velocity_factor	=1.f;
-	m_ik_controller					=	NULL;
 	m_BonceDamageFactor				=1.f;
 	m_collision_hit_callback		=	NULL;
 	m_Pred_Time						= 0.0;
@@ -286,7 +284,6 @@ void CCharacterPhysicsSupport::in_NetDestroy( )
 	CPHDestroyable::RespawnInit( );
 	m_eState = esAlive;
 	xr_delete( m_interactive_motion );
-	DestroyIKController( );
 }
 
 void	CCharacterPhysicsSupport::in_NetSave( NET_Packet& P )
@@ -484,8 +481,7 @@ void CCharacterPhysicsSupport::in_UpdateCL( )
 	{
 		ActivateShell( NULL );
 		m_PhysicMovementControl->DestroyCharacter( );
-	} else if( ik_controller( ) )
-		ik_controller( )->Update();
+	} 
 
 
 #ifdef DEBUG
@@ -610,7 +606,6 @@ void CCharacterPhysicsSupport::set_movement_position( const Fvector &pos )
 
 void CCharacterPhysicsSupport::ActivateShell			( CObject* who )
 {
-	DestroyIKController( );
 	IKinematics* K=CastToIKinematics( m_EntityAlife.Visual( ) );
 
 	//animation movement controller issues
@@ -756,11 +751,6 @@ void CCharacterPhysicsSupport::in_ChangeVisual()
 		xr_delete(m_pPhysicsShell);
 		ActivateShell(NULL);
 	}
-	if(m_ik_controller)
-	{
-		DestroyIKController();
-		CreateIKController();
-	}
 }
 
 bool CCharacterPhysicsSupport::CanRemoveObject()
@@ -784,21 +774,6 @@ void CCharacterPhysicsSupport::PHGetLinearVell(Fvector &velocity)
 	else
 		movement()->GetCharacterVelocity(velocity);
 		
-}
-
-void CCharacterPhysicsSupport::CreateIKController()
-{
-
-	VERIFY(!m_ik_controller);
-	m_ik_controller=xr_new<CIKLimbsController>();
-	m_ik_controller->Create(&m_EntityAlife);
-	
-}
-void CCharacterPhysicsSupport::DestroyIKController()
-{
-	if(!m_ik_controller)return;
-	m_ik_controller->Destroy(&m_EntityAlife);
-	xr_delete(m_ik_controller);
 }
 
 void		 CCharacterPhysicsSupport::in_NetRelcase(CObject* O)																													

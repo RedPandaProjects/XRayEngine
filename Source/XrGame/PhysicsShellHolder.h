@@ -63,7 +63,6 @@ public:
 	virtual CPHSoundPlayer				*ph_sound_player			()  						{return NULL;}
 	virtual	CCharacterPhysicsSupport	*character_physics_support	()							{return NULL;}
 	virtual	const CCharacterPhysicsSupport	*character_physics_support	() const					{return NULL;}
-	virtual	CIKLimbsController			*character_ik_controller	()							{return NULL;}
 	virtual ICollisionHitCallback		*get_collision_hit_callback ()							{return NULL;}
 	virtual void						set_collision_hit_callback	(ICollisionHitCallback *cc)	{;}
 	virtual void			_BCL			enable_notificate			()							{;}

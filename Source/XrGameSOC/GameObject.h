@@ -203,23 +203,6 @@ public:
 		return				(true);
 	}
 
-public:
-	typedef void  visual_callback(IKinematics *);
-	typedef svector<visual_callback*,6>			CALLBACK_VECTOR;
-	typedef CALLBACK_VECTOR::iterator			CALLBACK_VECTOR_IT;
-
-	CALLBACK_VECTOR			m_visual_callback;
-
-public:
-			void			add_visual_callback		(visual_callback *callback);
-			void			remove_visual_callback	(visual_callback *callback);
-			void			SetKinematicsCallback	(bool set);
-
-	IC		CALLBACK_VECTOR &visual_callbacks	()
-	{
-		return				(m_visual_callback);
-	}
-
 
 private:
 	mutable CScriptGameObject	*m_lua_game_object;

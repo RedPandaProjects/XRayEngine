@@ -19,7 +19,6 @@
 #include "../xrcdb/xr_collide_defs.h"
 #include "../xrengine/xr_collide_form.h"
 #include "weapon.h"
-#include "ik/math3d.h"
 #include "actor.h"
 #include "ai/monsters/basemonster/base_monster.h"
 
@@ -384,7 +383,7 @@ bool CBulletManager::ObjectHit( SBullet_Hit* hit_res, SBullet* bullet, const Fve
 			bullet->speed -= shootFactor;
 			if ( bullet->speed < 0 ) bullet->speed = 0;
 		}
-		if ( DOT( hit_normal, bullet->dir ) < 0 )
+		if (hit_normal.dotproduct(bullet->dir ) < 0 )
 		{
 			if ( bullet->density_mode )
 			{

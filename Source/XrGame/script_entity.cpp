@@ -30,7 +30,6 @@
 #include "script_callback_ex.h"
 #include "game_object_space.h"
 
-void  ActionCallback(IKinematics *tpKinematics);
 
 CScriptEntity::CScriptEntity()
 {
@@ -115,22 +114,15 @@ void CScriptEntity::SetScriptControl(const bool bScriptControl, shared_str caSci
 
 	if (bScriptControl && !can_script_capture()) return;
 
-	if (bScriptControl && !m_bScriptControl)
-		object().add_visual_callback			(&ActionCallback);
-	else
-		if (!bScriptControl && m_bScriptControl)
-			object().remove_visual_callback		(&ActionCallback);
+	//if (bScriptControl && !m_bScriptControl)
+	//	object().add_visual_callback			(&ActionCallback);
+	//else
+	//	if (!bScriptControl && m_bScriptControl)
+	//		object().remove_visual_callback		(&ActionCallback);
 
 	m_bScriptControl	= bScriptControl;
 	m_caScriptName		= caSciptName;
-/* 
-#ifdef DEBUG
-	if (bScriptControl)
-		ai().script_engine().script_log			(ScriptStorage::eLuaMessageTypeInfo,"Script %s set object %s under its control",*caSciptName,*object().cName());
-	else
-		ai().script_engine().script_log			(ScriptStorage::eLuaMessageTypeInfo,"Script %s freed object %s from its control",*caSciptName,*object().cName());
-#endif
-*/
+
 	if (!bScriptControl)
 		ResetScriptData(this);
 }
@@ -194,17 +186,6 @@ CScriptEntityAction *CScriptEntity::GetCurrentAction()
 		return(0);
 	else
 		return(m_tpActionQueue.front());
-}
-
-void  ActionCallback(IKinematics *tpKinematics)
-{
-	// sounds
-	CScriptEntity	*l_tpScriptMonster = smart_cast<CScriptEntity*>((CGameObject*)(tpKinematics->GetUpdateCallbackParam()));
-	VERIFY			(l_tpScriptMonster);
-	if (!l_tpScriptMonster->GetCurrentAction())
-		return;
-	l_tpScriptMonster->vfUpdateSounds();
-	l_tpScriptMonster->vfUpdateParticles();
 }
 
 void CScriptEntity::vfUpdateParticles()
@@ -625,6 +606,11 @@ bool CScriptEntity::bfScriptAnimation()
 void CScriptEntity::UpdateCL		()
 {
 	bfScriptAnimation				();
+	if (!GetCurrentAction()||!GetScriptControl())
+		return;
+	vfUpdateSounds();
+	vfUpdateParticles();
+
 }
 
 u32	 CScriptEntity::GetActionCount	() const

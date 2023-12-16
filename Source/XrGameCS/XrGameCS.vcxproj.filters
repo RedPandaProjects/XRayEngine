@@ -6474,72 +6474,6 @@
     <ClInclude Include="Hit.h">
       <Filter>Physics\Hit</Filter>
     </ClInclude>
-    <ClInclude Include="Ik\aint.h">
-      <Filter>Physics\IK</Filter>
-    </ClInclude>
-    <ClInclude Include="Ik\Dof7control.h">
-      <Filter>Physics\IK</Filter>
-    </ClInclude>
-    <ClInclude Include="Ik\eqn.h">
-      <Filter>Physics\IK</Filter>
-    </ClInclude>
-    <ClInclude Include="Ik\eulersolver.h">
-      <Filter>Physics\IK</Filter>
-    </ClInclude>
-    <ClInclude Include="ik_anim_state.h">
-      <Filter>Physics\IK</Filter>
-    </ClInclude>
-    <ClInclude Include="ik_calculate_data.h">
-      <Filter>Physics\IK</Filter>
-    </ClInclude>
-    <ClInclude Include="ik_calculate_state.h">
-      <Filter>Physics\IK</Filter>
-    </ClInclude>
-    <ClInclude Include="ik_collide_data.h">
-      <Filter>Physics\IK</Filter>
-    </ClInclude>
-    <ClInclude Include="ik_dbg_matrix.h">
-      <Filter>Physics\IK</Filter>
-    </ClInclude>
-    <ClInclude Include="ik_foot_collider.h">
-      <Filter>Physics\IK</Filter>
-    </ClInclude>
-    <ClInclude Include="ik_limb_state.h">
-      <Filter>Physics\IK</Filter>
-    </ClInclude>
-    <ClInclude Include="ik_limb_state_predict.h">
-      <Filter>Physics\IK</Filter>
-    </ClInclude>
-    <ClInclude Include="ik_object_shift.h">
-      <Filter>Physics\IK</Filter>
-    </ClInclude>
-    <ClInclude Include="IKFoot.h">
-      <Filter>Physics\IK</Filter>
-    </ClInclude>
-    <ClInclude Include="IKFoot_inl.h">
-      <Filter>Physics\IK</Filter>
-    </ClInclude>
-    <ClInclude Include="Ik\IKLimb.h">
-      <Filter>Physics\IK</Filter>
-    </ClInclude>
-    <ClInclude Include="IKLimbsController.h">
-      <Filter>Physics\IK</Filter>
-    </ClInclude>
-    <ClInclude Include="Ik\jtlimits.h">
-      <Filter>Physics\IK</Filter>
-    </ClInclude>
-    <ClInclude Include="Ik\limb.h">
-      <Filter>Physics\IK</Filter>
-    </ClInclude>
-    <ClInclude Include="Ik\math3d.h">
-      <Filter>Physics\IK</Filter>
-    </ClInclude>
-    <ClInclude Include="Ik\mathTrig.h">
-      <Filter>Physics\IK</Filter>
-    </ClInclude>
-    <ClInclude Include="pose_extrapolation.h">
-      <Filter>Physics\IK</Filter>
-    </ClInclude>
     <ClInclude Include="animation_movement_controller.h">
       <Filter>Physics\animation_movement_controller</Filter>
     </ClInclude>
@@ -9984,60 +9918,6 @@
     </ClCompile>
     <ClCompile Include="Hit.cpp">
       <Filter>Physics\Hit</Filter>
-    </ClCompile>
-    <ClCompile Include="Ik\aint.cxx">
-      <Filter>Physics\IK</Filter>
-    </ClCompile>
-    <ClCompile Include="Ik\Dof7control.cpp">
-      <Filter>Physics\IK</Filter>
-    </ClCompile>
-    <ClCompile Include="Ik\eqn.cxx">
-      <Filter>Physics\IK</Filter>
-    </ClCompile>
-    <ClCompile Include="Ik\eulersolver.cxx">
-      <Filter>Physics\IK</Filter>
-    </ClCompile>
-    <ClCompile Include="ik_anim_state.cpp">
-      <Filter>Physics\IK</Filter>
-    </ClCompile>
-    <ClCompile Include="ik_calculate_data.cpp">
-      <Filter>Physics\IK</Filter>
-    </ClCompile>
-    <ClCompile Include="ik_dbg_matrix.cpp">
-      <Filter>Physics\IK</Filter>
-    </ClCompile>
-    <ClCompile Include="ik_foot_collider.cpp">
-      <Filter>Physics\IK</Filter>
-    </ClCompile>
-    <ClCompile Include="ik_limb_state.cpp">
-      <Filter>Physics\IK</Filter>
-    </ClCompile>
-    <ClCompile Include="ik_object_shift.cpp">
-      <Filter>Physics\IK</Filter>
-    </ClCompile>
-    <ClCompile Include="IKFoot.cpp">
-      <Filter>Physics\IK</Filter>
-    </ClCompile>
-    <ClCompile Include="Ik\IKLimb.cpp">
-      <Filter>Physics\IK</Filter>
-    </ClCompile>
-    <ClCompile Include="IKLimbsController.cpp">
-      <Filter>Physics\IK</Filter>
-    </ClCompile>
-    <ClCompile Include="Ik\jtlimits.cxx">
-      <Filter>Physics\IK</Filter>
-    </ClCompile>
-    <ClCompile Include="Ik\limb.cxx">
-      <Filter>Physics\IK</Filter>
-    </ClCompile>
-    <ClCompile Include="Ik\math3d.cpp">
-      <Filter>Physics\IK</Filter>
-    </ClCompile>
-    <ClCompile Include="Ik\mathTrig.cpp">
-      <Filter>Physics\IK</Filter>
-    </ClCompile>
-    <ClCompile Include="pose_extrapolation.cpp">
-      <Filter>Physics\IK</Filter>
     </ClCompile>
     <ClCompile Include="animation_movement_controller.cpp">
       <Filter>Physics\animation_movement_controller</Filter>
