@@ -137,102 +137,10 @@ public:
 class	ENGINE_API	IRender_interface
 {
 public:
-	enum GenerationLevel
-	{
-		GENERATION_R1				= 81,
-		GENERATION_DX81				= 81,
-		GENERATION_R2				= 90,
-		GENERATION_DX90				= 90,
-		GENERATION_forcedword		= u32(-1)
-	};
-	enum ScreenshotMode
-	{
-		SM_NORMAL					= 0,		// jpeg,	name ignored
-		SM_FOR_CUBEMAP				= 1,		// tga,		name used as postfix
-		SM_FOR_GAMESAVE				= 2,		// dds/dxt1,name used as full-path
-		SM_FOR_LEVELMAP				= 3,		// tga,		name used as postfix (level_name)
-		SM_FOR_MPSENDING			= 4,
-		SM_forcedword				= u32(-1)
-	};
-public:
-	// options
-	s32								m_skinning;
-	s32								m_MSAASample;
 
-	BENCH_SEC_SCRAMBLEMEMBER1
+	virtual void					SpawnStaticDecal		(const shared_str& TextureName,const Fvector& Point, const Fvector& Normal, float Size)=0;
+	virtual void					SpawnSkeletalDecal		(const IRenderVisual* InObject,const shared_str& TextureName, const Fvector& StartPoint, const Fvector& EndPoint, float Size)=0;
 
-	// data
-	CFrustum						ViewBase;
-	CFrustum*						View;
-public:
-	// feature level
-	virtual	GenerationLevel			get_generation			()											= 0;
-
-	virtual bool					is_sun_static			() =0;
-	virtual DWORD					get_dx_level			() =0;
-
-	// Loading / Unloading
-	virtual	void					create					()											= 0;
-	virtual	void					destroy					()											= 0;
-	virtual	void					reset_begin				()											= 0;
-	virtual	void					reset_end				()											= 0;
-
-	BENCH_SEC_SCRAMBLEVTBL1
-	BENCH_SEC_SCRAMBLEVTBL3
-
-	virtual	void					level_Load				(IReader*)									= 0;
-	virtual void					level_Unload			()											= 0;
-
-	//virtual IDirect3DBaseTexture9*	texture_load			(LPCSTR	fname, u32& msize)					= 0;
-			void					shader_option_skinning	(s32 mode)									{ m_skinning=mode;	}
-	virtual HRESULT					shader_compile			(
-		LPCSTR							name,
-		DWORD const*                    pSrcData,
-		UINT                            SrcDataLen,
-		LPCSTR                          pFunctionName,
-		LPCSTR                          pTarget,
-		DWORD                           Flags,
-		void*&							result
-	)																									= 0;
-
-	// Information
-	virtual	void					Statistics				(CGameFont* F	)							{};
-
-	virtual LPCSTR					getShaderPath			()											= 0;
-//	virtual ref_shader				getShader				(int id)									= 0;
-	virtual IRender_Sector*			getSector				(int id)									= 0;
-	virtual IRenderVisual*			getVisual				(int id)									= 0;
-	virtual IRender_Sector*			detectSector			(const Fvector& P)							= 0;
-	virtual IRender_Target*			getTarget				()											= 0;
-
-	// Main 
-	IC		void					set_Frustum				(CFrustum*	O	)							{ VERIFY(O);	View = O;			}
-	virtual void					set_Transform			(Fmatrix*	M	)							= 0;
-	virtual void					set_HUD					(BOOL 		V	)							= 0;
-	virtual BOOL					get_HUD					()											= 0;
-	virtual void					set_Invisible			(BOOL 		V	)							= 0;
-	virtual void					flush					()											= 0;	
-	virtual void					set_Object				(IRenderable*		O	)					= 0;
-	virtual	void					add_Occluder			(Fbox2&	bb_screenspace	)					= 0;	// mask screen region as oclluded (-1..1, -1..1)
-	virtual void					add_Visual				(IRenderVisual*	V	)					= 0;	// add visual leaf	(no culling performed at all)
-	virtual void					add_Geometry			(IRenderVisual*	V	)					= 0;	// add visual(s)	(all culling performed)
-//	virtual void					add_StaticWallmark		(ref_shader& S, const Fvector& P, float s, CDB::TRI* T, Fvector* V)=0;
-	virtual void					add_StaticWallmark		(const wm_shader& S, const Fvector& P, float s, CDB::TRI* T, Fvector* V)=0;
-	//	Prefer this function when possible
-	virtual void					add_StaticWallmark		(IWallMarkArray *pArray, const Fvector& P, float s, CDB::TRI* T, Fvector* V)=0;
-	virtual void					clear_static_wallmarks	()=0;
-	//virtual void					add_SkeletonWallmark	(intrusive_ptr<CSkeletonWallmark> wm)						= 0;
-	//virtual void					add_SkeletonWallmark	(const Fmatrix* xf, CKinematics* obj, ref_shader& sh, const Fvector& start, const Fvector& dir, float size)=0;
-	//	Prefer this function when possible
-	virtual void					add_SkeletonWallmark	(const Fmatrix* xf, IKinematics* obj, IWallMarkArray *pArray, const Fvector& start, const Fvector& dir, float size)=0;
-
-	//virtual IBlender*				blender_create			(CLASS_ID cls)								= 0;
-	//virtual void					blender_destroy			(IBlender* &)								= 0;
-
-	virtual IRender_ObjectSpecific*	ros_create				(IRenderable* parent)						= 0;
-	virtual void					ros_destroy				(IRender_ObjectSpecific* &)					= 0;
-
-	// Lighting/glowing
 	virtual IRender_Light*			light_create			()											= 0;
 	virtual void					light_destroy			(IRender_Light* p_)							{ };
 	virtual IRender_Glow*			glow_create				()											= 0;
@@ -240,43 +148,13 @@ public:
 
 	// Models
 	virtual IRenderVisual*			model_CreateParticles	(LPCSTR name)								= 0;
-//	virtual IRender_DetailModel*	model_CreateDM			(IReader*	F)								= 0;
-	//virtual IRenderDetailModel*		model_CreateDM			(IReader*	F)								= 0;
-	//virtual IRenderVisual*			model_Create			(LPCSTR name, IReader*	data=0)				= 0;
 	virtual IRenderVisual*			model_Create			(LPCSTR name, IReader*	data=0)				= 0;
-	virtual IRenderVisual*			model_CreateChild		(LPCSTR name, IReader*	data)				= 0;
-	virtual IRenderVisual*			model_Duplicate			(IRenderVisual*	V)						= 0;
-	//virtual void					model_Delete			(IRenderVisual* &	V, BOOL bDiscard=FALSE)	= 0;
 	virtual void					model_Delete			(IRenderVisual* &	V, BOOL bDiscard=FALSE)	= 0;
-//	virtual void 					model_Delete			(IRender_DetailModel* & F)					= 0;
-	virtual void					model_Logging			(BOOL bEnable)								= 0;
-	virtual void					models_Prefetch			()											= 0;
-	virtual void					models_Clear			(BOOL b_complete)							= 0;
-
-	// Occlusion culling
-	virtual BOOL					occ_visible				(vis_data&	V)								= 0;
-	virtual BOOL					occ_visible				(Fbox&		B)								= 0;
-	virtual BOOL					occ_visible				(sPoly&		P)								= 0;
-
-	// Main
-	virtual void					Calculate				()											= 0;
-	virtual void					Render					()											= 0;
+	virtual IRender_Target*			getTarget				()											= 0;
 	
-	virtual void					Screenshot				(ScreenshotMode mode=SM_NORMAL, LPCSTR name = 0) = 0;
-	virtual	void					Screenshot				(ScreenshotMode mode, CMemoryWriter& memory_writer) = 0;
-	virtual void					ScreenshotAsyncBegin	() = 0;
-	virtual void					ScreenshotAsyncEnd		(CMemoryWriter& memory_writer) = 0;
-
-	// Render mode
-	virtual void					rmNear					()											= 0;
-	virtual void					rmFar					()											= 0;
-	virtual void					rmNormal				()											= 0;
-	virtual u32						memory_usage			()											= 0;
-
-	// Constructor/destructor
+	virtual IRender_ObjectSpecific*	ros_create				(IRenderable* parent)						= 0;
+	virtual void					ros_destroy				(IRender_ObjectSpecific*&)					= 0;
 	virtual ~IRender_interface();
-protected:
-	virtual	void					ScreenshotImpl			(ScreenshotMode mode, LPCSTR name, CMemoryWriter* memory_writer) = 0;
 };
 struct ENGINE_API		resptrcode_glow : public resptr_base<IRender_Glow>
 {

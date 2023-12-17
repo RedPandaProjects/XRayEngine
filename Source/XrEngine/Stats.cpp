@@ -305,7 +305,6 @@ void CStats::Show()
 		// Renderer specific
 		F.SetHeightI						(f_base_size);
 		F.OutSet						(200,0);
-		Render->Statistics				(&F);
 
 		//////////////////////////////////////////////////////////////////////////
 		// Game specific

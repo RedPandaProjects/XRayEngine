@@ -120,7 +120,7 @@ void  CTracer::Render	(const Fvector& pos,
 						 float speed,
 						 bool bActor)
 {
-	if (::Render->ViewBase.testSphere_dirty((Fvector&)center,length*.5f) )
+	if (1)
 	{
 		R_ASSERT (colorID < m_aColors.size() );
 		

@@ -87,9 +87,7 @@ void CLevel::remove_objects	()
 	stalker_animation_data_storage().clear		();
 	
 	VERIFY										(Render);
-	Render->models_Clear						(FALSE);
 	
-	Render->clear_static_wallmarks				();
 
 #ifdef DEBUG
 	if(!g_dedicated_server)

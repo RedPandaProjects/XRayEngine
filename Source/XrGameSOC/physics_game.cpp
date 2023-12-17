@@ -54,11 +54,11 @@ public:
 class CPHWallMarksCall :
 	public CPHAction
 {
-	wm_shader pWallmarkShader;
+	shared_str pWallmarkShader;
 	Fvector pos;
 	CDB::TRI* T;
 public:
-	CPHWallMarksCall(const Fvector &p,CDB::TRI* Tri,wm_shader s)
+	CPHWallMarksCall(const Fvector &p,CDB::TRI* Tri,shared_str s)
 	{
 		pWallmarkShader=s;
 		pos.set(p);
@@ -66,10 +66,10 @@ public:
 	}
 	virtual void 			run								()
 	{
-		//�������� ������� �� ���������
-		::Render->add_StaticWallmark(pWallmarkShader,pos, 
-			0.09f, T,
-			Level().ObjectSpace.GetStaticVerts());
+		Fvector	Normal;
+		const Fvector* StaticVertices = Level().ObjectSpace.GetStaticVerts();
+		Normal.mknormal			(StaticVertices[T->verts[0]],StaticVertices[T->verts[1]],StaticVertices[T->verts[2]]);
+		::Render->SpawnStaticDecal(pWallmarkShader,pos, Normal,0.09f);
 	};
 	virtual bool 			obsolete						()const{return false;}
 };
@@ -106,9 +106,9 @@ void  TContactShotMark(CDB::TRI* T,dContactGeom* c)
 		SGameMtlPair* mtl_pair		= GameMaterialLibrary->GetMaterialPair(T->material,data->material);
 		if(mtl_pair)
 		{
-			if(vel_cret>Pars::vel_cret_wallmark && !mtl_pair->m_pCollideMarks->empty())
+			if(vel_cret>Pars::vel_cret_wallmark && !mtl_pair->CollideMarks->IsEmpty())
 			{
-				wm_shader pWallmarkShader = mtl_pair->m_pCollideMarks->GenerateWallmark();
+				shared_str pWallmarkShader = mtl_pair->CollideMarks->GenerateWallmark();
 				Level().ph_commander().add_call(xr_new<CPHOnesCondition>(),xr_new<CPHWallMarksCall>( *((Fvector*)c->pos),T,pWallmarkShader));
 			}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -429,11 +429,12 @@ void CEntityAlive::PlaceBloodWallmark(const Fvector& dir, const Fvector& start_p
 
 			
 			//ref_shader wallmarkShader = wallmarks_vector[::Random.randI(wallmarks_vector.size())];
-			VERIFY(!pwallmarks_vector->empty());
+			VERIFY(!pwallmarks_vector->IsEmpty());
 			{
 				//добавить отметку на материале
-				//::Render->add_StaticWallmark(wallmarkShader, end_point, wallmark_size, pTri, pVerts);
-				::Render->add_StaticWallmark(pwallmarks_vector, end_point, wallmark_size, pTri, pVerts);
+				Fvector	Normal;
+				Normal.mknormal(pVerts[pTri->verts[0]],pVerts[pTri->verts[1]],pVerts[pTri->verts[2]]);
+				::Render->SpawnStaticDecal(pwallmarks_vector->GenerateWallmark(), end_point, Normal,wallmark_size);
 			}
 		}
 	}

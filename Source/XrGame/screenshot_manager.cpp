@@ -192,7 +192,6 @@ void screenshot_manager::shedule_Update(u32 dt)
 		}
 	} else if (is_make_in_progress && (--m_defered_ssframe_counter == 0))
 	{
-		Render->ScreenshotAsyncEnd(m_result_writer);
 /*	//---------
 #ifdef DEBUG
 		if (!m_result_writer.size())

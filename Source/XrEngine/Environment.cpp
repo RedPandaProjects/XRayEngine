@@ -482,9 +482,9 @@ void CEnvironment::OnFrame()
 	float					current_weight;
 	lerp					(current_weight);
 
-	//	Igor. Dynamic sun position. 
-	if ( !::Render->is_sun_static())
-		calculate_dynamic_sun_dir();
+	////	Igor. Dynamic sun position. 
+	//if ( !::Render->is_sun_static())
+	//	calculate_dynamic_sun_dir();
 
 #ifndef MASTER_GOLD
 	if(CurrentEnv->sun_dir.y>0)

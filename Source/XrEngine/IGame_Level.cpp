@@ -36,7 +36,6 @@ IGame_Level::~IGame_Level	()
 	xr_delete					( pLevel		);
 
 	// Render-level unload
-	Render->level_Unload		();
 	xr_delete					(m_pCameras);
 	// Unregister
 	Device->seqRenderDebug.Remove		(this);

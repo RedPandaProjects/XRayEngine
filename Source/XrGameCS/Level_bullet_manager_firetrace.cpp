@@ -156,27 +156,22 @@ void CBulletManager::FireShotmark (SBullet* bullet, const Fvector& vDir, const F
 
 	if (R.O)
 	{
-/*  add_SkeletonWallmark not implemented now...
-		particle_dir		 = vDir;
+		particle_dir		 = vDir; 
 		particle_dir.invert	();
 
 		//�� ������� ������ ������� �� ������
 		if(Level().CurrentEntity() && Level().CurrentEntity()->ID() == R.O->ID()) return;
 
-		if (mtl_pair && !mtl_pair->m_pCollideMarks->empty() && ShowMark)
+		/*ui_shader* pWallmarkShader = (!mtl_pair || mtl_pair->CollideMarks.empty()) ?
+						NULL:&mtl_pair->CollideMarks[::Random.randI(0,mtl_pair->CollideMarks.size())];;*/
+
+		if (mtl_pair && !mtl_pair->CollideMarks->IsEmpty()&& ShowMark)
 		{
 			//�������� ������� �� ���������
 			Fvector p;
-			p.mad(bullet->bullet_pos,bullet->dir,R.range-0.01f);
-			if(!g_dedicated_server)
-				::Render->add_SkeletonWallmark	(	&R.O->renderable.xform, 
-													PKinematics(R.O->Visual()), 
-													&*mtl_pair->m_pCollideMarks,
-													p, 
-													bullet->dir, 
-													bullet->wallmark_size);
+			p.mad(bullet->bullet_pos,bullet->dir,R.range+0.5f);
+			::Render->SpawnSkeletalDecal(R.O->Visual(), mtl_pair->CollideMarks->GenerateWallmark(),bullet->bullet_pos, p, bullet->wallmark_size);
 		}
-*/
 	} 
 	else 
 	{
@@ -184,10 +179,11 @@ void CBulletManager::FireShotmark (SBullet* bullet, const Fvector& vDir, const F
 		Fvector*	pVerts	= Level().ObjectSpace.GetStaticVerts();
 		CDB::TRI*	pTri	= Level().ObjectSpace.GetStaticTris()+R.element;
 
-		if (mtl_pair && !mtl_pair->m_pCollideMarks->empty() && ShowMark)
+		if (mtl_pair && !mtl_pair->CollideMarks->IsEmpty() && ShowMark)
 		{
-			//�������� ������� �� ���������
-			::Render->add_StaticWallmark	(&*mtl_pair->m_pCollideMarks, vEnd, bullet->wallmark_size, pTri, pVerts);
+			Fvector	Normal;
+			Normal.mknormal(pVerts[pTri->verts[0]],pVerts[pTri->verts[1]],pVerts[pTri->verts[2]]);
+			::Render->SpawnStaticDecal(mtl_pair->CollideMarks->GenerateWallmark(), vEnd, Normal,bullet->wallmark_size);
 		}
 	}
 

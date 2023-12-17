@@ -57,12 +57,12 @@ class CPHWallMarksCall :
 	public CPHAction
 {
 	//ref_shader pWallmarkShader;
-	wm_shader pWallmarkShader;
+	shared_str pWallmarkShader;
 	Fvector pos;
 	CDB::TRI* T;
 public:
 	//CPHWallMarksCall(const Fvector &p,CDB::TRI* Tri,ref_shader s)
-	CPHWallMarksCall(const Fvector &p,CDB::TRI* Tri,const wm_shader &s)
+	CPHWallMarksCall(const Fvector &p,CDB::TRI* Tri,const shared_str &s)
 	{
 		pWallmarkShader=s;
 		pos.set(p);
@@ -70,10 +70,10 @@ public:
 	}
 	virtual void 			run								()
 	{
-		//�������� ������� �� ���������
-		::Render->add_StaticWallmark(pWallmarkShader,pos, 
-			0.09f, T,
-			Level().ObjectSpace.GetStaticVerts());
+		Fvector	Normal;
+		const Fvector* StaticVertices = Level().ObjectSpace.GetStaticVerts();
+		Normal.mknormal			(StaticVertices[T->verts[0]],StaticVertices[T->verts[1]],StaticVertices[T->verts[2]]);
+		::Render->SpawnStaticDecal(pWallmarkShader,pos, Normal,0.09f);
 	};
 	virtual bool 			obsolete						()const{return false;}
 };
@@ -111,10 +111,10 @@ void  TContactShotMark(CDB::TRI* T,dContactGeom* c)
 		if(mtl_pair)
 		{
 			//if(vel_cret>Pars::vel_cret_wallmark && !mtl_pair->CollideMarks.empty())
-			if(vel_cret>Pars::vel_cret_wallmark && !mtl_pair->m_pCollideMarks->empty())
+			if(vel_cret>Pars::vel_cret_wallmark && !mtl_pair->CollideMarks->IsEmpty())
 			{
 				//ref_shader pWallmarkShader = mtl_pair->CollideMarks[::Random.randI(0,mtl_pair->CollideMarks.size())];
-				wm_shader WallmarkShader = mtl_pair->m_pCollideMarks->GenerateWallmark();
+				shared_str WallmarkShader = mtl_pair->CollideMarks->GenerateWallmark();
 				//ref_shader pWallmarkShader = mtl_pair->CollideMarks[::Random.randI(0,mtl_pair->CollideMarks.size())];
 				Level().ph_commander().add_call(xr_new<CPHOnesCondition>(),xr_new<CPHWallMarksCall>( *((Fvector*)c->pos),T,WallmarkShader));
 			}

@@ -22,7 +22,7 @@ void CWalmarkManager::Clear()
 
 void CWalmarkManager::AddWallmark(const Fvector& dir, const Fvector& start_pos, 
 								  float range, float wallmark_size,
-								  SHADER_VECTOR& wallmarks_vector,int t)
+								  xr_vector<shared_str>& wallmarks_vector,int t)
 {
 	CDB::TRI*	pTri	= Level().ObjectSpace.GetStaticTris()+t;//result.element;
 	SGameMtl*	pMaterial = GameMaterialLibrary->GetMaterialByIdx(pTri->material);
@@ -37,13 +37,13 @@ void CWalmarkManager::AddWallmark(const Fvector& dir, const Fvector& start_pos,
 		end_point.set(0,0,0);
 		end_point.mad(start_pos, dir, range);
 
-		ui_shader* pWallmarkShader = wallmarks_vector.empty()?NULL:
-		&wallmarks_vector[::Random.randI(0,wallmarks_vector.size())];
+		shared_str* pWallmarkShader = wallmarks_vector.empty()?NULL:&wallmarks_vector[::Random.randI(0,wallmarks_vector.size())];
 
 		if (pWallmarkShader)
 		{
-			//�������� ������� �� ���������
-			::Render->add_StaticWallmark(*pWallmarkShader, end_point, wallmark_size, pTri, pVerts);
+            Fvector	Normal;
+			Normal.mknormal(pVerts[pTri->verts[0]],pVerts[pTri->verts[1]],pVerts[pTri->verts[2]]);
+			::Render->SpawnStaticDecal(*pWallmarkShader, end_point, Normal,wallmark_size);
 		}
 	}
 }
@@ -170,8 +170,10 @@ void CWalmarkManager::StartWorkflow()
 
 		if(dist <= m_trace_dist )
 		{
-			ui_shader wallmarkShader = m_wallmarks[::Random.randI( m_wallmarks.size())];
-			::Render->add_StaticWallmark(wallmarkShader, end_point, m_wallmark_size, _t, V_array);
+			shared_str wallmarkShader = m_wallmarks[::Random.randI( m_wallmarks.size())];
+            Fvector	Normal;
+			Normal.mknormal(V_array[_t->verts[0]],V_array[_t->verts[1]],V_array[_t->verts[2]]);
+			::Render->SpawnStaticDecal(wallmarkShader, end_point, Normal,m_wallmark_size);
 			++wm_count;
 		}else
 			++_not_dist;
@@ -203,7 +205,6 @@ void CWalmarkManager::Load (LPCSTR section)
 //.	m_trace_dist	= pSettings->r_float(section,"dist");
 //.	m_wallmark_size	= pSettings->r_float(section,"size");
 	
-	//�������� ������� �� ������
 	string256	tmp;
 	LPCSTR wallmarks_name = pSettings->r_string(section, "wallmarks"); 
 
@@ -212,8 +213,7 @@ void CWalmarkManager::Load (LPCSTR section)
 	ui_shader	s;
 	for (int k=0; k<cnt; ++k)
 	{
-		s->create ("effects\\wallmark",_GetItem(wallmarks_name,k,tmp));
-		m_wallmarks.push_back	(s);
+		m_wallmarks.push_back	(_GetItem(wallmarks_name,k,tmp));
 	}
 }
 

@@ -52,28 +52,7 @@ void CHudItem::PlaySound(LPCSTR alias, const Fvector& position)
 
 void CHudItem::renderable_Render()
 {
-	UpdateXForm					();
-	BOOL _hud_render			= ::Render->get_HUD() && GetHUDmode();
 	
-	if(_hud_render  && !IsHidden())
-	{ 
-	}
-	else 
-	{
-		if (!object().H_Parent() || (!_hud_render && !IsHidden()))
-		{
-			on_renderable_Render		();
-			debug_draw_firedeps			();
-		}else
-		if (object().H_Parent()) 
-		{
-			CInventoryOwner	*owner = smart_cast<CInventoryOwner*>(object().H_Parent());
-			VERIFY			(owner);
-			CInventoryItem	*self = smart_cast<CInventoryItem*>(this);
-			if (owner->attached(self))
-				on_renderable_Render();
-		}
-	}
 }
 
 void CHudItem::SwitchState(u32 S)

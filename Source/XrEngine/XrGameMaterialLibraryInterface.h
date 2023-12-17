@@ -128,7 +128,8 @@ public:
     SoundVec			        CollideSounds;
 
     PSVec				        CollideParticles;
-    FactoryPtr<IWallMarkArray>  m_pCollideMarks;
+    xr_vector<shared_str>       CollideMarksLegacy;
+    FactoryPtr<IWallMarkArray>  CollideMarks;
 public:
     SGameMtlPair(XrGameMaterialLibraryInterface* owner);
     virtual ~SGameMtlPair();

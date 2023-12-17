@@ -163,10 +163,7 @@ void CHUDManager::Render_First()
 	if (A && !A->HUDview())			return;
 
 	// only shadow 
-	::Render->set_Invisible			(TRUE);
-	::Render->set_Object			(O->H_Root());
 	O->renderable_Render			();
-	::Render->set_Invisible			(FALSE);
 }
 
 void CHUDManager::Render_Last()
@@ -184,10 +181,7 @@ void CHUDManager::Render_Last()
 		return;
 
 	// hud itself
-	::Render->set_HUD				(TRUE);
-	::Render->set_Object			(O->H_Root());
 	O->OnHUDDraw					(this);
-	::Render->set_HUD				(FALSE);
 }
 extern void draw_wnds_rects();
 //��������� ��������� ����������

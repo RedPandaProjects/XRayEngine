@@ -144,7 +144,6 @@ void IGame_Persistent::OnGameStart()
 	Log				("Loading objects...");
 	ObjectPool.prefetch					();
 	Log				("Loading models...");
-	Render->models_Prefetch				();
 	//Device->Resources->DeferredUpload	();
 
 	p_time				=			1000.f*Device->dwTimeContinual - p_time;
@@ -159,7 +158,6 @@ void IGame_Persistent::OnGameEnd	()
 {
 #ifndef _EDITOR
 	ObjectPool.clear					();
-	Render->models_Clear				(TRUE);
 #endif
 }
 

@@ -692,7 +692,7 @@ u32 vertex_id	(Fvector position)
 
 u32 render_get_dx_level()
 {
-	return ::Render->get_dx_level();
+	return 0;
 }
 #pragma optimize("s",on)
 void CLevel::script_register(lua_State *L)

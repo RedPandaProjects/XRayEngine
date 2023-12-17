@@ -725,7 +725,7 @@ u32 vertex_id	(Fvector position)
 
 u32 render_get_dx_level()
 {
-	return ::Render->get_dx_level();
+	return 0;
 }
 
 CUISequencer* g_tutorial = NULL;

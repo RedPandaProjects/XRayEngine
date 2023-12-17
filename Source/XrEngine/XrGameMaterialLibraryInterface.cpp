@@ -68,12 +68,12 @@ void CreateMarks(ShaderVec& lst, LPCSTR buf)
     }
 }
 */
-void CreateMarks(IWallMarkArray* pMarks, LPCSTR buf)
+void CreateMarks(xr_vector<shared_str>&Out, LPCSTR buf)
 {
     string256	tmp;
     int cnt = _GetItemCount(buf);	R_ASSERT(cnt <= GAMEMTL_SUBITEM_COUNT);
     for (int k = 0; k < cnt; ++k)
-        pMarks->AppendMark(_GetItem(buf, k, tmp));
+      Out.emplace_back(_GetItem(buf, k, tmp));
 }
 
 
@@ -92,9 +92,6 @@ SGameMtlPair::~SGameMtlPair()
     DestroySounds(StepSounds);
     DestroySounds(CollideSounds);
     DestroyPSs(CollideParticles);
-    //	DestroyMarks	(CollideMarks);
-        //RenderFactory->DestroyGameMtlPair(m_pCollideMarks);
-        //m_pCollideMarks->
 }
 
 
@@ -119,8 +116,7 @@ void SGameMtlPair::Load(IReader& fs)
     fs.r_stringZ(buf);		CreateSounds(CollideSoundsNames, *buf);
     fs.r_stringZ(buf);		CreatePSs(CollideParticles, *buf);
     fs.r_stringZ(buf);
-    //CreateMarks			(CollideMarks,*buf);
-    CreateMarks(&*m_pCollideMarks, *buf);
+    CreateMarks(CollideMarksLegacy, *buf);
 }
 
 #if 0

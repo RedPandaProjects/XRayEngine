@@ -674,8 +674,6 @@ void			CGameObject::dbg_DrawSkeleton	()
 void CGameObject::renderable_Render	()
 {
 	inherited::renderable_Render();
-	::Render->set_Transform		(&XFORM());
-	::Render->add_Visual		(Visual());
 }
 
 /*

@@ -233,8 +233,6 @@ void CParticlesObject::renderable_Render	()
 	if (!renderable.visual)return;
 #endif
 	VERIFY					(renderable.visual);
-	::Render->set_Transform	(&renderable.xform);
-	::Render->add_Visual	(renderable.visual);
 }
 
 bool CParticlesObject::IsAutoRemove			()

@@ -18,7 +18,6 @@ void IGame_ObjectPool::prefetch	()
 	R_ASSERT			(m_PrefetchObjects.empty());
 
 	int	p_count			= 0;
-	::Render->model_Logging	(FALSE);
 
 	string256				section;
 	// prefetch objects
@@ -34,8 +33,6 @@ void IGame_ObjectPool::prefetch	()
 		m_PrefetchObjects.push_back	(pObject);
 	}
 
-	// out statistic
-	::Render->model_Logging	(TRUE);
 }
 
 void IGame_ObjectPool::clear()

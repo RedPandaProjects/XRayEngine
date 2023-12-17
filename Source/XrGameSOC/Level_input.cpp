@@ -106,7 +106,6 @@ void CLevel::IR_OnKeyboardPress	(int key)
 	{
 
 	case kSCREENSHOT:
-		Render->Screenshot();
 		return;
 		break;
 

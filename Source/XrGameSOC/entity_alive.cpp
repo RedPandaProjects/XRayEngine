@@ -414,11 +414,12 @@ void CEntityAlive::PlaceBloodWallmark(const Fvector& dir, const Fvector& start_p
 			end_point.set(0,0,0);
 			end_point.mad(start_pos, dir, result.range);
 
-			wm_shader wallmarkShader = wallmarks_vector->GenerateWallmark();
+			shared_str wallmarkShader = wallmarks_vector->GenerateWallmark();
 
 			{
-				//�������� ������� �� ���������
-				::Render->add_StaticWallmark(wallmarkShader, end_point, wallmark_size, pTri, pVerts);
+				Fvector	Normal;
+				Normal.mknormal(pVerts[pTri->verts[0]],pVerts[pTri->verts[1]],pVerts[pTri->verts[2]]);
+				::Render->SpawnStaticDecal(wallmarkShader, end_point, Normal,wallmark_size);
 			}
 		}
 	}

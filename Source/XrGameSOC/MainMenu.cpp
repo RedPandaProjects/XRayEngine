@@ -280,8 +280,8 @@ void	CMainMenu::IR_OnKeyboardPress(int dik)
 		Console->Show();
 		return;
 	}
-	if (DIK_F12 == dik){
-		Render->Screenshot();
+	if (DIK_F12 == dik)
+	{
 		return;
 	}
 
@@ -328,10 +328,7 @@ void CMainMenu::OnRenderUI	()
 	if(m_Flags.test(flGameSaveScreenshot))
 		return;
 
-	if(g_pGameLevel)
-		Render->Calculate			();
 
-	Render->Render				();
 	if(!OnRenderPPUI_query())
 	{
 		DoRenderDialogs();
@@ -395,7 +392,6 @@ void CMainMenu::OnFrame()
 	if(m_Flags.test(flGameSaveScreenshot) && Device->dwFrame > m_screenshotFrame  )
 	{
 		m_Flags.set					(flGameSaveScreenshot,FALSE);
-		::Render->Screenshot		(IRender_interface::SM_FOR_GAMESAVE, m_screenshot_name);
 		
 		if(g_pGameLevel && m_Flags.test(flActive))
 		{
@@ -419,23 +415,6 @@ void CMainMenu::OnDeviceCreate()
 }
 
 
-void CMainMenu::Screenshot(IRender_interface::ScreenshotMode mode, LPCSTR name)
-{
-	if(mode != IRender_interface::SM_FOR_GAMESAVE)
-	{
-		::Render->Screenshot		(mode,name);
-	}else{
-		m_Flags.set					(flGameSaveScreenshot, TRUE);
-		strcpy(m_screenshot_name,name);
-		if(g_pGameLevel && m_Flags.test(flActive)){
-			Device->seqFrame.Add		(g_pGameLevel);
-			Device->seqRenderDebug.Add	(g_pGameLevel);
-		};
-		m_screenshotFrame			= Device->dwFrame+1;
-		m_Flags.set					(flRestoreConsole,		Console->bVisible);
-		Console->Hide				();
-	}
-}
 
 void CMainMenu::RegisterPPDraw(CUIWindow* w)
 {

@@ -17,7 +17,7 @@ CWalmarkManager::~CWalmarkManager()
 }
 void CWalmarkManager::Clear()
 {
-	m_wallmarks->clear();
+	m_wallmarks->Clear();
 }
 
 void CWalmarkManager::AddWallmark(const Fvector& dir, const Fvector& start_pos, 
@@ -37,9 +37,11 @@ void CWalmarkManager::AddWallmark(const Fvector& dir, const Fvector& start_pos,
 		end_point.set(0,0,0);
 		end_point.mad(start_pos, dir, range);
 
-		if (!wallmarks_vector.empty())
+		if (!wallmarks_vector.IsEmpty())
 		{		
-			::Render->add_StaticWallmark(&wallmarks_vector, end_point, wallmark_size, pTri, pVerts);
+			Fvector	Normal;
+			Normal.mknormal(pVerts[pTri->verts[0]],pVerts[pTri->verts[1]],pVerts[pTri->verts[2]]);
+			::Render->SpawnStaticDecal(wallmarks_vector.GenerateWallmark(), end_point, Normal,wallmark_size);
 		}
 
 		/*
@@ -177,7 +179,9 @@ void CWalmarkManager::StartWorkflow()
 
 		if(dist <= m_trace_dist )
 		{
-			::Render->add_StaticWallmark(&*m_wallmarks, end_point, m_wallmark_size, _t, V_array);
+			Fvector	Normal;
+			Normal.mknormal(V_array[_t->verts[0]],V_array[_t->verts[1]],V_array[_t->verts[2]]);
+			::Render->SpawnStaticDecal(m_wallmarks->GenerateWallmark(), end_point, Normal,m_wallmark_size);
 			++wm_count;
 		}else
 			++_not_dist;
