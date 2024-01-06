@@ -926,7 +926,7 @@ public:
 		weather_name[0]			= 0;
 		sscanf					(args,"%s", weather_name);
 		if (!weather_name[0])	return;
-		g_pGamePersistent->Environment().SetWeather(weather_name);		
+		g_Engine->GetEnvironmentCheck()->SetWeather(weather_name,false);		
 	};
 
 	virtual void	Info	(TInfo& I){strcpy(I,"Set new weather"); }

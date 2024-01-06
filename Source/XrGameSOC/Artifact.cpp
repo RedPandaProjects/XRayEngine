@@ -45,7 +45,7 @@ struct SArtefactActivation{
 	float						m_cur_state_time;
 
 	ref_light					m_light;
-	ref_sound					m_snd;
+	FRBMKSoundSourceRef 					m_snd;
 	
 	u32							m_owner_id;
 
@@ -530,12 +530,12 @@ void SArtefactActivation::ChangeEffects()
 	VERIFY(!ph_world->Processing());
 	SStateDef& state_def = m_activation_states[(int)m_cur_activation_state];
 	
-	if(m_snd._feedback())
-		m_snd.stop();
+	if(m_snd.IsPlaying())
+		m_snd.Stop();
 	
 	if(state_def.m_snd.size()){
-		m_snd.create			(*state_def.m_snd,st_Effect,sg_SourceType);
-		m_snd.play_at_pos		(m_af,	m_af->Position());
+		m_snd.Create			(*state_def.m_snd);
+		m_snd.Play				(m_af,	m_af->Position());
 	};
 
 	m_light->set_range		(	state_def.m_light_range);
@@ -562,8 +562,8 @@ void SArtefactActivation::ChangeEffects()
 void SArtefactActivation::UpdateEffects()
 {
 	VERIFY(!ph_world->Processing());
-	if(m_snd._feedback())
-		m_snd.set_position( m_af->Position() );
+	if(m_snd.IsPlaying())
+		m_snd.SetPosition( m_af->Position() );
 	
 	m_light->set_position(m_af->Position());
 }

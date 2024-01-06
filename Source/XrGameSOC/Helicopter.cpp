@@ -216,8 +216,8 @@ BOOL CHelicopter::net_Spawn(CSE_Abstract*	DC)
 		K->CalculateBones	(TRUE);
 	}
 
-	m_engineSound.create			(*heli->engine_sound,st_Effect,sg_SourceType);
-	m_engineSound.play_at_pos		(0,XFORM().c,sm_Looped);
+	m_engineSound.Create(*heli->engine_sound);
+	m_engineSound.Play(nullptr,XFORM().c,true);
 	
 	CShootingObject::Light_Create	();
 
@@ -255,8 +255,8 @@ void CHelicopter::net_Destroy()
 	CShootingObject::StopFlameParticles	();
 	CPHSkeleton::RespawnInit			();
 	CPHDestroyable::RespawnInit			();
-	m_engineSound.stop					();
-	m_brokenSound.stop					();
+	m_engineSound.Stop					();
+	m_brokenSound.Stop					();
 	CParticlesObject::Destroy			(m_pParticle);
 	m_light_render.destroy				();
 	m_movement.net_Destroy				();
@@ -391,8 +391,8 @@ void CHelicopter::UpdateCL()
 		//smoke
 		UpdateHeliParticles();
 
-		if(m_brokenSound._feedback())
-			m_brokenSound.set_position(XFORM().c);
+		if(m_brokenSound.IsPlaying())
+			m_brokenSound.SetPosition(XFORM().c);
 
 
 		return;
@@ -419,8 +419,8 @@ void CHelicopter::UpdateCL()
 	}
 #endif
 
-	if(m_engineSound._feedback())
-		m_engineSound.set_position(XFORM().c);
+	if(m_engineSound.IsPlaying())
+		m_engineSound.SetPosition(XFORM().c);
 	
 
 

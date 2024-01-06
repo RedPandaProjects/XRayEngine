@@ -2,7 +2,7 @@
 #define ApplicationRender_included
 #pragma once
 
-class XRayEngineInterface;
+class IRBMKEngine;
 
 class IApplicationRender
 {
@@ -13,7 +13,7 @@ public:
 	virtual void LoadBegin() = 0;
 	virtual void destroy_loading_shaders() = 0;
 	virtual void setLevelLogo(LPCSTR pszLogoName) = 0;
-	virtual void load_draw_internal(XRayEngineInterface &owner) = 0;
+	virtual void load_draw_internal(IRBMKEngine &owner) = 0;
 	//	?????
 	virtual void KillHW() = 0;
 };

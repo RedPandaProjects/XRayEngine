@@ -21,8 +21,8 @@ private:
 	} step_effector;
 
 	SAttackEffector m_threaten_effector;
-	ref_sound		m_sound_threaten_hit;		// ����, ������� �������� � ������ � ������
-	ref_sound		m_sound_start_threaten;		// ����, ������� �������� � ������ � ������
+	FRBMKSoundSourceRef 		m_sound_threaten_hit;		// ����, ������� �������� � ������ � ������
+	FRBMKSoundSourceRef 		m_sound_start_threaten;		// ����, ������� �������� � ������ � ������
 	
 	u32				m_time_next_threaten;
 	

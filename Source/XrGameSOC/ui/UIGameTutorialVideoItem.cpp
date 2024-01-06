@@ -1,4 +1,6 @@
 #include "pch_script.h"
+
+#include "ai_sounds.h"
 #include "UIGameTutorial.h"
 #include "UIWindow.h"
 #include "UIStatic.h"
@@ -6,6 +8,7 @@
 #include "../../XrEngine/object_broker.h"
 #include "../XrEngine/Xr_input.h"
 #include "../xr_level_controller.h"
+#include "../../XrEngine/Interfaces/Core/RBMKEngine.h"
 
 #include "../XrEngine/Render/UISequenceVideoItem.h"
 #include "../XrEngine/Render/UIShader.h"
@@ -27,8 +30,7 @@ CUISequenceVideoItem::CUISequenceVideoItem(CUISequencer* owner):CUISequenceItem(
 
 CUISequenceVideoItem::~CUISequenceVideoItem()
 {
-	m_sound[0].stop			();
-	m_sound[1].stop			();
+	m_sound.Stop			();
 	delete_data				(m_wnd);
 }
 
@@ -88,11 +90,8 @@ void CUISequenceVideoItem::Load(CUIXml* xml, int idx)
 
 	if (m_snd_name&&m_snd_name[0])
 	{
-		string_path			_l, _r;
-		strconcat			(sizeof(_l),_l, m_snd_name, "_l");
-		strconcat			(sizeof(_r),_r, m_snd_name, "_r");
-		m_sound[0].create	(_l,st_Effect,sg_Undefined);	VERIFY(m_sound[0]._handle());
-		m_sound[1].create	(_r,st_Effect,sg_Undefined);	VERIFY(m_sound[1]._handle());
+		m_sound = g_Engine->GetSoundManager()->CreateSource(m_snd_name,SOUND_TYPE_NO_SOUND);
+		VERIFY(m_sound.IsValid());
 	}
 	xml->SetLocalRoot		(_stored_root);
 }
@@ -108,23 +107,27 @@ void CUISequenceVideoItem::Update()
 		}
 	}else return;
 
-	u32 sync_tm				= (0==m_sound[0]._handle())?Device->dwTimeContinual:(m_sound[0]._feedback()?m_sound[0]._feedback()->play_time():m_sync_time);
-	m_sync_time				= sync_tm;
+	const u32 SyncTime =  Device->dwTimeContinual;
+	m_sync_time = SyncTime;
 	// processing A&V
-	if (m_texture->HasTexture()){
-		BOOL is_playing		= m_sound[0]._handle()?!!m_sound[0]._feedback():m_texture->video_IsPlaying();
-		if (is_playing){
+	if (m_texture->HasTexture())
+	{
+		if (bool is_playing		= m_sound.IsPlaying()||m_texture->video_IsPlaying()){
 			m_texture->video_Sync		(m_sync_time);
-		}else{
+		}
+		else
+		{
 			// sync start
-			if (m_flags.test(etiNeedStart)){
-				m_sound[0].play_at_pos	(NULL, Fvector().set(-0.5f,0.f,0.3f), sm_2D);
-				m_sound[1].play_at_pos	(NULL, Fvector().set(+0.5f,0.f,0.3f), sm_2D);
+			if (m_flags.test(etiNeedStart))
+			{
+				m_sound.Play(nullptr);
 				m_texture->video_Play	(FALSE,m_sync_time);
 				m_flags.set				(etiNeedStart,FALSE);
 				CUIWindow* w			= m_owner->MainWnd()->FindChild("back");
 				if (w)					w->Show(!!m_flags.test(etiBackVisible));
-			}else{
+			}
+			else
+				{
 				m_flags.set				(etiPlaying,FALSE);
 			}
 		}
@@ -178,8 +181,7 @@ bool CUISequenceVideoItem::Stop	(bool bForce)
 	m_wnd->Show					(false);
 	m_owner->MainWnd()->DetachChild(m_wnd);
 
-	m_sound[0].stop				();
-	m_sound[1].stop				();
+	m_sound.Stop();
 	m_texture->ResetTexture();
 
 	if(m_flags.test(etiNeedPauseOn) && !m_flags.test(etiStoredPauseState))

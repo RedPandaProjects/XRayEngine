@@ -30,18 +30,18 @@ void CCar::SCarSound::Init()
 	{
 		volume  			= ini->r_float("car_sound","snd_volume");
 
-		snd_engine.create		(ini->r_string("car_sound","snd_name"),st_Effect,sg_SourceType);//
-		snd_engine_start.create	(READ_IF_EXISTS(ini,r_string,"car_sound","engine_start","car\\test_car_start"),st_Effect,sg_SourceType);
-		snd_engine_stop.create	(READ_IF_EXISTS(ini,r_string,"car_sound","engine_stop","car\\test_car_stop"),st_Effect,sg_SourceType);
+		snd_engine = g_Engine->GetSoundManager()->CreateSource		(ini->r_string("car_sound","snd_name"));//
+		snd_engine_start = g_Engine->GetSoundManager()->CreateSource(READ_IF_EXISTS(ini,r_string,"car_sound","engine_start","car\\test_car_start"));
+		snd_engine_stop = g_Engine->GetSoundManager()->CreateSource	(READ_IF_EXISTS(ini,r_string,"car_sound","engine_stop","car\\test_car_stop"));
 		float fengine_start_delay=READ_IF_EXISTS(ini,r_float,"car_sound","engine_sound_start_dellay",0.25f);
-		engine_start_delay=iFloor((snd_engine_start._handle() ? snd_engine_start._handle()->length_ms() : 1.f)*fengine_start_delay);
+		engine_start_delay= 1.f*fengine_start_delay;
 		if(ini->line_exist("car_sound","relative_pos"))
 		{
 			relative_pos.set(ini->r_fvector3("car_sound","relative_pos"));
 		}
 		if(ini->line_exist("car_sound","transmission_switch"))
 		{
-			snd_transmission.create(ini->r_string("car_sound","transmission_switch"),st_Effect,sg_SourceType);
+			snd_transmission = g_Engine->GetSoundManager()->CreateSource(ini->r_string("car_sound","transmission_switch"));
 		}
 	
 	
@@ -50,14 +50,14 @@ void CCar::SCarSound::Init()
 	}
 	eCarSound=sndOff;
 }
-void CCar::SCarSound::SetSoundPosition(ref_sound &snd)
+void CCar::SCarSound::SetSoundPosition(FRBMKSoundSourceRef  &snd)
 {
 	VERIFY(!ph_world->Processing());
-	if (snd._feedback())
+	if (snd.IsPlaying())
 	{
 		Fvector pos;
 		pcar->XFORM().transform_tiny(pos,relative_pos);
-		snd.set_position		(pos);
+		snd.SetPosition(pos);
 	}
 }
 void CCar::SCarSound::UpdateStarting()
@@ -65,7 +65,7 @@ void CCar::SCarSound::UpdateStarting()
 	VERIFY(!ph_world->Processing());
 	SetSoundPosition(snd_engine_start);
 
-	if(snd_engine._feedback())
+	if(snd_engine.IsPlaying())
 	{
 			UpdateDrive();
 	} else
@@ -73,29 +73,29 @@ void CCar::SCarSound::UpdateStarting()
 		
 		if(time_state_start+engine_start_delay<Device->dwTimeGlobal)
 		{
-			snd_engine.play(pcar,sm_Looped);
+			snd_engine.Play(pcar,true);
 			UpdateDrive();
 		}
 	}
 
-	if(!snd_engine_start._feedback())Drive();
+	if(!snd_engine_start.IsPlaying())Drive();
 }
 void CCar::SCarSound::UpdateStoping()
 {
 	VERIFY(!ph_world->Processing());
 	SetSoundPosition(snd_engine_stop);
-	if(!snd_engine_stop._feedback())SwitchOff();
+	if(!snd_engine_stop.IsPlaying())SwitchOff();
 }
 void CCar::SCarSound::UpdateStalling()
 {
 	SetSoundPosition(snd_engine_stop);
-	if(!snd_engine_stop._feedback())SwitchOff();
+	if(!snd_engine_stop.IsPlaying())SwitchOff();
 }
 void CCar::SCarSound::UpdateDrive()
 {
 VERIFY(!ph_world->Processing());
 float		scale							= 0.5f+0.5f*pcar->m_current_rpm/pcar->m_torque_rpm; clamp(scale,0.5f,1.25f);
-			snd_engine.set_frequency		(scale);
+			if(snd_engine)snd_engine.SetFrequency		(scale);
 			SetSoundPosition(snd_engine);
 }
 void CCar::SCarSound::SwitchState(ESoundState new_state)
@@ -126,10 +126,10 @@ void CCar::SCarSound::SwitchOn()
 void CCar::SCarSound::Destroy()
 {
 	SwitchOff();
-	snd_engine.destroy	();
-	snd_transmission.destroy();
-	snd_engine_stop.destroy();
-	snd_engine_start.destroy();
+	snd_engine.Reset	();
+	snd_transmission.Reset();
+	snd_engine_stop.Reset();
+	snd_engine_start.Reset();
 }
 
 void CCar::SCarSound::SwitchOff()
@@ -143,7 +143,7 @@ void CCar::SCarSound::Start()
 	VERIFY(!ph_world->Processing());
 	if(eCarSound==sndOff) SwitchOn();
 	SwitchState(sndStarting);
-	snd_engine_start.play(pcar);
+	snd_engine_start.Play(pcar);
 	SetSoundPosition(snd_engine_start);
 }
 
@@ -152,8 +152,8 @@ void CCar::SCarSound::Stall()
 	VERIFY(!ph_world->Processing());
 	if(eCarSound==sndOff)return;
 	SwitchState(sndStalling);
-	snd_engine.stop_deffered();
-	snd_engine_stop.play(pcar);
+	snd_engine.StopWithFade();
+	snd_engine_stop.Play(pcar);
 	SetSoundPosition(snd_engine_stop);
 }
 
@@ -162,8 +162,8 @@ void CCar::SCarSound::Stop()
 	VERIFY(!ph_world->Processing());
 	if(eCarSound==sndOff)return;
 	SwitchState(sndStoping);
-	snd_engine.stop_deffered();
-	snd_engine_stop.play(pcar);
+	snd_engine.StopWithFade();
+	snd_engine_stop.Play(pcar);
 	SetSoundPosition(snd_engine_stop);
 }
 
@@ -172,15 +172,15 @@ void CCar::SCarSound::Drive()
 	VERIFY(!ph_world->Processing());
 	if(eCarSound==sndOff) SwitchOn();
 	SwitchState(sndDrive);
-	if(!snd_engine._feedback())snd_engine.play(pcar,sm_Looped);
+	if(!snd_engine.IsPlaying())snd_engine.Play(pcar,true);
 	SetSoundPosition(snd_engine);
 }
 void CCar::SCarSound::TransmissionSwitch()
 {
 	VERIFY(!ph_world->Processing());
-	if(snd_transmission._handle()&&eCarSound!=sndOff)
+	if(snd_transmission.IsValid()&&eCarSound!=sndOff)
 	{
-		snd_transmission.play(pcar);
+		snd_transmission.Play(pcar);
 		SetSoundPosition(snd_transmission);
 	}
 }

@@ -10,20 +10,20 @@ CPHSoundPlayer::CPHSoundPlayer(CPhysicsShellHolder* obj)
 
 CPHSoundPlayer::~CPHSoundPlayer()
 {
-	m_sound.stop();
+	m_sound.Stop();
 	m_object=NULL;
 }
 
 void CPHSoundPlayer::Play(SGameMtlPair* mtl_pair,const Fvector& pos)
 {
 
-	if(!m_sound._feedback())
+	if(!m_sound.IsPlaying())
 	{
 		Fvector vel;m_object->PHGetLinearVell(vel);
 		if(vel.square_magnitude()>0.01f)
 		{
-			CLONE_MTL_SOUND(m_sound, mtl_pair, CollideSounds);
-			m_sound.play_at_pos(smart_cast<CPhysicsShellHolder*>(m_object),pos);
+			CLONE_MTL_SOUND(m_sound, mtl_pair, CollideSoundsNames);
+			m_sound.Play(smart_cast<CPhysicsShellHolder*>(m_object),pos);
 		}
 	}
 }

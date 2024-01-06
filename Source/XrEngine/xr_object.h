@@ -68,7 +68,7 @@ protected:
 	// Geometric (transformation)
 	svector<SavedPosition,4>			PositionStack;
 public:
-	class XRayUnrealProxyInterface*		UnrealProxy;
+	class IRBMKUnrealProxy*		UnrealProxy;
 	u32									dbg_update_cl;
 	u32									dwFrame_UpdateCL;
 	u32									dwFrame_AsCrow;

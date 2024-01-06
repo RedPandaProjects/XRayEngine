@@ -92,7 +92,6 @@ public:
 };
 
 DEFINE_VECTOR(SGameMtl*, GameMtlVec, GameMtlIt);
-DEFINE_VECTOR(ref_sound, SoundVec, SoundIt);
 DEFINE_VECTOR(shared_str, PSVec, PSIt);
 #include "../XrEngine/Render/WallMarkArray.h"
 #include "../XrEngine/Render/RenderFactory.h"
@@ -118,15 +117,12 @@ public:
         flCollideParticles = (1 << 5),
         flCollideMarks = (1 << 6)
     };
-    Flags32				OwnProps;
+    Flags32				        OwnProps;
 	//	properties
 	xr_vector<shared_str>       BreakingSoundsNames;
-	SoundVec			        BreakingSounds;
 	xr_vector<shared_str>       StepSoundsNames;
-	SoundVec			        StepSounds;
 	xr_vector<shared_str>       CollideSoundsNames;
-    SoundVec			        CollideSounds;
-
+  
     PSVec				        CollideParticles;
     xr_vector<shared_str>       CollideMarksLegacy;
     FactoryPtr<IWallMarkArray>  CollideMarks;

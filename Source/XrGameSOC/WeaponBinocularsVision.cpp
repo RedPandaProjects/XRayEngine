@@ -180,7 +180,6 @@ CBinocularsVision::CBinocularsVision(CWeaponBinoculars* parent)
 }
 CBinocularsVision::~CBinocularsVision()
 {
-	m_snd_found.destroy	();
 	delete_data			(m_active_objects);
 }
 
@@ -234,8 +233,8 @@ void CBinocularsVision::Update()
 			new_vis_obj->m_object			= object_;
 			new_vis_obj->create_default		(m_frame_color.get());
 			new_vis_obj->m_upd_speed			= m_rotating_speed;
-			if(NULL==m_snd_found._feedback())
-				m_snd_found.play_at_pos			(0,Fvector().set(0,0,0),sm_2D);
+			if(!m_snd_found.IsPlaying())
+				m_snd_found.Play			(nullptr);
 		}
 	}
 	std::sort								(m_active_objects.begin(), m_active_objects.end());
@@ -262,7 +261,7 @@ void CBinocularsVision::Load(const shared_str& section)
 {
 	m_rotating_speed	= pSettings->r_float(section,"vis_frame_speed");
 	m_frame_color		= pSettings->r_fcolor(section,"vis_frame_color");
-	m_snd_found.create	(pSettings->r_string(section,"found_snd"),st_Effect,sg_SourceType);
+	m_snd_found.Create	(pSettings->r_string(section,"found_snd"));
 }
 
 void CBinocularsVision::remove_links(CObject *object)

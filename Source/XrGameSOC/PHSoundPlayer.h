@@ -5,7 +5,7 @@ class CPhysicsShellHolder;
 
 class CPHSoundPlayer
 {
-		ref_sound					m_sound																		;
+		FRBMKSoundSourceRef					m_sound																		;
 		CPhysicsShellHolder			*m_object;
 public:
 		void						Play					(SGameMtlPair* mtl_pair,const Fvector& pos)			;

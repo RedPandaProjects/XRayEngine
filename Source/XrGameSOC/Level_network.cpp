@@ -33,7 +33,7 @@ void CLevel::remove_objects	()
 		Server->SLS_Clear		();
 	}
 	
-	snd_Events.clear			();
+	//snd_Events.clear			();
 	for (int i=0; i<6; ++i) {
 		psNET_Flags.set			(NETFLAG_MINIMIZEUPDATES,FALSE);
 		// ugly hack for checks that update is twice on frame

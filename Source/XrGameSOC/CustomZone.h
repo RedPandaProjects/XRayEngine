@@ -231,12 +231,12 @@ protected:
 	shared_str				m_sIdleObjectParticlesBig;
 	BOOL					m_bIdleObjectParticlesDontStop;
 
-	ref_sound				m_idle_sound;
-	ref_sound				m_awaking_sound;
-	ref_sound				m_accum_sound;
-	ref_sound				m_blowout_sound;
-	ref_sound				m_hit_sound;
-	ref_sound				m_entrance_sound;
+	FRBMKSoundSourceRef		m_idle_sound;
+	FRBMKSoundSourceRef		m_awaking_sound;
+	FRBMKSoundSourceRef		m_accum_sound;
+	FRBMKSoundSourceRef 	m_blowout_sound;
+	FRBMKSoundSourceRef		m_hit_sound;
+	FRBMKSoundSourceRef		m_entrance_sound;
 
 	//объект партиклов обычного состояния зоны
 	CParticlesObject*		m_pIdleParticles;
@@ -347,7 +347,7 @@ protected:
 	//имя партиклов, которые проигрываются во время и на месте рождения артефакта
 	shared_str				m_sArtefactSpawnParticles;
 	//звук рождения артефакта
-	ref_sound				m_ArtefactBornSound;
+	FRBMKSoundSourceRef		m_ArtefactBornSound;
 
 	struct ARTEFACT_SPAWN
 	{

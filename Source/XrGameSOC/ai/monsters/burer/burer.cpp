@@ -79,9 +79,9 @@ void CBurer::Load(LPCSTR section)
 	particle_gravi_prepare	= pSettings->r_string(section,"Particle_Gravi_Prepare");
 	particle_tele_object	= pSettings->r_string(section,"Particle_Tele_Object");
 	
-	::Sound->create(sound_gravi_wave,	pSettings->r_string(section,"sound_gravi_wave"),st_Effect,SOUND_TYPE_WORLD);
-	::Sound->create(sound_tele_hold,	pSettings->r_string(section,"sound_tele_hold"),	st_Effect,SOUND_TYPE_WORLD);
-	::Sound->create(sound_tele_throw,	pSettings->r_string(section,"sound_tele_throw"),st_Effect,SOUND_TYPE_WORLD);
+	sound_gravi_wave.Create(pSettings->r_string(section,"sound_gravi_wave"),SOUND_TYPE_WORLD);
+	sound_tele_hold .Create(pSettings->r_string(section,"sound_tele_hold") ,SOUND_TYPE_WORLD);
+	sound_tele_throw.Create(pSettings->r_string(section,"sound_tele_throw"),SOUND_TYPE_WORLD);
 
 	m_gravi_speed					= pSettings->r_u32(section,"Gravi_Speed");
 	m_gravi_step					= pSettings->r_u32(section,"Gravi_Step");
@@ -269,9 +269,14 @@ void CBurer::UpdateGraviObject()
 	// ������ ����
 	Fvector snd_pos = m_gravi_object.cur_pos;
 	snd_pos.y += 0.5f;
-	if (sound_gravi_wave._feedback())		{
-		sound_gravi_wave.set_position	(snd_pos);
-	} else ::Sound->play_at_pos			(sound_gravi_wave,0,snd_pos);
+	if (sound_gravi_wave.IsPlaying())		
+	{
+		sound_gravi_wave.SetPosition	(snd_pos);
+	}
+	else
+	{
+		sound_gravi_wave.Play(nullptr,snd_pos);
+	}
 }
 
 void CBurer::UpdateCL()

@@ -75,6 +75,7 @@ u32 CSoundPlayer::add				(LPCSTR prefix, u32 max_count, ESoundTypes type, u32 pr
 	sound_params.m_sound_prefix			= prefix;
 	sound_params.m_sound_player_prefix	= m_sound_prefix;
 	sound_params.m_max_count			= max_count;
+	sound_params.m_data					= data;
 	sound_params.m_type					= type;
 
 	typedef CSoundCollectionStorage::SOUND_COLLECTION_PAIR	SOUND_COLLECTION_PAIR;
@@ -140,12 +141,12 @@ void CSoundPlayer::update_playing_sounds()
 {
 	xr_vector<CSoundSingle>::iterator	I = m_playing_sounds.begin();
 	xr_vector<CSoundSingle>::iterator	E = m_playing_sounds.end();
-	for ( ; I != E; ++I) {
-		if ((*I).m_sound->_feedback())
-			(*I).m_sound->_feedback()->set_position(compute_sound_point(*I));
+	for (CSoundSingle& I : m_playing_sounds) {
+		if (I.m_sound.IsPlaying())
+			I.m_sound.SetPosition(compute_sound_point(I));
 		else
-			if (!(*I).started() && (Device->dwTimeGlobal >= (*I).m_start_time))
-				(*I).play_at_pos		(m_object,compute_sound_point(*I));
+			if (!I.started() && (Device->dwTimeGlobal >= I.m_start_time))
+				I.m_sound.Play		(m_object,compute_sound_point(I));
 	}
 }
 
@@ -154,7 +155,7 @@ bool CSoundPlayer::need_bone_data	() const
 	xr_vector<CSoundSingle>::const_iterator	I = m_playing_sounds.begin();
 	xr_vector<CSoundSingle>::const_iterator	E = m_playing_sounds.end();
 	for ( ; I != E; ++I) {
-		if ((*I).m_sound->_feedback())
+		if ((*I).m_sound.IsPlaying())
 			return					(true);
 		else
 			if (!(*I).started() && (Device->dwTimeGlobal >= (*I).m_start_time))
@@ -184,7 +185,7 @@ void CSoundPlayer::play				(u32 internal_type, u32 max_start_time, u32 min_start
 	(CSoundParams&)sound_single	= (CSoundParams&)sound;
 	sound_single.m_bone_id		= CastToIKinematics(m_object->Visual())->LL_BoneID(sound.m_bone_name);
 
-	sound_single.m_sound		= xr_new<ref_sound>();
+	sound_single.m_sound.Reset();
 	/**
 	sound_single.m_sound->clone	(
 		*(*I).second.second->m_sounds[
@@ -200,15 +201,10 @@ void CSoundPlayer::play				(u32 internal_type, u32 max_start_time, u32 min_start
 		sg_SourceType
 	);
 	/**/
-	sound_single.m_sound->clone	(
-		(*I).second.second->random(id),
-		st_Effect,
-		sg_SourceType
-	);
-
-	sound_single.m_sound->_p->g_object		= m_object;
-	sound_single.m_sound->_p->g_userdata	= (*I).second.first.m_data;
-	VERIFY						(sound_single.m_sound->_handle());
+	sound_single.m_sound.Dublicate ((*I).second.second->random(id),SOUND_TYPE_FROM_SOURCE);
+	VERIFY(sound_single.m_sound);
+	sound_single.m_sound.GetSoundSource()->UserData	= (*I).second.first.m_data;
+	VERIFY						(sound_single.m_sound.IsValid());
 
 	VERIFY						(max_start_time >= min_start_time);
 	VERIFY						(max_stop_time >= min_stop_time);
@@ -223,7 +219,7 @@ void CSoundPlayer::play				(u32 internal_type, u32 max_start_time, u32 min_start
 	if (max_stop_time)
 		random_time				= (max_stop_time > min_stop_time) ? random(max_stop_time - min_stop_time) + min_stop_time : max_stop_time;
 
-	sound_single.m_stop_time	= sound_single.m_start_time + sound_single.m_sound->_handle()->length_ms() + random_time;
+	sound_single.m_stop_time	= sound_single.m_start_time + static_cast<s32>(sound_single.m_sound.GetDuration()*1000.f) + random_time;
 	m_playing_sounds.push_back	(sound_single);
 	
 	if (Device->dwTimeGlobal >= m_playing_sounds.back().m_start_time)
@@ -248,18 +244,28 @@ CSoundPlayer::CSoundCollection::CSoundCollection	(const CSoundCollectionParams &
 		LPSTR							S = (LPSTR)&s;
 		_GetItem						(*params.m_sound_prefix,j,temp);
 		strconcat						(sizeof(s),S,*params.m_sound_player_prefix,temp);
-		if (FS.exist(fn,"$game_sounds$",S,".ogg")) {
-			ref_sound					*temp = add(params.m_type,S);
+		if (g_Engine->GetSoundManager()->ExistSoundWave(S))
+		{
+			FRBMKSoundSourceRef temp;
+			temp.Create(S,params.m_type);
 			if (temp)
-				m_sounds.push_back		(temp);
+			{
+				m_sounds.push_back(temp);
+			}
 		}
-		for (u32 i=0; i<params.m_max_count; ++i){
-			string256					name;
-			sprintf_s						(name,"%s%d",S,i);
-			if (FS.exist(fn,"$game_sounds$",name,".ogg")) {
-				ref_sound				*temp = add(params.m_type,name);
+		for (u32 i=0; i<params.m_max_count; ++i)
+		{
+			string256 name;
+			sprintf_s(name,"%s%d",S,i);
+			
+			if (g_Engine->GetSoundManager()->ExistSoundWave(name))
+			{
+				FRBMKSoundSourceRef temp;
+				temp.Create(name,params.m_type);
 				if (temp)
+				{
 					m_sounds.push_back	(temp);
+				}
 			}
 		}
 	}
@@ -272,29 +278,29 @@ CSoundPlayer::CSoundCollection::CSoundCollection	(const CSoundCollectionParams &
 CSoundPlayer::CSoundCollection::~CSoundCollection	()
 {
 #ifdef DEBUG
-	xr_vector<ref_sound*>::iterator	I = m_sounds.begin();
-	xr_vector<ref_sound*>::iterator	E = m_sounds.end();
+	auto	I = m_sounds.begin();
+	auto	E = m_sounds.end();
 	for ( ; I != E; ++I) {
 		VERIFY						(*I);
-		VERIFY						(!(*I)->_feedback());
+		VERIFY						(!(*I).IsPlaying());
 	}
 #endif
 	delete_data						(m_sounds);
 }
 
-const ref_sound &CSoundPlayer::CSoundCollection::random	(const u32 &id)
+const FRBMKSoundSourceRef  &CSoundPlayer::CSoundCollection::random	(const u32 &id)
 {
 	VERIFY					(!m_sounds.empty());
 
 	if (id != u32(-1)) {
 		m_last_sound_id		= id;
 		VERIFY				(id < m_sounds.size());
-		return				(*m_sounds[id]);
+		return				m_sounds[id];
 	}
 
 	if (m_sounds.size() <= 2) {
 		m_last_sound_id		= CRandom32::random(m_sounds.size());
-		return				(*m_sounds[m_last_sound_id]);
+		return				m_sounds[m_last_sound_id];
 	}
 	
 	u32						result;
@@ -304,5 +310,5 @@ const ref_sound &CSoundPlayer::CSoundCollection::random	(const u32 &id)
 	while (result == m_last_sound_id);
 
 	m_last_sound_id			= result;
-	return					(*m_sounds[result]);
+	return					m_sounds[result];
 }

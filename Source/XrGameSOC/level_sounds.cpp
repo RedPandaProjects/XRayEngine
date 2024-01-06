@@ -4,6 +4,8 @@
 #include "level.h"
 #include "level_sounds.h"
 
+#include "../Editors/XrECore/Engine/ai_sounds.h"
+
 //-----------------------------------------------------------------------------
 // static level sounds
 //-----------------------------------------------------------------------------
@@ -12,7 +14,7 @@ void SStaticSound::Load(IReader& F)
 	R_ASSERT				(F.find_chunk(0));
 	xr_string				wav_name;
 	F.r_stringZ				(wav_name);
-	m_Source.create			(wav_name.c_str(),st_Effect,sg_SourceType);
+	m_Source = g_Engine->GetSoundManager()->CreateSource(wav_name.c_str());
 	F.r_fvector3			(m_Position);
 	m_Volume				= F.r_float();
 	m_Freq					= F.r_float();
@@ -29,34 +31,41 @@ void SStaticSound::Load(IReader& F)
 void SStaticSound::Update(u32 game_time, u32 global_time)
 {
 	if ((0==m_ActiveTime.x)&&(0==m_ActiveTime.y)||((int(game_time)>=m_ActiveTime.x)&&(int(game_time)<m_ActiveTime.y))){
-		if (0==m_Source._feedback()){
+		if (!m_Source.IsPlaying()){
 			if ((0==m_PauseTime.x)&&(0==m_PauseTime.y)){    
-				m_Source.play_at_pos	(0,m_Position,sm_Looped);
-				m_Source.set_volume		(m_Volume);
-				m_Source.set_frequency	(m_Freq);
+				m_Source.Play	(nullptr,m_Position,true);
+				if(m_Source)
+				{
+					m_Source.SetVolume		(m_Volume);
+					m_Source.SetFrequency	(m_Freq);
+				}
 				m_StopTime				= 0xFFFFFFFF;
 			}else{
 				if (global_time>=m_NextTime){
 					bool bFullPlay		= (0==m_PlayTime.x)&&(0==m_PlayTime.y);
-					m_Source.play_at_pos	(0,m_Position,bFullPlay?0:sm_Looped);
-					m_Source.set_volume		(m_Volume);
-					m_Source.set_frequency	(m_Freq);
-					if (bFullPlay){
-						m_StopTime		= 0xFFFFFFFF;
-						m_NextTime		= global_time+m_Source._handle()->length_ms()+Random.randI(m_PauseTime.x,m_PauseTime.y);
-					}else{
-						m_StopTime		= bFullPlay?0:global_time+Random.randI(m_PlayTime.x,m_PlayTime.y);
-						m_NextTime		= m_StopTime+Random.randI(m_PauseTime.x,m_PauseTime.y);
+					m_Source.Play	(nullptr,m_Position,bFullPlay);
+					if(m_Source)
+					{
+						m_Source.SetVolume		(m_Volume);
+						m_Source.SetFrequency	(m_Freq);
+						if (bFullPlay){
+							m_StopTime		= 0xFFFFFFFF;
+							m_NextTime		= global_time+m_Source.GetDuration()+Random.randI(m_PauseTime.x,m_PauseTime.y);
+						}else{
+							m_StopTime		= bFullPlay?0:global_time+Random.randI(m_PlayTime.x,m_PlayTime.y);
+							m_NextTime		= m_StopTime+Random.randI(m_PauseTime.x,m_PauseTime.y);
+						}
 					}
+					
 				}
 			}
 		}else{
 			if (Device->dwTimeGlobal>=m_StopTime)
-				m_Source.stop_deffered();
+				m_Source.StopWithFade();
 		}
 	}else{
-		if (0!=m_Source._feedback())
-			m_Source.stop_deffered();
+		if (0!=m_Source.IsPlaying())
+			m_Source.StopWithFade();
 	}
 }
 //-----------------------------------------------------------------------------
@@ -71,8 +80,7 @@ void SMusicTrack::Load(LPCSTR fn, LPCSTR params)
 	string_path			_l, _r;
 	strconcat			(sizeof(_l),_l, fn, "_l");
 	strconcat			(sizeof(_r),_r, fn, "_r");
-	m_SourceLeft.create	(_l,st_Music,sg_Undefined);
-	m_SourceRight.create(_r,st_Music,sg_Undefined);
+	m_Source.Create	(fn,SOUND_TYPE_NO_SOUND);
 	// parse params
 	int cnt				= _GetItemCount(params); VERIFY(cnt==5);
 	m_ActiveTime.set	(0,0);
@@ -86,21 +94,18 @@ void SMusicTrack::Load(LPCSTR fn, LPCSTR params)
 
 void	SMusicTrack::Play()
 {
-	m_SourceLeft.play_at_pos	(0,Fvector().set(-0.5f,0.f,0.3f),sm_2D);
-	m_SourceRight.play_at_pos	(0,Fvector().set(+0.5f,0.f,0.3f),sm_2D);
+	m_Source.Play	(0);
 	SetVolume					(1.0f);
 }
 
 void SMusicTrack::SetVolume(float volume)
 {
-	m_SourceLeft.set_volume		(volume*m_Volume);
-	m_SourceRight.set_volume	(volume*m_Volume);
+	m_Source.SetVolume		(volume*m_Volume);
 }
 
 void SMusicTrack::Stop()
 {
-	m_SourceLeft.stop_deffered	();
-	m_SourceRight.stop_deffered	();
+	m_Source.StopWithFade	();
 }
 
 //-----------------------------------------------------------------------------

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../XrEngine/feel_touch.h"
-#include "../XrEngine/feel_sound.h"
 #include "../XrEngine/iinputreceiver.h"
 #include "../XrEngine/Render/animation_motion.h"
 #include "actor_flags.h"
@@ -14,6 +13,7 @@
 #include "PhraseDialogManager.h"
 
 #include "step_manager.h"
+#include "../XrEngine/Interfaces/Sound/RBMKSoundActorListener.h"
 
 using namespace ACTOR_DEFS;
 
@@ -66,7 +66,7 @@ class	CActor:
 	public CInventoryOwner,
 	public CPhraseDialogManager,
 	public CStepManager,
-	public Feel::Sound
+	public IRBMKSoundActorListener
 #ifdef DEBUG
 	,public pureRenderDebug
 #endif
@@ -107,8 +107,8 @@ public:
 	// Render
 	virtual void						renderable_Render			();
 	virtual BOOL						renderable_ShadowGenerate	();
-	virtual	void						feel_sound_new				(CObject* who, int type, CSound_UserDataPtr user_data, const Fvector& Position, float power);
-	virtual	Feel::Sound*				dcast_FeelSound				()	{ return this;	}
+	virtual	void						ListenSound					(CObject* InSourceActor, s32 SoundFlags,const Fvector& InPosition, float InnPower,CSound_UserDataPtr UserData) override;
+	virtual	IRBMKSoundActorListener*	CastToSoundActorListener	() override	{ return this;	}
 			float						m_snd_noise;
 #ifdef DEBUG
 	virtual void						OnRenderDebug			();
@@ -207,8 +207,8 @@ public:
 	const xr_vector<const CArtefact*>& ArtefactsOnBelt() {return m_ArtefactsOnBelt;}
 protected:
 	//���� �������� �������
-	ref_sound			m_HeavyBreathSnd;
-	ref_sound			m_BloodSnd;
+	FRBMKSoundSourceRef 			m_HeavyBreathSnd;
+	FRBMKSoundSourceRef 			m_BloodSnd;
 
 	xr_vector<const CArtefact*> m_ArtefactsOnBelt;
 
@@ -228,9 +228,9 @@ protected:
 	float					hit_probability;
 
 	// media
-	SndShockEffector*		m_sndShockEffector;
-	xr_vector<ref_sound>	sndHit[ALife::eHitTypeMax];
-	ref_sound				sndDie[SND_DIE_COUNT];
+	SndShockEffector*					m_sndShockEffector;
+	xr_vector<FRBMKSoundSourceRef >		sndHit[ALife::eHitTypeMax];
+	FRBMKSoundSourceRef 				sndDie[SND_DIE_COUNT];
 
 
 	float					m_fLandingTime;

@@ -245,7 +245,7 @@ void CActor::PickupInfoDraw(CObject* object)
 	HUD().Font().pFontLetterica16Russian->Out			(x,y,draw_str);
 }
 
-void CActor::feel_sound_new(CObject* who, int type, CSound_UserDataPtr user_data, const Fvector& Position, float power)
+void CActor::ListenSound(CObject* who, s32 type,  const Fvector& Position, float power,CSound_UserDataPtr UserData)
 {
 	if(who == this)
 		m_snd_noise = _max(m_snd_noise,power);

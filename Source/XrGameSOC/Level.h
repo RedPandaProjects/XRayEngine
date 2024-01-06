@@ -189,9 +189,6 @@ public:
 #endif // BATTLEYE
 
 private:
-	// preload sounds registry
-	DEFINE_MAP					(shared_str,ref_sound,SoundRegistryMap,SoundRegistryMapIt);
-	SoundRegistryMap			sound_registry;
 
 public:
 	void						PrefetchSound (LPCSTR name);
@@ -220,7 +217,7 @@ protected:
 
 public:
 	// sounds
-	xr_vector<ref_sound*>		static_Sounds;
+	xr_vector<FRBMKSoundSourceRef *>		static_Sounds;
 
 	// startup options
 	shared_str					m_caServerOptions;

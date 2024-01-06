@@ -72,20 +72,20 @@ void CMaterialManager::update		(float time_delta, float volume, float step_time,
 		position.y				+= m_movement_control->FootRadius(); 
 	}
 	
-	// ref_sound step
+	// FRBMKSoundSourceContainer  step
 	if (!standing) {
 		if (m_time_to_step < 0) {
-			SoundVec& snd_array = mtl_pair->StepSounds;
+			xr_vector<shared_str>* snd_array = &mtl_pair->StepSoundsNames;
 			
-			if(m_run_mode && mtl_pair->BreakingSounds.size() >0)
-				snd_array = mtl_pair->BreakingSounds;
+			if(m_run_mode && mtl_pair->BreakingSoundsNames.size() >0)
+				snd_array = &mtl_pair->BreakingSoundsNames;
 
-			if (snd_array.size() >0){
-				m_step_id								= ::Random.randI(0, snd_array.size());
+			if (snd_array->size() >0){
+				m_step_id								= ::Random.randI(0, snd_array->size());
 				m_time_to_step							= step_time;
 
-				m_step_sound[m_step_id]					= snd_array[m_step_id];
-				m_step_sound[m_step_id].play_at_pos	(m_object,position);
+				m_step_sound[m_step_id].Create((*snd_array)[m_step_id].c_str());
+				m_step_sound[m_step_id].Play	(m_object,position);
 			}
 		}
 		m_time_to_step								-= time_delta;
@@ -95,9 +95,9 @@ void CMaterialManager::update		(float time_delta, float volume, float step_time,
 
 
 	for(int i=0; i<4; i++)
-		if (m_step_sound[i]._feedback())		{
-			m_step_sound[i].set_position	(position    );
-			m_step_sound[i].set_volume		(1.f * volume);
+		if (m_step_sound[i].IsPlaying())		{
+			m_step_sound[i].SetPosition	(position    );
+			m_step_sound[i].SetVolume		( volume);
 		}
 }
 

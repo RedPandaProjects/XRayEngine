@@ -4,8 +4,6 @@
 #include "IGame_Persistent.h"
 #include "..\XrAPI\xrGameManager.h"
 #ifndef _EDITOR
-#include "environment.h"
-#	include "XRayEngineInterface.h"
 #	include "IGame_Level.h"
 #	include "XR_IOConsole.h"
 #	include "Render.h"
@@ -28,17 +26,6 @@ IGame_Persistent::IGame_Persistent	(bool bIsEditor)
 	Device->seqAppDeactivate.Add	(this);
 
 	m_pMainMenu						= NULL;
-
-	switch (xrGameManager::GetGame())
-	{
-	case EGame::SHOC:
-		pEnvironment = xr_new<CEnvironmentSOC>();
-		break;
-	default:
-		pEnvironment = xr_new<CEnvironment>();
-		break;
-
-	}
 }
 
 IGame_Persistent::~IGame_Persistent	()
@@ -48,9 +35,6 @@ IGame_Persistent::~IGame_Persistent	()
 	Device->seqAppEnd.Remove			(this);
 	Device->seqAppActivate.Remove	(this);
 	Device->seqAppDeactivate.Remove	(this);
-#ifndef _EDITOR
-	xr_delete						(pEnvironment);
-#endif
 }
 
 void IGame_Persistent::OnAppActivate		()
@@ -63,12 +47,10 @@ void IGame_Persistent::OnAppDeactivate		()
 
 void IGame_Persistent::OnAppStart	()
 {
-	Environment().load();
 }
 
 void IGame_Persistent::OnAppEnd		()
 {
-	Environment().unload();
 	OnGameEnd						();
 
 #ifndef _EDITOR
@@ -121,16 +103,6 @@ void IGame_Persistent::Disconnect	()
 #endif
 }
 
-class CEnvironment* IGame_Persistent::EnvironmentAsCOP()
-{
-	return static_cast<CEnvironment*>(pEnvironment);
-};
-
-class CEnvironmentSOC* IGame_Persistent::EnvironmentAsSOC()
-{
-	return static_cast<CEnvironmentSOC*>(pEnvironment);
-};
-
 void IGame_Persistent::OnGameStart()
 {
 #ifndef _EDITOR
@@ -164,10 +136,6 @@ void IGame_Persistent::OnGameEnd	()
 void IGame_Persistent::OnFrame		()
 {
 #ifndef _EDITOR
-
-	if(!Device->Paused() || Device->dwPrecacheFrame)
-		Environment().OnFrame	();
-
 
 	Device->Statistic->Particles_starting= ps_needtoplay.size	();
 	Device->Statistic->Particles_active	= ps_active.size		();

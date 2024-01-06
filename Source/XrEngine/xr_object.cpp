@@ -9,7 +9,6 @@
 #include "Render/RenderVisual.h"
 #include "Render/Kinematics.h"
 
-#include "XRayEngineInterface.h"
 #include "GameFont.h"
 
 #include "mp_logging.h"
@@ -18,7 +17,8 @@
 #pragma warning(push)
 #pragma warning(disable:4995)
 #include <intrin.h>
-#include "XRayUnrealProxyInterface.h"
+
+#include "Interfaces/Core/RBMKEngine.h"
 #pragma warning(pop)
 
 #pragma intrinsic(_InterlockedCompareExchange)

@@ -29,6 +29,7 @@
 #include "movement_manager.h"
 #include "script_callback_ex.h"
 #include "game_object_space.h"
+#include "../XrEngine/Interfaces/Core/RBMKEngine.h"
 
 void  ActionCallback(IKinematics *tpKinematics);
 
@@ -211,14 +212,14 @@ void CScriptEntity::vfUpdateParticles()
 void CScriptEntity::vfUpdateSounds()
 {
 	CScriptSoundAction	&l_tSoundAction = GetCurrentAction()->m_tSoundAction;
-	if (xr_strlen(l_tSoundAction.m_caBoneName) && m_current_sound && m_current_sound->_feedback())
-		m_current_sound->_feedback()->set_position(GetUpdatedMatrix(l_tSoundAction.m_caBoneName,l_tSoundAction.m_tSoundPosition,Fvector().set(0,0,0)).c);
+	if (xr_strlen(l_tSoundAction.m_caBoneName) && m_current_sound && m_current_sound->IsPlaying())
+		if((*m_current_sound))(*m_current_sound).SetPosition(GetUpdatedMatrix(l_tSoundAction.m_caBoneName,l_tSoundAction.m_tSoundPosition,Fvector().set(0,0,0)).c);
 }
 
 void CScriptEntity::vfFinishAction(CScriptEntityAction *tpEntityAction)
 {
-	if (m_current_sound) {
-		m_current_sound->destroy	();
+	if (m_current_sound) 
+	{
 		xr_delete					(m_current_sound);
 	}
 	if (!tpEntityAction->m_tParticleAction.m_bAutoRemove)
@@ -365,26 +366,29 @@ bool CScriptEntity::bfAssignSound(CScriptEntityAction *tpEntityAction)
 		return		(false);
 	
 	if (m_current_sound) {
-		if (!m_current_sound->_feedback())
+		if (!m_current_sound->IsPlaying())
 			if (!l_tSoundAction.m_bStartedToPlay) {
 #ifdef _DEBUG
 //				Msg									("%6d Starting sound %s",Device->dwTimeGlobal,*l_tSoundAction.m_caSoundToPlay);
 #endif
 				const Fmatrix	&l_tMatrix = GetUpdatedMatrix(l_tSoundAction.m_caBoneName,l_tSoundAction.m_tSoundPosition,l_tSoundAction.m_tSoundAngles);
-				m_current_sound->play_at_pos(m_object,l_tMatrix.c,l_tSoundAction.m_bLooped ? sm_Looped : 0);
+				(*m_current_sound).Play(m_object,l_tMatrix.c,l_tSoundAction.m_bLooped );
 				l_tSoundAction.m_bStartedToPlay = true;
 			}
 			else {
 				l_tSoundAction.m_bCompleted		= true;
 			}
 	}
-	else {
-		if (xr_strlen(l_tSoundAction.m_caSoundToPlay)) {
-			m_current_sound						= xr_new<ref_sound>();
-			m_current_sound->create				(*l_tSoundAction.m_caSoundToPlay,st_Effect,l_tSoundAction.m_sound_type);
+	else
+	{
+		if (xr_strlen(l_tSoundAction.m_caSoundToPlay)) 
+		{
+			m_current_sound = xr_new<FRBMKSoundSourceRef >(g_Engine->GetSoundManager()->CreateSource(*l_tSoundAction.m_caSoundToPlay,l_tSoundAction.m_sound_type));
 		}
-		else
+		else 
+		{
 			l_tSoundAction.m_bCompleted = true;
+		}
 	}
 	return		(!l_tSoundAction.m_bCompleted);
 }

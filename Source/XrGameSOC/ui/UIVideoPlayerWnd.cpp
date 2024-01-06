@@ -62,8 +62,8 @@ void CUIVideoPlayerWnd::SetFile		(LPCSTR fn)
 		VERIFY(!m_surface->GetShader());
 		m_surface->InitTexture			(fn);
 
-		if(FS.exist("$game_sounds$",fn))
-			::Sound->create(m_sound, fn,st_Effect,sg_SourceType);
+		if(g_Engine->GetSoundManager()->ExistSoundWave(fn))
+			m_sound.Create(fn);
 	}
 }
 
@@ -103,8 +103,8 @@ void CUIVideoPlayerWnd::OnTabChanged			(CUIWindow* pWnd, void* pData)
 
 void CUIVideoPlayerWnd::Play	()
 {
-	if (m_sound._handle())
-        m_sound.play(NULL, sm_2D);
+	if (m_sound.IsValid())
+        m_sound.Play(nullptr);
 
 	if(m_texture){
 		if(!m_texture->video_IsPlaying())
@@ -115,8 +115,8 @@ void CUIVideoPlayerWnd::Play	()
 
 void CUIVideoPlayerWnd::Stop	()
 {
-	if (m_sound._handle())
-        m_sound.stop();
+	if (m_sound.IsPlaying())
+        m_sound.Stop();
 
 	if(m_texture){
 		if(m_texture->video_IsPlaying())

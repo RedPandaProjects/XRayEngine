@@ -18,7 +18,6 @@
 #include "script_engine.h"
 #include "patrol_path_storage.h"
 #include "alife_simulator.h"
-#include "../XrEngine/XRayEngineInterface.h"
 
 
 CAI_Space *g_ai_space = 0;

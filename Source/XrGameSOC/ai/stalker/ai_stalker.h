@@ -162,7 +162,7 @@ public:
 	virtual CGameObject*				cast_game_object			()						{return this;}
 	virtual CPhysicsShellHolder*		cast_physics_shell_holder	()						{return this;}
 	virtual CParticlesPlayer*			cast_particles_player		()						{return this;}
-	virtual	Feel::Sound*				dcast_FeelSound				()						{return this;}
+	virtual	IRBMKSoundActorListener*	CastToSoundActorListener	() override				{return this;}
 	virtual CAI_Stalker*				cast_stalker				()						{return this;}
 	virtual CCustomMonster*				cast_custom_monster			()						{return this;}
 	virtual CScriptEntity*				cast_script_entity			()						{return this;}

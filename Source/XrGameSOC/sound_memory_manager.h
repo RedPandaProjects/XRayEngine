@@ -84,7 +84,7 @@ public:
 	virtual	void				Load					(LPCSTR section);
 	virtual	void				reinit					();
 	virtual	void				reload					(LPCSTR section);
-	virtual void				feel_sound_new			(CObject* who, int eType, CSound_UserDataPtr user_data, const Fvector &Position, float power);
+	virtual void				ListenSound				(CObject* InSourceActor, s32 SoundFlags,const Fvector& InPosition, float InnPower, CSound_UserDataPtr UserData);
 	virtual	void				update					();
 			void				remove_links			(CObject *object);
 

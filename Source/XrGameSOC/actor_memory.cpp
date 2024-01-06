@@ -48,5 +48,5 @@ void CActorMemory::camera					(
 	aspect_ratio	= camera.f_aspect;
 	near_plane		= .1f;
 	
-	far_plane		= g_pGamePersistent->Environment().CurrentEnv->far_plane;
+	far_plane		= g_Engine->GetEnvironmentCheck()->GetFogPlane();
 }

@@ -95,7 +95,7 @@ class CUISequenceSimpleItem: public CUISequenceItem
 	SubItemVec				m_subitems;
 public:
 	CUIWindow*				m_UIWindow;
-	ref_sound				m_sound;
+	FRBMKSoundSourceRef		m_sound;
 	float					m_time_start;
 	float					m_time_length;
 	string64				m_pda_section;
@@ -119,7 +119,7 @@ public:
 class CUISequenceVideoItem: public CUISequenceItem
 {
 	typedef CUISequenceItem	inherited;
-	ref_sound				m_sound[2];
+	FRBMKSoundSourceRef				m_sound;
 	enum {	
 		etiPlaying			= (1<<(eti_last+0)),
 		etiNeedStart		= (1<<(eti_last+1)),

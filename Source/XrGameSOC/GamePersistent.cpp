@@ -19,7 +19,6 @@
 #include "stalker_velocity_holder.h"
 
 #include "../XrEngine/CameraManager.h"
-#include "../XrEngine/EnvironmentSOC.h"
 #include "actor.h"
 
 #ifndef MASTER_GOLD
@@ -163,7 +162,6 @@ void CGamePersistent::Disconnect()
 
 	__super::Disconnect			();
 	// stop all played emitters
-	::Sound->stop_emitters		();
 	m_game_params.m_e_game_type_for_soc	= GAME_ANY;
 }
 
@@ -212,55 +210,55 @@ void CGamePersistent::OnGameEnd	()
 
 void CGamePersistent::WeathersUpdate()
 {
-	if (g_pGameLevel && !g_dedicated_server)
-	{
-		CActor* actor = smart_cast<CActor*>(Level().CurrentViewEntity());
-		BOOL bIndoor = TRUE;
-		if (actor) bIndoor = actor->renderable_ROS()->get_luminocity_hemi() < 0.05f;
+	//if (g_pGameLevel && !g_dedicated_server)
+	//{
+	//	CActor* actor = smart_cast<CActor*>(Level().CurrentViewEntity());
+	//	BOOL bIndoor = TRUE;
+	//	if (actor) bIndoor = actor->renderable_ROS()->get_luminocity_hemi() < 0.05f;
 
-		int data_set = (Random.randF() < (1.f - EnvironmentAsSOC()->CurrentEnv->weight)) ? 0 : 1;
-		IEnvDescriptor* _env = EnvironmentAsSOC()->Current[data_set]; VERIFY(_env);
-		CEnvSOCAmbient* env_amb = static_cast<CEnvSOCAmbient*>(_env->env_ambient);
-		if (env_amb) {
-			// start sound
-			if (Device->dwTimeGlobal > ambient_sound_next_time) {
-				ref_sound* snd = env_amb->get_rnd_sound();
-				ambient_sound_next_time = Device->dwTimeGlobal + env_amb->get_rnd_sound_time();
-				if (snd) {
-					Fvector	pos;
-					float	angle = ::Random.randF(PI_MUL_2);
-					pos.x = cosf(angle);
-					pos.y = 0;
-					pos.z = sinf(angle);
-					pos.normalize().mul(env_amb->get_rnd_sound_dist()).add(Device->vCameraPosition);
-					pos.y += 10.f;
-					snd->play_at_pos(0, pos);
-				}
-			}
+	//	int data_set = (Random.randF() < (1.f - EnvironmentAsSOC()->CurrentEnv->weight)) ? 0 : 1;
+	//	IEnvDescriptor* _env = EnvironmentAsSOC()->Current[data_set]; VERIFY(_env);
+	//	CEnvSOCAmbient* env_amb = static_cast<CEnvSOCAmbient*>(_env->env_ambient);
+	//	if (env_amb) {
+	//		// start sound
+	//		if (Device->dwTimeGlobal > ambient_sound_next_time) {
+	//			FRBMKSoundSourceContainer * snd = env_amb->get_rnd_sound();
+	//			ambient_sound_next_time = Device->dwTimeGlobal + env_amb->get_rnd_sound_time();
+	//			if (snd) {
+	//				Fvector	pos;
+	//				float	angle = ::Random.randF(PI_MUL_2);
+	//				pos.x = cosf(angle);
+	//				pos.y = 0;
+	//				pos.z = sinf(angle);
+	//				pos.normalize().mul(env_amb->get_rnd_sound_dist()).add(Device->vCameraPosition);
+	//				pos.y += 10.f;
+	//				snd->play_at_pos(0, pos);
+	//			}
+	//		}
 
-			// start effect
-			if ((FALSE == bIndoor) && (0 == ambient_particles) && Device->dwTimeGlobal > ambient_effect_next_time) {
-				CEnvSOCAmbient::SEffect* eff = env_amb->get_rnd_effect();
-				if (eff) {
-					EnvironmentAsSOC()->wind_gust_factor = eff->wind_gust_factor;
-					ambient_effect_next_time = Device->dwTimeGlobal + env_amb->get_rnd_effect_time();
-					ambient_effect_stop_time = Device->dwTimeGlobal + eff->life_time;
-					ambient_particles = CParticlesObject::Create(eff->particles.c_str(), FALSE, false);
-					Fvector pos; pos.add(Device->vCameraPosition, eff->offset);
-					ambient_particles->play_at_pos(pos);
-					if (eff->sound._handle())		eff->sound.play_at_pos(0, pos);
-				}
-			}
-		}
-		// stop if time exceed or indoor
-		if (bIndoor || Device->dwTimeGlobal >= ambient_effect_stop_time) {
-			if (ambient_particles)					ambient_particles->Stop();
-			EnvironmentAsSOC()->wind_gust_factor = 0.f;
-		}
-		// if particles not playing - destroy
-		if (ambient_particles && !ambient_particles->IsPlaying())
-			CParticlesObject::Destroy(ambient_particles);
-	}
+	//		// start effect
+	//		if ((FALSE == bIndoor) && (0 == ambient_particles) && Device->dwTimeGlobal > ambient_effect_next_time) {
+	//			CEnvSOCAmbient::SEffect* eff = env_amb->get_rnd_effect();
+	//			if (eff) {
+	//				EnvironmentAsSOC()->wind_gust_factor = eff->wind_gust_factor;
+	//				ambient_effect_next_time = Device->dwTimeGlobal + env_amb->get_rnd_effect_time();
+	//				ambient_effect_stop_time = Device->dwTimeGlobal + eff->life_time;
+	//				ambient_particles = CParticlesObject::Create(eff->particles.c_str(), FALSE, false);
+	//				Fvector pos; pos.add(Device->vCameraPosition, eff->offset);
+	//				ambient_particles->play_at_pos(pos);
+	//				if (eff->sound._handle())		eff->sound.play_at_pos(0, pos);
+	//			}
+	//		}
+	//	}
+	//	// stop if time exceed or indoor
+	//	if (bIndoor || Device->dwTimeGlobal >= ambient_effect_stop_time) {
+	//		if (ambient_particles)					ambient_particles->Stop();
+	//		EnvironmentAsSOC()->wind_gust_factor = 0.f;
+	//	}
+	//	// if particles not playing - destroy
+	//	if (ambient_particles && !ambient_particles->IsPlaying())
+	//		CParticlesObject::Destroy(ambient_particles);
+	//}
 }
 
 #include "UI/UIGameTutorial.h"
@@ -528,8 +526,6 @@ void CGamePersistent::OnRenderPPUI_PP()
 {
 	MainMenu()->OnRenderPPUI_PP();
 }
-#include "string_table.h"
-#include "../XrEngine/XRayEngineInterface.h"
 void CGamePersistent::LoadTitle(LPCSTR str)
 {
 }

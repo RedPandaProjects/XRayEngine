@@ -5,7 +5,7 @@
 
 struct SStaticSound
 {
-	ref_sound		m_Source;
+	FRBMKSoundSourceRef 		m_Source;
 	Ivector2		m_ActiveTime;
 	Ivector2		m_PlayTime;
 	Ivector2		m_PauseTime;
@@ -25,14 +25,13 @@ struct	SMusicTrack
 #ifdef DEBUG
 	shared_str		m_DbgName;
 #endif
-	ref_sound		m_SourceLeft;
-	ref_sound		m_SourceRight;
+	FRBMKSoundSourceRef 		m_Source;
 	Ivector2		m_ActiveTime;
 	Ivector2		m_PauseTime;
 	float			m_Volume;
 public:
 	void			Load			(LPCSTR fn, LPCSTR params);
-	BOOL			IsPlaying		(){return m_SourceLeft._feedback() || m_SourceRight._feedback();}
+	BOOL			IsPlaying		(){return m_Source.IsPlaying();}
 	void			Play			();
 	void			Stop			();
 	void			SetVolume		(float volume);

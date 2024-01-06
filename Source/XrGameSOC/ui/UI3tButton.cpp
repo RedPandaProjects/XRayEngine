@@ -80,24 +80,24 @@ void CUI3tButton::OnFocusReceive()
 
 void CUI3tButton::InitSoundH(LPCSTR sound_file)
 {
-	::Sound->create		(m_sound_h, sound_file,st_Effect,sg_SourceType);
+	m_sound_h.Create(sound_file);
 }
 
 void CUI3tButton::InitSoundT(LPCSTR sound_file)
 {
-	::Sound->create		(m_sound_t, sound_file,st_Effect,sg_SourceType); 
+	m_sound_h.Create(sound_file); 
 }
 
 void CUI3tButton::PlaySoundT()
 {
-	if (m_sound_t._handle())
-        m_sound_t.play(NULL, sm_2D);
+	if (m_sound_t.IsValid())
+        m_sound_t.Play(nullptr);
 }
 
 void CUI3tButton::PlaySoundH()
 {
-	if (m_sound_h._handle())
-		m_sound_h.play(NULL, sm_2D);
+	if (m_sound_h.IsValid())
+		m_sound_h.Play(nullptr);
 }
 
 void CUI3tButton::Init(float x, float y, float width, float height)

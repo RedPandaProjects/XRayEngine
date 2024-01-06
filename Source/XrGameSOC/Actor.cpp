@@ -66,7 +66,7 @@
 #include "script_callback_ex.h"
 #include "InventoryBox.h"
 #include "location_manager.h"
-#include "../XrEngine/XRayEngineInterface.h"
+#include "../XrEngine/Interfaces/Core/RBMKEngine.h"
 
 const u32		patch_frames	= 50;
 const float		respawn_delay	= 1.f;
@@ -210,8 +210,6 @@ CActor::~CActor()
 	//xr_delete(Weapons);
 	for (int i=0; i<eacMaxCam; ++i) xr_delete(cameras[i]);
 
-	m_HeavyBreathSnd.destroy();
-	m_BloodSnd.destroy		();
 
 	xr_delete				(m_pActorEffector);
 
@@ -380,20 +378,20 @@ if(!g_dedicated_server)
 		int cnt = _GetItemCount(hit_snds);
 		string128		tmp;
 		VERIFY			(cnt!=0);
+		sndHit[hit_type].resize(cnt);
 		for(int i=0; i<cnt;++i)
 		{
-			sndHit[hit_type].push_back		(ref_sound());
-			sndHit[hit_type].back().create	(_GetItem(hit_snds,i,tmp),st_Effect,sg_SourceType);
+			sndHit[hit_type][i] = g_Engine->GetSoundManager()->CreateSource(_GetItem(hit_snds,i,tmp));
 		}
 		char buf[256];
 
-		::Sound->create		(sndDie[0],			strconcat(sizeof(buf),buf,*cName(),"\\die0"), st_Effect,SOUND_TYPE_MONSTER_DYING);
-		::Sound->create		(sndDie[1],			strconcat(sizeof(buf),buf,*cName(),"\\die1"), st_Effect,SOUND_TYPE_MONSTER_DYING);
-		::Sound->create		(sndDie[2],			strconcat(sizeof(buf),buf,*cName(),"\\die2"), st_Effect,SOUND_TYPE_MONSTER_DYING);
-		::Sound->create		(sndDie[3],			strconcat(sizeof(buf),buf,*cName(),"\\die3"), st_Effect,SOUND_TYPE_MONSTER_DYING);
+		sndDie[0] = g_Engine->GetSoundManager()->CreateSource(strconcat(sizeof(buf),buf,*cName(),"\\die0"),SOUND_TYPE_MONSTER_DYING);
+		sndDie[1] = g_Engine->GetSoundManager()->CreateSource(strconcat(sizeof(buf),buf,*cName(),"\\die1"),SOUND_TYPE_MONSTER_DYING);
+		sndDie[2] = g_Engine->GetSoundManager()->CreateSource(strconcat(sizeof(buf),buf,*cName(),"\\die2"),SOUND_TYPE_MONSTER_DYING);
+		sndDie[3] = g_Engine->GetSoundManager()->CreateSource(strconcat(sizeof(buf),buf,*cName(),"\\die3"),SOUND_TYPE_MONSTER_DYING);
 
-		m_HeavyBreathSnd.create	(pSettings->r_string(section,"heavy_breath_snd"), st_Effect,SOUND_TYPE_MONSTER_INJURING);
-		m_BloodSnd.create		(pSettings->r_string(section,"heavy_blood_snd"), st_Effect,SOUND_TYPE_MONSTER_INJURING);
+		m_HeavyBreathSnd = g_Engine->GetSoundManager()->CreateSource(pSettings->r_string(section,"heavy_breath_snd"),SOUND_TYPE_MONSTER_INJURING);
+		m_BloodSnd = g_Engine->GetSoundManager()->CreateSource(pSettings->r_string(section,"heavy_blood_snd"),SOUND_TYPE_MONSTER_INJURING);
 	}
 }
 	if( psActorFlags.test(AF_PSP) )
@@ -444,9 +442,9 @@ void CActor::PHHit(float P,Fvector &dir, CObject *who,s16 element,Fvector p_in_o
 
 struct playing_pred
 {
-	IC	bool	operator()			(ref_sound &s)
+	IC	bool	operator()			(FRBMKSoundSourceRef  &s)
 	{
-		return	(NULL != s._feedback() );
+		return s.IsPlaying();
 	}
 };
 
@@ -510,17 +508,17 @@ void	CActor::Hit							(SHit* pHDS)
 		!sndHit[HDS.hit_type].empty()			&& 
 		(ALife::eHitTypeTelepatic != HDS.hit_type))
 	{
-		ref_sound& S = sndHit[HDS.hit_type][Random.randI(sndHit[HDS.hit_type].size())];
+		FRBMKSoundSourceRef & S = sndHit[HDS.hit_type][Random.randI(sndHit[HDS.hit_type].size())];
 		bool b_snd_hit_playing = sndHit[HDS.hit_type].end() != std::find_if(sndHit[HDS.hit_type].begin(), sndHit[HDS.hit_type].end(), playing_pred());
 
 		if(ALife::eHitTypeExplosion == HDS.hit_type)
 		{
 			if (this == Level().CurrentControlEntity())
 			{
-				S.set_volume(10.0f);
+				S.SetVolume(10.0f);
 				if(!m_sndShockEffector){
 					m_sndShockEffector = xr_new<SndShockEffector>();
-					m_sndShockEffector->Start(this, float(S._handle()->length_ms()), HDS.damage() );
+					m_sndShockEffector->Start(this, S.GetDuration()*1000.f, HDS.damage() );
 				}
 			}
 			else
@@ -530,7 +528,7 @@ void	CActor::Hit							(SHit* pHDS)
 		{
 			Fvector point		= Position();
 			point.y				+= CameraHeight();
-			S.play_at_pos		(this, point);
+			S.Play(this, point);
 		};
 	}
 
@@ -794,10 +792,10 @@ void CActor::Die(CObject* who)
 
 	if(!g_dedicated_server)
 	{
-		::Sound->play_at_pos	(sndDie[Random.randI(SND_DIE_COUNT)],this,Position());
+		sndDie[Random.randI(SND_DIE_COUNT)].Play(this,Position());
 
-		m_HeavyBreathSnd.stop	();
-		m_BloodSnd.stop			();		
+		m_HeavyBreathSnd.Stop();
+		m_BloodSnd.Stop();		
 	}
 
 	if(IsGameTypeSingle())
@@ -1134,49 +1132,40 @@ void CActor::shedule_Update	(u32 DT)
 	}
 	pCamBobbing->SetState						(mstate_real, conditions().IsLimping(), IsZoomAimingMode());
 
-	//���� �������� ������� ��� �������� � ��������
 	if(this==Level().CurrentControlEntity() && !g_dedicated_server )
 	{
 		if(conditions().IsLimping() && g_Alive())
 		{
-			if(!m_HeavyBreathSnd._feedback())
+			if(!m_HeavyBreathSnd.IsPlaying())
 			{
-				m_HeavyBreathSnd.play_at_pos(this, Fvector().set(0,ACTOR_HEIGHT,0), sm_Looped | sm_2D);
-			}else{
-				m_HeavyBreathSnd.set_position(Fvector().set(0,ACTOR_HEIGHT,0));
+				m_HeavyBreathSnd.Play(this,true);
 			}
-		}else if(m_HeavyBreathSnd._feedback()){
-			m_HeavyBreathSnd.stop		();
 		}
-
-		float bs = conditions().BleedingSpeed();
-		if(bs>0.6f)
+		else if(m_HeavyBreathSnd.IsPlaying())
 		{
-			Fvector snd_pos;
-			snd_pos.set(0,ACTOR_HEIGHT,0);
-			if(!m_BloodSnd._feedback())
-				m_BloodSnd.play_at_pos(this, snd_pos, sm_Looped | sm_2D);
-			else
-				m_BloodSnd.set_position(snd_pos);
-
-			float v = bs+0.25f;
-
-			m_BloodSnd.set_volume	(v);
-		}else{
-			if(m_BloodSnd._feedback())
-				m_BloodSnd.stop();
+			m_HeavyBreathSnd.Stop();
 		}
 
-		if(!g_Alive()&&m_BloodSnd._feedback())
-				m_BloodSnd.stop();
+		const float BleedingSpeed = conditions().BleedingSpeed();
+		if(BleedingSpeed>0.6f&&!g_Alive())
+		{
+			if(!m_HeavyBreathSnd.IsPlaying()){
+
+				m_BloodSnd.Play(this,true);
+			}
+
+			if(m_BloodSnd)m_BloodSnd.SetVolume(BleedingSpeed+0.25f);
+		}
+		else  if(m_BloodSnd.IsPlaying())
+		{
+			m_BloodSnd.Stop();
+		}
 	}
 	
-	//���� � ������ HUD, �� ���� ������ ������ �� ��������
 	if(!character_physics_support()->IsRemoved()&&renderable.visual)
 	{
 		renderable.visual->SetOwnerNoSee(HUDview	());
 	}
-	//��� ����� ����� ����� �����
 	collide::rq_result& RQ = HUD().GetCurrentRayQuery();
 	
 

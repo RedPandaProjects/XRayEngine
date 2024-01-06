@@ -157,8 +157,8 @@ void CPseudoGigant::Load(LPCSTR section)
 	// --------------------------------------------------------------------------------
 	
 
-	::Sound->create(m_sound_threaten_hit,pSettings->r_string(section,"sound_threaten_hit"),		st_Effect,SOUND_TYPE_WORLD);
-	::Sound->create(m_sound_start_threaten,pSettings->r_string(section,"sound_threaten_start"), st_Effect,SOUND_TYPE_MONSTER_ATTACKING);
+	m_sound_threaten_hit.Create(pSettings->r_string(section,"sound_threaten_hit"),SOUND_TYPE_WORLD);
+	m_sound_start_threaten.Create(pSettings->r_string(section,"sound_threaten_start"), SOUND_TYPE_MONSTER_ATTACKING);
 
 	m_kick_damage			= pSettings->r_float(section,"HugeKick_Damage");
 	m_kick_particles		= pSettings->r_string(section,"HugeKick_Particles");
@@ -230,14 +230,14 @@ bool CPseudoGigant::check_start_conditions(ControlCom::EControlType type)
 void CPseudoGigant::on_activate_control(ControlCom::EControlType type)
 {
 	if (type == ControlCom::eControlThreaten) {
-		m_sound_start_threaten.play_at_pos(this,get_head_position(this));
+		m_sound_start_threaten.Play(this,get_head_position(this));
 		m_time_next_threaten = time() + Random.randI(m_threaten_delay_min,m_threaten_delay_max);
 	}
 }
 
 void CPseudoGigant::on_threaten_execute()
 {
-	// разбросить объекты
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	m_nearest.clear		();
 	Level().ObjectSpace.GetNearest	(m_nearest,Position(), 15.f, NULL); 
 	for (u32 i=0;i<m_nearest.size();i++) {
@@ -253,13 +253,13 @@ void CPseudoGigant::on_threaten_execute()
 		obj->m_pPhysicsShell->applyImpulse(dir,20 * obj->m_pPhysicsShell->getMass());
 	}
 
-	// играть звук
+	// РёРіСЂР°С‚СЊ Р·РІСѓРє
 	Fvector		pos;
 	pos.set		(Position());
 	pos.y		+= 0.1f;
-	m_sound_threaten_hit.play_at_pos(this,pos);
+	m_sound_threaten_hit.Play(this,pos);
 
-	// играть партиклы
+	// РёРіСЂР°С‚СЊ РїР°СЂС‚РёРєР»С‹
 	PlayParticles(m_kick_particles, pos, Direction());
 	
 	CActor *pA = const_cast<CActor *>(smart_cast<const CActor *>(EnemyMan.get_enemy()));
@@ -271,11 +271,11 @@ void CPseudoGigant::on_threaten_execute()
 	hit_value		= m_kick_damage - m_kick_damage * dist_to_enemy / m_threaten_dist_max;
 	clamp			(hit_value,0.f,1.f);
 
-	// запустить эффектор
+	// Р·Р°РїСѓСЃС‚РёС‚СЊ СЌС„С„РµРєС‚РѕСЂ
 	Actor()->Cameras().AddCamEffector(xr_new<CMonsterEffectorHit>(m_threaten_effector.ce_time,m_threaten_effector.ce_amplitude * hit_value,m_threaten_effector.ce_period_number,m_threaten_effector.ce_power * hit_value));
 	Actor()->Cameras().AddPPEffector(xr_new<CMonsterEffector>(m_threaten_effector.ppi, m_threaten_effector.time, m_threaten_effector.time_attack, m_threaten_effector.time_release, hit_value));
 
-	// развернуть камеру
+	// СЂР°Р·РІРµСЂРЅСѓС‚СЊ РєР°РјРµСЂСѓ
 	if (pA->cam_Active()) {
 		pA->cam_Active()->Move(Random.randI(2) ? kRIGHT : kLEFT, Random.randF(0.3f * hit_value)); 
 		pA->cam_Active()->Move(Random.randI(2) ? kUP	: kDOWN, Random.randF(0.3f * hit_value)); 
@@ -283,7 +283,7 @@ void CPseudoGigant::on_threaten_execute()
 
 	Actor()->lock_accel_for	(m_time_kick_actor_slow_down);
 	
-	// Нанести хит
+	// РќР°РЅРµСЃС‚Рё С…РёС‚
 	NET_Packet	l_P;
 	SHit		HS;
 

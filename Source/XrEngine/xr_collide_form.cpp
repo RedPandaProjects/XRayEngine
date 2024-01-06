@@ -3,7 +3,6 @@
 #include "xr_collide_form.h"
 #include "xr_object.h"
 #include "../xrcdb/xr_area.h"
-#include "XRayEngineInterface.h"
 #include "xrLevel.h"
 #include "fmesh.h"
 #include "../xrCDB/frustum.h"

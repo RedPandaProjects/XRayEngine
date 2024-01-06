@@ -62,7 +62,7 @@ protected:
 								eInvItemUse,
 								eInvSndMax};
 
-	ref_sound					sounds					[eInvSndMax];
+	FRBMKSoundSourceRef 					sounds					[eInvSndMax];
 	void						PlaySnd					(eInventorySndAction a);
 
 	CUIStatic					UIBeltSlots;
@@ -110,7 +110,7 @@ protected:
 
 	CUIPropertiesBox			UIPropertiesBox;
 	
-	//информация о персонаже
+	//РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РїРµСЂСЃРѕРЅР°Р¶Рµ
 	CUIOutfitInfo				UIOutfitInfo;
 	CUIItemInfo					UIItemInfo;
 

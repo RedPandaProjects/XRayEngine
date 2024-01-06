@@ -8,8 +8,6 @@
 #include "game_cl_artefacthunt.h"
 #include "game_cl_single.h"
 #include "MainMenu.h"
-#include "../XrEngine/XRayEngineInterface.h"
-
 
 xrServer::EConnect xrServer::Connect(shared_str &session_name)
 {

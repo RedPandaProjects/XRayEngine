@@ -5393,9 +5393,6 @@
     <ProjectReference Include="..\XrPhysics\XrPhysics.vcxproj">
       <Project>{3d3cc439-aabc-4565-99c8-9c53f425380c}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\XrSound\XrSound.vcxproj">
-      <Project>{57601b62-902a-4ec8-bcc7-b6a2e30b0676}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\XrXMLParser\XrXMLParser.vcxproj">
       <Project>{39abb344-2136-46c3-814d-8e80bc59a08e}</Project>
     </ProjectReference>

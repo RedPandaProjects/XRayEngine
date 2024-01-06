@@ -98,10 +98,7 @@ CCustomMonster::~CCustomMonster	()
 	xr_delete					(m_memory_manager);
 	xr_delete					(m_movement_manager);
 	xr_delete					(m_sound_player);
-	if (g_pGameLevel)
-	{
-		g_pGameLevel->SoundEvent_OnDestDestroy(this);
-	}
+	g_Engine->GetSoundManager()->Destroyed(CastToSoundActorListener());
 #ifdef DEBUG
 	Msg							("dumping client spawn manager stuff for object with id %d",ID());
 	if(!g_dedicated_server)
@@ -546,9 +543,9 @@ void CCustomMonster::update_range_fov	(float &new_range, float &new_fov, float s
 {
 	const float	standard_far_plane			= eye_range;
 
-	float	current_fog_density				= GamePersistent().Environment().CurrentEnv->fog_density;
+	float	current_fog_density				= g_Engine->GetEnvironmentCheck()->GetFogDensity();
 	// 0=no_fog, 1=full_fog, >1 = super-fog
-	float	current_far_plane				= GamePersistent().Environment().CurrentEnv->far_plane;
+	float	current_far_plane				= g_Engine->GetEnvironmentCheck()->GetFogPlane();
 	// 300=standart, 50=super-fog
 
 	new_fov									= start_fov;
@@ -856,11 +853,11 @@ float CCustomMonster::feel_vision_mtl_transp(CObject* O, u32 element)
 	return	(memory().visual().feel_vision_mtl_transp(O,element));
 }
 
-void CCustomMonster::feel_sound_new	(CObject* who, int type, CSound_UserDataPtr user_data, const Fvector &position, float power)
+void CCustomMonster::ListenSound(CObject* InSourceActor, s32 SoundFlags,const Fvector& InPosition, float InnPower, CSound_UserDataPtr UserData)
 {
 	if (getDestroy())
 		return;
-	memory().sound().feel_sound_new(who,type,user_data,position,power);
+	memory().sound().ListenSound(InSourceActor,SoundFlags,InPosition,InnPower,UserData);
 }
 
 bool CCustomMonster::useful			(const CItemManager *manager, const CGameObject *object) const

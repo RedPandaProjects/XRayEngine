@@ -51,18 +51,18 @@ public:
 		CSound_UserDataPtr	m_data;
 	};
 
-	struct CSoundCollection : public CRandom32 {
-		xr_vector<ref_sound*>					m_sounds;
+	struct CSoundCollection : public CRandom32
+	{
+		xr_vector<FRBMKSoundSourceRef>			m_sounds;
 		u32										m_last_sound_id;
 
 							CSoundCollection	(const CSoundCollectionParams &params);
 							~CSoundCollection	();
-		IC	ref_sound		*add				(ESoundTypes type, LPCSTR name) const;
-			const ref_sound	&random				(const u32 &id);
+			const FRBMKSoundSourceRef 	&random				(const u32 &id);
 	};
 
 	struct CSoundSingle : public CSoundParams {
-		ref_sound								*m_sound;
+		FRBMKSoundSourceRef 					m_sound;
 		u32										m_start_time;
 		u32										m_stop_time;
 		bool									m_started;
@@ -75,16 +75,17 @@ public:
 
 				void	destroy					()
 		{
-			VERIFY								(m_sound);
-			if (m_sound->_feedback())
-				m_sound->stop					();
+			VERIFY(m_sound.IsValid());
+			if (m_sound.IsPlaying())
+				m_sound.Stop					();
 
-			xr_delete							(m_sound);
+			m_sound.Reset();
 		}
 
-				void	play_at_pos				(CObject *object, const Fvector &position)
+		void	play_at_pos				(CObject *object, const Fvector &position)
 		{
-			m_sound->play_at_pos				(object,position);
+			VERIFY(m_sound.IsValid());
+			m_sound.Play(object,position);
 			m_started							= true;
 		}
 
@@ -103,15 +104,8 @@ public:
 
 		bool			operator()				(CSoundSingle &sound)
 		{
-			VERIFY		(sound.m_sound);
-			bool		result = 
-				(sound.m_synchro_mask & m_sound_mask) || 
-				(
-					!sound.m_sound->_feedback() && 
-					(sound.m_stop_time <= Device->dwTimeGlobal)
-				);
-			if (result)
-				sound.destroy					();
+			bool		result = (sound.m_synchro_mask & m_sound_mask) || (!sound.m_sound.IsPlaying() && (sound.m_stop_time <= Device->dwTimeGlobal));
+			if (result){sound.destroy();}
 			return								(result);
 		}
 	};

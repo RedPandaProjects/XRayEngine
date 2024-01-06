@@ -16,27 +16,20 @@ using namespace luabind;
 void CScriptSound::script_register(lua_State *L)
 {
 	module(L)
-	[
-		class_<CSound_params>("sound_params")
-			.def_readwrite("position",			&CSound_params::position)
-			.def_readwrite("volume",			&CSound_params::volume)
-			.def_readwrite("frequency",			&CSound_params::freq)
-			.def_readwrite("min_distance",		&CSound_params::min_distance)
-			.def_readwrite("max_distance",		&CSound_params::max_distance),
-			
+	[			
 		class_<CScriptSound>("sound_object")
 			.enum_("sound_play_type")
 			[
-				value("looped",					sm_Looped),
-				value("s2d",					sm_2D),
+				value("looped",					1),
+				value("s2d",					2),
 				value("s3d",					0)
 			]
-			.property("frequency",				&CScriptSound::GetFrequency,	&CScriptSound::SetFrequency)
+			//.property("frequency",				&CScriptSound::GetFrequency,	&CScriptSound::SetFrequency)
 			.property("min_distance",			&CScriptSound::GetMinDistance,	&CScriptSound::SetMinDistance)
 			.property("max_distance",			&CScriptSound::GetMaxDistance,	&CScriptSound::SetMaxDistance)
 			.property("volume",					&CScriptSound::GetVolume,		&CScriptSound::SetVolume)
-			.def(								constructor<LPCSTR>())
-			.def(								constructor<LPCSTR,ESoundTypes>())
+			.def(									constructor<LPCSTR>())
+			.def(									constructor<LPCSTR,ESoundTypes>())
 			.def("get_position",				&CScriptSound::GetPosition)
 			.def("set_position",				&CScriptSound::SetPosition)
 			.def("play",						(void (CScriptSound::*)(CScriptGameObject*))(&CScriptSound::Play))

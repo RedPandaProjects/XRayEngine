@@ -7,8 +7,7 @@
 class CController;
 
 struct SAuraSound {
-	ref_sound	left;
-	ref_sound	right;
+	FRBMKSoundSourceRef 	Sound;
 };
 
 
@@ -20,11 +19,10 @@ class CPPEffectorControllerAura : public CPPEffectorCustom {
 	u32				m_time_state_started;
 	u32				m_time_to_fade;
 	
-	ref_sound		m_snd_left;
-	ref_sound		m_snd_right;
+	FRBMKSoundSourceRef 		m_snd;
 
 public:
-					CPPEffectorControllerAura	(const SPPInfo &ppi, u32 time_to_fade, const ref_sound &snd_left, const ref_sound &snd_right);
+					CPPEffectorControllerAura	(const SPPInfo &ppi, u32 time_to_fade, const FRBMKSoundSourceRef  &snd);
 	virtual BOOL	update						();
 	void			switch_off					();
 };

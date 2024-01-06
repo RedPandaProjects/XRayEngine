@@ -29,7 +29,7 @@
 #include "../../../ActorEffector.h"
 #include "../../../../XrEngine/CameraBase.h"
 
-void CBaseMonster::feel_sound_new(CObject* who, int eType, CSound_UserDataPtr user_data, const Fvector &Position, float power)
+void CBaseMonster::ListenSound				(CObject* who, s32 eType,const Fvector& Position, float power, CSound_UserDataPtr user_data)
 {
 	if (!g_Alive())		return;
 
@@ -223,7 +223,7 @@ void CBaseMonster::HitSignal(float amount, Fvector& vLocalDir, CObject* who, s16
 {
 	if (!g_Alive()) return;
 	
-	feel_sound_new(who,SOUND_TYPE_WEAPON_SHOOTING,0,who->Position(),1.f);
+	ListenSound(who,SOUND_TYPE_WEAPON_SHOOTING,who->Position(),1.f,nullptr);
 	if (g_Alive()) sound().play(MonsterSound::eMonsterSoundTakeDamage);
 
 	if (element < 0) return;

@@ -237,15 +237,14 @@ void CBulletManager::FireShotmark (SBullet* bullet, const Fvector& vDir, const F
 		}
 	}
 
-	ref_sound* pSound = (!mtl_pair || mtl_pair->CollideSounds.empty())?
-						NULL:&mtl_pair->CollideSounds[::Random.randI(0,mtl_pair->CollideSounds.size())];
+	shared_str pSound = (!mtl_pair || mtl_pair->CollideSoundsNames.empty())?nullptr:mtl_pair->CollideSoundsNames[::Random.randI(0,mtl_pair->CollideSoundsNames.size())];
 
 	//��������� ����
-	if(pSound && ShowMark)
+	if(g_Engine->GetSoundManager()->ExistSoundWave(pSound.c_str()) && ShowMark)
 	{
 		CObject* O			= Level().Objects.net_Find(bullet->parent_id );
-		bullet->m_mtl_snd	= *pSound;
-		bullet->m_mtl_snd.play_at_pos(O, vEnd, 0);
+		bullet->m_mtl_snd.Create(pSound.c_str());
+		bullet->m_mtl_snd.Play(O, vEnd);
 	}
 
 	LPCSTR ps_name = (!mtl_pair || mtl_pair->CollideParticles.empty())?

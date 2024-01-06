@@ -44,7 +44,6 @@
 #include "game_cl_base_weapon_usage_statistic.h"
 #include "clsid_game.h"
 #include "../xrengine/xr_collide_form.h"
-#include "../XrEngine/XRayEngineInterface.h"
 #ifdef DEBUG
 #	include "debug_renderer.h"
 #endif
@@ -653,7 +652,7 @@ BOOL CActor::net_Spawn		(CSE_Abstract* DC)
 
 		
 		//���������� ���� �������� �������
-		m_HeavyBreathSnd.stop();
+		m_HeavyBreathSnd.Stop();
 	}
 	
 	typedef CClientSpawnManager::CALLBACK_TYPE	CALLBACK_TYPE;
@@ -696,7 +695,7 @@ BOOL CActor::net_Spawn		(CSE_Abstract* DC)
 
 void CActor::net_Destroy	()
 {
-	if (UnrealProxy && UnrealProxy->QueryInterface(EXRayUnrealInterfaceType::StalkerPlayerCharacter))
+	if (UnrealProxy && UnrealProxy->QueryInterface(ERBMKUnrealInterfaceType::StalkerPlayerCharacter))
 	{
 		if (renderable.visual)
 		{

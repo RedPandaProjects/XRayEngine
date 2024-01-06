@@ -10,8 +10,7 @@
 
 IC	u32	CScriptSound::Length				()
 {
-	VERIFY					(m_sound._handle());
-	return					(m_sound._handle()->length_ms());
+	return static_cast<u32>(m_sound.GetDuration() * 1000.f);
 }
 
 IC	void CScriptSound::Play					(CScriptGameObject *object)
@@ -36,84 +35,62 @@ IC	void CScriptSound::PlayAtPos			(CScriptGameObject *object, const Fvector &pos
 
 IC	void CScriptSound::SetMinDistance		(const float fMinDistance)
 {
-	VERIFY				(m_sound._handle());
-	m_sound.set_range(fMinDistance,GetMaxDistance());
+	VERIFY				(m_sound.IsValid());
+	m_sound.SetRange(fMinDistance,GetMaxDistance());
 }
 
 IC	void CScriptSound::SetMaxDistance		(const float fMaxDistance)
 {
-	VERIFY				(m_sound._handle());
-	m_sound.set_range(GetMinDistance(),fMaxDistance);
+	VERIFY				(m_sound.IsValid());
+	m_sound.SetRange(GetMinDistance(),fMaxDistance);
 }
 
-IC	const float	CScriptSound::GetFrequency	() const
-{
-	VERIFY				(m_sound._handle());
-	return				(m_sound.get_params()->freq);
-}
 
 IC	const float CScriptSound::GetMinDistance() const
 {
-	VERIFY				(m_sound._handle());
-	return				(m_sound.get_params()->min_distance);
+	VERIFY				(m_sound.IsValid());
+	return				(m_sound.GetMinDistance());
 }
 
 IC	const float CScriptSound::GetMaxDistance() const
 {
-	VERIFY				(m_sound._handle());
-	return				(m_sound.get_params()->max_distance);
+	VERIFY				(m_sound.IsValid());
+	return				(m_sound.GetMaxDistance());
 }
 
 IC	const float	CScriptSound::GetVolume		() const
 {
-	VERIFY				(m_sound._handle());
-	return				(m_sound.get_params()->volume);
+	VERIFY				(m_sound.IsValid());
+	return				(m_sound.GetVolume());
 }
 
 IC	bool CScriptSound::IsPlaying			() const
 {
-	VERIFY				(m_sound._handle());
-	return				(!!m_sound._feedback());
+	VERIFY				(m_sound.IsValid());
+	return				m_sound.IsPlaying();
 }
 
 IC	void CScriptSound::Stop					()
 {
-	VERIFY				(m_sound._handle());
-	m_sound.stop		();
+	VERIFY(m_sound.IsValid());
+	m_sound.Stop();
 }
 
 IC	void CScriptSound::StopDeffered			()
 {
-	VERIFY				(m_sound._handle());
-	m_sound.stop_deffered();
+	VERIFY(m_sound.IsValid());
+	m_sound.StopWithFade();
 }
 
 IC	void CScriptSound::SetPosition			(const Fvector &position)
 {
-	VERIFY				(m_sound._handle());
-	m_sound.set_position(position);
-}
-
-IC	void CScriptSound::SetFrequency			(float frequency)
-{
-	VERIFY				(m_sound._handle());
-	m_sound.set_frequency(frequency);
+	VERIFY(m_sound.IsValid());
+	m_sound.SetPosition(position);
 }
 
 IC	void CScriptSound::SetVolume			(float volume)
 {
-	VERIFY				(m_sound._handle());
-	m_sound.set_volume	(volume);
+	VERIFY(m_sound.IsValid());
+	m_sound.SetVolume	(volume);
 }
 
-IC	const CSound_params *CScriptSound::GetParams	()
-{
-	VERIFY				(m_sound._handle());
-	return				(m_sound.get_params());
-}
-
-IC	void CScriptSound::SetParams			(CSound_params *sound_params)
-{
-	VERIFY				(m_sound._handle());
-	m_sound.set_params	(sound_params);
-}

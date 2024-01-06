@@ -12,7 +12,6 @@
 #include "game_base.h"
 #include "ai_space.h"
 #include "game_graph.h"
-#include "../XrEngine/XRayEngineInterface.h"
 
 #pragma warning(push)
 #pragma warning(disable:4995)

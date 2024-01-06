@@ -1,10 +1,6 @@
 #pragma once
 
 #include "gametype_chooser.h"
-#if  !__UNREAL__
-#include "Environment.h"
-#include "EnvironmentSOC.h"
-#endif
 #include "IGame_ObjectPool.h"
 #include "EngineAPI.h"
 
@@ -64,10 +60,6 @@ public:
 	virtual void					Start				(LPCSTR op);
 	virtual void					Disconnect			();
 	IGame_ObjectPool				ObjectPool;
-	class IEnvironment*					pEnvironment;
-	IC class IEnvironment&			Environment()		{return *pEnvironment;};
-	class CEnvironment*			EnvironmentAsCOP();
-	class CEnvironmentSOC*			EnvironmentAsSOC();
 
 	IMainMenu*						m_pMainMenu;	
 

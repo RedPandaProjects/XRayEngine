@@ -217,9 +217,9 @@ protected:
 //////////////////////////////////////////////////
 
 // sound, light, particles...
-	ref_sound						m_engineSound;
-	ref_sound						m_brokenSound;
-//	ref_sound						m_explodeSound;
+	FRBMKSoundSourceRef						m_engineSound;
+	FRBMKSoundSourceRef						m_brokenSound;
+//	FRBMKSoundSourceContainer 						m_explodeSound;
 	ref_light						m_light_render;
 	CLAItem*						m_lanim;
 	u16								m_light_bone, m_smoke_bone;

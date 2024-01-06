@@ -112,7 +112,7 @@ void CHudItem::Show()
 	object().Visual()->SetOwnerNoSee(true);
 	if (smart_cast<CActor*>(object().H_Parent())&&m_pHUD->Visual())
 	{
-		if (XRayUnrealPlayerCharacterInterface* PlayerCharacter = reinterpret_cast<XRayUnrealPlayerCharacterInterface* >(ParentActor->UnrealProxy->QueryInterface(EXRayUnrealInterfaceType::StalkerPlayerCharacter)))
+		if (IRBMKUnrealPlayerCharacter* PlayerCharacter = reinterpret_cast<IRBMKUnrealPlayerCharacter* >(ParentActor->UnrealProxy->QueryInterface(ERBMKUnrealInterfaceType::StalkerPlayerCharacter)))
 		{
 
 			m_pHUD->Visual()->AttachTo(PlayerCharacter->GetCameraComponent(),"");

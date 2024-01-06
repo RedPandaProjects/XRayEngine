@@ -13,6 +13,7 @@
 #include "script_callback_ex.h"
 #include "script_game_object.h"
 #include "PhysicsShell.h"
+#include "../XrEngine/Interfaces/Core/RBMKEngine.h"
 #ifdef DEBUG
 #include "PHWorld.h"
 extern CPHWorld			*ph_world;
@@ -61,7 +62,7 @@ BOOL CDestroyablePhysicsObject::net_Spawn(CSE_Abstract* DC)
 	if(ini){	
 		if(ini->section_exist("immunities"))		CHitImmunity::LoadImmunities("immunities",ini);
 		CPHCollisionDamageReceiver::Init();
-		if(ini->section_exist("sound"))				m_destroy_sound.create(ini->r_string("sound","break_sound"),st_Effect,sg_SourceType);
+		if(ini->section_exist("sound"))				m_destroy_sound = g_Engine->GetSoundManager()->CreateSource(ini->r_string("sound","break_sound"));
 		if(ini->section_exist("particles"))			m_destroy_particles=ini->r_string("particles","destroy_particles");
 	}
 	CParticlesPlayer::LoadParticles(K);
@@ -100,9 +101,9 @@ void CDestroyablePhysicsObject::Destroy()
 	const CGameObject *who_object = smart_cast<const CGameObject*>(FatalHit().initiator());
 	callback(GameObject::eDeath)(lua_game_object(),who_object  ? who_object : 0);
 	CPHDestroyable::Destroy(ID(),"physic_destroyable_object");
-	if(m_destroy_sound._handle())
+	if(m_destroy_sound.IsPlaying())
 	{
-		m_destroy_sound.play_at_pos(this,Position());
+		m_destroy_sound.Play(this,Position());
 	}
 	if(*m_destroy_particles)
 	{		
@@ -146,7 +147,7 @@ void CDestroyablePhysicsObject::shedule_Update(u32 dt)
 
 bool CDestroyablePhysicsObject::CanRemoveObject()
 {
-	return !CParticlesPlayer::IsPlaying()&& !m_destroy_sound._feedback();//&& sound!
+	return !CParticlesPlayer::IsPlaying()&& !m_destroy_sound.IsPlaying();//&& sound!
 }
 DLL_Pure	*CDestroyablePhysicsObject::_construct()
 {

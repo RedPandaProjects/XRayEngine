@@ -1264,7 +1264,8 @@ void CActor::shedule_Update	(u32 DT)
 	if(this==Level().CurrentControlEntity() && !g_dedicated_server )
 	{
 		if(conditions().IsLimping() && g_Alive() && !psActorFlags.test(AF_GODMODE_RT)){
-			if(!m_HeavyBreathSnd._feedback()){
+			if(!m_HeavyBreathSnd._feedback())
+			{
 				m_HeavyBreathSnd.play_at_pos(this, Fvector().set(0,ACTOR_HEIGHT,0), sm_Looped | sm_2D);
 			}else{
 				m_HeavyBreathSnd.set_position(Fvector().set(0,ACTOR_HEIGHT,0));

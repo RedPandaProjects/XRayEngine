@@ -24,7 +24,7 @@ void CPolterFlame::load(LPCSTR section)
 {
 	inherited::load(section);
 
-	m_sound.create		(pSettings->r_string(section,"flame_sound"), st_Effect,SOUND_TYPE_WORLD);
+	m_sound.Create		(pSettings->r_string(section,"flame_sound"),SOUND_TYPE_WORLD);
 		
 	m_particles_prepare	= pSettings->r_string(section,"flame_particles_prepare");
 	m_particles_fire	= pSettings->r_string(section,"flame_particles_fire");
@@ -72,7 +72,7 @@ void CPolterFlame::load(LPCSTR section)
 	m_scan_effector_time_attack		= pSettings->r_float(ppi_section,"time_attack");
 	m_scan_effector_time_release	= pSettings->r_float(ppi_section,"time_release");
 
-	m_scan_sound.create		(pSettings->r_string(section,"flame_scan_sound"), st_Effect,SOUND_TYPE_WORLD);
+	m_scan_sound.Create		(pSettings->r_string(section,"flame_scan_sound"),SOUND_TYPE_WORLD);
 	//-----------------------------------------------------------------------------------------
 
 	m_state_scanning	= false;
@@ -92,8 +92,8 @@ void CPolterFlame::create_flame(const CObject *target_object)
 	element->position				= position;
 	element->target_object			= target_object;
 	element->time_started			= time();
-	element->sound.clone			(m_sound, st_Effect,SOUND_TYPE_WORLD);
-	element->sound.play_at_pos		(m_object,element->position);
+	element->sound.Dublicate		(m_sound, SOUND_TYPE_WORLD);
+	element->sound.Play			(m_object,element->position);
 	element->particles_object		= 0;
 	element->time_last_hit			= 0;
 
@@ -159,7 +159,7 @@ void CPolterFlame::update_schedule()
 
 					// ������ ����
 					//m_scan_sound.play_at_pos(m_object, get_head_position(Actor()),sm_2D);
-					::Sound->play_at_pos(m_scan_sound, 0, Actor()->Position());
+					m_scan_sound.Play(nullptr, Actor()->Position());
 
 					// �����������
 					Actor()->Cameras().AddPPEffector(xr_new<CMonsterEffector>(m_scan_effector_info, m_scan_effector_time, m_scan_effector_time_attack, m_scan_effector_time_release));
@@ -169,7 +169,7 @@ void CPolterFlame::update_schedule()
 		} 
 		// check stop of scanning (it currently scans)
 		else {
-			if (!m_scan_sound._feedback()) {
+			if (!m_scan_sound.IsPlaying()) {
 				// stop here
 				m_state_scanning = false;
 				
@@ -267,7 +267,7 @@ void CPolterFlame::on_destroy()
 
 	// ������ �� ���� �������� � ��������� �� ��� �����
 	for ( ;I != E; ++I) {
-		if ((*I)->sound._feedback()) (*I)->sound.stop();
+		if ((*I)->sound.IsPlaying()) (*I)->sound.Stop();
 		if ((*I)->particles_object) CParticlesObject::Destroy((*I)->particles_object);
 
 		xr_delete((*I));
@@ -275,13 +275,13 @@ void CPolterFlame::on_destroy()
 	
 	m_flames.clear();
 
-	if (m_scan_sound._feedback()) m_scan_sound.stop();
+	if (m_scan_sound.IsPlaying()) m_scan_sound.Stop();
 }
 
 void CPolterFlame::on_die()
 {
 	inherited::on_die();
-	if (m_scan_sound._feedback()) m_scan_sound.stop();
+	if (m_scan_sound.IsPlaying()) m_scan_sound.Stop();
 }
 
 

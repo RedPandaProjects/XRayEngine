@@ -11,7 +11,7 @@ class game_cl_ArtefactHunt :public game_cl_TeamDeathmatch
 	shared_str							m_Eff_Af_Disappear;
 	typedef game_cl_TeamDeathmatch inherited;
 protected:
-//	ref_sound							pMessageSounds[8];
+//	FRBMKSoundSourceContainer 							pMessageSounds[8];
 
 protected:
 	virtual const shared_str			GetBaseCostSect			() {return "artefacthunt_base_cost";}

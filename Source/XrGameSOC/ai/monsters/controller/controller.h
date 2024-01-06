@@ -13,10 +13,10 @@ class CController : public CBaseMonster {
 	typedef		CBaseMonster	inherited;
 
 	u8					m_max_controlled_number;
-	ref_sound			control_start_sound;		// ����, ������� �������� � ������ � ������
-	ref_sound			control_hit_sound;			// ����, ������� �������� � ������ � ������
+	FRBMKSoundSourceRef 			control_start_sound;		// ����, ������� �������� � ������ � ������
+	FRBMKSoundSourceRef 			control_hit_sound;			// ����, ������� �������� � ������ � ������
 
-	ref_sound			m_sound_hit_fx;
+	FRBMKSoundSourceRef 			m_sound_hit_fx;
 	SndShockEffector*	m_sndShockEffector;					
 
 	SAttackEffector		m_control_effector;
@@ -40,8 +40,7 @@ class CController : public CBaseMonster {
 	CControllerAura		*m_aura;
 	
 	struct SAuraSound {
-		ref_sound	left;
-		ref_sound	right;
+		FRBMKSoundSourceRef 	Sound;
 	} aura_sound;
 	SAuraSound		*current_aura_sound;
 	
@@ -55,17 +54,11 @@ public:
 public:	
 	CControllerPsyHit	*m_psy_hit;
 
-	ref_sound			m_sound_aura_left_channel;
-	ref_sound			m_sound_aura_right_channel;
-	ref_sound			m_sound_aura_hit_left_channel;
-	ref_sound			m_sound_aura_hit_right_channel;
+	FRBMKSoundSourceRef 			m_sound_tube_start;
+	FRBMKSoundSourceRef 			m_sound_tube_pull;
+	FRBMKSoundSourceRef 			m_sound_tube_hit;
 
-	ref_sound			m_sound_tube_start;
-	ref_sound			m_sound_tube_pull;
-	ref_sound			m_sound_tube_hit_left;
-	ref_sound			m_sound_tube_hit_right;
-
-	ref_sound			m_sound_tube_prepare;
+	FRBMKSoundSourceRef 			m_sound_tube_prepare;
 
 public:	
 	SVelocityParam		m_velocity_move_fwd;

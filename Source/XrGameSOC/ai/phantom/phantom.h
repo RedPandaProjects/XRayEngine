@@ -33,7 +33,7 @@ private:
 private:
 	struct SStateData{
 		shared_str		particles;
-		ref_sound		sound;
+		FRBMKSoundSourceRef 		sound;
 		MotionID		motion;
 	};
 	SStateData			m_state_data[stCount];

@@ -2,17 +2,15 @@
 
 #include "game_cl_base.h"
 #include "script_export_space.h"
-#include "game_cl_mp_snd_messages.h"
-#include "../XrSound/Sound.h"
 #include "ui/UISpeechMenu.h"
 #include "Spectator.h"
-
+#include "../XrEngine/Interfaces/Core/RBMKEngine.h"
 class CUISpeechMenu;
 class CUIMessageBoxEx;
 
 
 struct SND_Message{
-	ref_sound	pSound;
+	FRBMKSoundSourceRef 	pSound;
 	u32			priority;
 	u32			SoundID;
 	u32			LastStarted;
@@ -21,20 +19,19 @@ struct SND_Message{
 	{
 		SoundID = ID;
 		priority = prior;
-		pSound.create(name,st_Effect,sg_SourceType);
+		pSound = g_Engine->GetSoundManager()->CreateSource(name);
 		LastStarted = 0;
 	}
 	~SND_Message()
 	{
 		SoundID = 0;
 		priority = 0;
-		pSound.destroy();
 	}
 };
 
 struct cl_TeamStruct
 {
-	shared_str			caSection;		// имя секции комманды
+	shared_str			caSection;		// РёРјСЏ СЃРµРєС†РёРё РєРѕРјРјР°РЅРґС‹
 	//-----------------------------------
 	ui_shader			IndicatorShader;
 	ui_shader			InvincibleShader;
@@ -48,8 +45,8 @@ DEF_DEQUE(CL_TEAM_DATA_LIST, cl_TeamStruct);
 
 struct cl_Message_Sound
 {
-	ref_sound	mSound_Voice;
-	ref_sound	mSound_Radio;
+	FRBMKSoundSourceRef 	mSound_Voice;
+	FRBMKSoundSourceRef 	mSound_Radio;
 };
 
 DEF_VECTOR	(TEAMSOUND, cl_Message_Sound);

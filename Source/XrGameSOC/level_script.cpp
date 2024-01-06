@@ -144,22 +144,22 @@ CScriptGameObject *get_object_by_id(u32 id)
 
 LPCSTR get_weather	()
 {
-	return			(*g_pGamePersistent->Environment().GetWeather());
+	return			(*g_Engine->GetEnvironmentCheck()->GetWeather());
 }
 
 void set_weather	(LPCSTR weather_name, bool forced)
 {
-	return			(g_pGamePersistent->Environment().SetWeather(weather_name,forced));
+	return			(g_Engine->GetEnvironmentCheck()->SetWeather(weather_name,forced));
 }
 
 bool set_weather_fx	(LPCSTR weather_name)
 {
-	return			(g_pGamePersistent->Environment().SetWeatherFX(weather_name));
+	return			(g_Engine->GetEnvironmentCheck()->SetEffect(weather_name));
 }
 
 bool is_wfx_playing	()
 {
-	return			(g_pGamePersistent->Environment().IsWFXPlaying());
+	return			(g_Engine->GetEnvironmentCheck()->IsEffectPlaying());
 }
 
 void set_time_factor(float time_factor)
@@ -216,7 +216,8 @@ float high_cover_in_direction(u32 level_vertex_id, const Fvector &direction)
 
 float rain_factor()
 {
-	return			(g_pGamePersistent->Environment().CurrentEnv->rain_density);
+	
+	return			(g_Engine->GetEnvironmentCheck()->GetRainDensity());
 }
 
 u32	vertex_in_direction(u32 level_vertex_id, Fvector direction, float max_distance)
@@ -395,15 +396,7 @@ CPHWorld* physics_world()
 {
 	return	ph_world;
 }
-IEnvironment *environment()
-{
-	return		(g_pGamePersistent->pEnvironment);
-}
 
-IEnvDescriptorMixer *current_environment(IEnvironment *self)
-{
-	return		(self->CurrentEnv);
-}
 extern bool g_bDisableAllInput;
 void disable_input()
 {
@@ -429,14 +422,14 @@ void iterate_sounds					(LPCSTR prefix, u32 max_count, const CScriptCallbackEx<v
 	for (int j=0, N = _GetItemCount(prefix); j<N; ++j) {
 		string_path					fn, s;
 		_GetItem					(prefix,j,s);
-		if (FS.exist(fn,"$game_sounds$",s,".ogg"))
+		if (g_Engine->GetSoundManager()->ExistSoundWave(s))
 			callback				(prefix);
 
 		for (u32 i=0; i<max_count; ++i)
 		{
 			string_path					name;
 			sprintf_s					(name,"%s%d",s,i);
-			if (FS.exist(fn,"$game_sounds$",name,".ogg"))
+			if (g_Engine->GetSoundManager()->ExistSoundWave(name))
 				callback			(name);
 		}
 	}
@@ -485,13 +478,11 @@ void remove_cam_effector(int id)
 		
 float get_snd_volume()
 {
-	return psSoundVFactor;
+	return 1;
 }
 
 void set_snd_volume(float v)
 {
-	psSoundVFactor = v;
-	clamp(psSoundVFactor,0.0f,1.0f);
 }
 #include "actor_statistic_mgr.h"
 void add_actor_points(LPCSTR sect, LPCSTR detail_key, int cnt, int pts)
@@ -582,13 +573,6 @@ void g_change_community_goodwill(LPCSTR _community, int _entity_id, int val)
 
 void CLevel::script_register(lua_State *L)
 {
-	class_<IEnvDescriptorMixer>("CEnvDescriptor")
-		.def_readonly("fog_density",			&IEnvDescriptorMixer::fog_density)
-		.def_readonly("far_plane",				&IEnvDescriptorMixer::far_plane),
-
-	class_<IEnvironment>("CEnvironment")
-		.def("current",							current_environment);
-
 	module(L,"level")
 	[
 		// obsolete\deprecated
@@ -603,8 +587,6 @@ void CLevel::script_register(lua_State *L)
 		def("set_weather",						set_weather),
 		def("set_weather_fx",					set_weather_fx),
 		def("is_wfx_playing",					is_wfx_playing),
-
-		def("environment",						environment),
 		
 		def("set_time_factor",					set_time_factor),
 		def("get_time_factor",					get_time_factor),

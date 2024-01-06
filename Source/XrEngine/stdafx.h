@@ -43,7 +43,6 @@
 
 #include "../xrcdb/xrXRC.h"
 
-#include "../xrSound/sound.h"
 #include "XrISEAbstract.h"
 extern ENGINE_API CInifile *pGameIni;
 
@@ -68,4 +67,6 @@ extern ENGINE_API CInifile *pGameIni;
 #include "bone.h"
 #include "level_graph.h"
 #include "game_graph.h"
-#include "XRayUnrealProxyInterface.h"
+#include "Interfaces/Core/RBMKUnrealProxy.h"
+#include "Interfaces/Sound/RBMKSoundSource.h"
+#include "Interfaces/Core/RBMKEngine.h"

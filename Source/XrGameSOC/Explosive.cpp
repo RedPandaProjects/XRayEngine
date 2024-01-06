@@ -84,7 +84,6 @@ void CExplosive::LightDestroy()
 
 CExplosive::~CExplosive(void) 
 {
-	sndExplode.destroy		();
 }
 
 void CExplosive::Load(LPCSTR section) 
@@ -122,7 +121,7 @@ void CExplosive::Load(CInifile *ini,LPCSTR section)
 	m_fFragmentSpeed			= ini->r_float	(section,"fragment_speed"				);
 
 	LPCSTR	snd_name		= ini->r_string(section,"snd_explode");
-	sndExplode.create		(snd_name, st_Effect,m_eSoundExplode);
+	sndExplode.Create		(snd_name,m_eSoundExplode);
 
 	m_fExplodeDurationMax	= ini->r_float(section, "explode_duration");
 
@@ -331,7 +330,7 @@ void CExplosive::Explode()
 //	Msg("---------CExplosive Explode [%d] frame[%d]",cast_game_object()->ID(), Device->dwFrame);
 	OnBeforeExplosion();
 	//������ ���� ������
-	Sound->play_at_pos(sndExplode, 0, pos, false);
+	sndExplode.Play( nullptr, pos, false);
 	
 	//���������� �������
 

@@ -8,7 +8,6 @@
 #include "script_engine_space.h"
 #include "level.h"
 #include "game_cl_base.h"
-#include "../XrEngine/XRayEngineInterface.h"
 #include "../XrEngine/gamemtllib.h"
 #include "PhysicsCommon.h"
 #include "level_sounds.h"
@@ -79,7 +78,7 @@ BOOL CLevel::Load_GameSpecific_After()
 	//		Sounds_Random.reserve	(S.Data.size());
 	//		for (CInifile::SectCIt I=S.Data.begin(); S.Data.end()!=I; ++I) 
 	//		{
-	//			Sounds_Random.push_back	(ref_sound());
+	//			Sounds_Random.push_back	(FRBMKSoundSourceContainer ());
 	//			Sound->create			(Sounds_Random.back(),*I->first,st_Effect,sg_SourceType);
 	//		}
 	//		Sounds_Random_dwNextTime= Device->TimerAsync	()	+ 50000;

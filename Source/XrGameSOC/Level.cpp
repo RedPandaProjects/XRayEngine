@@ -1,7 +1,6 @@
 #include "pch_script.h"
 #include "../XrEngine/fdemorecord.h"
 #include "../XrEngine/fdemoplay.h"
-#include "../XrEngine/environment.h"
 #include "../XrEngine/igame_persistent.h"
 #include "ParticlesObject.h"
 #include "Level.h"
@@ -215,11 +214,10 @@ CLevel::~CLevel()
 
 	// Unload sounds
 	// unload prefetched sounds
-	sound_registry.clear		();
+	//sound_registry.clear		();
 
 	// unload static sounds
 	for (u32 i=0; i<static_Sounds.size(); ++i){
-		static_Sounds[i]->destroy();
 		xr_delete				(static_Sounds[i]);
 	}
 	static_Sounds.clear			();
@@ -296,17 +294,17 @@ void CLevel::GetLevelInfo( CServerInfo* si )
 
 void CLevel::PrefetchSound		(LPCSTR name)
 {
-	// preprocess sound name
-	string_path					tmp;
-	strcpy_s					(tmp,name);
-	xr_strlwr					(tmp);
-	if (strext(tmp))			*strext(tmp)=0;
-	shared_str	snd_name		= tmp;
-	// find in registry
-	SoundRegistryMapIt it		= sound_registry.find(snd_name);
-	// if find failed - preload sound
-	if (it==sound_registry.end())
-		sound_registry[snd_name].create(snd_name.c_str(),st_Effect,sg_SourceType);
+	//// preprocess sound name
+	//string_path					tmp;
+	//strcpy_s					(tmp,name);
+	//xr_strlwr					(tmp);
+	//if (strext(tmp))			*strext(tmp)=0;
+	//shared_str	snd_name		= tmp;
+	//// find in registry
+	//SoundRegistryMapIt it		= sound_registry.find(snd_name);
+	//// if find failed - preload sound
+	//if (it==sound_registry.end())
+	//	sound_registry[snd_name].create(snd_name.c_str(),st_Effect,sg_SourceType);
 }
 
 // Game interface ////////////////////////////////////////////////////
@@ -541,7 +539,7 @@ void CLevel::OnFrame	()
 	}
 	
 //	g_pGamePersistent->Environment().SetGameTime	(GetGameDayTimeSec(),GetGameTimeFactor());
-	g_pGamePersistent->Environment().SetGameTime	(GetEnvironmentGameDayTimeSec(),GetGameTimeFactor());
+	g_Engine->GetEnvironmentCheck()->SetGameTime	(GetEnvironmentGameDayTimeSec(),GetGameTimeFactor());
 
 	//Device->Statistic->cripting.Begin	();
 	if (!g_dedicated_server)

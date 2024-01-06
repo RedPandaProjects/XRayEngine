@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "igame_level.h"
-#include "XRayEngineInterface.h"
 
 #include "gamefont.h"
 #include "fDemoRecord.h"

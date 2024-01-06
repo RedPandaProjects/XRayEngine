@@ -1,4 +1,6 @@
 #include "pch_script.h"
+
+#include "ai_sounds.h"
 #include "UIGameTutorial.h"
 #include "UIWindow.h"
 #include "UIStatic.h"
@@ -13,6 +15,7 @@
 #include "UIInventoryWnd.h"
 #include "UITalkWnd.h"
 #include "UICarBodyWnd.h"
+#include "../../XrEngine/Interfaces/Core/RBMKEngine.h"
 
 
 //-----------------------------------------------------------------------------
@@ -24,7 +27,7 @@ CUISequenceSimpleItem::~CUISequenceSimpleItem()
 	SubItemVecIt _E			= m_subitems.end	();
 	for(;_I!=_E;++_I)		_I->Stop			();
 	m_subitems.clear		();
-	m_sound.stop			();
+	m_sound.Stop			();
 	delete_data				(m_UIWindow);
 }
 
@@ -50,9 +53,9 @@ void CUISequenceSimpleItem::Load(CUIXml* xml, int idx)
 	xml->SetLocalRoot		(xml->NavigateToNode("item",idx));
 	
 	LPCSTR m_snd_name		= xml->Read				("sound",0,""			);
-	if (m_snd_name&&m_snd_name[0]){
-		m_sound.create		(m_snd_name,st_Effect,sg_Undefined);	
-		VERIFY				(m_sound._handle());
+	if (m_snd_name&&m_snd_name[0])
+	{
+		m_sound = g_Engine->GetSoundManager()->CreateSource(m_snd_name,SOUND_TYPE_NO_SOUND);	
 	}
 	m_time_length			= xml->ReadFlt			("length_sec",0,0		);
 	m_desired_cursor_pos.x	= xml->ReadAttribFlt	("cursor_pos",0,"x",1024);
@@ -175,7 +178,7 @@ void CUISequenceSimpleItem::Start()
 	m_time_start							= float(Device->dwTimeContinual)/1000.0f;
 	m_owner->MainWnd()->AttachChild	(m_UIWindow);
 
-	if (m_sound._handle())		m_sound.play(NULL, sm_2D);
+	if (m_sound.IsValid())		m_sound.Play(nullptr);
 
 	if (g_pGameLevel){
 			bool bShowPda			= false;
@@ -219,7 +222,7 @@ bool CUISequenceSimpleItem::Stop			(bool bForce)
 		return false;
 
 	m_owner->MainWnd()->DetachChild	(m_UIWindow);
-	m_sound.stop				();
+	m_sound.Stop				();
 
 	if(m_flags.test(etiNeedPauseOn) && !m_flags.test(etiStoredPauseState))
 		Device->Pause			(FALSE, TRUE, FALSE, "simpleitem_stop");

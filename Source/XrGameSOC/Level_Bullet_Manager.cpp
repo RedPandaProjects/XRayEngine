@@ -119,8 +119,8 @@ void CBulletManager::Load		()
 	int cnt					= _GetItemCount(whine_sounds);
 	xr_string tmp;
 	for (int k=0; k<cnt; ++k){
-		m_WhineSounds.push_back	(ref_sound());
-		m_WhineSounds.back().create(_GetItem(whine_sounds,k,tmp),st_Effect,sg_SourceType);
+		m_WhineSounds.push_back	(FRBMKSoundSourceRef ());
+		m_WhineSounds.back().Create(_GetItem(whine_sounds,k,tmp));
 	}
 
 	LPCSTR explode_particles= pSettings->r_string(BULLET_MANAGER_SECTION, "explode_particles");
@@ -143,11 +143,11 @@ void CBulletManager::PlayExplodePS		(const Fmatrix& xf)
 void CBulletManager::PlayWhineSound(SBullet* bullet, CObject* object, const Fvector& pos)
 {
 	if (m_WhineSounds.empty())						return;
-	if (bullet->m_whine_snd._feedback() != NULL)	return;
+	if (!bullet->m_whine_snd.IsPlaying())	return;
 	if(bullet->hit_type!=ALife::eHitTypeFireWound ) return;
 
 	bullet->m_whine_snd								= m_WhineSounds[Random.randI(0, m_WhineSounds.size())];
-	bullet->m_whine_snd.play_at_pos					(object,pos);
+	bullet->m_whine_snd.Play					(object,pos);
 }
 
 void CBulletManager::Clear		()

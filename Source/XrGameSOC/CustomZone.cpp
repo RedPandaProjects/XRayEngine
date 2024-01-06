@@ -17,6 +17,7 @@
 #include "../XrEngine/Render/Kinematics.h"
 #include "zone_effector.h"
 #include "breakableobject.h"
+#include "../XrCDB/xrCDB.h"
 #include "../XrEngine/xr_collide_form.h"
 //////////////////////////////////////////////////////////////////////////
 #define PREFETCHED_ARTEFACTS_NUM 1	//���������� �������������� ������������ ����������
@@ -61,13 +62,6 @@ CCustomZone::CCustomZone(void)
 
 CCustomZone::~CCustomZone(void) 
 {	
-	m_idle_sound.destroy		();
-	m_accum_sound.destroy		();
-	m_awaking_sound.destroy		();
-	m_blowout_sound.destroy		();
-	m_hit_sound.destroy			();
-	m_entrance_sound.destroy	();
-	m_ArtefactBornSound.destroy	();
 
 	xr_delete					(m_effector);
 }
@@ -107,37 +101,37 @@ void CCustomZone::Load(LPCSTR section)
 	if(pSettings->line_exist(section,"idle_sound")) 
 	{
 		sound_str = pSettings->r_string(section,"idle_sound");
-		m_idle_sound.create(sound_str, st_Effect,sg_SourceType);
+		m_idle_sound.Create(sound_str);
 	}
 	
 	if(pSettings->line_exist(section,"accum_sound")) 
 	{
 		sound_str = pSettings->r_string(section,"accum_sound");
-		m_accum_sound.create(sound_str, st_Effect,sg_SourceType);
+		m_accum_sound.Create(sound_str);
 	}
 	if(pSettings->line_exist(section,"awake_sound")) 
 	{
 		sound_str = pSettings->r_string(section,"awake_sound");
-		m_awaking_sound.create(sound_str, st_Effect,sg_SourceType);
+		m_awaking_sound.Create(sound_str);
 	}
 	
 	if(pSettings->line_exist(section,"blowout_sound")) 
 	{
 		sound_str = pSettings->r_string(section,"blowout_sound");
-		m_blowout_sound.create(sound_str, st_Effect,sg_SourceType);
+		m_blowout_sound.Create(sound_str);
 	}
 	
 	
 	if(pSettings->line_exist(section,"hit_sound")) 
 	{
 		sound_str = pSettings->r_string(section,"hit_sound");
-		m_hit_sound.create(sound_str, st_Effect,sg_SourceType);
+		m_hit_sound.Create(sound_str);
 	}
 
 	if(pSettings->line_exist(section,"entrance_sound")) 
 	{
 		sound_str = pSettings->r_string(section,"entrance_sound");
-		m_entrance_sound.create(sound_str, st_Effect,sg_SourceType);
+		m_entrance_sound.Create(sound_str);
 	}
 
 
@@ -275,7 +269,7 @@ void CCustomZone::Load(LPCSTR section)
 		if(pSettings->line_exist(section,"artefact_born_sound"))
 		{
 			sound_str = pSettings->r_string(section,"artefact_born_sound");
-			m_ArtefactBornSound.create(sound_str, st_Effect,sg_SourceType);
+			m_ArtefactBornSound.Create(sound_str);
 		}
 
 		m_fThrowOutPower = pSettings->r_float (section,			"throw_out_power");
@@ -688,7 +682,7 @@ float CCustomZone::Power(float dist)
 
 void CCustomZone::PlayIdleParticles()
 {
-	m_idle_sound.play_at_pos(0, Position(), true);
+	m_idle_sound.Play(nullptr, Position(), true);
 
 	if(*m_sIdleParticles)
 	{
@@ -706,7 +700,7 @@ void CCustomZone::PlayIdleParticles()
 
 void CCustomZone::StopIdleParticles()
 {
-	m_idle_sound.stop();
+	m_idle_sound.Stop();
 
 	if(m_pIdleParticles)
 		m_pIdleParticles->Stop(FALSE);
@@ -766,7 +760,7 @@ void CCustomZone::PlayBlowoutParticles()
 
 void CCustomZone::PlayHitParticles(CGameObject* pObject)
 {
-	m_hit_sound.play_at_pos(0, pObject->Position());
+	m_hit_sound.Play(nullptr,pObject->Position());
 
 	shared_str particle_str = NULL;
 
@@ -796,7 +790,7 @@ void CCustomZone::PlayEntranceParticles(CGameObject* pObject)
 {
 	if (!IsEnabled())		return;
 
-	m_entrance_sound.play_at_pos(0, pObject->Position());
+	m_entrance_sound.Play(nullptr, pObject->Position());
 
 	shared_str particle_str = NULL;
 
@@ -849,7 +843,7 @@ void CCustomZone::PlayEntranceParticles(CGameObject* pObject)
 
 void CCustomZone::PlayBulletParticles(Fvector& pos)
 {
-	m_entrance_sound.play_at_pos(0, pos);
+	m_entrance_sound.Play(nullptr, pos);
 
 	if(!m_sEntranceParticlesSmall) return;
 	
@@ -1008,7 +1002,7 @@ void CCustomZone::UpdateBlowout()
 
 	if(m_dwBlowoutSoundTime>=(u32)m_iPreviousStateTime && 
 		m_dwBlowoutSoundTime<(u32)m_iStateTime)
-		m_blowout_sound.play_at_pos	(0, Position());
+		m_blowout_sound.Play	(nullptr, Position());
 
 	if(m_zone_flags.test(eBlowoutWind) && m_dwBlowoutWindTimeStart>=(u32)m_iPreviousStateTime && 
 		m_dwBlowoutWindTimeStart<(u32)m_iStateTime)
@@ -1242,7 +1236,7 @@ void CCustomZone::ThrowOutArtefact(CArtefact* pArtefact)
 		pParticles->Play();
 	}
 
-	m_ArtefactBornSound.play_at_pos(0, pArtefact->Position());
+	m_ArtefactBornSound.Play(nullptr, pArtefact->Position());
 
 	Fvector dir;
 	dir.random_dir();
@@ -1262,15 +1256,16 @@ void CCustomZone::StartWind()
 	if(m_fDistanceToCurEntity>WIND_RADIUS) return;
 
 	m_bBlowoutWindActive = true;
-	m_fStoreWindPower = g_pGamePersistent->Environment().wind_strength_factor;
-	clamp(g_pGamePersistent->Environment().wind_strength_factor, 0.f, 1.f);
+	
+	m_fStoreWindPower = g_Engine->GetEnvironmentCheck()->GetWindStrengthFactor();
+	clamp(m_fStoreWindPower, 0.f, 1.f);
 }
 
 void CCustomZone::StopWind()
 {
 	if(!m_bBlowoutWindActive) return;
 	m_bBlowoutWindActive = false;
-	g_pGamePersistent->Environment().wind_strength_factor = m_fStoreWindPower;
+	g_Engine->GetEnvironmentCheck()->SetWindStrengthFactor(m_fStoreWindPower);
 }
 
 void CCustomZone::UpdateWind()
@@ -1285,17 +1280,15 @@ void CCustomZone::UpdateWind()
 
 	if(m_dwBlowoutWindTimePeak > (u32)m_iStateTime)
 	{
-		g_pGamePersistent->Environment().wind_strength_factor = m_fBlowoutWindPowerMax + ( m_fStoreWindPower - m_fBlowoutWindPowerMax)*
+		g_Engine->GetEnvironmentCheck()->SetWindStrengthFactor(m_fBlowoutWindPowerMax + ( m_fStoreWindPower - m_fBlowoutWindPowerMax)*
 								float(m_dwBlowoutWindTimePeak - (u32)m_iStateTime)/
-								float(m_dwBlowoutWindTimePeak - m_dwBlowoutWindTimeStart);
-		clamp(g_pGamePersistent->Environment().wind_strength_factor, 0.f, 1.f);
+								float(m_dwBlowoutWindTimePeak - m_dwBlowoutWindTimeStart));
 	}
 	else
 	{
-		g_pGamePersistent->Environment().wind_strength_factor = m_fBlowoutWindPowerMax + (m_fStoreWindPower - m_fBlowoutWindPowerMax)*
+		g_Engine->GetEnvironmentCheck()->SetWindStrengthFactor( m_fBlowoutWindPowerMax + (m_fStoreWindPower - m_fBlowoutWindPowerMax)*
 			float((u32)m_iStateTime - m_dwBlowoutWindTimePeak)/
-			float(m_dwBlowoutWindTimeEnd - m_dwBlowoutWindTimePeak);
-		clamp(g_pGamePersistent->Environment().wind_strength_factor, 0.f, 1.f);
+			float(m_dwBlowoutWindTimeEnd - m_dwBlowoutWindTimePeak));
 	}
 }
 
@@ -1366,8 +1359,8 @@ void CCustomZone::PlayAccumParticles()
 		pParticles->Play();
 	}
 
-	if(m_accum_sound._handle())
-		m_accum_sound.play_at_pos	(0, Position());
+	if(m_accum_sound.IsValid())
+		m_accum_sound.Play	(nullptr, Position());
 }
 
 void CCustomZone::PlayAwakingParticles()
@@ -1379,8 +1372,8 @@ void CCustomZone::PlayAwakingParticles()
 		pParticles->Play();
 	}
 
-	if(m_awaking_sound._handle())
-		m_awaking_sound.play_at_pos	(0, Position());
+	if(m_awaking_sound.IsValid())
+		m_awaking_sound.Play	(nullptr, Position());
 }
 
 void CCustomZone::UpdateOnOffState	()

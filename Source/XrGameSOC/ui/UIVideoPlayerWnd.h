@@ -12,7 +12,7 @@ class CUIVideoPlayerWnd :public CUIDialogWnd, public CUIWndCallback
 	CUITabControl*	m_tabControl;
 	CUIStatic*		m_surface;
 protected:
-	ref_sound		m_sound;
+	FRBMKSoundSourceRef 		m_sound;
 	FactoryPtr<IUISequenceVideoItem>		m_texture;
 	shared_str		m_fn;
 	Flags8			m_flags;

@@ -393,11 +393,11 @@ void CUITalkWnd::PlaySnd(LPCSTR text)
 	
 	string_path	fn;
 	strconcat(sizeof(fn),fn, "characters_voice\\dialogs\\", text, ".ogg");
-	if(FS.exist("$game_sounds$",fn)){
+	if(g_Engine->GetSoundManager()->ExistSoundWave(fn)){
 		VERIFY(m_pActor);
 		if (!m_pActor->OnDialogSoundHandlerStart(m_pOthersInvOwner,fn)) {
-			m_sound.create(fn,st_Effect,sg_SourceType);
-			m_sound.play(0,sm_2D);
+			m_sound.Create(fn);
+			m_sound.Play(nullptr);
 		}
 	}
 }
@@ -406,8 +406,8 @@ void CUITalkWnd::StopSnd()
 {
 	if (m_pActor && m_pActor->OnDialogSoundHandlerStop(m_pOthersInvOwner)) return;
 
-	if(m_sound._feedback()) 
-		m_sound.stop	();
+	if(m_sound.IsPlaying()) 
+		m_sound.Stop	();
 }
 
 void CUITalkWnd::AddIconedMessage(LPCSTR text, LPCSTR texture_name, Frect texture_rect, LPCSTR templ_name)

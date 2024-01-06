@@ -14,7 +14,7 @@
 class CScriptGameObject;
 
 class CScriptSound {
-	mutable ref_sound			m_sound;
+	mutable FRBMKSoundSourceRef	m_sound;
 	shared_str					m_caSoundToPlay;
 
 	friend class CScriptSoundAction;
@@ -29,18 +29,14 @@ public:
 	IC		void				PlayAtPos			(CScriptGameObject *object, const Fvector &position);
 	IC		void				PlayAtPos			(CScriptGameObject *object, const Fvector &position, float delay);
 			void				PlayAtPos			(CScriptGameObject *object, const Fvector &position, float delay, int flags);
-			void				PlayNoFeedback		(CScriptGameObject *object,	u32 flags/*!< Looping */, float delay/*!< Delay */, Fvector pos, float vol);
+			void				PlayNoFeedback		(CScriptGameObject *object,	int flags/*!< Looping */, float delay/*!< Delay */, Fvector pos, float vol);
 	IC		void				Stop				();
 	IC		void				StopDeffered		();
 	IC		void				SetPosition			(const Fvector &position);
-	IC		void				SetFrequency		(float frequency);
 	IC		void				SetVolume			(float volume);
-	IC		const CSound_params	*GetParams			();
-	IC		void				SetParams			(CSound_params *sound_params);
 			void				SetMinDistance		(const float fMinDistance);
 	IC		void				SetMaxDistance		(const float fMaxDistance);
 			Fvector				GetPosition			() const;
-	IC		const float			GetFrequency		() const;
 	IC		const float			GetMinDistance		() const;
 	IC		const float			GetMaxDistance		() const;
 	IC		const float			GetVolume			() const;

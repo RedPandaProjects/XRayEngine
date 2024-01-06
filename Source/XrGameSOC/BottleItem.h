@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////
 // BottleItem.h
-// BottleItem - бутылка с напитком, которую можно разбить
+// BottleItem - Р±СѓС‚С‹Р»РєР° СЃ РЅР°РїРёС‚РєРѕРј, РєРѕС‚РѕСЂСѓСЋ РјРѕР¶РЅРѕ СЂР°Р·Р±РёС‚СЊ
 ///////////////////////////////////////////////////////////////
 
 
@@ -31,7 +31,7 @@ public:
 	virtual void					UseBy				(CEntityAlive* entity_alive);
 protected:
 	float		m_alcohol;
-	//партиклы разбивания бутылки
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	shared_str m_sBreakParticles;
-	ref_sound sndBreaking;
+	FRBMKSoundSourceRef  sndBreaking;
 };

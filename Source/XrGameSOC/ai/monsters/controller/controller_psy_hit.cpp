@@ -261,8 +261,7 @@ void CControllerPsyHit::death_glide_end()
 	monster->draw_fire_particles();
 
 
-	monster->m_sound_tube_hit_left.play_at_pos(Actor(), Fvector().set(-1.f, 0.f, 1.f), sm_2D);
-	monster->m_sound_tube_hit_right.play_at_pos(Actor(), Fvector().set(1.f, 0.f, 1.f), sm_2D);
+	monster->m_sound_tube_hit.Play(Actor());
 
 	//m_object->Hit_Psy		(Actor(), monster->m_tube_damage);
 	m_object->Hit_Wound		(Actor(), monster->m_tube_damage,Fvector().set(0.0f,1.0f,0.0f),0.0f);
@@ -284,25 +283,25 @@ void CControllerPsyHit::set_sound_state(ESoundState state)
 {
 	CController *monster = smart_cast<CController *>(m_object);
 	if (state == ePrepare) {
-		monster->m_sound_tube_prepare.play_at_pos(Actor(), Fvector().set(0.f, 0.f, 0.f), sm_2D);
+		monster->m_sound_tube_prepare.Play(Actor());
 	} else 
 	if (state == eStart) {
-		if (monster->m_sound_tube_prepare._feedback())	monster->m_sound_tube_prepare.stop();
+		if (monster->m_sound_tube_prepare.IsPlaying())	monster->m_sound_tube_prepare.Stop();
 
-		monster->m_sound_tube_start.play_at_pos(Actor(), Fvector().set(0.f, 0.f, 0.f), sm_2D);
-		monster->m_sound_tube_pull.play_at_pos(Actor(), Fvector().set(0.f, 0.f, 0.f), sm_2D);
+		monster->m_sound_tube_start.Play(Actor());
+		 monster->m_sound_tube_pull.Play(Actor());
 	} else 
 	if (state == eHit) {
-		if (monster->m_sound_tube_start._feedback())	monster->m_sound_tube_start.stop();
-		if (monster->m_sound_tube_pull._feedback())		monster->m_sound_tube_pull.stop();
+		if (monster->m_sound_tube_start.IsPlaying())	monster->m_sound_tube_start.Stop();
+		if (monster->m_sound_tube_pull.IsPlaying())		monster->m_sound_tube_pull.Stop();
 		
 		//monster->m_sound_tube_hit_left.play_at_pos(Actor(), Fvector().set(-1.f, 0.f, 1.f), sm_2D);
 		//monster->m_sound_tube_hit_right.play_at_pos(Actor(), Fvector().set(1.f, 0.f, 1.f), sm_2D);
 	} else 
 	if (state == eNone) {
-		if (monster->m_sound_tube_start._feedback())	monster->m_sound_tube_start.stop();
-		if (monster->m_sound_tube_pull._feedback())		monster->m_sound_tube_pull.stop();
-		if (monster->m_sound_tube_prepare._feedback())	monster->m_sound_tube_prepare.stop();
+		if (monster->m_sound_tube_start.IsPlaying())	monster->m_sound_tube_start.Stop();
+		if (monster->m_sound_tube_pull.IsPlaying())		monster->m_sound_tube_pull.Stop();
+		if (monster->m_sound_tube_prepare.IsPlaying())	monster->m_sound_tube_prepare.Stop();
 	}
 
 	m_sound_state = state;

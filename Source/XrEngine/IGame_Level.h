@@ -6,7 +6,7 @@
 #include "iinputreceiver.h"
 #include "xr_object_list.h"
 #include "../xrcdb/xr_area.h"
-#include "XRayLevelToBlueprint.h"
+#include "Interfaces/Core/RBMKLevelToBlueprint.h"
 
 // refs
 class ENGINE_API CCameraManager;
@@ -46,17 +46,13 @@ class ENGINE_API	IGame_Level	:
 	public pureRenderDebug,
 	public pureFrame,
 	public IEventReceiver,
-	public XRayLevelToBlueprint
+	public IRBMKLevelToBlueprint
 {
 protected:
 	// Network interface
 	CObject*					pCurrentEntity;
 	CObject*					pCurrentViewEntity;
    
-	// Static sounds
-	xr_vector<ref_sound>		Sounds_Random;
-	u32							Sounds_Random_dwNextTime;
-	BOOL						Sounds_Random_Enabled;
 	CCameraManager*				m_pCameras;
 
 	// temporary
@@ -69,13 +65,13 @@ public:
 	BOOL						bReady;
 
 	CInifile*					pLevel;
-public:	// deferred sound events
-	struct	_esound_delegate	{
-		Feel::Sound*			dest	;
-		ref_sound_data_ptr		source	;
-		float					power	;
-	};
-	xr_vector<_esound_delegate>	snd_Events;
+//public:	// deferred sound events
+//	struct	_esound_delegate	{
+//		Feel::Sound*			dest	;
+//		ref_sound_data_ptr		source	;
+//		float					power	;
+//	};
+//	xr_vector<_esound_delegate>	snd_Events;
 public:
 	// Main, global functions
 	IGame_Level					();
@@ -107,9 +103,9 @@ public:
 	void						SetEntity				( CObject* O  );//							{ pCurrentEntity=pCurrentViewEntity=O;	}
 	void						SetViewEntity			( CObject* O  );//							{ pCurrentViewEntity=O;					}
 	
-	void						SoundEvent_Register		( ref_sound_data_ptr S, float range );
-	void						SoundEvent_Dispatch		( );
-	void                        SoundEvent_OnDestDestroy (Feel::Sound*);
+	//void						SoundEvent_Register		( ref_sound_data_ptr S, float range );
+	//void						SoundEvent_Dispatch		( );
+	//void                        SoundEvent_OnDestDestroy (Feel::Sound*);
 
 	// Loader interface
 	//ref_shader					LL_CreateShader			(int S, int T, int M, int C);

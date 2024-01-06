@@ -6,19 +6,16 @@
 #include "../../../CameraEffector.h"
 #include "../../../ActorEffector.h"
 
-CPPEffectorControllerAura::CPPEffectorControllerAura(const SPPInfo &ppi, u32 time_to_fade, const ref_sound &snd_left, const ref_sound &snd_right)
+CPPEffectorControllerAura::CPPEffectorControllerAura(const SPPInfo &ppi, u32 time_to_fade, const FRBMKSoundSourceRef  &snd)
 : inherited(ppi)
 {
 	m_time_to_fade			= time_to_fade;
 	m_effector_state		= eStateFadeIn;
 	m_time_state_started	= Device->dwTimeGlobal;
 
-	m_snd_left.clone		(snd_left,st_Effect,sg_SourceType);	
-	m_snd_right.clone		(snd_right,st_Effect,sg_SourceType);	
+	m_snd .Dublicate(snd,SOUND_TYPE_FROM_SOURCE);
 
-	m_snd_left.play_at_pos	(Actor(), Fvector().set(-1.f, 0.f, 1.f), sm_Looped | sm_2D);
-	m_snd_right.play_at_pos	(Actor(), Fvector().set(-1.f, 0.f, 1.f), sm_Looped | sm_2D);
-
+	m_snd.Play	(Actor(),true);
 }
 
 void CPPEffectorControllerAura::switch_off()
@@ -41,21 +38,18 @@ BOOL CPPEffectorControllerAura::update()
 			m_effector_state	= eStatePermanent;
 			m_factor			= 1.f;
 		} else if (m_factor < 0) {
-			if (m_snd_left._feedback())		m_snd_left.stop();
-			if (m_snd_right._feedback())	m_snd_right.stop();
+			if (m_snd.IsPlaying())		m_snd.Stop();
 		
 			return FALSE;
 		}
 	}
 
 	// start new or play again?
-	if (!m_snd_left._feedback() && !m_snd_right._feedback()) {
-		m_snd_left.play_at_pos	(Actor(), Fvector().set(-1.f, 0.f, 1.f), sm_Looped | sm_2D);
-		m_snd_right.play_at_pos	(Actor(), Fvector().set(-1.f, 0.f, 1.f), sm_Looped | sm_2D);
+	if (!m_snd.IsPlaying()) {
+		m_snd.Play	(Actor(), true);
 	} 
 
-	if (m_snd_left._feedback())		m_snd_left.set_volume	(m_factor);
-	if (m_snd_right._feedback())	m_snd_right.set_volume	(m_factor);
+	if (m_snd.IsPlaying())		m_snd.SetVolume	(m_factor);
 
 	return TRUE;
 }
@@ -98,7 +92,7 @@ void CControllerAura::update_schedule()
 			} else {
 				// check to start
 				if (m_time_fake_aura < time())  {
-					m_effector = xr_new<CPPEffectorControllerAura>	(m_state, 5000, aura_sound.left, aura_sound.right);
+					m_effector = xr_new<CPPEffectorControllerAura>	(m_state, 5000, aura_sound.Sound);
 					Actor()->Cameras().AddPPEffector				(m_effector);
 
 					m_time_fake_aura		= time() + 5000 + Random.randI(FAKE_AURA_DURATION);
@@ -122,7 +116,7 @@ void CControllerAura::update_schedule()
 		} else {
 			if (need_be_active) {
 				// create effector
-				m_effector = xr_new<CPPEffectorControllerAura>	(m_state, 5000, aura_sound.left, aura_sound.right);
+				m_effector = xr_new<CPPEffectorControllerAura>	(m_state, 5000, aura_sound.Sound);
 				Actor()->Cameras().AddPPEffector				(m_effector);
 				
 				m_hit_state			= eEffectoring;
@@ -178,8 +172,7 @@ void CControllerAura::load(LPCSTR section)
 {
 	inherited::load				(pSettings->r_string(section,"aura_effector"));
 	
-	aura_sound.left.create		(pSettings->r_string(section,"PsyAura_SoundLeftPath"),st_Effect,sg_SourceType);
-	aura_sound.right.create		(pSettings->r_string(section,"PsyAura_SoundRightPath"),st_Effect,sg_SourceType);
+	aura_sound.Sound = g_Engine->GetSoundManager()->CreateSource( pSettings->r_string(section,"PsyAura_SoundPath"));
 
 	aura_radius					= READ_IF_EXISTS(pSettings,r_float,section,"PsyAura_Radius", 40.f);
 	aura_damage					= READ_IF_EXISTS(pSettings,r_float,section,"PsyAura_Damage", 0.02f);

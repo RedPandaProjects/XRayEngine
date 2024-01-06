@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "../../physicsshellholder.h"
 #include "telekinetic_object.h"
+
+#include "ai_sounds.h"
 #include "../../PhysicsShell.h"
 #include "../../PHInterpolation.h"
 #include "../../PHElement.h"
@@ -54,10 +56,10 @@ bool CTelekineticObject::init(CTelekinesis* tele,CPhysicsShellHolder *obj, float
 	return true;
 }
 
-void CTelekineticObject::set_sound(const ref_sound &snd_hold, const ref_sound &snd_throw)
+void CTelekineticObject::set_sound(const FRBMKSoundSourceRef  &snd_hold, const FRBMKSoundSourceRef  &snd_throw)
 {
-	sound_hold.clone	(snd_hold,st_Effect,sg_SourceType);
-	sound_throw.clone	(snd_throw,st_Effect,sg_SourceType);
+	sound_hold.Dublicate(snd_hold,SOUND_TYPE_FROM_SOURCE);
+	sound_throw.Dublicate(snd_throw,SOUND_TYPE_FROM_SOURCE);
 }
 
 
@@ -202,11 +204,11 @@ void CTelekineticObject::fire_t(const Fvector &target, float time)
 	TransferenceToThrowVel(transference,time,object->EffectiveGravity());
 	object->m_pPhysicsShell->set_LinearVel(transference);
 
-	if (sound_throw._handle()) 
-		sound_throw.play_at_pos(object,object->Position());
+	if (sound_throw.IsValid()) 
+		sound_throw.Play(object,object->Position());
 
-	if (sound_hold._handle() && sound_hold._feedback()) 
-		sound_hold.stop();
+	if (sound_hold.IsPlaying()) 
+		sound_hold.Stop();
 
 }
 void CTelekineticObject::fire(const Fvector &target, float power)
@@ -274,10 +276,10 @@ bool CTelekineticObject::can_activate(CPhysicsShellHolder *obj)
 
 void CTelekineticObject::update_hold_sound()
 {
-	if (!sound_hold._handle()) return;
+	if (!sound_hold.IsValid()) return;
 
-	if (sound_hold._feedback()) 
-		sound_hold.set_position(object->Position());
+	if (sound_hold.IsPlaying()) 
+		sound_hold.SetPosition(object->Position());
 	else 
-		sound_hold.play_at_pos(object,object->Position());
+		sound_hold.Play(object,object->Position());
 }

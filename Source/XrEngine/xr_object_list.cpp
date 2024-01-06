@@ -10,6 +10,7 @@
 #include "../xrCore/net_utils.h"
 
 #include "CustomHUD.h"
+#include "Interfaces/Core/RBMKEngine.h"
 
 class fClassEQ {
 	CLASS_ID cls;
@@ -268,7 +269,7 @@ void CObjectList::Update		(bool bForce)
 		for (Objects::iterator oit=objects_sleeping.begin(); oit!=objects_sleeping.end(); oit++)
 			for (int it = destroy_queue.size()-1; it>=0; it--)	(*oit)->net_Relcase	(destroy_queue[it]);
 
-		for (int it = destroy_queue.size()-1; it>=0; it--)	Sound->object_relcase	(destroy_queue[it]);
+		for (int it = destroy_queue.size()-1; it>=0; it--)	g_Engine-> GetSoundManager()->Destroyed(destroy_queue[it]);
 		
 		RELCASE_CALLBACK_VEC::iterator It	= m_relcase_callbacks.begin();
 		RELCASE_CALLBACK_VEC::iterator Ite	= m_relcase_callbacks.end();

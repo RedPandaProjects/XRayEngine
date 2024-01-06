@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////
-// HudSound.h:		структура для работы со звуками применяемыми в 
-//					HUD-объектах (обычные звуки, но с доп. параметрами)
+// HudSound.h:		СЃС‚СЂСѓРєС‚СѓСЂР° РґР»СЏ СЂР°Р±РѕС‚С‹ СЃРѕ Р·РІСѓРєР°РјРё РїСЂРёРјРµРЅСЏРµРјС‹РјРё РІ 
+//					HUD-РѕР±СЉРµРєС‚Р°С… (РѕР±С‹С‡РЅС‹Рµ Р·РІСѓРєРё, РЅРѕ СЃ РґРѕРї. РїР°СЂР°РјРµС‚СЂР°РјРё)
 //////////////////////////////////////////////////////////////////////
 
 #pragma once
@@ -12,16 +12,11 @@ struct HUD_SOUND
 	~HUD_SOUND()	{ m_activeSnd=NULL; }
 
 	////////////////////////////////////
-	// работа со звуками
+	// СЂР°Р±РѕС‚Р° СЃРѕ Р·РІСѓРєР°РјРё
 	/////////////////////////////////////
-	static void		LoadSound		(	LPCSTR section, LPCSTR line,
-		ref_sound& hud_snd,
-		int type = sg_SourceType,
-		float* volume = NULL,
-		float* delay = NULL);
+	static void		LoadSound		(	LPCSTR section, LPCSTR line,FRBMKSoundSourceRef &hud_snd, int type = -1, float* volume = NULL, float* delay = NULL);
 
-	static void		LoadSound		(	LPCSTR section, LPCSTR line,
-		HUD_SOUND& hud_snd,  int type = sg_SourceType);
+	static void		LoadSound		(	LPCSTR section, LPCSTR line, HUD_SOUND& hud_snd,  int type = -1);
 
 	static void		DestroySound	(	HUD_SOUND& hud_snd);
 
@@ -35,23 +30,29 @@ struct HUD_SOUND
 
 	ICF BOOL		playing			()
 	{
-		if (m_activeSnd)	return	m_activeSnd->snd._feedback()?TRUE:FALSE;
+		if (m_activeSnd)	return	m_activeSnd->snd.IsPlaying();
 		else				return	FALSE;
 	}
 
 	ICF void		set_position	(const Fvector& pos)
 	{
-		if(m_activeSnd)	{ 
-			if (m_activeSnd->snd._feedback()&&!m_activeSnd->snd._feedback()->is_2D())	
-									m_activeSnd->snd.set_position	(pos);
-			else					m_activeSnd	= NULL;
+		if(m_activeSnd)	
+		{ 
+			if (m_activeSnd->snd.IsRelative())
+			{
+				m_activeSnd	= nullptr;
+			}
+			else
+			{
+				m_activeSnd->snd.SetPosition(pos);
+			}
 		}
 	}
 
 	struct SSnd		{
-		ref_sound	snd;
-		float		delay;		//задержка перед проигрыванием
-		float		volume;		//громкость
+		FRBMKSoundSourceRef	snd;
+		float		delay;		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+		float		volume;		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	};
 	SSnd*			m_activeSnd;
 	xr_vector<SSnd> sounds;

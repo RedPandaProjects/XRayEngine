@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../xrEngine/feel_touch.h"
-#include "../xrEngine/feel_sound.h"
 #include "../xrEngine/iinputreceiver.h"
 #include "../XrEngine/Render/KinematicsAnimated.h"
 #include "actor_flags.h"

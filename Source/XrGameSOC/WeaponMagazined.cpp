@@ -456,7 +456,7 @@ void CWeaponMagazined::UpdateSounds	()
 	
 	dwUpdateSounds_Frame = Device->dwFrame;
 
-	// ref_sound positions
+	// FRBMKSoundSourceContainer  positions
 	if (sndShow.playing			())	sndShow.set_position		(get_LastFP());
 	if (sndHide.playing			())	sndHide.set_position		(get_LastFP());
 	if (sndShot.playing			()) sndShot.set_position		(get_LastFP());

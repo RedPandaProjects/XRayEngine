@@ -18,7 +18,6 @@
 #include "string_table.h"
 
 #include "../XrEngine/object_broker.h"
-#include "../XrEngine/XRayEngineInterface.h"
 
 //#define DEMO_BUILD
 

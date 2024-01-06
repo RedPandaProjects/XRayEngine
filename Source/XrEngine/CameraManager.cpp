@@ -6,13 +6,11 @@
 #include "igame_level.h"
 #include "igame_persistent.h"
 
-#include "Environment.h"
 #include "CameraBase.h"
 #include "CameraManager.h"
 #include "Effector.h"
 #include "EffectorPP.h"
 
-#include "XRayEngineInterface.h"
 #include "gamefont.h"
 #include "render.h"
 
@@ -276,7 +274,7 @@ void CCameraManager::OnEffectorReleased(SBaseEffector* e)
 
 void CCameraManager::UpdateFromCamera(const CCameraBase* C)
 {	
-	Update(C->vPosition,C->vDirection,C->vNormal, C->f_fov, C->f_aspect, g_pGamePersistent->Environment().CurrentEnv->far_plane, C->m_Flags.flags); 
+	Update(C->vPosition,C->vDirection,C->vNormal, C->f_fov, C->f_aspect, 1000, C->m_Flags.flags); 
 }
 
 void CCameraManager::Update(const Fvector& P, const Fvector& D, const Fvector& N, float fFOV_Dest, float fASPECT_Dest, float fFAR_Dest, u32 flags)

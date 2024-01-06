@@ -14,7 +14,6 @@
 #include "ai_space.h"
 #include "game_graph.h"
 #include "alife_simulator_header.h"
-#include "../XrEngine/XRayEngineInterface.h"
 
 extern LPCSTR alife_section;
 

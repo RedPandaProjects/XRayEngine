@@ -52,7 +52,7 @@ void CTraderAnimation::set_head_animation(LPCSTR anim)
 {
 	m_anim_head = anim;
 
-	// назначить анимацию головы
+	// РЅР°Р·РЅР°С‡РёС‚СЊ Р°РЅРёРјР°С†РёСЋ РіРѕР»РѕРІС‹
 	IKinematicsAnimated	*kinematics_animated	= CastToIKinematicsAnimated(m_trader->Visual());
 	m_motion_head								= kinematics_animated->ID_Cycle(m_anim_head);
 	kinematics_animated->PlayCycle				(m_motion_head,TRUE,head_callback,this);	
@@ -67,19 +67,17 @@ void CTraderAnimation::set_sound(LPCSTR sound, LPCSTR anim)
 	
 	set_head_animation	(anim);
 
-	m_sound				= xr_new<ref_sound>();
-	m_sound->create		(sound,st_Effect,SOUND_TYPE_WORLD);
-	m_sound->play		(NULL, sm_2D);
+	m_sound	= xr_new<FRBMKSoundSourceRef >(g_Engine->GetSoundManager()->CreateSource(sound,SOUND_TYPE_WORLD));
+	(*m_sound).Play(nullptr);
 }
 
 void CTraderAnimation::remove_sound()
 {
 	VERIFY				(m_sound);
 	
-	if (m_sound->_feedback()) 
-						m_sound->stop();
+	if (m_sound->IsPlaying()) 
+						(*m_sound).Stop();
 	
-	m_sound->destroy	();
 	xr_delete			(m_sound);
 }
 
@@ -88,7 +86,7 @@ void CTraderAnimation::remove_sound()
 //////////////////////////////////////////////////////////////////////////
 void CTraderAnimation::update_frame()
 {
-	if (m_sound && !m_sound->_feedback()) {
+	if (m_sound && !m_sound->IsPlaying()) {
 		m_trader->callback	(GameObject::eTraderSoundEnd)();
 		remove_sound		();
 	}
@@ -99,9 +97,11 @@ void CTraderAnimation::update_frame()
 		if (m_anim_global) m_motion_head.invalidate();
 	}
 
-	// назначить анимацию головы
-	if (!m_motion_head) {
-		if (m_sound && m_sound->_feedback()) {
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+	if (!m_motion_head) 
+	{
+		if (m_sound && m_sound->IsPlaying()) 
+		{
 			m_trader->callback(GameObject::eTraderHeadAnimationRequest)();
 		}
 	}
@@ -114,9 +114,9 @@ void CTraderAnimation::external_sound_start(LPCSTR phrase)
 {
 	if (m_sound)			remove_sound();	
 	
-	m_sound					= xr_new<ref_sound>();
-	m_sound->create			(phrase,st_Effect,SOUND_TYPE_WORLD);
-	m_sound->play			(NULL, sm_2D);
+	m_sound					= xr_new<FRBMKSoundSourceRef >(g_Engine->GetSoundManager()->CreateSource(phrase,SOUND_TYPE_WORLD));
+	
+	(*m_sound).Play(nullptr);
 
 	m_motion_head.invalidate();
 }

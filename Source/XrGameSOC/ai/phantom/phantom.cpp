@@ -38,19 +38,19 @@ void CPhantom::Load( LPCSTR section )
 	LPCSTR snd_name			= 0;
 	m_state_data[stBirth].particles	= pSettings->r_string(section,"particles_birth");
 	snd_name						= pSettings->r_string(section,"sound_birth");
-	if (snd_name&&snd_name[0])		m_state_data[stBirth].sound.create(snd_name,st_Effect,sg_SourceType);
+	if (snd_name&&snd_name[0])		m_state_data[stBirth].sound.Create(snd_name);
 
 	m_state_data[stFly].particles	= pSettings->r_string(section,"particles_fly");
 	snd_name						= pSettings->r_string(section,"sound_fly");
-	if (snd_name&&snd_name[0])		m_state_data[stFly].sound.create(snd_name,st_Effect,sg_SourceType);
+	if (snd_name&&snd_name[0])		m_state_data[stFly].sound.Create(snd_name);
 
 	m_state_data[stContact].particles= pSettings->r_string(section,"particles_contact");
 	snd_name						= pSettings->r_string(section,"sound_contact");
-	if (snd_name&&snd_name[0])		m_state_data[stContact].sound.create(snd_name,st_Effect,sg_SourceType);
+	if (snd_name&&snd_name[0])		m_state_data[stContact].sound.Create(snd_name);
 
 	m_state_data[stShoot].particles	= pSettings->r_string(section,"particles_shoot");
 	snd_name						= pSettings->r_string(section,"sound_shoot");
-	if (snd_name&&snd_name[0])		m_state_data[stShoot].sound.create(snd_name,st_Effect,sg_SourceType);
+	if (snd_name&&snd_name[0])		m_state_data[stShoot].sound.Create(snd_name);
 }
 BOOL CPhantom::net_Spawn(CSE_Abstract* DC)
 {
@@ -113,7 +113,7 @@ void CPhantom::net_Destroy	()
 
 	// stop looped
 	SStateData& sdata			= m_state_data[stFly];
-	sdata.sound.stop			();
+	sdata.sound.Stop			();
 	CParticlesObject::Destroy	(m_fly_particles);
 }
 
@@ -161,33 +161,33 @@ void CPhantom::SwitchToState_internal(EState new_state)
 		case stBirth:{
 			SStateData& sdata	= m_state_data[new_state];
 			PlayParticles		(sdata.particles.c_str(),TRUE,xform);
-			sdata.sound.play_at_pos(0,xform.c);
+			sdata.sound.Play(nullptr,xform.c);
 			K->PlayCycle		(sdata.motion, TRUE, animation_end_callback, this);
 		}break;
 		case stFly:{
 			UpdateEvent.bind	(this,&CPhantom::OnFlyState);
 			SStateData& sdata	= m_state_data[new_state];
 			m_fly_particles		= PlayParticles(sdata.particles.c_str(),FALSE,xform);
-			sdata.sound.play_at_pos(0,xform.c,sm_Looped);
+			sdata.sound.Play(nullptr,xform.c);
 			K->PlayCycle		(sdata.motion);
 		}break;
 		case stContact:{
 			UpdateEvent.bind	(this,&CPhantom::OnDeadState);	
 			SStateData& sdata	= m_state_data[new_state];
-			sdata.sound.play_at_pos(0,xform.c);
+			sdata.sound.Play(nullptr,xform.c);
 			K->PlayCycle		(sdata.motion, TRUE, animation_end_callback, this);
 		}break;
 		case stShoot:{
 			UpdateEvent.bind	(this,&CPhantom::OnDeadState);	
 			SStateData& sdata	= m_state_data[new_state];
 			PlayParticles		(sdata.particles.c_str(),TRUE,xform);
-			sdata.sound.play_at_pos(0,xform.c);
+			sdata.sound.Play(nullptr,xform.c);
 			K->PlayCycle		(sdata.motion, TRUE, animation_end_callback, this);
 		}break;
 		case stIdle:{
 			UpdateEvent.bind	(this,&CPhantom::OnIdleState);	
 			SStateData& sdata	= m_state_data[m_CurState];
-			sdata.sound.stop	();
+			sdata.sound.Stop	();
 			CParticlesObject::Destroy(m_fly_particles);
 		}break;
 		}
@@ -230,7 +230,7 @@ void CPhantom::UpdateFlyMedia()
 		m_fly_particles->UpdateParent(xform,vel);
 	}
 	// update sound
-	if (m_state_data[stFly].sound._feedback()) m_state_data[stFly].sound.set_position(xform.c);
+	if (m_state_data[stFly].sound.IsPlaying()) m_state_data[stFly].sound.SetPosition(xform.c);
 }
 //---------------------------------------------------------------------
 

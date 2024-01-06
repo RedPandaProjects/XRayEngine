@@ -685,6 +685,7 @@ void CAI_Stalker::OnHUDDraw				(CCustomHUD *hud)
 		xr_vector<CSoundPlayer::CSoundSingle>::const_iterator	I = sound().playing_sounds().begin();
 		xr_vector<CSoundPlayer::CSoundSingle>::const_iterator	E = sound().playing_sounds().end();
 		for ( ; I != E; ++I)
+			if((*I).m_sound)
 			HUD().Font().pFontStat->OutNext(
 				"%s%s%s[%s]%s",
 				indent,
@@ -695,13 +696,13 @@ void CAI_Stalker::OnHUDDraw				(CCustomHUD *hud)
 				"not yet started"
 				:
 				(
-					(*I).m_sound->_feedback()
+					(*I).m_sound.IsPlaying()
 					?
 					"playing"
 					:
 					"already played"
 				),
-				(*I).m_sound->_handle() ? (*I).m_sound->_handle()->file_name() : "no source"
+				(*I).m_sound.IsValid() ? (*I).m_sound.GetName() : "no source"
 			);
 	}
 

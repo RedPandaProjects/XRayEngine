@@ -24,36 +24,35 @@ void CMMSound::Init(CUIXml& xml_doc, LPCSTR path){
 
     strconcat(sizeof(_path),_path, path,":whell_sound");
 	if (check_file(xml_doc.Read(_path, 0, "")))
-        m_whell.create(xml_doc.Read(_path, 0, "") ,st_Effect,sg_SourceType);
+        m_whell.Create(xml_doc.Read(_path, 0, "") );
 
 	strconcat(sizeof(_path),_path, path,":whell_click");
 	if (check_file(xml_doc.Read(_path, 0, "")))
-        m_whell_click.create(xml_doc.Read(_path, 0, ""),st_Effect,sg_SourceType );
+        m_whell_click.Create(xml_doc.Read(_path, 0, ""));
 }
 
-bool CMMSound::check_file(LPCSTR fname){
-	string_path		_path;
-	strconcat		(sizeof(_path),_path, fname, ".ogg");
-	return FS.exist("$game_sounds$", _path) ? true : false;		
+bool CMMSound::check_file(LPCSTR fname)
+{
+	return g_Engine->GetSoundManager()->ExistSoundWave(fname)  ? true : false;		
 }
 
 void CMMSound::whell_Play(){
-	if (m_whell._handle() && !m_whell._feedback())
-		m_whell.play(NULL, sm_Looped | sm_2D);
+	if (m_whell.IsValid() && !m_whell.IsPlaying())
+		m_whell.Play(nullptr);
 }
 
 void CMMSound::whell_Stop(){
-	if (m_whell._feedback())
-		m_whell.stop();
+	if (m_whell.IsPlaying())
+		m_whell.Stop();
 }
 
 void CMMSound::whell_Click(){
-   	if (m_whell_click._handle())
-		m_whell_click.play(NULL, sm_2D);
+   	if (m_whell_click.IsValid())
+		m_whell_click.Play(nullptr);
 }
 
 void CMMSound::whell_UpdateMoving(float frequency){
-	m_whell.set_frequency(frequency);
+	if(m_whell)m_whell.SetFrequency(frequency);
 }
 
 void CMMSound::music_Play(){
@@ -62,33 +61,25 @@ void CMMSound::music_Play(){
 
 	int i = Random.randI(m_play_list.size());
 
-	string_path		_path;
-	string_path		_path2;
-	strconcat		(sizeof(_path),_path, m_play_list[i].c_str(), "_l.ogg");
-	strconcat		(sizeof(_path2),_path2, m_play_list[i].c_str(), "_r.ogg");
-	VERIFY			(FS.exist("$game_sounds$", _path ));	
-	VERIFY			(FS.exist("$game_sounds$", _path2 ));
+	VERIFY			(g_Engine->GetSoundManager()->ExistSoundWave(m_play_list[i].c_str() ));	
 
-	m_music_l.create(_path,st_Music,sg_SourceType);
-	m_music_r.create(_path2,st_Music,sg_SourceType);
-
-    m_music_l.play_at_pos(NULL, Fvector().set(-0.5f,0.f,0.3f), sm_2D);
-    m_music_r.play_at_pos(NULL, Fvector().set(+0.5f,0.f,0.3f), sm_2D);
+	m_music.Create(m_play_list[i].c_str());
+    m_music.Play(nullptr);
 }
 
 void CMMSound::music_Update(){
 	if (Device->Paused()) return;
-	if (0==m_music_l._feedback() || 0==m_music_r._feedback())
+	if (!m_music.IsPlaying())
 		music_Play();
 }
 
 void CMMSound::music_Stop(){
-    m_music_l.stop();
-	m_music_r.stop();
+    m_music.Stop();
 }
 
-void CMMSound::all_Stop(){
+void CMMSound::all_Stop()
+{
 	music_Stop();
-	m_whell.stop();
-	m_whell_click.stop();
+	if(m_whell)	m_whell.Stop();
+	if(m_whell_click)m_whell_click.Stop();
 }

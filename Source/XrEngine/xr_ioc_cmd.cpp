@@ -2,12 +2,10 @@
 #include "igame_level.h"
 
 //#include "xr_effgamma.h"
-#include "XRayEngineInterface.h"
 #include "xr_ioconsole.h"
 #include "xr_ioc_cmd.h"
 //#include "fbasicvisual.h"
 #include "cameramanager.h"
-#include "environment.h"
 #include "xr_input.h"
 #include "CustomHUD.h"
 
@@ -370,16 +368,6 @@ public:
 	}
 };
 //-----------------------------------------------------------------------
-class CCC_SND_Restart : public IConsole_Command
-{
-public:
-	CCC_SND_Restart(LPCSTR N) : IConsole_Command(N) { bEmptyArgsHandled = TRUE; };
-	virtual void Execute(LPCSTR args) {
-		Sound->_restart();
-	}
-};
-
-//-----------------------------------------------------------------------
 float	ps_gamma=1.f,ps_brightness=1.f,ps_contrast=1.f;
 
 
@@ -435,43 +423,6 @@ public:
 //void fill_render_mode_list();
 //void free_render_mode_list();
 
-#ifndef DEDICATED_SERVER
-class CCC_soundDevice : public CCC_Token
-{
-	typedef CCC_Token inherited;
-public:
-	CCC_soundDevice(LPCSTR N) :inherited(N, &snd_device_id, NULL){};
-	virtual			~CCC_soundDevice	()
-	{}
-
-	virtual void Execute(LPCSTR args)
-	{
-		GetToken				();
-		if(!tokens)				return;
-		inherited::Execute		(args);
-	}
-
-	virtual void	Status	(TStatus& S)
-	{
-		GetToken				();
-		if(!tokens)				return;
-		inherited::Status		(S);
-	}
-
-	virtual xr_token* GetToken()
-	{
-		tokens					= snd_devices_token;
-		return inherited::GetToken();
-	}
-
-	virtual void Save(IWriter *F)	
-	{
-		GetToken				();
-		if(!tokens)				return;
-		inherited::Save			(F);
-	}
-};
-#endif
 class ENGINE_API CCC_HideConsole : public IConsole_Command
 {
 public		:
@@ -561,7 +512,6 @@ void CCC_Register()
 
 ;
 	CMD3(CCC_Mask,		"rs_stats",				&psDeviceFlags,		rsStatistic				);
-	CMD4(CCC_Float,		"rs_vis_distance",		&psVisDistance,		0.4f,	1.5f			);
 
 	CMD3(CCC_Mask,		"rs_cam_pos",			&psDeviceFlags,		rsCameraPos				);
 #ifdef DEBUG
@@ -575,23 +525,7 @@ void CCC_Register()
 	CMD4(CCC_Integer,	"net_dedicated_sleep",	&psNET_DedicatedSleep,		0,	64	);
 
 
-	
-	// Sound
-	CMD2(CCC_Float,		"snd_volume_eff",		&psSoundVEffects);
-	CMD2(CCC_Float,		"snd_volume_music",		&psSoundVMusic);
-	CMD1(CCC_SND_Restart,"snd_restart"			);
-	CMD3(CCC_Mask,		"snd_acceleration",		&psSoundFlags,		ss_Hardware	);
-	CMD3(CCC_Mask,		"snd_efx",				&psSoundFlags,		ss_EAX		);
-	CMD4(CCC_Integer,	"snd_targets",			&psSoundTargets,	4,32		);
-	CMD4(CCC_Integer,	"snd_cache_size",		&psSoundCacheSizeMB,4,32		);
-
-#ifdef DEBUG
-	CMD3(CCC_Mask,		"snd_stats",			&g_stats_flags,		st_sound	);
-	CMD3(CCC_Mask,		"snd_stats_min_dist",	&g_stats_flags,		st_sound_min_dist );
-	CMD3(CCC_Mask,		"snd_stats_max_dist",	&g_stats_flags,		st_sound_max_dist );
-	CMD3(CCC_Mask,		"snd_stats_ai_dist",	&g_stats_flags,		st_sound_ai_dist );
-	CMD3(CCC_Mask,		"snd_stats_info_name",	&g_stats_flags,		st_sound_info_name );
-	CMD3(CCC_Mask,		"snd_stats_info_object",&g_stats_flags,		st_sound_info_object );
+	#ifdef DEBUG
 
 	CMD4(CCC_Integer,	"error_line_count",		&g_ErrorLineCount,	6,	1024	);
 #endif // DEBUG
@@ -607,11 +541,6 @@ void CCC_Register()
 
 	//CMD1(CCC_r2,		"renderer"				);
 
-#ifndef DEDICATED_SERVER
-	CMD1(CCC_soundDevice, "snd_device"			);
-#endif
-	//psSoundRolloff	= pSettings->r_float	("sound","rolloff");		clamp(psSoundRolloff,			EPS_S,	2.f);
-	psSoundOcclusionScale	= pSettings->r_float	("sound","occlusion_scale");clamp(psSoundOcclusionScale,	0.1f,	.5f);
 
 	extern	int	g_Dump_Export_Obj;
 	extern	int	g_Dump_Import_Obj;

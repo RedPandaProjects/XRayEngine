@@ -101,7 +101,7 @@ public:
 	};
 
 	virtual		CObject*		dcast_CObject		()	{ return 0;	}
-	virtual		Feel::Sound*	dcast_FeelSound		()	{ return 0;	}
+	virtual		class IRBMKSoundActorListener*	CastToSoundActorListener()	{ return nullptr;	}
 	virtual		IRenderable*	dcast_Renderable	()	{ return 0;	}
 	virtual		IRender_Light*	dcast_Light			()	{ return 0; }
 

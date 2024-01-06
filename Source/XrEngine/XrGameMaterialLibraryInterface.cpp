@@ -1,5 +1,8 @@
 #include "stdafx.h"
 #include "XrGameMaterialLibraryInterface.h"
+
+#include "Interfaces/Core/RBMKEngine.h"
+
 SGameMtl::SGameMtl()
 {
     ID = -1;
@@ -26,24 +29,15 @@ SGameMtl::~SGameMtl()
 {
 }
 
-void DestroySounds(SoundVec& lst)
+static void DestroySounds(xr_vector<IRBMKSoundSource*>& Sources)
 {
-    for (SoundIt it = lst.begin(); lst.end() != it; ++it)
-        it->destroy();
+	for(IRBMKSoundSource*Source:Sources)
+	{
+	  g_Engine->GetSoundManager()->Destroy(Source);
+	}
+	Sources.clear();
 }
-/*
-void DestroyMarks(ShaderVec& lst)
-{
-    for (ShaderIt it=lst.begin(); lst.end() != it; ++it)
-        it->destroy();
-}
-*/
 
-void DestroyPSs(PSVec& lst)
-{
-    //	for (PSIt it=lst.begin(); lst.end() != it; ++it)
-    //		Device->Resources->Delete(*it);
-}
 
 void CreateSounds(xr_vector<shared_str>& lst, LPCSTR buf)
 {
@@ -52,22 +46,8 @@ void CreateSounds(xr_vector<shared_str>& lst, LPCSTR buf)
     lst.resize(cnt);
     for (int k = 0; k < cnt; ++k)
         lst[k] = shared_str(_GetItem(buf, k, tmp));
-  //  for (int k = 0; k < cnt; ++k)
-       // lst[k].create(_GetItem(buf, k, tmp), st_Effect, sg_SourceType);
 }
-/*
-void CreateMarks(ShaderVec& lst, LPCSTR buf)
-{
-    string256	tmp;
-    int cnt		=_GetItemCount(buf);	R_ASSERT(cnt<=GAMEMTL_SUBITEM_COUNT);
-    ref_shader	s;
-    for (int k=0; k<cnt; ++k)
-    {
-        s.create		("effects\\wallmark",_GetItem(buf,k,tmp));
-        lst.push_back	(s);
-    }
-}
-*/
+
 void CreateMarks(xr_vector<shared_str>&Out, LPCSTR buf)
 {
     string256	tmp;
@@ -88,10 +68,6 @@ void CreatePSs(PSVec& lst, LPCSTR buf)
 SGameMtlPair::~SGameMtlPair()
 {
     // destroy all media
-    DestroySounds(BreakingSounds);
-    DestroySounds(StepSounds);
-    DestroySounds(CollideSounds);
-    DestroyPSs(CollideParticles);
 }
 
 
@@ -119,34 +95,6 @@ void SGameMtlPair::Load(IReader& fs)
     CreateMarks(CollideMarksLegacy, *buf);
 }
 
-#if 0
-void SGameMtlPair::Load(IReader& fs)
-{
-    shared_str				buf;
-
-    R_ASSERT(fs.find_chunk(GAMEMTLPAIR_CHUNK_PAIR));
-    mtl0 = fs.r_u32();
-    mtl1 = fs.r_u32();
-    ID = fs.r_u32();
-    ID_parent = fs.r_u32();
-    u32 own_mask = fs.r_u32();
-    if (GAMEMTL_NONE_ID == ID_parent) OwnProps.one();
-    else							OwnProps.assign(own_mask);
-
-    R_ASSERT(fs.find_chunk(GAMEMTLPAIR_CHUNK_BREAKING));
-    fs.r_stringZ(buf); 	BreakingSounds = buf.size() ? *buf : "";
-
-    R_ASSERT(fs.find_chunk(GAMEMTLPAIR_CHUNK_STEP));
-    fs.r_stringZ(buf);	StepSounds = buf.size() ? *buf : "";
-
-    R_ASSERT(fs.find_chunk(GAMEMTLPAIR_CHUNK_COLLIDE));
-    fs.r_stringZ(buf);	CollideSounds = buf.size() ? *buf : "";
-    fs.r_stringZ(buf);	CollideParticles = buf.size() ? *buf : "";
-    fs.r_stringZ(buf);	CollideMarks = buf.size() ? *buf : "";
-    R_ASSERT(0);
-}
-
-#endif
 void SGameMtlPair::Save(IWriter& fs)
 {
     R_ASSERT(0);
@@ -218,13 +166,7 @@ LPCSTR SGameMtlPair::dbg_Name()
 
 SGameMtlPair::SGameMtlPair(XrGameMaterialLibraryInterface* owner)
 {
-#ifdef _EDITOR
-    m_EditParent = false;
-    m_EditCommand = false;
-#endif
-#ifndef	GM_NON_GAME
-    //m_pCollideMarks = RenderFactory->CreateGameMtlPair();
-#endif	//	GM_NON_GAME
+
     mtl0 = -1;
     mtl1 = -1;
     ID = -1;
