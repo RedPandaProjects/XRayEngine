@@ -142,16 +142,6 @@ CScriptGameObject *get_object_by_id(u32 id)
 	return pGameObject->lua_game_object();
 }
 
-LPCSTR get_weather	()
-{
-	return			(*g_Engine->GetEnvironmentCheck()->GetWeather());
-}
-
-void set_weather	(LPCSTR weather_name, bool forced)
-{
-	return			(g_Engine->GetEnvironmentCheck()->SetWeather(weather_name,forced));
-}
-
 bool set_weather_fx	(LPCSTR weather_name)
 {
 	return			(g_Engine->GetEnvironmentCheck()->SetEffect(weather_name));
@@ -583,8 +573,6 @@ void CLevel::script_register(lua_State *L)
 		def("check_object",						check_object),
 #endif
 		
-		def("get_weather",						get_weather),
-		def("set_weather",						set_weather),
 		def("set_weather_fx",					set_weather_fx),
 		def("is_wfx_playing",					is_wfx_playing),
 		

@@ -1256,8 +1256,8 @@ void CCustomZone::StartWind()
 	if(m_fDistanceToCurEntity>WIND_RADIUS) return;
 
 	m_bBlowoutWindActive = true;
-	
-	m_fStoreWindPower = g_Engine->GetEnvironmentCheck()->GetWindStrengthFactor();
+	m_fStoreWindPower = 1;
+	//m_fStoreWindPower = g_Engine->GetEnvironmentCheck()->GetWindStrengthFactor();
 	clamp(m_fStoreWindPower, 0.f, 1.f);
 }
 
@@ -1265,7 +1265,7 @@ void CCustomZone::StopWind()
 {
 	if(!m_bBlowoutWindActive) return;
 	m_bBlowoutWindActive = false;
-	g_Engine->GetEnvironmentCheck()->SetWindStrengthFactor(m_fStoreWindPower);
+	//g_Engine->GetEnvironmentCheck()->SetWindStrengthFactor(m_fStoreWindPower);
 }
 
 void CCustomZone::UpdateWind()
@@ -1278,18 +1278,18 @@ void CCustomZone::UpdateWind()
 		return;
 	}
 
-	if(m_dwBlowoutWindTimePeak > (u32)m_iStateTime)
-	{
-		g_Engine->GetEnvironmentCheck()->SetWindStrengthFactor(m_fBlowoutWindPowerMax + ( m_fStoreWindPower - m_fBlowoutWindPowerMax)*
-								float(m_dwBlowoutWindTimePeak - (u32)m_iStateTime)/
-								float(m_dwBlowoutWindTimePeak - m_dwBlowoutWindTimeStart));
-	}
-	else
-	{
-		g_Engine->GetEnvironmentCheck()->SetWindStrengthFactor( m_fBlowoutWindPowerMax + (m_fStoreWindPower - m_fBlowoutWindPowerMax)*
-			float((u32)m_iStateTime - m_dwBlowoutWindTimePeak)/
-			float(m_dwBlowoutWindTimeEnd - m_dwBlowoutWindTimePeak));
-	}
+	// if(m_dwBlowoutWindTimePeak > (u32)m_iStateTime)
+	// {
+	// 	g_Engine->GetEnvironmentCheck()->SetWindStrengthFactor(m_fBlowoutWindPowerMax + ( m_fStoreWindPower - m_fBlowoutWindPowerMax)*
+	// 							float(m_dwBlowoutWindTimePeak - (u32)m_iStateTime)/
+	// 							float(m_dwBlowoutWindTimePeak - m_dwBlowoutWindTimeStart));
+	// }
+	// else
+	// {
+	// 	g_Engine->GetEnvironmentCheck()->SetWindStrengthFactor( m_fBlowoutWindPowerMax + (m_fStoreWindPower - m_fBlowoutWindPowerMax)*
+	// 		float((u32)m_iStateTime - m_dwBlowoutWindTimePeak)/
+	// 		float(m_dwBlowoutWindTimeEnd - m_dwBlowoutWindTimePeak));
+	// }
 }
 
 u32	CCustomZone::ef_anomaly_type	() const
