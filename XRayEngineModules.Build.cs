@@ -23,7 +23,6 @@ public class XRayEngineModules : ModuleRules
 
 
             PublicAdditionalLibraries.Add(Path.Combine(LibPath, "XrCore_" + ConfigureName + ".lib"));
-            PublicAdditionalLibraries.Add(Path.Combine(LibPath,"XrSound_"+ ConfigureName + ".lib"));
             PublicAdditionalLibraries.Add(Path.Combine(LibPath,"XrEngine_" + ConfigureName + ".lib"));
 			PublicAdditionalLibraries.Add(Path.Combine(LibPath,"XrCDB_" + ConfigureName + ".lib"));
 			PublicAdditionalLibraries.Add(Path.Combine(LibPath,"XrAPI_" + ConfigureName + ".lib"));
