@@ -63,7 +63,8 @@ void IGame_Level::Load()
 {
 	IReader F(nullptr,0);
 	pLevel						= xr_new<CInifile>	(&F);
-	
+
+	g_pGamePersistent->LoadTitle("st_loading_cform");
 	g_Engine->LoadCFormFormCurrentWorld(ObjectSpace, build_callback);
 	// HUD + Environment
 	if(!g_hud)

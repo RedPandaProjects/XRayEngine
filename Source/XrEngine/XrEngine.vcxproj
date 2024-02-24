@@ -196,6 +196,7 @@
     <ClInclude Include="IInputReceiver.h" />
     <ClInclude Include="Interfaces\Core\RBMKEngine.h" />
     <ClInclude Include="Interfaces\Core\RBMKLevelToBlueprint.h" />
+    <ClInclude Include="Interfaces\Core\RBMKLoadingScreenManager.h" />
     <ClInclude Include="Interfaces\Core\RBMKUnrealProxy.h" />
     <ClInclude Include="Interfaces\Environment\RBMKEnvironment.h" />
     <ClInclude Include="Interfaces\Sound\RBMKSoundActorListener.h" />
@@ -364,6 +365,7 @@
     <ClCompile Include="IGame_Persistent.cpp" />
     <ClCompile Include="IInputReceiver.cpp" />
     <ClCompile Include="Interfaces\Core\RBMKEngine.cpp" />
+    <ClCompile Include="Interfaces\Core\RBMKLoadingScreenManager.cpp" />
     <ClCompile Include="Interfaces\Core\RBMKUnrealProxy.cpp" />
     <ClCompile Include="Interfaces\Environment\RBMKEnvironment.cpp" />
     <ClCompile Include="Interfaces\Sound\RBMKSoundActorListener.cpp" />

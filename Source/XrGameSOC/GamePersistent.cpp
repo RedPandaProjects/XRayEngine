@@ -1,4 +1,7 @@
 #include "pch_script.h"
+
+#include "string_table.h"
+
 #include "gamepersistent.h"
 #include "../XrEngine/fmesh.h"
 #include "../XrEngine/xr_ioconsole.h"
@@ -435,6 +438,8 @@ void CGamePersistent::OnEvent(EVENT E, u64 P1, u64 P2)
 {
 	if(E==eQuickLoad)
 	{
+		g_Engine->GetLoadingScreen()->Play(false,9);
+		g_pGamePersistent->LoadTitle("st_client_synchronising");
 		if (Device->Paused())
 			Device->Pause		(FALSE, TRUE, TRUE, "eQuickLoad");
 		
@@ -445,6 +450,7 @@ void CGamePersistent::OnEvent(EVENT E, u64 P1, u64 P2)
 		R_ASSERT				(game);
 		game->restart_simulator	(saved_name);
 		xr_free					(saved_name);
+		g_Engine->GetLoadingScreen()->Wait();
 		return;
 	}else
 	if(E==eDemoStart)
@@ -528,6 +534,9 @@ void CGamePersistent::OnRenderPPUI_PP()
 }
 void CGamePersistent::LoadTitle(LPCSTR str)
 {
+	string512			buff;
+	sprintf_s				(buff, "%s...", CStringTable().translate(str).c_str());
+	g_Engine->GetLoadingScreen()->SetTitle(buff);
 }
 
 bool CGamePersistent::CanBePaused()

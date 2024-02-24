@@ -20,7 +20,7 @@ public:
 
 	virtual void				Stop							() = 0;
 	virtual void				StopWithFade					() = 0;
-	virtual void				Pause							(bool Paused) = 0;
+	//virtual void				Pause							(bool Paused) = 0;
 	virtual void				SetVolume						(float NewVolume) = 0;
 	virtual void				SetFrequency					(float NewFrequency) = 0;
 	virtual void				SetPosition						(const Fvector&InPosition) = 0;
@@ -62,7 +62,7 @@ public:
 	void						Stop						();
 	void						StopWithFade				();
 	bool						IsPlaying					()const;
-	void						Pause						(bool Paused) ;
+//	void						Pause						(bool Paused) ;
 	void						SetVolume					(float NewVolume);
 	void						SetFrequency				(float NewFrequency);
 	void						SetPosition					(const Fvector&InPosition);

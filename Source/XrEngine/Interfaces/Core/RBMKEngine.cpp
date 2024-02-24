@@ -123,20 +123,18 @@ void IRBMKEngine::OnFrame()
 	//	g_pGameLevel->SoundEvent_Dispatch();
 	//}
 	Device->seqFrame.Process(rp_Frame);
+	if(NeedRunGame)
+	{
+		NeedRunGame = false;
+		OnRunGame(RunGame_ServerParams.c_str(),RunGame_ClientParams.c_str());
+	}
 }
 
 void IRBMKEngine::RunGame			(const char* ServerParams, const char* ClientParams)
 {
-	R_ASSERT(0 == g_pGameLevel);
-	R_ASSERT(0 != g_pGamePersistent);
-	{
-		Console->Execute("main_menu off");
-		Console->Hide();
-		g_pGamePersistent->PreStart(ServerParams);
-		g_pGameLevel = (IGame_Level*)NEW_INSTANCE(CLSID_GAME_LEVEL);
-		g_pGamePersistent->Start(ServerParams);
-		g_pGameLevel->net_Start(ServerParams, ClientParams);
-	}
+	NeedRunGame = true;
+	RunGame_ServerParams = ServerParams;
+	RunGame_ClientParams = ClientParams;
 }
 
 void IRBMKEngine::StopGame			()
@@ -414,6 +412,20 @@ void IRBMKEngine::destroyEngine()
 	Engine->Destroy();
 	xr_delete(Device->Statistic);
 	xr_delete(XRC);
+}
+
+void IRBMKEngine::OnRunGame(const char* ServerParams, const char* ClientParams)
+{
+	R_ASSERT(0 == g_pGameLevel);
+	R_ASSERT(0 != g_pGamePersistent);
+	{
+		Console->Execute("main_menu off");
+		Console->Hide();
+		g_pGamePersistent->PreStart(ServerParams);
+		g_pGameLevel = (IGame_Level*)NEW_INSTANCE(CLSID_GAME_LEVEL);
+		g_pGamePersistent->Start(ServerParams);
+		g_pGameLevel->net_Start(ServerParams, ClientParams);
+	}
 }
 
 

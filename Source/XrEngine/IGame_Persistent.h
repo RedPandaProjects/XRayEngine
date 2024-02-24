@@ -74,7 +74,7 @@ public:
 	virtual void					OnAppDeactivate		();
 	virtual void		_BCL		OnFrame				();
 
-	// вызывается только когда изменяется тип игры
+	// РІС‹Р·С‹РІР°РµС‚СЃСЏ С‚РѕР»СЊРєРѕ РєРѕРіРґР° РёР·РјРµРЅСЏРµС‚СЃСЏ С‚РёРї РёРіСЂС‹
 	virtual	void					OnGameStart			(); 
 	virtual void					OnGameEnd			();
 
@@ -93,6 +93,7 @@ public:
 	ICF		u32						GameType			() {return m_game_params.m_e_game_type;};
 	virtual void					Statistics			(CGameFont* F) = 0;
 	virtual bool					CanBePaused			()		{ return true;}
+	virtual	void					LoadTitle			(LPCSTR str){}
 };
 
 class IMainMenu

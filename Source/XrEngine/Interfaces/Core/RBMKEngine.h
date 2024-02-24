@@ -1,5 +1,6 @@
 #pragma once
 #include "RBMKLevelToBlueprint.h"
+#include "RBMKLoadingScreenManager.h"
 #include "../Sound/RBMKSoundManager.h"
 #include "../Environment/RBMKEnvironment.h"
 enum class ERBMKWorldStatus
@@ -20,9 +21,10 @@ public:
 	 
 	virtual	void							OnEvent						(EVENT E, u64 P1, u64 P2);
 	virtual void							OnFrame						();
+	virtual void							OnRunGame					(const char* ServerParams = "unreal/single/alife/new" ,const char*ClientParams = "localhost");
 
 	virtual void							Exit						() = 0;
-	virtual void							RunGame						(const char* ServerParams = "unreal/single/alife/new" ,const char*ClientParams = "localhost");
+			void							RunGame						(const char* ServerParams = "unreal/single/alife/new" ,const char*ClientParams = "localhost");
 	virtual void							StopGame					();
 	virtual void							LoadDefaultWorld			() = 0;
 	virtual bool							IsRunningGame				();
@@ -39,10 +41,11 @@ public:
 	virtual ERBMKWorldStatus				GetWorldStatus				() = 0;
 
 			IRBMKLevelToBlueprint*			GetLevelScript				();
-
+	virtual IRBMKLoadingScreenManager*		GetLoadingScreen			() = 0;
 	virtual IRBMKSoundManager*				GetSoundManager				() = 0;
 	virtual IRBMKEnvironment*				GetEnvironment				() = 0;
 			IRBMKEnvironment*				GetEnvironmentCheck			() {IRBMKEnvironment* Environment = GetEnvironment();R_ASSERT(Environment); return Environment;};
+
 private:
 	void									InitEngine					();
 	void									InitSettings				();
@@ -61,6 +64,10 @@ private:
 	EVENT									eDisconnect;
 	EVENT									eConsole;
 	EVENT									eStartMPDemo;
+
+	bool									NeedRunGame = false;
+	shared_str								RunGame_ServerParams;
+	shared_str								RunGame_ClientParams;
 };
 
 extern ENGINE_API	IRBMKEngine*	g_Engine;

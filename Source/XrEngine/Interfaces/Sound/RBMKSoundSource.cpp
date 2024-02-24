@@ -77,13 +77,13 @@ bool FRBMKSoundSourceRef::IsPlaying() const
 	return false;
 }
 
-void FRBMKSoundSourceRef::Pause(bool Paused)
-{
-	if(SoundSource)
-	{
-		SoundSource->Pause(Paused);
-	}
-}
+// void FRBMKSoundSourceRef::Pause(bool Paused)
+// {
+// 	if(SoundSource)
+// 	{
+// 		SoundSource->Pause(Paused);
+// 	}
+// }
 
 void FRBMKSoundSourceRef::SetVolume(float NewVolume)
 {

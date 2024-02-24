@@ -16,6 +16,15 @@ BOOL CLevel::net_Start_client	( LPCSTR options )
 #include "string_table.h"
 bool	CLevel::net_start_client1				()
 {
+	string64					name_of_server = "";
+	if (strchr(*m_caClientOptions, '/'))
+		strncpy(name_of_server,*m_caClientOptions, strchr(*m_caClientOptions, '/')-*m_caClientOptions);
+	
+	string256					temp;
+	sprintf_s						(temp,"%s %s",
+								CStringTable().translate("st_client_connecting_to").c_str(), name_of_server);
+
+	g_pGamePersistent->LoadTitle				(temp);
 	return true;
 }
 
@@ -53,7 +62,8 @@ bool	CLevel::net_start_client3				()
 
 		m_name					= level_name;
 		// Load level
-		// 
+		//
+		g_pGamePersistent->LoadTitle("st_loading_map");
 		g_Engine->LoadWorld(level_name);
 
 	}
@@ -78,7 +88,7 @@ bool	CLevel::net_start_client4				()
 			return true;
 		}
 		Load();
-
+		g_pGamePersistent->LoadTitle("st_client_spawning");
 		// Send physics to single or multithreaded mode
 		LoadPhysicsGameParams				();
 		ph_world							= xr_new<CPHWorld>();
@@ -135,7 +145,7 @@ bool	CLevel::net_start_client6				()
 		if(g_hud)
 			g_hud->OnConnected				();
 
-
+		g_pGamePersistent->LoadTitle("st_client_synchronising");
 		Device->PreCache						(30,true,true);
 		net_start_result_total				= TRUE;
 	}
