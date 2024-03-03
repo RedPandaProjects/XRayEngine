@@ -373,7 +373,7 @@ public:
 	virtual void				Think					();
 	virtual void				SelectAnimation			(const Fvector& _view, const Fvector& _move, float speed );
 	virtual void				Exec_Action				(float dt);
-	virtual	void				feel_sound_new			(CObject* who, int type, CSound_UserDataPtr user_data, const Fvector &Position, float power);
+	virtual	void				ListenSound				(CObject* InSourceActor, s32 SoundFlags,const Fvector& InPosition, float InnPower, CSound_UserDataPtr UserData) override;
 	virtual void				feel_touch_new			(CObject* O);
 	virtual BOOL				feel_touch_on_contact	(CObject* O);
 	virtual BOOL				feel_vision_isRelevant	(CObject*);
@@ -423,7 +423,6 @@ public:
 	virtual void				setup_physic_shell		();
 	virtual void				activate_physic_shell	();
 	virtual void				on_activate_physic_shell();
-	virtual	Feel::Sound*		dcast_FeelSound			()			{ return this;	}
 	virtual bool				use_model_pitch			() const;
 	virtual float				get_custom_pitch_speed	(float def_speed);
 

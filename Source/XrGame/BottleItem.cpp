@@ -5,6 +5,8 @@
 
 #include "stdafx.h"
 #include "BottleItem.h"
+
+#include "ai_sounds.h"
 #include "xrmessages.h"
 #include "entity_alive.h"
 #include "EntityCondition.h"
@@ -17,7 +19,7 @@ CBottleItem::CBottleItem(void)
 
 CBottleItem::~CBottleItem(void) 
 {
-	sndBreaking.destroy();
+	sndBreaking.Reset();
 }
 
 
@@ -29,7 +31,7 @@ void CBottleItem::Load(LPCSTR section)
 		m_sBreakParticles = pSettings->r_string(section, "break_particles");
 
 	if(pSettings->line_exist(section, "break_sound"))
-		sndBreaking.create(pSettings->r_string(section, "break_sound"),st_Effect,sg_SourceType);
+		sndBreaking.Create(pSettings->r_string(section, "break_sound"),SOUND_TYPE_FROM_SOURCE);
 
 }
 
@@ -48,7 +50,7 @@ void CBottleItem::OnEvent(NET_Packet& P, u16 type)
 void CBottleItem::BreakToPieces()
 {
 	//играем звук
-	sndBreaking.play_at_pos(0, Position(), false);
+	sndBreaking.Play(0, Position(), false);
 
 	//отыграть партиклы разбивания
 	if(*m_sBreakParticles)

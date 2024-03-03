@@ -6,6 +6,8 @@
 #include "hit_immunity.h"
 #include "damage_manager.h"
 #include "DestroyablePhysicsObject.h"
+
+#include "ai_sounds.h"
 #include "../XrEngine/Render/KinematicsAnimated.h"
 #include "../XrEngine/Render/Kinematics.h"
 #include "xrServer_Objects_ALife.h"
@@ -62,7 +64,7 @@ BOOL CDestroyablePhysicsObject::net_Spawn(CSE_Abstract* DC)
 	if(ini){	
 		if(ini->section_exist("immunities"))		CHitImmunity::LoadImmunities("immunities",ini);
 		CPHCollisionDamageReceiver::Init();
-		if(ini->section_exist("sound"))				m_destroy_sound.create(ini->r_string("sound","break_sound"),st_Effect,sg_SourceType);
+		if(ini->section_exist("sound"))				m_destroy_sound.Create(ini->r_string("sound","break_sound"),SOUND_TYPE_FROM_SOURCE);
 		if(ini->section_exist("particles"))			m_destroy_particles=ini->r_string("particles","destroy_particles");
 	}
 	CParticlesPlayer::LoadParticles(K);
@@ -101,9 +103,9 @@ void CDestroyablePhysicsObject::Destroy()
 	const CGameObject *who_object = smart_cast<const CGameObject*>(FatalHit().initiator());
 	callback(GameObject::eDeath)(lua_game_object(),who_object  ? who_object : 0);
 	CPHDestroyable::Destroy(ID(),"physic_destroyable_object");
-	if(m_destroy_sound._handle())
+	if(m_destroy_sound.IsValid())
 	{
-		m_destroy_sound.play_at_pos(this,Position());
+		m_destroy_sound.Play(this,Position());
 	}
 	if(*m_destroy_particles)
 	{		
@@ -147,7 +149,7 @@ void CDestroyablePhysicsObject::shedule_Update(u32 dt)
 
 bool CDestroyablePhysicsObject::CanRemoveObject()
 {
-	return !CParticlesPlayer::IsPlaying()&& !m_destroy_sound._feedback();//&& sound!
+	return !CParticlesPlayer::IsPlaying()&& !m_destroy_sound.IsPlaying();//&& sound!
 }
 DLL_Pure	*CDestroyablePhysicsObject::_construct()
 {

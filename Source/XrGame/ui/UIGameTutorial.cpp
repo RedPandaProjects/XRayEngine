@@ -1,5 +1,7 @@
 #include "pch_script.h"
 #include "UIGameTutorial.h"
+
+#include "ai_sounds.h"
 #include "UIWindow.h"
 #include "UIStatic.h"
 #include "UIXmlInit.h"
@@ -138,8 +140,8 @@ void CUISequencer::Start(LPCSTR tutor_name)
 	LPCSTR snd_name				= uiXml.Read("sound", 0, "");
 	if (snd_name && snd_name[0])
 	{
-		m_global_sound.create	(snd_name, st_Effect,sg_Undefined);	
-		VERIFY					(m_global_sound._handle() || strstr(Core.Params,"-nosound"));
+		m_global_sound.Create	(snd_name, SOUND_TYPE_NO_SOUND);	
+		VERIFY					(m_global_sound.IsValid() || strstr(Core.Params,"-nosound"));
 	}
 	m_start_lua_function		= uiXml.Read("function_on_start", 0, "");
 	m_stop_lua_function			= uiXml.Read("function_on_stop", 0, "");
@@ -177,8 +179,8 @@ void CUISequencer::Start(LPCSTR tutor_name)
 	if(m_flags.test(etsNeedPauseOff) && m_flags.test(etsStoredPauseState))
 		Device->Pause			(FALSE, TRUE, FALSE, "tutorial_start");
 
-	if (m_global_sound._handle())		
-		m_global_sound.play(NULL, sm_2D);
+	if (m_global_sound.IsValid())		
+		m_global_sound.Play(NULL);
 
 	if(m_start_lua_function.size())
 		CallFunction(m_start_lua_function);
@@ -224,7 +226,7 @@ void CUISequencer::Destroy()
 	if(m_stop_lua_function.size())
 		CallFunction(m_stop_lua_function);
 
-	m_global_sound.stop			();
+	m_global_sound.Stop			();
 	Device->seqFrame.Remove		(this);
 	Device->seqRenderUI.Remove		(this);
 	delete_data					(m_sequencer_items);

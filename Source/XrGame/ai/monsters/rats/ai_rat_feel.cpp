@@ -20,7 +20,7 @@ BOOL CAI_Rat::feel_vision_isRelevant(CObject* O)
 	return TRUE;
 }
 
-void CAI_Rat::feel_sound_new(CObject* who, int eType, CSound_UserDataPtr user_data, const Fvector &Position, float power)
+void CAI_Rat::ListenSound(CObject* who, s32 eType,const Fvector& Position, float power, CSound_UserDataPtr user_data)
 {
 	if (!g_Alive())
 		return;
@@ -46,7 +46,7 @@ void CAI_Rat::feel_sound_new(CObject* who, int eType, CSound_UserDataPtr user_da
 		}
 	}
 
-	inherited::feel_sound_new	(who,eType,user_data,Position,power);
+	inherited::ListenSound	(who,eType,Position,power,user_data);
 }
 
 BOOL CAI_Rat::feel_touch_on_contact	(CObject *O)

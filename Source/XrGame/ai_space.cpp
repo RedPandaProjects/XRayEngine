@@ -21,7 +21,6 @@
 #include "doors_manager.h"
 #include "../xrEngine/dedicated_server_only.h"
 #include "../xrEngine/no_single.h"
-#include "../XrEngine/XRayEngineInterface.h"
 
 CAI_Space *g_ai_space = 0;
 
@@ -92,7 +91,7 @@ CAI_Space::~CAI_Space				()
 }
 void CAI_Space::load_from_editor()
 {
-#ifndef MASTER_GOLD
+#if 0
 	unload(true);
 
 #ifdef DEBUG

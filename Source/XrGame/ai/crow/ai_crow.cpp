@@ -10,6 +10,8 @@
 #include "../../../xrphysics/physicsshell.h"
 #include "../../../xrphysics/phvalide.h"
 #include "ai_crow.h"
+
+#include "ai_sounds.h"
 #include "../../level.h"
 #include "../XrEngine/Render/RenderVisual.h"
 #include "../XrEngine/Render/Kinematics.h"
@@ -40,15 +42,15 @@ void CAI_Crow::SSound::Load	(LPCSTR prefix)
 {
 	string_path	fn;
 	if (FS.exist(fn,"$game_sounds$",prefix,".ogg")){
-		m_Sounds.push_back	(ref_sound());
-		::Sound->create		(m_Sounds.back(),prefix,st_Effect,sg_SourceType);
+		m_Sounds.push_back	(FRBMKSoundSourceRef());
+		m_Sounds.back().Create(prefix,SOUND_TYPE_FROM_SOURCE);
 	}
 	for (int i=0; (i<MAX_SND_COUNT)&&(m_Sounds.size()<MAX_SND_COUNT); ++i){
 		string64		name;
 		xr_sprintf			(name,"%s_%d",prefix,i);
 		if (FS.exist(fn,"$game_sounds$",name,".ogg")){
-			m_Sounds.push_back(ref_sound());
-			::Sound->create(m_Sounds.back(),name,st_Effect,sg_SourceType);
+			m_Sounds.push_back(FRBMKSoundSourceRef());
+			m_Sounds.back().Create(name,SOUND_TYPE_FROM_SOURCE);
 		}
 	}
 	R_ASSERT(m_Sounds.size());
@@ -58,14 +60,14 @@ void CAI_Crow::SSound::Load	(LPCSTR prefix)
 void CAI_Crow::SSound::SetPosition	(const Fvector& pos)
 {
 	for (int i=0; i<(int)m_Sounds.size(); ++i)
-		if (m_Sounds[i]._feedback())
-			m_Sounds[i].set_position(pos);
+		if (m_Sounds[i].IsPlaying())
+			m_Sounds[i].SetPosition(pos);
 }
 
 void CAI_Crow::SSound::Unload		()
 {
 	for (int i=0; i<(int)m_Sounds.size(); ++i)
-		::Sound->destroy	(m_Sounds[i]);
+		m_Sounds[i].Reset();
 }
 
 void cb_OnHitEndPlaying			(CBlend* B)
@@ -338,7 +340,7 @@ void CAI_Crow::shedule_Update		(u32 DT)
 		if (fIdleSoundTime<=0){
 			fIdleSoundTime	= fIdleSoundDelta+fIdleSoundDelta*Random.randF(-0.5f,0.5f);
 			//if (st_current==eFlyIdle)
-			::Sound->play_at_pos(m_Sounds.m_idle.GetRandom(),H_Root(),Position());
+			m_Sounds.m_idle.GetRandom().Play( H_Root(),Position());
 		}
 		fIdleSoundTime		-= fDT;
 	}

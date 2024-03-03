@@ -167,13 +167,13 @@ protected:
 	//typedef xr_vector<SMedicineInfluenceValues> BOOSTS_VECTOR;
 	//typedef xr_vector<SMedicineInfluenceValues>::iterator BOOSTS_VECTOR_ITER;
 	//BOOSTS_VECTOR m_vecBoosts;
-	ref_sound m_use_sound;
+	FRBMKSoundSourceRef m_use_sound;
 };
 
 class CActorDeathEffector
 {
 	CActorCondition*		m_pParent;
-	ref_sound				m_death_sound;
+	FRBMKSoundSourceRef				m_death_sound;
 	bool					m_b_actual;
 	float					m_start_health;
 	void 			OnPPEffectorReleased		();

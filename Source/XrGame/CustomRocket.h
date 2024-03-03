@@ -132,7 +132,7 @@ protected:
 	ref_light		m_pTrailLight;
 	Fcolor			m_TrailLightColor;
 	float			m_fTrailLightRange;
-	ref_sound		m_flyingSound;
+	FRBMKSoundSourceRef		m_flyingSound;
 
 protected:
 	virtual void	StartLights();

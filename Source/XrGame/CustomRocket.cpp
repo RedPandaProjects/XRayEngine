@@ -18,6 +18,7 @@
 #include "../XrEngine/Render/RenderVisual.h"
 //#include "CalculateTriangle.h"
 #include "actor.h"
+#include "ai_sounds.h"
 #ifdef DEBUG
 #include "PHDebug.h"
 #include "game_base_space.h"
@@ -319,7 +320,7 @@ void  CCustomRocket::reload		(LPCSTR section)
 		m_sFlyParticles	= pSettings->r_string(section,"fly_particles");
 
 	if(pSettings->line_exist(section,"snd_fly_sound")){
-		m_flyingSound.create(pSettings->r_string(section,"snd_fly_sound"),st_Effect,sg_SourceType);
+		m_flyingSound.Create(pSettings->r_string(section,"snd_fly_sound"),SOUND_TYPE_FROM_SOURCE);
 	}
 
 	
@@ -553,8 +554,8 @@ void CCustomRocket::PhTune					(float step)
 
 void CCustomRocket::UpdateParticles()
 {
-	if(m_flyingSound._handle() && m_flyingSound._feedback())
-		m_flyingSound.set_position( XFORM().c );
+	if(m_flyingSound.IsPlaying())
+		m_flyingSound.SetPosition( XFORM().c );
 
 	if(!m_pEngineParticles && !m_pFlyParticles) return;
 
@@ -601,8 +602,8 @@ void CCustomRocket::StopEngineParticles()
 }
 void CCustomRocket::StartFlyParticles()
 {
-	if(m_flyingSound._handle())
-		m_flyingSound.play_at_pos(0, XFORM().c, sm_Looped );
+	if(m_flyingSound.IsValid())
+		m_flyingSound.Play(0, XFORM().c, true );
 
 	VERIFY(m_pFlyParticles == NULL);
 
@@ -617,8 +618,8 @@ void CCustomRocket::StartFlyParticles()
 }
 void CCustomRocket::StopFlyParticles()
 {
-	if(m_flyingSound._handle())
-		m_flyingSound.stop();
+	if(m_flyingSound.IsPlaying())
+		m_flyingSound.Stop();
 
 	if(m_pFlyParticles == NULL) return;
 	m_pFlyParticles->Stop();

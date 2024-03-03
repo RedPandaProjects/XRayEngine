@@ -20,7 +20,7 @@ CUIMMShniaga::CUIMMShniaga(){
 
 	m_view			= xr_new<CUIScrollView>();	AttachChild(m_view);
 	m_shniaga		= xr_new<CUIStatic>();	AttachChild(m_shniaga);
-	m_magnifier		= xr_new<CUIStatic>();	m_shniaga->AttachChild(m_magnifier);	//m_magnifier->SetPPMode();
+	m_magnifier		= xr_new<CUIStatic>();	m_shniaga->AttachChild(m_magnifier);	m_magnifier->SetPPMode();
 
 	m_mag_pos = 0;
 
@@ -323,12 +323,12 @@ bool b_shniaganeed_pp = true;
 void CUIMMShniaga::SetVisibleMagnifier(bool f)
 {
 	b_shniaganeed_pp = f;
-	/*Fvector2 pos = m_magnifier->GetWndPos();
+	Fvector2 pos = m_magnifier->GetWndPos();
 	if (f)
 		pos.x = m_mag_pos;
 	else
 		pos.x = 1025;
-	m_magnifier->SetWndPos(pos);*/
+	m_magnifier->SetWndPos(pos);
 }
 
 void CUIMMShniaga::ProcessEvent(EVENT ev){

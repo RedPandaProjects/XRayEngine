@@ -46,7 +46,7 @@ private:
 			void		PlaySoundH					();
 			void		PlaySoundT					();
 
-	ref_sound			m_sound_h;
-	ref_sound			m_sound_t;	
+	FRBMKSoundSourceRef			m_sound_h;
+	FRBMKSoundSourceRef			m_sound_t;	
 
 }; // class CUI3tButton

@@ -305,7 +305,7 @@ float CStepManager::get_blend_time()
 
 void CStepManager::material_sound::play_next(SGameMtlPair* mtl_pair, CEntityAlive* object, float volume, bool b_hud_mode)
 {
-	if (mtl_pair->StepSounds.empty() ) 
+	if (mtl_pair->StepSoundsNames.empty() ) 
 		return;
 
 	Fvector sound_pos	= object->Position();
@@ -313,12 +313,12 @@ void CStepManager::material_sound::play_next(SGameMtlPair* mtl_pair, CEntityAliv
 
 	if( last_mtl_pair!= mtl_pair || m_last_step_sound_played == u8(-1) )
 	{
-		m_last_step_sound_played	= u8( Random.randI(mtl_pair->StepSounds.size()) );
+		m_last_step_sound_played	= u8( Random.randI(mtl_pair->StepSoundsNames.size()) );
 		last_mtl_pair				= mtl_pair; 
 	} else 
 	{
 		
-		u8 new_played = u8 ( ( m_last_step_sound_played + 1 +  Random.randI(mtl_pair->StepSounds.size()-1) ) % mtl_pair->StepSounds.size() );
+		u8 new_played = u8 ( ( m_last_step_sound_played + 1 +  Random.randI(mtl_pair->StepSoundsNames.size()-1) ) % mtl_pair->StepSoundsNames.size() );
 	
 		m_last_step_sound_played = new_played;
 	}
@@ -327,9 +327,15 @@ void CStepManager::material_sound::play_next(SGameMtlPair* mtl_pair, CEntityAliv
 	if(b_hud_mode)
 		sound_pos.set(0,0,0);
 
-	mtl_pair->StepSounds[m_last_step_sound_played].play_no_feedback(object, 
-																	b_hud_mode? sm_2D:0, 
-																	0, 
-																	&sound_pos, 
-																	&vol );
+	FRBMKSoundSourceRef Sound;
+	Sound.Create(mtl_pair->StepSoundsNames[m_last_step_sound_played].c_str());
+	if(b_hud_mode)
+	{
+		Sound.PlayWithoutFeedback(object,false,0, &vol );
+	}
+	else
+	{
+		Sound.PlayWithoutFeedback(object, sound_pos,false,0, &vol );
+	}
+
 }

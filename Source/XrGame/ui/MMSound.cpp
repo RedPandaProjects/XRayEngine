@@ -1,6 +1,8 @@
 #include "StdAfx.h"
 
 #include "MMSound.h"
+
+#include "ai_sounds.h"
 #include "xrUIXmlParser.h"
 
 CMMSound::CMMSound()
@@ -25,12 +27,11 @@ void CMMSound::Init(CUIXml& xml_doc, LPCSTR path){
 
     strconcat(sizeof(_path),_path, path,":whell_sound");
 	if (check_file(xml_doc.Read(_path, 0, "")))
-        m_whell.create(xml_doc.Read(_path, 0, "") ,st_Effect,sg_SourceType);
+        m_whell.Create(xml_doc.Read(_path, 0, "") ,SOUND_TYPE_FROM_SOURCE);
 
 	strconcat(sizeof(_path),_path, path,":whell_click");
 	if (check_file(xml_doc.Read(_path, 0, "")))
-        m_whell_click.create(xml_doc.Read(_path, 0, ""),st_Effect,sg_SourceType );
-
+        m_whell_click.Create(xml_doc.Read(_path, 0, ""),SOUND_TYPE_FROM_SOURCE );
 }
 
 bool CMMSound::check_file(LPCSTR fname){
@@ -42,26 +43,26 @@ bool CMMSound::check_file(LPCSTR fname){
 void CMMSound::whell_Play()
 {
 
-	if (m_whell._handle() && !m_whell._feedback())
-		m_whell.play(NULL, sm_Looped | sm_2D);
+	if (m_whell.IsValid() && !m_whell.IsPlaying())
+		m_whell.Play(NULL, true);
 
 }
 
 void CMMSound::whell_Stop(){
-	if (m_whell._feedback())
-		m_whell.stop();
+	if (m_whell.IsPlaying())
+		m_whell.Stop();
 }
 
 void CMMSound::whell_Click()
 {
 
-   	if (m_whell_click._handle())
-		m_whell_click.play(NULL, sm_2D);
+   	if (m_whell_click.IsValid())
+		m_whell_click.Play(NULL);
 
 }
 
 void CMMSound::whell_UpdateMoving(float frequency){
-	m_whell.set_frequency(frequency);
+	m_whell.SetFrequency(frequency);
 }
 
 void CMMSound::music_Play()
@@ -75,25 +76,25 @@ void CMMSound::music_Play()
 	strconcat		(sizeof(_path),_path, m_play_list[i].c_str(), ".ogg");
 	VERIFY			(FS.exist("$game_sounds$", _path ));	
 
-	m_music_stereo.create(_path,st_Music,sg_SourceType);
-    m_music_stereo.play(NULL, sm_2D);
+	m_music_stereo.Create(_path,SOUND_TYPE_FROM_SOURCE);
+    m_music_stereo.Play(NULL);
 }
 
 void CMMSound::music_Update()
 {
 	if (Device->Paused()) return;
 
-	if ( 0==m_music_stereo._feedback() )
+	if ( 0==m_music_stereo.IsPlaying() )
 		music_Play();
 }
 
 void CMMSound::music_Stop()
 {
-	m_music_stereo.stop();
+	m_music_stereo.Stop();
 }
 
 void CMMSound::all_Stop(){
 	music_Stop();
-	m_whell.stop();
-	m_whell_click.stop();
+	m_whell.Stop();
+	m_whell_click.Stop();
 }

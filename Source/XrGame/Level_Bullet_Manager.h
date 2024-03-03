@@ -66,8 +66,8 @@ struct SBullet
 	ALife::EHitType hit_type			;
 	//---------------------------------
 	u32				m_dwID				;
-	ref_sound		m_whine_snd			;
-	ref_sound		m_mtl_snd			;
+	FRBMKSoundSourceRef		m_whine_snd			;
+	FRBMKSoundSourceRef		m_mtl_snd			;
 	//---------------------------------
 	u16				targetID			;
 	//---------------------------------
@@ -108,7 +108,7 @@ private:
 	collide::rq_results		m_rq_results;
 
 private:
-	DEFINE_VECTOR						(ref_sound,SoundVec,SoundVecIt);
+	DEFINE_VECTOR						(FRBMKSoundSourceRef,SoundVec,SoundVecIt);
 	DEFINE_VECTOR						(SBullet,BulletVec,BulletVecIt);
 	friend	CLevel;
 

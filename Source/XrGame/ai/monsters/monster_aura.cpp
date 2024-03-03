@@ -116,10 +116,10 @@ void   monster_aura::load_from_ini (CInifile const* ini, pcstr const section, bo
 	pcstr const detect_sound_name	=	READ_IF_EXISTS(ini, r_string, section, detect_sound_string, NULL);
 
 	if(sound_name)
-		m_sound.create					(sound_name, st_Effect, sg_SourceType);
+		m_sound.Create					(sound_name, SOUND_TYPE_FROM_SOURCE);
 
 	if(detect_sound_name)
-		m_detect_sound.create			(detect_sound_name, st_Effect, sg_SourceType);
+		m_detect_sound.Create			(detect_sound_name,  SOUND_TYPE_FROM_SOURCE);
 
 	if(m_pp_effector_name || m_max_power || m_max_distance || sound_name || detect_sound_name)
 		m_enabled = true;
@@ -142,8 +142,8 @@ void   monster_aura::remove_pp_effector ()
 		RemoveEffector					(Actor(), m_pp_index);
 		m_pp_index					=	0;
 
-		m_sound.stop					();
-		m_detect_sound.stop				();
+		m_sound.Stop					();
+		m_detect_sound.Stop				();
 	}
 }
 
@@ -174,7 +174,7 @@ void   monster_aura::play_detector_sound()
 
 		if(m_detect_snd_time > cur_period)
 		{
-			m_detect_sound.play_at_pos		(Actor(), Fvector().set(0.f, 1.f, 0.f), sm_2D);
+			m_detect_sound.Play		(Actor());
 			m_detect_snd_time = 0.0f;
 		} 
 		else
@@ -184,8 +184,8 @@ void   monster_aura::play_detector_sound()
 
 void   monster_aura::on_monster_death ()
 {
-	m_sound.stop();
-	m_detect_sound.stop();
+	m_sound.Stop();
+	m_detect_sound.Stop();
 }
 
 void   monster_aura::update_schedule ()
@@ -198,14 +198,14 @@ void   monster_aura::update_schedule ()
 
 	float const pp_factor			=	get_post_process_factor();
 
-	if ( !m_sound._feedback() )
+	if ( !m_sound.IsPlaying() )
 	{
-		m_sound.play_at_pos				(Actor(), Fvector().set(0.f, 1.f, 0.f), sm_Looped | sm_2D);
+		m_sound.Play				(Actor(),true);
 	} 
 
-	if ( m_sound._feedback() )
+	if ( m_sound.IsPlaying() )
 	{
-		m_sound.set_volume				(pp_factor);
+		m_sound.SetVolume				(pp_factor);
 	}
 
 	if ( !m_pp_effector_name )

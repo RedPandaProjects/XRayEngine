@@ -46,7 +46,7 @@ void CLevel::remove_objects	()
 
 		for (int i=0; i<20; ++i) 
 		{
-			snd_Events.clear		();
+		//	snd_Events.clear		();
 			psNET_Flags.set			(NETFLAG_MINIMIZEUPDATES,FALSE);
 			// ugly hack for checks that update is twice on frame
 			// we need it since we do updates for checking network messages

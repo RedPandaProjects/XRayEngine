@@ -359,7 +359,8 @@ void CMainMenu::OnRenderPPUI_PP	()
 	if ( !IsActive() ) return;
 
 	if(m_Flags.test(flGameSaveScreenshot))	return;
-
+	UIRender->PushLayer(ERBMKUILayer::Distort);
+	
 	UI()->pp_start();
 	
 	xr_vector<CUIWindow*>::iterator it = m_pp_draw_wnds.begin();
@@ -368,6 +369,8 @@ void CMainMenu::OnRenderPPUI_PP	()
 		(*it)->Draw();
 	}
 	UI()->pp_stop();
+	
+	UIRender->PopLayer();
 }
 
 void CMainMenu::StartStopMenu(CUIDialogWnd* pDialog, bool bDoHideIndicators)

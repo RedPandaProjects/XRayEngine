@@ -120,7 +120,7 @@ public:
 struct SArtefactDetectorsSupport
 {
 	CArtefact*						m_parent;
-	ref_sound						m_sound;
+	FRBMKSoundSourceRef						m_sound;
 
 	Fvector							m_path_moving_force;
 	u32								m_switchVisTime;

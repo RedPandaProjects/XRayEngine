@@ -1,4 +1,6 @@
 #include "pch_script.h"
+
+#include "ai_sounds.h"
 #include "UIGameTutorial.h"
 #include "UIWindow.h"
 #include "UIStatic.h"
@@ -30,7 +32,7 @@ CUISequenceVideoItem::CUISequenceVideoItem(CUISequencer* owner):CUISequenceItem(
 
 CUISequenceVideoItem::~CUISequenceVideoItem()
 {
-	m_sound.stop			();
+	m_sound.Stop			();
 	delete_data				(m_wnd);
 	delete_data				(m_wnd_bg);
 }
@@ -95,8 +97,8 @@ void CUISequenceVideoItem::Load(CUIXml* xml, int idx)
 
 	if (snd_name && snd_name[0])
 	{
-		m_sound.create		(snd_name,st_Effect,sg_Undefined);	
-		VERIFY				(m_sound._handle());
+		m_sound.Create		(snd_name,SOUND_TYPE_NO_SOUND);	
+		VERIFY				(m_sound.IsValid());
 	}
 	xml->SetLocalRoot		(_stored_root);
 }
@@ -125,13 +127,13 @@ void CUISequenceVideoItem::Update()
 		}
 	}else return;
 
-	u32 sync_tm				= (0==m_sound._handle())?Device->dwTimeContinual:(m_sound._feedback()?m_sound._feedback()->play_time():m_sync_time);
+	u32 sync_tm				= (0==m_sound.IsValid())?Device->dwTimeContinual:(m_sound.IsPlaying()?m_sound.GetDuration()*1000u:m_sync_time);
 	m_sync_time				= sync_tm;
 	// processing A&V
 
 	if (m_texture->HasTexture())
 	{
-		BOOL is_playing		= m_sound._handle() ? !!m_sound._feedback() : m_texture->video_IsPlaying();
+		BOOL is_playing		= m_sound.IsValid() ? !!m_sound.IsPlaying() : m_texture->video_IsPlaying();
 		if (is_playing)
 		{
 			m_texture->video_Sync(m_sync_time);
@@ -140,7 +142,7 @@ void CUISequenceVideoItem::Update()
 			// sync start
 			if (m_flags.test(etiNeedStart))
 			{
-				m_sound.play_at_pos		(NULL, Fvector().set(0.0f,0.f,0.0f), sm_2D);
+				m_sound.Play		(NULL);
 				m_texture->video_Play	(FALSE, m_sync_time);
 				m_flags.set				(etiNeedStart,FALSE);
 				CUIWindow* w			= m_owner->MainWnd()->FindChild("back");
@@ -206,7 +208,7 @@ bool CUISequenceVideoItem::Stop	(bool bForce)
 	if(Device->dwTimeContinual>=m_time_start && m_wnd->GetParent()==m_owner->MainWnd())
 		m_owner->MainWnd()->DetachChild(m_wnd);
 
-	m_sound.stop				();
+	m_sound.Stop				();
 	m_texture->ResetTexture		();
 
 	if(m_flags.test(etiNeedPauseOn) && !m_flags.test(etiStoredPauseState))

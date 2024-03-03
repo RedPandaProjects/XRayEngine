@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "UITalkWnd.h"
 
+#include "ai_sounds.h"
 #include "UITalkDialogWnd.h"
 
 #include "../actor.h"
@@ -224,7 +225,7 @@ void CUITalkWnd::Update()
 		CGameObject* pOtherGO	= smart_cast<CGameObject*>(m_pOthersInvOwner);
 		Fvector P				= pOtherGO->Position();
 		P.y						+= 1.8f;
-		m_sound.set_position	(P);
+		m_sound.SetPosition	(P);
 	}
 }
 
@@ -417,8 +418,8 @@ void CUITalkWnd::PlaySnd(LPCSTR text)
 			CGameObject* pOtherGO = smart_cast<CGameObject*>(m_pOthersInvOwner);
 			Fvector P = pOtherGO->Position();
 			P.y			+= 1.8f;
-			m_sound.create( fn, st_Effect, sg_SourceType );
-			m_sound.play_at_pos( 0, P );
+			m_sound.Create( fn,  SOUND_TYPE_FROM_SOURCE );
+			m_sound.Play( nullptr, P );
 		}
 	}
 }
@@ -427,8 +428,8 @@ void CUITalkWnd::StopSnd()
 {
 	if (m_pActor && m_pActor->OnDialogSoundHandlerStop(m_pOthersInvOwner)) return;
 
-	if(m_sound._feedback()) 
-		m_sound.stop	();
+	if(m_sound.IsPlaying()) 
+		m_sound.Stop	();
 }
 
 void CUITalkWnd::AddIconedMessage(LPCSTR caption, LPCSTR text, LPCSTR texture_name, LPCSTR templ_name)

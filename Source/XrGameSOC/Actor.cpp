@@ -1350,7 +1350,7 @@ void CActor::RenderIndicator			(Fvector dpos, float r1, float r2, ui_shader IndS
 	//dwCount 				= u32(pv-pv_start);
 	//RCache.Vertex.Unlock	(dwCount,hFriendlyIndicator->vb_stride);
 
-	UIRender->CacheSetXformWorld(Fidentity);
+	//UIRender->CacheSetXformWorld(Fidentity);
 	//RCache.set_xform_world		(Fidentity);
 	//RCache.set_Shader			(IndShader);
 	//RCache.set_Geometry			(hFriendlyIndicator);

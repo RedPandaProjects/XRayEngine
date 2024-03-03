@@ -30,7 +30,7 @@ void HUD_SOUND_ITEM::LoadSound(	LPCSTR section, LPCSTR line,
 
 void  HUD_SOUND_ITEM::LoadSound(LPCSTR section, 
 								LPCSTR line, 
-								ref_sound& snd, 
+								FRBMKSoundSourceRef& snd, 
 								int type,
 								float* volume, 
 								float* delay)
@@ -42,7 +42,7 @@ void  HUD_SOUND_ITEM::LoadSound(LPCSTR section,
 	R_ASSERT(count);
 
 	_GetItem(str, 0, buf_str);
-	snd.create(buf_str, st_Effect,type);
+	snd.Create(buf_str, type);
 
 
 	if(volume != NULL)
@@ -72,7 +72,7 @@ void HUD_SOUND_ITEM::DestroySound(HUD_SOUND_ITEM& hud_snd)
 {
 	xr_vector<SSnd>::iterator it = hud_snd.sounds.begin();
 	for(;it!=hud_snd.sounds.end();++it)
-		(*it).snd.destroy();
+		(*it).snd.Reset();
 	hud_snd.sounds.clear	();
 	
 	hud_snd.m_activeSnd		= NULL;
@@ -90,29 +90,29 @@ void HUD_SOUND_ITEM::PlaySound(	HUD_SOUND_ITEM&		hud_snd,
 	hud_snd.m_activeSnd			= NULL;
 	StopSound					(hud_snd);
 
-	u32 flags = b_hud_mode?sm_2D:0;
-	if(looped)
-		flags |= sm_Looped;
 
 	if(index==u8(-1))
 		index = (u8)Random.randI(hud_snd.sounds.size());
 
 	hud_snd.m_activeSnd = &hud_snd.sounds[ index ];
 	
+	if(b_hud_mode)
+	{
+		hud_snd.m_activeSnd->snd.Play(	const_cast<CObject*>(parent),looped,hud_snd.m_activeSnd->delay);
+	}
+	else
+	{
+		hud_snd.m_activeSnd->snd.Play(	const_cast<CObject*>(parent),position,looped,hud_snd.m_activeSnd->delay);
+	}
 
-	hud_snd.m_activeSnd->snd.play_at_pos(	const_cast<CObject*>(parent),
-											flags&sm_2D?Fvector().set(0,0,0):position,
-											flags,
-											hud_snd.m_activeSnd->delay);
-
-	hud_snd.m_activeSnd->snd.set_volume		(hud_snd.m_activeSnd->volume * b_hud_mode?psHUDSoundVolume:1.0f);
+	hud_snd.m_activeSnd->snd.SetVolume		(hud_snd.m_activeSnd->volume * b_hud_mode?psHUDSoundVolume:1.0f);
 }
 
 void HUD_SOUND_ITEM::StopSound(HUD_SOUND_ITEM& hud_snd)
 {
 	xr_vector<SSnd>::iterator it = hud_snd.sounds.begin();
 	for(;it!=hud_snd.sounds.end();++it)
-		(*it).snd.stop		();
+		(*it).snd.Stop		();
 	hud_snd.m_activeSnd		= NULL;
 }
 

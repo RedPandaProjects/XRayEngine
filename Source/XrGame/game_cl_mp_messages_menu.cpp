@@ -1,4 +1,6 @@
 #include "stdafx.h"
+
+#include "ai_sounds.h"
 #include "game_cl_mp.h"
 #include "ui/UISpeechMenu.h"
 #include "xrMessages.h"
@@ -55,8 +57,8 @@ void				game_cl_mp::AddMessageMenu			(LPCSTR	menu_section, LPCSTR snd_path, LPCS
 				{
 					pNewTeamSound->push_back(cl_Message_Sound());
 					cl_Message_Sound* pMsgSound = &(pNewTeamSound->back());
-					pMsgSound->mSound_Voice.create(FileName_Voice,st_Effect,sg_SourceType);	//Msg("-- %s Loaded", FileName_Voice);
-					pMsgSound->mSound_Radio.create(FileName_Radio,st_Effect,sg_SourceType);	//Msg("-- %s Loaded", FileName_Radio);
+					pMsgSound->mSound_Voice.Create(FileName_Voice,SOUND_TYPE_FROM_SOURCE);	//Msg("-- %s Loaded", FileName_Voice);
+					pMsgSound->mSound_Radio.Create(FileName_Radio,SOUND_TYPE_FROM_SOURCE);	//Msg("-- %s Loaded", FileName_Radio);
 				}
 				else
 				{
@@ -102,10 +104,10 @@ void		game_cl_mp::DestroyMessagesMenus	()
 				for (u32 t=0; t<pVar->size(); t++)
 				{
 					cl_Message_Sound* pTeamVar = &((*pVar)[t]);
-					if (pTeamVar->mSound_Radio._feedback()) pTeamVar->mSound_Radio.stop();
-					if (pTeamVar->mSound_Voice._feedback()) pTeamVar->mSound_Voice.stop();
-					pTeamVar->mSound_Radio.destroy();
-					pTeamVar->mSound_Voice.destroy();
+					if (pTeamVar->mSound_Radio.IsPlaying()) pTeamVar->mSound_Radio.Stop();
+					if (pTeamVar->mSound_Voice.IsPlaying()) pTeamVar->mSound_Voice.Stop();
+					pTeamVar->mSound_Radio.Reset();
+					pTeamVar->mSound_Voice.Reset();
 				}
 			}
 		}
@@ -174,11 +176,11 @@ void				game_cl_mp::OnSpeechMessage			(NET_Packet& P)
 	{
 		if (ps == local_player)
 		{
-			pMSound->mSound_Voice.play_at_pos(NULL, Fvector().set(0,0,0), sm_2D, 0);
+			pMSound->mSound_Voice.Play(nullptr);
 		}
 		else
 		{
-			pMSound->mSound_Radio.play_at_pos(NULL, Fvector().set(0,0,0), sm_2D, 0);
+			pMSound->mSound_Radio.Play(nullptr);
 		}
 		Msg("%s said: %s", ps->getName(), *CStringTable().translate(pMMessage->pMessage));
 	}
@@ -187,7 +189,7 @@ void				game_cl_mp::OnSpeechMessage			(NET_Packet& P)
 		CObject* pObj = Level().Objects.net_Find(ps->GameID);
 		if (pObj)
 		{
-			pMSound->mSound_Voice.play_at_pos(pObj, pObj->Position());
+			pMSound->mSound_Voice.Play(pObj, pObj->Position());
 		};			
 	};
 };

@@ -63,7 +63,7 @@ public:
 			void				SetExplosionSize		(const Fvector &new_size);
 	virtual bool				Useful					() const;
 protected:
-			bool				IsSoundPlaying			(){return !!sndExplode._feedback();}
+			bool				IsSoundPlaying			(){return !!sndExplode.IsPlaying();}
 			bool				IsExploded				(){return !!m_explosion_flags.test(flExploded);}
 public:
 			bool				IsExploding				(){return !!m_explosion_flags.test(flExploding);}
@@ -135,7 +135,7 @@ protected:
 	float						m_fFragmentSpeed;
 	
 	//звуки
-	ref_sound					sndExplode;
+	FRBMKSoundSourceRef					sndExplode;
 	ESoundTypes					m_eSoundExplode;
 
 	//размер отметки на стенах

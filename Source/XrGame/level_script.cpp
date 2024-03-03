@@ -161,15 +161,11 @@ CScriptGameObject *get_object_by_id(u16 id)
 
 LPCSTR get_weather	()
 {
-	return			(*g_pGamePersistent->EnvironmentAsCOP()->GetWeather());
+	return			"none";
 }
 
 void set_weather	(LPCSTR weather_name, bool forced)
 {
-#ifdef INGAME_EDITOR
-	if (!Device->WeatherEditor())
-#endif // #ifdef INGAME_EDITOR
-		g_pGamePersistent->EnvironmentAsCOP()->SetWeather(weather_name,forced);
 }
 
 bool set_weather_fx	(LPCSTR weather_name)
@@ -177,7 +173,7 @@ bool set_weather_fx	(LPCSTR weather_name)
 #ifdef INGAME_EDITOR
 	if (!Device->WeatherEditor())
 #endif // #ifdef INGAME_EDITOR
-		return		(g_pGamePersistent->EnvironmentAsCOP()->SetWeatherFX(weather_name));
+		return			(g_Engine->GetEnvironmentCheck()->SetEffect(weather_name));
 	
 #ifdef INGAME_EDITOR
 	return			(false);
@@ -189,7 +185,7 @@ bool start_weather_fx_from_time	(LPCSTR weather_name, float time)
 #ifdef INGAME_EDITOR
 	if (!Device->WeatherEditor())
 #endif // #ifdef INGAME_EDITOR
-		return		(g_pGamePersistent->EnvironmentAsCOP()->StartWeatherFXFromTime(weather_name, time));
+		return			(g_Engine->GetEnvironmentCheck()->SetEffect(weather_name));
 	
 #ifdef INGAME_EDITOR
 	return			(false);
@@ -198,17 +194,17 @@ bool start_weather_fx_from_time	(LPCSTR weather_name, float time)
 
 bool is_wfx_playing	()
 {
-	return			(g_pGamePersistent->EnvironmentAsCOP()->IsWFXPlaying());
+	return			g_Engine->GetEnvironmentCheck()->IsEffectPlaying();
 }
 
 float get_wfx_time	()
 {
-	return			(g_pGamePersistent->EnvironmentAsCOP()->wfx_time);
+	return				g_Engine->GetEnvironmentCheck()->GetEffectTime();
 }
 
 void stop_weather_fx()
 {
-	g_pGamePersistent->EnvironmentAsCOP()->StopWFX();
+	g_Engine->GetEnvironmentCheck()->StopEffect();
 }
 
 void set_time_factor(float time_factor)
@@ -269,7 +265,7 @@ void change_game_time(u32 days, u32 hours, u32 mins)
 		u32 value		= days*86400+hours*3600+mins*60;
 		float fValue	= static_cast<float> (value);
 		value			*= 1000;//msec		
-		g_pGamePersistent->EnvironmentAsCOP()->ChangeGameTime(fValue);
+		//g_pGamePersistent->EnvironmentAsCOP()->ChangeGameTime(fValue);
 		tpGame->alife().time_manager().change_game_time(value);
 	}
 }
@@ -290,7 +286,7 @@ float low_cover_in_direction(u32 level_vertex_id, const Fvector &direction)
 
 float rain_factor()
 {
-	return			(g_pGamePersistent->EnvironmentAsCOP()->CurrentEnv->rain_density);
+	return		g_Engine->GetEnvironmentCheck()->GetRainDensity();
 }
 
 u32	vertex_in_direction(u32 level_vertex_id, Fvector direction, float max_distance)
@@ -492,15 +488,15 @@ cphysics_world_scripted* physics_world_scripted()
 {
 	return	get_script_wrapper<cphysics_world_scripted>(*physics_world());
 }
-IEnvironment *environment()
-{
-	return		(g_pGamePersistent->pEnvironment);
-}
-
-IEnvDescriptor *current_environment(IEnvironment *self)
-{
-	return		(self->CurrentEnv);
-}
+//IEnvironment *environment()
+//{
+//	return		(g_pGamePersistent->pEnvironment);
+//}
+//
+//IEnvDescriptor *current_environment(IEnvironment *self)
+//{
+//	return		(self->CurrentEnv);
+//}
 extern bool g_bDisableAllInput;
 void disable_input()
 {
@@ -590,13 +586,11 @@ void remove_cam_effector(int id)
 		
 float get_snd_volume()
 {
-	return psSoundVFactor;
+	return 1;
 }
 
 void set_snd_volume(float v)
 {
-	psSoundVFactor = v;
-	clamp(psSoundVFactor,0.0f,1.0f);
 }
 #include "actor_statistic_mgr.h"
 void add_actor_points(LPCSTR sect, LPCSTR detail_key, int cnt, int pts)
@@ -766,12 +760,12 @@ bool has_active_tutotial()
 #pragma optimize("s",on)
 void CLevel::script_register(lua_State *L)
 {
-	class_<IEnvDescriptor>("CEnvDescriptor")
+	/*class_<IEnvDescriptor>("CEnvDescriptor")
 		.def_readonly("fog_density",			&IEnvDescriptor::fog_density)
 		.def_readonly("far_plane",				&IEnvDescriptor::far_plane),
 
 	class_<IEnvironment>("CEnvironment")
-		.def("current",							current_environment);
+		.def("current",							current_environment);*/
 
 	module(L,"level")
 	[
@@ -791,7 +785,7 @@ void CLevel::script_register(lua_State *L)
 		def("get_wfx_time",						get_wfx_time),
 		def("stop_weather_fx",					stop_weather_fx),
 
-		def("environment",						environment),
+	//	def("environment",						environment),
 		
 		def("set_time_factor",					set_time_factor),
 		def("get_time_factor",					get_time_factor),

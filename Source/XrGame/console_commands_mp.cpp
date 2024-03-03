@@ -1682,7 +1682,7 @@ public:
 		Level().Server->game->SetEnvironmentGameTimeFactor(NewTime,eFactor);
 		Level().Server->game->SetGameTimeFactor(NewTime,g_fTimeFactor);
 	}
-};
+};/*
 class CCC_SetWeather : public IConsole_Command {
 public:
 					CCC_SetWeather	(LPCSTR N) : IConsole_Command(N)  { bEmptyArgsHandled = false; };
@@ -1698,7 +1698,7 @@ public:
 	};
 
 	virtual void	Info	(TInfo& I){xr_strcpy(I,"Set new weather"); }
-};
+};*/
 
 class CCC_SaveStatistic : public IConsole_Command {
 public:
@@ -2047,7 +2047,7 @@ void register_mp_console_commands()
 
 	CMD1(CCC_StartTimeEnvironment,	"sv_setenvtime");
 
-	CMD1(CCC_SetWeather,	"sv_setweather"			);
+	//CMD1(CCC_SetWeather,	"sv_setweather"			);
 
 	CMD4(CCC_Integer,		"cl_cod_pickup_mode",	&g_b_COD_PickUpMode,	0, 1)	;
 

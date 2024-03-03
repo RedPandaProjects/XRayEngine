@@ -18,7 +18,7 @@ void CScanningAbilityAbstract::on_destroy()
 TEMPLATE_SPECIALIZATION
 void CScanningAbilityAbstract::load(LPCSTR section)
 {
-	::Sound->create(sound_scan,	pSettings->r_string(section,"scan_sound"), st_Effect,SOUND_TYPE_WORLD);
+	sound_scan.Create(pSettings->r_string(section,"scan_sound"), SOUND_TYPE_WORLD);
 
 	critical_value			= pSettings->r_float(section,"scan_critical_value");
 	scan_radius				= pSettings->r_float(section,"scan_radius");
@@ -63,7 +63,7 @@ TEMPLATE_SPECIALIZATION
 void CScanningAbilityAbstract::schedule_update()
 {
 	// check if we end scanning
-	if (m_this_scan && !sound_scan._feedback()) {
+	if (m_this_scan && !sound_scan.IsPlaying()) {
 		object->can_scan = true;
 		m_this_scan		 = false;
 	}
@@ -92,11 +92,11 @@ void CScanningAbilityAbstract::schedule_update()
 				scan_value		+= vel;
 			}
 			
-			if (sound_scan._feedback()) sound_scan.set_position(scan_obj->Position());
+			if (sound_scan.IsPlaying()) sound_scan.SetPosition(scan_obj->Position());
 			else {
 				if (object->can_scan) {
 					// играть звук
-					::Sound->play_at_pos(sound_scan, 0, scan_obj->Position());
+					sound_scan.Play(0, scan_obj->Position());
 				
 					// постпроцесс
 					// TODO: make this postprocess with static check (only one for all scanners)

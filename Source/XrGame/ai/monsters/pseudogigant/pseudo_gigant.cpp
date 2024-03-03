@@ -155,8 +155,8 @@ void CPseudoGigant::Load(LPCSTR section)
 	// --------------------------------------------------------------------------------
 	
 
-	::Sound->create(m_sound_threaten_hit,pSettings->r_string(section,"sound_threaten_hit"),		st_Effect,SOUND_TYPE_WORLD);
-	::Sound->create(m_sound_start_threaten,pSettings->r_string(section,"sound_threaten_start"), st_Effect,SOUND_TYPE_MONSTER_ATTACKING);
+	m_sound_threaten_hit.Create(pSettings->r_string(section,"sound_threaten_hit"),		SOUND_TYPE_WORLD);
+	m_sound_start_threaten.Create(pSettings->r_string(section,"sound_threaten_start"), SOUND_TYPE_MONSTER_ATTACKING);
 
 	m_kick_damage			= pSettings->r_float(section,"HugeKick_Damage");
 	m_kick_particles		= pSettings->r_string(section,"HugeKick_Particles");
@@ -237,7 +237,7 @@ bool CPseudoGigant::check_start_conditions(ControlCom::EControlType type)
 void CPseudoGigant::on_activate_control(ControlCom::EControlType type)
 {
 	if (type == ControlCom::eControlThreaten) {
-		m_sound_start_threaten.play_at_pos(this,get_head_position(this));
+		m_sound_start_threaten.Play(this,get_head_position(this));
 		m_time_next_threaten = time() + Random.randI(m_threaten_delay_min,m_threaten_delay_max);
 	}
 }
@@ -264,7 +264,7 @@ void CPseudoGigant::on_threaten_execute()
 	Fvector		pos;
 	pos.set		(Position());
 	pos.y		+= 0.1f;
-	m_sound_threaten_hit.play_at_pos(this,pos);
+	m_sound_threaten_hit.Play(this,pos);
 
 	// играть партиклы
 	PlayParticles(m_kick_particles, pos, Direction());

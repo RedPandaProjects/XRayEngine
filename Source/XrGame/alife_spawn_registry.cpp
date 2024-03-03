@@ -13,11 +13,6 @@
 #include "ai_space.h"
 #include "game_graph.h"
 
-#pragma warning(push)
-#pragma warning(disable:4995)
-#include <malloc.h>
-#include "../XrEngine/XRayEngineInterface.h"
-#pragma warning(pop)
 
 CALifeSpawnRegistry::CALifeSpawnRegistry	(LPCSTR section)
 {
@@ -83,7 +78,7 @@ void CALifeSpawnRegistry::load				(LPCSTR spawn_name)
 
 void CALifeSpawnRegistry::load_from_editor()
 {
-#ifndef SHIPPING
+#if 0
 	Msg("* Loading spawn registry...");
 	ai().patrol_path_storage_from_editor();
 

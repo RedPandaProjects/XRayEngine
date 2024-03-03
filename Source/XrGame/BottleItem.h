@@ -31,5 +31,5 @@ public:
 protected:
 	//партиклы разбивания бутылки
 	shared_str m_sBreakParticles;
-	ref_sound sndBreaking;
+	FRBMKSoundSourceRef sndBreaking;
 };

@@ -8,7 +8,6 @@
 #include "NET_Queue.h"
 #include "file_transfer.h"
 #include "hudmanager.h"
-#include "..\XrEngine\XrEditorSceneInterface.h"
 #include "Level_Bullet_Manager.h"
 #include "UIGameCustom.h"
 #include "../xrEngine/xr_ioconsole.h"
@@ -91,7 +90,7 @@ BOOL CLevelEditor::net_Start(LPCSTR op_server, LPCSTR op_client)
 		Device->seqFrame.Add(this);
 		R_ASSERT(Load_GameSpecific_Before());
 		Objects.Load();
-		EditorScene->LoadCFrom(&ObjectSpace, build_callback);
+		//EditorScene->LoadCFrom(&ObjectSpace, build_callback);
 		bReady = true;
 		map_data.m_level_geom_crc32 = 0;
 	}

@@ -19,8 +19,8 @@ private:
 	pcstr				m_pp_effector_name;
 	u32					m_pp_index;
 
-	ref_sound			m_sound;
-	ref_sound			m_detect_sound;
+	FRBMKSoundSourceRef			m_sound;
+	FRBMKSoundSourceRef			m_detect_sound;
 	float				m_detect_snd_time;
 
 	bool				m_enabled;

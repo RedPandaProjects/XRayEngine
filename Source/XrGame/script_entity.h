@@ -65,7 +65,7 @@ public:
 	MotionID					m_tpScriptAnimation;
 
 protected:
-	ref_sound					*m_current_sound;
+	FRBMKSoundSourceRef					*m_current_sound;
 	xr_vector<CSavedSound>		m_saved_sounds;
 
 public:

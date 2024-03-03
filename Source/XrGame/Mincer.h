@@ -22,7 +22,7 @@ private:
 	typedef CBaseGraviZone inherited;
 	CTeleWhirlwind m_telekinetics;
 	shared_str	   m_torn_particles;
-	ref_sound	   m_tearing_sound;
+	FRBMKSoundSourceRef	   m_tearing_sound;
 	float		   m_fActorBlowoutRadiusPercent;
 
 public:

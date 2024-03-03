@@ -96,7 +96,7 @@ void reward_manager::load_reward_item	(CInifile & reward_config,
 	tmp_descriptor->m_height			= reward_config.r_u32(section, "ingame_texture_height");
 	
 	LPCSTR tmp_sound_name				= reward_config.r_string(section, "play_sound");
-	tmp_descriptor->m_play_sound.create	(tmp_sound_name, st_Effect, 0);
+	tmp_descriptor->m_play_sound.Create	(tmp_sound_name,  0);
 	tmp_descriptor->m_process_time		= reward_config.r_u32(section, "reward_time");
 
 #ifdef DEBUG
@@ -118,9 +118,9 @@ void reward_manager::process_reward		(u32 const award_id)
 	for (rewards_map_t::iterator i = m_rewards_map.begin(),
 		ie = m_rewards_map.end(); i != ie; ++i)
 	{
-		if (i->second->m_play_sound._feedback())
+		if (i->second->m_play_sound.IsPlaying())
 		{
-			i->second->m_play_sound.stop();
+			i->second->m_play_sound.Stop();
 		}
 	}
 	rewards_map_t::const_iterator tmp_iter = m_rewards_map.find(award_id);
@@ -133,7 +133,7 @@ void reward_manager::process_reward		(u32 const award_id)
 		tmp_iter->second->m_width,
 		tmp_iter->second->m_height);
 
-	tmp_iter->second->m_play_sound.play(NULL, sm_2D);
+	tmp_iter->second->m_play_sound.Play(NULL);
 	m_reward_process_time			= tmp_iter->second->m_process_time;
 	m_last_reward_time				= Device->dwTimeGlobal;
 }

@@ -11,7 +11,7 @@ class CUISequencer :public pureFrame, public pureRenderUI,	public IInputReceiver
 {
 protected:
 	CUIWindow*				m_UIWindow;
-	ref_sound				m_global_sound;
+	FRBMKSoundSourceRef				m_global_sound;
 	xr_deque<CUISequenceItem*> m_sequencer_items;
 
 	bool					GrabInput			();
@@ -128,7 +128,7 @@ class CUISequenceSimpleItem: public CUISequenceItem
 	};
 public:
 	CUIWindow*				m_UIWindow;
-	ref_sound				m_sound;
+	FRBMKSoundSourceRef				m_sound;
 	float					m_time_start;
 	float					m_time_length;
 	string64				m_pda_section;
@@ -156,7 +156,7 @@ protected:
 class CUISequenceVideoItem: public CUISequenceItem
 {
 	typedef CUISequenceItem	inherited;
-	ref_sound				m_sound;
+	FRBMKSoundSourceRef				m_sound;
 	FactoryPtr<IUISequenceVideoItem>	m_texture;
 	enum {	
 		etiPlaying			= (1<<(eti_last+0)),

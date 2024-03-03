@@ -858,12 +858,12 @@ bool CActorCondition::ApplyInfluence(const SMedicineInfluenceValues& V, const sh
 	{
 		if(pSettings->line_exist(sect, "use_sound"))
 		{
-			if(m_use_sound._feedback())
-				m_use_sound.stop		();
+			if(m_use_sound.IsPlaying())
+				m_use_sound.Stop		();
 
 			shared_str snd_name			= pSettings->r_string(sect, "use_sound");
-			m_use_sound.create			(snd_name.c_str(), st_Effect, sg_SourceType);
-			m_use_sound.play			(NULL, sm_2D);
+			m_use_sound.Create			(snd_name.c_str(),  SOUND_TYPE_FROM_SOURCE);
+			m_use_sound.Play			(NULL);
 		}
 	}
 
@@ -882,12 +882,12 @@ bool CActorCondition::ApplyBooster(const SBooster& B, const shared_str& sect)
 		{
 			if(pSettings->line_exist(sect, "use_sound"))
 			{
-				if(m_use_sound._feedback())
-					m_use_sound.stop		();
+				if(m_use_sound.IsPlaying())
+					m_use_sound.Stop		();
 
 				shared_str snd_name			= pSettings->r_string(sect, "use_sound");
-				m_use_sound.create			(snd_name.c_str(), st_Effect, sg_SourceType);
-				m_use_sound.play			(NULL, sm_2D);
+				m_use_sound.Create			(snd_name.c_str(),  SOUND_TYPE_FROM_SOURCE);
+				m_use_sound.Play			(NULL);
 			}
 		}
 
@@ -915,8 +915,8 @@ CActorDeathEffector::CActorDeathEffector	(CActorCondition* parent, LPCSTR sect)	
 	AddEffector				(Actor(), effActorDeath, sect);
 	disable_input			();
 	LPCSTR snd				= pSettings->r_string(sect, "snd");
-	m_death_sound.create	(snd,st_Effect,0);
-	m_death_sound.play_at_pos(0,Fvector().set(0,0,0),sm_2D);
+	m_death_sound.Create	(snd,0);
+	m_death_sound.Play(0);
 
 
 	SBaseEffector* pe		= Actor()->Cameras().GetPPEffector((EEffectorPPType)effActorDeath);
@@ -944,7 +944,7 @@ void CActorDeathEffector::OnPPEffectorReleased()
 void CActorDeathEffector::Stop()
 {
 	RemoveEffector			(Actor(),effActorDeath);
-	m_death_sound.destroy	();
+	m_death_sound.Reset		();
 	enable_input			();
 	show_indicators			();
 }

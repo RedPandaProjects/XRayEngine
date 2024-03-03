@@ -9,6 +9,7 @@ public:
 	virtual IRBMKSoundSource*	AddReference				(IRBMKSoundSource*SoundSource) = 0;
 	virtual void				Destroy						(IRBMKSoundSource*SoundSource) = 0;
 	virtual IRBMKSoundSource*	Duplicate					(IRBMKSoundSource*SoundSource) = 0;
+	virtual void				Replace						(IRBMKSoundSource*SoundSource,CObject*Object) = 0;
 	virtual IRBMKSoundSource*	Duplicate					(IRBMKSoundSource*SoundSource,s32 CustomFlags) = 0;
 	virtual void				Destroyed					(IRBMKSoundActorListener*SoundActorListener) = 0;
 	virtual void				Destroyed					(CObject*Object) = 0;

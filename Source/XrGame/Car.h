@@ -334,10 +334,10 @@ virtual void ApplyDamage(u16 level);
 
 	struct SCarSound
 	{
-		ref_sound					snd_engine							;
-		ref_sound					snd_engine_start					;
-		ref_sound					snd_engine_stop						;
-		ref_sound					snd_transmission					;
+		FRBMKSoundSourceRef					snd_engine							;
+		FRBMKSoundSourceRef					snd_engine_start					;
+		FRBMKSoundSourceRef					snd_engine_stop						;
+		FRBMKSoundSourceRef					snd_transmission					;
 
 		enum ESoundState
 		{
@@ -353,7 +353,7 @@ virtual void ApplyDamage(u16 level);
 		void	UpdateStalling		()							;
 		void	UpdateDrive			()							;
 		void	SwitchState			(ESoundState new_state)		;
-		void	SetSoundPosition	(ref_sound	&snd)			;
+		void	SetSoundPosition	(FRBMKSoundSourceRef	&snd)			;
 		void	SwitchOff			()							;
 		void	SwitchOn			()							;
 		void	Init				()							;

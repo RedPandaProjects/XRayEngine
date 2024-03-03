@@ -812,13 +812,13 @@ void CAI_Stalker::debug_text			()
 				"not yet started"
 				:
 				(
-					(*I).m_sound->_feedback()
+					(*I).m_sound->IsPlaying()
 					?
 					"playing"
 					:
 					"already played"
 				),
-				(*I).m_sound->_handle() ? (*I).m_sound->_handle()->file_name() : "no source"
+				(*I).m_sound->GetName().c_str()
 			);
 	}
 

@@ -23,7 +23,7 @@ class CUITalkWnd: public CUIDialogWnd
 {
 private:
 	typedef CUIDialogWnd inherited;
-	ref_sound			m_sound;
+	FRBMKSoundSourceRef			m_sound;
 	void				PlaySnd					(LPCSTR text);
 	void				StopSnd					();
 
@@ -31,7 +31,7 @@ public:
 						CUITalkWnd();
 	virtual				~CUITalkWnd();
 
-	IC		bool		playing_sound			()		 { return !!m_sound._feedback(); }
+	IC		bool		playing_sound			()		 { return !!m_sound.IsPlaying(); }
 	IC	CInventoryOwner*OthersInvOwner			() const { return m_pOthersInvOwner;	 };
 
 			void		InitTalkWnd				();

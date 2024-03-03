@@ -66,7 +66,7 @@ class	CActor:
 	public CInventoryOwner,
 	public CPhraseDialogManager,
 	public CStepManager,
-	public Feel::Sound
+	public IRBMKSoundActorListener
 #ifdef DEBUG
 	,public pureRenderDebug
 #endif
@@ -104,8 +104,8 @@ public:
 	// Render
 	virtual void						renderable_Render			();
 	virtual BOOL						renderable_ShadowGenerate	();
-	virtual	void						feel_sound_new				(CObject* who, int type, CSound_UserDataPtr user_data, const Fvector& Position, float power);
-	virtual	Feel::Sound*				dcast_FeelSound				()	{ return this;	}
+	virtual	void						ListenSound					(CObject* InSourceActor, s32 SoundFlags,const Fvector& InPosition, float InnPower,CSound_UserDataPtr UserData) override;
+	virtual	IRBMKSoundActorListener*	CastToSoundActorListener	() override	{ return this;	}
 			float						m_snd_noise;
 #ifdef DEBUG
 	virtual void						OnRenderDebug			();
@@ -200,9 +200,9 @@ public:
 
 protected:
 	//звук тяжелого дыхания
-	ref_sound			m_HeavyBreathSnd;
-	ref_sound			m_BloodSnd;
-	ref_sound			m_DangerSnd;
+	FRBMKSoundSourceRef			m_HeavyBreathSnd;
+	FRBMKSoundSourceRef			m_BloodSnd;
+	FRBMKSoundSourceRef			m_DangerSnd;
 
 protected:
 	// Death
@@ -212,8 +212,8 @@ protected:
 
 	// media
 	SndShockEffector*		m_sndShockEffector;
-	xr_vector<ref_sound>	sndHit[ALife::eHitTypeMax];
-	ref_sound				sndDie[SND_DIE_COUNT];
+	xr_vector<FRBMKSoundSourceRef>	sndHit[ALife::eHitTypeMax];
+	FRBMKSoundSourceRef				sndDie[SND_DIE_COUNT];
 
 
 	float					m_fLandingTime;

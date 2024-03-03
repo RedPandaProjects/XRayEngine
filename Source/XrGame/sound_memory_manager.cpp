@@ -125,7 +125,7 @@ IC	bool is_sound_type(int s, const ESoundTypes &t)
 	return	((s & t) == t);
 }
 
-void CSoundMemoryManager::feel_sound_new(CObject *object, int sound_type, CSound_UserDataPtr user_data, const Fvector &position, float sound_power)
+void CSoundMemoryManager::ListenSound(CObject *object, int sound_type, CSound_UserDataPtr user_data, const Fvector &position, float sound_power)
 {
 #ifndef MASTER_GOLD
 	if (object && smart_cast<CActor*>(object) && psAI_Flags.test(aiIgnoreActor))

@@ -833,7 +833,7 @@ void player_hud::SetActor(CActor* InActor)
 	m_actor = InActor;
 	if(InActor&&InActor->UnrealProxy)
 	{
-		if (XRayUnrealPlayerCharacterInterface* PlayerCharacter = reinterpret_cast<XRayUnrealPlayerCharacterInterface* >(InActor->UnrealProxy->QueryInterface(EXRayUnrealInterfaceType::StalkerPlayerCharacter)))
+		if (IRBMKUnrealPlayerCharacter* PlayerCharacter = reinterpret_cast<IRBMKUnrealPlayerCharacter* >(InActor->UnrealProxy->QueryInterface(ERBMKUnrealInterfaceType::StalkerPlayerCharacter)))
 		{
 			m_model->dcast_RenderVisual()->AttachTo(PlayerCharacter->GetCameraComponent(),"");
 			m_model->dcast_RenderVisual()->SetOwnerNoSee(false);

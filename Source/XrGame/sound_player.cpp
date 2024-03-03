@@ -142,8 +142,8 @@ void CSoundPlayer::update_playing_sounds()
 	xr_vector<CSoundSingle>::iterator	I = m_playing_sounds.begin();
 	xr_vector<CSoundSingle>::iterator	E = m_playing_sounds.end();
 	for ( ; I != E; ++I) {
-		if ((*I).m_sound->_feedback())
-			(*I).m_sound->_feedback()->set_position(compute_sound_point(*I));
+		if ((*I).m_sound->IsPlaying())
+			(*I).m_sound->SetPosition(compute_sound_point(*I));
 		else
 			if (!(*I).started() && (Device->dwTimeGlobal >= (*I).m_start_time))
 				(*I).play_at_pos		(m_object,compute_sound_point(*I));
@@ -155,7 +155,7 @@ bool CSoundPlayer::need_bone_data	() const
 	xr_vector<CSoundSingle>::const_iterator	I = m_playing_sounds.begin();
 	xr_vector<CSoundSingle>::const_iterator	E = m_playing_sounds.end();
 	for ( ; I != E; ++I) {
-		if ((*I).m_sound->_feedback())
+		if ((*I).m_sound->IsPlaying())
 			return					(true);
 		else
 			if (!(*I).started() && (Device->dwTimeGlobal >= (*I).m_start_time))
@@ -186,7 +186,7 @@ void CSoundPlayer::play				(u32 internal_type, u32 max_start_time, u32 min_start
 	sound_single.m_bone_id		= CastToIKinematics(m_object->Visual())->LL_BoneID(sound.m_bone_name);
 	R_ASSERT					  (sound_single.m_bone_id != BI_NONE);
 
-	sound_single.m_sound		= xr_new<ref_sound>();
+	sound_single.m_sound		= xr_new<FRBMKSoundSourceRef>();
 	/**
 	sound_single.m_sound->clone	(
 		*(*I).second.second->m_sounds[
@@ -199,18 +199,16 @@ void CSoundPlayer::play				(u32 internal_type, u32 max_start_time, u32 min_start
 			id
 		],
 		st_Effect,
-		sg_SourceType
+		SOUND_TYPE_FROM_SOURCE
 	);
 	/**/
-	sound_single.m_sound->clone	(
+	sound_single.m_sound->Dublicate	(
 		(*I).second.second->random(id),
-		st_Effect,
-		sg_SourceType
+		SOUND_TYPE_FROM_SOURCE
 	);
-
-	sound_single.m_sound->_p->g_object		= m_object;
-	sound_single.m_sound->_p->g_userdata	= (*I).second.first.m_data;
-	VERIFY						(sound_single.m_sound->_handle());
+	g_Engine->GetSoundManager()->Replace(sound_single.m_sound->GetSoundSource(),m_object);
+	sound_single.m_sound->GetSoundSource()->UserData	= (*I).second.first.m_data;
+	VERIFY						(sound_single.m_sound->IsValid());
 
 	VERIFY						(max_start_time >= min_start_time);
 	VERIFY						(max_stop_time >= min_stop_time);
@@ -225,7 +223,7 @@ void CSoundPlayer::play				(u32 internal_type, u32 max_start_time, u32 min_start
 	if (max_stop_time)
 		random_time				= (max_stop_time > min_stop_time) ? random(max_stop_time - min_stop_time) + min_stop_time : max_stop_time;
 
-	sound_single.m_stop_time	= sound_single.m_start_time + iFloor(sound_single.m_sound->get_length_sec()*1000.0f) + random_time;
+	sound_single.m_stop_time	= sound_single.m_start_time + iFloor(sound_single.m_sound->GetDuration()) + random_time;
 	m_playing_sounds.push_back	(sound_single);
 	
 	if (Device->dwTimeGlobal >= m_playing_sounds.back().m_start_time)
@@ -251,7 +249,7 @@ CSoundPlayer::CSoundCollection::CSoundCollection	(const CSoundCollectionParams &
 		_GetItem						(*params.m_sound_prefix,j,temp);
 		strconcat						(sizeof(s),S,*params.m_sound_player_prefix,temp);
 		if (FS.exist(fn,"$game_sounds$",S,".ogg")) {
-			ref_sound					*temp = add(params.m_type,S);
+			FRBMKSoundSourceRef					*temp = add(params.m_type,S);
 			if (temp)
 				m_sounds.push_back		(temp);
 		}
@@ -259,7 +257,7 @@ CSoundPlayer::CSoundCollection::CSoundCollection	(const CSoundCollectionParams &
 			string256					name;
 			xr_sprintf						(name,"%s%d",S,i);
 			if (FS.exist(fn,"$game_sounds$",name,".ogg")) {
-				ref_sound				*temp = add(params.m_type,name);
+				FRBMKSoundSourceRef				*temp = add(params.m_type,name);
 				if (temp)
 					m_sounds.push_back	(temp);
 			}
@@ -274,17 +272,17 @@ CSoundPlayer::CSoundCollection::CSoundCollection	(const CSoundCollectionParams &
 CSoundPlayer::CSoundCollection::~CSoundCollection	()
 {
 #ifdef DEBUG
-	xr_vector<ref_sound*>::iterator	I = m_sounds.begin();
-	xr_vector<ref_sound*>::iterator	E = m_sounds.end();
+	xr_vector<FRBMKSoundSourceRef*>::iterator	I = m_sounds.begin();
+	xr_vector<FRBMKSoundSourceRef*>::iterator	E = m_sounds.end();
 	for ( ; I != E; ++I) {
 		VERIFY						(*I);
-		VERIFY						(!(*I)->_feedback());
+		VERIFY						(!(*I)->IsPlaying());
 	}
 #endif
 	delete_data						(m_sounds);
 }
 
-const ref_sound &CSoundPlayer::CSoundCollection::random	(const u32 &id)
+const FRBMKSoundSourceRef &CSoundPlayer::CSoundCollection::random	(const u32 &id)
 {
 	VERIFY					(!m_sounds.empty());
 

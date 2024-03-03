@@ -9,7 +9,7 @@ public	 CDamageManager
 {
 typedef  CPhysicObject inherited;
 	float m_fHealth;
-	ref_sound							m_destroy_sound;
+	FRBMKSoundSourceRef							m_destroy_sound;
 	shared_str							m_destroy_particles;
 public:
 										CDestroyablePhysicsObject									()																																			;

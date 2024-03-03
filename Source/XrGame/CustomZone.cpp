@@ -57,12 +57,12 @@ CCustomZone::CCustomZone(void)
 
 CCustomZone::~CCustomZone(void) 
 {	
-	m_idle_sound.destroy		();
-	m_accum_sound.destroy		();
-	m_awaking_sound.destroy		();
-	m_blowout_sound.destroy		();
-	m_hit_sound.destroy			();
-	m_entrance_sound.destroy	();
+	m_idle_sound.Reset		();
+	m_accum_sound.Reset		();
+	m_awaking_sound.Reset		();
+	m_blowout_sound.Reset		();
+	m_hit_sound.Reset			();
+	m_entrance_sound.Reset	();
 	xr_delete					(m_actor_effector);
 }
 
@@ -97,37 +97,37 @@ void CCustomZone::Load(LPCSTR section)
 	if(pSettings->line_exist(section,"idle_sound")) 
 	{
 		sound_str = pSettings->r_string(section,"idle_sound");
-		m_idle_sound.create(sound_str, st_Effect,sg_SourceType);
+		m_idle_sound.Create(sound_str,SOUND_TYPE_FROM_SOURCE);
 	}
 	
 	if(pSettings->line_exist(section,"accum_sound")) 
 	{
 		sound_str = pSettings->r_string(section,"accum_sound");
-		m_accum_sound.create(sound_str, st_Effect,sg_SourceType);
+		m_accum_sound.Create(sound_str, SOUND_TYPE_FROM_SOURCE);
 	}
 	if(pSettings->line_exist(section,"awake_sound")) 
 	{
 		sound_str = pSettings->r_string(section,"awake_sound");
-		m_awaking_sound.create(sound_str, st_Effect,sg_SourceType);
+		m_awaking_sound.Create(sound_str,SOUND_TYPE_FROM_SOURCE);
 	}
 	
 	if(pSettings->line_exist(section,"blowout_sound")) 
 	{
 		sound_str = pSettings->r_string(section,"blowout_sound");
-		m_blowout_sound.create(sound_str, st_Effect,sg_SourceType);
+		m_blowout_sound.Create(sound_str, SOUND_TYPE_FROM_SOURCE);
 	}
 	
 	
 	if(pSettings->line_exist(section,"hit_sound")) 
 	{
 		sound_str = pSettings->r_string(section,"hit_sound");
-		m_hit_sound.create(sound_str, st_Effect,sg_SourceType);
+		m_hit_sound.Create(sound_str, SOUND_TYPE_FROM_SOURCE);
 	}
 
 	if(pSettings->line_exist(section,"entrance_sound")) 
 	{
 		sound_str = pSettings->r_string(section,"entrance_sound");
-		m_entrance_sound.create(sound_str, st_Effect,sg_SourceType);
+		m_entrance_sound.Create(sound_str,SOUND_TYPE_FROM_SOURCE);
 	}
 
 
@@ -653,7 +653,7 @@ float CCustomZone::Power(float dist, float nearest_shape_radius)
 
 void CCustomZone::PlayIdleParticles(bool bIdleLight)
 {
-	m_idle_sound.play_at_pos(0, Position(), true);
+	m_idle_sound.Play(0, Position(), true);
 
 	if(*m_sIdleParticles)
 	{
@@ -672,7 +672,7 @@ void CCustomZone::PlayIdleParticles(bool bIdleLight)
 
 void CCustomZone::StopIdleParticles(bool bIdleLight)
 {
-	m_idle_sound.stop();
+	m_idle_sound.Stop();
 
 	if(m_pIdleParticles)
 	{
@@ -737,7 +737,7 @@ void CCustomZone::PlayBlowoutParticles()
 
 void CCustomZone::PlayHitParticles(CGameObject* pObject)
 {
-	m_hit_sound.play_at_pos(0, pObject->Position());
+	m_hit_sound.Play(0, pObject->Position());
 
 	shared_str particle_str = NULL;
 
@@ -765,7 +765,7 @@ void CCustomZone::PlayHitParticles(CGameObject* pObject)
 #include "bolt.h"
 void CCustomZone::PlayEntranceParticles(CGameObject* pObject)
 {
-	m_entrance_sound.play_at_pos		(0, pObject->Position());
+	m_entrance_sound.Play		(0, pObject->Position());
 
 	LPCSTR particle_str				= NULL;
 
@@ -881,7 +881,7 @@ void CCustomZone::PlayBoltEntranceParticles()
 
 void CCustomZone::PlayBulletParticles(Fvector& pos)
 {
-	m_entrance_sound.play_at_pos(0, pos);
+	m_entrance_sound.Play(0, pos);
 
 	if(!m_sEntranceParticlesSmall) return;
 	
@@ -1042,7 +1042,7 @@ void CCustomZone::UpdateBlowout()
 
 	if(m_dwBlowoutSoundTime>=(u32)m_iPreviousStateTime && 
 		m_dwBlowoutSoundTime<(u32)m_iStateTime)
-		m_blowout_sound.play_at_pos	(0, Position());
+		m_blowout_sound.Play	(0, Position());
 
 	if(m_zone_flags.test(eBlowoutWind) && m_dwBlowoutWindTimeStart>=(u32)m_iPreviousStateTime && 
 		m_dwBlowoutWindTimeStart<(u32)m_iStateTime)
@@ -1191,15 +1191,15 @@ void CCustomZone::StartWind()
 
 	m_zone_flags.set(eBlowoutWindActive, TRUE);
 
-	m_fStoreWindPower = g_pGamePersistent->EnvironmentAsCOP()->wind_strength_factor;
-	clamp(g_pGamePersistent->EnvironmentAsCOP()->wind_strength_factor, 0.f, 1.f);
+	//m_fStoreWindPower = g_pGamePersistent->EnvironmentAsCOP()->wind_strength_factor;
+	//clamp(g_pGamePersistent->EnvironmentAsCOP()->wind_strength_factor, 0.f, 1.f);
 }
 
 void CCustomZone::StopWind()
 {
 	if(!m_zone_flags.test(eBlowoutWindActive)) return;
 	m_zone_flags.set(eBlowoutWindActive, FALSE);
-	g_pGamePersistent->EnvironmentAsCOP()->wind_strength_factor = m_fStoreWindPower;
+//	g_pGamePersistent->EnvironmentAsCOP()->wind_strength_factor = m_fStoreWindPower;
 }
 
 void CCustomZone::UpdateWind()
@@ -1212,20 +1212,20 @@ void CCustomZone::UpdateWind()
 		return;
 	}
 
-	if(m_dwBlowoutWindTimePeak > (u32)m_iStateTime)
-	{
-		g_pGamePersistent->EnvironmentAsCOP()->wind_strength_factor = m_fBlowoutWindPowerMax + ( m_fStoreWindPower - m_fBlowoutWindPowerMax)*
-								float(m_dwBlowoutWindTimePeak - (u32)m_iStateTime)/
-								float(m_dwBlowoutWindTimePeak - m_dwBlowoutWindTimeStart);
-		clamp(g_pGamePersistent->EnvironmentAsCOP()->wind_strength_factor, 0.f, 1.f);
-	}
-	else
-	{
-		g_pGamePersistent->EnvironmentAsCOP()->wind_strength_factor = m_fBlowoutWindPowerMax + (m_fStoreWindPower - m_fBlowoutWindPowerMax)*
-			float((u32)m_iStateTime - m_dwBlowoutWindTimePeak)/
-			float(m_dwBlowoutWindTimeEnd - m_dwBlowoutWindTimePeak);
-		clamp(g_pGamePersistent->EnvironmentAsCOP()->wind_strength_factor, 0.f, 1.f);
-	}
+	//if(m_dwBlowoutWindTimePeak > (u32)m_iStateTime)
+	//{
+	//	g_pGamePersistent->EnvironmentAsCOP()->wind_strength_factor = m_fBlowoutWindPowerMax + ( m_fStoreWindPower - m_fBlowoutWindPowerMax)*
+	//							float(m_dwBlowoutWindTimePeak - (u32)m_iStateTime)/
+	//							float(m_dwBlowoutWindTimePeak - m_dwBlowoutWindTimeStart);
+	//	clamp(g_pGamePersistent->EnvironmentAsCOP()->wind_strength_factor, 0.f, 1.f);
+	//}
+	//else
+	//{
+	//	g_pGamePersistent->EnvironmentAsCOP()->wind_strength_factor = m_fBlowoutWindPowerMax + (m_fStoreWindPower - m_fBlowoutWindPowerMax)*
+	//		float((u32)m_iStateTime - m_dwBlowoutWindTimePeak)/
+	//		float(m_dwBlowoutWindTimeEnd - m_dwBlowoutWindTimePeak);
+	//	clamp(g_pGamePersistent->EnvironmentAsCOP()->wind_strength_factor, 0.f, 1.f);
+	//}
 }
 
 u32	CCustomZone::ef_anomaly_type() const
@@ -1311,8 +1311,8 @@ void CCustomZone::PlayAccumParticles()
 		pParticles->Play(false);
 	}
 
-	if(m_accum_sound._handle())
-		m_accum_sound.play_at_pos	(0, Position());
+	if(m_accum_sound.IsValid())
+		m_accum_sound.Play	(0, Position());
 }
 
 void CCustomZone::PlayAwakingParticles()
@@ -1325,8 +1325,8 @@ void CCustomZone::PlayAwakingParticles()
 		pParticles->Play(false);
 	}
 
-	if(m_awaking_sound._handle())
-		m_awaking_sound.play_at_pos	(0, Position());
+	if(m_awaking_sound.IsValid())
+		m_accum_sound.Play	(0, Position());
 }
 
 void CCustomZone::UpdateOnOffState()

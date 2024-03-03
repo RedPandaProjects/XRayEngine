@@ -10,7 +10,6 @@
 #include "../xrEngine/Render/ParticleCustom.h"
 #include "../xrEngine/render.h"
 #include "../xrEngine/IGame_Persistent.h"
-#include "../xrEngine/environment.h"
 
 const Fvector zero_vel		= {0.f,0.f,0.f};
 

@@ -131,12 +131,12 @@ void SArtefactActivation::ChangeEffects()
 	VERIFY(!physics_world()->Processing());
 	SStateDef& state_def = m_activation_states[(int)m_cur_activation_state];
 	
-	if(m_snd._feedback())
-		m_snd.stop();
+	if(m_snd.IsPlaying())
+		m_snd.Stop();
 	
 	if(state_def.m_snd.size()){
-		m_snd.create			(*state_def.m_snd,st_Effect,sg_SourceType);
-		m_snd.play_at_pos		(m_af,	m_af->Position());
+		m_snd.Create	(*state_def.m_snd,SOUND_TYPE_FROM_SOURCE);
+		m_snd.Play		(m_af,	m_af->Position());
 	};
 
 	m_light->set_range		(	state_def.m_light_range);
@@ -163,8 +163,8 @@ void SArtefactActivation::ChangeEffects()
 void SArtefactActivation::UpdateEffects()
 {
 	VERIFY(!physics_world()->Processing());
-	if(m_snd._feedback())
-		m_snd.set_position( m_af->Position() );
+	if(m_snd.IsPlaying())
+		m_snd.SetPosition( m_af->Position() );
 	
 	m_light->set_position(m_af->Position());
 }

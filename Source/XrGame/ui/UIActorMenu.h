@@ -72,7 +72,7 @@ protected:
 								eSndMax};
 
 	EMenuMode					m_currMenuMode;
-	ref_sound					sounds					[eSndMax];
+	FRBMKSoundSourceRef					sounds					[eSndMax];
 	void						PlaySnd					(eActorMenuSndAction a);
 
 	UIHint*						m_hint_wnd;

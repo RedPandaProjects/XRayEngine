@@ -43,7 +43,7 @@ public:
 	float						m_cur_state_time;
 
 	ref_light					m_light;
-	ref_sound					m_snd;
+	FRBMKSoundSourceRef					m_snd;
 	
 	u32							m_owner_id;
 

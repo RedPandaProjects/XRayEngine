@@ -22,10 +22,10 @@ protected:
 
 	IC	bool		check_file			(LPCSTR fname);
 
-	ref_sound		m_music_stereo;
+	FRBMKSoundSourceRef		m_music_stereo;
 
-	ref_sound		m_whell;
-	ref_sound		m_whell_click;
+	FRBMKSoundSourceRef		m_whell;
+	FRBMKSoundSourceRef		m_whell_click;
 	bool			m_bRandom;
 	xr_vector<xr_string>m_play_list;
 };

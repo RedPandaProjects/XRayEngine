@@ -2,7 +2,6 @@
 #include "hudtarget.h"
 #include "../xrEngine/gamemtllib.h"
 
-#include "../xrEngine/Environment.h"
 #include "../xrEngine/CustomHUD.h"
 #include "Entity.h"
 #include "level.h"
@@ -116,7 +115,7 @@ void CHUDTarget::CursorOnFrame ()
 	if(Level().CurrentEntity())
 	{
 		PP.RQ.O			= 0; 
-		PP.RQ.range		= g_pGamePersistent->EnvironmentAsCOP()->CurrentEnv->far_plane*0.99f;
+		PP.RQ.range		= g_Engine->GetEnvironmentCheck()->GetFogPlane();
 		PP.RQ.element		= -1;
 		
 		collide::ray_defs	RD(p1, dir, PP.RQ.range, CDB::OPT_CULL, collide::rqtBoth);

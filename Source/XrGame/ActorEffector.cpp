@@ -286,7 +286,7 @@ SndShockEffector::SndShockEffector	()
 
 SndShockEffector::~SndShockEffector	()
 {
-	psSoundVFactor		= m_stored_volume;
+	g_Engine->GetSoundManager()->SetShockEffectorVolume(m_stored_volume);
 	if(m_actor&&(m_ce||m_pe))
 		RemoveEffector	(m_actor, effHit);
 
@@ -318,11 +318,11 @@ void SndShockEffector::Start(CActor* A, float snd_length, float power)
 	m_snd_length	= snd_length;
 
 	if( m_stored_volume<0.0f )
-		m_stored_volume = psSoundVFactor;
+		m_stored_volume = 1;
 	
 
 	m_cur_length		= 0;
-	psSoundVFactor		= m_stored_volume*SND_MIN_VOLUME_FACTOR;
+	g_Engine->GetSoundManager()->SetShockEffectorVolume( m_stored_volume*SND_MIN_VOLUME_FACTOR);
 	
 	static float		xxx = 6.0f/1.50f; //6sec on max power(1.5)
 
@@ -338,7 +338,7 @@ void SndShockEffector::Update()
 	float x				= float(m_cur_length)/m_snd_length;
 	float y				= 2.f*x-1;
 	if (y>0.f){
-		psSoundVFactor	= y*(m_stored_volume-m_stored_volume*SND_MIN_VOLUME_FACTOR)+m_stored_volume*SND_MIN_VOLUME_FACTOR;
+		g_Engine->GetSoundManager()->SetShockEffectorVolume( y*(m_stored_volume-m_stored_volume*SND_MIN_VOLUME_FACTOR)+m_stored_volume*SND_MIN_VOLUME_FACTOR);
 	}
 }
 

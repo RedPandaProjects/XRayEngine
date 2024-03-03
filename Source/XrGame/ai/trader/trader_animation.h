@@ -17,7 +17,7 @@ class CTraderAnimation {
 	MotionID			m_motion_head;	
 	MotionID			m_motion_global;
 
-	ref_sound			*m_sound;
+	FRBMKSoundSourceRef			*m_sound;
 
 	bool				m_external_sound;
 

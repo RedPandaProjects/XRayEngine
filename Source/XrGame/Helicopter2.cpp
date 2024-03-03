@@ -42,9 +42,9 @@ void CHelicopter::TurnLighting(bool bOn)
 void  CHelicopter::TurnEngineSound(bool bOn)
 {
 	if(bOn)
-		m_engineSound.set_volume(1.0f);
+		m_engineSound.SetVolume(1.0f);
 	else
-		m_engineSound.set_volume(0.0f);
+		m_engineSound.SetVolume(0.0f);
 
 }
 
@@ -111,7 +111,7 @@ void CHelicopter::ExplodeHelicopter ()
 
 	CExplosive::SetInitiator(ID());
 	CExplosive::GenExplodeEvent(Position(),Fvector().set(0.f,1.f,0.f));
-	m_brokenSound.stop					();
+	m_brokenSound.Stop					();
 
 }
 
@@ -281,10 +281,10 @@ void CHelicopter::DieHelicopter()
 		return;
 	CEntity::Die(NULL);
 
-	m_engineSound.stop				();
+	m_engineSound.Stop				();
 
-	m_brokenSound.create			(pSettings->r_string(*cNameSect(), "broken_snd"),st_Effect,sg_SourceType);
-	m_brokenSound.play_at_pos		(0,XFORM().c,sm_Looped);
+	m_brokenSound.Create			(pSettings->r_string(*cNameSect(), "broken_snd"),SOUND_TYPE_FROM_SOURCE);
+	m_brokenSound.Play		(0,XFORM().c,true);
 
 
 	IKinematics* K		= CastToIKinematics(Visual());
@@ -319,7 +319,7 @@ void CHelicopter::DieHelicopter()
 	K->CalculateBones_Invalidate	();
 	K->CalculateBones				(TRUE);
 	setState						(CHelicopter::eDead);
-	m_engineSound.stop				();
+	m_engineSound.Stop				();
 	processing_deactivate			();
 	m_dead							= true;
 }

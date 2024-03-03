@@ -1,4 +1,6 @@
 #include "pch_script.h"
+
+#include "ai_sounds.h"
 #include "UIGameTutorial.h"
 #include "UIStatic.h"
 #include "uicursor.h"
@@ -22,7 +24,7 @@ CUISequenceSimpleItem::~CUISequenceSimpleItem()
 	SubItemVecIt _E			= m_subitems.end	();
 	for(;_I!=_E;++_I)		_I->Stop			();
 	m_subitems.clear		();
-	m_sound.stop			();
+	m_sound.Stop			();
 	delete_data				(m_UIWindow);
 }
 
@@ -52,8 +54,8 @@ void CUISequenceSimpleItem::Load(CUIXml* xml, int idx)
 	
 	LPCSTR m_snd_name		= xml->Read				("sound",0,""			);
 	if (m_snd_name&&m_snd_name[0]){
-		m_sound.create		(m_snd_name,st_Effect,sg_Undefined);	
-		VERIFY				(m_sound._handle() || strstr(Core.Params,"-nosound"));
+		m_sound.Create		(m_snd_name,SOUND_TYPE_NO_SOUND);	
+		VERIFY				(m_sound.IsValid() || strstr(Core.Params,"-nosound"));
 	}
 	m_time_length			= xml->ReadFlt			("length_sec",0,0		);
 	m_desired_cursor_pos.x	= xml->ReadAttribFlt	("cursor_pos",0,"x",0);
@@ -239,7 +241,7 @@ void CUISequenceSimpleItem::Start()
 
 	m_owner->MainWnd()->AttachChild	(m_UIWindow);
 
-	if (m_sound._handle())		m_sound.play(NULL, sm_2D);
+	if (m_sound.IsValid())		m_sound.Play(NULL);
 
 	if (g_pGameLevel)
 	{
@@ -272,8 +274,8 @@ bool CUISequenceSimpleItem::Stop			(bool bForce)
 
 	if(m_UIWindow->GetParent()==m_owner->MainWnd()) //started??
 		m_owner->MainWnd()->DetachChild	(m_UIWindow);
-
-	m_sound.stop				();
+		
+	m_sound.Stop();
 
 	if(m_flags.test(etiNeedPauseOn) && !m_flags.test(etiStoredPauseState))
 		Device->Pause			(FALSE, TRUE, FALSE, "simpleitem_stop");

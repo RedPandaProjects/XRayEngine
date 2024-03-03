@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "ZoneCampfire.h"
+
+#include "ai_sounds.h"
 #include "ParticlesObject.h"
 #include "GamePersistent.h"
 #include "../xrEngine/LightAnimLibrary.h"
@@ -24,7 +26,7 @@ CZoneCampfire::~CZoneCampfire()
 {
 	CParticlesObject::Destroy	(m_pDisabledParticles);
 	CParticlesObject::Destroy	(m_pEnablingParticles);
-	m_disabled_sound.destroy	();
+	m_disabled_sound.Reset	();
 }
 
 void CZoneCampfire::Load(LPCSTR section)
@@ -42,8 +44,8 @@ void CZoneCampfire::GoEnabledState()
 		CParticlesObject::Destroy	(m_pDisabledParticles);
 	}
 
-	m_disabled_sound.stop		();
-	m_disabled_sound.destroy	();
+	m_disabled_sound.Stop		();
+	m_disabled_sound.Reset	();
 
 	LPCSTR str						= pSettings->r_string(cNameSect(),"enabling_particles");
 	m_pEnablingParticles			= CParticlesObject::Create(str,FALSE);
@@ -63,8 +65,8 @@ void CZoneCampfire::GoDisabledState()
 	
 	
 	str = pSettings->r_string		(cNameSect(),"disabled_sound");
-	m_disabled_sound.create			(str, st_Effect,sg_SourceType);
-	m_disabled_sound.play_at_pos	(0, Position(), true);
+	m_disabled_sound.Create			(str, SOUND_TYPE_FROM_SOURCE);
+	m_disabled_sound.Play	(0, Position(), true);
 }
 
 #define OVL_TIME 3000
@@ -97,7 +99,8 @@ void CZoneCampfire::shedule_Update(u32	dt)
 	if(m_pIdleParticles)
 	{
 		Fvector vel;
-		vel.mul(GamePersistent().EnvironmentAsCOP()->wind_blast_direction,GamePersistent().EnvironmentAsCOP()->wind_strength_factor);
+		vel.set(0,0,0);
+		//vel.mul(GamePersistent().Eb()->wind_blast_direction,GamePersistent().EnvironmentAsCOP()->wind_strength_factor);
 		m_pIdleParticles->UpdateParent(XFORM(),vel);
 	}
 	inherited::shedule_Update(dt);

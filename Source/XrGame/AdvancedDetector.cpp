@@ -88,7 +88,7 @@ void CAdvancedDetector::UpdateAf()
 		af_info.snd_time		= 0;
 		HUD_SOUND_ITEM::PlaySound	(item_type->detect_snds, Fvector().set(0,0,0), this, true, false);
 		if(item_type->detect_snds.m_activeSnd)
-			item_type->detect_snds.m_activeSnd->snd.set_frequency(snd_freq);
+			item_type->detect_snds.m_activeSnd->snd.SetFrequency(snd_freq);
 	} 
 	else 
 		af_info.snd_time += Device->fTimeDelta;

@@ -48,11 +48,11 @@ void game_cl_CaptureTheArtefact::OnSpeechMessage(NET_Packet& P)
 	{
 		if (ps == local_player)
 		{
-			pMSound->mSound_Voice.play_at_pos(NULL, Fvector().set(0,0,0), sm_2D, 0);
+			pMSound->mSound_Voice.Play(nullptr);
 		}
 		else
 		{
-			pMSound->mSound_Radio.play_at_pos(NULL, Fvector().set(0,0,0), sm_2D, 0);
+			pMSound->mSound_Radio.Play(nullptr);
 		}
 		Msg("%s said: %s", ps->getName(), *CStringTable().translate(pMMessage->pMessage));
 	}
@@ -61,7 +61,7 @@ void game_cl_CaptureTheArtefact::OnSpeechMessage(NET_Packet& P)
 		CObject* pObj = Level().Objects.net_Find(ps->GameID);
 		if (pObj)
 		{
-			pMSound->mSound_Voice.play_at_pos(pObj, pObj->Position());
+			pMSound->mSound_Voice.Play(pObj, pObj->Position());
 		};			
 	};
 };

@@ -11,7 +11,7 @@ class CScanningAbility {
 	float		decrease_value;
 	float		scan_trace_time_freq;
 
-	ref_sound	sound_scan;
+	FRBMKSoundSourceRef	sound_scan;
 
 	// internal members
 	enum EScanState {

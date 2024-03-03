@@ -21,7 +21,7 @@ namespace award_system
 
 
 struct SND_Message{
-	ref_sound	pSound;
+	FRBMKSoundSourceRef	pSound;
 	u32			priority;
 	u32			SoundID;
 	u32			LastStarted;
@@ -30,14 +30,14 @@ struct SND_Message{
 	{
 		SoundID = ID;
 		priority = prior;
-		pSound.create(name,st_Effect,sg_SourceType);
+		pSound.Create(name);
 		LastStarted = 0;
 	}
 	~SND_Message()
 	{
 		SoundID = 0;
 		priority = 0;
-		pSound.destroy();
+		pSound.Reset();
 	}
 };
 
@@ -57,8 +57,8 @@ DEF_DEQUE(CL_TEAM_DATA_LIST, cl_TeamStruct);
 
 struct cl_Message_Sound
 {
-	ref_sound	mSound_Voice;
-	ref_sound	mSound_Radio;
+	FRBMKSoundSourceRef	mSound_Voice;
+	FRBMKSoundSourceRef	mSound_Radio;
 };
 
 DEF_VECTOR	(TEAMSOUND, cl_Message_Sound);

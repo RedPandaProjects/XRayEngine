@@ -196,10 +196,6 @@ public:
 	CZoneList*					hud_zones_list;
 	CZoneList*					create_hud_zones_list();
 
-private:
-	// preload sounds registry
-	DEFINE_MAP					(shared_str,ref_sound,SoundRegistryMap,SoundRegistryMapIt);
-	SoundRegistryMap			sound_registry;
 
 public:
 	void						PrefetchSound (LPCSTR name);
@@ -239,7 +235,7 @@ public:
 	bool						IsChecksumsEqual		(u32 check_sum) const;
 
 	// sounds
-	xr_vector<ref_sound*>		static_Sounds;
+	xr_vector<FRBMKSoundSourceRef*>		static_Sounds;
 
 	// startup options
 	shared_str					m_caServerOptions;

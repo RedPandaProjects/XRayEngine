@@ -50,7 +50,7 @@ void CUIStaticItem::Init(LPCSTR tex, LPCSTR sh, float left, float top, u32 align
 void CUIStaticItem::Render()
 {
 	VERIFY(g_bRendering);
-	// óñòàíîâèòü îáÿçàòåëüíî ïåğåä âûçîâîì CustomItem::Render() !!!
+	// ÑƒÑÑ‚Ğ°Ğ½Ğ¾Ğ²Ğ¸Ñ‚ÑŒ Ğ¾Ğ±ÑĞ·Ğ°Ñ‚ĞµĞ»ÑŒĞ½Ğ¾ Ğ¿ĞµÑ€ĞµĞ´ Ğ²Ñ‹Ğ·Ğ¾Ğ²Ğ¾Ğ¼ CustomItem::Render() !!!
 	VERIFY(hShader);
 	UIRender->SetShader(*hShader);
 	if (alpha_ref != -1)
@@ -93,7 +93,7 @@ void CUIStaticItem::Render()
 void CUIStaticItem::Render(float angle)
 {
 	VERIFY						(g_bRendering);
-	// óñòàíîâèòü îáÿçàòåëüíî ïåğåä âûçîâîì CustomItem::Render() !!!
+	// ÑƒÑÑ‚Ğ°Ğ½Ğ¾Ğ²Ğ¸Ñ‚ÑŒ Ğ¾Ğ±ÑĞ·Ğ°Ñ‚ĞµĞ»ÑŒĞ½Ğ¾ Ğ¿ĞµÑ€ĞµĞ´ Ğ²Ñ‹Ğ·Ğ¾Ğ²Ğ¾Ğ¼ CustomItem::Render() !!!
 	VERIFY						(hShader);
 	VERIFY(hShader);
 	UIRender->SetShader(*hShader);

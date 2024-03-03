@@ -11,7 +11,7 @@ class moving_bones_snd_player
 			float			max_factor;
 			float			base_velocity;
 			float			smothed_velocity;
-			ref_sound		sound;
+			FRBMKSoundSourceRef		sound;
 			Fmatrix			previous_position;
 			IKinematics		*kinematics;
 public:

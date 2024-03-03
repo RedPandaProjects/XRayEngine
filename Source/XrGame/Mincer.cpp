@@ -9,6 +9,7 @@
 #include "entity_alive.h"
 #include "PHDestroyableNotificate.h"
 #include "actor.h"
+#include "ai_sounds.h"
 
 CMincer::CMincer(void) 
 {
@@ -44,7 +45,7 @@ void CMincer::Load (LPCSTR section)
 	m_telekinetics.set_destroing_particles(shared_str(pSettings->r_string(section,"tearing_particles")));
 	m_telekinetics.set_throw_power(pSettings->r_float(section,"throw_out_impulse"));
 	m_torn_particles=pSettings->r_string(section,"torn_particles");
-	m_tearing_sound.create(pSettings->r_string(section,"body_tearing_sound"),st_Effect,sg_SourceType);
+	m_tearing_sound.Create(pSettings->r_string(section,"body_tearing_sound"),SOUND_TYPE_FROM_SOURCE);
 	m_fActorBlowoutRadiusPercent=pSettings->r_float(section,"actor_blowout_radius_percent");
 
 	//pSettings->r_fvector3(section,whirlwind_center);
@@ -130,7 +131,7 @@ void CMincer::NotificateDestroy			(CPHDestroyableNotificate *dn)
 	{
 		PP->StartParticles(m_torn_particles,Fvector().set(0,1,0),ID());
 	}
-	m_tearing_sound.play_at_pos(0,m_telekinetics.Center());
+	m_tearing_sound.Play(0,m_telekinetics.Center());
 
 	Fvector position_in_bone_space, throw_in_dir;
 	position_in_bone_space.set		(0.0f, 0.0f, 0.0f);

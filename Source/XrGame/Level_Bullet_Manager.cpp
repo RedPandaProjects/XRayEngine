@@ -7,6 +7,7 @@
 #include "Level_Bullet_Manager.h"
 #include "game_cl_base.h"
 #include "Actor.h"
+#include "ai_sounds.h"
 #include "gamepersistent.h"
 #include "mt_config.h"
 #include "game_cl_base_weapon_usage_statistic.h"
@@ -156,8 +157,8 @@ void CBulletManager::Load		()
 	xr_string tmp;
 	for (int k=0; k<cnt; ++k)
 	{
-		m_WhineSounds.push_back	(ref_sound());
-		m_WhineSounds.back().create(_GetItem(whine_sounds,k,tmp),st_Effect,sg_SourceType);
+		m_WhineSounds.push_back	(FRBMKSoundSourceRef());
+		m_WhineSounds.back().Create(_GetItem(whine_sounds,k,tmp),SOUND_TYPE_FROM_SOURCE);
 	}
 
 	LPCSTR explode_particles= pSettings->r_string(bullet_manager_sect, "explode_particles");
@@ -180,11 +181,11 @@ void CBulletManager::PlayExplodePS( const Fmatrix& xf )
 void CBulletManager::PlayWhineSound(SBullet* bullet, CObject* object, const Fvector& pos)
 {
 	if (m_WhineSounds.empty())						return;
-	if (bullet->m_whine_snd._feedback() != NULL)	return;
+	if (bullet->m_whine_snd.IsPlaying() != NULL)	return;
 	if(bullet->hit_type!=ALife::eHitTypeFireWound ) return;
 
 	bullet->m_whine_snd								= m_WhineSounds[Random.randI(0, m_WhineSounds.size())];
-	bullet->m_whine_snd.play_at_pos					(object,pos);
+	bullet->m_whine_snd.Play					(object,pos);
 }
 
 void CBulletManager::Clear		()
@@ -977,10 +978,10 @@ void CBulletManager::Render	()
 		tracers.Render			(bullet->bullet_pos, center, tracer_direction, length, width, bullet->m_u8ColorID, bullet->speed, bActor);
 	}
 	
-	UIRender->CacheSetCullMode		(IUIRender::cmNONE);
-	UIRender->CacheSetXformWorld	(Fidentity);
+	//UIRender->CacheSetCullMode		(IUIRender::cmNONE);
+	//UIRender->CacheSetXformWorld	(Fidentity);
 	UIRender->FlushPrimitive		();
-	UIRender->CacheSetCullMode		(IUIRender::cmCCW);
+	/*UIRender->CacheSetCullMode		(IUIRender::cmCCW);*/
 }
 
 void CBulletManager::CommitRenderSet		()	// @ the end of frame

@@ -416,11 +416,11 @@ void CBulletManager::Render	()
 	}
 
 
-	UIRender->CacheSetCullMode(IUIRender::cmNONE);
-	UIRender->CacheSetXformWorld(Fidentity);
+	//UIRender->CacheSetCullMode(IUIRender::cmNONE);
+	//UIRender->CacheSetXformWorld(Fidentity);
 	UIRender->SetShader(*tracers.sh_Tracer);
 	UIRender->FlushPrimitive();
-	UIRender->CacheSetCullMode(IUIRender::cmCCW);
+	//UIRender->CacheSetCullMode(IUIRender::cmCCW);
 }
 
 void CBulletManager::CommitRenderSet		()	// @ the end of frame

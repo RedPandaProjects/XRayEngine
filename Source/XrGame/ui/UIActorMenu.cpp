@@ -165,8 +165,8 @@ void CUIActorMenu::SetMenuMode(EMenuMode mode)
 
 void CUIActorMenu::PlaySnd(eActorMenuSndAction a)
 {
-	if (sounds[a]._handle())
-        sounds[a].play					(NULL, sm_2D);
+	if (sounds[a].IsValid())
+        sounds[a].Play					(NULL);
 }
 
 void CUIActorMenu::SendMessage(CUIWindow* pWnd, s16 msg, void* pData)

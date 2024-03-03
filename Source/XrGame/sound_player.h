@@ -52,39 +52,39 @@ public:
 	};
 
 	struct CSoundCollection : public CRandom32 {
-		xr_vector<ref_sound*>					m_sounds;
+		xr_vector<FRBMKSoundSourceRef*>					m_sounds;
 		u32										m_last_sound_id;
 
 							CSoundCollection	(const CSoundCollectionParams &params);
 							~CSoundCollection	();
-		IC	ref_sound		*add				(ESoundTypes type, LPCSTR name) const;
-			const ref_sound	&random				(const u32 &id);
+		IC	FRBMKSoundSourceRef		*add				(ESoundTypes type, LPCSTR name) const;
+			const FRBMKSoundSourceRef	&random				(const u32 &id);
 	};
 
 	struct CSoundSingle : public CSoundParams {
-		ref_sound								*m_sound;
+		FRBMKSoundSourceRef								*m_sound;
 		u32										m_start_time;
 		u32										m_stop_time;
 		bool									m_started;
 		u16										m_bone_id;
 
-				CSoundSingle					()
+		CSoundSingle					()
 		{
 			m_started							= false;
 		}
 
-				void	destroy					()
+		void	destroy					()
 		{
 			VERIFY								(m_sound);
-			if (m_sound->_feedback())
-				m_sound->stop					();
+			if (m_sound->IsPlaying())
+				m_sound->Stop					();
 
 			xr_delete							(m_sound);
 		}
 
-				void	play_at_pos				(CObject *object, const Fvector &position)
+		void	play_at_pos				(CObject *object, const Fvector &position)
 		{
-			m_sound->play_at_pos				(object,position);
+			m_sound->Play				(object,position);
 			m_started							= true;
 		}
 
@@ -107,7 +107,7 @@ public:
 			bool		result = 
 				(sound.m_synchro_mask & m_sound_mask) || 
 				(
-					!sound.m_sound->_feedback() && 
+					!sound.m_sound->IsPlaying() && 
 					(sound.m_stop_time <= Device->dwTimeGlobal)
 				);
 			if (result)

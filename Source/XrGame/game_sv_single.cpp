@@ -8,7 +8,6 @@
 #include "../xrEngine/object_broker.h"
 #include "gamepersistent.h"
 #include "xrServer.h"
-#include "../xrEngine/XRayEngineInterface.h"
 #include "../xrEngine/dedicated_server_only.h"
 #include "../xrEngine/no_single.h"
 

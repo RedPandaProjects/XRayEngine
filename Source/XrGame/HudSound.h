@@ -1,4 +1,5 @@
 #pragma once
+#include "ai_sounds.h"
 
 
 struct HUD_SOUND_ITEM
@@ -6,15 +7,15 @@ struct HUD_SOUND_ITEM
 	HUD_SOUND_ITEM():m_activeSnd(NULL),m_b_exclusive(false)		{}
 
 	static void		LoadSound		(	LPCSTR section, LPCSTR line,
-										ref_sound& hud_snd,
-										int type = sg_SourceType,
+										FRBMKSoundSourceRef& hud_snd,
+										int type = SOUND_TYPE_FROM_SOURCE,
 										float* volume = NULL,
 										float* delay = NULL);
 
 	static void		LoadSound		(	LPCSTR section, 
 										LPCSTR line,
 										HUD_SOUND_ITEM& hud_snd,  
-										int type = sg_SourceType);
+										int type = SOUND_TYPE_FROM_SOURCE);
 
 	static void		DestroySound	(	HUD_SOUND_ITEM& hud_snd);
 
@@ -29,21 +30,27 @@ struct HUD_SOUND_ITEM
 
 	ICF BOOL		playing			()
 	{
-		if (m_activeSnd)	return	m_activeSnd->snd._feedback()?TRUE:FALSE;
+		if (m_activeSnd)	return	m_activeSnd->snd.IsPlaying();
 		else				return	FALSE;
 	}
 
 	ICF void		set_position	(	const Fvector& pos)
 	{
-		if(m_activeSnd)	{ 
-			if (m_activeSnd->snd._feedback()&&!m_activeSnd->snd._feedback()->is_2D())	
-									m_activeSnd->snd.set_position	(pos);
-			else					m_activeSnd	= NULL;
+		if(m_activeSnd)
+		{ 
+			if (m_activeSnd->snd.IsValid()&&!m_activeSnd->snd.IsRelative())	
+			{
+				m_activeSnd->snd.SetPosition(pos);
+			}
+			else
+			{
+				m_activeSnd	= nullptr;
+			}
 		}
 	}
 
 	struct SSnd		{
-		ref_sound	snd;
+		FRBMKSoundSourceRef	snd;
 		float		delay;		//задержка перед проигрыванием
 		float		volume;		//громкость
 	};
@@ -74,7 +81,7 @@ public:
 													LPCSTR line,
 													LPCSTR alias,
 													bool exclusive = false,
-													int type = sg_SourceType);
+													int type = SOUND_TYPE_FROM_SOURCE);
 
 	void						SetPosition		(	LPCSTR alias, 	const Fvector& pos);
 	void						StopAllSounds	();

@@ -99,8 +99,8 @@ void CController::Load(LPCSTR section)
 	//anim().accel_chain_add		(eAnimWalkFwd,		eAnimRun);
 	//anim().accel_chain_add		(eAnimWalkDamaged,	eAnimRunDamaged);
 
-	::Sound->create(control_start_sound,pSettings->r_string(section,"sound_control_start"),	st_Effect,SOUND_TYPE_WORLD);
-	::Sound->create(control_hit_sound,	pSettings->r_string(section,"sound_control_hit"),	st_Effect,SOUND_TYPE_WORLD);
+	control_start_sound.Create( pSettings->r_string(section,"sound_control_start"),	SOUND_TYPE_WORLD);
+	control_hit_sound.Create(	pSettings->r_string(section,"sound_control_hit"),	SOUND_TYPE_WORLD);
 
 	anim().AddReplacedAnim(&m_bDamaged, eAnimStandIdle,	eAnimStandDamaged);
 	anim().AddReplacedAnim(&m_bDamaged, eAnimRun,		eAnimRunDamaged);
@@ -224,19 +224,16 @@ void CController::Load(LPCSTR section)
 	load_friend_community_overrides(section);
 
 	// load
-	m_sound_hit_fx.create		("affects\\tinnitus3a",st_Effect,sg_SourceType);
+	m_sound_hit_fx.Create		("affects\\tinnitus3a",SOUND_TYPE_FROM_SOURCE);
 
-	m_sound_aura_left_channel.create		("monsters\\controller\\controller_psy_aura_l",st_Effect,sg_SourceType);
-	m_sound_aura_right_channel.create		("monsters\\controller\\controller_psy_aura_r",st_Effect,sg_SourceType);
-	m_sound_aura_hit_left_channel.create	("monsters\\controller\\controller_psy_hit_l",st_Effect,sg_SourceType);
-	m_sound_aura_hit_right_channel.create	("monsters\\controller\\controller_psy_hit_l",st_Effect,sg_SourceType);
+	m_sound_aura_channel.Create		("monsters\\controller\\controller_psy_aura",SOUND_TYPE_FROM_SOURCE);
+	m_sound_aura_hit_channel.Create	("monsters\\controller\\controller_psy_hit",SOUND_TYPE_FROM_SOURCE);
 
-	m_sound_tube_start.create				("monsters\\controller\\controller_first_hit",st_Effect,sg_SourceType);
-	m_sound_tube_pull.create				("monsters\\controller\\controller_whoosh",st_Effect,sg_SourceType);
-	m_sound_tube_hit_left.create			("monsters\\controller\\controller_final_hit_l",st_Effect,sg_SourceType);
-	m_sound_tube_hit_right.create			("monsters\\controller\\controller_final_hit_r",st_Effect,sg_SourceType);
+	m_sound_tube_start.Create				("monsters\\controller\\controller_first_hit",SOUND_TYPE_FROM_SOURCE);
+	m_sound_tube_pull.Create				("monsters\\controller\\controller_whoosh",SOUND_TYPE_FROM_SOURCE);
+	m_sound_tube_hit.Create			("monsters\\controller\\controller_final_hit",SOUND_TYPE_FROM_SOURCE);
 
-	m_sound_tube_prepare.create				("monsters\\controller\\controller_tube_prepare",st_Effect,sg_SourceType);
+	m_sound_tube_prepare.Create				("monsters\\controller\\controller_tube_prepare",SOUND_TYPE_FROM_SOURCE);
 
 	particles_fire		= pSettings->r_string(section,"Control_Hit");
 	
@@ -361,8 +358,8 @@ void CController::play_control_sound_start()
 	Fvector pos = EnemyMan.get_enemy()->Position();
 	pos.y += 1.5f;
 
-	if (control_start_sound._feedback()) control_start_sound.stop();
-	control_start_sound.play_at_pos(const_cast<CEntityAlive*>(EnemyMan.get_enemy()),pos);
+	if (control_start_sound.IsPlaying()) control_start_sound.Stop();
+	control_start_sound.Play(const_cast<CEntityAlive*>(EnemyMan.get_enemy()),pos);
 }
 
 void CController::play_control_sound_hit()
@@ -370,8 +367,8 @@ void CController::play_control_sound_hit()
 	Fvector pos = EnemyMan.get_enemy()->Position();
 	pos.y += 1.5f;
 	
-	if (control_hit_sound._feedback()) control_hit_sound.stop();
-	control_hit_sound.play_at_pos(const_cast<CEntityAlive*>(EnemyMan.get_enemy()),pos);
+	if (control_hit_sound.IsPlaying()) control_hit_sound.Stop();
+	control_hit_sound.Play(const_cast<CEntityAlive*>(EnemyMan.get_enemy()),pos);
 }
 
 void CController::reload(LPCSTR section)

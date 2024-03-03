@@ -7,7 +7,6 @@
 #include "entity_alive.h"
 #include "script_entity.h"
 #include "../xrEngine/feel_vision.h"
-#include "../xrEngine/feel_sound.h"
 #include "../xrEngine/feel_touch.h"
 #include "../XrEngine/Render/Kinematics.h"
 #include "../xrEngine/associative_vector.h"
@@ -34,7 +33,7 @@ class CCustomMonster :
 	public CEntityAlive, 
 	public CScriptEntity,
 	public Feel::Vision,
-	public Feel::Sound,
+	public IRBMKSoundActorListener,
 	public Feel::Touch
 {
 private:
@@ -177,7 +176,7 @@ public:
 			void				set_range				(float new_range);
 //	virtual	void				feel_touch_new			(CObject	*O);
 	virtual BOOL				feel_visible_isRelevant	(CObject		*O);
-	virtual	Feel::Sound*		dcast_FeelSound			()			{ return this;	}
+	virtual	IRBMKSoundActorListener*CastToSoundActorListener	() override	{ return this;	}
 	virtual	void				Hit						(SHit* pHDS);
 
 	virtual void				OnEvent					( NET_Packet& P, u16 type		);
@@ -219,7 +218,7 @@ public:
 
 	IC		CMemoryManager		&memory					() const;
 	virtual float				feel_vision_mtl_transp	(CObject* O, u32 element);
-	virtual	void				feel_sound_new			(CObject* who, int type, CSound_UserDataPtr user_data, const Fvector &Position, float power);
+	virtual	void				ListenSound				(CObject* InSourceActor, s32 SoundFlags,const Fvector& InPosition, float InPower,CSound_UserDataPtr UserData) override;
 
 	virtual bool				useful					(const CItemManager *manager, const CGameObject *object) const;
 	virtual float				evaluate				(const CItemManager *manager, const CGameObject *object) const;

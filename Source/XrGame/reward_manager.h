@@ -24,7 +24,7 @@ private:
 		shared_str	m_color_animation;
 		u32			m_width;
 		u32			m_height;
-		ref_sound	m_play_sound;
+		FRBMKSoundSourceRef	m_play_sound;
 		u32			m_process_time;
 	};//struct reward_descriptor
 

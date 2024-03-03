@@ -2,7 +2,6 @@
 //#include "PHdynamicdata.h"
 //#include "Physics.h"
 #include "level.h"
-#include "../xrEngine/XRayEngineInterface.h"
 #include "../xrEngine/igame_persistent.h"
 
 #include "ai_space.h"
@@ -119,12 +118,12 @@ bool	CLevel::net_start_client4				()
 {
 	if(connected_to_server)
 	{
-		if (g_Engine->GetWorldStatus() == EXRayWorldStatus::Loading)
+		if (g_Engine->GetWorldStatus() == ERBMKWorldStatus::Loading)
 		{
 			return false;
 		}
-		R_ASSERT(g_Engine->GetWorldStatus() != EXRayWorldStatus::None);
-		if (g_Engine->GetWorldStatus() == EXRayWorldStatus::Failure)
+		R_ASSERT(g_Engine->GetWorldStatus() != ERBMKWorldStatus::None);
+		if (g_Engine->GetWorldStatus() == ERBMKWorldStatus::Failure)
 		{
 			Disconnect();
 			connected_to_server = FALSE;

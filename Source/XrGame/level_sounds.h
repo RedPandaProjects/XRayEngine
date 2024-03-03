@@ -5,7 +5,7 @@
 
 struct SStaticSound
 {
-	ref_sound		m_Source;
+	FRBMKSoundSourceRef		m_Source;
 	Ivector2		m_ActiveTime;
 	Ivector2		m_PlayTime;
 	Ivector2		m_PauseTime;
@@ -25,7 +25,7 @@ struct	SMusicTrack
 #ifdef DEBUG
 	shared_str		m_DbgName;
 #endif
-	ref_sound		m_SourceStereo;
+	FRBMKSoundSourceRef		m_SourceStereo;
 	Ivector2		m_ActiveTime;
 	Ivector2		m_PauseTime;
 	float			m_Volume;

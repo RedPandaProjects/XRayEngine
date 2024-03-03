@@ -28,7 +28,7 @@ void CPolterSpecialAbility::load(LPCSTR section)
 	m_particles_death					= pSettings->r_string(section,"Particles_Death");
 	m_particles_idle					= pSettings->r_string(section,"Particles_Idle");
 
-	m_sound_base.create					(pSettings->r_string(section,"Sound_Idle"), st_Effect, SOUND_TYPE_MONSTER_TALKING);
+	m_sound_base.Create					(pSettings->r_string(section,"Sound_Idle"),  SOUND_TYPE_MONSTER_TALKING);
 
 	m_last_hit_frame					= 0;
 }
@@ -36,8 +36,8 @@ void CPolterSpecialAbility::load(LPCSTR section)
 void CPolterSpecialAbility::update_schedule()
 {
 	if (m_object->g_Alive()) {
-		if (!m_sound_base._feedback()) m_sound_base.play_at_pos(m_object, m_object->Position());
-		else m_sound_base.set_position(m_object->Position());
+		if (!m_sound_base.IsPlaying()) m_sound_base.Play(m_object, m_object->Position());
+		else m_sound_base.SetPosition(m_object->Position());
 	}
 }
 
@@ -129,7 +129,7 @@ void CPoltergeist::PhysicalImpulse	(const Fvector &position)
 
 void CPoltergeist::StrangeSounds(const Fvector &position)
 {
-	if (m_strange_sound._feedback()) return;
+	if (m_strange_sound.IsPlaying()) return;
 	
 	for (u32 i = 0; i < TRACE_ATTEMPT_COUNT; i++) {
 		Fvector dir;
@@ -145,11 +145,11 @@ void CPoltergeist::StrangeSounds(const Fvector &position)
 				if (!mtl_pair) continue;
 
 				// Играть звук
-				if (!mtl_pair->CollideSounds.empty()) {
-					CLONE_MTL_SOUND(m_strange_sound, mtl_pair, CollideSounds);
+				if (!mtl_pair->CollideSoundsNames.empty()) {
+					CLONE_MTL_SOUND(m_strange_sound, mtl_pair, CollideSoundsNames);
 					Fvector pos;
 					pos.mad(position, dir, ((l_rq.range - 0.1f > 0) ? l_rq.range - 0.1f  : l_rq.range));
-					m_strange_sound.play_at_pos(this,pos);
+					m_strange_sound.Play(this,pos);
 					return;
 				}			
 			}

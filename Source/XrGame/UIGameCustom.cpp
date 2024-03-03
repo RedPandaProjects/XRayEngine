@@ -16,7 +16,6 @@
 #include "inventory.h"
 #include "game_cl_base.h"
 
-#include "../xrEngine/XRayEngineInterface.h"
 
 EGameIDs ParseStringToGameType(LPCSTR str);
 

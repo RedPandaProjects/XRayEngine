@@ -501,7 +501,7 @@ SArtefactDetectorsSupport::SArtefactDetectorsSupport(CArtefact* A)
 
 SArtefactDetectorsSupport::~SArtefactDetectorsSupport()
 {
-	m_sound.destroy();
+	m_sound.Reset();
 }
 
 void SArtefactDetectorsSupport::SetVisible(bool b)
@@ -527,8 +527,8 @@ void SArtefactDetectorsSupport::SetVisible(bool b)
 		m_parent->CParticlesPlayer::StartParticles(curr,bone_id,Fvector().set(0,1,0),m_parent->ID());
 
 		curr					= pSettings->r_string(m_parent->cNameSect().c_str(), (b)?"det_show_snd":"det_hide_snd");
-		m_sound.create			(curr, st_Effect, sg_SourceType);
-		m_sound.play_at_pos		(0, m_parent->Position(), 0);
+		m_sound.Create			(curr,  SOUND_TYPE_FROM_SOURCE);
+		m_sound.Play		(0, m_parent->Position());
 	}
 	
 	m_parent->setVisible	(b);

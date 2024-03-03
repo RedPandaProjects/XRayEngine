@@ -96,7 +96,7 @@ public:
 			void	PhysicalImpulse		(const Fvector &position);
 			void	StrangeSounds		(const Fvector &position);
 			
-			ref_sound m_strange_sound;
+			FRBMKSoundSourceRef m_strange_sound;
 	
 	// Movement
 			Fvector m_current_position;		// Позиция на ноде
@@ -171,7 +171,7 @@ class CPolterSpecialAbility {
 	LPCSTR				m_particles_death;
 	LPCSTR				m_particles_idle;
 
-	ref_sound			m_sound_base;
+	FRBMKSoundSourceRef			m_sound_base;
 	u32					m_last_hit_frame;
 
 protected:
@@ -200,7 +200,7 @@ class CPolterFlame : public CPolterSpecialAbility {
 
 	typedef CPolterSpecialAbility inherited;
 
-	ref_sound				m_sound;
+	FRBMKSoundSourceRef				m_sound;
 	LPCSTR					m_particles_prepare;
 	LPCSTR					m_particles_fire;
 	LPCSTR					m_particles_stop;
@@ -233,7 +233,7 @@ class CPolterFlame : public CPolterSpecialAbility {
 	float					m_scan_effector_time;
 	float					m_scan_effector_time_attack;
 	float					m_scan_effector_time_release;
-	ref_sound				m_scan_sound;
+	FRBMKSoundSourceRef				m_scan_sound;
 
 	bool					m_state_scanning;
 	u32						m_scan_next_time;
@@ -252,7 +252,7 @@ public:
 		Fvector				position;
 		Fvector				target_dir;
 		u32					time_started;
-		ref_sound			sound;
+		FRBMKSoundSourceRef			sound;
 		CParticlesObject	*particles_object;
 		EFlameState			state;
 		u32					time_last_hit;
@@ -304,8 +304,8 @@ class CPolterTele : public CPolterSpecialAbility {
 
 	float				m_pmt_object_collision_damage;
 
-	ref_sound			m_sound_tele_hold;
-	ref_sound			m_sound_tele_throw;
+	FRBMKSoundSourceRef			m_sound_tele_hold;
+	FRBMKSoundSourceRef			m_sound_tele_throw;
 
 	enum ETeleState {
 		eStartRaiseObjects,

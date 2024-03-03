@@ -62,8 +62,8 @@ void	game_cl_GameState::net_import_GameTime		(NET_Packet& P)
 
 	u64 OldTime = Level().GetEnvironmentGameTime();
 	Level().SetEnvironmentGameTimeFactor	(GameEnvironmentTime,EnvironmentTimeFactor);
-	if (OldTime > GameEnvironmentTime)
-		GamePersistent().EnvironmentAsCOP()->Invalidate();
+	//if (OldTime > GameEnvironmentTime)
+	//	GamePersistent().EnvironmentAsCOP()->Invalidate();
 }
 
 struct not_exsiting_clients_deleter
