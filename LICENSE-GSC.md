@@ -1,23 +1,25 @@
-All source code included with this distribution, unless declared otherwise, 
-is commercial GSC Game World proprietary code. 
+# License
 
-Redistribution and use in source and binary forms, with or without 
-modification, are permitted provided that the following conditions are met: 
+## Assertions and Restrictions
 
-1. Redistributions of source code must retain the above copyright notice, this 
-list of conditions and the following disclaimer. 
+- The project is created for non-commercial and educational purposes and should not be used for profit under any circumstances.
+- All trademarks, copyrights, and other forms of intellectual property related to the S.T.A.L.K.E.R. game and its elements belong to their respective owners, including but not limited to GSC Game World.
+- The authors of the project do not claim ownership of GSC Game World's intellectual property and acknowledge that some of the materials used may be their property.
+- This project is not endorsed and not affiliated with GSC Game World or any other official parties associated with the original S.T.A.L.K.E.R. game.
 
-2. Redistributions in binary form must reproduce the above copyright notice, 
-this list of conditions and the following disclaimer in the documentation 
-and/or other materials provided with the distribution. 
+## Disclaimer
 
-3. Neither binary nor source code redistributions may be used for any 
-commercial purposes. 
+The authors of the project provide it on an "as is" basis, without providing any warranties of accuracy, completeness, or fitness for any particular purpose. The authors bear no responsibility for any direct or indirect losses incurred as a result of using the project.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
-THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
-THE SOFTWARE.
+## Usage and Distribution
+
+- Free use, modification, and distribution of the project are permitted for non-commercial purposes, provided this notice of copyright and license is preserved.
+- Any commercial use of the project is prohibited without prior written permission from the copyright owners.
+
+## Contributing
+
+Contributions to the project are welcomed, provided they adhere to these licensing conditions and respect the intellectual property of third parties.
+
+## Conclusion
+
+Using the repository implies acceptance of these conditions. All rights not expressly granted in this document are reserved by the copyright owners.
