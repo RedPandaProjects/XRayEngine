@@ -58,8 +58,8 @@ public:
 
 	IC void					SetColor		(u32 C)		{dwCurrentColor=C;};
 
-	IC void					SetHeightI		(float S);
-	IC void					SetHeight		(float S);
+	void					SetHeightI		(float S);
+	void					SetHeight		(float S);
 
 	IC float				GetHeight		(){return fCurrentHeight*fSize;};
 	IC void					SetAligment		(EAligment aligment){ eCurrentAlignment=aligment; }

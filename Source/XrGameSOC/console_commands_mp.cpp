@@ -85,8 +85,8 @@ extern	int		g_sv_Client_Reconnect_Time;
 		int		g_dwEventDelay			= 0	;
 
 void XRNETSERVER_API DumpNetCompressorStats	(bool brief);
-BOOL XRNETSERVER_API g_net_compressor_enabled;
-BOOL XRNETSERVER_API g_net_compressor_gather_stats;
+extern BOOL XRNETSERVER_API g_net_compressor_enabled;
+extern BOOL XRNETSERVER_API g_net_compressor_gather_stats;
 
 
 #define RAPREFIX "raid:"

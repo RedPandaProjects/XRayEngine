@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../xrEngine/feel_touch.h"
-#include "../xrEngine/feel_sound.h"
 #include "../xrEngine/iinputreceiver.h"
 #include "../XrEngine/Render/KinematicsAnimated.h"
 #include "actor_flags.h"
@@ -69,7 +68,7 @@ class	CActor:
 	public CInventoryOwner,
 	public CPhraseDialogManager,
 	public CStepManager,
-	public Feel::Sound
+	public IRBMKSoundActorListener
 #ifdef DEBUG
 	,public pureRenderDebug
 #endif
@@ -107,8 +106,8 @@ public:
 	// Render
 	virtual void						renderable_Render			();
 	virtual BOOL						renderable_ShadowGenerate	();
-	virtual	void						feel_sound_new				(CObject* who, int type, CSound_UserDataPtr user_data, const Fvector& Position, float power);
-	virtual	Feel::Sound*				dcast_FeelSound				()	{ return this;	}
+	virtual	void						ListenSound					(CObject* InSourceActor, s32 SoundFlags,const Fvector& InPosition, float InPower,CSound_UserDataPtr UserData) override;
+	virtual	IRBMKSoundActorListener*	CastToSoundActorListener	() override	{ return this;	}
 			float						m_snd_noise;
 #ifdef DEBUG
 	virtual void						OnRenderDebug			();

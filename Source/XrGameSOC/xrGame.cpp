@@ -11,6 +11,7 @@
 #include "ui/xrUIXmlParser.h"
 #include "xr_level_controller.h"
 #include "profiler.h"
+#ifndef SHIPPING
 FACTORY_PTR_INSTANCIATE(FontRender)
 FACTORY_PTR_INSTANCIATE(FlareRender)
 FACTORY_PTR_INSTANCIATE(ThunderboltRender)
@@ -23,6 +24,7 @@ FACTORY_PTR_INSTANCIATE(EnvDescriptorMixerRender)
 FACTORY_PTR_INSTANCIATE(UIShader)
 FACTORY_PTR_INSTANCIATE(WallMarkArray)
 FACTORY_PTR_INSTANCIATE(StatGraphRender)
+#endif
 FACTORY_PTR_INSTANCIATE(UISequenceVideoItem)
 extern void setup_luabind_allocator();
 extern void CCC_RegisterCommands();

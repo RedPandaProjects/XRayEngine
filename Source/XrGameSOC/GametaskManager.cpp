@@ -18,7 +18,7 @@
 #include <malloc.h>
 #pragma warning(pop)
 
-shared_str	g_active_task_id			= "";
+shared_str	g_active_task_id;
 u16			g_active_task_objective_id	= u16(-1);
 
 struct FindTaskByID{
@@ -117,7 +117,7 @@ CGameTask*	CGameTaskManager::GiveGameTaskToActor(CGameTask* t, u32 timeToComplet
 	}
 
 
-	//установить флажок необходимости прочтения тасков в PDA
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ PDA
 	if(HUD().GetUI()){
 		CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(HUD().GetUI()->UIGame());
 		if(pGameSP) 

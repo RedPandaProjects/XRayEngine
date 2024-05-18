@@ -6,7 +6,11 @@
 
 #ifdef _DEBUG
 #define DEBUG
-#endif 
+#endif
+
+#if UE_BUILD_SHIPPING||UE_BUILD_TEST
+#define SHIPPING
+#endif
 
 #ifdef SHIPPING
 #	define MASTER_GOLD
@@ -24,20 +28,8 @@
 
 #pragma warning(disable:4996)
 
-#if (defined(_DEBUG) || defined(MIXED) || defined(DEBUG)) && !defined(FORCE_NO_EXCEPTIONS)
-	// "debug" or "mixed"
-	#if !defined(_CPPUNWIND)
-		#error Please enable exceptions...
-	#endif
-	#define _HAS_EXCEPTIONS		1	// STL
-	#define XRAY_EXCEPTIONS		1	// XRAY
-#else
-	// "release"
-	#define _HAS_EXCEPTIONS		1	// STL
-	#define XRAY_EXCEPTIONS		0	// XRAY
-	#define LUABIND_NO_EXCEPTIONS
-	#pragma warning(disable:4530)
-#endif
+#define XRAY_EXCEPTIONS		0	// XRAY
+#define LUABIND_NO_EXCEPTIONS
 
 #if !defined(_MT)
 	// multithreading disabled

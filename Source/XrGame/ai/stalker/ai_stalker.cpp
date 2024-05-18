@@ -797,7 +797,7 @@ void CAI_Stalker::update_object_handler	()
 		try {
 			CObjectHandler::update	();
 		}
-#ifdef DEBUG
+#if 0
 		catch (luabind::cast_failed &message) {
 			Msg						("! Expression \"%s\" from luabind::object to %s",message.what(),message.info()->name());
 			throw;

@@ -72,12 +72,9 @@ void CEngineAPI::InitializeNotDedicated()
 
 extern "C"  DLL_Pure * __cdecl xrFactory_Create(CLASS_ID clsid);
 extern "C" void		__cdecl	xrFactory_Destroy(DLL_Pure * O);
-extern "C" bool SupportsRendering();
-extern "C" void InitializeRendering();
+extern "C" void		__cdecl	xrGameInitialize();
 #else
 extern "C" {
-	typedef bool  SupportsRendering();
-	typedef void  InitializeRendering();
 	typedef void  xrGameInitialize();
 };
 #endif
@@ -86,8 +83,7 @@ void CEngineAPI::Initialize(void)
 	//////////////////////////////////////////////////////////////////////////
 	// render
 #ifdef SHIPPING
-	//InitializeNotDedicated();
-	InitializeRendering();
+	xrGameInitialize();
 	pCreate = &xrFactory_Create;
 	pDestroy = &xrFactory_Destroy;
 
