@@ -221,7 +221,7 @@ struct CLoader
 		{
 			if constexpr (object_type_traits::is_pointer<T>::value)
 			{
-				load_data(*(data = xr_new<object_type_traits::remove_pointer<T>::type>()), stream, p);
+				load_data(*(data = xr_new<object_type_traits::remove_pointer<T>::template type>()), stream, p);
 			}
 			else
 			{
