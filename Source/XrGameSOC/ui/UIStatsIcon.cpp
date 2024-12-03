@@ -3,7 +3,7 @@
 #include "UITextureMaster.h"
 #include "UIInventoryUtilities.h"
 
-CUIStatsIcon::TEX_INFO		CUIStatsIcon::m_tex_info[MAX_DEF_TEX][2];
+xr_vector<xr_vector<CUIStatsIcon::TEX_INFO>> CUIStatsIcon::m_tex_info;
 
 CUIStatsIcon::CUIStatsIcon(){
 	SetStretchTexture(true);
@@ -13,7 +13,17 @@ CUIStatsIcon::CUIStatsIcon(){
 
 using namespace InventoryUtilities;
 
-void CUIStatsIcon::InitTexInfo(){
+void CUIStatsIcon::InitTexInfo()
+{
+	if(m_tex_info.size())
+	{
+		return;
+	}
+	m_tex_info.resize(MAX_DEF_TEX);
+	for(xr_vector<::CUIStatsIcon::TEX_INFO>& array :m_tex_info)
+	{
+		array.resize(2);
+	}
 	if (m_tex_info[RANK_0][0].sh)
 		return;
 	// ranks
@@ -63,7 +73,8 @@ void CUIStatsIcon::FreeTexInfo(){
 		m_tex_info[i][1].sh->destroy();
 	}
 	m_tex_info[ARTEFACT][0].sh->destroy();
-	m_tex_info[DEATH][0].sh->destroy();	
+	m_tex_info[DEATH][0].sh->destroy();
+	m_tex_info.clear();
 }
 
 void CUIStatsIcon::SetText(LPCSTR str){

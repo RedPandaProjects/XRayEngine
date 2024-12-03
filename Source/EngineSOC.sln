@@ -221,7 +221,6 @@ Global
 		{445E1E70-EEEB-4640-850A-BC5997FA521F}.Release|x64.ActiveCfg = Release|x64
 		{445E1E70-EEEB-4640-850A-BC5997FA521F}.Release|x64.Build.0 = Release|x64
 		{445E1E70-EEEB-4640-850A-BC5997FA521F}.Shipping|x64.ActiveCfg = Debug|x64
-		{445E1E70-EEEB-4640-850A-BC5997FA521F}.Shipping|x64.Build.0 = Debug|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

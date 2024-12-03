@@ -83,11 +83,7 @@ class ENGINE_API motion_marks
 {
 public:
 	typedef					std::pair<  float, float > 				interval;
-#ifndef MASTER_GOLD
 public:
-#else
-private:
-#endif
 	typedef xr_vector< interval >									STORAGE;
 	typedef STORAGE::iterator										ITERATOR;
 	typedef STORAGE::const_iterator									C_ITERATOR;

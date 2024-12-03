@@ -856,6 +856,7 @@
     <ClInclude Include="XrDeviceInterface.h">
       <Filter>Interfaces\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Interfaces\Core\RBMKLoadingScreenManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="defines.cpp">
@@ -1114,6 +1115,7 @@
     <ClCompile Include="Xr_input.cpp">
       <Filter>Interfaces\Input</Filter>
     </ClCompile>
+    <ClCompile Include="Interfaces\Core\RBMKLoadingScreenManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc">

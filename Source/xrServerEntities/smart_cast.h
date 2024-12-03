@@ -9,7 +9,7 @@
 #ifndef SMART_CAST_H
 #define SMART_CAST_H
 
-#if defined(DEBUG)||defined(XRSEFACTORY_EXPORTS)
+#if /*!defined(SHIPPING)||defined(XRSEFACTORY_EXPORTS)*/1
 #	define PURE_DYNAMIC_CAST
 #endif // DEBUG
 
@@ -20,7 +20,6 @@
 #ifdef PURE_DYNAMIC_CAST
 #	define smart_cast dynamic_cast
 #else
-#	define PURE_DYNAMIC_CAST_COMPATIBILITY_CHECK
 
 #	ifdef DEBUG
 //#		define SMART_CAST_STATS_ALL

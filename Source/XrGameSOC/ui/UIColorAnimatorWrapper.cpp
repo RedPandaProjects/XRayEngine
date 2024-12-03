@@ -24,7 +24,11 @@ CUIColorAnimatorWrapper::CUIColorAnimatorWrapper()
 		reverse				(false),
 		kRev				(0.0f)
 {
-	prevGlobalTime	= Device->dwTimeContinual/1000.0f;
+	prevGlobalTime = 0;
+	if(Device)
+	{
+		prevGlobalTime	= Device->dwTimeContinual/1000.0f;
+	}
 	currColor		= 0xffff0000;
 }
 

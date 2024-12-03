@@ -61,10 +61,10 @@ void CScriptSound::PlayNoFeedback	(CScriptGameObject *object,	int flags/*!< Loop
 	THROW3						(m_sound.IsValid(),"There is no sound",*m_caSoundToPlay);
 	if((flags&0x2) == 0x2)
 	{
-		VERIFY(fis_zero( pos.square_magnitude()));
+		//VERIFY(fis_zero( pos.square_magnitude()));
 		m_sound.PlayWithoutFeedback(&object->object(),(flags&0x1) == 0x1,delay,&vol);
 	}
-	else
+	else 
 	{
 		m_sound.PlayWithoutFeedback(&object->object(), pos,(flags&0x1) == 0x1,delay,&vol);
 	}

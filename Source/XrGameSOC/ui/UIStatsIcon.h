@@ -30,5 +30,5 @@ protected:
 
 	static void	InitTexInfo();
 	static void FreeTexInfo();
-	static TEX_INFO		m_tex_info[MAX_DEF_TEX][2];
+	static xr_vector<xr_vector<TEX_INFO>> m_tex_info;
 };

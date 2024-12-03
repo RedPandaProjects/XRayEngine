@@ -433,7 +433,7 @@ void CHudItem::ReAttach()
 	if(ParentActor->UnrealProxy)
 	{
 		LastAttachBone = GetAttachBone();
-		object().Visual()->AttachTo(ParentActor->UnrealProxy, LastAttachBone.c_str());
+		object().Visual()->AttachTo(ParentActor->Visual(), LastAttachBone.c_str());
 		object().Visual()->SetOwnerNoSee(true);
 	}
 }

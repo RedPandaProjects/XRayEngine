@@ -335,7 +335,7 @@ int CScriptStorage::vscript_log		(ScriptStorage::ELuaMessageType tLuaMessageType
 #endif
 #endif
 
-#if MASTER_GOLD
+#ifdef MASTER_GOLD
 	return		(0);
 #else // #ifdef PRINT_CALL_STACK
 
