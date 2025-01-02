@@ -632,6 +632,11 @@ void CAI_Stalker::destroy_anim_mov_ctrl	()
 	movement().m_head.target.pitch	= movement().m_body.current.pitch;
 }
 
+bool CAI_Stalker::IsStalker()
+{
+	return true;
+}
+
 void CAI_Stalker::UpdateCL()
 {
 	START_PROFILE("stalker")

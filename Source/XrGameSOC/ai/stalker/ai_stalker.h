@@ -544,7 +544,7 @@ private:
 public:
 	virtual	void						create_anim_mov_ctrl						(CBlend *b);
 	virtual	void						destroy_anim_mov_ctrl						();
-
+	virtual bool						IsStalker() override;
 private:
 	bool	m_can_select_items;
 

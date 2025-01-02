@@ -97,8 +97,98 @@ void CEditableMesh::RecomputeBBox()
 	for(u32 k=1; k<m_VertCount; k++)
 		m_Box.modify(m_Vertices[k]);
 }
+inline bool operator<(const st_MeshVertex2&Left, const st_MeshVertex2&Right)
+{
+	if(Left.Index != Right.Index)
+	{
+		return Left.Index < Right.Index;
+	}
+	if(!fsimilar(Left.Normal.x, Right.Normal.x))
+	{
+		return Left.Normal.x < Right.Normal.x;
+	}
+	if(!fsimilar(Left.Normal.y, Right.Normal.y))
+	{
+		return Left.Normal.y < Right.Normal.y;
+	}
+	if(!fsimilar(Left.Normal.z, Right.Normal.z))
+	{
+		return Left.Normal.z < Right.Normal.z;
+	}
 
-void CEditableMesh::GenerateVertices(xr_vector<st_MeshVertex>& Vertices, CSurface* Surface)
+	if(!fsimilar(Left.UV.x, Right.UV.x))
+	{
+		return Left.UV.x < Right.Normal.x;
+	}
+
+	if(!fsimilar(Left.UV.y, Right.UV.y))
+	{
+		return Left.UV.y < Right.Normal.y;
+	}
+
+	for(int i = 0 ;i<4;i++)
+	{
+		if(Left.BoneID[i] != Right.BoneID[i])
+		{
+			return Left.BoneID[i] < Right.BoneID[i];
+		}
+		if(!fsimilar(Left.BoneWeight[i],  Right.BoneWeight[i]))
+		{
+			return Left.BoneWeight[i] < Right.BoneWeight[i];
+		}
+	}
+	return false;
+}
+
+
+inline bool operator==(const st_MeshVertex2&Left, const st_MeshVertex2&Right)
+{
+	if(Left.Index != Right.Index)
+	{
+		return false;
+	}
+	if(!fsimilar(Left.Normal.x, Right.Normal.x))
+	{
+		return false;
+	}
+	if(!fsimilar(Left.Normal.y, Right.Normal.y))
+	{
+		return false;
+	}
+	if(!fsimilar(Left.Normal.z, Right.Normal.z))
+	{
+		return false;
+	}
+
+	if(!fsimilar(Left.UV.x, Right.UV.x))
+	{
+		return false;
+	}
+
+	if(!fsimilar(Left.UV.y, Right.UV.y))
+	{
+		return false;
+	}
+
+	for(int i = 0 ;i<4;i++)
+	{
+		if(Left.BoneID[i] != Right.BoneID[i])
+		{
+			return false;
+		}
+		if(!fsimilar(Left.BoneWeight[i],  Right.BoneWeight[i]))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+inline bool operator!=(const st_MeshVertex2&Left, const st_MeshVertex2&Right)
+{
+	return !(Left == Right);
+}
+
+void CEditableMesh::GenerateVertices(xr_vector<Fvector>&Vertexes,xr_vector<st_MeshVertex2>&VertexesInstance, CSurface* Surface)
 {
 	if (m_VertCount == 0)
 		return;
@@ -108,6 +198,9 @@ void CEditableMesh::GenerateVertices(xr_vector<st_MeshVertex>& Vertices, CSurfac
 	GenerateSVertices(4);
 	VERIFY(m_VertexNormals);
 	auto&Face = m_SurfFaces[Surface];
+
+	u32 MaxIndex = 0;
+	std::map<st_MeshVertex2,u32> VertexesInstanceCache;
 	for (size_t i = 0; i < Face.size(); i++)
 	{
 		u32 FaceIndex = Face[i];
@@ -115,14 +208,16 @@ void CEditableMesh::GenerateVertices(xr_vector<st_MeshVertex>& Vertices, CSurfac
 
 		for (size_t k = 0; k < 3; k++)
 		{
-			st_MeshVertex ResultVertex;
+			st_MeshVertex2 ResultVertex = {};
 			st_FaceVert& fv = MeshFace.pv[k];
 			u32 NormalID = FaceIndex * 3 + (u32)k;//fv.pindex;
 			VERIFY2(NormalID < m_FaceCount * 3, "Normal index out of range.");
 			VERIFY2((u32)fv.pindex < m_VertCount, "Point index out of range.");
 
-			ResultVertex.Normal = m_VertexNormals[NormalID];;
-			ResultVertex.Position = m_Vertices[fv.pindex];
+			ResultVertex.Normal = m_VertexNormals[NormalID];
+			ResultVertex.Index = fv.pindex;
+			MaxIndex = _max(ResultVertex.Index,MaxIndex);
+			ResultVertex.Index += Vertexes.size();
 			ResultVertex.UV.set(0, 0);
 			for (size_t i = 0; i < 4; i++)
 			{
@@ -150,13 +245,15 @@ void CEditableMesh::GenerateVertices(xr_vector<st_MeshVertex>& Vertices, CSurfac
 				ResultVertex.UV = VMap->getUV(VertexMapPoint.index);
 				break;
 			}
-			Vertices.push_back(ResultVertex);
+			VertexesInstance.push_back(ResultVertex);
+
+			
 		}
 		if (Surface->m_Flags.is(CSurface::sf2Sided))
 		{
 			for (int k = 2; k >= 0; k--)
 			{
-				st_MeshVertex ResultVertex;
+				st_MeshVertex2 ResultVertex = {};
 				st_FaceVert& fv = MeshFace.pv[k];
 				u32 NormalID = FaceIndex * 3 + k;//fv.pindex;
 				VERIFY2(NormalID < m_FaceCount * 3, "Normal index out of range.");
@@ -164,7 +261,9 @@ void CEditableMesh::GenerateVertices(xr_vector<st_MeshVertex>& Vertices, CSurfac
 
 				ResultVertex.Normal = m_VertexNormals[NormalID];
 				ResultVertex.Normal.mul(-1);
-				ResultVertex.Position = m_Vertices[fv.pindex];
+				ResultVertex.Index = fv.pindex;
+				MaxIndex = _max(ResultVertex.Index,MaxIndex);
+				ResultVertex.Index += Vertexes.size();
 				ResultVertex.UV.set(0, 0);
 				if (m_SVertices)
 				{
@@ -187,10 +286,11 @@ void CEditableMesh::GenerateVertices(xr_vector<st_MeshVertex>& Vertices, CSurfac
 					ResultVertex.UV = VMap->getUV(VertexMapPoint.index);
 					break;
 				}
-				Vertices.push_back(ResultVertex);
+				VertexesInstance.push_back(ResultVertex);
 			}
 		}
 	}
+	Vertexes.insert(Vertexes.end(),m_Vertices,m_Vertices+MaxIndex+1);
 	UnloadSVertices();
 	UnloadVNormals();
 }

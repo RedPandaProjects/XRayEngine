@@ -204,6 +204,7 @@ virtual	const IObjectPhysicsCollision	*physics_collision	()					{ return  0; }
 
 	virtual void						CreateUnrealProxy	();
 	virtual void						DestroyUnrealProxy	();
+	virtual bool						IsStalker			();
 };
 
 #pragma pack(pop)

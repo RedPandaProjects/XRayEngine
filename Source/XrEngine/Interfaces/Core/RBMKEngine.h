@@ -30,7 +30,7 @@ public:
 	virtual bool							IsRunningGame				();
 			shared_str						GetGameVersion				();
 	virtual shared_str						GetUnrealVersion			() = 0;
-	virtual class IRBMKUnrealProxy*			CreateUnrealProxy			() = 0;
+	virtual class IRBMKUnrealProxy*			CreateUnrealProxy			(const char*SoftProxyRef) = 0;
 	virtual class IRBMKUnrealProxy*			GetUnrealPlayerCharacter	() = 0;
 	virtual void							Destroy						(class IRBMKUnrealProxy*) = 0;
 	virtual void							LoadCFormFormCurrentWorld	(class CObjectSpace&ObjectSpace,CDB::build_callback build_callback)= 0 ;

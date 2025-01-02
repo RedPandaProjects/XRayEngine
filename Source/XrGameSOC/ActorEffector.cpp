@@ -139,16 +139,10 @@ BOOL CAnimatorCamEffector::Valid()
 	return			inherited::Valid();
 }
 
-BOOL CAnimatorCamEffector::Process (Fvector &p, Fvector &d, Fvector &n, float& fFov, float& fFar, float& fAspect)
+BOOL CAnimatorCamEffector::ProcessCam(SCamEffectorInfo& info)
 {
-	SCamEffectorInfo Args;
-	Args.p = p;
-	Args.d = d;
-	Args.n = n;
-	Args.fFov = fFov;
-	Args.fFar = fFar;
-	Args.fAspect = fAspect;
-	if(!inherited::ProcessCam(Args))	return FALSE;
+	if(!inherited::ProcessCam(info))	
+		return FALSE;
 
 	const Fmatrix& m			= m_objectAnimator->XFORM();
 	m_objectAnimator->Update	(Device->fTimeDelta);
@@ -156,23 +150,58 @@ BOOL CAnimatorCamEffector::Process (Fvector &p, Fvector &d, Fvector &n, float& f
 	if(!m_bAbsolutePositioning){
 		Fmatrix Mdef;
 		Mdef.identity				();
-		Mdef.j						= n;
-		Mdef.k						= d;
-		Mdef.i.crossproduct			(n,d);
-		Mdef.c						= p;
-
+		Mdef.j						= info.n;
+		Mdef.k						= info.d;
+		Mdef.i.crossproduct			(info.n, info.d);
+		Mdef.c						= info.p;
+//		Msg("fr[%d] %2.3f,%2.3f,%2.3f", Device->dwFrame,m.c.x,m.c.y,m.c.z);
 		Fmatrix mr;
 		mr.mul						(Mdef,m);
-		d							= mr.k;
-		n							= mr.j;
-		p							= mr.c;
+		info.d						= mr.k;
+		info.n						= mr.j;
+		info.p						= mr.c;
 	}else{
-		d							= m.k;
-		n							= m.j;
-		p							= m.c;
+		info.d						= m.k;
+		info.n						= m.j;
+		info.p						= m.c;
 	};
 	return						TRUE;
 }
+//
+//BOOL CAnimatorCamEffector::Process (Fvector &p, Fvector &d, Fvector &n, float& fFov, float& fFar, float& fAspect)
+//{
+//	SCamEffectorInfo Args;
+//	Args.p = p;
+//	Args.d = d;
+//	Args.n = n;
+//	Args.fFov = fFov;
+//	Args.fFar = fFar;
+//	Args.fAspect = fAspect;
+//	if(!inherited::ProcessCam(Args))	return FALSE;
+//
+//	const Fmatrix& m			= m_objectAnimator->XFORM();
+//	m_objectAnimator->Update	(Device->fTimeDelta);
+//
+//	if(!m_bAbsolutePositioning){
+//		Fmatrix Mdef;
+//		Mdef.identity				();
+//		Mdef.j						= n;
+//		Mdef.k						= d;
+//		Mdef.i.crossproduct			(n,d);
+//		Mdef.c						= p;
+//
+//		Fmatrix mr;
+//		mr.mul						(Mdef,m);
+//		d							= mr.k;
+//		n							= mr.j;
+//		p							= mr.c;
+//	}else{
+//		d							= m.k;
+//		n							= m.j;
+//		p							= m.c;
+//	};
+//	return						TRUE;
+//}
 
 BOOL CAnimatorCamLerpEffector::Process(Fvector &p, Fvector &d, Fvector &n, float& fFov, float& fFar, float& fAspect)
 {

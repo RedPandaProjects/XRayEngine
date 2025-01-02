@@ -492,7 +492,13 @@ Fvector CObject::get_last_local_point_on_mesh	( Fvector const& local_point, u16 
 void CObject::CreateUnrealProxy	()
 {
 	R_ASSERT(UnrealProxy == nullptr);
-	UnrealProxy = g_Engine->CreateUnrealProxy();
+
+	const char* UnrealProxyClass = nullptr;
+	if(pSettings->line_exist(*cNameSect(),"unreal_proxy"))
+	{
+		UnrealProxyClass = pSettings->r_string(*cNameSect(),"unreal_proxy");
+	}
+	UnrealProxy = g_Engine->CreateUnrealProxy(UnrealProxyClass);
 	UnrealProxy->Lock(this);
 	if (renderable.visual)
 	{
@@ -513,4 +519,9 @@ void CObject::DestroyUnrealProxy()
 		UnrealProxy = nullptr;
 	}
 
+}
+
+bool CObject::IsStalker()
+{
+	return false;
 }

@@ -42,7 +42,7 @@ public:
 						CAnimatorCamEffector	();
 	virtual				~CAnimatorCamEffector	();
 			void		Start					(LPCSTR fn);
-	virtual	BOOL		Process					(Fvector &p, Fvector &d, Fvector &n, float& fFov, float& fFar, float& fAspect);
+	virtual BOOL		ProcessCam				(SCamEffectorInfo& info) override;
 			void		SetCyclic				(bool b)				{m_bCyclic=b;}
 	virtual	BOOL		Valid					();
 			float		GetAnimatorLength		()						{return fLifeTime;};

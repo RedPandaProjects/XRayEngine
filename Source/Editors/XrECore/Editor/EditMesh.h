@@ -179,6 +179,15 @@ struct  st_MeshVertex
 	float	 BoneWeight[4];
 
 };
+struct  st_MeshVertex2
+{
+	u32		 Index;
+	Fvector3 Normal;
+	Fvector2 UV;
+	u16		 BoneID[4];
+	float	 BoneWeight[4];
+
+};
 #pragma pack( pop )
 
 DEFINE_VECTOR		(IntVec,AdjVec,AdjIt);
@@ -227,7 +236,7 @@ class ECORE_API CEditableMesh {
 #endif
 public:
 
-	void 			GenerateVertices	(xr_vector<st_MeshVertex>&Vertexes, CSurface*Surface);
+	void 			GenerateVertices	(xr_vector<Fvector>&Vertexes,xr_vector<st_MeshVertex2>&VertexesInstance,CSurface*Surface);
     void 			GenerateFNormals	();
     void 			GenerateVNormals	(const Fmatrix* parent_xform);
     void            GenerateSVertices	(u32 influence);
