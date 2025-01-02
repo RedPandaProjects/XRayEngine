@@ -70,7 +70,7 @@ CVampireCameraEffector::CVampireCameraEffector(float time, const Fvector &src, c
 	dangle_current.set	(0.f, 0.f, 0.f);
 }
 
-BOOL CVampireCameraEffector::Process(Fvector &p, Fvector &d, Fvector &n, float& fFov, float& fFar, float& fAspect)
+BOOL CVampireCameraEffector::ProcessCam(SCamEffectorInfo& info)
 {
 	fLifeTime -= Device->fTimeDelta; if(fLifeTime<0) return FALSE;
 
@@ -80,10 +80,10 @@ BOOL CVampireCameraEffector::Process(Fvector &p, Fvector &d, Fvector &n, float& 
 	// �������������
 	Fmatrix	Mdef;
 	Mdef.identity		();
-	Mdef.j.set			(n);
-	Mdef.k.set			(d);
-	Mdef.i.crossproduct	(n,d);
-	Mdef.c.set			(p);
+	Mdef.j.set			(info.n);
+	Mdef.k.set			(info.d);
+	Mdef.i.crossproduct	(info.n, info.d);
+	Mdef.c.set			(info.p);
 
 	
 	//////////////////////////////////////////////////////////////////////////
@@ -129,9 +129,9 @@ BOOL CVampireCameraEffector::Process(Fvector &p, Fvector &d, Fvector &n, float& 
 	Fmatrix		mR;
 	mR.mul		(Mdef,R);
 
-	d.set		(mR.k);
-	n.set		(mR.j);
-	p.set		(mR.c);
+	info.d.set		(mR.k);
+	info.n.set		(mR.j);
+	info.p.set		(mR.c);
 
 	return TRUE;
 }
