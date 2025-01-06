@@ -9,9 +9,10 @@ public:
 	virtual void			Register			(const char* entry, const char* group, int UeSetting);
 	static CUIOptionsManager* GetOptionsManager	() {return &m_optionsManager;}
 	void					SaveUeValue();
+
 protected:
 	virtual void			SetCurrentValue		()	=0;	
-	virtual void			SaveValue			();
+	virtual void			SaveValue() {};
 
 	virtual bool			IsChanged			()			=0;
 	virtual void			SeveBackUpValue		()	{};
@@ -40,8 +41,7 @@ protected:
 
 	xr_string		m_entry;
 	int UeSettingIndex;
-	std::map<int, int> UeSettingsMapInt;
-	std::map<int, float> UeSettingsMapFloat;
-
+	std::pair<int, int> UeSettingsPairInt;
+	std::pair<int, float> UeSettingsPairFloat;
 	static CUIOptionsManager m_optionsManager;
 };

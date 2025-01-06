@@ -2,13 +2,12 @@
 #include "UIOptionsItem.h"
 #include "UIOptionsManager.h"
 #include "../XrEngine/Xr_ioconsole.h"
+#include "UIComboBox.h"
 
 CUIOptionsManager CUIOptionsItem::m_optionsManager;
 
 CUIOptionsItem::~CUIOptionsItem()
 {
-	UeSettingsMapInt.clear();
-	UeSettingsMapFloat.clear();
 	m_optionsManager.UnRegisterItem(this);
 }
 
@@ -56,7 +55,8 @@ void CUIOptionsItem::SaveOptIntegerValue(int val, bool IsUe)
 {
 	if (IsUe)
 	{
-		UeSettingsMapInt[UeSettingIndex] = val;
+		UeSettingsPairInt.first = UeSettingIndex;
+		UeSettingsPairInt.second = val;
 	}
 	else
 	{
@@ -80,7 +80,8 @@ void CUIOptionsItem::SaveOptFloatValue(float val, bool IsUe)
 {
 	if (IsUe)
 	{
-		UeSettingsMapFloat[UeSettingIndex] = val;
+		UeSettingsPairFloat.first = UeSettingIndex;
+		UeSettingsPairFloat.second = val;
 	}
 	else
 	{
@@ -120,11 +121,18 @@ void CUIOptionsItem::SaveOptTokenValue(const char* val){
 
 void CUIOptionsItem::SaveUeValue()
 {
-		g_Engine->ChangeUeSettingsInt(UeSettingsMapInt);
-		g_Engine->ChangeUeSettingsFloat(UeSettingsMapFloat);
+		g_Engine->ChangeUeSettingsInt(UeSettingsPairInt);
+		g_Engine->ChangeUeSettingsFloat(UeSettingsPairFloat);
+
+		CUIComboBox* combo = smart_cast<CUIComboBox*>(this);
+		if (combo)
+		{
+			LPCSTR Current = combo->GetText();
+			u32 w = 0;
+			u32 h = 0;
+			sscanf(Current, "%dx%d", &w, &h);
+
+			g_Engine->SetResolution(w, h);
+		}
 }
 
-void CUIOptionsItem::SaveValue()
-{
-
-}

@@ -9,17 +9,13 @@ class CUIOptionsItem;
 class CUIOptionsManager{
 	friend class CUIOptionsItem;
 public:	
-	CUIOptionsManager();
+	CUIOptionsManager() {};
 
 	void SeveBackupValues(const char* group);
 	void SetCurrentValues(const char* group);
 	void SaveValues(const char* group, bool need_post_save);
 	bool IsGroupChanged(const char* group);
 	void UndoGroup(const char* group);
-
-	void OptionsPostAccept();
-	void DoVidRestart();
-	void DoSndRestart();
 
 	void SendMessage2Group(const char* group, const char* message);
 
@@ -35,7 +31,4 @@ protected:
 	typedef xr_map<group_name, items_list>::iterator	groups_it;
 
 	groups	m_groups;
-
-	bool	m_b_vid_restart;
-	bool	m_b_snd_restart;
 };

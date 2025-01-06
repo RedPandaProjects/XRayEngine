@@ -15,7 +15,7 @@
 #define CB_HEIGHT 23.0f
 #define BTN_SIZE  23.0f
 
-CUIComboBox::CUIComboBox()
+CUIComboBox::CUIComboBox(bool IsResList) : IsCustomResolutionList(IsResList)
 {
 	AttachChild			(&m_frameLine);
 	AttachChild			(&m_text);
@@ -112,6 +112,8 @@ void CUIComboBox::OnListItemSelect()
 #include "../string_table.h"
 void CUIComboBox::SetCurrentValue()
 {
+	if (!IsCustomResolutionList)
+	{
 	m_list.Clear		();
 	xr_token* tok		= GetOptToken();
 
@@ -130,14 +132,58 @@ void CUIComboBox::SetCurrentValue()
 		m_itoken_id			= (int)(__int64)itm->GetData();
 	else
 		m_itoken_id			= 1; //first
+
+	}
+	else
+	{
+		m_list.Clear();
+		u32 w;
+		u32 h;
+		g_Engine->GetCurrentResolution(w, h);
+
+		xr_string Combine;
+		Combine.Printf("%dx%d", w, h);
+
+		AddItem_(Combine.c_str(), 0);
+
+		std::vector<xr_string> ResolutinonsVector;
+		g_Engine->GetResolutions(ResolutinonsVector);
+
+		for (int i = 1; i < ResolutinonsVector.size(); i++)
+		{
+			xr_string &element = ResolutinonsVector[i];
+
+			u32 tempw = 0;
+			u32 temph = 0;
+
+			sscanf(element.c_str(), "%dx%d", &w, &h);
+			if (tempw == w && temph == h)
+				continue;
+			AddItem_(element.c_str(), i);
+		}
+
+
+		LPCSTR cur_val = Combine.c_str();
+		m_text.SetText(cur_val);
+		m_list.SetSelectedText(cur_val);
+
+		CUIListBoxItem* itm = m_list.GetSelectedItem();
+		if (itm)
+			m_itoken_id = (int)(__int64)itm->GetData();
+		else
+			m_itoken_id = 1; //first
+	}
 }
 
 void CUIComboBox::SaveValue()
 {
-	CUIOptionsItem::SaveValue	();
-	xr_token* tok				= GetOptToken();
-	LPCSTR	cur_val				= get_token_name(tok, m_itoken_id);
-	SaveOptTokenValue			(cur_val);
+	if (!IsCustomResolutionList)
+	{
+		CUIOptionsItem::SaveValue();
+		xr_token* tok = GetOptToken();
+		LPCSTR	cur_val = get_token_name(tok, m_itoken_id);
+		SaveOptTokenValue(cur_val);
+	}
 }
 
 bool CUIComboBox::IsChanged()

@@ -7,11 +7,6 @@
 #include "UIOptionsItem.h"
 #include "../XrEngine/Xr_ioconsole.h"
 
-CUIOptionsManager::CUIOptionsManager(){
-	m_b_vid_restart = false;
-	m_b_vid_restart = false;
-}
-
 void CUIOptionsManager::RegisterItem(CUIOptionsItem* item, const char* group){
 	groups_it it = m_groups.find(group);
 
@@ -115,23 +110,6 @@ void CUIOptionsManager::UndoGroup(const char* group){
 	}
 }
 
-void CUIOptionsManager::OptionsPostAccept(){
-	if (m_b_vid_restart)
-		Console->Execute("vid_restart");
-	if (m_b_snd_restart)
-		Console->Execute("snd_restart");
-
-	m_b_vid_restart = false;
-	m_b_snd_restart = false;
-}
-
-void CUIOptionsManager::DoVidRestart(){
-	m_b_vid_restart = true;
-}
-
-void CUIOptionsManager::DoSndRestart(){
-    m_b_snd_restart = true;
-}
 
 
 

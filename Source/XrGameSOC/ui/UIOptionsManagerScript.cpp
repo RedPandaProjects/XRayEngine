@@ -29,7 +29,7 @@ LPCSTR CUIOptionsManagerScript::GetCurrentResolution()
 LPCSTR CUIOptionsManagerScript::SetResolution(bool next)
 {
 	std::vector<LPCSTR> ResVec;
-	g_Engine->GetResolutions(ResVec);
+	//g_Engine->GetResolutions(ResVec);
 	LPCSTR curr = GetCurrentResolution();
 	LPCSTR next_resolution;
 
@@ -79,12 +79,8 @@ bool CUIOptionsManagerScript::IsGroupChanged(const char* group){
 	return CUIOptionsItem::GetOptionsManager()->IsGroupChanged(group);
 }
 
-void CUIOptionsManagerScript::UndoGroup(const char* group){
+void CUIOptionsManagerScript::UndoGroup(const char* group) {
 	CUIOptionsItem::GetOptionsManager()->UndoGroup(group);
-}
-
-void CUIOptionsManagerScript::OptionsPostAccept(){
-	CUIOptionsItem::GetOptionsManager()->OptionsPostAccept();
 }
 
 void CUIOptionsManagerScript::SendMessage2Group(const char* group, const char* message){
@@ -105,7 +101,6 @@ void CUIOptionsManagerScript::script_register(lua_State *L)
 			.def("SetResolution", &CUIOptionsManagerScript::SetResolution)
 			.def("IsGroupChanged",		&CUIOptionsManagerScript::IsGroupChanged )
 			.def("UndoGroup",			&CUIOptionsManagerScript::UndoGroup )
-			.def("OptionsPostAccept",	&CUIOptionsManagerScript::OptionsPostAccept )
 			.def("SendMessage2Group",	&CUIOptionsManagerScript::SendMessage2Group )
 			
 		];

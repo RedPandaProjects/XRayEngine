@@ -42,6 +42,8 @@ public:
 	void ParseFile		(LPCSTR xml_file);
 	void ParseShTexInfo	(LPCSTR xml_file);
 	void InitWindow		(LPCSTR path, int index, CUIWindow* pWnd);
+	void InitResolutionsComboBox(LPCSTR path, CUIWindow* parent);
+	void InitCustomComboBox(CUIXml& xml_doc, const char* path, int index, CUIComboBox* pWnd);
 	//void InitList		(LPCSTR path, int index, CUIListWnd* pWnd);
 
 	CUIListWnd*			InitList(LPCSTR path, CUIWindow* parent);

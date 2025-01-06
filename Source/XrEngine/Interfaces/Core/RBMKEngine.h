@@ -46,10 +46,10 @@ public:
 	virtual IRBMKEnvironment*				GetEnvironment				() = 0;
 	virtual void							ExecUeCmd					(const char* cmd) = 0;
 	virtual int								GetSettingInt				(int setting, int&min, int&max) = 0;
-	virtual void							ChangeUeSettingsInt			(const std::map<int, int>& settinglist) = 0;
-	virtual void							ChangeUeSettingsFloat		(const std::map<int, float>& settinglist) = 0;
+	virtual void							ChangeUeSettingsInt			(const std::pair<int, int>& settinglist) = 0;
+	virtual void							ChangeUeSettingsFloat		(const std::pair<int, float>& settinglist) = 0;
 	virtual float							GetSettingFloat(int setting, float&min, float&max) = 0;
-	virtual void				GetResolutions(std::vector<LPCSTR> &ResVec) = 0;
+	virtual void				GetResolutions(std::vector<xr_string> &ResVec) = 0;
 	virtual void				GetCurrentResolution(u32& w, u32& h) = 0;
 	virtual void				SetResolution(u32 w,u32 h) = 0;
 			IRBMKEnvironment*				GetEnvironmentCheck			() {IRBMKEnvironment* Environment = GetEnvironment();R_ASSERT(Environment); return Environment;};

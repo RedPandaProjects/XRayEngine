@@ -54,6 +54,59 @@ void CScriptXmlInit::InitWindow(LPCSTR path, int index, CUIWindow* pWnd){
 	CUIXmlInit::InitWindow(m_xml, path, index, pWnd);
 }
 
+void CScriptXmlInit::InitResolutionsComboBox(LPCSTR path, CUIWindow* parent)
+{
+	CUIComboBox* pWnd = xr_new<CUIComboBox>(true);
+	InitCustomComboBox(m_xml, path, 0, pWnd);
+
+
+
+	pWnd->SetAutoDelete(true);
+	_attach_child(pWnd, parent);
+}
+
+void CScriptXmlInit::InitCustomComboBox(CUIXml& xml_doc, const char* path, int index, CUIComboBox* pWnd)
+{
+	u32							color;
+	CGameFont* pFont;
+
+	pWnd->SetListLength(xml_doc.ReadAttribInt(path, index, "list_length", 4));
+
+	CUIXmlInit::InitWindow(xml_doc, path, index, pWnd);
+
+	//pWnd.Get
+
+
+	//InitOptionsItem(xml_doc, path, index, pWnd);
+	CUIXmlInit::InitOptionsItem(xml_doc, path, 0, pWnd);
+
+	bool b = (1 == xml_doc.ReadAttribInt(path, index, "always_show_scroll", 1));
+
+	pWnd->m_list.SetFixedScrollBar(b);
+
+	string512					_path;
+	strconcat(sizeof(_path), _path, path, ":list_font");
+	CUIXmlInit::InitFont(xml_doc, _path, index, color, pFont);
+	pWnd->SetFont(pFont);
+	pWnd->m_list.SetFont(pFont);
+	pWnd->m_list.SetTextColor(color);
+	strconcat(sizeof(_path), _path, path, ":list_font_s");
+	CUIXmlInit::InitFont(xml_doc, _path, index, color, pFont);
+	pWnd->m_list.SetTextColorS(color);
+
+	strconcat(sizeof(_path), _path, path, ":text_color:e");
+	if (xml_doc.NavigateToNode(_path, index)) {
+		color = CUIXmlInit::GetColor(xml_doc, _path, index, 0x00);
+		pWnd->SetTextColor(color);
+	}
+
+	strconcat(sizeof(_path), _path, path, ":text_color:d");
+	if (xml_doc.NavigateToNode(_path, index)) {
+		color = CUIXmlInit::GetColor(xml_doc, _path, index, 0x00);
+		pWnd->SetTextColorD(color);
+	}
+}
+
 
 CUIFrameWindow*	CScriptXmlInit::InitFrame(LPCSTR path, CUIWindow* parent){
 	CUIFrameWindow* pWnd = xr_new<CUIFrameWindow>();
@@ -297,6 +350,7 @@ void CScriptXmlInit::script_register(lua_State *L){
 		.def("InitLabel",				&CScriptXmlInit::InitLabel)
 		.def("InitEditBox",				&CScriptXmlInit::InitEditBox)		
 		.def("InitStatic",				&CScriptXmlInit::InitStatic)
+		.def("InitResolutionsBox", &CScriptXmlInit::InitResolutionsComboBox)
 		.def("InitAnimStatic",			&CScriptXmlInit::InitAnimStatic)		
 		.def("InitCheck",				&CScriptXmlInit::InitCheck)
 		.def("InitSpinNum",				&CScriptXmlInit::InitSpinNum)

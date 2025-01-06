@@ -25,7 +25,7 @@ class CUIComboBox : public CUIWindow, public CUIOptionsItem {
 	} E_COMBO_STATE;
 
 public:
-						CUIComboBox				();
+						CUIComboBox				(bool IsResList = false);
 	virtual				~CUIComboBox			();
 	// CUIOptionsItem
 	virtual void		SetCurrentValue			();
@@ -64,6 +64,7 @@ protected:
 	int					m_itoken_id;
 	E_COMBO_STATE		m_eState;
 	int					m_backup_itoken_id;
+	bool				IsCustomResolutionList;
 
 	CUI_IB_FrameLineWnd	m_frameLine;
 	CUILabel			m_text;
