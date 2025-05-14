@@ -139,87 +139,74 @@ BOOL CAnimatorCamEffector::Valid()
 	return			inherited::Valid();
 }
 
-BOOL CAnimatorCamEffector::Process (Fvector &p, Fvector &d, Fvector &n, float& fFov, float& fFar, float& fAspect)
+BOOL CAnimatorCamEffector::ProcessCam(SCamEffectorInfo& info)
 {
-	SCamEffectorInfo Args;
-	Args.p = p;
-	Args.d = d;
-	Args.n = n;
-	Args.fFov = fFov;
-	Args.fFar = fFar;
-	Args.fAspect = fAspect;
-	if(!inherited::ProcessCam(Args))	return FALSE;
+	if (!inherited::ProcessCam(info))
+		return FALSE;
 
-	const Fmatrix& m			= m_objectAnimator->XFORM();
-	m_objectAnimator->Update	(Device->fTimeDelta);
+	const Fmatrix& m = m_objectAnimator->XFORM();
+	m_objectAnimator->Update(Device->fTimeDelta);
 
-	if(!m_bAbsolutePositioning){
+	if (!m_bAbsolutePositioning) {
 		Fmatrix Mdef;
-		Mdef.identity				();
-		Mdef.j						= n;
-		Mdef.k						= d;
-		Mdef.i.crossproduct			(n,d);
-		Mdef.c						= p;
-
+		Mdef.identity();
+		Mdef.j = info.n;
+		Mdef.k = info.d;
+		Mdef.i.crossproduct(info.n, info.d);
+		Mdef.c = info.p;
+		//		Msg("fr[%d] %2.3f,%2.3f,%2.3f", Device->dwFrame,m.c.x,m.c.y,m.c.z);
 		Fmatrix mr;
-		mr.mul						(Mdef,m);
-		d							= mr.k;
-		n							= mr.j;
-		p							= mr.c;
-	}else{
-		d							= m.k;
-		n							= m.j;
-		p							= m.c;
+		mr.mul(Mdef, m);
+		info.d = mr.k;
+		info.n = mr.j;
+		info.p = mr.c;
+	}
+	else {
+		info.d = m.k;
+		info.n = m.j;
+		info.p = m.c;
 	};
 	return						TRUE;
 }
 
-BOOL CAnimatorCamLerpEffector::Process(Fvector &p, Fvector &d, Fvector &n, float& fFov, float& fFar, float& fAspect)
+BOOL CAnimatorCamLerpEffector::ProcessCam(SCamEffectorInfo& info)
 {
-	SCamEffectorInfo Args;
-	Args.p = p;
-	Args.d = d;
-	Args.n = n;
-	Args.fFov = fFov;
-	Args.fFar = fFar;
-	Args.fAspect = fAspect;
-	if(!inherited::inherited::ProcessCam(Args))	return FALSE;
+	if (!inherited::inherited::ProcessCam(info))	return FALSE;
 
-	const Fmatrix& m			= m_objectAnimator->XFORM();
-	m_objectAnimator->Update	(Device->fTimeDelta);
+	const Fmatrix& m = m_objectAnimator->XFORM();
+	m_objectAnimator->Update(Device->fTimeDelta);
 
 	Fmatrix Mdef;
-	Mdef.identity				();
-	Mdef.j						= n;
-	Mdef.k						= d;
-	Mdef.i.crossproduct			(n,d);
-	Mdef.c						= p;
+	Mdef.identity();
+	Mdef.j = info.n;
+	Mdef.k = info.d;
+	Mdef.i.crossproduct(info.n, info.d);
+	Mdef.c = info.p;
 
 	Fmatrix mr;
-	mr.mul						(Mdef,m);
+	mr.mul(Mdef, m);
 
 
 	Fquaternion					q_src, q_dst, q_res;
-	q_src.set					(Mdef);
-	q_dst.set					(mr);
+	q_src.set(Mdef);
+	q_dst.set(mr);
 
-	float	t					= m_func();
-	clamp						(t,0.0f,1.0f);
+	float	t = m_func();
+	clamp(t, 0.0f, 1.0f);
 
-	VERIFY						(t>=0.f && t<=1.f);
-	q_res.slerp					(q_src, q_dst, t);
-	
+	VERIFY(t >= 0.f && t <= 1.f);
+	q_res.slerp(q_src, q_dst, t);
+
 	Fmatrix						res;
-	res.rotation				(q_res);
-	res.c.lerp					(p, mr.c, t);
+	res.rotation(q_res);
+	res.c.lerp(info.p, mr.c, t);
 
-	d							= res.k;
-	n							= res.j;
-	p							= res.c;
+	info.d = res.k;
+	info.n = res.j;
+	info.p = res.c;
 
 	return TRUE;
 }
-
 
 CAnimatorCamLerpEffectorConst::CAnimatorCamLerpEffectorConst()
 :m_factor(0.0f)
@@ -337,14 +324,14 @@ const float	_base_fov		= 170.f;
 const float	_max_fov_add	= 160.f;
 
 
-BOOL CControllerPsyHitCamEffector::Process(Fvector &p, Fvector &d, Fvector &n, float& fFov, float& fFar, float& fAspect)
+BOOL CControllerPsyHitCamEffector::ProcessCam(SCamEffectorInfo& info)
 {
 	Fmatrix	Mdef;
 	Mdef.identity		();
-	Mdef.j.set			(n);
+	Mdef.j.set			(info.n);
 	Mdef.k.set			(m_direction);
-	Mdef.i.crossproduct	(n,m_direction);
-	Mdef.c.set			(p);
+	Mdef.i.crossproduct	(info.n,m_direction);
+	Mdef.c.set			(info.p);
 
 	//////////////////////////////////////////////////////////////////////////
 
@@ -368,7 +355,7 @@ BOOL CControllerPsyHitCamEffector::Process(Fvector &p, Fvector &d, Fvector &n, f
 	float cur_dist	= m_distance * perc_past;
 
 	Mdef.c.mad	(m_position_source, m_direction, cur_dist);
-	fFov = _base_fov - _max_fov_add*perc_past;
+	info.fFov = _base_fov - _max_fov_add*perc_past;
 
 	m_time_current	+= Device->fTimeDelta;
 	
@@ -384,9 +371,9 @@ BOOL CControllerPsyHitCamEffector::Process(Fvector &p, Fvector &d, Fvector &n, f
 	Fmatrix		mR;
 	mR.mul		(Mdef,R);
 
-	d.set		(mR.k);
-	n.set		(mR.j);
-	p.set		(mR.c);
+	info.d.set		(mR.k);
+	info.n.set		(mR.j);
+	info.p.set		(mR.c);
 
 	return TRUE;
 }
